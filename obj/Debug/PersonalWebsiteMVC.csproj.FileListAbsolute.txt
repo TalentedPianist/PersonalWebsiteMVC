@@ -1,779 +1,142 @@
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfoInputs.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfo.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CoreCompileInputs.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.dll
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.pdb
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csprojAssemblyReference.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.input.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.output.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorCoreGenerate.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Shared/_Layout.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Admin/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Create.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Delete.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Details.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Update.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Create.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Details.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Update.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Create.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Delete.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Details.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Update.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Create.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Delete.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Details.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Update.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Create.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Update.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Create.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Update.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/_ViewImports.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/AccessDenied.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmail.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ExternalLogin.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPassword.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Lockout.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Login.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWith2fa.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Logout.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Email.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_Layout.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Register.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPassword.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_StatusMessage.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_ViewImports.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Error.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewImports.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewStart.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/About.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Blog.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Contact.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Gallery.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Guestbook.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Index.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Privacy.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Error.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_LandingPage1.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_Layout.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_LoginPartial.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_PersonalWebsite1.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_SidebarExtended.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_SidebarMain.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewImports.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewStart.cshtml.g.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.Views.pdb
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CopyComplete
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.Manifest.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.xml
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.genruntimeconfig.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/appsettings.Development.json
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/appsettings.json
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/libman.json
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Properties/launchSettings.json
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.StaticWebAssets.xml
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.exe
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.deps.json
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.runtimeconfig.json
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.runtimeconfig.dev.json
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.pdb
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.Views.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.Views.pdb
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/HtmlAgilityPack.NetCore.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Cryptography.Internal.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.UI.Views.V3.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.UI.Views.V4.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.UI.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Razor.Language.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Bcl.HashCode.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.CSharp.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.Razor.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.Workspaces.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Data.SqlClient.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.DotNet.PlatformAbstractions.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.Abstractions.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.Design.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.Relational.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.SqlServer.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Caching.Abstractions.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Caching.Memory.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Configuration.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Configuration.Abstractions.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Configuration.Binder.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.DependencyInjection.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.DependencyInjection.Abstractions.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.DependencyModel.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.FileProviders.Abstractions.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.FileProviders.Embedded.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Identity.Core.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Identity.Stores.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Logging.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Logging.Abstractions.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Options.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Primitives.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Graph.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Graph.Core.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Identity.Client.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/dotnet-aspnet-codegenerator-design.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Newtonsoft.Json.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/NuGet.Frameworks.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.AspNetCore.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Extensions.Hosting.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Extensions.Logging.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Formatting.Compact.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Settings.Configuration.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Sinks.Console.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Sinks.Debug.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Sinks.File.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Collections.Immutable.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.AttributedModel.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.Convention.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.Hosting.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.Runtime.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.TypedParts.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Configuration.ConfigurationManager.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Diagnostics.DiagnosticSource.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Runtime.Caching.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Security.Cryptography.ProtectedData.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win-arm64/native/sni.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win-x64/native/sni.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win-x86/native/sni.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/MailKit.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/MimeKit.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/NETCore.MailKit.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/BouncyCastle.Crypto.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/appsettings.Development.json
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/appsettings.json
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/libman.json
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Properties/launchSettings.json
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.StaticWebAssets.xml
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.exe
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.deps.json
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.runtimeconfig.json
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.runtimeconfig.dev.json
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.pdb
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.Views.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/PersonalWebsiteMVC.Views.pdb
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/HtmlAgilityPack.NetCore.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/MailKit.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Cryptography.Internal.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.UI.Views.V3.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.UI.Views.V4.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Identity.UI.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.AspNetCore.Razor.Language.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Bcl.AsyncInterfaces.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Bcl.HashCode.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.CSharp.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.CSharp.Workspaces.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.Razor.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.CodeAnalysis.Workspaces.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Data.SqlClient.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.DotNet.PlatformAbstractions.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.Abstractions.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.Design.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.Relational.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.EntityFrameworkCore.SqlServer.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Caching.Abstractions.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Caching.Memory.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Configuration.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Configuration.Abstractions.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Configuration.Binder.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.DependencyInjection.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.DependencyInjection.Abstractions.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.DependencyModel.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.FileProviders.Abstractions.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.FileProviders.Embedded.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Identity.Core.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Identity.Stores.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Logging.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Logging.Abstractions.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Options.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Extensions.Primitives.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Graph.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Graph.Core.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.Identity.Client.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Contracts.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Core.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/dotnet-aspnet-codegenerator-design.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Templating.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGeneration.Utils.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Microsoft.VisualStudio.Web.CodeGenerators.Mvc.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/MimeKit.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/NETCore.MailKit.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Newtonsoft.Json.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/NuGet.Frameworks.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/BouncyCastle.Crypto.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.AspNetCore.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Extensions.Hosting.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Extensions.Logging.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Formatting.Compact.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Settings.Configuration.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Sinks.Console.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Sinks.Debug.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/Serilog.Sinks.File.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Collections.Immutable.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.AttributedModel.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.Convention.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.Hosting.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.Runtime.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Composition.TypedParts.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Configuration.ConfigurationManager.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Diagnostics.DiagnosticSource.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Runtime.Caching.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/System.Security.Cryptography.ProtectedData.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.CSharp.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.CSharp.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/cs/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/de/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/es/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/fr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/it/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ja/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ko/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pl/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/pt-BR/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/ru/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/tr/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hans/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/zh-Hant/Microsoft.CodeAnalysis.Workspaces.resources.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/unix/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win/lib/netcoreapp2.1/Microsoft.Data.SqlClient.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win-arm64/native/sni.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win-x64/native/sni.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win-x86/native/sni.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/unix/lib/netcoreapp2.0/System.Runtime.Caching.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win/lib/netcoreapp2.0/System.Runtime.Caching.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/bin/Debug/runtimes/win/lib/netstandard2.0/System.Security.Cryptography.ProtectedData.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csprojAssemblyReference.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfoInputs.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfo.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CoreCompileInputs.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.input.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.output.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorCoreGenerate.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Shared/_Layout.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Admin/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Create.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Delete.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Details.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Update.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Create.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Details.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Update.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Create.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Delete.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Details.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Update.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Create.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Delete.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Details.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Update.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Create.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Update.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Create.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Update.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/_ViewImports.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/AccessDenied.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmail.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ExternalLogin.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPassword.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Lockout.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Login.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWith2fa.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Logout.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Email.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_Layout.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Register.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPassword.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_StatusMessage.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_ViewImports.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Error.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewImports.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewStart.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/About.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Blog.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Contact.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Gallery.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Guestbook.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Index.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Privacy.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Error.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_LandingPage1.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_Layout.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_LoginPartial.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_PersonalWebsite1.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_SidebarExtended.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_SidebarMain.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewImports.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewStart.cshtml.g.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cs
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.Views.pdb
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CopyComplete
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.Manifest.cache
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.xml
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.dll
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.pdb
-E:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.genruntimeconfig.cache
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cs
-/Volumes/NEW VOLUME/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cache
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/appsettings.Development.json
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/appsettings.json
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/libman.json
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/Properties/launchSettings.json
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.StaticWebAssets.xml
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.exe
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.deps.json
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.runtimeconfig.json
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.runtimeconfig.dev.json
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.dll
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.pdb
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.Views.dll
-D:/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.Views.pdb
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csprojAssemblyReference.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfoInputs.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfo.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CoreCompileInputs.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.input.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.output.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorCoreGenerate.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Shared/_Layout.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Admin/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Create.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Delete.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Details.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Update.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Create.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Details.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Update.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Create.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Delete.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Details.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Update.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Create.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Delete.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Details.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Update.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Create.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Update.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Create.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Update.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/_ViewImports.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/AccessDenied.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmail.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ExternalLogin.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPassword.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Lockout.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Login.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWith2fa.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Logout.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Email.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_Layout.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Register.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPassword.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_StatusMessage.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_ViewImports.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Error.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewImports.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewStart.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/About.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Blog.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Contact.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Gallery.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Guestbook.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Index.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Privacy.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Error.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_LandingPage1.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_Layout.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_LoginPartial.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_PersonalWebsite1.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_SidebarExtended.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_SidebarMain.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewImports.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewStart.cshtml.g.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cs
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.Views.pdb
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CopyComplete
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.Manifest.cache
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.xml
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.dll
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.pdb
-D:/Websites/csharp/Core/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.genruntimeconfig.cache
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/appsettings.Development.json
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/appsettings.json
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/libman.json
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/Properties/launchSettings.json
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.StaticWebAssets.xml
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.deps.json
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.runtimeconfig.json
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.runtimeconfig.dev.json
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.dll
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.pdb
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.Views.dll
-/Users/douglasmcgregor/Documents/PersonalWebsiteMVC/PersonalWebsiteMVC.Views.pdb
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.dll
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.pdb
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.csprojAssemblyReference.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.GeneratedMSBuildEditorConfig.editorconfig
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.AssemblyInfoInputs.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.AssemblyInfo.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.csproj.CoreCompileInputs.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.RazorAssemblyInfo.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.RazorAssemblyInfo.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\staticwebassets\PersonalWebsiteMVC.StaticWebAssets.Manifest.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\staticwebassets\PersonalWebsiteMVC.StaticWebAssets.xml
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\scopedcss\bundle\PersonalWebsiteMVC.styles.css
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.TagHelpers.input.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.TagHelpers.output.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.RazorCoreGenerate.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Shared\_Layout.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Admin\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Admin\SignlR.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Blog\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Blog\Delete.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Blog\Details.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Blog\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Blog\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Categories\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Categories\Details.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Categories\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Categories\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Comments\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Comments\Delete.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Comments\Details.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Comments\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Comments\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Gallery\Album.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Gallery\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Gallery\Delete.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Gallery\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Gallery\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Guestbook\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Guestbook\Delete.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Guestbook\Details.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Guestbook\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Guestbook\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Roles\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Roles\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Roles\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Search\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Search\Delete.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Search\Details.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Search\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Search\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Shared\Components\Album\Default.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Shared\Components\Album\FormView1.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Shared\Components\Album\FormView2.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Shared\Components\Gallery\FormView1.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Shared\Components\Gallery\FormView2.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Users\Create.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Users\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Users\Update.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Web\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\Web\YouTube.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Admin\Views\_ViewImports.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\AccessDenied.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ConfirmEmail.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ConfirmEmailChange.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ExternalLogin.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ForgotPassword.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Lockout.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Login.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\LoginWith2fa.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\LoginWithRecoveryCode.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Logout.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\ChangePassword.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\DeletePersonalData.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\Disable2fa.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\DownloadPersonalData.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\Email.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\EnableAuthenticator.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\ExternalLogins.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\GenerateRecoveryCodes.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\PersonalData.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\ResetAuthenticator.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\SetPassword.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\ShowRecoveryCodes.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\TwoFactorAuthentication.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\_Layout.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\_ManageNav.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\_StatusMessage.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Manage\_ViewImports.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\Register.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\RegisterConfirmation.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ResendEmailConfirmation.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ResetPassword.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\ResetPasswordConfirmation.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\_StatusMessage.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Account\_ViewImports.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\Error.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\_ValidationScriptsPartial.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\_ViewImports.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Areas\Identity\Pages\_ViewStart.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\About\About.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Blog\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Blog\_CommentsPartial.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Contact\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Contact\Thanks.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Gallery\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Guestbook\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Home\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Home\Privacy.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Search\Index.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\Components\Comments\BlankView.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\Components\Comments\CommentsView1.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\Components\Comments\Default.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\Error.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\_Layout.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\_LoginPartial.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\_PersonalWebsite1.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\_Sidebar.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\_ViewImports.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\Razor\Views\_ViewStart.cshtml.g.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.RazorTargetAssemblyInfo.cache
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.RazorTargetAssemblyInfo.cs
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\ref\PersonalWebsiteMVC.dll
-E:\Users\Shared\PersonalWebsiteMVC\appsettings.Development.json
-E:\Users\Shared\PersonalWebsiteMVC\appsettings.json
-E:\Users\Shared\PersonalWebsiteMVC\libman.json
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.StaticWebAssets.xml
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.exe
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.deps.json
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.runtimeconfig.json
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.runtimeconfig.dev.json
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.dll
-E:\Users\Shared\PersonalWebsiteMVC\ref\PersonalWebsiteMVC.dll
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.pdb
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.Views.dll
-E:\Users\Shared\PersonalWebsiteMVC\PersonalWebsiteMVC.Views.pdb
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.Views.pdb
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.csproj.CopyComplete
-E:\Source\repos\PersonalWebsiteMVC\obj\Debug\PersonalWebsiteMVC.genruntimeconfig.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csprojAssemblyReference.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.GeneratedMSBuildEditorConfig.editorconfig
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfoInputs.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfo.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CoreCompileInputs.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.MvcApplicationPartsAssemblyInfo.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorAssemblyInfo.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.Manifest.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/staticwebassets/PersonalWebsiteMVC.StaticWebAssets.xml
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/scopedcss/bundle/PersonalWebsiteMVC.styles.css
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.input.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.TagHelpers.output.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorCoreGenerate.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Shared/_Layout.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Admin/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Admin/SignlR.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Delete.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Details.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Details.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Categories/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Delete.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Details.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Comments/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Gallery/Album.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Gallery/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Gallery/Delete.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Gallery/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Gallery/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Delete.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Details.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Guestbook/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Roles/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Search/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Search/Delete.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Search/Details.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Search/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Search/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Shared/Components/Album/Default.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Shared/Components/Album/FormView1.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Shared/Components/Album/FormView2.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Shared/Components/Gallery/FormView1.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Shared/Components/Gallery/FormView2.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Create.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Users/Update.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Web/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Web/YouTube.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/_ViewImports.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/AccessDenied.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmail.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ConfirmEmailChange.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ExternalLogin.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPassword.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ForgotPasswordConfirmation.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Lockout.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Login.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWith2fa.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/LoginWithRecoveryCode.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Logout.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ChangePassword.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DeletePersonalData.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Disable2fa.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/DownloadPersonalData.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Email.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/EnableAuthenticator.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ExternalLogins.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/GenerateRecoveryCodes.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/PersonalData.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ResetAuthenticator.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/SetPassword.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/ShowRecoveryCodes.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/TwoFactorAuthentication.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_Layout.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ManageNav.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_StatusMessage.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Manage/_ViewImports.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/Register.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/RegisterConfirmation.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResendEmailConfirmation.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPassword.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/ResetPasswordConfirmation.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_StatusMessage.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Account/_ViewImports.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/Error.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ValidationScriptsPartial.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewImports.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewStart.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/About/About.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Blog/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Blog/_CommentsPartial.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Contact/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Contact/Thanks.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Gallery/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Guestbook/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Privacy.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Search/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Components/Comments/BlankView.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Components/Comments/CommentsView1.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Components/Comments/Default.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Error.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_Layout.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_LoginPartial.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_PersonalWebsite1.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_Sidebar.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/_ValidationScriptsPartial.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewImports.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/_ViewStart.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorTargetAssemblyInfo.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.Views.pdb
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.dll
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/ref/PersonalWebsiteMVC.dll
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.pdb
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/appsettings.Development.json
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/appsettings.json
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/libman.json
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.StaticWebAssets.xml
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.deps.json
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.runtimeconfig.json
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.runtimeconfig.dev.json
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.dll
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/ref/PersonalWebsiteMVC.dll
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.pdb
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.Views.dll
+/Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.Views.pdb
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CopyComplete
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.genruntimeconfig.cache

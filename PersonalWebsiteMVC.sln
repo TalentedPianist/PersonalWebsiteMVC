@@ -23,7 +23,7 @@ Global
 		SolutionGuid = {5DBF3D50-045E-443A-9F7C-9DB94D297F62}
 	EndGlobalSection
 	GlobalSection(MonoDevelopProperties) = preSolution
-		outputpath = ../../../Users/Shared/PersonalWebsiteMVC
+		outputpath = ../VSBuild
 		Policies = $0
 		$0.TextStylePolicy = $10
 		$0.TextStylePolicy = $11

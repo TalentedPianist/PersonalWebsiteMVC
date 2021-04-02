@@ -30,7 +30,6 @@ namespace PersonalWebsiteMVC.Helpers
                     .WithRedirectUri("https://localhost:5000")
                     .Build();
               
-               var account = await app.GetAccountsAsync();
                var result = await app.AcquireTokenForClient(Scopes).ExecuteAsync();
                return result.AccessToken;
           }

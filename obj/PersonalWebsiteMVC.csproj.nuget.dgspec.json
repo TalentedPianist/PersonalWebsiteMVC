@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Source\\repos\\PersonalWebsiteMVC\\PersonalWebsiteMVC.csproj": {}
+    "/Volumes/Data/Websites/PersonalWebsiteMVC/PersonalWebsiteMVC.csproj": {}
   },
   "projects": {
-    "E:\\Source\\repos\\PersonalWebsiteMVC\\PersonalWebsiteMVC.csproj": {
+    "/Volumes/Data/Websites/PersonalWebsiteMVC/PersonalWebsiteMVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Source\\repos\\PersonalWebsiteMVC\\PersonalWebsiteMVC.csproj",
+        "projectUniqueName": "/Volumes/Data/Websites/PersonalWebsiteMVC/PersonalWebsiteMVC.csproj",
         "projectName": "PersonalWebsiteMVC",
-        "projectPath": "E:\\Source\\repos\\PersonalWebsiteMVC\\PersonalWebsiteMVC.csproj",
-        "packagesPath": "C:\\Users\\Douglas\\.nuget\\packages\\",
-        "outputPath": "E:\\Source\\repos\\PersonalWebsiteMVC\\obj\\",
+        "projectPath": "/Volumes/Data/Websites/PersonalWebsiteMVC/PersonalWebsiteMVC.csproj",
+        "packagesPath": "/Users/douglasmcgregor/.nuget/packages/",
+        "outputPath": "/Volumes/Data/Websites/PersonalWebsiteMVC/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Douglas\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/Users/douglasmcgregor/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net5.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -237,7 +235,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.201/RuntimeIdentifierGraph.json"
         }
       }
     }
