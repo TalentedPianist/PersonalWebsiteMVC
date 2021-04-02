@@ -1,0 +1,29 @@
+﻿@model Guestbook
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<h1 class="bg-info text-white">Create</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+     <div class="form-group">
+          <label asp-for="GuestbookComment">Comment:</label>
+          <textarea asp-for="GuestbookComment" rows="10" cols="30" class="form-control"></textarea>
+     </div>
+     <div class="form-group">
+          <label asp-for="GuestbookUser">Name:</label>
+          <input asp-for="GuestbookUser" class="form-control" />
+     </div>
+     <div class="form-group">
+          <label asp-for="GuestbookUserEmail">Email:</label>
+          <input asp-for="GuestbookUserEmail" class="form-control" />
+     </div>
+     <div class="form-group">
+          <label asp-for="GuestbookUserWebsite">Website:</label>
+          <input asp-for="GuestbookUserWebsite" class="form-control" />
+     </div>
+     <button type="submit" class="btn btn-primary">Save</button>
+</form>

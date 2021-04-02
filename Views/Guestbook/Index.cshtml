@@ -1,0 +1,107 @@
+﻿@model PersonalWebsiteMVC.Models.GuestbookMixModel
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Core.Common
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+@inject Microsoft.Extensions.Configuration.IConfiguration Configuration
+@*
+     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+@{
+     async Task<string> GuestbookForm()
+     {
+          <form method="post" asp-controller="Guestbook" asp-action="AddEntry">
+               <div asp-validation-summary="All" class="text-danger"></div>
+
+               <div class="form-group">
+                    <label asp-for="Guestbook.GuestbookUser"></label>
+                    <input asp-for="Guestbook.GuestbookUser" placeholder="Name" />
+               </div>
+               <div class="form-group">
+                    <label asp-for="Guestbook.GuestbookUserEmail"></label>
+                    <input asp-for="Guestbook.GuestbookUserEmail" placeholder="Email" />
+               </div>
+               <div class="form-group">
+                    <label asp-for="Guestbook.GuestbookUserWebsite"></label>
+                    <input asp-for="Guestbook.GuestbookUserWebsite" placeholder="Website" />
+               </div>
+               <div class="form-group">
+                    <label asp-for="Guestbook.GuestbookComment"></label>
+                    <textarea asp-for="Guestbook.GuestbookComment" rows="5" cols="30" placeholder="Comment"></textarea>
+               </div>
+               <div class="form-group">
+
+                    <div class="g-recaptcha" data-sitekey="6LcJN9AZAAAAAKrWhRogrKcHXUG1NAOa_tJkqD8g"></div>
+               </div>
+               <button type="submit" class="btn btn-primary">Submit</button>
+          </form>
+          await Task.CompletedTask;
+          return String.Empty;
+     }
+}
+
+
+@if (Model.GuestbookAll.Count() == 0)
+{
+     <h1>Guestbook</h1>
+     <p>No entries have been found at this time.  Be the first to sign the guestbook using the form below.  Your email address is required but will not be shown.</p>
+     <hr>
+     @GuestbookForm().Result
+}
+else
+{
+     var pagedGuestbook = Model.GuestbookAll.ToPagedList(CurrentPage(), 2);
+     <h1>Guestbook</h1>
+
+     var yes = Model.GuestbookAll.Where(g => g.GuestbookApproved == "Yes").Count();
+     if (yes == 0)
+     {
+
+          <p>No entries have been found.  Be the first to sign the guestbook using the form below.  Your email address is required but will not be published.</p>
+          <hr>
+          @GuestbookForm().Result
+     }
+     else
+     {
+          <p>@yes entries have been found.</p>
+          <div class="Comments">
+               @foreach (var item in pagedGuestbook.Where(g => g.GuestbookApproved == "Yes").ToList())
+               {
+
+                    <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp">
+                    <text>Posted by </text> @item.GuestbookUser <text> on </text> @item.GuestbookDate <text>.</text>
+                    <div style="clear: both;"></div>
+                    @item.GuestbookComment
+                    <hr>
+
+               }
+          </div>
+
+          <p>You are on page @pagedGuestbook.PageNumber of @pagedGuestbook.PageCount.</p>
+          @Html.PagedListPager((IPagedList)pagedGuestbook, page => Url.Action("Guestbook", new { page = page }), Bootstrap4PagedListRenderOptions.Default)
+          <hr>
+          <p>Please sign the guestbook using the form below.  It is much appreciated.  Your email address is required but will not be publishesd.  Thanks.</p>
+          @GuestbookForm().Result
+     }
+
+}
+
+@functions {
+     int CurrentPage()
+     {
+          if (http.HttpContext.Request.Query.ContainsKey("page"))
+          {
+               return Convert.ToInt32(http.HttpContext.Request.Query["page"]);
+          }
+          else
+          {
+               return 1;
+          }
+     }
+}
+
+

@@ -1,0 +1,23 @@
+﻿@model IEnumerable<PersonalWebsiteMVC.Models.Categories>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<h1 class="bg-info text-white p-1">Categories</h1>
+<a asp-action="Create" class="btn btn-secondary">Create</a>
+
+<table class="table text-center">
+<thead class="font-weight-bold"><td>CategoryID</td><td>Category</td><td>Update</td><td>Details</td><td>Delete</td></thead>
+@foreach (var item in Model)
+{
+     <tr>
+     <td>@item.CategoryID</td>
+     <td>@item.Category</td>
+     <td><a asp-action="Update" class="btn btn-primary" asp-route-id="@item.CategoryID">Update</a></td>
+     <td><a asp-action="Details" class="btn btn-primary" asp-route-id="@item.CategoryID">Details</a></td>
+     <td><a asp-action="Delete" class="btn btn-primary" asp-route-id="@item.CategoryID">Delete</a></td>
+     </tr>
+}
+</table>
+

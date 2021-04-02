@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using System.Net
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+@using System.IO 
+
+@{
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml"; 
+     string CookieStr = "__Secure-3PAPISID=XCvfg4wzHrgs6nXK/A-MBmO58MMahkycXy;__Secure-3PSID=0QeDbX3IW_gyCi4NZ4p4cwX4Wm_e8dInRVMHLP6vgNDU1CTXz2CF0VvE9LgOfAaWa1gzxA.;APISID=noWnQPH_Zk6lwBKX/At6kEsauG24CaxCMs;CONSENT=YES+GB.en+20180415-11-0;HSID=Abp3jtXKcCHsb_KBI;LOGIN_INFO=AFmmF2swRQIhAKx9to8MsK5lfi989PPB6lA0G4Jc3oUtJGhXW4fHD6jeAiAhfOmy5GSMcfi7KEvCE0lnJ5CFRel5JAU9isnXfxJrCg:QUQ3MjNmd29vX240dnN4eHhwRXFUSGJzY0RQN0hHQy1FZ2RpOHVOSmhGOXY3TW1EMUZ0bHJRNGpnTW5uazR4M2dlLVN3MWl2OEZSTENMZ1dSRjRJMTA1YVNzMGlMRXBNSmgyUDhGcE1hcDdkVlNOcFBEREtJOUphbGRSSXYzRmFUXzRYaHJYN2NMN0pKd0VCdXdzOVg0djBLRkpaazNtR1N3cXJfWnBOWm04YkVmczBmRHdqOGVJ;PREF=cvdm=grid&al=en;SAPISID=XCvfg4wzHrgs6nXK/A-MBmO58MMahkycXy;SID=0QeDbX3IW_gyCi4NZ4p4cwX4Wm_e8dInRVMHLP6vgNDU1CTX3rdY-ngX5kBIqg11gB1wgg.;SIDCC=AJi4QfFV9aphGVARn57Y37RdKRx0RwKBo44LqY9JWafT08hBQpGhnXutQVzz6SU6CGh0dl13XZY;SSID=AQGdpfaNkYRP3IaRL;VISITOR_INFO1_LIVE=MIXCUjzzI28;YSC=Fx5h-xV50kg;";
+
+     string[] cookies = CookieStr.Split(';');
+     CookieContainer cookieContainer = new CookieContainer();
+     foreach (string cookie in cookies)
+          cookieContainer.SetCookies(new Uri("https://www.youtube.com"), cookie);
+     HttpWebRequest request = WebRequest.Create("https://www.youtube.com/feed/history") as HttpWebRequest;
+     request.CookieContainer = cookieContainer;
+
+     var response = (HttpWebResponse)request.GetResponse();
+     Stream responseStream = response.GetResponseStream();
+     System.Text.Encoding enc = System.Text.Encoding.GetEncoding("utf-8");
+     StreamReader responseStreamReader = new StreamReader(responseStream, enc);
+     @responseStreamReader.ReadToEnd()
+}

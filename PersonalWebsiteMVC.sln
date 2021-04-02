@@ -1,0 +1,77 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PersonalWebsiteMVC", "PersonalWebsiteMVC.csproj", "{ACB4B863-C1DA-447C-B57C-F936706EC313}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ACB4B863-C1DA-447C-B57C-F936706EC313}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACB4B863-C1DA-447C-B57C-F936706EC313}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACB4B863-C1DA-447C-B57C-F936706EC313}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACB4B863-C1DA-447C-B57C-F936706EC313}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5DBF3D50-045E-443A-9F7C-9DB94D297F62}
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		outputpath = ../../../Users/Shared/PersonalWebsiteMVC
+		Policies = $0
+		$0.TextStylePolicy = $10
+		$0.TextStylePolicy = $11
+		$11.FileWidth = 80
+		$11.TabWidth = 5
+		$11.IndentWidth = 5
+		$11.scope = text/x-csharp
+		$11.RemoveTrailingWhitespace = False
+		$11.NoTabsAfterNonTabs = True
+		$0.CSharpFormattingPolicy = $12
+		$12.scope = text/x-csharp
+		$0.TextStylePolicy = $13
+		$13.TabWidth = 5
+		$13.IndentWidth = 5
+		$13.scope = text/x-cshtml-web
+		$13.TabsToSpaces = True
+		$0.HTMLFormattingPolicy = $14
+		$14.scope = text/x-cshtml-web
+		$0.TextStylePolicy = $15
+		$15.TabWidth = 5
+		$15.TabsToSpaces = True
+		$15.IndentWidth = 5
+		$15.RemoveTrailingWhitespace = False
+		$15.scope = text/x-html
+		$0.HTMLFormattingPolicy = $16
+		$16.FormatOnPaste = True
+		$16.scope = text/x-html
+		$0.TextStylePolicy = $17
+		$17.FileWidth = 80
+		$17.TabWidth = 5
+		$17.TabsToSpaces = True
+		$17.IndentWidth = 5
+		$17.RemoveTrailingWhitespace = False
+		$17.scope = text/x-javascript
+		$0.TextStylePolicy = $18
+		$18.FileWidth = 80
+		$18.TabWidth = 5
+		$18.TabsToSpaces = True
+		$18.IndentWidth = 5
+		$18.RemoveTrailingWhitespace = False
+		$18.scope = text/x-jsts
+		$0.DotNetNamingPolicy = $19
+		$19.DirectoryNamespaceAssociation = PrefixedHierarchical
+		$0.TextStylePolicy = $20
+		$20.FileWidth = 80
+		$20.TabWidth = 5
+		$20.TabsToSpaces = True
+		$20.IndentWidth = 5
+		$20.scope = text/x-web
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,94 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{ Layout = "~/Areas/Admin/Shared/_Layout.cshtml"; }
+
+@using PersonalWebsiteMVC.Helpers
+@inject IGraphSDKHelper _Graph
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+@using Microsoft.Graph
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core.Common
+
+<p>@ViewBag.Message</p>
+
+@{
+    if (http.HttpContext.Request.Query.ContainsKey("q"))
+    {
+        string id = http.HttpContext.Request.Query["q"];
+        var album = _Graph.GraphClient().Result.Drives["douglas@douglasmcgregor.co.uk"].Items[id].Children.Request().Expand("thumbnails").GetAsync().Result;
+        var pagedAlbum = album.ToPagedList(CurrentPage(), 6);
+        for (int i = 0; i < album.Count(); i++)
+        {
+            for (int p = 0; p < album[i].Thumbnails.Count(); p++)
+            {
+                <div class="Gallery">
+                    <a href="#" id="button1-@i" data-toggle="modal" data-target="#exampleModal-@i"><img src="@album[i].Thumbnails[p].Small.Url" class="image" data-target="#exampleModal-@i"></a>
+                    
+                </div>
+
+
+                <!-- Modal -->
+                <div class="modal fade" id="exampleModal-@i" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-xl" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">@album[i].Name</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <img src="@album[i].Thumbnails[p].Large.Url">
+                            </div>
+                            <div class="modal-footer justify-content-between">
+                                @{
+                                     string name = album[i].Name;
+                                     string albumId = album[i].Id;
+                                }
+                                @await Component.InvokeAsync("Album", new { picName = name, albumId = albumId })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <script>
+					$(document).ready(function () {
+						$('#button1-@i').on("click", function () {
+							$('#exampleModal-@i').modal('show');
+						});
+
+					});
+                </script>
+
+
+            }
+        }
+
+    }
+}
+
+
+
+
+
+@functions {
+    int CurrentPage()
+    {
+        if (http.HttpContext.Request.Query.ContainsKey("page"))
+        {
+            var page = Convert.ToInt32(http.HttpContext.Request.Query["page"]);
+            return page;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
+}

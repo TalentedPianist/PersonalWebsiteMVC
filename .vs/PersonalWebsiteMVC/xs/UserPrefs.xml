@@ -1,0 +1,37 @@
+﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{ACB4B863-C1DA-447C-B57C-F936706EC313}|Default">
+  <MonoDevelop.Ide.Workbench>
+    <Files>
+      <File FileName="Views/Shared/_PersonalWebsite1.cshtml" Line="59" Column="139" />
+      <File FileName="Controllers/GuestbookController.cs" Line="38" Column="40" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="PersonalWebsiteMVC" expanded="True">
+            <Node name="PersonalWebsiteMVC" expanded="True">
+              <Node name="Areas" expanded="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="GuestbookController.cs" selected="True" />
+              </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Gallery" expanded="True" />
+                <Node name="Home" expanded="True" />
+                <Node name="Search" expanded="True" />
+                <Node name="Shared" expanded="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore>
+      <Breakpoint file="/usr/local/share/dotnet/sdk/5.0.102/Sdks/Microsoft.NET.Sdk/targets/Microsoft.PackageDependencyResolution.targets" line="241" column="1" />
+    </BreakpointStore>
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.ItemProperties.PersonalWebsiteMVC PreferredExecutionTarget="/Applications/Google Chrome.app" />
+</Properties>

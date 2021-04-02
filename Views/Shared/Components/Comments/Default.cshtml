@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model PersonalWebsiteMVC.Models.MixModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+<h3>Comments</h3>
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7500bc2f1fb1449c92ac7404edfd833f42dc4bd0
+
+<p>No comments have been found.  Be the first to have your say and add a comment using the form below.  Your email address is required but will not be shown.  Thanks for commenting.</p>
+
+<form method="post" asp-action="AddComment()" asp-route-q="@http.HttpContext.Request.Query["q"]">
+    <div class="form-group">
+        <label asp-for="Comments.CommentAuthor"></label>
+        <input asp-for="Comments.CommentAuthor" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments.CommentAuthorEmail"></label>
+        <input asp-for="Comments.CommentAuthorEmail" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments.CommentAuthorUrl"></label>
+        <input asp-for="Comments.CommentAuthorUrl" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments.CommentContent"></label>
+        <textarea asp-for="Comments.CommentContent" rows="5" cols="30"></textarea>
+    </div>
+    <input type="hidden" asp-for="Comments.CommentType" value="@ViewBag.CommentType" />
+    <input type="hidden" asp-for="Comments.PhotoID" value="@ViewBag.Id" />
+    <input type="hidden" asp-for="Comments.ParentID" value="0" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model PersonalWebsiteMVC.Models.MixModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+
+@ViewBag.CommentType
+
+<h3>Comments</h3>
+
+<<<<<<< HEAD
+
+=======
+>>>>>>> 7500bc2f1fb1449c92ac7404edfd833f42dc4bd0
+
+<div class="Comments">
+    <p>@Model.AllComments.Count() comments has been found for this @TempData["CommentType"].</p>
+
+    @foreach (var item in Model.AllComments)
+    {
+        <div class="row">
+            <div class="col-4">
+                <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y">
+            </div>
+            <div class="col-8">
+                <p>Comment posted by @item.CommentAuthor on @item.CommentDate</p>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col">
+                @item.CommentContent
+            </div>
+        </div>
+    }
+
+</div>
+
+<hr>
+
+<p>Have your say about the @TempData["CommentType"] using the form below.  Thanks for commenting.</p>
+
+<form method="post" asp-action="AddComment()" asp-route-q="@http.HttpContext.Request.Query["q"]">
+    <div class="form-group">
+        <label asp-for="Comments.CommentAuthor"></label>
+        <input asp-for="Comments.CommentAuthor" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments.CommentAuthorEmail"></label>
+        <input asp-for="Comments.CommentAuthorEmail" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments.CommentAuthorUrl"></label>
+        <input asp-for="Comments.CommentAuthorUrl" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Comments.CommentContent"></label>
+        <textarea asp-for="Comments.CommentContent" rows="5" cols="30"></textarea>
+    </div>
+    <input asp-for="Comments.PhotoID" type="hidden" value="@ViewBag.Id" />
+    <input asp-for="Comments.CommentType" type="hidden" value="@ViewBag.CommentType" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+

@@ -1,0 +1,77 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model PersonalWebsiteMVC.Models.Gallery
+@using PersonalWebsiteMVC.Helpers
+@inject IGraphSDKHelper _Graph
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+@using System.Linq
+
+@{
+    string id = "01PTFRO2O4BZ2ACOZGKND2H3VV6RF5DVEG";
+    var rootFolder = _Graph.GraphClient().Result.Drives["douglas@douglasmcgregor.co.uk"].Items[id].Children.Request().Expand("thumbnails").GetAsync().Result;
+    for (int i = 0; i < rootFolder.Count(); i++)
+    {
+        var albumId = rootFolder[i].Id;
+        var album = _Graph.GraphClient().Result.Drives["douglas@douglasmcgregor.co.uk"].Items[albumId].Children.Request().Expand("thumbnails").GetAsync().Result;
+        var data = new Dictionary<string, string>
+{
+                    {"q", albumId },
+                    {"title", rootFolder[i].Name }
+               };
+        foreach (var item in album[i].Thumbnails)
+        {
+            var random = new Random();
+            var index = random.Next(album.Count());
+            var cover = album[index].Thumbnails.Select(t => t.Medium.Url).FirstOrDefault();
+            var cover1 = album[index].Thumbnails.Select(t => t.Large.Url).FirstOrDefault();
+
+
+
+            <div class="Gallery">
+                <h2>@rootFolder[i].Name</h2>
+                <a id="button1-@i" data-toggle="modal" data-target="#exampleModal-@i"><img src="@cover" class="image"></a>
+                <a id="button2-@i" asp-action="Album" asp-all-route-data="@data" class="btn btn-primary">View</a>
+
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal-@i" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h2 class="modal-title" id="exampleModalLabel">@rootFolder[i].Name</h2>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="@cover1">
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            @await Component.InvokeAsync("Gallery", new { galleryId = rootFolder[i].Id, galleryName = rootFolder[i].Name })
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+			 $(document).ready(function () {
+				$('#button1-@i').on("click", function () {
+				    //$('#exampleModal-@i').modal('show');
+				});
+                 
+             
+			 });
+            </script>
+        }
+
+    }
+}
+

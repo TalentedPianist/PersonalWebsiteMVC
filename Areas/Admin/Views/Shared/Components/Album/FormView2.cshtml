@@ -1,0 +1,17 @@
+﻿@model PersonalWebsiteMVC.Models.Photos
+
+<form method="post">
+     <div class="form-group">
+          <label asp-for="PhotoName"></label>
+          <input asp-for="PhotoName" />
+     </div>
+     <div class="form-group">
+          <label asp-for="PhotoLocation"></label>
+          <input asp-for="PhotoLocation" />
+     </div>
+     <div class="form-group">
+          <label asp-for="PhotoDescription"></label>
+          <textarea asp-for="PhotoDescription" rows="5" cols="30"></textarea>
+     </div>
+     <button type="submit" class="btn btn-primary">Submit</button>
+</form>

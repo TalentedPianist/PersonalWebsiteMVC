@@ -1,0 +1,127 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+@using PersonalWebsiteMVC.Helpers
+@inject IGraphSDKHelper _Graph
+@using Microsoft.Graph
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Mvc.Bootstrap4.Core
+@using X.PagedList.Mvc.Core.Common
+
+
+
+
+
+@if (http.HttpContext.Request.Query.ContainsKey("q"))
+{
+    <h2>Gallery</h2>
+    <h3>@http.HttpContext.Request.Query["title"]</h3>
+    string id = http.HttpContext.Request.Query["q"];
+    var album = _Graph.GraphClient().Result.Drives["douglas@douglasmcgregor.co.uk"].Items[id].Children.Request().Expand("thumbnails").GetAsync().Result;
+    for (int a = 0; a < album.Count(); a++)
+    {
+        for (int b = 0; b < album[a].Thumbnails.Count(); b++)
+        {
+            <div class="Gallery">
+                <a href="#" id="button1-@a" data-toggle="modal" data-target="#exampleModal-@a"><img src="@album[a].Thumbnails[b].Small.Url" class="image"></a>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="exampleModal-@a" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">@album[a].Name</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <img src="@album[a].Thumbnails[b].Large.Url">
+                        </div>
+                        <div class="modal-footer justify-content-between">
+                            <div class="row">
+                                <div class="col">
+                                    @{
+
+                                        ViewData["CommentType"] = "photo";
+                                        ViewData["PhotoID"] = album[a].Id;
+                                        ViewData["AlbumID"] = id;
+                                    }
+
+                                    <partial name="_CommentsPartial" view-data="ViewData" />
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+}
+else
+{
+    <h2>Gallery</h2>
+    string id = "01PTFRO2O4BZ2ACOZGKND2H3VV6RF5DVEG";
+    var rootFolder = _Graph.GraphClient().Result.Drives["douglas@douglasmcgregor.co.uk"].Items[id].Children.Request().Expand("thumbnails").GetAsync().Result;
+    for (int i = 0; i < rootFolder.Count(); i++)
+    {
+        var albumId = rootFolder[i].Id;
+        var album = _Graph.GraphClient().Result.Drives["douglas@douglasmcgregor.co.uk"].Items[albumId].Children.Request().Expand("thumbnails").GetAsync().Result;
+        var data = new Dictionary<string, string>
+{
+              {"q", albumId },
+              {"title", rootFolder[i].Name }
+          };
+
+        foreach (var item in album[i].Thumbnails)
+        {
+
+            var random = new Random();
+            var index = random.Next(album.Count());
+            var cover = album[index].Thumbnails.Select(t => t.Medium.Url).FirstOrDefault();
+            var cover1 = album[index].Thumbnails.Select(t => t.Large.Url).FirstOrDefault();
+
+            <div class="Gallery">
+                <h3>@rootFolder[i].Name</h3>
+                <img src="@cover" class="image">
+                <a id="button1-@i" asp-action="Gallery" asp-all-route-data="@data" class="btn btn-primary">View</a>
+            </div>
+
+            <style>
+                #button1-@i
+                {
+                    margin-top: 0.5em;
+                }
+            </style>
+
+        }
+    }
+}
+
+
+
+@functions {
+
+    int CurrentPage()
+    {
+        if (http.HttpContext.Request.Query.ContainsKey("page"))
+        {
+            var page = Convert.ToInt32(http.HttpContext.Request.Query["page"]);
+            return page;
+        }
+        else
+        {
+            return 1;
+        }
+    }
+
+
+}

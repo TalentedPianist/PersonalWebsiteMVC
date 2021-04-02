@@ -1,0 +1,42 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model PersonalWebsiteMVC.Models.Gallery
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http  
+
+
+<form method="post" asp-action="Update" asp-controller="Gallery">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div class="form-group">
+        <label asp-for="GalleryName"></label>
+        <input asp-for="GalleryName" size="50" />
+    </div>
+    <div class="form-group">
+        <label asp-for="GalleryLocation"></label>
+        <input asp-for="GalleryLocation" id="searchTextField" size="50" />
+    </div>
+    <div class="form-group">
+        <label asp-for="GalleryDescription"></label>
+        <textarea asp-for="GalleryDescription" rows="5" cols="30"></textarea>
+    </div>
+    <input asp-for="GalleryRemoteID" type="hidden" />
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script>
+    function initialize() {
+          var input = document.getElementById("searchTextField");
+          new google.maps.places.Autocomplete(input);
+     }
+
+     google.maps.event.addDomListener(window, "load", initialize);</script>
+
+<style>
+    .pac-container {
+        z-index: 1051 !important;
+    }
+</style>

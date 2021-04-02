@@ -1,0 +1,37 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model IEnumerable<PersonalWebsiteMVC.Models.SolrModel>
+
+<h2 class="bg bg-info p-2">Search</h2>
+<a asp-action="Create" class="btn btn-secondary">Create</a>
+
+<table class="table">
+	<thead>
+		<tr>
+			<td>ID</td>
+			<td>Title</td>
+			<td>Url</td>
+			<td></td>
+			<td></td>
+			<td></td>
+		</tr>
+	</thead>
+	<tbody>
+
+		@foreach (var item in Model)
+		{
+			<tr>
+				<td>@item.ID</td>
+				<td>@item.Title</td>
+				<td>@item.Url</td>
+				<td><a asp-action="Update" asp-route-q="@item.ID" class="btn btn-primary">Update</a></td>
+				<td><a asp-action="Details" asp-route-q="@item.ID" class="btn btn-primary">Details</a></td>
+				<td><a asp-action="Delete" asp-route-q="@item.ID" class="btn btn-primary">Delete</a></td>
+			</tr>
+		}
+	</tbody>
+</table>

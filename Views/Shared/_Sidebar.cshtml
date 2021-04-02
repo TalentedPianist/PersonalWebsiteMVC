@@ -1,0 +1,42 @@
+﻿@*
+     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+@using System.Linq 
+
+<h3>About</h3>
+
+<img src="~/images/me.jpg" class="img-fluid rounded-circle float-left ProfilePic" />
+
+Currently working part time in an office.  Self taught ASP.NET web developer, also looking for freelance work as a web developer.  Interested in the paranormal.
+
+<div style="clear: both;"></div>
+<div class="row">
+     <div class="col-md-6 m-0 p-0 float-left">
+          <h3>Latest Posts</h3>
+          <ul>
+               @{
+                    var posts = db.Posts.OrderByDescending(i => i).Take(3);
+                    foreach (var item in posts)
+                    {
+                         <li><a asp-action="Blog" asp-controller="Home" asp-route-q="@item.PostID">@item.PostTitle</a></li>
+                        
+                    }
+               }
+          </ul>
+     </div>
+
+     <div class="col-md-6 m-0 p-0 float-left">
+          <h3>Interesting Links</h3>
+
+          <ul>
+               <li><a href="https://www.amyscrypt.com" target="_blank">Amy's Crypt</a></li>
+               <li><a href="https://www.ufoseekers.com" target="_blank">UFO Seekers</a></li>
+          </ul>
+     </div>
+</div>
+
+

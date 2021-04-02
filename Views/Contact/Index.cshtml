@@ -1,0 +1,43 @@
+﻿@model PersonalWebsiteMVC.Models.ContactFormModel
+@{
+     ViewData["Title"] = "Contact";
+}
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions
+@inject IHttpContextAccessor http
+@inject Microsoft.Extensions.Configuration.IConfiguration configuration
+
+@{
+     var httpVerb = http.HttpContext.Request.Method;
+}
+
+
+
+<h1>Contact</h1>
+
+<p>Get in touch with me using the form below.  A reply will be sent as soon as possible.</p>
+
+<form asp-action="Contact" asp-controller="Contact" method="post">
+     <div asp-validation-summary="All" class="text-danger"></div>
+     <div class="form-group">
+          <label asp-for="Name"></label>
+          <input asp-for="Name" placeholder="Name" />
+     </div>
+     <div class="form-group">
+          <label asp-for="Email"></label>
+          <input asp-for="Email" placeholder="Email" />
+     </div>
+     <div class="form-group">
+          <label asp-for="Message"></label>
+          <textarea asp-for="Message" rows="5" cols="30" name="message" placeholder="Message"></textarea>
+     </div>
+     <div class="form-group">
+          <div class="g-recaptcha" data-sitekey="@configuration.GetSection("GoogleReCaptcha:key").Value"></div>
+     </div>
+     <button type="submit" class="btn btn-primary">Send</button>
+</form>
+
+
+@section Scripts {
+     <script src="https://www.google.com/recaptcha/api.js"></script>
+}

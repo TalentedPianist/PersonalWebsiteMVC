@@ -1,0 +1,103 @@
+﻿@*
+     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model PersonalWebsiteMVC.Models.MixModel
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+
+@Html.Raw(ViewBag.Message)
+
+<h3>Comments</h3>
+
+
+@{
+
+
+
+     if (Model.AllComments.Count() == 0)
+     {
+          <p>No comments have been found for this post.</p>
+     }
+
+     if (Model.AllComments.Count() == 1)
+     {
+          <p>1 comment has been found for this post.</p>
+     }
+     if (Model.AllComments.Count() > 1)
+     {
+          <p>@Model.AllComments.Count() comments have been found for this post.</p>
+     }
+     var pagedComments = Model.AllComments.ToPagedList(CurrentPage(), 3);
+     <div class="Comments">
+          @foreach (var item in pagedComments)
+          {
+               <img src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?f=y&d=mp" class="img">
+               <text>Posted by </text> @item.CommentAuthor <text> on </text> @item.CommentDate.ToString("dddd dd MMMM yyy")<text> at </text> @item.CommentDate.ToString("t") <text>.</text>
+               <div style="clear: both;"></div>
+               @item.CommentContent
+          }
+     </div>
+
+     if (Model.AllComments.Count() == 0)
+     {
+     }
+     else
+     {
+          if (Model.AllComments.Count() == 1)
+          {
+          }
+          else
+          {
+               @Html.PagedListPager((IPagedList)pagedComments, page => Url.Action("Blog", new { page = page, q = http.HttpContext.Request.Query["q"] }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
+          }
+
+     }
+}
+
+<p>Have your say and add a comment using the form below.  Your email address is required but will not be shown.  Thanks.</p>
+
+<form method="post" asp-route-q="@http.HttpContext.Request.Query["q"]">
+     <div asp-validation-summary="All"></div>
+     <input type="hidden" asp-for="Comments.CommentType" value="@ViewData["CommentType"]" />
+     <input type="hidden" asp-for="Comments.ParentID" value="@ViewData["ParentID"]" />
+     <input type="hidden" asp-for="Comments.PhotoID" value="@ViewData["PhotoID"]" />
+     <input type="hidden" name="AlbumID" value="@ViewData["AlbumID"]" />
+     <div class="form-group">
+          <label asp-for="Comments.CommentAuthor"></label>
+          <input asp-for="Comments.CommentAuthor" placeholder="Name" />
+     </div>
+     <div class="form-group">
+          <label asp-for="Comments.CommentAuthorEmail"></label>
+          <input asp-for="Comments.CommentAuthorEmail" placeholder="Email" />
+     </div>
+     <div class="form-group">
+          <label asp-for="Comments.CommentAuthorUrl"></label>
+          <input asp-for="Comments.CommentAuthorUrl" placeholder="Website" />
+     </div>
+     <div class="form-group">
+          <label asp-for="Comments.CommentContent"></label>
+          <textarea asp-for="Comments.CommentContent" rows="5" cols="30" placeholder="Comment"></textarea>
+     </div>
+     <div class="form-group">
+          <div class="g-recaptcha" data-sitekey="6LcJN9AZAAAAAKrWhRogrKcHXUG1NAOa_tJkqD8g"></div>
+     </div>
+
+     <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+
+
+@functions {
+
+     int CurrentPage()
+     {
+          if (http.HttpContext.Request.Query.ContainsKey("page"))
+          {
+               return Convert.ToInt32(http.HttpContext.Request.Query["page"]);
+          }
+          else
+               return 1;
+     }
+}

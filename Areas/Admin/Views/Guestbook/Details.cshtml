@@ -1,0 +1,56 @@
+﻿@model PersonalWebsiteMVC.Models.Guestbook
+
+@{
+     ViewData["Title"] = "Details";
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<h1 class="bg-info text-white">Details</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+
+
+<dl class="row">
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.GuestbookComment)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.GuestbookComment)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.GuestbookUser)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.GuestbookUser)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.GuestbookUserEmail)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.GuestbookUserEmail)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.GuestbookUserWebsite)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.GuestbookUserWebsite)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.GuestbookDate)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.GuestbookDate)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.GuestbookIP)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.GuestbookIP)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.GuestbookApproved)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.GuestbookApproved)
+     </dd>
+</dl>
+

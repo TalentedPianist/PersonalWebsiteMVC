@@ -1,0 +1,55 @@
+﻿@*
+     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model PersonalWebsiteMVC.Models.Gallery
+@using PersonalWebsiteMVC.Helpers
+@inject IGraphSDKHelper _Graph
+@using Microsoft.Graph
+@using Microsoft.Graph.Core
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+
+@ViewBag.Message
+@ViewBag.Error
+@ViewBag.Error1
+
+<h1>Create</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+
+<form method="post" asp-controller="Gallery" asp-area="Admin">
+     <div class="text-danger" asp-validation-summary="All"></div>
+
+     <div class="form-group">
+          <label asp-for="GalleryName"></label>
+          <input asp-for="GalleryName" />
+     </div>
+     <div class="form-group">
+          <label asp-for="GalleryLocation"></label>
+          <input asp-for="GalleryLocation" id="searchTextField" />
+     </div>
+     <div class="form-group">
+          <label asp-for="GalleryDate"></label>
+          <input asp-for="GalleryDate" name="Date" />
+     </div>
+     <div class="form-group">
+          <label asp-for="GalleryDescription"></label>
+          <textarea asp-for="GalleryDescription" rows="5" cols="30" name="Description"></textarea>
+     </div>
+
+     <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&key=AIzaSyBLgq2BcCrbNfFlvviKbpOvAikzKMlPYp4"></script>
+<script>
+     function initialize() {
+          var input = document.getElementById("searchTextField");
+          new google.maps.places.Autocomplete(input);
+     }
+
+     google.maps.event.addDomListener(window, "load", initialize);
+</script>

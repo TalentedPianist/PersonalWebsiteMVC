@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model PersonalWebsiteMVC.Models.SolrModel
+
+<h2 class="bg bg-info p-2">Update</h2>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+
+<form method="post">
+	<div asp-validation-summary="All" class="text-danger"></div>
+
+	<div class="form-group">
+		<label asp-for="Title"></label>
+		<input asp-for="Title" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Url"></label>
+		<input asp-for="Url" />
+	</div>
+	<div class="form-group">
+		<label asp-for="Body"></label>
+		<textarea asp-for="Body" rows="5" cols="30"></textarea>
+	</div>
+	<input asp-for="ID" type="hidden" />
+	<button type="submit" class="btn btn-primary">Submit</button>
+</form>

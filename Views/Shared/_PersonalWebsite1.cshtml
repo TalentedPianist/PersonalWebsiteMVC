@@ -1,0 +1,130 @@
+﻿@{
+    var r = new Random();
+    var n = r.Next();
+}
+@inject PersonalWebsiteMVC.Data.ApplicationDbContext db
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Extensions
+@inject IHttpContextAccessor http
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Douglas McGregor</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8">
+    <meta name="author" content="Douglas McGregor">
+    <meta name="keywords" content="Douglas, McGregor, Personal, Website, Glasgow, ASP.NET Core, ASP.NET">
+    <meta name="description" content="My personal website.  Notes on computer programaming and life.">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-ajax-unobtrusive/jquery.unobtrusive-ajax.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <link rel="stylesheet" href="~/css/PersonalWebsite1.css?v=@n">
+    <script src="~/js/PersonalWebsite1.js?v=@n"></script>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <div class="row">
+                <div class="col-md-6">
+                    <h1 class="title float-left">Douglas McGregor</h1>
+                    <p style="clear: both;">My personal website.  Notes on computer programming, the paranormal and life.</p>
+                </div>
+                <div class="col-md-6 p-4">
+                    <form class="form-inline float-right" role="search">
+                        <input type="text" class="form-control " placeholder="Search" />
+                        <button type="submit" class="btn btn-primary"><i class="fa fa-fw fa-search"></i></button>
+                    </form>
+                </div>
+            </div>
+        </header>
+        <div style="clear: both;"></div>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light m-0 p-0">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo01" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo01">
+                <ul class="navbar-nav mr-auto p-0">
+                    <!-- https://stackoverflow.com/questions/22407367/mvc-with-bootstrap-navbar-set-selected-item-to-active -->
+                    <li class="nav-item">
+                        <a class="nav-link @(ViewBag.Current == "" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    <li class="nav-item @(ViewBag.Current == "Blog" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="Blog">Blog</a></li>
+                    <li class="nav-item @(ViewBag.Current == "Contact" ? "active" : "")"><a class="nav-link" asp-controller="Contact">Contact</a></li>
+                    <li class="nav-item @(ViewBag.Current == "Gallery" ? "active " : "")"><a class="nav-link" asp-controller="Gallery">Gallery</a></li>
+                    <li class="nav-item @(ViewBag.Current == "Guestbook" ? "active " : "")"><a class="nav-link" asp-controller="Guestbook">Guestbook</a></li>
+                </ul>
+
+
+            </div>
+
+        </nav>
+
+
+        <div class="mobile-search d-md-none">
+            <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-fw fa-search"></i></button>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModal-label">
+            <div class="modal-dialog modal-sm" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModal-label">Modal title</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @ViewBag.Message
+
+        @if (http.HttpContext.Request.GetDisplayUrl().Contains("Gallery"))
+        {
+            @RenderBody()
+        }
+        else
+        {
+            if (http.HttpContext.Request.GetDisplayUrl().Contains("Account"))
+            {
+                @RenderBody()
+            }
+            else
+            {
+
+                <section class="row">
+                    <main class="col-md-6 main">
+                        @RenderBody()
+                    </main>
+                    <aside class="col-md-6">
+                        <partial name="_Sidebar" />
+                    </aside>
+                </section>
+            }
+        }
+
+        <footer>
+            Copyright &copy; douglasmcgregor.co.uk 2020
+        </footer>
+    </div>
+
+
+
+    @RenderSection("Scripts", false)
+
+    @section Scripts {
+
+    }
+
+</body>
+</html>
