@@ -132,7 +132,7 @@ namespace PersonalWebsiteMVC
                /*
                if (env.IsDevelopment())
                {
-                    
+                     
                     app.UseDeveloperExceptionPage();
                     app.UseDatabaseErrorPage();
                }

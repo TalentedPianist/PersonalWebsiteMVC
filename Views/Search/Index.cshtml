@@ -3,3 +3,29 @@
 *@
 @{
 }
+@model IEnumerable<PersonalWebsiteMVC.Models.SolrModel>
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http 
+
+@Html.Raw(TempData["Message"])
+
+@{
+    try
+    {
+         
+        foreach (var item in Model)
+        {
+            <b style="margin-bottom: 1em;">@item.Title</b>
+            <br>
+            @Html.Raw(item.Body)<text>.........</text>
+            <br>
+            <a href="@item.Url">@item.Url</a>
+            <hr>
+        }
+    }
+    catch (NullReferenceException ex)
+    {
+          Console.WriteLine(ex.Message);
+    }
+}
+

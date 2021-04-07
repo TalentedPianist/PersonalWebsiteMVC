@@ -34,7 +34,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 			options.ExtraParams = new KeyValuePair<string, string>[] {
 				//new KeyValuePair<string, string>("wt", "xml");
 			};
-			var model = solr.Query(new SolrQuery("*:*"), options);
+			var model = solr.Query(("*:*"), options);
 			return View(model);
 		}
 
@@ -108,6 +108,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 		public IActionResult Solr(PersonalWebsiteMVC.Models.SolrModel model)
 		{
 			var s = new PersonalWebsiteMVC.Models.SolrModel();
+			s.ID = Guid.NewGuid().ToString();
 			s.Title = model.Title;
 			s.Url = model.Url;
 			s.Body = GetData(model.Url);

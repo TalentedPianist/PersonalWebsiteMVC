@@ -17,4 +17,6 @@ namespace PersonalWebsiteMVC.Models
 		[SolrField("body")]
 		public string Body { get; set; }
 	}
+
+
 }

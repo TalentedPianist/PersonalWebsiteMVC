@@ -1,23 +1,19 @@
 ﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{ACB4B863-C1DA-447C-B57C-F936706EC313}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Helpers/AuthHelper.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/SearchController.cs">
     <Files>
-      <File FileName="Views/Shared/_PersonalWebsite1.cshtml" Line="58" Column="128" />
-      <File FileName="Controllers/GuestbookController.cs" />
-      <File FileName="Helpers/AuthHelper.cs" Line="36" Column="7" />
+      <File FileName="Controllers/SearchController.cs" Line="24" Column="4" />
+      <File FileName="Views/Search/Index.cshtml" Line="10" Column="3" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="PersonalWebsiteMVC" expanded="True">
             <Node name="PersonalWebsiteMVC" expanded="True">
-              <Node name="Areas" expanded="True" />
-              <Node name="Controllers" expanded="True" />
-              <Node name="Helpers" expanded="True">
-                <Node name="AuthHelper.cs" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="SearchController.cs" selected="True" />
               </Node>
+              <Node name="Models" expanded="True" />
               <Node name="Views" expanded="True">
-                <Node name="Gallery" expanded="True" />
-                <Node name="Home" expanded="True" />
                 <Node name="Search" expanded="True" />
                 <Node name="Shared" expanded="True" />
               </Node>
