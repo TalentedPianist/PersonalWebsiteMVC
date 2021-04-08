@@ -6,6 +6,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using SolrNet;
+using SolrNet.Commands.Parameters;
+using SolrNet.Mapping;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -14,10 +17,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
      public class BlogController : Controller
      {
           private readonly ApplicationDbContext _db;
+          private ISolrOperations<SolrModel> _solr;
 
-          public BlogController(ApplicationDbContext db)
+          public BlogController(ApplicationDbContext db, ISolrOperations<SolrModel> solr)
           {
                _db = db;
+               _solr = solr;
           }
 
           public IActionResult Index()
@@ -59,7 +64,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public IActionResult Update(int id, Posts model)
+          public IActionResult Update(int id, Posts model, string Solr)
           {
                if (ModelState.IsValid)
                {
@@ -72,6 +77,22 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     b.CategoryID = model.CategoryID;
                     _db.Update(b);
                     _db.SaveChanges();
+                    if (Solr == "Yes")
+                    {
+                         var s = new PersonalWebsiteMVC.Models.SolrModel();
+                         s.ID = model.PostID.ToString();
+                         s.Title = model.PostTitle;
+                         s.Url = "http://www.douglasmcgregor.co.uk/Blog?q=" + model.PostID;
+                         s.Body = model.PostContent;
+                         _solr.Add(s);
+                         _solr.Commit();
+                    }
+                    if (Solr == "No")
+                    {
+                         SolrQueryByField results = new SolrQueryByField("ID", model.PostID.ToString());
+                         _solr.Delete(results.FieldValue);
+                         _solr.Commit();
+                    }
                     return RedirectToAction("Index");
                }
                return View(model);

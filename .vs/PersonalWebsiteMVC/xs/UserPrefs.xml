@@ -1,21 +1,23 @@
 ﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{ACB4B863-C1DA-447C-B57C-F936706EC313}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/SearchController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Areas/Admin/Controllers/BlogController.cs">
     <Files>
-      <File FileName="Controllers/SearchController.cs" Line="24" Column="4" />
-      <File FileName="Views/Search/Index.cshtml" Line="10" Column="3" />
+      <File FileName="Areas/Admin/Controllers/BlogController.cs" Line="88" Column="35" />
+      <File FileName="Areas/Admin/Views/Blog/Update.cshtml" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="PersonalWebsiteMVC" expanded="True">
             <Node name="PersonalWebsiteMVC" expanded="True">
-              <Node name="Controllers" expanded="True">
-                <Node name="SearchController.cs" selected="True" />
-              </Node>
-              <Node name="Models" expanded="True" />
-              <Node name="Views" expanded="True">
-                <Node name="Search" expanded="True" />
-                <Node name="Shared" expanded="True" />
+              <Node name="Areas" expanded="True">
+                <Node name="Admin" expanded="True">
+                  <Node name="Controllers" expanded="True">
+                    <Node name="BlogController.cs" selected="True" />
+                  </Node>
+                  <Node name="Views" expanded="True">
+                    <Node name="Blog" expanded="True" />
+                  </Node>
+                </Node>
               </Node>
             </Node>
           </Node>
