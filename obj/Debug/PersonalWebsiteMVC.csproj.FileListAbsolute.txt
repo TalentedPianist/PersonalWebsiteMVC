@@ -15,7 +15,6 @@
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.RazorCoreGenerate.cache
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Shared/_Layout.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Admin/Index.cshtml.g.cs
-/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Admin/SignlR.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Create.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Delete.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Admin/Views/Blog/Details.cshtml.g.cs

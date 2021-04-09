@@ -13252,7 +13252,7 @@
       "outputPath": "/Volumes/Data/Websites/PersonalWebsiteMVC/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/douglasmcgregor/.config/NuGet/NuGet.Config"
+        "/Users/douglasmcgregor/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net5.0"
