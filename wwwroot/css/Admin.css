@@ -149,3 +149,18 @@ form {
      .image:hover {
           cursor: pointer;
      }
+
+/* odd/ even tr for table */
+tr:nth-child(odd) 
+{
+    background-color: coral;
+}
+
+tr:nth-child(even) {
+    background-color: grey;
+}
+
+.table {
+     width: 10em !important;
+}
+
