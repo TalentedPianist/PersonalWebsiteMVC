@@ -40,7 +40,7 @@
           "dependencies": {
             "AngleSharp": {
               "target": "Package",
-              "version": "[0.14.0, )"
+              "version": "[0.15.0, )"
             },
             "BingMapsRESTToolkit": {
               "target": "Package",
@@ -48,7 +48,7 @@
             },
             "Google.Apis.YouTube.v3": {
               "target": "Package",
-              "version": "[1.51.0.2238, )"
+              "version": "[1.51.0.2294, )"
             },
             "GoogleReCaptcha.V3": {
               "target": "Package",
@@ -142,7 +142,7 @@
             },
             "Microsoft.Graph": {
               "target": "Package",
-              "version": "[3.29.0, )"
+              "version": "[3.30.0, )"
             },
             "Microsoft.Graph.Core": {
               "target": "Package",
@@ -150,11 +150,11 @@
             },
             "Microsoft.Identity.Client": {
               "target": "Package",
-              "version": "[4.29.0, )"
+              "version": "[4.30.1, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[1.8.2, )"
+              "version": "[1.9.2, )"
             },
             "Microsoft.Toolkit": {
               "target": "Package",
@@ -235,7 +235,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.201/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.202/RuntimeIdentifierGraph.json"
         }
       }
     }

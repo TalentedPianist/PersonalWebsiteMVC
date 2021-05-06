@@ -150,17 +150,34 @@ form {
           cursor: pointer;
      }
 
-/* odd/ even tr for table */
-tr:nth-child(odd) 
-{
-    background-color: coral;
+
+.server-info table {
+    width: 100%;
+    table-layout: fixed;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    border: 1px solid #000000;
 }
 
-tr:nth-child(even) {
-    background-color: grey;
+.server-info td  {word-wrap : break-word; border: 1px solid #000000; padding-left: 1em; padding-top: 0.5em; padding-bottom: 0.5em; }
+
+.server-info tr:nth-child(odd) {
+    background-color: #c0c0c0; 
 }
 
-.table {
-     width: 10em !important;
+tr:nth-child(even){
+
 }
+
+.server-info td:nth-child(1) {
+    width: 40%;
+    font-weight: bold; 
+}
+
+.server-info td:nth-child(2) {
+    width: 60%; 
+}
+
+
+
 

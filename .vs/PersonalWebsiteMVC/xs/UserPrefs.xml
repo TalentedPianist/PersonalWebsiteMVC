@@ -1,9 +1,8 @@
 ﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{ACB4B863-C1DA-447C-B57C-F936706EC313}|Default">
-  <MonoDevelop.Ide.Workbench ActiveDocument="wwwroot/css/Admin.css">
+  <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Areas/Admin/Controllers/AdminController.cs" Line="12" Column="17" />
-      <File FileName="Areas/Admin/Views/Admin/Index.cshtml" Line="20" Column="13" />
-      <File FileName="wwwroot/css/Admin.css" Line="153" Column="4" />
+      <File FileName="Areas/Admin/Views/Admin/Index.cshtml" Line="14" Column="7" />
+      <File FileName="wwwroot/css/Admin.css" Line="176" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,14 +13,14 @@
                 <Node name="Admin" expanded="True">
                   <Node name="Controllers" expanded="True" />
                   <Node name="Views" expanded="True">
-                    <Node name="Admin" expanded="True" />
+                    <Node name="Admin" expanded="True">
+                      <Node name="Index.cshtml" selected="True" />
+                    </Node>
                   </Node>
                 </Node>
               </Node>
               <Node name="wwwroot" expanded="True">
-                <Node name="css" expanded="True">
-                  <Node name="Admin.css" selected="True" />
-                </Node>
+                <Node name="css" expanded="True" />
               </Node>
             </Node>
           </Node>

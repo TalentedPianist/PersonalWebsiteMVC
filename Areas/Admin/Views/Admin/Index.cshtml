@@ -3,43 +3,21 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
-@using System.Diagnostics
-@using System.Diagnostics.CodeAnalysis
-@using System.Globalization
-@using System.Reflection
-@using System.Security
+@using System.Collections
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
 
+<h2>Hello @http.HttpContext.User.Identity.Name, welcome to the Admin section.</h2>
 
-<h1>Index</h1>
-
-
-<!-- https://github.com/aspnet/AspNetWebStack/blob/main/src/System.Web.Helpers/ServerInfo.cs -->
-
-<table class="table">
-    <tbody>
-        <tr>
-            <th>Machine Name</th>
-            <td>@Environment.MachineName</td>
-        </tr>
-        <tr>
-            <th>OS Version</th>
-            <td>@Environment.OSVersion</td>
-        </tr>
-        <tr>
-            <th>User Name</th>
-            <td>@Environment.UserName</td>
-        </tr>
-        <tr>
-            <th>User Interactive</th>
-            <td>@Environment.UserInteractive.ToString()</td>
-        </tr>
-        <tr>
-            <th>Procesor Count</th>
-            <td>@Environment.ProcessorCount.ToString(CultureInfo.InvariantCulture)
-        </tr>
-        <tr>
-            <th>Tick Count</th>
-            <td>@Environment.TickCount.ToString(CultureInfo.InvariantCulture)</td>
-        </tr>
-    </tbody>
+<h3>Environment Variables</h3>
+<div class="server-info">
+<table>
+@foreach (DictionaryEntry item in System.Environment.GetEnvironmentVariables())
+{
+     <tr>
+        <td>@item.Key</td>
+        <td>@item.Value</td>
+    </tr>
+}
 </table>
+</div>
