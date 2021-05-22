@@ -33,6 +33,13 @@ using Microsoft.EntityFrameworkCore;
 #line hidden
 #nullable disable
 #nullable restore
+#line 7 "/Volumes/Data/Websites/PersonalWebsiteMVC/Areas/Admin/Views/_ViewImports.cshtml"
+using X.PagedList.Mvc;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 8 "/Volumes/Data/Websites/PersonalWebsiteMVC/Areas/Admin/Views/Gallery/Index.cshtml"
 using PersonalWebsiteMVC.Helpers;
 
@@ -61,7 +68,7 @@ using System.Linq;
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"45d47e7ff42ed51061805998d02a3214de12d596", @"/Areas/Admin/Views/Gallery/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c08ccd86c98340427f57f8e5a5e1ae6ac572d505", @"/Areas/Admin/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"7d1e9b2535b764a00e1b192463e55e7c90845a64", @"/Areas/Admin/Views/_ViewImports.cshtml")]
     public class Areas_Admin_Views_Gallery_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<PersonalWebsiteMVC.Models.Gallery>
     {
         private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("asp-action", "Album", global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
@@ -164,7 +171,7 @@ WriteAttributeValue("", 1576, cover, 1576, 6, false);
 #nullable disable
             EndWriteAttribute();
             WriteLiteral(" class=\"image\"></a>\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "45d47e7ff42ed51061805998d02a3214de12d5967489", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "45d47e7ff42ed51061805998d02a3214de12d5967666", async() => {
                 WriteLiteral("View");
             }
             );

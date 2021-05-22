@@ -64,11 +64,11 @@
             },
             "Microsoft.AspNetCore.Authentication.AzureAD.UI": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -80,15 +80,15 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.AspNetCore.Mvc.Razor": {
               "target": "Package",
@@ -116,21 +116,21 @@
             },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
               "suppressParent": "All",
               "target": "Package",
-              "version": "[5.0.5, )"
+              "version": "[5.0.6, )"
             },
             "Microsoft.Extensions.Configuration.UserSecrets": {
               "target": "Package",
@@ -142,7 +142,7 @@
             },
             "Microsoft.Graph": {
               "target": "Package",
-              "version": "[3.30.0, )"
+              "version": "[3.33.0, )"
             },
             "Microsoft.Graph.Core": {
               "target": "Package",
@@ -150,15 +150,15 @@
             },
             "Microsoft.Identity.Client": {
               "target": "Package",
-              "version": "[4.30.1, )"
+              "version": "[4.31.0, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[1.9.2, )"
+              "version": "[1.10.0, )"
             },
             "Microsoft.Toolkit": {
               "target": "Package",
-              "version": "[7.0.1, )"
+              "version": "[7.0.2, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -166,7 +166,7 @@
             },
             "MimeKit": {
               "target": "Package",
-              "version": "[2.11.0, )"
+              "version": "[2.12.0, )"
             },
             "NETCore.MailKit": {
               "target": "Package",
@@ -208,11 +208,27 @@
               "target": "Package",
               "version": "[4.3.0, )"
             },
+            "X.PagedList": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "X.PagedList.EntityFramework": {
+              "target": "Package",
+              "version": "[1.0.1, )"
+            },
+            "X.PagedList.Mvc": {
+              "target": "Package",
+              "version": "[8.0.7, )"
+            },
             "X.PagedList.Mvc.Bootstrap4": {
               "target": "Package",
               "version": "[8.0.7.1, )"
             },
             "X.PagedList.Mvc.Core": {
+              "target": "Package",
+              "version": "[8.1.0, )"
+            },
+            "X.PagedList.Web.Common": {
               "target": "Package",
               "version": "[8.0.7, )"
             }
@@ -235,7 +251,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.202/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
         }
       }
     }

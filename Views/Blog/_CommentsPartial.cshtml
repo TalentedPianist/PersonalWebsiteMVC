@@ -50,7 +50,7 @@
           }
           else
           {
-               @Html.PagedListPager((IPagedList)pagedComments, page => Url.Action("Blog", new { page = page, q = http.HttpContext.Request.Query["q"] }), Bootstrap4PagedListRenderOptions.ClassicPlusFirstAndLast)
+               @Html.PagedListPager(pagedComments, page => Url.Action("Blog", new { page = page, q = http.HttpContext.Request.Query["q"] }), PagedListRenderOptions.TwitterBootstrapPager)
           }
 
      }

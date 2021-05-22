@@ -10,7 +10,10 @@
 @inject IHttpContextAccessor http
 @using PersonalWebsiteMVC.Data
 @inject ApplicationDbContext db
-
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
 
 @{
      try
@@ -62,18 +65,18 @@
                          <hr>
                     }
                     <p>You are on page @pagedPost.PageNumber of @pagedPost.PageCount.</p>
-                    @Html.PagedListPager((IPagedList)pagedPost, page => Url.Action("Blog", new { page = page }), Bootstrap4PagedListRenderOptions.TwitterBootstrapPager)
+                    @Html.Pager(pagedPost).Url(page => Url.Action("Index", new { page })).Build()
                }
-          }
-     }
-     catch (NullReferenceException ex)
-     {
-          Console.WriteLine(ex.Message);
+                         }
+                    }
+                    catch (NullReferenceException ex)
+                    {
+                         Console.WriteLine(ex.Message);
          <partial name="_CommentsPartial" model="Model" />
      }
 }
 
-}
+
 
 
 @functions {

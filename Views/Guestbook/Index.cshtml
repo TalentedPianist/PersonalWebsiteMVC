@@ -1,8 +1,4 @@
 ﻿@model PersonalWebsiteMVC.Models.GuestbookMixModel
-@using X.PagedList
-@using X.PagedList.Mvc.Core
-@using X.PagedList.Mvc.Core.Common
-@using X.PagedList.Mvc.Bootstrap4.Core
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor http
 @inject Microsoft.Extensions.Configuration.IConfiguration Configuration
@@ -82,7 +78,7 @@ else
           </div>
 
           <p>You are on page @pagedGuestbook.PageNumber of @pagedGuestbook.PageCount.</p>
-          @Html.PagedListPager((IPagedList)pagedGuestbook, page => Url.Action("Guestbook", new { page = page }), Bootstrap4PagedListRenderOptions.Default)
+          @Html.PagedListPager(pagedGuestbook, page => Url.Action("Index", new { page = page }), PagedListRenderOptions.TwitterBootstrapPager)
           <hr>
           <p>Please sign the guestbook using the form below.  It is much appreciated.  Your email address is required but will not be publishesd.  Thanks.</p>
           @GuestbookForm().Result

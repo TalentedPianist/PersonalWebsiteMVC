@@ -70,34 +70,41 @@ using System.Text.RegularExpressions;
 #nullable disable
 #nullable restore
 #line 9 "/Volumes/Data/Websites/PersonalWebsiteMVC/Views/_ViewImports.cshtml"
-using X.PagedList;
-
-#line default
-#line hidden
-#nullable disable
-#nullable restore
-#line 10 "/Volumes/Data/Websites/PersonalWebsiteMVC/Views/_ViewImports.cshtml"
 using X.PagedList.Mvc.Core;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
+#line 10 "/Volumes/Data/Websites/PersonalWebsiteMVC/Views/_ViewImports.cshtml"
+using X.PagedList.Mvc.Core.Fluent;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
 #line 11 "/Volumes/Data/Websites/PersonalWebsiteMVC/Views/_ViewImports.cshtml"
-using X.PagedList.Mvc.Core.Common;
+using X.PagedList.Web.Common;
 
 #line default
 #line hidden
 #nullable disable
 #nullable restore
 #line 12 "/Volumes/Data/Websites/PersonalWebsiteMVC/Views/_ViewImports.cshtml"
-using X.PagedList.Mvc.Bootstrap4.Core;
+using X.PagedList.Mvc.Bootstrap4;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 13 "/Volumes/Data/Websites/PersonalWebsiteMVC/Views/_ViewImports.cshtml"
+using X.PagedList;
 
 #line default
 #line hidden
 #nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"f14d87672de1590d59f3f6b766174ed2d9c7ff09", @"/Views/About/About.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"c781d234dc8d08fe842de06390c8a36c46d15cb8", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"3d81f8c63a9b9d73463747c10a1b4ebfdb314c06", @"/Views/_ViewImports.cshtml")]
     public class Views_About_About : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
         #pragma warning disable 1998

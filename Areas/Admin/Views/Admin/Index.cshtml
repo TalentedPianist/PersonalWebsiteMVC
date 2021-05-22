@@ -7,7 +7,7 @@
 @using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor http
 
-<h2>Hello @http.HttpContext.User.Identity.Name, welcome to the Admin section.</h2>
+<p class="lead">Hello @http.HttpContext.User.Identity.Name, welcome to the Admin section.</p>
 
 <h3>Environment Variables</h3>
 <div class="server-info">

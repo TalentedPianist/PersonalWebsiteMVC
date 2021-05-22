@@ -1,8 +1,9 @@
 ﻿<Properties GitUserInfo="UsingMD" StartupConfiguration="{ACB4B863-C1DA-447C-B57C-F936706EC313}|Default">
   <MonoDevelop.Ide.Workbench>
     <Files>
-      <File FileName="Areas/Admin/Views/Admin/Index.cshtml" Line="14" Column="7" />
-      <File FileName="wwwroot/css/Admin.css" Line="176" Column="1" />
+      <File FileName="Views/Blog/_CommentsPartial.cshtml" Line="56" Column="7" />
+      <File FileName="Views/Blog/Index.cshtml" Line="79" Column="1" />
+      <File FileName="Views/Shared/_Sidebar.cshtml" Line="8" Column="20" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -13,10 +14,15 @@
                 <Node name="Admin" expanded="True">
                   <Node name="Controllers" expanded="True" />
                   <Node name="Views" expanded="True">
-                    <Node name="Admin" expanded="True">
-                      <Node name="Index.cshtml" selected="True" />
-                    </Node>
+                    <Node name="Admin" expanded="True" />
+                    <Node name="Gallery" expanded="True" />
                   </Node>
+                </Node>
+              </Node>
+              <Node name="Views" expanded="True">
+                <Node name="Blog" expanded="True" />
+                <Node name="Shared" expanded="True">
+                  <Node name="_Sidebar.cshtml" selected="True" />
                 </Node>
               </Node>
               <Node name="wwwroot" expanded="True">
