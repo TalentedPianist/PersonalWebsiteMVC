@@ -31,8 +31,8 @@
         <header>
             <div class="row">
                 <div class="col-md-6">
-                    <h1 class="title float-left">Douglas McGregor</h1>
-                    
+                    <h1 class="title float-left">Douglas McGregor</h1><br>
+                    <p>Blogging about web development, the paranormal and life.</p>
                 </div>
                 <div class="col-md-6">
                     <form class="form-inline float-right" role="search" action="Search/Search" method="post">
@@ -53,7 +53,6 @@
                     <li class="nav-item">
                         <a class="nav-link @(ViewBag.Current == "" ? "active" : "")" asp-area="" asp-controller="Home" asp-action="Index">Home <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item @(ViewBag.Current == "Blog" ? "active" : "")"><a class="nav-link" asp-area="" asp-controller="Blog">Blog</a></li>
                     <li class="nav-item @(ViewBag.Current == "Contact" ? "active" : "")"><a class="nav-link" asp-controller="Contact">Contact</a></li>
                     <li class="nav-item @(ViewBag.Current == "Guestbook" ? "active " : "")"><a class="nav-link" asp-controller="Guestbook">Guestbook</a></li>
                 </ul>

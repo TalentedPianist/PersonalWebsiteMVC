@@ -27,6 +27,7 @@ namespace PersonalWebsiteMVC.Models
           public string PostLocation { get; set; }
           public string PostIP { get; set; }
           public string PostActive { get; set; }
+          public bool PostPublished { get; set;  }
           public DateTime PostDate { get; set; }
           public int CommentCount { get; set; }
      }

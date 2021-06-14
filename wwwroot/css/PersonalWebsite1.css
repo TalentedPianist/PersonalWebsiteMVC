@@ -8,9 +8,12 @@ html, body {
 
 body {
      position: relative;
-     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
      background-image: url('../images/background.gif');
-     background-repeat: repeat-x;
+     background-repeat: no-repeat;
+     background-size: 100% 100%;
+     background-position: center;
+     
 }
 
 h1 {
@@ -32,12 +35,17 @@ header {
      padding-top: 0.5em;
 }
 
+header p {
+    clear: both;
+}
+
 footer {
      text-align: center;
-     border-top: 1px solid #c0c0c0;
      padding-top: 1em;
      margin-bottom: 1em;
      margin-top: 1em;
+     margin-bottom: 0.5em;
+     border-top: 1px solid #c0c0c0; 
 }
 
 label {
@@ -98,7 +106,7 @@ iframe {
 .navbar {
      background-color: transparent !important;
      border-top: 1px solid #c0c0c0;
-     border-bottom: 1px solid #c0c0c0;
+     border-bottom: 1px solid #c0c0c0; 
 }
 
 .navbar-nav {

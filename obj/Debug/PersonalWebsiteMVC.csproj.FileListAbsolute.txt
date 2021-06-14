@@ -99,13 +99,10 @@
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewImports.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Areas/Identity/Pages/_ViewStart.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/About/About.cshtml.g.cs
-/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Blog/Index.cshtml.g.cs
-/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Blog/_CommentsPartial.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Contact/Index.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Contact/Thanks.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Gallery/Index.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Guestbook/Index.cshtml.g.cs
-/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Index.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Privacy.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Search/Index.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Shared/Components/Comments/BlankView.cshtml.g.cs
@@ -139,3 +136,5 @@
 /Volumes/Data/Websites/VSBuild/PersonalWebsiteMVC/PersonalWebsiteMVC.Views.pdb
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.CopyComplete
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.genruntimeconfig.cache
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/_CommentsPartial.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Index.cshtml.g.cs

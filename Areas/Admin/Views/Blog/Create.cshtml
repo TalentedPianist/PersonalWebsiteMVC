@@ -10,7 +10,7 @@
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form method="post" action="Create">
+<form method="post">
 
     <div class="form-group form-row">
         <label asp-for="PostContent">Content:</label>
@@ -30,19 +30,10 @@
             }
         </select>
     </div>
-    <div class="form-group form-row">
-        <label asp-for="PostLocation">Location:</label>
-        <input asp-for="PostLocation" id="searchTextField" />
-    </div>
-    <button type="submit" class="btn btn-primary">Save</button>
+    <button type="submit" class="btn btn-primary" asp-page-handler="PublishPost">Publish</button>
+    <button type="submit" class="btn btn-secondary" asp-page-handler="SaveDraft">Save Draft</button>
 
 </form>
 
-<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places&key=AIzaSyBLgq2BcCrbNfFlvviKbpOvAikzKMlPYp4"></script>
-<script>function initialize() {
-          var input = document.getElementById("searchTextField");
-          new google.maps.places.Autocomplete(input);
-     }
 
-     google.maps.event.addDomListener(window, "load", initialize);</script>
 

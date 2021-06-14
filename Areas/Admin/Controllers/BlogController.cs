@@ -36,7 +36,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public IActionResult Create(Posts model)
+          public IActionResult OnPostPublish(Posts model)
           {
                if (ModelState.IsValid)
                {
@@ -55,6 +55,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     return RedirectToAction("Index");
                }
                return View(model);
+          }
+
+          public IActionResult OnPostSaveDraft(Posts model)
+          {
+               if (ModelState.IsValid)
+            {
+                    var p = new Posts();
+                    
+            }
+               return View();
           }
 
           public IActionResult Update(int id)

@@ -1,4 +1,93 @@
-﻿
-<h1>Welcome</h1>
+﻿@*
 
-<p>Hello and welcome to the site!  This is my first post.  My aim for this website is to post helpful articles on web development, and without getting too personal, interesting bits of life from outside the box.  Thanks for visiting!</p>
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model PersonalWebsiteMVC.Models.MixModel
+@inject IHttpContextAccessor http
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+@using X.PagedList.Mvc.Core
+@using X.PagedList
+@using X.PagedList.Mvc.Core.Fluent
+@using X.PagedList.Web.Common
+
+@{
+    try
+    {
+        if (Model.AllPosts.Count() == 0)
+        {
+            <h1>Welcome</h1>
+
+            <p>Hello and welcome to the site! This is my first post. My aim for this website is to post helpful articles on web development, and without getting too personal, interesting bits of life from outside the box. Thanks for visiting!</p>
+                }
+                else
+                {
+                if (http.HttpContext.Request.Query.ContainsKey("q"))
+                {
+
+                <h2>@Model.Posts.PostTitle</h2>
+                @Html.Raw(Model.Posts.PostContent)
+                <hr>
+                ViewData["CommentType"] = "post";
+                ViewData["ParentID"] = http.HttpContext.Request.Query["q"];
+                <partial name="_CommentsPartial" model="Model" view-data="ViewData" />
+
+                }
+                else
+                {
+                var pagedPost = Model.AllPosts.ToPagedList(CurrentPage(), 4);
+                foreach (var item in pagedPost)
+                {
+                <h2>@item.PostTitle</h2>
+                var post = StringExtensions.Truncate(item.PostContent, 250).Replace("&ndash;", "-");
+                HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
+                doc.LoadHtml(post);
+                string output = "";
+
+                if (item.PostContent.Contains("iframe"))
+                {
+                output = post;
+                }
+                else
+                {
+                foreach (var node in doc.DocumentNode.ChildNodes)
+                {
+
+                output += node.InnerText;
+                }
+                }
+                @Html.Raw(output) <text>..........</text>
+                <a class="btn btn-primary" asp-action="Blog" asp-route-q="@item.PostID">View</a>
+                <hr>
+                }
+<p>You are on page @pagedPost.PageNumber of @pagedPost.PageCount.</p>
+                @Html.Pager(pagedPost).Url(page => Url.Action("Index", new { page })).Build()
+            }
+        }
+    }
+    catch (NullReferenceException ex)
+    {
+        Console.WriteLine(ex.Message);
+        <partial name="_CommentsPartial" model="Model" />
+    }
+}
+
+
+
+
+@functions {
+
+    int CurrentPage()
+    {
+        if (http.HttpContext.Request.Query.ContainsKey("page"))
+        {
+            return Convert.ToInt32(http.HttpContext.Request.Query["page"]);
+        }
+        else
+            return 1;
+    }
+}
