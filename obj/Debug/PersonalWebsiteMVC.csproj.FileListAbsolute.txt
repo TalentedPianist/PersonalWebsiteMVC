@@ -1,4 +1,3 @@
-/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csprojAssemblyReference.cache
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.GeneratedMSBuildEditorConfig.editorconfig
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfoInputs.cache
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.AssemblyInfo.cs
@@ -138,3 +137,4 @@
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.genruntimeconfig.cache
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/_CommentsPartial.cshtml.g.cs
 /Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/Razor/Views/Home/Index.cshtml.g.cs
+/Volumes/Data/Websites/PersonalWebsiteMVC/obj/Debug/PersonalWebsiteMVC.csproj.AssemblyReference.cache

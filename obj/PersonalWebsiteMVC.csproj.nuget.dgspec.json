@@ -38,17 +38,9 @@
         "net5.0": {
           "targetAlias": "net5.0",
           "dependencies": {
-            "AngleSharp": {
-              "target": "Package",
-              "version": "[0.15.0, )"
-            },
-            "BingMapsRESTToolkit": {
-              "target": "Package",
-              "version": "[1.1.4, )"
-            },
             "Google.Apis.YouTube.v3": {
               "target": "Package",
-              "version": "[1.51.0.2343, )"
+              "version": "[1.55.0.2449, )"
             },
             "GoogleReCaptcha.V3": {
               "target": "Package",
@@ -58,17 +50,13 @@
               "target": "Package",
               "version": "[1.5.0.1, )"
             },
-            "IronPython": {
-              "target": "Package",
-              "version": "[2.7.11, )"
-            },
             "Microsoft.AspNetCore.Authentication.AzureAD.UI": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.AspNetCore.Http": {
               "target": "Package",
@@ -80,15 +68,15 @@
             },
             "Microsoft.AspNetCore.Identity.EntityFrameworkCore": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.AspNetCore.Identity.UI": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.AspNetCore.Mvc.NewtonsoftJson": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.AspNetCore.Mvc.Razor": {
               "target": "Package",
@@ -114,17 +102,13 @@
               "target": "Package",
               "version": "[2.2.0, )"
             },
-            "Microsoft.EntityFrameworkCore": {
-              "target": "Package",
-              "version": "[5.0.7, )"
-            },
             "Microsoft.EntityFrameworkCore.Relational": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[5.0.7, )"
+              "version": "[5.0.11, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
               "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
@@ -142,23 +126,23 @@
             },
             "Microsoft.Graph": {
               "target": "Package",
-              "version": "[3.33.0, )"
+              "version": "[4.7.0, )"
             },
             "Microsoft.Graph.Core": {
               "target": "Package",
-              "version": "[1.25.1, )"
+              "version": "[2.0.5, )"
             },
             "Microsoft.Identity.Client": {
               "target": "Package",
-              "version": "[4.32.1, )"
+              "version": "[4.36.2, )"
             },
             "Microsoft.Identity.Web": {
               "target": "Package",
-              "version": "[1.12.0, )"
+              "version": "[1.18.0, )"
             },
             "Microsoft.Toolkit": {
               "target": "Package",
-              "version": "[7.0.2, )"
+              "version": "[7.1.0, )"
             },
             "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
               "target": "Package",
@@ -166,7 +150,7 @@
             },
             "MimeKit": {
               "target": "Package",
-              "version": "[2.12.0, )"
+              "version": "[2.15.1, )"
             },
             "NETCore.MailKit": {
               "target": "Package",
@@ -182,11 +166,11 @@
             },
             "Serilog.Sinks.Console": {
               "target": "Package",
-              "version": "[4.0.0-dev-00839, )"
+              "version": "[4.0.0, )"
             },
             "Serilog.Sinks.File": {
               "target": "Package",
-              "version": "[5.0.0-dev-00905, )"
+              "version": "[5.0.0, )"
             },
             "SolrNet": {
               "target": "Package",
@@ -212,17 +196,9 @@
               "target": "Package",
               "version": "[8.1.0, )"
             },
-            "X.PagedList.EntityFramework": {
-              "target": "Package",
-              "version": "[1.0.1, )"
-            },
-            "X.PagedList.Mvc": {
-              "target": "Package",
-              "version": "[8.0.7, )"
-            },
             "X.PagedList.Mvc.Bootstrap4": {
               "target": "Package",
-              "version": "[8.0.7.1, )"
+              "version": "[8.1.0, )"
             },
             "X.PagedList.Mvc.Core": {
               "target": "Package",
@@ -251,7 +227,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.203/RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/5.0.402/RuntimeIdentifierGraph.json"
         }
       }
     }
