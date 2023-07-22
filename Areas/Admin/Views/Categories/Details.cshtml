@@ -1,0 +1,43 @@
+﻿@model PersonalWebsiteMVC.Models.Categories
+
+@{
+     ViewData["Title"] = "Details";
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<h1 class="bg-info text-white p-1">Details</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+
+
+<dl class="row">
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.PostID)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.PostID)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.PostCount)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.PostCount)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.Category)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.Category)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.IP)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.IP)
+     </dd>
+     <dt class="col-sm-2">
+          @Html.DisplayNameFor(model => model.CategoryDate)
+     </dt>
+     <dd class="col-sm-10">
+          @Html.DisplayFor(model => model.CategoryDate)
+     </dd>
+</dl>

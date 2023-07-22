@@ -1,0 +1,24 @@
+﻿@model IEnumerable<Comments> 
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<h1 class="bg-info text-white">Comments</h1>
+<a asp-action="Create" class="btn btn-secondary">Create</a>
+
+<table class="table">
+     <tr><th>CommentID</th><th>BlogID</th><th>User</th><th>Update</th><th>Details</th><th>Delete</th></tr>
+     @foreach (var item in Model)
+     {
+          <tr>
+          <td>@item.CommentID</td>
+          <td>@item.ParentID</td>
+          <td>@item.CommentAuthor</td>
+          <td><a asp-action="Update" class="btn btn-primary" asp-route-id="@item.CommentID">Update</a></td>
+          <td><a asp-action="Details" class="btn btn-primary" asp-route-id="@item.CommentID">Details</a></td>
+          <td><a asp-action="Delete" class="btn btn-primary" asp-route-id="@item.CommentID">Delete</a></td>
+          </tr>
+     }
+</table>
+

@@ -1,0 +1,39 @@
+﻿@model Comments
+@inject ApplicationDbContext db
+@{
+     ViewData["Title"] = "Update";
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<h1 class="bg-info text-white">Update</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+     <div class="form-group">
+          <label asp-for="CommentContent">Comment:</label>
+          <textarea asp-for="CommentContent" rows="10" cols="30" class="form-control"></textarea>
+     </div>
+     <div class="form-group">
+          <select asp-for="ParentID" class="form-control">
+               @foreach (var item in db.Posts)
+               {
+                    <option value="@item.PostID">@item.PostTitle</option>
+               }
+          </select>
+     </div>
+     <div class="form-group">
+          <label asp-for="CommentAuthor">User:</label>
+          <input asp-for="CommentAuthor" class="form-control" />
+     </div>
+     <div class="form-group">
+          <label asp-for="CommentAuthorEmail">Email:</label>
+          <input asp-for="CommentAuthorEmail" class="form-control" />
+     </div>
+     <div class="form-group">
+          <label asp-for="CommentAuthorUrl">Website:</label>
+          <input asp-for="CommentAuthorUrl" class="form-control" />
+     </div>
+     <button type="submit" class="btn btn-primary">Save</button>
+</form>
+

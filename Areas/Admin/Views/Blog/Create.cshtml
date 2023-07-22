@@ -1,0 +1,39 @@
+﻿@model PersonalWebsiteMVC.Models.Posts
+@using PersonalWebsiteMVC.Data
+@inject ApplicationDbContext db
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+<h1 class="bg-info text-white">Create</h1>
+<a asp-action="Index" class="btn btn-secondary">Back</a>
+<div asp-validation-summary="All" class="text-danger"></div>
+
+<form method="post">
+
+    <div class="form-group form-row">
+        <label asp-for="PostContent">Content:</label>
+        <textarea asp-for="PostContent" id="ckeditor1"></textarea>
+    </div>
+    <div class="form-group form-row">
+        <label asp-for="PostTitle">Title:</label>
+        <input asp-for="PostTitle" />
+    </div>
+    <div class="form-group form-row">
+        <label asp-for="CategoryID">Category:</label>
+        <select asp-for="CategoryID">
+            @foreach (var item in db.Categories)
+            {
+                <option value="@item.CategoryID" />
+                @item.Category
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary" asp-page-handler="PublishPost">Publish</button>
+    <button type="submit" class="btn btn-secondary" asp-page-handler="SaveDraft">Save Draft</button>
+
+</form>
+
+
+
