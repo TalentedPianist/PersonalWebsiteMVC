@@ -3,3 +3,113 @@
     padding: 0; 
     box-sizing: border-box; 
 }
+
+img { 
+    width: 100%;
+}
+
+body { 
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+h1 { 
+    font-size: 48px;
+}
+
+h2 { 
+    font-size: 36px;
+}
+
+h3 { 
+    font-size: 28px;
+}
+
+header { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+}
+
+.MobileHeader { 
+    position: relative; 
+    z-index: 500; 
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+
+    @media only screen and (min-width: 600px) { 
+        display: none;
+    }
+
+    section {
+        display: flex; 
+        flex-direction: column;
+        flex: 1; 
+        align-items: center;
+        justify-content: center;
+        width: 100vw;
+        min-width: 100%;
+
+        &:first-child { 
+            flex-direction: row; 
+            gap: 5em;
+            background-color: #321d45;
+        }
+
+        &:last-child { 
+            flex-direction: column;
+            background-color: #ffa500;
+            gap: 2em;
+            padding-top: 1em;
+
+            img { 
+                width: 60%;
+                border-radius: 50%;
+
+                @media only screen and (min-width: 600px) { 
+                    width: 50%;
+                }
+            }
+        }
+    }
+}
+
+.TabletHeader { 
+    @media only screen and (max-width: 600px) { 
+        display: none;
+    }
+
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    background-color: #321d45;
+    width: 100vw;
+    
+    section { 
+        &:first-child { 
+            color: white;
+
+            nav  {
+                ul { 
+                    display: flex;
+                    flex-direction: row; 
+                    flex: 1; 
+                    justify-content: center;
+                    align-items: center;
+                    padding-top: 1em;
+                    padding-bottom: 1em;
+                    gap: 4em;
+
+                }
+
+                a {
+                    font-size: x-large;
+                }
+            }
+        }
+    }
+}

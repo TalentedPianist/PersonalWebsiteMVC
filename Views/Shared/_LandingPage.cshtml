@@ -4,10 +4,16 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="/lib/tailwindcss/tailwind.min.css">
+    <link rel="stylesheet" href="/lib/flowbite/flowbite.min.css">
+    <link rel="stylesheet" href="/css/LandingPage.min.css" asp-append-version="true">
 </head>
 <body>
-    <div>
-        @RenderBody()
-    </div>
+     <header>
+          <div class="MobileHeader"><partial name="MobileHeader" /></div>
+          <div class="TabletHeader"><partial name="TabletHeader" /></div>
+     </header>
+
+     @RenderBody()
 </body>
 </html>

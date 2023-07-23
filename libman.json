@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "defaultProvider": "cdnjs",
+  "libraries": [
+    {
+      "library": "tailwindcss@2.2.19",
+      "destination": "wwwroot/lib/tailwindcss/"
+    },
+    {
+      "library": "flowbite@1.7.0",
+      "destination": "wwwroot/lib/flowbite/"
+    }
+  ]
+}
