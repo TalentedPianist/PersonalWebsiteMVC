@@ -31,6 +31,8 @@ header {
   justify-content: center;
   align-items: center;
   width: 100vw;
+  position: relative;
+  z-index: 500;
 }
 
 .MobileHeader {
@@ -58,11 +60,9 @@ header {
 .MobileHeader section:first-child {
   flex-direction: row;
   gap: 5em;
-  background-color: #321d45;
 }
 .MobileHeader section:last-child {
   flex-direction: column;
-  background-color: #ffa500;
   gap: 2em;
   padding-top: 1em;
 }
@@ -80,7 +80,6 @@ header {
   display: flex;
   flex-direction: column;
   flex: 1;
-  background-color: #321d45;
   width: 100vw;
 }
 @media only screen and (max-width: 600px) {
@@ -88,8 +87,12 @@ header {
     display: none;
   }
 }
-.TabletHeader section:first-child {
-  color: white;
+.TabletHeader section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+  z-index: 500;
 }
 .TabletHeader section:first-child nav ul {
   display: flex;
@@ -97,10 +100,35 @@ header {
   flex: 1;
   justify-content: center;
   align-items: center;
-  padding-top: 1em;
-  padding-bottom: 1em;
   gap: 4em;
+  background-color: #321d45;
+  position: relative;
+  z-index: 500;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
+}
+.TabletHeader section:first-child nav li svg {
+  width: 50px !important;
+  height: 50px !important;
+  display: flex;
+  margin: 0 auto;
 }
 .TabletHeader section:first-child nav a {
   font-size: x-large;
+  color: white;
+  text-align: center;
+  display: flex;
+  align-items: center;
+}
+.TabletHeader section:nth-of-type(2) {
+  align-items: center;
+}
+.TabletHeader .bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  height: 90vh;
+  width: 100vw;
 }
