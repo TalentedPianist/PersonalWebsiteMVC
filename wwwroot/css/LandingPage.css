@@ -8,6 +8,10 @@ img {
   width: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
@@ -31,6 +35,7 @@ header {
   justify-content: center;
   align-items: center;
   width: 100vw;
+  height: 100vh;
   position: relative;
   z-index: 500;
 }
@@ -56,6 +61,7 @@ header {
   justify-content: center;
   width: 100vw;
   min-width: 100%;
+  height: 70vh;
 }
 .MobileHeader section:first-child {
   flex-direction: row;
@@ -80,6 +86,7 @@ header {
   display: flex;
   flex-direction: column;
   flex: 1;
+  align-items: center;
   width: 100vw;
 }
 @media only screen and (max-width: 600px) {
@@ -87,12 +94,22 @@ header {
     display: none;
   }
 }
-.TabletHeader section {
+.TabletHeader #container {
   display: flex;
   flex-direction: column;
   flex: 1;
+  align-items: flex-start;
+  height: 60vh;
+}
+.TabletHeader section {
+  display: flex;
+  flex-direction: column;
   position: relative;
   z-index: 500;
+  width: 100vw;
+}
+.TabletHeader section:first-child h1 {
+  text-align: center;
 }
 .TabletHeader section:first-child nav ul {
   display: flex;
@@ -121,7 +138,27 @@ header {
   align-items: center;
 }
 .TabletHeader section:nth-of-type(2) {
+  text-align: center;
   align-items: center;
+  justify-content: center;
+  flex-direction: row;
+}
+.TabletHeader section article {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.TabletHeader section img {
+  width: 60%;
+  display: flex;
+  margin: 0 auto;
+  border-radius: 50%;
+}
+.TabletHeader section button {
+  align-self: flex-start;
+  margin: 0 auto;
+  font-size: large;
 }
 .TabletHeader .bg {
   position: absolute;
@@ -129,6 +166,6 @@ header {
   left: 0;
   bottom: 0;
   right: 0;
-  height: 90vh;
+  height: 95vh;
   width: 100vw;
 }

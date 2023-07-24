@@ -9,6 +9,10 @@
     {
       "library": "flowbite@1.7.0",
       "destination": "wwwroot/lib/flowbite/"
+    },
+    {
+      "library": "smooth-scroll@16.1.3",
+      "destination": "wwwroot/lib/smooth-scroll/"
     }
   ]
 }
