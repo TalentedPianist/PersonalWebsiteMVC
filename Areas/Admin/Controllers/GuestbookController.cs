@@ -9,7 +9,8 @@ using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-     [Area("Admin")]
+#nullable enable
+    [Area("Admin")]
      [Authorize(Policy = "Admin")]
      public class GuestbookController : Controller
      {

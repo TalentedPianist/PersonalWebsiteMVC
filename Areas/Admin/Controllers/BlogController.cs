@@ -12,7 +12,8 @@ using SolrNet.Mapping;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-     [Area("Admin")]
+#nullable enable
+    [Area("Admin")]
      [Authorize(Policy = "Admin")]
      public class BlogController : Controller
      {
