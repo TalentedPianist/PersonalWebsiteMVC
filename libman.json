@@ -13,6 +13,10 @@
     {
       "library": "smooth-scroll@16.1.3",
       "destination": "wwwroot/lib/smooth-scroll/"
+    },
+    {
+      "library": "headhesive@1.2.4",
+      "destination": "wwwroot/lib/headhesive/"
     }
   ]
 }

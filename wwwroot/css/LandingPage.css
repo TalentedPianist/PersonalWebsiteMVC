@@ -38,6 +38,11 @@ header {
   height: 100vh;
   position: relative;
   z-index: 500;
+  background-color: lightblue;
+}
+
+.fixed {
+  position: fixed;
 }
 
 .MobileHeader {
@@ -62,6 +67,8 @@ header {
   width: 100vw;
   min-width: 100%;
   height: 70vh;
+  position: relative;
+  z-index: 500;
 }
 .MobileHeader section:first-child {
   flex-direction: row;
@@ -97,9 +104,12 @@ header {
 .TabletHeader #container {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0;
   align-items: flex-start;
   height: 60vh;
+}
+.TabletHeader #container::after {
+  background-color: lightblue;
 }
 .TabletHeader section {
   display: flex;
@@ -119,10 +129,12 @@ header {
   align-items: center;
   gap: 4em;
   background-color: #321d45;
-  position: relative;
-  z-index: 500;
+  position: sticky;
+  top: 0;
+  z-index: 500 !important;
   padding-top: 0.5em;
   padding-bottom: 0.5em;
+  width: 100vw;
 }
 .TabletHeader section:first-child nav li svg {
   width: 50px !important;
@@ -168,4 +180,48 @@ header {
   right: 0;
   height: 95vh;
   width: 100vw;
+}
+
+#About {
+  display: flex;
+  flex-direction: column;
+  flex: 0 auto;
+  align-content: flex-start;
+  height: 100vh;
+}
+#About h2 {
+  display: flex;
+  margin: 0 auto;
+}
+#About img {
+  width: 20%;
+  border-radius: 50%;
+  display: flex;
+  margin: 0 auto;
+}
+#About section {
+  display: inline-flex;
+  flex-direction: column;
+  flex: 0;
+  align-content: flex-start;
+  padding-left: 2em;
+  padding-right: 2em;
+  color: black;
+  background-color: lightblue;
+}
+#About section:first-child {
+  padding-top: 7em;
+}
+@media only screen and (min-width: 600px) {
+  #About section {
+    flex-direction: row;
+    flex: 0;
+  }
+  #About section article {
+    width: 50%;
+    padding-right: 1em;
+  }
+}
+#About svg {
+  width: 100%;
 }

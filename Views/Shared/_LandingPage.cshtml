@@ -2,11 +2,11 @@
 
 <html>
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewBag.Title</title>
-    <link rel="stylesheet" href="/lib/tailwindcss/tailwind.min.css">
-    <link rel="stylesheet" href="/lib/flowbite/flowbite.min.css">
-    <link rel="stylesheet" href="/css/LandingPage.min.css" asp-append-version="true">
+     <meta name="viewport" content="width=device-width" />
+     <title>@ViewBag.Title</title>
+     <link rel="stylesheet" href="/lib/tailwindcss/tailwind.min.css">
+     <link rel="stylesheet" href="/lib/flowbite/flowbite.min.css">
+     <link rel="stylesheet" href="/css/LandingPage.min.css" asp-append-version="true">
 </head>
 <body>
      <header>
@@ -14,17 +14,38 @@
           <div class="TabletHeader"><partial name="TabletHeader" /></div>
      </header>
 
-     <section id="About">
-          <h2>About Me</h2>
-          <article>
-               <h3>Web Developer</h3>
-          </article>
-          <article>
-          </article>
-     </section>
+     <div id="About">
+          <section>
+               <h2>About Me</h2>
+          </section>
+          <section>
+               <img src="/images/me.jpeg">
+          </section>
+          <section>
+
+               <article>
+                    <h3>Web Developer</h3>
+
+                    <p>Habitant nisl lacinia pretium aptent interdum nunc cursus. Curae; risus ad turpis montes mi fermentum faucibus congue lobortis phasellus sem. Nam malesuada sociosqu phasellus eu consequat quis vehicula. Mattis non quam cubilia ultricies ridiculus eros. Elementum justo etiam varius, euismod cursus himenaeos fermentum turpis nec tempor! Consequat mattis tincidunt curae; augue pretium enim ut? Sodales platea per gravida posuere tellus libero ac leo sem taciti vulputate sem. Habitant dapibus fusce lacus rutrum conubia. Pharetra facilisi ipsum litora dis magnis diam egestas.</p>
+               </article>
+               <article>
+                    <h3>Musician</h3>
+
+                    <p>Erat vehicula sociis volutpat semper aliquet quis, turpis tempus tempor pulvinar. Viverra ut; fermentum faucibus a quam commodo tristique? Lectus dignissim habitasse, dis posuere varius fames. Congue aenean duis eros. Morbi phasellus suspendisse primis libero porta magna libero curabitur rutrum pharetra mattis aliquet. Sodales ut ornare luctus nunc nec fames enim. Dapibus blandit lorem dignissim pretium fringilla semper dictum erat quisque volutpat convallis et. Nam suscipit habitant, nulla sodales eleifend convallis tortor ante turpis placerat habitant? Ad ad cum arcu nascetur aenean, rutrum maecenas facilisis magna cursus mus urna. Mollis duis condimentum posuere inceptos?</p>
+               </article>
+          </section>
+          <svg xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" viewBox="0 0 1440 320"><path fill="lightblue" fill-opacity="1" d="M0,32L1440,224L1440,0L0,0Z" width="100%"></path></svg>
+     </div>
+
+     <div id="Blog"><partial name="_BlogPartial" /></div>
 
      @RenderBody()
 
+
+     <script src="/lib/jquery/dist/jquery.min.js"></script>
+
+     <script src="/lib/smooth-scroll/smooth-scroll.min.js"></script>
+     <script src="/lib/smooth-scroll/smooth-scroll.polyfills.min.js"></script>
      <script src="/js/site.js" asp-append-version="true"></script>
 </body>
 </html>
