@@ -3,6 +3,14 @@
 
 // Write your JavaScript code.
 
+// Code to toggle mobile menu
+let menu = document.querySelector('#menuClick');
+menu.addEventListener("click", function () {
+    let nav = document.querySelector("nav ul");
+    nav.classList.add("mobileNav");
+    let modal = document.querySelector("nav");
+    modal.classList.add("modal");
+});
 
 
 var num = 200;
