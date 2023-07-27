@@ -3,15 +3,13 @@
 
 // Write your JavaScript code.
 
-// Code to toggle mobile menu
-let menu = document.querySelector('#menuClick');
-menu.addEventListener("click", function () {
-    let nav = document.querySelector("nav ul");
-    nav.classList.add("mobileNav");
-    let modal = document.querySelector("nav");
-    modal.classList.add("modal");
-});
+var menu = document.querySelector("#menuClick");
+var nav = document.querySelector("nav");
 
+menu.addEventListener("click", function (e) {
+    e.preventDefault(); // This must be present or else code won't work as expected.
+    nav.classList.toggle("mobile");
+});
 
 var num = 200;
 

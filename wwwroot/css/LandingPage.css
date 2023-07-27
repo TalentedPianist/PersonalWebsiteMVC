@@ -63,36 +63,34 @@ header nav svg {
     display: none;
   }
 }
-header nav ul {
-  position: relative;
-  z-index: 500;
-}
-@media (max-width: 600px) {
+@media only screen and (max-width: 600px) {
   header nav ul {
     display: none;
   }
 }
-header nav .mobileNav {
+header nav section {
   display: flex;
-  flex-direction: column !important;
+  flex-direction: column;
   flex: 1;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  left: 0;
-  top: 10em;
-  right: 0;
-  bottom: 0;
+  position: relative;
   z-index: 500;
 }
-header nav .modal {
+header .mobile {
   display: flex;
+  flex-direction: column;
+  flex: 1;
   position: absolute;
+  z-index: 500;
   top: 0;
   left: 0;
-  right: 0;
   bottom: 0;
+  right: 0;
   background-color: rgba(0, 0, 0, 0.6);
+}
+header .mobile ul {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 header .homeIcon {
   width: 60px;
