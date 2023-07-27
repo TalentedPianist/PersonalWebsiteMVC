@@ -2,56 +2,67 @@
 
 <html>
 <head>
-     <meta name="viewport" content="width=device-width" />
-     <title>@ViewBag.Title</title>
-     <link rel="stylesheet" href="/css/LandingPage.min.css" asp-append-version="true">
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="/css/LandingPage.min.css" asp-append-version="true">
 </head>
 <body>
-     <header>
-          <nav>
-               <a href="/"><svg preserveAspectRatio="none" class="homeIcon" viewBox="0 0 61 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <header>
+        <nav>
+            <a href="/">
+                <svg preserveAspectRatio="none" class="homeIcon" viewBox="0 0 61 60" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M30.1935 1.06968L30.1931 1.06935C30.1466 1.02484 30.0847 1 30.0203 1C29.9559 1 29.894 1.02484 29.8475 1.06935L29.847 1.06981L1.08187 28.549C1.05744 28.5724 1.038 28.6005 1.02474 28.6316C1.01147 28.6627 1.00465 28.6962 1.00469 28.73L1.00469 28.7313L1 54.5217C1 54.5218 1 54.5219 1 54.5219C1.00005 55.5827 1.42147 56.6 2.17157 57.3502C2.92172 58.1003 3.93914 58.5217 5 58.5217H20.0156C20.4135 58.5217 20.795 58.3637 21.0763 58.0824C21.3576 57.8011 21.5156 57.4196 21.5156 57.0217V35.7717C21.5156 35.175 21.7527 34.6027 22.1746 34.1807C22.5966 33.7588 23.1689 33.5217 23.7656 33.5217H36.2656C36.8624 33.5217 37.4347 33.7588 37.8566 34.1807C38.2786 34.6027 38.5156 35.175 38.5156 35.7717V57.0217C38.5156 57.4196 38.6737 57.8011 38.955 58.0824C39.2363 58.3637 39.6178 58.5217 40.0156 58.5217H55.025C56.0859 58.5217 57.1033 58.1003 57.8534 57.3502C58.6036 56.6 59.025 55.5826 59.025 54.5217V28.7311V28.73C59.025 28.6961 59.0182 28.6627 59.005 28.6316C58.9918 28.6006 58.9724 28.5727 58.9482 28.5494L30.1935 1.06968ZM30.1935 1.06968L58.9478 28.549L30.1935 1.06968Z" fill="#50C878" stroke="black" stroke-width="2" />
-               </svg></a>
+                </svg>
+            </a>
 
-               <a href="" id="menuClick"><svg width="80" height="75" viewBox="0 0 80 75" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <a href="" id="menuClick">
+                <svg width="80" height="75" viewBox="0 0 80 75" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M10.5 54.5V48.8333H69.5V54.5H10.5ZM10.5 37.8333V32.1667H69.5V37.8333H10.5ZM10.5 21.1667V15.5H69.5V21.1667H10.5Z" fill="#FFD233" stroke="black" />
-               </svg></a>
-
-                
-               <ul>
-                    <li><a href="#" id="closeMenu">Close</a></li>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/About">About</a></li>
-                    <li><a href="/Blog">Blog</a></li>
-                    <li><a href="/Contact">Contact</a></li>
-                    <li><a href="/Guestbook">Guestbook</a></li>
-               </ul>
-                
-
-          </nav>
-
-         <section>
-         <h1>Hi</h1>
-         <img src="/images/me.jpeg">
-         <h2>I'm Douglas</h2>
-         <h3>Thanks for visiting!</h3>
-             </section>
-
-          <svg preserveAspectRatio="none" class="bg" viewBox="0 0 390 748" fill="none" xmlns="http://www.w3.org/2000/svg">
-               <path fill-rule="evenodd" clip-rule="evenodd" d="M390 0H0V526V540V741.592L16.25 723.626C32.5 705.66 65 669.728 97.5 681.705C111.184 686.748 124.868 700.285 138.553 713.822C157.368 732.434 176.184 751.047 195 747.58C212.024 744.443 229.048 723.232 246.071 702.02C261.548 682.737 277.024 663.454 292.5 657.75C325 645.773 357.5 693.682 373.75 717.637L390 741.592V540V526V0Z" fill="#FFA500" />
-          </svg>
-
-     </header>
+                </svg>
+            </a>
 
 
+            <ul>
+                <li><a href="#" id="closeMenu">Close</a></li>
+                <li><a href="/">Home</a></li>
+                <li><a href="/About">About</a></li>
+                <li><a href="/Blog">Blog</a></li>
+                <li><a href="/Contact">Contact</a></li>
+                <li><a href="/Guestbook">Guestbook</a></li>
+            </ul>
 
-     <div id="Blog"><partial name="_BlogPartial" /></div>
 
-     @RenderBody()
+        </nav>
+
+        <div class="container">
+            <section>
+                <h1>Hi</h1>
+            </section>
+            <section>
+                <article>
+                    <img src="/images/me.jpeg">
+                </article>
+                <article>
+                    <h2>I'm Douglas</h2>
+                    <h3>Thanks for visiting!</h3>
+                </article>
+            </section>
+        </div>
+
+        <svg preserveAspectRatio="none" class="bg" viewBox="0 0 390 748" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M390 0H0V526V540V741.592L16.25 723.626C32.5 705.66 65 669.728 97.5 681.705C111.184 686.748 124.868 700.285 138.553 713.822C157.368 732.434 176.184 751.047 195 747.58C212.024 744.443 229.048 723.232 246.071 702.02C261.548 682.737 277.024 663.454 292.5 657.75C325 645.773 357.5 693.682 373.75 717.637L390 741.592V540V526V0Z" fill="#FFA500" />
+        </svg>
+
+    </header>
 
 
-     <script src="/lib/jquery/dist/jquery.min.js"></script>
-     <script src="/lib/magnific-popup.js/jquery.magnific-popup.min.js"></script>
-     <script src="/js/site.js" asp-append-version="true"></script>
+
+
+    @RenderBody()
+
+
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/magnific-popup.js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

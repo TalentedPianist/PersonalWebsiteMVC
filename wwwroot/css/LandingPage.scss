@@ -1,55 +1,86 @@
 ﻿* {
-    margin: 0; 
-    padding: 0; 
-    box-sizing: border-box; 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-img { 
+img {
     width: 100%;
 }
 
-html  {
+html {
     scroll-behavior: smooth;
 }
 
-body { 
+body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-h1 { 
+h1 {
     font-size: 48px;
 }
 
-h2 { 
+h2 {
     font-size: 36px;
 }
 
-h3 { 
+h3 {
     font-size: 28px;
 }
 
-header { 
-    display: flex; 
+h1, h2, h3, h4, h5, h6, p, img {
+    position: relative;
+    z-index: 500;
+}
+
+header {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
-    justify-content: center;
-    align-items: center;
+    flex: 1;
     width: 100vw;
-    height: initial;
+    height: 100vh;
     position: relative;
     z-index: 500;
 
-    nav { 
+    .container {
+        display: flex; 
+        flex-direction: column;
+        flex: 0;
+        align-items: center;
+        justify-content: space-between;
+        gap: 2em;
+    
+
+        section {
+            display: flex; 
+            flex-direction: column;
+            flex: 0;
+            gap: 2em;
+
+          
+
+            img {
+                width: 40%;
+                border-radius: 50%;
+            }
+
+            article { 
+                width: 100%;
+                text-align: center;
+            }
+        }
+    }
+
+    nav {
         position: relative;
         z-index: 500;
         width: 100vw;
         display: flex;
         flex-direction: column;
-        flex: 1; 
         justify-content: space-evenly;
         align-items: center;
 
-        @media only screen and (max-width: 600px) { 
+        @media only screen and (max-width: 600px) {
             flex-direction: row;
         }
 
@@ -57,88 +88,80 @@ header {
             position: relative;
             z-index: 500;
 
-            @media only screen and (min-width: 600px) { 
+            @media only screen and (min-width: 600px) {
                 display: none;
             }
         }
 
-        ul { 
-           @media only screen and (max-width: 600px) { 
-               display: none;
+        ul {
+            @media only screen and (max-width: 600px) {
+                display: none;
             }
         }
-       
-        section { 
-            display: flex; 
-            flex-direction: column;
-            flex: 1; 
-            position: relative;
-            z-index: 500;
-        }
-   
     }
 
-    .mobile { 
+    .mobile {
         display: flex;
         flex-direction: column;
         flex: 1;
         position: absolute;
         z-index: 500;
-        top: 0; 
-        left: 0; 
-        bottom: 0; 
-        right: 0; 
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
         background-color: rgba(0,0,0,0.6);
 
-        ul  {
+        ul {
             display: flex;
             flex-direction: column;
-            flex: 1; 
-          
+            flex: 1;
+            position: relative;
+            z-index: 500;
         }
     }
 
     .homeIcon {
-        width: 60px; 
+        width: 60px;
         height: 60px;
 
-        @media only screen and (min-width: 767px) { 
+        @media only screen and (min-width: 767px) {
             display: none;
         }
     }
-  
-    .bg { 
-        position: absolute; 
-        top: 0; 
-        left: 0; 
-        right: 0; 
+
+    .bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
         bottom: 0;
-        height: 80vh;
+        height: 95vh;
         width: 100vw;
     }
 }
 
 
 
-#About { 
+#About {
     display: flex;
     flex-direction: column;
     flex: 0 auto;
     align-content: flex-start;
 
-    h2 { 
+    h2 {
         display: flex;
         margin: 0 auto;
     }
 
-    img { 
+    img {
         width: 20%;
         border-radius: 50%;
-        display: flex; 
+        display: flex;
         margin: 0 auto;
     }
 
-    section { 
+    section {
         display: inline-flex;
         flex-direction: column;
         flex: 0;
@@ -147,24 +170,23 @@ header {
         padding-right: 2em;
         color: black;
         background-color: lightblue;
-        
-        &:first-child { 
+
+        &:first-child {
             padding-top: 7em;
         }
 
-        @media only screen and (min-width: 600px) { 
+        @media only screen and (min-width: 600px) {
             flex-direction: row;
             flex: 0;
 
-            article { 
+            article {
                 width: 50%;
                 padding-right: 1em;
             }
         }
     }
 
-    svg { 
+    svg {
         width: 100%;
     }
 }
-
