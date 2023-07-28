@@ -30,7 +30,8 @@ h3 {
 
 h1, h2, h3, h4, h5, h6, p, img {
     position: relative;
-    z-index: 500;
+    z-index: 1;
+
 }
 
 header {
@@ -47,7 +48,7 @@ header {
         flex-direction: column;
         flex: 0;
         align-items: center;
-        justify-content: space-between;
+        justify-content: center;
         gap: 2em;
     
 
@@ -56,17 +57,24 @@ header {
             flex-direction: column;
             flex: 0;
             gap: 2em;
-
+            
+          
           
 
             img {
                 width: 40%;
                 border-radius: 50%;
+                z-index: 1;
+                display: flex; 
+                margin: 0 auto;
             }
 
             article { 
                 width: 100%;
                 text-align: center;
+                display: flex;
+                flex-direction: column;
+                gap: 2em;
             }
         }
     }
@@ -79,21 +87,27 @@ header {
         flex-direction: column;
         justify-content: space-evenly;
         align-items: center;
+   
 
         @media only screen and (max-width: 600px) {
             flex-direction: row;
         }
 
         svg {
-            position: relative;
-            z-index: 500;
+       
 
             @media only screen and (min-width: 600px) {
                 display: none;
             }
         }
 
+        i {
+            border: 0;
+        }
+
         ul {
+            list-style-type: none;
+
             @media only screen and (max-width: 600px) {
                 display: none;
             }
@@ -103,21 +117,36 @@ header {
     .mobile {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 1; 
+        align-items: center;
         position: absolute;
-        z-index: 500;
-        top: 0;
-        left: 0;
-        bottom: 0;
+        top: 0; 
+        bottom: 0; 
+        left: 0; 
         right: 0;
-        background-color: rgba(0,0,0,0.6);
+        z-index: 500;
+        background-color: rgba(0,0,0,0.8);
+        width: 100vw;
 
         ul {
             display: flex;
             flex-direction: column;
             flex: 1;
+            align-items: center;
+            list-style-type: none;
+            gap: 3em;
             position: relative;
             z-index: 500;
+        }
+
+        li { 
+            list-style-type: none;
+        }
+
+        a { 
+            color: white;
+            font-size: xx-large;
+            text-align: center;
         }
     }
 
@@ -147,7 +176,17 @@ header {
     display: flex;
     flex-direction: column;
     flex: 0 auto;
+    align-items: flex-start;
     align-content: flex-start;
+    height: 100vh;
+
+    h1 {
+        color: purple;
+        font-weight: bold; 
+        text-shadow: 1px 1px black;
+        margin: 0 auto;
+       
+    }
 
     h2 {
         display: flex;
@@ -162,18 +201,13 @@ header {
     }
 
     section {
-        display: inline-flex;
+        display: flex;
         flex-direction: column;
         flex: 0;
-        align-content: flex-start;
         padding-left: 2em;
         padding-right: 2em;
         color: black;
-        background-color: lightblue;
-
-        &:first-child {
-            padding-top: 7em;
-        }
+        height: 95vh;
 
         @media only screen and (min-width: 600px) {
             flex-direction: row;

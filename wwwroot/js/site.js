@@ -9,7 +9,21 @@ var nav = document.querySelector("nav");
 menu.addEventListener("click", function (e) {
     e.preventDefault(); // This must be present or else code won't work as expected.
     nav.classList.toggle("mobile");
+    document.querySelector("section").style.zindex = "-1";
+    var li = document.createElement("li");
+    li.innerHTML = "<a href='' id='closeLink'><img src='/icons/close.svg' class='closeIcon'></a>";
+    document.querySelector("nav ul").before(li);
+    document.querySelector(".homeIcon").style.display = "none";
+    document.querySelector(".menuIcon").style.display = "none";
 });
+
+
+let about = document.querySelector("#About");
+about.addEventListener("scroll", function (event) {
+    alert("Works!");
+});
+
+
 
 var num = 200;
 

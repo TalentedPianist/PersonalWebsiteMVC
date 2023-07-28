@@ -30,7 +30,7 @@ h3 {
 
 h1, h2, h3, h4, h5, h6, p, img {
   position: relative;
-  z-index: 500;
+  z-index: 1;
 }
 
 header {
@@ -47,7 +47,7 @@ header .container {
   flex-direction: column;
   flex: 0;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 2em;
 }
 header .container section {
@@ -59,10 +59,16 @@ header .container section {
 header .container section img {
   width: 40%;
   border-radius: 50%;
+  z-index: 1;
+  display: flex;
+  margin: 0 auto;
 }
 header .container section article {
   width: 100%;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2em;
 }
 header nav {
   position: relative;
@@ -78,14 +84,16 @@ header nav {
     flex-direction: row;
   }
 }
-header nav svg {
-  position: relative;
-  z-index: 500;
-}
 @media only screen and (min-width: 600px) {
   header nav svg {
     display: none;
   }
+}
+header nav i {
+  border: 0;
+}
+header nav ul {
+  list-style-type: none;
 }
 @media only screen and (max-width: 600px) {
   header nav ul {
@@ -96,20 +104,33 @@ header .mobile {
   display: flex;
   flex-direction: column;
   flex: 1;
+  align-items: center;
   position: absolute;
-  z-index: 500;
   top: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
   right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 500;
+  background-color: rgba(0, 0, 0, 0.8);
+  width: 100vw;
 }
 header .mobile ul {
   display: flex;
   flex-direction: column;
   flex: 1;
+  align-items: center;
+  list-style-type: none;
+  gap: 3em;
   position: relative;
   z-index: 500;
+}
+header .mobile li {
+  list-style-type: none;
+}
+header .mobile a {
+  color: white;
+  font-size: xx-large;
+  text-align: center;
 }
 header .homeIcon {
   width: 60px;
@@ -134,7 +155,15 @@ header .bg {
   display: flex;
   flex-direction: column;
   flex: 0 auto;
+  align-items: flex-start;
   align-content: flex-start;
+  height: 100vh;
+}
+#About h1 {
+  color: purple;
+  font-weight: bold;
+  text-shadow: 1px 1px black;
+  margin: 0 auto;
 }
 #About h2 {
   display: flex;
@@ -147,17 +176,13 @@ header .bg {
   margin: 0 auto;
 }
 #About section {
-  display: inline-flex;
+  display: flex;
   flex-direction: column;
   flex: 0;
-  align-content: flex-start;
   padding-left: 2em;
   padding-right: 2em;
   color: black;
-  background-color: lightblue;
-}
-#About section:first-child {
-  padding-top: 7em;
+  height: 95vh;
 }
 @media only screen and (min-width: 600px) {
   #About section {
