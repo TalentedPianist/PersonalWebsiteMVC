@@ -3,6 +3,6 @@ namespace PersonalWebsiteMVC.Models
 {
 	public class SearchViewModel
 	{
-		public string Search { get; set; }
+		public string Search { get; set; } = default!;
 	}
 }

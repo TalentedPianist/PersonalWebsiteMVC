@@ -9,13 +9,13 @@ namespace PersonalWebsiteMVC.Models
 	public class SolrModel
 	{
 		[SolrUniqueKey("id")]
-		public string ID { get; set; }
+		public string ID { get; set; } = default!;
 		[SolrField("title")]
-		public string Title { get; set; }
+		public string Title { get; set; } = default!;
 		[SolrField("url")]
-		public string Url { get; set; }
+		public string Url { get; set; } = default!;
 		[SolrField("body")]
-		public string Body { get; set; }
+		public string Body { get; set; } = default!;
 	}
 
 

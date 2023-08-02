@@ -8,10 +8,10 @@ namespace PersonalWebsiteMVC.Models
 {
      public class RoleModification
      {
-          [Required]
-          public string RoleName { get; set; }
-          public string RoleId { get; set; }
-          public string[] AddIds { get; set; }
-          public string[] DeleteIds { get; set; }
+        [Required]
+        public string RoleName { get; set; } = default!;
+        public string RoleId { get; set; } = default!;
+        public string[] AddIds { get; set; } = default!;
+        public string[] DeleteIds { get; set; } = default!;
      }
 }

@@ -11,42 +11,42 @@ namespace PersonalWebsiteMVC.Models
      {
           [Key]
           public int GalleryID { get; set; }
-          [Display(Name="Remote ID")]
-          public string GalleryRemoteID { get; set; }
-          [Display(Name = "Gallery Url")]
-          public string GalleryUrl { get; set; }
-          [Display(Name="Name")]
-          public string GalleryName { get; set; }
-          [Display(Name ="Description")]
-          public string GalleryDescription { get; set; }
-          [Display(Name ="Location")]
-          public string GalleryLocation { get; set; }
+        [Display(Name = "Remote ID")]
+        public string GalleryRemoteID { get; set; } = default!;
+        [Display(Name = "Gallery Url")]
+        public string GalleryUrl { get; set; } = default!;
+        [Display(Name = "Name")]
+        public string GalleryName { get; set; } = default!;
+        [Display(Name = "Description")]
+        public string GalleryDescription { get; set; } = default!;
+        [Display(Name = "Location")]
+        public string GalleryLocation { get; set; } = default!;
           [Display(Name = "Date")]
           public DateTime? GalleryDate { get; set; }
-          public string GalleryIP { get; set; }
+        public string GalleryIP { get; set; } = default!;
      }
 
      public class Photos
      {
           [Key]
           public int PhotoID { get; set; }
-          [Display(Name = "Remote ID")]
-          public string PhotoRemoteID { get; set; }
-          [Display(Name = "Select Photo")]
-          public string GalleryRemoteID { get; set; }
-          [Display(Name = "PhotoMediuUrl")]
-          public string PhotoMediumUrl { get; set; }
-          [Display(Name = "PhotoLargeUrl")]
-          public string PhotoLargeUrl { get; set; }
-          [Display(Name = "Name")]
-          public string PhotoName { get; set; } 
-          [Display(Name = "Description")]
-          public string PhotoDescription { get; set; }
-          [Display(Name = "Location")]
-          public string PhotoLocation { get; set; }
+        [Display(Name = "Remote ID")]
+        public string PhotoRemoteID { get; set; } = default!;
+        [Display(Name = "Select Photo")]
+        public string GalleryRemoteID { get; set; } = default!;
+        [Display(Name = "PhotoMediuUrl")]
+        public string PhotoMediumUrl { get; set; } = default!;
+        [Display(Name = "PhotoLargeUrl")]
+        public string PhotoLargeUrl { get; set; } = default!;
+        [Display(Name = "Name")]
+        public string PhotoName { get; set; } = default!;
+        [Display(Name = "Description")]
+        public string PhotoDescription { get; set; } = default!;
+        [Display(Name = "Location")]
+        public string PhotoLocation { get; set; } = default!;
           [Display(Name = "Date")]
           public DateTime PhotoDate { get; set; }
-          public string PhotoIP { get; set; }
+        public string PhotoIP { get; set; } = default!;
          
      }
 }
