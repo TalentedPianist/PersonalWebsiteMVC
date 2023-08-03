@@ -53,7 +53,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public async Task<IActionResult> Update(string id)
           {
-               ApplicationUser user = await userManager.FindByIdAsync(id);
+               ApplicationUser? user = await userManager.FindByIdAsync(id);
                if (user != null)
                     return View(user);
                else
@@ -63,7 +63,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           [HttpPost]
           public async Task<IActionResult> Update(string id, string email, string password)
           {
-               ApplicationUser user = await userManager.FindByIdAsync(id);
+               ApplicationUser? user = await userManager.FindByIdAsync(id);
                if (user != null)
                {
                     if (!string.IsNullOrEmpty(email))
@@ -93,7 +93,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public async Task<IActionResult> Delete(string id)
           {
-               ApplicationUser user = await userManager.FindByIdAsync(id);
+               ApplicationUser? user = await userManager.FindByIdAsync(id);
                if (user != null)
                {
                     IdentityResult result = await userManager.DeleteAsync(user);

@@ -42,7 +42,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     g.GuestbookUserEmail = model.GuestbookUserEmail;
                     g.GuestbookUserWebsite = model.GuestbookUserWebsite;
                     g.GuestbookDate = DateTime.Now;
-                    g.GuestbookIP = HttpContext.Connection.RemoteIpAddress.ToString();
+                    g.GuestbookIP = HttpContext!.Connection.RemoteIpAddress!.ToString();
                     g.GuestbookApproved = "No";
                     _db.Add(g);
                     _db.SaveChanges();
@@ -62,7 +62,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                if (ModelState.IsValid)
                {
                     var entry = _db.Guestbook.Where(g => g.GuestbookID == id).FirstOrDefault();
-                    entry.GuestbookComment = model.GuestbookComment;
+                    entry!.GuestbookComment = model.GuestbookComment;
                     entry.GuestbookUser = model.GuestbookUser;
                     entry.GuestbookUserEmail = model.GuestbookUserEmail;
                     entry.GuestbookUserWebsite = model.GuestbookUserWebsite;
@@ -77,7 +77,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           public IActionResult Delete(int id)
           {
                var g = _db.Guestbook.Where(g => g.GuestbookID == id).FirstOrDefault();
-               _db.Remove(g);
+               _db.Remove(g!);
                _db.SaveChanges();
                return RedirectToAction("Index");
           }

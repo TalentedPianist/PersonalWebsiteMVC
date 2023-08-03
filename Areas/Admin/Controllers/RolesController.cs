@@ -45,7 +45,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public async Task<IActionResult> Delete(string id)
           {
-               IdentityRole role = await roleManager.FindByIdAsync(id);
+               IdentityRole? role = await roleManager.FindByIdAsync(id);
                if (role != null)
                {
                     IdentityResult result = await roleManager.DeleteAsync(role);
@@ -78,17 +78,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public async Task<IActionResult> Update(string id)
           {
-               IdentityRole role = await roleManager.FindByIdAsync(id);
+               IdentityRole? role = await roleManager.FindByIdAsync(id);
                List<ApplicationUser> members = new List<ApplicationUser>();
                List<ApplicationUser> nonMembers = new List<ApplicationUser>();
                foreach (ApplicationUser user in userManager.Users)
                {
-                    var list = await userManager.IsInRoleAsync(user, role.Name) ? members : nonMembers;
+                    List<ApplicationUser>? list = await userManager.IsInRoleAsync(user, role!.Name!) ? members : nonMembers;
                     list.Add(user);
                }
                return View(new RoleEdit
                {
-                    Role = role,
+                    Role = role!,
                     Members = members,
                     NonMembers = nonMembers
                });
@@ -102,7 +102,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                {
                     foreach (string userId in model.AddIds ?? new string[] { })
                     {
-                         ApplicationUser user = await userManager.FindByIdAsync(userId);
+                         ApplicationUser? user = await userManager.FindByIdAsync(userId);
                          if (user != null)
                          {
                               result = await userManager.AddToRoleAsync(user, model.RoleName);
@@ -113,10 +113,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     }
                     foreach (string userId in model.DeleteIds ?? new string[] { })
                     {
-                         ApplicationUser user  = await userManager.FindByIdAsync(userId);
+                         ApplicationUser? user  = await userManager.FindByIdAsync(userId);
                          if (User != null)
                          {
-                              result = await userManager.RemoveFromRoleAsync(user, model.RoleName);
+                              result = await userManager.RemoveFromRoleAsync(user!, model.RoleName);
                               if (!result.Succeeded)
                                    foreach (var item in result.Errors)
                                         ModelState.AddModelError("", item.Description);

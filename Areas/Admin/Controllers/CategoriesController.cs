@@ -59,7 +59,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                if (ModelState.IsValid)
                {
                     var category = _db.Categories.Where(c => c.CategoryID == id).FirstOrDefault();
-                    category.Category = model.Category;
+                    category!.Category = model.Category;
                     _db.Categories.Update(category);
                     _db.SaveChanges();
                     return RedirectToAction("Index");
@@ -75,7 +75,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           public IActionResult Delete(int id)
           {
                var category = _db.Categories.Where(c => c.CategoryID == id).FirstOrDefault();
-               _db.Categories.Remove(category);
+               _db.Categories.Remove(category!);
                _db.SaveChanges();
                return RedirectToAction("Index");
           }

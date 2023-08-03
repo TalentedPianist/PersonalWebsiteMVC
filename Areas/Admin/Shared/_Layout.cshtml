@@ -90,7 +90,7 @@
 @functions {
 	string GetTitle()
 	{
-		string url = http.HttpContext.Request.GetDisplayUrl();
+		string url = http.HttpContext!.Request.GetDisplayUrl();
 		if (url.Contains("Gallery"))
 			return "<h1>Gallery</h1> - <h2>" + http.HttpContext.Request.Query["title"] + "</h2>";
 

@@ -17,8 +17,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
      [Authorize(Policy = "Admin")]
      public class BlogController : Controller
      {
-          private readonly ApplicationDbContext _db;
-          private ISolrOperations<SolrModel> _solr;
+        private readonly ApplicationDbContext _db = default!;
+        private ISolrOperations<SolrModel> _solr = default!;
 
           public BlogController(ApplicationDbContext db, ISolrOperations<SolrModel> solr)
           {
@@ -49,7 +49,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     b.PostAuthor = model.PostAuthor;
                     b.PostLocation= model.PostLocation;
                     b.PostDate = DateTime.Now;
-                    b.PostIP = HttpContext.Connection.RemoteIpAddress.ToString();
+                    b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
                     b.PostActive = "No";
                     _db.Posts.Add(b);
                     _db.SaveChanges();
@@ -80,7 +80,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                if (ModelState.IsValid)
                {
                     var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault();
-                    b.PostContent = model.PostContent;
+                    b!.PostContent = model.PostContent;
                     b.PostExcerpt = model.PostExcerpt;
                     b.PostTitle = model.PostTitle;
                     b.PostAuthor = model.PostAuthor;
@@ -111,8 +111,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Delete(int id)
           {
-               var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault();
-            _db.Remove(b);
+               var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault()!;
+                _db.Remove<Posts>(b);
                _db.SaveChanges();
                return RedirectToAction("Index");
           }

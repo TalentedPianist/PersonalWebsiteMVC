@@ -9,7 +9,7 @@ namespace PersonalWebsiteMVC.Models
      public class GuestbookMixModel
      {
           public List<Guestbook> GuestbookAll { get; set; } = new List<Guestbook>();
-          public Guestbook Guestbook { get; set; }
+        public Guestbook Guestbook { get; set; } = default!;
      }
 
      public class Guestbook 

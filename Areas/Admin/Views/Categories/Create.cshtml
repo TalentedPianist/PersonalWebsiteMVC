@@ -23,7 +23,7 @@
             </div>
                <input type="hidden" asp-for="PostID" value="0" />
                <input type="hidden" asp-for="PostCount" value="0" />
-              <input type="hidden" asp-for="IP" value="@http.HttpContext.Connection.RemoteIpAddress.ToString()" />
+              <input type="hidden" asp-for="IP" value="@http.HttpContext!.Connection.RemoteIpAddress!.ToString()" />
               <input type="hidden" asp-for="CategoryDate" value="@DateTime.Now" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

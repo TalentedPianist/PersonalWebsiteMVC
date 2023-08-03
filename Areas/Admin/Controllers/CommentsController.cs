@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -14,10 +15,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
     public class CommentsController : Controller
     {
           private readonly ApplicationDbContext _db;
+        private readonly IHttpContextAccessor _http;
 
-          public CommentsController(ApplicationDbContext db)
+          public CommentsController(ApplicationDbContext db, IHttpContextAccessor http)
           {
                _db = db; 
+            _http = http;
           }
 
         public IActionResult Index()
@@ -42,7 +45,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     comment.CommentAuthorEmail = model.CommentAuthorEmail;
                     comment.CommentAuthorUrl = model.CommentAuthorUrl;
                     comment.CommentDate = DateTime.Now;
-                    comment.CommentAuthorIP = HttpContext.Connection.RemoteIpAddress.ToString();
+                    comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
                     _db.Comments.Add(comment);
                     _db.SaveChanges();
                     return RedirectToAction("Index");
@@ -61,7 +64,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                if (ModelState.IsValid)
                {
                     var comment = _db.Comments.Where(c => c.CommentID == id).FirstOrDefault();
-                    comment.ParentID = model.ParentID;
+                    comment!.ParentID = model.ParentID;
                     comment.CommentContent = comment.CommentContent;
                     comment.CommentAuthor = model.CommentAuthor;
                     comment.CommentAuthorEmail = model.CommentAuthorEmail;
@@ -76,7 +79,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           public IActionResult Delete(int id)
           {
                var comment = _db.Comments.Where(c => c.CommentID == id).FirstOrDefault();
-               _db.Remove(comment);
+               _db.Remove(comment!);
                _db.SaveChanges();
                return RedirectToAction("Index");
           }
