@@ -2,5 +2,9 @@
   {
     "outputFile": "wwwroot/css/LandingPage.css",
     "inputFile": "wwwroot/css/LandingPage.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/Blog.css",
+    "inputFile": "wwwroot/css/Blog.scss"
   }
 ]
