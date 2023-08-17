@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
+using Newtonsoft.Json;
+using PersonalWebsiteMVC.Models;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,7 +21,13 @@ namespace PersonalWebsiteMVC.api
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            List<Posts> Posts = new List<Posts>();
+            foreach (var item in _db.Posts)
+            {
+                Posts.Add(item);
+            }
+            string json = JsonConvert.SerializeObject(Posts, Formatting.Indented);
+            yield return json;
         }
 
         // GET api/<BlogController>/5

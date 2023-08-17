@@ -1,9 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http.Extensions;
 
+<!DOCTYPE html>
 <html>
 <head>
     <meta name="viewport" content="width=device-width,initial-scale=1.0" />
     <title>@ViewBag.Title</title>
+    <link rel="stylesheet" href="/lib/tailwindcss/tailwind.min.css">
+    <link rel="stylesheet" href="/lib/flowbite/flowbite.min.css">
     <link rel="stylesheet" href="/css/Blog.min.css" asp-append-version="true">
 </head>
 <body>
@@ -13,7 +16,7 @@
                 <path d="M42.5 0L0 34.4525V69.277C0 70.7948 0.746277 72.2505 2.07466 73.3238C3.40304 74.397 5.20472 75 7.08333 75H31.875V46.385H53.125V75H77.9167C79.7953 75 81.597 74.397 82.9253 73.3238C84.2537 72.2505 85 70.7948 85 69.277V34.2522L42.5 0Z" />
             </svg>
 
-            <svg preserveAspectRatio="none" class="menuIcon" viewBox="0 0 87 67" xmlns="http://www.w3.org/2000/svg">
+            <a href="#" id="menuLink"><svg preserveAspectRatio="none" class="menuIcon" viewBox="0 0 87 67" xmlns="http://www.w3.org/2000/svg">
                 <g clip-path="url(#clip0_2_19)">
                     <path d="M77.3333 53.9722H9.66667C9.02573 53.9722 8.41104 53.7761 7.95783 53.4271C7.50461 53.0781 7.25 52.6047 7.25 52.1111C7.25 51.6175 7.50461 51.1441 7.95783 50.7951C8.41104 50.4461 9.02573 50.25 9.66667 50.25H77.3333C77.9743 50.25 78.589 50.4461 79.0422 50.7951C79.4954 51.1441 79.75 51.6175 79.75 52.1111C79.75 52.6047 79.4954 53.0781 79.0422 53.4271C78.589 53.7761 77.9743 53.9722 77.3333 53.9722Z" />
                     <path d="M77.3333 35.3611H9.66667C9.02573 35.3611 8.41104 35.165 7.95783 34.816C7.50461 34.467 7.25 33.9936 7.25 33.5C7.25 33.0064 7.50461 32.533 7.95783 32.184C8.41104 31.835 9.02573 31.6389 9.66667 31.6389H77.3333C77.9743 31.6389 78.589 31.835 79.0422 32.184C79.4954 32.533 79.75 33.0064 79.75 33.5C79.75 33.9936 79.4954 34.467 79.0422 34.816C78.589 35.165 77.9743 35.3611 77.3333 35.3611Z" />
@@ -24,13 +27,22 @@
                         <rect width="87" height="67" fill="white" />
                     </clipPath>
                 </defs>
-            </svg>
+            </svg></a>
 
         </div>
+
+        <nav>
+            <ul>
+                <li><a asp-action="Index">Home</a></li>
+                <li><a asp-action="About">About</a></li>
+                <li><a asp-action="Blog">Blog</a></li>
+                <li><a asp-action="Contact">Contact</a></li>
+            </ul>
+        </nav>
     </header>
     @RenderBody()
 
-    <svg preserveAspectRatio="none" class="bg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffa500" fill-opacity="1" d="M0,224L1440,32L1440,0L0,0Z"></path></svg>
-    <script src="/js/Blog.js" asp-append-version="true"></script>
+
+    <script src="/js/site.js" asp-append-version="true"></script>
 </body>
 </html>

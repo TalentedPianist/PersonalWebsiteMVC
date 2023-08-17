@@ -3,54 +3,27 @@
 
 // Write your JavaScript code.
 
-var menu = document.querySelector("#menuClick");
-var nav = document.querySelector("nav");
+(function () {
+    let menu = document.getElementById("menuLink");
+    let nav = document.querySelector("nav");
+    let header = document.querySelector("header");
+    let home = document.querySelector(".homeIcon");
+    let menuIcon = document.querySelector(".menuIcon");
 
-menu.addEventListener("click", function (e) {
-    e.preventDefault(); // This must be present or else code won't work as expected.
-    nav.classList.toggle("mobile");
-    document.querySelector("section").style.zindex = "-1";
-    var li = document.createElement("li");
-    li.innerHTML = "<a href='' id='closeLink'><img src='/icons/close.svg' class='closeIcon'></a>";
-    document.querySelector("nav ul").before(li);
-    document.querySelector(".homeIcon").style.display = "none";
-    document.querySelector(".menuIcon").style.display = "none";
-});
+    menu.addEventListener("click", function (event) {
+        event.preventDefault();
+        home.style.display = "none";
+        menuIcon.style.display = "none";
+        nav.classList.add("mobileNav");
+        header.classList.add("Modal");
+        let ul = document.querySelector("nav ul");
+        let li = document.createElement("li");
+        li.innerHTML = "<a href='' id='closeLink'><img src='../icons/close.svg' style='position: relative; z-index: 2;'></a>";
+        ul.appendChild(li);
+        ul.prepend(li);
+    });
 
+   
+}());
 
-let about = document.querySelector("#About");
-about.addEventListener("scroll", function (event) {
-    alert("Works!");
-});
-
-
-
-var num = 200;
-
-// Code to make header sticky on scroll
-//https://stackoverflow.com/questions/22541364/sticky-navbar-onscroll
-$(window).bind('scroll', function () {
-    if ($(window).scrollTop() > num) {
-        $('nav').addClass('fixed');
-    } else {
-        $('nav').removeClass('fixed');
-    }
-});
-
-// jQuery smooth scroll code
-// https://stackoverflow.com/questions/7717527/smooth-scrolling-when-clicking-an-anchor-link
-$(document).on('click', 'a[href^="#"]', function (event) {
-    event.preventDefault();
-
-    $('html, body').animate({
-        scrollTop: $($.attr(this, 'href')).offset().top
-    }, 500);
-});
-
-// Scroll to top of page when home link is clicked
-// https://stackoverflow.com/questions/1144805/scroll-to-the-top-of-the-page-using-javascript
-$(".home").on("click", function () {
-    $("html, body").animate({ scrollTop: 0 }, "slow");
-    return false;
-});
 
