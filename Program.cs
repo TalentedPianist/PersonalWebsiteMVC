@@ -62,6 +62,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
+builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
@@ -86,6 +87,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
+app.MapBlazorHub();
 
 
 
