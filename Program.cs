@@ -5,6 +5,11 @@ using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json.Serialization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
+using System;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -62,6 +67,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.SlidingExpiration = true;
 });
 
+builder.Services.AddServerSideBlazor();
 
 var app = builder.Build();
 
@@ -86,7 +92,7 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 app.MapRazorPages();
-
+app.MapBlazorHub();
 
 
 app.Run();
