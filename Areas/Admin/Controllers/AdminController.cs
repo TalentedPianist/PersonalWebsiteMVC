@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
-	[Authorize(Policy ="Admin")]
+	[Route("Admin")]
 	public class AdminController : Controller
 	{
 
