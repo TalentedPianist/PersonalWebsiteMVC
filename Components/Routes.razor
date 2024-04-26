@@ -1,6 +1,6 @@
 ﻿
 
-<Router AppAssembly="@typeof(BlogLayout).Assembly">
+<Router AppAssembly="@typeof(Program).Assembly">
 	<Found Context="routeData">
 		<AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(BlogLayout)">
 			<NotAuthorized>

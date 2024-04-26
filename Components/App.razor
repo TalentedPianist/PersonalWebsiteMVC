@@ -1,31 +1,23 @@
 ﻿@using MudBlazor
-@using MudBlazor.Services 
-@inject NavigationManager nav 
-
 
 <!DOCTYPE html>
 <html>
 <head>
-	<base href="/">
-	<link rel="stylesheet" href="/css/Blog.min.css">
-	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
-	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet">
-	<link rel="stylesheet" href="PersonalWebsiteMVC.styles.css">
-	
-	<title>Douglas McGregor</title>
+    <base href="/">
+
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+    <link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/Blog.min.css">
+    <title>Douglas McGregor</title>
 </head>
 <body>
-	<Routes @rendermode="InteractiveServer" />
+    <Routes @rendermode="InteractiveServer" />
 
-	<MudHidden Breakpoint="Breakpoint.Sm">
-		<p>This is a mobile device.</p>
-	</MudHidden>
 
-	<MudThemeProvider />
-	<MudDialogProvider />
-	<MudSnackbarProvider />
 
-	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
 
 </body>
 </html>
@@ -34,11 +26,11 @@
 
 
 @code {
-	public string? Message { get; set; }
+    public string? Message { get; set; }
 
-	protected override void OnInitialized() 
-	{
-		Message = DateTime.Now.ToString();
-	}
+    protected override void OnInitialized()
+    {
+        Message = DateTime.Now.ToString();
+    }
 
 }
