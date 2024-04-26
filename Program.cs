@@ -11,6 +11,8 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
+using PersonalWebsiteMVC.Components;
+using PersonalWebsiteMVC.Components.Layout;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -70,6 +72,7 @@ builder.Services.ConfigureApplicationCookie(options =>
 
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
+builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
 var app = builder.Build();
 
@@ -86,6 +89,9 @@ app.UseStaticFiles();
 
 
 app.UseRouting();
+app.UseAntiforgery();
+
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.UseAuthentication();
 app.UseAuthorization();

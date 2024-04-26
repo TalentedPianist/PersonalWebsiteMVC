@@ -1,0 +1,37 @@
+﻿@using MudBlazor
+@using MudBlazor.Services 
+@inject NavigationManager nav 
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<base href="~/">
+	<link rel="stylesheet" href="/css/Blog.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet">
+	<title>Douglas McGregor</title>
+</head>
+<body>
+    <Routes @rendermode="InteractiveServer" />
+
+    <h1>@Message</h1>
+
+
+
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+</body>
+</html>
+
+
+
+
+@code {
+	public string? Message { get; set; }
+
+	
+
+}
