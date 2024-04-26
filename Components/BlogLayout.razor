@@ -1,0 +1,40 @@
+﻿@using MudBlazor
+@rendermode
+
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="/css/Blog.min.css">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+	<link href="_content/MudBlazor/MudBlazor.min.css" rel="stylesheet" />
+	<title>Douglas McGregor</title>
+</head>
+<body>
+
+	<h1>@Message</h1>
+
+	<MudHidden Breakpoint="Breakpoint.Sm">
+		<p>This is a desktop  device.</p>
+	</MudHidden>
+
+	<script src="_content/MudBlazor/MudBlazor.min.js"></script>
+
+</body>
+</html>
+
+
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
+
+@code {
+	public string? Message { get; set; }
+
+	protected override void OnInitialized()
+	{
+		base.OnInitialized();
+		Message = $"Initialized at {DateTime.Now}";
+
+	}
+}
