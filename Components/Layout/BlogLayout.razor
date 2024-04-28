@@ -1,67 +1,16 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
-@using MudBlazor.Services
-@implements IBrowserViewportObserver
-@implements IAsyncDisposable
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudBreakpointProvider>
-    <MudHidden Breakpoint="Breakpoint.XlAndUp">
-        <p>This is a mobile device.</p>
-    </MudHidden>
+<MudHidden Breakpoint="Breakpoint.Sm">
+	<Mobile />
+</MudHidden>
 
-
-    @_start
-
-    @foreach (var item in _breakpointHistory)
-    {
-        
-            @item.ToString()
-        }
-</MudBreakpointProvider>
 
 @Body
 
-@code {
-    [Inject]
-    private IBrowserViewportService BrowserViewportService { get; set; } = default!;
 
-    private List<Breakpoint> _breakpointHistory = new();
-    private Breakpoint _start;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
-    {
-        if (firstRender)
-        {
-            await BrowserViewportService.SubscribeAsync(this, fireImmediately: true);
-        }
-        await base.OnAfterRenderAsync(firstRender);
-    }
-
-    public async ValueTask DisposeAsync() => await BrowserViewportService.UnsubscribeAsync(this);
-
-    Guid IBrowserViewportObserver.Id { get; } = Guid.NewGuid();
-
-    ResizeOptions IBrowserViewportObserver.ResizeOptions { get; } = new()
-    {
-        ReportRate = 250,
-        NotifyOnBreakpointOnly = true
-    };
-
-    Task IBrowserViewportObserver.NotifyBrowserViewportChangeAsync(BrowserViewportEventArgs browserViewportEventArgs)
-    {
-        if (browserViewportEventArgs.IsImmediate)
-        {
-            _start = browserViewportEventArgs.Breakpoint;
-        }
-        else
-        {
-            _breakpointHistory.Add(browserViewportEventArgs.Breakpoint);
-        }
-        return InvokeAsync(StateHasChanged);
-    }
-}
 
