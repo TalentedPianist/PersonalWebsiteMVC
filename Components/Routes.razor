@@ -1,16 +1,12 @@
 ﻿
-
 <Router AppAssembly="@typeof(Program).Assembly">
-	<Found Context="routeData">
-		<AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(BlogLayout)">
-			<NotAuthorized>
-				
-			</NotAuthorized>
-		</AuthorizeRouteView>
-		<FocusOnNavigate RouteData="@routeData" Selector="h1" />
-	</Found>
-	<NotFound>
-		<p>Sorry, the page does not exist.</p>
-	</NotFound>
+    <Found Context="routeData">
+        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.BlogLayout)">
+            <NotAuthorized>
+
+            </NotAuthorized>
+        </AuthorizeRouteView>
+        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
+    </Found>
 
 </Router>

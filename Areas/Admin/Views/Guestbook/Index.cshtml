@@ -12,12 +12,12 @@
      @foreach (var item in Model)
      {
           <tr>
-          <td>@item.GuestbookID</td>
-          <td>@item.GuestbookUser</td>
-          <td>@item.GuestbookUserEmail</td>
-          <td><a asp-action="Update" class="btn btn-primary" asp-route-id="@item.GuestbookID">Update</a></td>
-          <td><a asp-action="Details" class="btn btn-primary" asp-route-id="@item.GuestbookID">Details</a></td>
-          <td><a asp-action="Delete" class="btn btn-primary" asp-route-id="@item.GuestbookID">Delete</a></td>
+          <td>@item.Id</td>
+          <td>@item.GuestbookAuthor</td>
+          <td>@item.GuestbookAuthorEmail</td>
+          <td><a asp-action="Update" class="btn btn-primary" asp-route-id="@item.Id">Update</a></td>
+          <td><a asp-action="Details" class="btn btn-primary" asp-route-id="@item.Id">Details</a></td>
+          <td><a asp-action="Delete" class="btn btn-primary" asp-route-id="@item.Id">Delete</a></td>
           </tr>
      }
 </table>

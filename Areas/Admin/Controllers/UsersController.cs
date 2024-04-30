@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PersonalWebsiteBlazor.Models;
 using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
@@ -36,10 +37,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                {
                     ApplicationUser appUser = new ApplicationUser
                     {
-                         UserName = user.Name,
+                         UserName = user.Username,
                          Email = user.Email
                     };
-                    IdentityResult result = await userManager.CreateAsync(appUser, user.Password);
+                    IdentityResult result = await userManager.CreateAsync(appUser, user.Password!);
                     if (result.Succeeded)
                          return RedirectToAction("Index");
                     else

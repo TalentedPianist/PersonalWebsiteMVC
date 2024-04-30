@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PersonalWebsiteBlazor.Models;
 using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Data
@@ -11,9 +12,9 @@ namespace PersonalWebsiteMVC.Data
         {
         }
 
-        public DbSet<Posts> Posts { get; set; } = default!;
+        public DbSet<PersonalWebsiteMVC.Models.Posts> Posts { get; set; } = default!;
         public DbSet<Categories> Categories { get; set; } = default!;
-        public DbSet<Comments> Comments { get; set; } = default!;
+        public DbSet<PersonalWebsiteMVC.Models.Comments> Comments { get; set; } = default!;
         public DbSet<Guestbook> Guestbook { get; set; } = default!;
     }
 }

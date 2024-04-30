@@ -1,37 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PersonalWebsiteMVC.Models
 {
-     public class GuestbookMixModel
-     {
-          public List<Guestbook> GuestbookAll { get; set; } = new List<Guestbook>();
-        public Guestbook Guestbook { get; set; } = default!;
-     }
-
-     public class Guestbook 
-     {
-          [Key]
-          public int GuestbookID { get; set; }
+    public class Guestbook
+    {
+        [Key]
+        public int Id { get; set; }
         [Required]
-        [Display(Name = "Comment:")]
-        public string GuestbookComment { get; set; } = default!;
+        public string? GuestbookAuthor { get; set; } 
         [Required]
-        [Display(Name = "Name:")]
-
-        public string GuestbookUser { get; set; } = default!;
+        public string? GuestbookAuthorEmail { get; set; } 
+        public string? GuestbookAuthorUrl { get; set; } 
         [Required]
-        [Display(Name = "Email:")]
+        public string? GuestbookContent { get; set; } 
+        public string? GuestbookAuthorIP { get; set; } 
+        public string? GuestbookApproved { get; set; } 
+        public DateTime DatePosted { get; set; }
 
-        public string GuestbookUserEmail { get; set; } = default!;
-
-        [Display(Name = "Website:")]
-        public string GuestbookUserWebsite { get; set; } = default!;
-        public string GuestbookApproved { get; set; } = default!;
-        public string GuestbookIP { get; set; } = default!;
-          public DateTime GuestbookDate { get; set; }
-     }
+    }
 }

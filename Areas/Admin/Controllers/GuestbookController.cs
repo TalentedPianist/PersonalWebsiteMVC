@@ -37,12 +37,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                if (ModelState.IsValid)
                {
                     var g = new Guestbook();
-                    g.GuestbookComment = model.GuestbookComment;
-                    g.GuestbookUser = model.GuestbookUser;
-                    g.GuestbookUserEmail = model.GuestbookUserEmail;
-                    g.GuestbookUserWebsite = model.GuestbookUserWebsite;
-                    g.GuestbookDate = DateTime.Now;
-                    g.GuestbookIP = HttpContext!.Connection.RemoteIpAddress!.ToString();
+                    g.GuestbookContent = model.GuestbookContent;
+                    g.GuestbookAuthor = model.GuestbookAuthor;
+                    g.GuestbookAuthorEmail = model.GuestbookAuthorEmail;
+                    g.GuestbookAuthorUrl = model.GuestbookAuthorUrl;
+                    g.DatePosted = DateTime.Now;
+                    g.GuestbookAuthorIP = HttpContext!.Connection.RemoteIpAddress!.ToString();
                     g.GuestbookApproved = "No";
                     _db.Add(g);
                     _db.SaveChanges();
@@ -53,7 +53,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Update(int id)
           {
-               return View(_db.Guestbook.Where(g => g.GuestbookID == id).FirstOrDefault());
+               return View(_db.Guestbook.Where(g => g.Id == id).FirstOrDefault());
           }
 
           [HttpPost]
@@ -61,11 +61,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           {
                if (ModelState.IsValid)
                {
-                    var entry = _db.Guestbook.Where(g => g.GuestbookID == id).FirstOrDefault();
-                    entry!.GuestbookComment = model.GuestbookComment;
-                    entry.GuestbookUser = model.GuestbookUser;
-                    entry.GuestbookUserEmail = model.GuestbookUserEmail;
-                    entry.GuestbookUserWebsite = model.GuestbookUserWebsite;
+                    var entry = _db.Guestbook.Where(g => g.Id == id).FirstOrDefault();
+                    entry!.GuestbookContent = model.GuestbookContent;
+                    entry.GuestbookAuthor = model.GuestbookAuthor;
+                    entry.GuestbookAuthorEmail = model.GuestbookAuthorEmail;
+                    entry.GuestbookAuthorUrl = model.GuestbookAuthorUrl;
                     entry.GuestbookApproved = model.GuestbookApproved;
                     _db.Update(entry);
                     _db.SaveChanges();
@@ -76,7 +76,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Delete(int id)
           {
-               var g = _db.Guestbook.Where(g => g.GuestbookID == id).FirstOrDefault();
+               var g = _db.Guestbook.Where(g => g.Id == id).FirstOrDefault();
                _db.Remove(g!);
                _db.SaveChanges();
                return RedirectToAction("Index");
@@ -84,7 +84,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Details(int id)
           {
-               return View(_db.Guestbook.Where(g => g.GuestbookID == id).FirstOrDefault());
+               return View(_db.Guestbook.Where(g => g.Id == id).FirstOrDefault());
           }
 
      }

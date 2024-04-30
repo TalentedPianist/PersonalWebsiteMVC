@@ -1,16 +1,20 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
+@inject NavigationManager nav 
+ 
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
-<MudHidden Breakpoint="Breakpoint.Sm">
+<MudHidden Breakpoint="Breakpoint.SmAndUp">
 	<Mobile />
 </MudHidden>
 
 
 @Body
+
+
 
 
 

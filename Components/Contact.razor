@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Components.Forms
+
+
+
+<div id="Contact">
+
+	<svg preserveAspectRatio="none" class="contact-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" fill="red"><path fill-opacity="1" d="M0,96L48,133.3C96,171,192,245,288,277.3C384,309,480,299,576,261.3C672,224,768,160,864,160C960,160,1056,224,1152,224C1248,224,1344,160,1392,128L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
+
+
+
+
+
+	<MudText Typo="Typo.h2">Contact</MudText>
+
+	<p>I would love to hear from you.  Please fill out the form below and I will get back to you as soon as possible.</p>
+
+	<EditForm Model="Model" FormName="ContactForm" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+		<DataAnnotationsValidator />
+		<ValidationSummary />
+
+		<div>
+			<label for="Your Name">Your Name:</label>
+			<InputText @bind-Value="Model.Name" placeholder="Your Name e.g. John Smith" />
+		</div>
+		<div>
+
+			<label for="Your Email">Your Email Address:</label>
+			<InputText type="email" @bind-Value="Model.Email" placeholder="Your email address e.g. john@johnsmith.com" />
+		</div>
+		<div>
+			<label for="Your Website">Your Website:</label>
+			<InputText @bind-Value="Model.Website" placeholder="Your website url e.g. https://www.johnsmith.com" />
+		</div>
+		<div>
+		
+			<label for="Your Message">Your Message:</label>
+			
+		</div>
+		<MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Contact</MudButton>
+	</EditForm>
+
+</div>

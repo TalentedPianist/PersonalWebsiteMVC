@@ -1,0 +1,46 @@
+﻿@inject IJSRuntime JS
+
+<MudDialog Class="MobileMenu">
+
+	<DialogContent>
+		<ul>
+			<li><MudButton Style="color: white; font-size: xx-large;" OnClick="CloseDialog">X</MudButton></li>
+			<li><NavLink href="#Home" @onclick="(() => Navigate(Home))">Home</NavLink></li>
+			<li><NavLink href="#About" @onclick="(() => Navigate(About))">About</NavLink></li>
+			<li><NavLink href="#Blog" @onclick="(() => Navigate(Blog))">Blog</NavLink></li>
+			<li><NavLink href="#Contact" @onclick="(() => Navigate(Contact))">Contact</NavLink></li>
+			<li><NavLink href="#Guestbook" @onclick="(() => Navigate(Guestbook))">Guestbook</NavLink></li>
+		</ul>
+	</DialogContent>
+
+</MudDialog>
+
+@code {
+	[CascadingParameter]
+	MudDialogInstance? MudDialog
+	{
+		get; set;
+	}
+
+	private async Task CloseDialog()
+	{
+		MudDialog!.Close(DialogResult.Ok(false));
+		await Task.CompletedTask;
+
+	}
+
+	public string Home { get; set; } = "Home";
+	public string About { get; set; } = "About";
+	public string Blog { get; set; } = "Blog";
+	public string Contact { get; set; } = "Contact";
+	public string Guestbook { get; set; } = "Guestbook";
+
+	private async Task Navigate(string url)
+	{
+		MudDialog!.Close(DialogResult.Ok(false));
+		await JS.InvokeVoidAsync("SmoothScroll", url);
+		await JS.InvokeVoidAsync("ShowIcon");
+		// Two calls to JavaScript functions required to get this working properly!! 
+	}
+}
+

@@ -1,27 +1,63 @@
-﻿<header>
-	<MudIcon Icon="@Icons.Material.Filled.Menu" Class="Menu" />
-</header>
+﻿@inject ApplicationDbContext _db
+@inject IJSRuntime JS
+@inject NavigationManager nav
+@using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.WebUtilities
+
+@Message
 
 <div id="Home">
-	<h1>Hi, I'm Douglas!</h1>
-	<img src="http://www.gravatar.com/avatar/?d=mp">
-	<h2>Thanks for visiting!</h2>
-	<MudButton ButtonType="ButtonType.Button" Size="Size.Large" Variant="Variant.Filled" Color="Color.Primary">About Me</MudButton>
+	<div class="overlay">
+		<section>
+
+			<MudText Typo="Typo.h3">Hi, I'm Douglas!</MudText>
+			<MudImage Src="images/me.jpg" />
+			<MudText Typo="Typo.h4">Thanks for visiting!</MudText>
+			<MudButton OnClick="AboutMe">About Me</MudButton>
+		</section>
+	</div>
+
 
 </div>
 
 <div id="About">
-	<h1>About Me</h1>
 
-	<p>Rebum aliquyam et labore invidunt suscipit consequat amet ea eros sed erat justo gubergren stet magna labore clita sanctus gubergren</p>
+	<MudText Typo="Typo.h2">About Me</MudText>
 
-	<p>Consetetur aliquam sadipscing clita consetetur et tempor justo sit iriure nulla dolor no ea exerci volutpat dolor dolores et labore velit kasd tempor aliquyam ea est sit at dolores in</p>
+	<img src="/images/me.jpg">
 
-	<p>Vero rebum erat augue eos rebum et iusto sanctus at sanctus kasd amet iriure amet gubergren et labore accusam sit labore illum te erat in dolore feugiat feugiat stet diam</p>
 
-	<p>At erat tempor kasd et et diam magna sit erat</p>
-	/p>
+	<p>Exerci et stet nonumy tempor gubergren eirmod clita sed dolor amet tempor duo lorem nonumy dolore in dolor vero eos</p>
+
+	<p>Amet invidunt accusam delenit vero gubergren et eum accusam elitr labore rebum eirmod magna et aliquyam at illum erat voluptua eros sea dolores eos est sea ipsum takimata erat gubergren</p>
+
+	<p>Aliquam vel duo stet dolor et amet ipsum accusam diam diam nostrud diam commodo stet dignissim ipsum stet erat wisi sea iusto eos vel vel ipsum sit dolor nostrud lorem sea consetetur ea kasd nonumy</p>
 
 
 	<svg preserveAspectRatio="none" class="blog-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#0099ff" fill-opacity="1" d="M0,64L48,64C96,64,192,64,288,96C384,128,480,192,576,186.7C672,181,768,107,864,85.3C960,64,1056,96,1152,128C1248,160,1344,192,1392,208L1440,224L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>
 </div>
+
+
+
+
+
+@functions {
+	public static string Truncate(string value, int maxChars)
+	{
+		return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "....";
+	}
+
+	public static string RemoveHTMLTags(string html)
+	{
+		return Regex.Replace(html, "<.*?>", string.Empty);
+	}
+}
+
+@code {
+
+	public string? Message { get; set; }
+
+	public async Task AboutMe() {
+		await Task.CompletedTask;
+	}
+}

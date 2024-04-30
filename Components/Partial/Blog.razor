@@ -1,0 +1,42 @@
+﻿@using System.Text.RegularExpressions
+@inject ApplicationDbContext _db
+@inject NavigationManager nav
+@inject IJSRuntime JS 
+@layout BlogLayout
+
+@if (_db.Posts.Count() == 0)
+{
+    <MudText Color="Color.Primary" Typo="Typo.h1">Blog</MudText>
+    <MudText Typo="Typo.body1">No posts have been found just now.  Please check back later.</MudText>
+}
+else
+{
+
+}
+
+
+@code { 
+    [SupplyParameterFromQuery(Name="id")]
+    public int Id { get; set; } = new();
+
+#pragma warning disable
+    public async Task ViewPost(int id)
+    {
+        var query = new Dictionary<string, string>
+        {
+            {"id", id.ToString() },
+        };
+        nav.NavigateTo(QueryHelpers.AddQueryString("#Blog", query));
+        await JS.InvokeVoidAsync("location.reload");
+    }
+
+    public async Task ViewComments(int id)
+    {
+        var query = new Dictionary<string, string>
+        {
+            {"id", id.ToString() }
+        };
+        nav.NavigateTo(QueryHelpers.AddQueryString("#Comments", query));
+        await JS.InvokeVoidAsync("location.reload");
+    }
+}
