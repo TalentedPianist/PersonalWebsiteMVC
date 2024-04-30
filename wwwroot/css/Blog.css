@@ -8,46 +8,51 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-header {
-  display: flex;
-  flex-direction: column;
-  flex: 0;
-  align-items: center;
-  background-color: orange;
-}
-header .Menu {
-  color: yellow;
-  font-size: 5em;
-}
-
 #Home {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
-  gap: 5em;
+  gap: 2em;
   height: 100vh;
-  background-color: orange;
+  width: 100vw;
+  background-image: url(../images/ireland.jpg);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  color: white;
+}
+#Home section {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  align-items: center;
+  gap: 5em;
 }
 #Home img {
-  border-radius: 50%;
   width: 50%;
+  border-radius: 50%;
 }
 
 #About {
   display: flex;
   flex-direction: column;
   flex: 0;
-  justify-content: flex-start;
-  background-color: yellow;
+  align-items: center;
+  background-color: orange;
   height: 100vh;
 }
 #About p {
-  margin-top: 1em;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 1em;
+  font-size: large;
 }
-#About h1 {
-  display: flex;
-  margin: 0 auto;
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
 }
