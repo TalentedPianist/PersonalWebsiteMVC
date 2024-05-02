@@ -87,18 +87,25 @@ else
 }
 app.UseStaticFiles();
 
+app.MapRazorPages();
+app.MapControllers();
 
 app.UseRouting();
+app.UseAuthorization();
+
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
+
 app.UseAuthentication();
-app.UseAuthorization();
+
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 
 

@@ -23,6 +23,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                passwordHasher = passwordHash;
           }
 
+       
         public IActionResult Index()
         {
             return View(userManager.Users);
