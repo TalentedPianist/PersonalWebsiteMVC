@@ -4,13 +4,13 @@ using Microsoft.JSInterop;
 using PersonalWebsiteBlazor.Models;
 using PersonalWebsiteMVC.Models;
 
-namespace PersonalWebsiteBlazor.Components
+namespace PersonalWebsiteMVC.Components
 {
-    public partial class Mobile : ComponentBase
+    public partial class MobileComponent : ComponentBase
     {
         private NavigationManager _nav { get; set; }
         private JSRuntime JS { get; set; }
-        public Mobile(NavigationManager nav, JSRuntime jS)
+        public MobileComponent(NavigationManager nav, JSRuntime jS)
         {
             _nav = nav;
             JS = jS;
@@ -40,7 +40,7 @@ namespace PersonalWebsiteBlazor.Components
                 PostID = Convert.ToInt32(id);
 
             }
-            StateHasChanged();
+  
         }
 
      

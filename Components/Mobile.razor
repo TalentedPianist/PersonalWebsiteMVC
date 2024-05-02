@@ -1,18 +1,22 @@
 ﻿
 @using System.Text.RegularExpressions
-@inherits Mobile
+@inject IJSRuntime JS 
+@inject ApplicationDbContext db 
 
 
 <div id="Home">
-	<div class="overlay">
-		<section>
+    <div class="overlay">
+        <header>
+            <MudIcon Icon="@Icons.Material.Outlined.Menu" Class="Menu" />
+        </header>
+        <section>
 
-			<MudText Typo="Typo.h3">Hi, I'm Douglas!</MudText>
-			<MudImage Src="images/me.jpg" />
-			<MudText Typo="Typo.h4">Thanks for visiting!</MudText>
-			<MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="AboutMe">About Me</MudButton>
-		</section>
-	</div>
+            <MudText Typo="Typo.h3">Hi, I'm Douglas!</MudText>
+            <MudImage Src="images/me.jpg" />
+            <MudText Typo="Typo.h4">Thanks for visiting!</MudText>
+            <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="AboutMe">About Me</MudButton>
+        </section>
+    </div>
 
 
 </div>
@@ -28,11 +32,19 @@
 
 	<p>Aliquam vel duo stet dolor et amet ipsum accusam diam diam nostrud diam commodo stet dignissim ipsum stet erat wisi sea iusto eos vel vel ipsum sit dolor nostrud lorem sea consetetur ea kasd nonumy</p>
 
+	<MudButton OnClick="Blog" Color="Color.Primary" Variant="Variant.Filled">Blog</MudButton>
 
 </div>
 
 <div id="Blog">
+	<h1>Blog</h1>
 
+	@Message
+
+	@foreach (Posts post in AllPosts)
+	{
+		@post.PostTitle
+	}
 
 </div>
 
@@ -50,3 +62,41 @@
 	}
 }
 
+
+@code { 
+	public string? Message { get; set; }
+
+	public List<Posts> AllPosts { get; set; } = new List<Posts>();
+
+	public async Task AboutMe()
+	{
+		await JS.InvokeVoidAsync("SmoothScroll", "About");
+	}
+
+	public async Task Blog()
+	{
+		await JS.InvokeVoidAsync("SmoothScroll", "Blog");
+	}
+
+	protected override async Task OnAfterRenderAsync(bool firstRender)
+	{
+		await Task.CompletedTask;
+
+	}
+
+	protected override void OnInitialized()
+	{
+		if (db.Posts.Count() == 0)
+		{
+			Message = "No posts have been found just now.  Please check back later.";
+		}
+		else
+		{
+			foreach (Posts post in db.Posts)
+			{
+				AllPosts.Add(post);
+			}
+		}
+	}
+}
+}

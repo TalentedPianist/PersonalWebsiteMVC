@@ -21,13 +21,29 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
     color: white;
+    position: relative;
+
+    header { 
+        display: flex; 
+        flex-direction: row; 
+        flex: 0; 
+        width: 100vw;
+        align-items: center;
+
+        .Menu { 
+            font-size: 5em;
+            display: flex; 
+            margin: 0 auto;
+        }
+    }
 
     section { 
         display: flex; 
         flex-direction: column;
         flex: 0;
         align-items: center;
-        gap: 5em;
+        gap: 4em;
+        height: 90vh;
     }
 
     img { 
@@ -50,6 +66,16 @@ body {
         padding-top: 1em;
         font-size: large;
     }
+}
+
+#Blog { 
+    display: flex; 
+    flex-direction: column;
+    flex: 0; 
+    height: 100vh;
+    background-color: yellow;
+    position: relative;
+    align-items: center;
 }
 
 .overlay { 
