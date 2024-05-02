@@ -14,7 +14,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
 #nullable enable
     [Area("Admin")]
-     [Authorize(Policy = "Admin")]
+
      public class BlogController : Controller
      {
         private readonly ApplicationDbContext _db = default!;
@@ -26,6 +26,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                _solr = solr;
           }
 
+        [Route("Admin/Blog")]
           public IActionResult Index()
           {
                return View(_db.Posts.ToList());

@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
 using PersonalWebsiteMVC.Components;
 using PersonalWebsiteMVC.Components.Layout;
+using SolrNet;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews().AddNewtonsoftJson();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
+builder.Services.AddMvc();
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
@@ -74,6 +76,7 @@ builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.De
 builder.Services.AddMudServices();
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -100,6 +103,11 @@ app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 
 app.UseAuthentication();
+
+app.MapAreaControllerRoute(
+    name: "Admin",
+    areaName: "Admin",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
 app.MapControllerRoute(

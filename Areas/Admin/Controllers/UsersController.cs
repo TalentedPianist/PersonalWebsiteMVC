@@ -11,7 +11,6 @@ using PersonalWebsiteMVC.Models;
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
      [Area("Admin")]
-     [Authorize(Policy = "Admin")]
     public class UsersController : Controller
     {
           private UserManager<ApplicationUser> userManager;
@@ -23,7 +22,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                passwordHasher = passwordHash;
           }
 
-       
+       [Route("Admin/Users")]
         public IActionResult Index()
         {
             return View(userManager.Users);
@@ -63,11 +62,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public async Task<IActionResult> Update(string id, string email, string password)
+          public async Task<IActionResult> Update(string id, string firstname, string lastname, string email, string password)
           {
                ApplicationUser? user = await userManager.FindByIdAsync(id);
                if (user != null)
                {
+                    
                     if (!string.IsNullOrEmpty(email))
                          user.Email = email;
                     else

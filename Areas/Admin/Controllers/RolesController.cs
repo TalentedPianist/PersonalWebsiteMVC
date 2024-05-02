@@ -12,7 +12,7 @@ using PersonalWebsiteMVC.Models;
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
      [Area("Admin")]
-     [Authorize(Policy = "Admin")]
+  
     public class RolesController : Controller
      {
           private RoleManager<IdentityRole> roleManager;
@@ -24,6 +24,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                userManager = userMgr;
           }
 
+            [Route("Admin/Roles")]
           public ViewResult Index() => View(roleManager.Roles);
 
           [HttpGet]

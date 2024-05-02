@@ -86,6 +86,11 @@
 
 	protected override void OnInitialized()
 	{
+		GetBlog();
+	}
+
+	public void GetBlog()
+	{
 		if (db.Posts.Count() == 0)
 		{
 			Message = "No posts have been found just now.  Please check back later.";
@@ -99,4 +104,4 @@
 		}
 	}
 }
-}
+
