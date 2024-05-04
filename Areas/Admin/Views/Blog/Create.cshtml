@@ -10,17 +10,17 @@
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form method="post">
+<form method="post" asp-action="SaveBlog">
 
-    <div class="form-group form-row">
+    <div class="form-group">
         <label asp-for="PostContent">Content:</label>
         <textarea asp-for="PostContent" id="ckeditor1"></textarea>
     </div>
-    <div class="form-group form-row">
+    <div class="form-group">
         <label asp-for="PostTitle">Title:</label>
         <input asp-for="PostTitle" />
     </div>
-    <div class="form-group form-row">
+    <div class="form-group">
         <label asp-for="CategoryID">Category:</label>
         <select asp-for="CategoryID">
             @foreach (var item in db.Categories)
@@ -30,8 +30,8 @@
             }
         </select>
     </div>
-    <button type="submit" class="btn btn-primary" asp-page-handler="PublishPost">Publish</button>
-    <button type="submit" class="btn btn-secondary" asp-page-handler="SaveDraft">Save Draft</button>
+    <button type="submit" class="btn btn-primary">Publish</button>
+
 
 </form>
 

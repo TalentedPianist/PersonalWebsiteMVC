@@ -6,9 +6,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
-using SolrNet;
-using SolrNet.Commands.Parameters;
-using SolrNet.Mapping;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -18,12 +15,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
      public class BlogController : Controller
      {
         private readonly ApplicationDbContext _db = default!;
-        private ISolrOperations<SolrModel> _solr = default!;
 
-          public BlogController(ApplicationDbContext db, ISolrOperations<SolrModel> solr)
+          public BlogController(ApplicationDbContext db)
           {
                _db = db;
-               _solr = solr;
+               
           }
 
         [Route("Admin/Blog")]
@@ -38,7 +34,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public IActionResult OnPostPublish(Posts model)
+          [Route("Blog/SavePost")]
+          public IActionResult SaveBlog(Posts model)
           {
                if (ModelState.IsValid)
                {
@@ -59,15 +56,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View(model);
           }
 
-          public IActionResult OnPostSaveDraft(Posts model)
-          {
-               if (ModelState.IsValid)
-            {
-                    var p = new Posts();
-                    
-            }
-               return View();
-          }
 
           public IActionResult Update(int id)
           {
@@ -76,7 +64,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public IActionResult Update(int id, Posts model, string Solr)
+          public IActionResult Update(int id, Posts model)
           {
                if (ModelState.IsValid)
                {
@@ -89,22 +77,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     b.CategoryID = model.CategoryID;
                     _db.Update(b);
                     _db.SaveChanges();
-                    if (Solr == "Yes")
-                    {
-                         var s = new PersonalWebsiteMVC.Models.SolrModel();
-                         s.ID = model.PostID.ToString();
-                         s.Title = model.PostTitle;
-                         s.Url = "http://www.douglasmcgregor.co.uk/Blog?q=" + model.PostID;
-                         s.Body = model.PostContent;
-                         _solr.Add(s);
-                         _solr.Commit();
-                    }
-                    if (Solr == "No")
-                    {
-                         SolrQueryByField results = new SolrQueryByField("ID", model.PostID.ToString());
-                         _solr.Delete(results.FieldValue);
-                         _solr.Commit();
-                    }
+                   
                     return RedirectToAction("Index");
                }
                return View(model);

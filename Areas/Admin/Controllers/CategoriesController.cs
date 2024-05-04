@@ -10,7 +10,7 @@ using PersonalWebsiteMVC.Models;
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
      [Area("Admin")]
-     [Authorize(Policy = "Admin")]
+     
      public class CategoriesController : Controller
      {
           private readonly ApplicationDbContext _db; 
@@ -20,6 +20,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                _db = db; 
           }
 
+          [Route("Admin/Categories")]
           public IActionResult Index()
           {
                return View(_db.Categories);

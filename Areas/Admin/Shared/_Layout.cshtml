@@ -72,12 +72,19 @@
 	</div>
 
 	<script src="/lib/jquery/dist/jquery.min.js"></script>
-	<script src="/lib/ckeditor/ckeditor.js"></script>
+	<script src="/lib/ckeditor5/ckeditor.min.js"></script>
 	<script src="/lib/ckeditor/adapters/jquery.js"></script>
 	<script src="/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
 	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBLgq2BcCrbNfFlvviKbpOvAikzKMlPYp4&libraries=places"></script>
 	<script src="~/js/Admin.js?v=@n"></script>
+	<script>
+		ClassicEditor
+			.create(document.querySelector('#ckeditor1'))
+			.cach(error => {
+				console.error(error);
+			});
+	</script>
 
 	@RenderSection("Scripts", required: false)
 
