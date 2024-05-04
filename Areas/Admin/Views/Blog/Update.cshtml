@@ -13,16 +13,12 @@
 <form asp-action="Update" method="post">
     <div class="form-group">
         <label asp-for="PostContent">Content:</label>
-        <textarea asp-for="PostContent" id="ckeditor1"></textarea>
+        <textarea asp-for="PostContent" id="ckeditor1" name="txtPost"></textarea>
     </div>
 
     <div class="form-group">
         <label asp-for="PostTitle">Title:</label>
         <input asp-for="PostTitle" />
-    </div>
-    <div class="form-group">
-        <label asp-for="PostLocation">Location:</label>
-        <input asp-for="PostLocation" id="searchTextField" />
     </div>
      <div class="form-group">
           <label asp-for="CategoryID">Category</label>
@@ -33,14 +29,7 @@
                 }
           </select>
      </div>
-    <div class="form-group">
-          <label>Add to Solr</label>
-            <select name="Solr">
-                <option value="Yes">Yes</option>
-                <option value="No">No</option>
-            </select>
-            <input type="hidden" name="postID" asp-for="PostID" />
-    </div>
+  
     <button type="submit" class="btn btn-primary">Save</button>
 </form>
 

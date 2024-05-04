@@ -10,11 +10,14 @@
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
 
-<form method="post" asp-action="SaveBlog">
+@TempData["Message"]
+
+<form method="post" asp-action="SavePost" asp-controller="Blog" asp-area="Admin">
 
     <div class="form-group">
         <label asp-for="PostContent">Content:</label>
-        <textarea asp-for="PostContent" id="ckeditor1"></textarea>
+        <!-- Note: textarea needs the name attribute or else data posted will be null -->
+        <textarea asp-for="PostContent" id="ckeditor1" name="txtPost"></textarea>
     </div>
     <div class="form-group">
         <label asp-for="PostTitle">Title:</label>

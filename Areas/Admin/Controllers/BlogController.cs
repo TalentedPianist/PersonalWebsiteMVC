@@ -14,6 +14,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
      public class BlogController : Controller
      {
+
         private readonly ApplicationDbContext _db = default!;
 
           public BlogController(ApplicationDbContext db)
@@ -28,19 +29,22 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View(_db.Posts.ToList());
           }
 
+            [Route("/Admin/Blog/Create")]
           public IActionResult Create()
           {
                return View();
           }
 
           [HttpPost]
-          [Route("Blog/SavePost")]
+            [Route("Blog/SavePost")]
           public IActionResult SaveBlog(Posts model)
           {
+            TempData["Message"] = model.PostContent;
+
                if (ModelState.IsValid)
                {
                     var b = new Posts();
-                    b.PostContent = model.PostContent;
+                b.PostContent = Request.Form["txtPost"];
                     b.PostExcerpt = model.PostExcerpt;
                     b.PostTitle = model.PostTitle;
                     b.CategoryID = model.CategoryID; 
@@ -53,7 +57,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     _db.SaveChanges();
                     return RedirectToAction("Index");
                }
-               return View(model);
+               return View("Create", model); // Works when nothing else will.  Makes sense because it's in the root Blog folder.
           }
 
 
