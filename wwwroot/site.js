@@ -62,5 +62,13 @@ function LoadCKEditor() {
    
 }
 
+function HideIcon() {
+    $('.MenuIcon').css('display', 'none');
+}
+
+function ShowIcon() {
+    $('.MenuIcon').css('display', 'none');
+}
+
 
 

@@ -1,13 +1,18 @@
 ﻿
 @using System.Text.RegularExpressions
+@using PersonalWebsiteMVC.Components.Partial 
+@using MudBlazor
+@using MudBlazor.Services 
 @inject IJSRuntime JS 
 @inject ApplicationDbContext db 
+@inject IDialogService Dialog 
+@inject NavigationManager nav 
 
 
 <div id="Home">
     <div class="overlay">
         <header>
-            <MudIcon Icon="@Icons.Material.Outlined.Menu" Class="Menu" />
+            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Class="Menu" OnClick="OpenDialog" />
         </header>
         <section>
 
@@ -37,15 +42,7 @@
 </div>
 
 <div id="Blog">
-	<h1>Blog</h1>
-
-	@Message
-
-	@foreach (Posts post in AllPosts)
-	{
-		@post.PostTitle
-	}
-
+	<Blog />
 </div>
 
 
@@ -65,6 +62,7 @@
 
 @code { 
 	public string? Message { get; set; }
+	public int? PostID { get; set; }
 
 	public List<Posts> AllPosts { get; set; } = new List<Posts>();
 
@@ -80,28 +78,57 @@
 
 	protected override async Task OnAfterRenderAsync(bool firstRender)
 	{
-		await Task.CompletedTask;
-
-	}
-
-	protected override void OnInitialized()
-	{
-		GetBlog();
-	}
-
-	public void GetBlog()
-	{
-		if (db.Posts.Count() == 0)
+		var uri = nav.ToAbsoluteUri(nav.Uri);
+		if (firstRender)
 		{
-			Message = "No posts have been found just now.  Please check back later.";
-		}
-		else
-		{
-			foreach (Posts post in db.Posts)
+			await JS.InvokeVoidAsync("DetectScroll");
+
+			if (uri.Fragment.Contains("Home"))
 			{
-				AllPosts.Add(post);
+				await JS.InvokeVoidAsync("SmoothScroll", "Home");
+
+			}
+
+			if (uri.Fragment.Contains("About"))
+			{
+				await JS.InvokeVoidAsync("SmoothScroll", "About");
+			}
+
+			if (uri.Fragment.Contains("Blog"))
+			{
+				if (PostID > 0)
+				{
+					await JS.InvokeVoidAsync("SmoothScroll", "SinglePost");
+				}
+				else
+				{
+					await JS.InvokeVoidAsync("SmoothScroll", "Blog");
+				}
+			}
+
+			if (uri.Fragment.Contains("Comments"))
+			{
+				await JS.InvokeVoidAsync("SmoothScroll", "Comments");
+			}
+
+			if (uri.Fragment.Contains("Contact"))
+			{
+				await JS.InvokeVoidAsync("SmoothScroll", "Contact");
 			}
 		}
+
 	}
+
+
+	public async Task OpenDialog()
+	{
+		await JS.InvokeVoidAsync("HideIcon");
+		var options = new DialogOptions { CloseOnEscapeKey = true };
+		var dialog = Dialog.Show<MobileNav>("", options);
+		var result = await dialog.Result;
+	}
+
+
+
 }
 
