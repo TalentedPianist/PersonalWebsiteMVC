@@ -11,9 +11,7 @@
 
 <div id="Home">
     <div class="overlay">
-        <header>
-            <MudIconButton Icon="@Icons.Material.Outlined.Menu" Class="Menu" OnClick="OpenDialog" />
-        </header>
+        
         <section>
 
             <MudText Typo="Typo.h3">Hi, I'm Douglas!</MudText>
@@ -120,13 +118,6 @@
 	}
 
 
-	public async Task OpenDialog()
-	{
-		await JS.InvokeVoidAsync("HideIcon");
-		var options = new DialogOptions { CloseOnEscapeKey = true };
-		var dialog = Dialog.Show<MobileNav>("", options);
-		var result = await dialog.Result;
-	}
 
 
 

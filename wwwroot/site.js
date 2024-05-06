@@ -1,7 +1,7 @@
 ﻿
 function DetectScroll() {
     $(window).on("scroll", function () {
-        if ($(window).scrollTop() >= 330) {
+        if ($(window).scrollTop() >= 530) {
             $("header").addClass("sticky");
         } else {
             $("header").removeClass("sticky");

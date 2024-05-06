@@ -1,5 +1,7 @@
 ﻿@inherits LayoutComponentBase
 @using MudBlazor
+@inject IDialogService Dialog
+@inject IJSRuntime JS
  
 
 <MudThemeProvider />
@@ -7,11 +9,25 @@
 <MudSnackbarProvider />
 
 <MudHidden Breakpoint="Breakpoint.SmAndUp">
-    <Mobile />
+	<header>
+		<MudIconButton Icon="@Icons.Material.Outlined.Menu" Class="Menu" OnClick="OpenDialog" Size="Size.Large" />
+	</header>
+	<Mobile />
 </MudHidden>
 
 
 @Body
+
+@code {
+
+	public async Task OpenDialog()
+	{
+		await JS.InvokeVoidAsync("HideIcon");
+		var options = new DialogOptions { CloseOnEscapeKey = true, };
+		var dialog = Dialog.Show<MobileNav>("", options);
+		var result = await dialog.Result;
+	}
+}
 
 
 

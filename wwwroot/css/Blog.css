@@ -8,6 +8,21 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
+header {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  width: 100vw;
+  align-items: center;
+  position: absolute;
+  top: 0;
+}
+header .Menu {
+  font-size: 5em;
+  display: flex;
+  margin: 0 auto;
+}
+
 #Home {
   display: flex;
   flex-direction: column;
@@ -21,18 +36,6 @@ body {
   background-repeat: no-repeat;
   color: white;
   position: relative;
-}
-#Home header {
-  display: flex;
-  flex-direction: row;
-  flex: 0;
-  width: 100vw;
-  align-items: center;
-}
-#Home header .Menu {
-  font-size: 5em;
-  display: flex;
-  margin: 0 auto;
 }
 #Home section {
   display: flex;
@@ -83,4 +86,45 @@ body {
 
 .sticky {
   position: sticky;
+  top: 0;
+  display: flex;
+  z-index: 20000 !important;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+.Menu {
+  color: white;
+  font-size: 10em;
+}
+
+.MobileMenu {
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 2000 !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  gap: 2em;
+  align-items: center;
+  width: 100vw;
+}
+.MobileMenu ul {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  align-items: center;
+  gap: 2em;
+  position: relative;
+  z-index: 20000 !important;
+}
+.MobileMenu a {
+  color: white;
+  font-size: xx-large;
+  position: relative;
+  z-index: 20000 !important;
 }
