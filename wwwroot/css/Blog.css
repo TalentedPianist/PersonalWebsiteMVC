@@ -73,6 +73,9 @@ header .Menu {
   position: relative;
   align-items: center;
 }
+#Blog h1 {
+  margin-top: 3em;
+}
 
 .overlay {
   position: absolute;

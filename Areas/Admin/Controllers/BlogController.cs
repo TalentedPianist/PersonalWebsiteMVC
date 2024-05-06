@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
@@ -23,30 +24,31 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         }
 
-        [Route("Admin/Blog")]
+        [Microsoft.AspNetCore.Mvc.Route("Admin/Blog")]
         public IActionResult Index()
         {
             return View(_db.Posts.ToList());
         }
 
-        [Route("/Admin/Blog/Create")]
+        [Microsoft.AspNetCore.Mvc.Route("/Admin/Blog/Create")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Route("Blog/SavePost")]
-        public async Task<IActionResult> SaveBlog(Posts model, IFormFile file)
+        [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
+        public async Task<IActionResult> SaveBlog(Posts model, [FromForm(Name="File1")]IFormFile file)
         {
-            var filePath = Path.Combine("Uploads", file.FileName);
-            if (System.IO.File.Exists(filePath))
+            var filePath = file.FileName;
+
+            if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
             {
                 ModelState.AddModelError("", "File already exists.");
             }
             else
             {
-                using (var stream = System.IO.File.Create(filePath))
+                using (var stream = System.IO.File.Create("wwwroot/Uploads/" + filePath))
                 {
                     await file.CopyToAsync(stream);
                 }
@@ -69,9 +71,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     return RedirectToAction("Index");
                 }
             }
-            
 
-           
             return View("Create", model); // Works when nothing else will.  Makes sense because it's in the root Blog folder.
         }
 
