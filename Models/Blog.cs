@@ -20,6 +20,7 @@ namespace PersonalWebsiteMVC.Models
           [Key]
           public int PostID { get; set; }
           public int CategoryID { get; set; }
+        public string? FeaturedImage { get; set; }
         public string? PostContent { get; set; } 
         public string? PostExcerpt { get; set; } 
         public string? PostTitle { get; set; } 
