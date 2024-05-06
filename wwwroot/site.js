@@ -3,8 +3,10 @@ function DetectScroll() {
     $(window).on("scroll", function () {
         if ($(window).scrollTop() >= 530) {
             $("header").addClass("sticky");
+            $("body").prepend($("header"));
         } else {
             $("header").removeClass("sticky");
+            $(".overlay").prepend($("header"));
         }
     });
 }

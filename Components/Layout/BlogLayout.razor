@@ -9,9 +9,7 @@
 <MudSnackbarProvider />
 
 <MudHidden Breakpoint="Breakpoint.SmAndUp">
-	<header>
-		<MudIconButton Icon="@Icons.Material.Outlined.Menu" Class="Menu" OnClick="OpenDialog" Size="Size.Large" />
-	</header>
+	
 	<Mobile />
 </MudHidden>
 
@@ -20,13 +18,6 @@
 
 @code {
 
-	public async Task OpenDialog()
-	{
-		await JS.InvokeVoidAsync("HideIcon");
-		var options = new DialogOptions { CloseOnEscapeKey = true, };
-		var dialog = Dialog.Show<MobileNav>("", options);
-		var result = await dialog.Result;
-	}
 }
 
 
