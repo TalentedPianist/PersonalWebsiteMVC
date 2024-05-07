@@ -1,12 +1,12 @@
 ﻿
 @using System.Text.RegularExpressions
-@using PersonalWebsiteMVC.Components.Partial 
+@using PersonalWebsiteMVC.Components.Partial
 @using MudBlazor
-@using MudBlazor.Services 
-@inject IJSRuntime JS 
-@inject ApplicationDbContext db 
-@inject IDialogService Dialog 
-@inject NavigationManager nav 
+@using MudBlazor.Services
+@inject IJSRuntime JS
+@inject ApplicationDbContext db
+@inject IDialogService Dialog
+@inject NavigationManager nav
 
 
 <div id="Home">
@@ -28,106 +28,96 @@
 
 <div id="About">
 
-	<MudText Typo="Typo.h2">About Me</MudText>
+    <MudText Typo="Typo.h2">About Me</MudText>
 
 
-	<p>Exerci et stet nonumy tempor gubergren eirmod clita sed dolor amet tempor duo lorem nonumy dolore in dolor vero eos</p>
+    <p>Exerci et stet nonumy tempor gubergren eirmod clita sed dolor amet tempor duo lorem nonumy dolore in dolor vero eos</p>
 
-	<p>Amet invidunt accusam delenit vero gubergren et eum accusam elitr labore rebum eirmod magna et aliquyam at illum erat voluptua eros sea dolores eos est sea ipsum takimata erat gubergren</p>
+    <p>Amet invidunt accusam delenit vero gubergren et eum accusam elitr labore rebum eirmod magna et aliquyam at illum erat voluptua eros sea dolores eos est sea ipsum takimata erat gubergren</p>
 
-	<p>Aliquam vel duo stet dolor et amet ipsum accusam diam diam nostrud diam commodo stet dignissim ipsum stet erat wisi sea iusto eos vel vel ipsum sit dolor nostrud lorem sea consetetur ea kasd nonumy</p>
+    <p>Aliquam vel duo stet dolor et amet ipsum accusam diam diam nostrud diam commodo stet dignissim ipsum stet erat wisi sea iusto eos vel vel ipsum sit dolor nostrud lorem sea consetetur ea kasd nonumy</p>
 
-	<MudButton OnClick="Blog" Color="Color.Primary" Variant="Variant.Filled">Blog</MudButton>
+    <MudButton OnClick="Blog" Color="Color.Primary" Variant="Variant.Filled">Blog</MudButton>
 
 </div>
 
-<div id="Blog">
-	<Blog />
-</div>
+
+<Blog />
+<Contact />
+
+<footer>
+    Copyright &copy; douglasmcgregor.co.uk 2024
+</footer>
 
 
 
-@functions {
-	public static string Truncate(string value, int maxChars)
-	{
-		return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "....";
-	}
+@code {
+    public string? Message { get; set; }
+    [SupplyParameterFromQuery(Name ="id")]
+    public int? PostID { get; set; }
 
-	public static string RemoveHTMLTags(string html)
-	{
-		return Regex.Replace(html, "<.*?>", string.Empty);
-	}
-}
+    public async Task AboutMe()
+    {
+        await JS.InvokeVoidAsync("SmoothScroll", "About");
+    }
 
+    public async Task Blog()
+    {
+        await JS.InvokeVoidAsync("SmoothScroll", "Blog");
+    }
 
-@code { 
-	public string? Message { get; set; }
-	public int? PostID { get; set; }
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var uri = nav.ToAbsoluteUri(nav.Uri);
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("DetectScroll");
 
-	public List<Posts> AllPosts { get; set; } = new List<Posts>();
+            if (uri.Fragment.Contains("Home"))
+            {
+                await JS.InvokeVoidAsync("SmoothScroll", "Home");
 
-	public async Task AboutMe()
-	{
-		await JS.InvokeVoidAsync("SmoothScroll", "About");
-	}
+            }
 
-	public async Task Blog()
-	{
-		await JS.InvokeVoidAsync("SmoothScroll", "Blog");
-	}
+            if (uri.Fragment.Contains("About"))
+            {
+                await JS.InvokeVoidAsync("SmoothScroll", "About");
+            }
 
-	protected override async Task OnAfterRenderAsync(bool firstRender)
-	{
-		var uri = nav.ToAbsoluteUri(nav.Uri);
-		if (firstRender)
-		{
-			await JS.InvokeVoidAsync("DetectScroll");
+            if (uri.Fragment.Contains("Blog"))
+            {
+                if (PostID > 0)
+                {
+                    await JS.InvokeVoidAsync("SmoothScroll", "SinglePost");
+                }
+                else
+                {
+                    await JS.InvokeVoidAsync("SmoothScroll", "Blog");
+                }
+            }
 
-			if (uri.Fragment.Contains("Home"))
-			{
-				await JS.InvokeVoidAsync("SmoothScroll", "Home");
+            if (uri.Fragment.Contains("Comments"))
+            {
+                await JS.InvokeVoidAsync("SmoothScroll", "Comments");
+            }
 
-			}
+            if (uri.Fragment.Contains("Contact"))
+            {
+                await JS.InvokeVoidAsync("SmoothScroll", "Contact");
+            }
+        }
 
-			if (uri.Fragment.Contains("About"))
-			{
-				await JS.InvokeVoidAsync("SmoothScroll", "About");
-			}
-
-			if (uri.Fragment.Contains("Blog"))
-			{
-				if (PostID > 0)
-				{
-					await JS.InvokeVoidAsync("SmoothScroll", "SinglePost");
-				}
-				else
-				{
-					await JS.InvokeVoidAsync("SmoothScroll", "Blog");
-				}
-			}
-
-			if (uri.Fragment.Contains("Comments"))
-			{
-				await JS.InvokeVoidAsync("SmoothScroll", "Comments");
-			}
-
-			if (uri.Fragment.Contains("Contact"))
-			{
-				await JS.InvokeVoidAsync("SmoothScroll", "Contact");
-			}
-		}
-
-	}
+    }
 
 
 
-	public async Task OpenDialog()
-	{
-		await JS.InvokeVoidAsync("HideIcon");
-		var options = new DialogOptions { CloseOnEscapeKey = true, };
-		var dialog = Dialog.Show<MobileNav>("", options);
-		var result = await dialog.Result;
-	}
+    public async Task OpenDialog()
+    {
+        await JS.InvokeVoidAsync("HideIcon");
+        var options = new DialogOptions { CloseOnEscapeKey = true, };
+        var dialog = Dialog.Show<MobileNav>("", options);
+        var result = await dialog.Result;
+    }
 
 
 }

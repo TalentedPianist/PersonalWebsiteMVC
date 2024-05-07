@@ -1,8 +1,8 @@
 ﻿@model PersonalWebsiteMVC.Models.Posts
 
 @{
-     ViewData["Title"] = "Details";
-     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Details";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 
 <h1 class="bg-info text-white p-1">Details</h1>
@@ -13,52 +13,58 @@
     Category ID:
 </dt>
 <dd class="col-sm-10">
-     @Model.CategoryID
+    @Model.CategoryID
 </dd>
 <dt class="col-sm-2">
     Post:
 </dt>
 <dd class="col-sm-10">
-    @Model.PostContent
+    @Html.Raw(Model.PostContent)
 </dd>
 <dt class="col-sm-2">
     Title:
 </dt>
 <dd class="col-sm-10">
-     @Model.PostTitle
+    @Model.PostTitle
 </dd>
 <dt class="col-sm-2">
     Author:
 </dt>
 <dd class="col-sm-10">
-     @Model.PostAuthor
+    @Model.PostAuthor
 </dd>
 <dt class="col-sm-2">
-     Location:
+    Featured Image:
+</dt>
+<dd class="col-sm-10">
+    @Model.FeaturedImage
+</dd>
+<dt class="col-sm-2">
+    Location:
 </dt>
 <dd class="col-sm-10">
     @Model.PostLocation
 </dd>
 <dt class="col-sm-2">
-     IP Address:
+    IP Address:
 </dt>
 <dd class="col-sm-10">
     @Model.PostIP
 </dd>
 <dt class="col-sm-2">
-     Active:
+    Active:
 </dt>
 <dd class="col-sm-10">
     @Model.PostActive
 </dd>
 <dt class="col-sm-2">
-     Date Posted:
+    Date Posted:
 </dt>
 <dd class="col-sm-10">
     @Model.PostPublished
 </dd>
 <dt class="col-sm-2">
-     Comment Count:
+    Comment Count:
 </dt>
 <dd class="col-sm-10">
     @Model.CommentCount

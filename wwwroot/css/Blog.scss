@@ -25,6 +25,24 @@ header {
     }
 }
 
+form { 
+    display: flex; 
+    flex-direction: column;
+    flex: 0; 
+    gap: 2em;
+}
+
+footer  {
+    display: flex; 
+    flex-direction: column;
+    flex: 0; 
+    align-items: center;
+    clear: both;
+    background-color: burlywood;
+    padding-top: 1em;
+    padding-bottom: 1em;
+}
+
 #Home { 
     display: flex; 
     flex-direction: column;
@@ -76,13 +94,60 @@ header {
     display: flex; 
     flex-direction: column;
     flex: 0; 
-    height: 100vh;
-    background-color: yellow;
+    height: 100%;
+    background-color: yellow !important;
     position: relative;
     align-items: center;
+    padding-left: 1em;
+    padding-right: 1em;
 
-    h1 { 
-        margin-top: 3em;
+    h1, h2 { 
+        display: flex; 
+        margin: 0 auto;
+    }
+   
+   
+  
+    .mud-card-content, .mud-card-actions { 
+        background-color: yellow !important;
+    }
+}
+
+
+#SinglePost {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    gap: 2em;
+    align-items: center;
+    padding-left: 1em;
+    padding-right: 1em;
+    background-color: yellow;
+
+    button { 
+        display: flex; 
+        align-self: flex-start;
+    }
+
+    img { 
+        height: 200px;
+        width: 100%;
+        display: flex; 
+    }
+
+}
+
+#Contact { 
+    display: flex; 
+    flex-direction: column;
+    flex: 0;
+    gap: 2em;
+    background-color: lightskyblue;
+    height: 100vh;
+
+    button { 
+        display: flex; 
+        align-self: flex-start;
     }
 }
 

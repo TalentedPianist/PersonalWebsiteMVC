@@ -6,29 +6,46 @@
 
 @using PersonalWebsiteMVC.Data
 @inject ApplicationDbContext db
+@inject UserManager<ApplicationUser> userManager 
 
 <h1 class="bg-info text-white">Update</h1>
 <a asp-action="Index" class="btn btn-secondary">Back</a>
 <div asp-validation-summary="All" class="text-danger"></div>
-<form asp-action="Update" method="post">
+
+@TempData["Message"]
+
+<form asp-action="Update" method="post" enctype="multipart/form-data" name="UpdateForm" asp-controller="Blog" asp-area="Admin">
     <div class="form-group">
         <label asp-for="PostContent">Content:</label>
-        <textarea asp-for="PostContent" id="ckeditor1" name="txtPost"></textarea>
+        <textarea id="ckeditor1" name="txtPost">@Model.PostContent</textarea>
     </div>
 
     <div class="form-group">
         <label asp-for="PostTitle">Title:</label>
-        <input asp-for="PostTitle" />
+        <input asp-for="PostTitle" class="form-control" />
+    </div>
+    <div class="form-group">
+        <label asp-for="FeaturedImage">Featured Image:</label>
+        <input type="file" name="File1" class="form-control">
     </div>
      <div class="form-group">
           <label asp-for="CategoryID">Category</label>
-          <select asp-for="CategoryID">
+          <select asp-for="CategoryID" class="form-control">
                 @foreach (var item in db.Categories)
                 {
                      <option value="@item.CategoryID">@item.Category</option>
                 }
           </select>
      </div>
+     <div class="form-group">
+        <label asp-for="PostAuthor">User:</label>
+        <select asp-for="PostAuthor" class="form-control">
+            @foreach (ApplicationUser user in userManager.Users)
+            {
+                <option value="@user.Id">@user.UserName</option>
+            }
+        </select>
+    </div>
   
     <button type="submit" class="btn btn-primary">Save</button>
 </form>

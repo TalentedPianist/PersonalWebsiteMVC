@@ -3,6 +3,7 @@
 @inject NavigationManager nav
 @inject IJSRuntime JS 
 @layout BlogLayout
+ 
 
 @if (_db.Posts.Count() == 0)
 {
@@ -11,9 +12,69 @@
 }
 else
 {
-    <div id="Blog">
-        <MudText Typo="Typo.h2">Blog</MudText>
-    </div>
+    if (Id > 0)
+    {
+        var uri = nav.ToAbsoluteUri(nav.Uri);
+        if (uri.Fragment.Contains("Comments"))
+        {
+        }
+        else
+        {
+            var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
+            <div id="SinglePost">
+                <h1>Blog</h1>
+                <h2>@post!.PostTitle</h2>
+                <img src=@($"Uploads/{post.FeaturedImage}")>
+                @((MarkupString)post.PostContent!)
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewComments(post.PostID))">Comments</MudButton>
+            </div>
+        }
+    }
+    else
+    {
+        <div id="Blog">
+                <h1>Blog</h1>
+
+            
+                @foreach (var item in _db.Posts)
+                {
+                 
+                        try
+                        {
+                            var result = Truncate(item.PostContent!, 200);
+
+                            <MudCard>
+                                <MudCardMedia Image=@($"/Uploads/{item.FeaturedImage}") Height="200" />
+                                <MudCardContent>
+                                    <MudText Typo="Typo.h5">@item.PostTitle</MudText>
+                                    <MudText Typo="Typo.body1">@RemoveHTMLTags(result)</MudText>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewPost(item.PostID))">Read More</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        }
+                        catch (NullReferenceException ex)
+                        {
+                            @ex.Message
+                        }
+                    
+                }
+            
+        </div>
+    }
+}
+
+@functions { 
+    public static string Truncate(string value, int maxChars)
+    {
+        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "....";
+    }
+
+    public static string RemoveHTMLTags(string html)
+    {
+        return Regex.Replace(html, "<.*?>", string.Empty);
+    }
 }
 
 

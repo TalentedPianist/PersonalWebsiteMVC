@@ -83,14 +83,35 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult Update(int id, Posts model)
+        public async Task<IActionResult> Update(int id, Posts model, [FromForm(Name="File1")]IFormFile file, [FromForm(Name="txtPost")]string post)
         {
+            if (file == null)
+            {
+                TempData["Message"] = post;
+            }
+            else
+            {
+                if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
+                {
+                    ModelState.Clear(); // Reset model state because it is valid
+                }
+                else
+                {
+                    using (var stream = System.IO.File.Create("wwwroot/Uploads/" + file.FileName))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                    ModelState.Clear();
+                }
+            }
+
             if (ModelState.IsValid)
             {
                 var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault();
-                b!.PostContent = model.PostContent;
+                b!.PostContent = post;
                 b.PostExcerpt = model.PostExcerpt;
                 b.PostTitle = model.PostTitle;
+                b.FeaturedImage = file!.FileName;
                 b.PostAuthor = model.PostAuthor;
                 b.PostLocation = model.PostLocation;
                 b.CategoryID = model.CategoryID;
