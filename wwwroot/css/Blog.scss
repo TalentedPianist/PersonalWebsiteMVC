@@ -9,6 +9,18 @@ body {
 
 }
 
+h1, h2, h3, h4, h5, h6 { 
+    color: black;
+}
+
+h1 { 
+    font-size: 40px;
+}
+
+h2 { 
+    font-size: 36px;
+}
+
 header {
     display: flex;
     flex-direction: column;
@@ -30,6 +42,11 @@ form {
     flex-direction: column;
     flex: 0; 
     gap: 2em;
+
+    input { 
+        border: 1px solid black;
+        padding: 5px 5px 5px 5px;
+    }
 }
 
 footer  {
@@ -41,6 +58,7 @@ footer  {
     background-color: burlywood;
     padding-top: 1em;
     padding-bottom: 1em;
+    text-align: center;
 }
 
 #Home { 
@@ -57,7 +75,10 @@ footer  {
     color: white;
     position: relative;
 
-   
+    h1, h2, { 
+        color: white !important;
+        font-weight: bold !important;
+    }
 
     section { 
         display: flex; 
@@ -81,6 +102,7 @@ footer  {
     align-items: center;
     background-color: orange;
     height: 100vh;
+    padding-bottom: 2em;
 
     p {
         padding-left: 1em;
@@ -141,9 +163,24 @@ footer  {
     display: flex; 
     flex-direction: column;
     flex: 0;
-    gap: 2em;
+    gap: 1em;
+    align-items: center;
     background-color: lightskyblue;
-    height: 100vh;
+    height: 100%;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    div { 
+        display: flex; 
+        flex-direction: column;
+        flex: 0;
+        width: 90vw;
+    }
+
+    p { 
+        padding-left: 1.5em;
+        padding-right: 1em;
+    }
 
     button { 
         display: flex; 
@@ -206,3 +243,13 @@ footer  {
         z-index: 20000 !important;
     }
 }
+
+.ck-content { 
+    max-height: 200px !important;
+    min-height: 200px !important;
+}
+
+.ck-dropdown__button { 
+    display: none !important;
+}
+

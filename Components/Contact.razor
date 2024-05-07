@@ -1,11 +1,9 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
-
+@using Sitko.Blazor.CKEditor
+@using Sitko.Blazor.CKEditor.Bundle
 
 
 <div id="Contact">
-
-
-
 
     <h1>Contact</h1>
 
@@ -31,9 +29,37 @@
         <div>
 
             <label for="Your Message">Your Message:</label>
-
+            <CKEditor @bind-Value="@Model.Message" Config="configCustom" Style="height: 200px;"></CKEditor>
         </div>
         <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Contact</MudButton>
     </EditForm>
 
 </div>
+
+@code {
+    private CKEditorConfig? config;
+    private CKEditorConfig? configCustom;
+
+    ContactFormModel Model = new ContactFormModel();
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        config = CKEditorBundleOptions.DefaultConfig.WithHtmlEditing();
+        configCustom = CKEditorBundleOptions.DefaultConfig;
+        configCustom.Toolbar = new CKEditorToolbar
+        {
+            Items = []
+        };
+        
+    }
+
+    public async Task HandleValidSubmit()
+    {
+        await Task.CompletedTask;
+    }
+
+    public async Task HandleInvalidSubmit()
+    {
+        await Task.CompletedTask;
+    }
+}

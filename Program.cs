@@ -14,6 +14,7 @@ using MudBlazor.Services;
 using PersonalWebsiteMVC.Components;
 using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
+using Sitko.Blazor.CKEditor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -76,6 +77,12 @@ builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.De
 builder.Services.AddMudServices();
 builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
+builder.Services.AddCKEditor(builder.Configuration, options =>
+{
+    options.EditorClassName = "ClassicEditor";
+    options.ScriptPath = "https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js";
+    options.StylePath = "/lib/ckeditor/samples/css/samples.css";
+});
 
 var app = builder.Build();
 
