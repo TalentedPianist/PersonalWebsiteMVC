@@ -1,0 +1,73 @@
+﻿@using KITT.Web.ReCaptcha.Blazor.v2
+@inject KITT.Web.ReCaptcha.Http.v2.ReCaptchaService ReCaptchaService
+@implements IDisposable
+
+<ReCaptcha SiteKey="6LeIxAcTAAAAAJcZVRqyHh71UMIEGNQ_MXjiZKhI"
+    @bind-Value="model.CaptchaResponse"
+    Theme="Theme.Light"
+    Size="KITT.Web.ReCaptcha.Blazor.v2.Size.Normal"
+    TabIndex="1" />
+
+
+@code  {
+    private ViewModel model = new();
+    private EditContext? context;
+    private bool disabled = true;
+    private string? message;
+    private bool isSuccessMessage;
+    private IEnumerable<string> errorCodes = Enumerable.Empty<string>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        context = new EditContext(model);
+        context.OnFieldChanged += OnFieldChangedHandler;
+    }
+
+    private void OnFieldChangedHandler(object? sender, FieldChangedEventArgs e)
+    {
+        disabled = !(context!.Validate());
+        StateHasChanged();
+    }
+
+    private async Task Submit()
+    {
+        try
+        {
+            var reCaptchaResponse = await ReCaptchaService.VerifyAsync(model.CaptchaResponse);
+            if (reCaptchaResponse.Success)
+            {
+                message = "reCaptcha validated successfully!";
+                isSuccessMessage = true;
+                errorCodes = Enumerable.Empty<string>();
+            }
+            else
+            {
+                message = "reCaptcha validated successfully!";
+                isSuccessMessage = true;
+                errorCodes = reCaptchaResponse.ErrorCodes;
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine(ex);
+            message = $"[Exception {ex.GetType()}] {ex.Message}";
+            isSuccessMessage = false;
+        }
+        finally
+        {
+            model = new();
+        }
+    }
+
+    void IDisposable.Dispose()
+    {
+        context!.OnFieldChanged -= OnFieldChangedHandler;
+    }
+
+    class ViewModel
+    {
+        public string Text { get; set; } = string.Empty;
+        public string CaptchaResponse { get; set; } = string.Empty;
+    }
+}

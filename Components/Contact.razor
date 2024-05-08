@@ -31,12 +31,16 @@
             <label for="Your Message">Your Message:</label>
             <CKEditor @bind-Value="@Model.Message" Config="configCustom" Style="height: 200px;"></CKEditor>
         </div>
+
+        <Recaptcha />
+
         <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Contact</MudButton>
     </EditForm>
 
 </div>
 
 @code {
+  
     private CKEditorConfig? config;
     private CKEditorConfig? configCustom;
 
@@ -50,7 +54,7 @@
         {
             Items = []
         };
-        
+
     }
 
     public async Task HandleValidSubmit()

@@ -15,6 +15,7 @@ using PersonalWebsiteMVC.Components;
 using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
+using KITT.Web.ReCaptcha.Http.v2;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -82,6 +83,11 @@ builder.Services.AddCKEditor(builder.Configuration, options =>
     options.EditorClassName = "ClassicEditor";
     options.ScriptPath = "https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js";
     options.StylePath = "/lib/ckeditor/samples/css/samples.css";
+});
+
+builder.Services.AddReCaptchaV2HttpClient(options =>
+{
+    options.SecretKey = "6LdB-1kpAAAAAPEBR2GuCm8rTEucGiU89cQPMaC0";
 });
 
 var app = builder.Build();
