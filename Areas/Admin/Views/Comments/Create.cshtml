@@ -15,8 +15,8 @@
           <textarea rows="10" cols="30" asp-for="CommentContent" class="form-control"></textarea>
      </div>
      <div class="form-group">
-          <label asp-for="ParentID">Blog:</label>
-          <select asp-for="ParentID" class="form-control">
+          <label asp-for="PostID">Blog:</label>
+          <select asp-for="PostID" class="form-control">
                @foreach (var item in db.Posts)
                {
                     <option value="@item.PostID">@item.PostTitle</option>

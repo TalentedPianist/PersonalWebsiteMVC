@@ -1,0 +1,29 @@
+﻿
+@{
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model IEnumerable<Album>
+
+
+<h1 class="bg bg-info p-1">Albums</h1>
+<a asp-action="Create" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Create</a>
+
+<table class="table table-bordered">
+    <thead>
+    <tr>
+    <th>Name</th>
+    <th>Update</th>
+    <th>Details</th>
+    <th>Delete</th>
+   </tr>
+   </thead>
+    <tbody>
+@foreach (Album album in Model)
+{
+    <tr>
+    <td>@album.Name</td>
+    <td><a asp-action="Update" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Gallery">Update</a></td>
+    </tr>
+}
+    </tbody>
+</table>

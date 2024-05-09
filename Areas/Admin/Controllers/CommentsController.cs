@@ -39,7 +39,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                if (ModelState.IsValid)
                {
                     var comment = new Comments();
-                    comment.ParentID = 0;
+                    comment.PostID = 0;
                     comment.CommentContent = model.CommentContent;
                     comment.CommentAuthor = model.CommentAuthor;
                     comment.CommentAuthorEmail = model.CommentAuthorEmail;
@@ -64,7 +64,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                if (ModelState.IsValid)
                {
                     var comment = _db.Comments.Where(c => c.CommentID == id).FirstOrDefault();
-                    comment!.ParentID = model.ParentID;
+                    comment!.PostID = model.PostID;
                     comment.CommentContent = comment.CommentContent;
                     comment.CommentAuthor = model.CommentAuthor;
                     comment.CommentAuthorEmail = model.CommentAuthorEmail;

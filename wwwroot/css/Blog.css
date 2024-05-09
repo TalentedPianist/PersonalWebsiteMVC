@@ -1,23 +1,22 @@
 ﻿* {
   margin: 0;
   padding: 0;
-  box-sizing: border-box;
+  box-sizing: border-box !important;
 }
 
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  width: 100% !important;
+}
+
+p {
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  color: black;
-}
-
-h1 {
-  font-size: 40px;
-}
-
-h2 {
-  font-size: 36px;
+  display: flex;
+  margin: 0 auto;
 }
 
 header {
@@ -39,10 +38,31 @@ form {
   flex-direction: column;
   flex: 0;
   gap: 2em;
+  margin-top: 1em;
 }
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
+  width: 90vw;
+}
+form div {
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  align-items: center;
+}
+form div:last-child {
+  width: 100%;
+  display: block;
+}
+form button {
+  display: flex;
+  align-self: flex-start;
+  margin: 0 auto !important;
+}
+form p {
+  padding-left: 1.5em !important;
+  padding-right: 1em !important;
 }
 
 footer {
@@ -61,19 +81,14 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 0;
-  align-items: center;
-  gap: 2em;
   height: 100vh;
-  width: 100vw;
   background-image: url(../images/ireland.jpg);
-  background-attachment: fixed;
   background-repeat: no-repeat;
-  color: white;
-  position: relative;
 }
 #Home h1, #Home h2 {
   color: white !important;
   font-weight: bold !important;
+  font-size: revert !important;
 }
 #Home section {
   display: flex;
@@ -82,6 +97,8 @@ footer {
   align-items: center;
   gap: 4em;
   height: 90vh;
+  width: 100vw;
+  position: relative;
 }
 #Home img {
   width: 50%;
@@ -94,7 +111,7 @@ footer {
   flex: 0;
   align-items: center;
   background-color: orange;
-  height: 100vh;
+  height: 100%;
   padding-bottom: 2em;
 }
 #About p {
@@ -143,30 +160,24 @@ footer {
   display: flex;
 }
 
+#Comments {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  height: 100%;
+  background-color: yellow;
+  padding-bottom: 2em;
+}
+
 #Contact {
   display: flex;
   flex-direction: column;
   flex: 0;
-  gap: 1em;
   align-items: center;
   background-color: lightskyblue;
   height: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
-}
-#Contact div {
-  display: flex;
-  flex-direction: column;
-  flex: 0;
-  width: 90vw;
-}
-#Contact p {
-  padding-left: 1.5em;
-  padding-right: 1em;
-}
-#Contact button {
-  display: flex;
-  align-self: flex-start;
 }
 
 .overlay {
@@ -174,7 +185,6 @@ footer {
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -226,6 +236,9 @@ footer {
 .ck-content {
   max-height: 200px !important;
   min-height: 200px !important;
+  width: 90vw !important;
+  margin-left: 1em !important;
+  margin-right: 1em !important;
 }
 
 .ck-dropdown__button {

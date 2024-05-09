@@ -16,5 +16,7 @@ namespace PersonalWebsiteMVC.Data
         public DbSet<Categories> Categories { get; set; } = default!;
         public DbSet<PersonalWebsiteMVC.Models.Comments> Comments { get; set; } = default!;
         public DbSet<Guestbook> Guestbook { get; set; } = default!;
+        public DbSet<Album> Albums { get; set; } = default!;
+        public DbSet<Photos> Photos { get; set; } = default!;
     }
 }
