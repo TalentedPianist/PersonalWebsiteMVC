@@ -35,6 +35,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\icons\" />
+    <Folder Include="wwwroot\Gallery\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 

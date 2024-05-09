@@ -23,6 +23,8 @@
     <tr>
     <td>@album.Name</td>
     <td><a asp-action="Update" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Gallery">Update</a></td>
+    <td><a asp-action="Details" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Gallery">Details</a></td>
+    <td><a asp-action="Delete" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Gallery">Delete</a></td>
     </tr>
 }
     </tbody>

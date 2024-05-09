@@ -2,4 +2,28 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
+@model Album
+
+<h1 class="bg bg-info p-1 text-white">Gallery Details</h1>
+<a asp-action="Index" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Back</a>
+
+<dl>
+    <dt>Id:</dt>
+    <dd>@Model.Id</dd>
+    <dt>Name:</dt>
+    <dd>@Model.Name</dd>
+    <dt>Description:</dt>
+    <dd>@Model.Description</dd>
+    <dt>Location:</dt>
+    <dd>@Model.Location</dd>
+    <dt>Cover Photo:</dt>
+    <dd>@Model.CoverPhoto</dd>
+    <dt>Date Created:</dt>
+    <dd>@Model.DateCreated</dd>
+</dl>
+
+<a asp-action="Update" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="Gallery" class="btn btn-link">Update</a> 
+|
+<a asp-action="Delete" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="Gallery" class="btn btn-link">Delete</a>

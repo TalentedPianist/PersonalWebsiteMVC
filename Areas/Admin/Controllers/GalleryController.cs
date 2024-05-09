@@ -30,6 +30,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 Album album = new Album();
                 album.Id = model.Id;
                 album.DateCreated = DateTime.Now;
+                album.Description = model.Description;
                 album.CoverPhoto = model.CoverPhoto;
                 album.Name = model.Name;
                 album.Location = model.Location;
@@ -46,9 +47,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View(model);
         }
 
-        public IActionResult UpdateAlbum(Album model)
+   
+        public IActionResult UpdateAlbum(Album model, [FromForm(Name="AlbumID")]int AlbumID)
         {
-            var album = _db.Albums.Where(a => a.Id == model.Id).FirstOrDefault();
+            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
             if (ModelState.IsValid)
             {
                 album!.Name = model.Name;
@@ -74,6 +76,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             _db.Remove(album);
             _db.SaveChanges();
             return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult CreateFolder([FromForm(Name="GalleryID")]int GalleryID)
+        {
+            var album = _db.Albums.Where(a => a.Id == GalleryID).FirstOrDefault();
+            System.IO.Directory.CreateDirectory("~/Gallery/" + album!.Name);
+            return View("Update", album);
         }
     }
 }
