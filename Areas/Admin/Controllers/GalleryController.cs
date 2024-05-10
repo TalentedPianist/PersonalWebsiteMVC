@@ -49,9 +49,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View("Create", model);
         }
 
-        public IActionResult Update(int id)
+        [HttpGet]
+        public IActionResult Update(int id, [FromQuery(Name="nextPage")]int nextPage)
         {
             var model = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+            
             return View(model);
         }
 
@@ -123,9 +125,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public void PaginatedList(int? page)
+        [HttpGet]
+        [Microsoft.AspNetCore.Mvc.Route("{pageNumber:int}")]
+        public IActionResult Pager(int pageNumber = 1)
         {
-            
+            return Ok();
         }
     }
 }
