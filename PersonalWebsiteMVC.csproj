@@ -6,7 +6,15 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <TargetFramework>net8.0</TargetFramework>
     <UserSecretsId>aspnet-PersonalWebsiteMVC-c32eb1a4-ffce-43bf-8180-4254c53bd434</UserSecretsId>
+	  <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="wwwroot\Gallery\**" />
+    <Content Remove="wwwroot\Gallery\**" />
+    <EmbeddedResource Remove="wwwroot\Gallery\**" />
+    <None Remove="wwwroot\Gallery\**" />
+  </ItemGroup>
 
 
   <ItemGroup>
@@ -19,6 +27,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.4" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.4">
       <PrivateAssets>all</PrivateAssets>
@@ -31,11 +40,12 @@
     <PackageReference Include="SolrNet" Version="1.1.1" />
     <PackageReference Include="SolrNet.Core" Version="1.1.1" />
     <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.1.1" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="9.1.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="wwwroot\Gallery\York\" />
     <Folder Include="wwwroot\icons\" />
-    <Folder Include="wwwroot\Gallery\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>
 

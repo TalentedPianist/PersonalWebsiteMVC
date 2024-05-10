@@ -5,9 +5,13 @@
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model Album
+@using Microsoft.AspNetCore.Hosting 
+@inject IWebHostEnvironment env
 
 <h1 class="bg bg-info p-1">Update Album</h1>
 <a asp-action="Index" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Back</a>
+
+@TempData["Message"]
 
 <form method="post" asp-action="UpdateAlbum" asp-area="Admin" asp-controller="Gallery" name="UpdateForm">
     <div class="form-group">
@@ -33,9 +37,14 @@
 
 
 @{
-    if (System.IO.Directory.Exists("~/Gallery/" + Model.Name))
+    if (System.IO.Directory.Exists(env.WebRootPath + "\\Gallery\\" + Model.Name))
     {
-
+        <h2 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Folder</h2>
+        <p>Do you wish to delete the album folder?</p>
+        <form asp-action="DeleteFolder" asp-area="Admin" asp-controller="Gallery">
+            <input type="hidden" value="@Model.Id" name="GalleryID">
+            <button type="submit" class="btn btn-primary mb-5">Yes</button>
+        </form>
     }
     else
     {
@@ -46,4 +55,31 @@
             <button type="submit" class="btn btn-primary mb-5">Yes</button>
         </form>
     }
+
+    <h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Add Photos</h3>
+    <p>Add photos to the current album @Model.Name</p>
+    <form method="post" asp-action="AddPhotos" enctype="multipart/form-data">
+        <div class="form-group">
+        <input type="file" name="AlbumPhotos" multiple class="form-control" id="files">
+        </div>
+        <input type="hidden" name="AlbumID" value="@Model.Id">
+        <button type="submit" class="btn btn-primary mb-5">Submit</button>
+    </form>
+
+    <h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Photos</h3>
+    <p>Delete photos from the current album @Model.Name</p>
+    <form method="post" asp-action="DeletePhotos" enctype="multipart/form-data">
+    @if (System.IO.Directory.Exists(env.WebRootPath + "\\Gallery\\" + Model.Name))
+    {
+        var d = new System.IO.DirectoryInfo(env.WebRootPath + "\\Gallery\\" + Model.Name);
+        foreach (System.IO.FileInfo fi in d.GetFiles())
+        {
+            <div class="form-group">
+            <label>@fi.Name</label>
+            <input type="checkbox" name="fileToDelete" value="@fi.Name" class="form-control">
+            </div>
+        }
+    }
+        <button type="submit" class="btn btn-primary">Delete</button>
+    </form>
 }
