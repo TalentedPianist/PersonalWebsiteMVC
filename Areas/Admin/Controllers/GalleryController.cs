@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
+using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -50,10 +51,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int id, [FromQuery(Name="nextPage")]int nextPage)
+        public IActionResult Update(int id, [FromQuery(Name="page")]int page)
         {
             var model = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
-            
+            ListFiles(page, "York");
             return View(model);
         }
 
@@ -125,11 +126,19 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        [HttpGet]
-        [Microsoft.AspNetCore.Mvc.Route("{pageNumber:int}")]
-        public IActionResult Pager(int pageNumber = 1)
+        public void ListFiles(int? page, string album)
         {
-            return Ok();
+            var pageIndex = (page ?? 1) - 1;
+            var pageSize = 10;
+            int totalFilesCount;
+
+            var filePath = Host.WebRootPath + "\\Gallery\\" + album;
+
+            DirectoryInfo dirInfo = new DirectoryInfo(filePath);
+            FileInfo[]? files = null;
+            files = dirInfo.GetFiles();
+            var pagedFiles = files.ToPagedList((int)page!, pageSize);
+            ViewBag.AllFiles = pagedFiles;
         }
     }
 }

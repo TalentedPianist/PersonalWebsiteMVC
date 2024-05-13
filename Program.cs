@@ -16,6 +16,7 @@ using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
 using KITT.Web.ReCaptcha.Http.v2;
+using ReflectionIT.Mvc.Paging;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -89,6 +90,7 @@ builder.Services.AddReCaptchaV2HttpClient(options =>
 {
     options.SecretKey = "6LdB-1kpAAAAAPEBR2GuCm8rTEucGiU89cQPMaC0";
 });
+
 
 var app = builder.Build();
 
