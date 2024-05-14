@@ -1,13 +1,10 @@
-﻿window.addEventListener("load", (e) => {
-    ClassicEditor.create(document.querySelector("#editor"))
-        .then(editor => {
-            console.log(editor);
-        })
-        .catch(error => {
-            console.error(error);
-        });
+﻿
+$('#ShowModal').on("click", function () {
+    $('.modal').modal({
+        backdrop: 'static',
+        keyboard: false,
+        show: true,
+    });
 });
 
-$('#myModal').on('shown.bs.modal', function () {
-    $('#').trigger('focus')
-});
+

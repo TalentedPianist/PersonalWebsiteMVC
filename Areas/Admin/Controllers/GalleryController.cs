@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
@@ -54,7 +55,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public IActionResult Update(int id, [FromQuery(Name="page")]int page)
         {
             var model = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
-            ListFiles(page, "York");
+            System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(Host.WebRootPath + "\\Gallery\\" + model!.Name);
+            try
+            {
+                ViewBag.Files = info.GetFiles().ToPagedList(page, 5);
+            }
+            catch (ArgumentOutOfRangeException ex)
+            {
+                ViewBag.Files = info.GetFiles().ToPagedList(1, 5);
+            }
             return View(model);
         }
 
@@ -126,19 +135,19 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index");
         }
 
-        public void ListFiles(int? page, string album)
+        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/DeleteFiles")]
+        public async Task<IActionResult> DeleteFiles([FromForm(Name ="FileName")]List<string> files, [FromForm(Name="AlbumID")]int AlbumID, [FromQuery(Name ="page")]int page)
         {
-            var pageIndex = (page ?? 1) - 1;
-            var pageSize = 10;
-            int totalFilesCount;
-
-            var filePath = Host.WebRootPath + "\\Gallery\\" + album;
-
-            DirectoryInfo dirInfo = new DirectoryInfo(filePath);
-            FileInfo[]? files = null;
-            files = dirInfo.GetFiles();
-            var pagedFiles = files.ToPagedList((int)page!, pageSize);
-            ViewBag.AllFiles = pagedFiles;
+            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
+            StringBuilder sb = new StringBuilder();
+            foreach (string file in files)
+            {
+                sb.Append(file);
+            }
+            TempData["Message"] = sb.ToString();
+            await Task.CompletedTask;
+            return View("~/Areas/Admin/Views/Gallery/Update.cshtml", album);
         }
     }
 }

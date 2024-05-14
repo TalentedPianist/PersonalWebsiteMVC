@@ -1,8 +1,8 @@
 ﻿@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model Album
 @using Microsoft.AspNetCore.Hosting
@@ -12,102 +12,134 @@
 @using X.PagedList.Mvc.Core
 @using X.PagedList
 
+
+
 <h1 class="bg bg-info p-1">Update Album</h1>
 <a asp-action="Index" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Back</a>
 
 @TempData["Message"]
 
 <form method="post" asp-action="UpdateAlbum" asp-area="Admin" asp-controller="Gallery" name="UpdateForm">
-	<div class="form-group">
-		<label>Name:</label>
-		<input type="text" asp-for="Name" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Description:</label>
-		<textarea asp-for="Description" rows="10" cols="30" class="form-control"></textarea>
-	</div>
-	<div class="form-group">
-		<label>Location:</label>
-		<input type="text" asp-for="Location" class="form-control">
-	</div>
-	<div class="form-group">
-		<label>Cover Photo:</label>
-		<input type="text" asp-for="CoverPhoto" class="form-control">
-	</div>
-	<input type="hidden" name="AlbumID" value="@Model.Id">
-	<button type="submit" class="btn btn-primary">Submit</button>
+    <div class="form-group">
+        <label>Name:</label>
+        <input type="text" asp-for="Name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea asp-for="Description" rows="10" cols="30" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Location:</label>
+        <input type="text" asp-for="Location" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Cover Photo:</label>
+        <input type="text" asp-for="CoverPhoto" class="form-control">
+    </div>
+    <input type="hidden" name="AlbumID" value="@Model.Id">
+    <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
 
 
 @{
 
-	if (System.IO.Directory.Exists(env.WebRootPath + "\\Gallery\\" + Model.Name))
-	{
-		<h2 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Folder</h2>
-		<p>Do you wish to delete the album folder?</p>
-		<form asp-action="DeleteFolder" asp-area="Admin" asp-controller="Gallery">
-			<input type="hidden" value="@Model.Id" name="GalleryID">
-			<button type="submit" class="btn btn-primary mb-5">Yes</button>
-		</form>
-	}
-	else
-	{
-		<h2 class="bg bg-info p-1 text-white mt-5 col-md-12">Gallery Info</h2>
-		<p>Gallery folder does not exist.  Create it?</p>
-		<form asp-action="CreateFolder" asp-area="Admin" asp-controller="Gallery">
-			<input type="hidden" value="@Model.Id" name="GalleryID">
-			<button type="submit" class="btn btn-primary mb-5">Yes</button>
-		</form>
-	}
-
-	<h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Add Photos</h3>
-	<p>Add photos to the current album @Model.Name</p>
-	<form method="post" asp-action="AddPhotos" enctype="multipart/form-data">
-		<div class="form-group">
-			<input type="file" name="AlbumPhotos" multiple class="form-control" id="files">
-		</div>
-		<input type="hidden" name="AlbumID" value="@Model.Id">
-		<button type="submit" class="btn btn-primary mb-5">Submit</button>
-	</form>
-
-	<h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Photos</h3>
-	<p>Delete photos from the current album @Model.Name</p>
-	<form method="post" asp-action="DeletePhotos" enctype="multipart/form-data">
-		@ViewBag.Message
-
-		<button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Select Files</button>
-		<button type="submit" class="btn btn-primary">Delete</button>
-	</form>
+    if (System.IO.Directory.Exists(env.WebRootPath + "\\Gallery\\" + Model.Name))
+    {
+        <h2 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Folder</h2>
+        <p>Do you wish to delete the album folder?</p>
+        <form asp-action="DeleteFolder" asp-area="Admin" asp-controller="Gallery">
+            <input type="hidden" value="@Model.Id" name="GalleryID">
+            <button type="submit" class="btn btn-primary mb-5">Yes</button>
+        </form>
+    }
+    else
+    {
+        <h2 class="bg bg-info p-1 text-white mt-5 col-md-12">Gallery Info</h2>
+        <p>Gallery folder does not exist.  Create it?</p>
+        <form asp-action="CreateFolder" asp-area="Admin" asp-controller="Gallery">
+            <input type="hidden" value="@Model.Id" name="GalleryID">
+            <button type="submit" class="btn btn-primary mb-5">Yes</button>
+        </form>
+    }
 }
+<h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Add Photos</h3>
+<p>Add photos to the current album @Model.Name</p>
+<form method="post" asp-action="AddPhotos" enctype="multipart/form-data">
+    <div class="form-group">
+        <input type="file" name="AlbumPhotos" multiple class="form-control" id="files">
+    </div>
+    <input type="hidden" name="AlbumID" value="@Model.Id">
+    <button type="submit" class="btn btn-primary mb-5">Submit</button>
+</form>
 
-<div class="modal" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Modal title</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<ul>
-				@foreach (var item in ViewBag.AllFiles)
-				{
-					<li>@item</li> 
-				}
-				</ul>
-				@Html.PagedListPager((IPagedList)ViewBag.AllFiles, page => Url.Action("Update", new { page }), new PagedListRenderOptions
-		   {
-			   LiElementClasses = new string[] { "page-item" },
-			   PageClasses = new string[] { "page-link" }
-		   })
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save Changes</button>
-			</div>
-		</div>
-	</div>
-</div>
+<h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Photos</h3>
+<p>Delete photos from the current album @Model.Name</p>
 
+<form method="post" asp-action="DeleteFiles" asp-area="Admin" asp-controller="Gallery">
+
+    @{
+        if (ViewBag.Files is null)
+        {
+        }
+        else
+        {
+            foreach (System.IO.FileInfo files in ViewBag.Files)
+            {
+                <label for="@files.Name">@files.Name</label>
+                <input type="checkbox" class="form-control" value="@files.Name" name="FileName" id="FileID">
+
+            }
+        }
+
+    }
+    <input type="hidden" name="AlbumID" value="@Model.Id">
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+@Html.PagedListPager((IPagedList)ViewBag.Files, page => Url.Action("Update", new { page = page }),
+PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
+{
+    MaximumPageNumbersToDisplay = 2,
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new string[] { "page-link" },
+
+},
+new AjaxOptions
+{
+    HttpMethod = "GET",
+    UpdateTargetId = "targetElement",
+    OnSuccess = "onAjaxSuccess",
+    OnFailure = "onAjaxFailure",
+
+}))
+
+
+
+
+@section scripts {
+    <script>
+        $(function () {
+
+            $('#targetElement').on('click', 'a', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    url: this.href,
+                    type: 'GET',
+                    cache: false,
+                    success: function (result) {
+                        $('#targetElement').html(result);
+                    }
+                });
+            });
+        });
+
+        function onAjaxFailure(xhr, status, error) {
+            $('#showUpdate').html("<strong>An error has occurred retrieving data: " + error + "<br></strong>");
+        }
+
+        function onAjaxSuccess(data, status, xhr) {
+            $('.modal').modal('show');
+        }
+    </script>
+}
