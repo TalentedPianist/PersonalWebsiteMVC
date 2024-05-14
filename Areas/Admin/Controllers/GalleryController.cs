@@ -107,47 +107,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
 
-        [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Gallery/AddPhotos")]
-        public async Task<IActionResult> AddPhotos([FromForm(Name ="AlbumPhotos")]List<IFormFile> files, [FromForm(Name="AlbumID")]int AlbumID)
-        {
-            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
-            long size = files.Sum(f => f.Length);
-            var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
-           
-            TempData["Message"] = filePath;
-            StringBuilder sb = new StringBuilder();
-            foreach (var formFile in files)
-            {
-                using (var stream = System.IO.File.Create(filePath + "\\" + formFile.FileName))
-                {
-                    await formFile.CopyToAsync(stream);
-                }
-
-                    Photos photo = new Photos();
-                photo.AlbumID = AlbumID;
-                photo.Name = formFile.Name;
-                _db.Photos.Add(photo);
-                _db.SaveChanges();
-            }
     
-            await Task.CompletedTask;
-            return RedirectToAction("Index");
-        }
-
-        [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/DeleteFiles")]
-        public async Task<IActionResult> DeleteFiles([FromForm(Name ="FileName")]List<string> files, [FromForm(Name="AlbumID")]int AlbumID, [FromQuery(Name ="page")]int page)
-        {
-            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
-            StringBuilder sb = new StringBuilder();
-            foreach (string file in files)
-            {
-                sb.Append(file);
-            }
-            TempData["Message"] = sb.ToString();
-            await Task.CompletedTask;
-            return View("~/Areas/Admin/Views/Gallery/Update.cshtml", album);
-        }
     }
 }

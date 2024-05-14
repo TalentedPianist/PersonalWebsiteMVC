@@ -17,7 +17,7 @@
 <h1 class="bg bg-info p-1">Update Album</h1>
 <a asp-action="Index" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Back</a>
 
-@TempData["Message"]
+@Html.Raw(TempData["Message"])
 
 <form method="post" asp-action="UpdateAlbum" asp-area="Admin" asp-controller="Gallery" name="UpdateForm">
     <div class="form-group">
@@ -88,7 +88,7 @@
             {
                 <label for="@files.Name">@files.Name</label>
                 <input type="checkbox" class="form-control" value="@files.Name" name="FileName" id="FileID">
-
+                <input type="hidden" name="FilePath" value="@files.FullName">
             }
         }
 
