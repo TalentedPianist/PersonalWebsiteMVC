@@ -7,6 +7,7 @@
 @model IEnumerable<Photos>
 @using Microsoft.AspNetCore.Hosting
 @inject IWebHostEnvironment env
+@inject ApplicationDbContext _db
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
 @TempData["Message"]
@@ -31,14 +32,12 @@
 
 
         <div id="Gallery">
-           
-           @foreach (var file in ViewBag.Files)
-           {
-               var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
-               <a id="test" href="@file.Name" data-toggle="modal" data-target="#myModal" data-src="@url" data-name="@file.Name"><img src="@url"></a>
 
-               
-           }
+            @foreach (var file in ViewBag.Files)
+            {
+                var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
+                <a id="test" href="#ex1" rel="modal:open" data-toggle="modal" data-target="#myModal" data-src="@url" data-name="@file.Name"><img src="@url"></a>
+            }
 
         </div>
     }
@@ -53,25 +52,14 @@
     }
 }
 
-<div id="myModal" class="modal fade" tabindex="-1">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title"><div id="modal_title"></div></h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				<div id="photo_modal"></div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div>
+<div id="ex1" class="modal">
+    <h2><div id="modal_title"></div></h2>
+    <div id="photo_modal"></div>
+    @TempData["FileName"]
+    <a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
 </div>
+
+
 
 @functions {
     string GetBaseUrl()
@@ -81,5 +69,37 @@
         var pathBase = request.PathBase.ToUriComponent();
         return $"{request.Scheme}://{host}{pathBase}";
     }
+
+    bool IsInDb(string fileName)
+    {
+        var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
+        if (photo!.Name == fileName)
+            return true;
+        else
+            return false;
+
+    }
+}
+
+@section Scripts {
+    <script>
+        $(function () {
+            $("#Gallery a").on("click", function () {
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("GetFile")",
+                    data: { name: $("#Gallery a").data("name") },
+                    dataType: "text",
+                    success: function (msg) {
+                        console.log($("#Gallery a").data("name"));
+                        console.log(msg);
+                    },
+                    error: function (req, status, error) {
+                        console.log(error);
+                    }
+                });
+            });
+        });
+    </script>
 }
 

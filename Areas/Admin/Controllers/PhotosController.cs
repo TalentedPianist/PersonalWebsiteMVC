@@ -66,5 +66,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             ViewBag.Message = sb.ToString();
             return RedirectToAction("Index", "Photos", AlbumID);
         }
+
+        [HttpPost]
+        public string GetFile(string fileName)
+        {
+            TempData["FileName"] = fileName;
+            return DateTime.Now.ToString();
+        }
     }
 }

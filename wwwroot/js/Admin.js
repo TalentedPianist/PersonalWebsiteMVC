@@ -2,9 +2,6 @@
     $('#Modal').modal('show');
 });
 
-$(function () {
-    
-});
 
 $('#Gallery a').on('click', function () {
     var imageSource = $(this).attr('src');
@@ -13,5 +10,5 @@ $('#Gallery a').on('click', function () {
     $("#modal_title").empty();
     $("#modal_title").append(fileName);
     $("#photo_modal").empty();
-    $("#photo_modal").append("<img id='photo1' src='" + src + "'>");
+    $("#photo_modal").append("<img src='" + src + "'>");
 });
