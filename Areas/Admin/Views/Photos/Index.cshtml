@@ -55,7 +55,7 @@
 <div id="ex1" class="modal">
     <h2><div id="modal_title"></div></h2>
     <div id="photo_modal"></div>
-    @TempData["FileName"]
+    <p>@TempData["FileName"]</p>
     <a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
 </div>
 
@@ -85,14 +85,16 @@
     <script>
         $(function () {
             $("#Gallery a").on("click", function () {
+                var n = $("#Gallery a").data("name");
+                var obj;
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("GetFile")",
-                    data: { name: $("#Gallery a").data("name") },
+                    data: { name: n },
                     dataType: "text",
-                    success: function (msg) {
-                        console.log($("#Gallery a").data("name"));
-                        console.log(msg);
+                    success: function (data) {
+                        //console.log($("#Gallery a").data("name"));
+                        console.log(data);
                     },
                     error: function (req, status, error) {
                         console.log(error);

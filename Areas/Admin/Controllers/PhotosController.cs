@@ -68,6 +68,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("/GetFile")]
         public string GetFile(string fileName)
         {
             TempData["FileName"] = fileName;
