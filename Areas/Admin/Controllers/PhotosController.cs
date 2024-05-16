@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using System.Text;
+using System.Text.Json.Nodes;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -69,10 +70,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("/GetFile")]
-        public string GetFile(string fileName)
+        public IActionResult GetFile(string fileName)
         {
-            TempData["FileName"] = fileName;
-            return DateTime.Now.ToString();
+            return Ok(fileName);
         }
     }
 }

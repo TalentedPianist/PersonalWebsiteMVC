@@ -79,7 +79,29 @@
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="/lib/jquery-modal/jquery.modal.min.js"></script>
     <script src="/js/Admin.js?v=@n"></script>
+    <script>
+    $(function () {
+    $("#Gallery a").on("click", function () {
+        var n = $("#Gallery a").data("src");
 
+
+        $.ajax({
+            type: "POST",
+            url: "@Url.Action("GetFile", "Photos")",
+            dataType: "json",
+            data: { name: "Douglas" },
+            contentType: 'application/json; charset=utf-8',
+            success: function (msg) {
+                console.log(msg);
+            },
+            error: function (req, status, error) {
+                console.log(error);
+            }
+
+        });
+    });
+});
+    </script>
 
     @RenderSection("Scripts", required: false)
 
