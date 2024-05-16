@@ -25,9 +25,19 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
             ViewBag.AlbumName = album.Name;
             ViewBag.AlbumID = album.Id;
+            ViewBag.Path = filePath;
 
             StringBuilder sb = new StringBuilder();
-            ViewBag.Files = sb.ToString();
+            DirectoryInfo di = new DirectoryInfo(filePath);
+          
+            foreach (FileInfo file in di.GetFiles())
+            {
+                sb.Append(file.Name);
+                
+            }
+
+            ViewBag.Message = sb.ToString();
+            ViewBag.Files = di.GetFiles();
             return View();
         }
 
