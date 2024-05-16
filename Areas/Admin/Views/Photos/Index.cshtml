@@ -5,17 +5,61 @@
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Photos>
+@using Microsoft.AspNetCore.Hosting
+@inject IWebHostEnvironment env
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
-@ViewBag.Message
-
+@TempData["Message"]
 @{
-    if (ViewBag.Files.Count == 0)
+    try
     {
-        <form method="post" asp-action="AddFiles" enctype="multipart/form-data" asp-controller="Photos" asp-area="Admin">
-            <div class="form-group">
-                <label for="Files">Select Files:</label>
-            <input type="file" class="form-control" multiple>
-            </div>
+        var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
+        var files = Directory.GetFiles(path);
+        int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
+        if (count == 0)
+        {
+            <p>No files exist for this album.  Add files?</p>
+            <form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="Files">Add Files</label>
+                    <input type="file" name="AddFiles" class="form-control-sm" multiple>
+                </div>
+                <input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        }
+
+        DirectoryInfo di = new DirectoryInfo(path);
+        <div id="Gallery">
+            @foreach (FileInfo file in di.GetFiles())
+            {
+             
+                <figure>
+                    <a class="test-popup-link" href="/Gallery/@ViewBag.AlbumName/@file.Name"><img src="/Gallery/@ViewBag.AlbumName/@file.Name"></a>
+                    <figcaption></figcaption>
+                </figure>
+
+            }
+
+        </div>
+    }
+    catch (DirectoryNotFoundException ex)
+    {
+        @ex.Message
+        <p>Directory does not exist.  Create it?</p>
+        <form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
+            <input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
+            <button type="submit" class="btn btn-primary">Yes</button>
+        </form>
+    }
+}
+
+@functions {
+    string GetBaseUrl()
+    {
+        var request = Context.Request;
+        var host = request.Host.ToUriComponent();
+        var pathBase = request.PathBase.ToUriComponent();
+        return $"{request.Scheme}://{host}{pathBase}";
     }
 }

@@ -17,22 +17,44 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("Photos/Index")]
         [Route("Photos/Index/{id}")]
+        [Route("Areas/Admin/Photos/Index")]
         public IActionResult Index(int id)
         {
             var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
             var photos = _db.Photos.Where(p => p.AlbumID == id);
             var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
             ViewBag.AlbumName = album.Name;
+            ViewBag.AlbumID = album.Id;
 
-            var files = Directory.GetFiles(filePath);
-            ViewBag.Message = files.Count();
             StringBuilder sb = new StringBuilder();
-            foreach (var file in files)
-            {
-                sb.Append(file);
-            }
             ViewBag.Files = sb.ToString();
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddFiles([FromForm(Name = "AddFiles")] List<IFormFile> files, [FromForm(Name = "AlbumID")] int AlbumID)
+        {
+            TempData["Message"] = AlbumID;
+            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();   
+            long size = files.Sum(f => f.Length);
+            StringBuilder sb = new StringBuilder();
+            var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
+            try
+            {
+                foreach (IFormFile file in files)
+                {
+                    using (var stream = new FileStream(Path.Combine(filePath, file.FileName), FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+                }
+            }
+            catch (DirectoryNotFoundException ex)
+            {
+            }
+
+            ViewBag.Message = sb.ToString();
+            return RedirectToAction("Index", "Photos", AlbumID);
         }
     }
 }

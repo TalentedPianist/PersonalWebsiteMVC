@@ -103,7 +103,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         { 
             var album = _db.Albums.Where(a => a.Id == GalleryID).FirstOrDefault();
             Directory.CreateDirectory(Host.WebRootPath + "\\Gallery\\" + album!.Name);
-            return View("~/Admin/Views/Gallery/Update.cshtml", album);
+            return View("~/Areas/Admin/Views/Gallery/Update.cshtml", album);
         }
 
 
