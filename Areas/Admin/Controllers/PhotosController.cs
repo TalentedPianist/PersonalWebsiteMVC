@@ -68,11 +68,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index", "Photos", AlbumID);
         }
 
-        [HttpPost]
+        
         [Route("/GetFile")]
-        public IActionResult GetFile(string fileName)
+        [HttpPost]
+        public JsonResult GetFile()
         {
-            return Ok(fileName);
+            string name = HttpContext.Request.Form["name"]!;
+            TempData["Name"] = name;
+            return Json(new[] { name });
         }
     }
 }

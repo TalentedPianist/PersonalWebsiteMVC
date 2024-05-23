@@ -1,8 +1,8 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Photos>
 @using Microsoft.AspNetCore.Hosting
@@ -12,73 +12,74 @@
 
 @TempData["Message"]
 @{
-    try
-    {
-        var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
-        var files = Directory.GetFiles(path);
-        int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
-        if (count == 0)
-        {
-            <p>No files exist for this album.  Add files?</p>
-            <form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="Files">Add Files</label>
-                    <input type="file" name="AddFiles" class="form-control-sm" multiple>
-                </div>
-                <input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
-                <button type="submit" class="btn btn-primary">Add</button>
-            </form>
-        }
+	try
+	{
+		var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
+		var files = Directory.GetFiles(path);
+		int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
+		if (count == 0)
+		{
+			<p>No files exist for this album.  Add files?</p>
+			<form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="Files">Add Files</label>
+					<input type="file" name="AddFiles" class="form-control-sm" multiple>
+				</div>
+				<input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
+				<button type="submit" class="btn btn-primary">Add</button>
+			</form>
+		}
 
 
-        <div id="Gallery">
-
-            @foreach (var file in ViewBag.Files)
-            {
-                var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
-                <a id="test" href="#ex1" rel="modal:open" data-toggle="modal" data-target="#myModal" data-src="@url" data-name="@file.Name"><img src="@url"></a>
-            }
-
-        </div>
-    }
-    catch (DirectoryNotFoundException ex)
-    {
-        @ex.Message
-        <p>Directory does not exist.  Create it?</p>
-        <form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
-            <input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
-            <button type="submit" class="btn btn-primary">Yes</button>
-        </form>
-    }
+		<div id="Gallery">
+			@{
+				int i = 1;
+				foreach (FileInfo file in ViewBag.Files)
+				{
+					var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
+					<a id="test" href="#ex1" rel="modal:open" data-toggle="modal" data-target="#myModal" data-src="@url" data-name="@file.Name" data-id="@i"><img src="@url"></a>
+					i++;
+				}
+			}
+		</div>
+	}
+	catch (DirectoryNotFoundException ex)
+	{
+		@ex.Message
+		<p>Directory does not exist.  Create it?</p>
+		<form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
+			<input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
+			<button type="submit" class="btn btn-primary">Yes</button>
+		</form>
+	}
 }
 
 <div id="ex1" class="modal">
-    <h2><div id="modal_title"></div></h2>
-    <div id="photo_modal"></div>
-
-    <a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
+	<h2>@TempData["name"]</h2>
+	<img src="/Gallery/@ViewBag.AlbumName/@TempData["name"]">
+	<a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
 </div>
 
 
 
 @functions {
-    string GetBaseUrl()
-    {
-        var request = Context.Request;
-        var host = request.Host.ToUriComponent();
-        var pathBase = request.PathBase.ToUriComponent();
-        return $"{request.Scheme}://{host}{pathBase}";
-    }
+	string GetBaseUrl()
+	{
+		var request = Context.Request;
+		var host = request.Host.ToUriComponent();
+		var pathBase = request.PathBase.ToUriComponent();
+		return $"{request.Scheme}://{host}{pathBase}";
+	}
 
-    bool IsInDb(string fileName)
-    {
-        var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
-        if (photo!.Name == fileName)
-            return true;
-        else
-            return false;
+	bool IsInDb(string fileName)
+	{
+		var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
+		if (photo!.Name == fileName)
+			return true;
+		else
+			return false;
 
-    }
+	}
 }
 
 
