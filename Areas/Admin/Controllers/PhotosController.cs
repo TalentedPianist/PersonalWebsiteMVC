@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OutputCaching;
 using PersonalWebsiteMVC.Data;
 using System.Text;
-using System.Text.Json.Nodes;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -10,10 +10,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
     {
         private ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
-        public PhotosController(ApplicationDbContext db, IWebHostEnvironment host)
+        public IHttpContextAccessor Context { get; set; }
+        public PhotosController(ApplicationDbContext db, IWebHostEnvironment host, IHttpContextAccessor context)
         {
             _db = db;
             Host = host;
+            Context = context;
         }
 
         [Route("Photos/Index")]
@@ -68,14 +70,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index", "Photos", AlbumID);
         }
 
-        
-        [Route("/GetFile")]
         [HttpPost]
-        public JsonResult GetFile()
+        [Route("/GetFile")]
+        public string GetFile()
         {
             string name = HttpContext.Request.Form["name"]!;
             TempData["Name"] = name;
-            return Json(new[] { name });
+            return name;
         }
     }
+
+    
 }

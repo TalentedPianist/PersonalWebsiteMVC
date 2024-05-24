@@ -63,6 +63,7 @@
         </form>
     }
 }
+
 <h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Add Photos</h3>
 <p>Add photos to the current album @Model.Name</p>
 <form method="post" asp-action="AddPhotos" enctype="multipart/form-data">
@@ -97,49 +98,5 @@
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
-@Html.PagedListPager((IPagedList)ViewBag.Files, page => Url.Action("Update", new { page = page }),
-PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new PagedListRenderOptions
-{
-    MaximumPageNumbersToDisplay = 2,
-    LiElementClasses = new string[] { "page-item" },
-    PageClasses = new string[] { "page-link" },
-
-},
-new AjaxOptions
-{
-    HttpMethod = "GET",
-    UpdateTargetId = "targetElement",
-    OnSuccess = "onAjaxSuccess",
-    OnFailure = "onAjaxFailure",
-
-}))
 
 
-
-
-@section scripts {
-    <script>
-        $(function () {
-
-            $('#targetElement').on('click', 'a', function (e) {
-                e.preventDefault();
-                $.ajax({
-                    url: this.href,
-                    type: 'GET',
-                    cache: false,
-                    success: function (result) {
-                        $('#targetElement').html(result);
-                    }
-                });
-            });
-        });
-
-        function onAjaxFailure(xhr, status, error) {
-            $('#showUpdate').html("<strong>An error has occurred retrieving data: " + error + "<br></strong>");
-        }
-
-        function onAjaxSuccess(data, status, xhr) {
-            $('.modal').modal('show');
-        }
-    </script>
-}

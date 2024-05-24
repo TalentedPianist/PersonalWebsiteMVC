@@ -33,12 +33,24 @@
 
 		<div id="Gallery">
 			@{
-				int i = 1;
+			
 				foreach (FileInfo file in ViewBag.Files)
 				{
 					var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
-					<a id="test" href="#ex1" rel="modal:open" data-toggle="modal" data-target="#myModal" data-src="@url" data-name="@file.Name" data-id="@i"><img src="@url"></a>
-					i++;
+					if (IsInDb(file.Name))
+					{
+
+					}
+					else
+					{
+
+						<figure>
+							<a id="test" href="#ex1" rel="modal:open" data-name="@file.Name"><img src="@url"></a>
+							<figcaption>
+
+							</figcaption>
+						</figure>
+					}
 				}
 			}
 		</div>
@@ -55,10 +67,27 @@
 }
 
 <div id="ex1" class="modal">
-	<h2>@TempData["name"]</h2>
-	<img src="/Gallery/@ViewBag.AlbumName/@TempData["name"]">
+	<h2>@TempData["Name"]</h2>
+	<img src="/Gallery/@ViewBag.AlbumName/@TempData["Name"]">
+	@{
+		try
+		{
+			if (IsInDb(TempData["Name"]!.ToString()!))
+			{
+			}
+			else
+			{
+				<p>Add to database</p>
+			}
+		}
+		catch (NullReferenceException ex)
+		{
+		}
+	}
 	<a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
 </div>
+
+
 
 
 
@@ -74,12 +103,18 @@
 	bool IsInDb(string fileName)
 	{
 		var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
-		if (photo!.Name == fileName)
-			return true;
-		else
+		try
+		{
+			if (photo!.Name == fileName)
+				return true;
+			else
+				return false;
+		}
+		catch (NullReferenceException ex)
+		{
 			return false;
+		}
 
 	}
 }
-
 

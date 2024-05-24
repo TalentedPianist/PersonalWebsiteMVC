@@ -16,7 +16,7 @@ using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
 using KITT.Web.ReCaptcha.Http.v2;
-using ReflectionIT.Mvc.Paging;
+using AspNetCore.Unobtrusive.Ajax;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +30,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 //.AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddControllersWithViews().AddNewtonsoftJson();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddMvc().AddRazorRuntimeCompilation();
 builder.Services.AddControllers()
@@ -91,6 +91,7 @@ builder.Services.AddReCaptchaV2HttpClient(options =>
     options.SecretKey = "6LdB-1kpAAAAAPEBR2GuCm8rTEucGiU89cQPMaC0";
 });
 
+builder.Services.AddSession();
 
 var app = builder.Build();
 
@@ -104,6 +105,7 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
+app.UseSession();
 
 app.MapRazorPages();
 app.MapControllers();
