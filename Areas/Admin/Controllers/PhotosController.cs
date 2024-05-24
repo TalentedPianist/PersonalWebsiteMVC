@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using PersonalWebsiteMVC.Data;
+using PersonalWebsiteMVC.Models;
 using System.Text;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
@@ -70,14 +71,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index", "Photos", AlbumID);
         }
 
-        [HttpPost]
-        [Route("/GetFile")]
-        public string GetFile()
+        public List<Comments> GetComments(int id)
         {
-            string name = HttpContext.Request.Form["name"]!;
-            TempData["Name"] = name;
-            return name;
+            
         }
+
+      
     }
 
     

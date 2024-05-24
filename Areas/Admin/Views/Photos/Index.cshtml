@@ -45,7 +45,7 @@
 					{
 
 						<figure>
-							<a id="test" href="#ex1" rel="modal:open" data-name="@file.Name"><img src="@url"></a>
+							<a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName"><img src="@url"></a>
 							<figcaption>
 
 							</figcaption>
@@ -67,24 +67,7 @@
 }
 
 <div id="ex1" class="modal">
-	<h2>@TempData["Name"]</h2>
-	<img src="/Gallery/@ViewBag.AlbumName/@TempData["Name"]">
-	@{
-		try
-		{
-			if (IsInDb(TempData["Name"]!.ToString()!))
-			{
-			}
-			else
-			{
-				<p>Add to database</p>
-			}
-		}
-		catch (NullReferenceException ex)
-		{
-		}
-	}
-	<a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
+
 </div>
 
 
