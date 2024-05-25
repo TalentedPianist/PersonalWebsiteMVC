@@ -71,11 +71,23 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index", "Photos", AlbumID);
         }
 
-        public List<Comments> GetComments(int id)
+        [Route("/IsInDb")]
+        [HttpPost]
+        public bool IsInDb(string name)
         {
-            
+            List<Photos> photos = _db.Photos.Where(p => p.Name == name).ToList();
+            bool hasPic = photos.Any();
+            if (hasPic)
+                return true;
+            return false;
         }
 
+        [Route("/AddToDatabase")]
+        public IActionResult AddToDatabase(string fileName)
+        {
+            Console.WriteLine(fileName);
+            return Content(fileName);
+        }
       
     }
 

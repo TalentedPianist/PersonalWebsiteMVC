@@ -105,10 +105,12 @@
                         data: { name: name },
                         dataType: 'text',
                         success: function (message) {
-                            $("#IsInDb").empty();
-                           
-                       
-                            
+                            //$("#IsInDb").empty();
+                            if (message) {
+                                $("#IsInDb").append(`
+                                <p><a href="/Photos/AddToDatabase?name=${name}">Add to Database</a></p>
+                                `);
+                            }
                         },
                         failure: function (error) {
                             console.log(error);
