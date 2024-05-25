@@ -81,48 +81,7 @@
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="/lib/jquery-modal/jquery.modal.min.js"></script>
     <script src="/js/Admin.js?v=@n"></script>
-    <script>
-        // Noted that the cache seems to prevent the image from changing.
-        $(function () {
-            $('#test[data-name]').each(function (i) {
-
-                $(this).on('click', function (e) {
-                   
-                    var name = $(this).data('name');
-                    var album = $(this).data('album');
-                    console.log(name);
-                    $(".modal").empty();
-                    $(".modal").append(`
-                       <h1>${name}</h1>
-                       <img src="/Gallery/${album}/${name}" alt="${name}">
-                       <div id="IsInDb"></div>
-                       <div id="Comments"></div>
-                       <a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
-                    `);
-                    $.ajax({
-                        method: "POST",
-                        url: "@Url.Action("IsInDb", "Photos")",
-                        data: { name: name },
-                        dataType: 'text',
-                        success: function (message) {
-                            //$("#IsInDb").empty();
-                            if (message) {
-                                $("#IsInDb").append(`
-                                <p><a href="/Photos/AddToDatabase?name=${name}">Add to Database</a></p>
-                                `);
-                            }
-                        },
-                        failure: function (error) {
-                            console.log(error);
-                        }
-                    });
-                });
-
-            });
-
-        });
-
-    </script>
+    
 
     @RenderSection("Scripts", required: false)
 

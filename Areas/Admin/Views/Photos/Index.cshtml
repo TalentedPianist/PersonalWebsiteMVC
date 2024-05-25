@@ -33,7 +33,7 @@
 
 		<div id="Gallery">
 			@{
-			
+
 				foreach (FileInfo file in ViewBag.Files)
 				{
 					var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
@@ -99,5 +99,69 @@
 		}
 
 	}
+}
+
+@section Scripts {
+	<script>
+    // Noted that the cache seems to prevent the image from changing.
+    $(function () {
+        $('#test[data-name]').each(function (i) {
+
+            $(this).on('click', function (e) {
+
+                var name = $(this).data('name');
+                var album = $(this).data('album');
+                console.log(name);
+                $(".modal").empty();
+                $(".modal").append(`
+                   <h1>${name}</h1>
+                   <img src="/Gallery/${album}/${name}" alt="${name}">
+                   <div id="IsInDb"></div>
+                   <div id="Comments"></div>
+                   <a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
+                `);
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("IsInDb", "Photos")",
+                    data: { name: name },
+                    dataType: 'text',
+                    success: function (message) {
+                        //$("#IsInDb").empty();
+						if (message) {
+							$("#IsInDb").append(`
+                            <p><a href="#" id="AddToDb" data-name="${name}">Add to Database</a></p>
+                            `);
+							$('#AddToDb').on('click', function (e) {
+								console.log("Link was clicked!");
+							});
+						}
+                    },
+                    failure: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+		});
+
+		function AddToDb() {
+
+			$.ajax({
+				method: 'POST',
+				url: "@Url.Action("AddToDb", "Photos")",
+				data: { name: $(this).data('name') },
+				dataType: 'text',
+				success: function (message) {
+					console.log(message);
+				},
+				failure: function (error) {
+					console.log(error);
+				}
+			});
+		}
+
+    });
+
+	</script>
 }
 

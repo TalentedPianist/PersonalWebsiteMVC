@@ -82,11 +82,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return false;
         }
 
-        [Route("/AddToDatabase")]
-        public IActionResult AddToDatabase(string fileName)
+        [Route("/Photos/AddToDatabase")]
+        [HttpPost]
+        public void AddToDatabase()
         {
-            Console.WriteLine(fileName);
-            return Content(fileName);
+            string name = HttpContext.Request.Form["name"]!;
+            Console.WriteLine(name);
         }
       
     }
