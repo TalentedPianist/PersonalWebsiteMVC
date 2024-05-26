@@ -33,11 +33,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
             StringBuilder sb = new StringBuilder();
             DirectoryInfo di = new DirectoryInfo(filePath);
-          
+
             foreach (FileInfo file in di.GetFiles())
             {
                 sb.Append(file.Name);
-                
+
             }
 
             ViewBag.Message = sb.ToString();
@@ -49,7 +49,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public async Task<IActionResult> AddFiles([FromForm(Name = "AddFiles")] List<IFormFile> files, [FromForm(Name = "AlbumID")] int AlbumID)
         {
             TempData["Message"] = AlbumID;
-            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();   
+            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
             long size = files.Sum(f => f.Length);
             StringBuilder sb = new StringBuilder();
             var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
@@ -82,15 +82,48 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return false;
         }
 
-        [Route("/Photos/AddToDatabase")]
         [HttpPost]
-        public void AddToDatabase()
+        [Route("/Photos/AjaxDbCheck")]
+        public bool AjaxDbCheck()
         {
-            string name = HttpContext.Request.Form["name"]!;
-            Console.WriteLine(name);
+            try
+            {
+                string name = HttpContext.Request.Form["name"].ToString();
+
+                Console.WriteLine(name);
+                var photo = _db.Photos.Where(p => p.Name == name);
+                Console.WriteLine(photo.Count());
+                if (photo.Count() == 0)
+                {
+                    return false;
+                }
+                else
+                {
+                    return true;
+                }
+            }
+            catch (NullReferenceException ex)
+            {
+                return false;
+            }
         }
-      
+
+        [Route("/Photos/AddToDb")]
+        [HttpPost]
+        public void AddToDb()
+        {
+            var strName = HttpContext.Request.Form["name"]!.ToString();
+            var strAlbum = HttpContext.Request.Form["album"]!.ToString();
+            var album = _db.Albums.Where(a => a.Name == strAlbum).FirstOrDefault();
+            Photos photo = new Photos();
+            photo.Name = strName;
+            photo.AlbumID = album!.Id;
+            photo.ImageUrl = $"/Gallery/{album.Name}/{strName}";
+            _db.Photos.Add(photo);
+            _db.SaveChanges();
+        }
+
     }
 
-    
+
 }
