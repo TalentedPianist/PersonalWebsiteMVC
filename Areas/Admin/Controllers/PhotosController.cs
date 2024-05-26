@@ -86,25 +86,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("/Photos/AjaxDbCheck")]
         public bool AjaxDbCheck()
         {
-            try
-            {
-                string name = HttpContext.Request.Form["name"].ToString();
-
-                Console.WriteLine(name);
-                var photo = _db.Photos.Where(p => p.Name == name);
-                Console.WriteLine(photo.Count());
-                if (photo.Count() == 0)
-                {
-                    return false;
-                }
-                else
-                {
-                    return true;
-                }
-            }
-            catch (NullReferenceException ex)
+            string name = HttpContext.Request.Form["name"]!;
+            //Console.WriteLine(name);
+            var photo = _db.Photos.Where(p => p.Name == name);
+            if (photo.Count() == 0)
             {
                 return false;
+            }
+            else
+            {
+                return true;
             }
         }
 
@@ -112,15 +103,23 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public void AddToDb()
         {
-            var strName = HttpContext.Request.Form["name"]!.ToString();
-            var strAlbum = HttpContext.Request.Form["album"]!.ToString();
-            var album = _db.Albums.Where(a => a.Name == strAlbum).FirstOrDefault();
-            Photos photo = new Photos();
-            photo.Name = strName;
-            photo.AlbumID = album!.Id;
-            photo.ImageUrl = $"/Gallery/{album.Name}/{strName}";
-            _db.Photos.Add(photo);
-            _db.SaveChanges();
+            try
+            {
+                var strName = HttpContext.Request.Form["name"]!.ToString();
+                Console.WriteLine(strName);
+                var strAlbum = HttpContext.Request.Form["album"]!.ToString();
+                var album = _db.Albums.Where(a => a.Name == strAlbum).FirstOrDefault();
+                Photos photo = new Photos();
+                photo.Name = strName;
+                photo.AlbumID = album!.Id;
+                photo.ImageUrl = $"/Gallery/{album.Name}/{strName}";
+                _db.Photos.Add(photo);
+                _db.SaveChanges();
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
 
     }
