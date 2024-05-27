@@ -11,12 +11,20 @@
     img { 
         width: 100%;
     }
+
+    figure { 
+        position: relative;
+    }
  
     figcaption { 
         color: white;
         position: relative; 
         text-align: center;
         padding: 15px;
+        position: absolute; 
+        top: 50%; 
+        left: 0%;
+
 
         a {
             color: white;

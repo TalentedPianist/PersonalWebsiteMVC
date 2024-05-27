@@ -1,8 +1,8 @@
 ﻿@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Photos>
 @using Microsoft.AspNetCore.Hosting
@@ -12,52 +12,52 @@
 
 @TempData["Message"]
 @{
-	try
-	{
-		var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
-		var files = Directory.GetFiles(path);
-		int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
-		if (count == 0)
-		{
-			<p>No files exist for this album.  Add files?</p>
-			<form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
-				<div class="form-group">
-					<label for="Files">Add Files</label>
-					<input type="file" name="AddFiles" class="form-control-sm" multiple>
-				</div>
-				<input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
-				<button type="submit" class="btn btn-primary">Add</button>
-			</form>
-		}
+    try
+    {
+        var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
+        var files = Directory.GetFiles(path);
+        int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
+        if (count == 0)
+        {
+            <p>No files exist for this album.  Add files?</p>
+            <form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="Files">Add Files</label>
+                    <input type="file" name="AddFiles" class="form-control-sm" multiple>
+                </div>
+                <input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        }
 
 
-		<div id="Gallery">
-			@{
+        <div id="Gallery">
+            @{
 
-				foreach (FileInfo file in ViewBag.Files)
-				{
-					var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
+                foreach (FileInfo file in ViewBag.Files)
+                {
+                    var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
 
-					<figure>
-						<a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName"><img src="@url"></a>
-						<figcaption>
+                    <figure>
+                        <a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName"><img src="@url"></a>
+                        <figcaption>
+                            @file.Name
+                        </figcaption>
+                    </figure>
 
-						</figcaption>
-					</figure>
-
-				}
-			}
-		</div>
-	}
-	catch (DirectoryNotFoundException ex)
-	{
-		@ex.Message
-		<p>Directory does not exist.  Create it?</p>
-		<form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
-			<input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
-			<button type="submit" class="btn btn-primary">Yes</button>
-		</form>
-	}
+                }
+            }
+        </div>
+    }
+    catch (DirectoryNotFoundException ex)
+    {
+        @ex.Message
+        <p>Directory does not exist.  Create it?</p>
+        <form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
+            <input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
+            <button type="submit" class="btn btn-primary">Yes</button>
+        </form>
+    }
 }
 
 <div id="ex1" class="modal">
@@ -69,34 +69,34 @@
 
 
 @functions {
-	string GetBaseUrl()
-	{
-		var request = Context.Request;
-		var host = request.Host.ToUriComponent();
-		var pathBase = request.PathBase.ToUriComponent();
-		return $"{request.Scheme}://{host}{pathBase}";
-	}
+    string GetBaseUrl()
+    {
+        var request = Context.Request;
+        var host = request.Host.ToUriComponent();
+        var pathBase = request.PathBase.ToUriComponent();
+        return $"{request.Scheme}://{host}{pathBase}";
+    }
 
-	bool IsInDb(string fileName)
-	{
-		var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
-		try
-		{
-			if (photo!.Name == fileName)
-				return true;
-			else
-				return false;
-		}
-		catch (NullReferenceException ex)
-		{
-			return false;
-		}
+    bool IsInDb(string fileName)
+    {
+        var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
+        try
+        {
+            if (photo!.Name == fileName)
+                return true;
+            else
+                return false;
+        }
+        catch (NullReferenceException ex)
+        {
+            return false;
+        }
 
-	}
+    }
 }
 
 @section Scripts {
-	<script>
+    <script>
     // Noted that the cache seems to prevent the image from changing.
     $(function () {
         $('#test[data-name]').each(function (i) {
@@ -122,7 +122,7 @@
 								console.log($(this).data('name'));
 							});
 						}
-					
+
 					},
 					error: function (error) {
 						console.log(error);
@@ -133,7 +133,10 @@
                 $(".modal").empty();
 $(".modal").append(`
    <h1>${name}</h1>
+   <figure>
    <img src="/Gallery/${album}/${name}" alt="${name}">
+   <figcaption>${name}</figcaption>
+   </figure>
    <div id="IsInDb">
 
    </div>
@@ -143,10 +146,16 @@ $(".modal").append(`
                 });
             });
 
-	});
+    });
 
-		
+        $("#Gallery figcaption").hide();
 
-	</script>
+        $("#Gallery img").each(function (e) {
+            $(this).on("mouseover", function (e) {
+                ("figcaption").show();
+            });
+        });
+
+    </script>
 }
 

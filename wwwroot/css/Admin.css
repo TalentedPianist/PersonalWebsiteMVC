@@ -8,11 +8,17 @@
 #Gallery img {
   width: 100%;
 }
+#Gallery figure {
+  position: relative;
+}
 #Gallery figcaption {
   color: white;
   position: relative;
   text-align: center;
   padding: 15px;
+  position: absolute;
+  top: 50%;
+  left: 0%;
 }
 #Gallery figcaption a {
   color: white;
