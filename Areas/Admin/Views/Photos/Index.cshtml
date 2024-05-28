@@ -41,6 +41,7 @@
                     <figure>
                         <a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName"><img src="@url"></a>
                         <figcaption>
+                            <p><input type="checkbox" name="image" id="myCheckbox" value="@file.Name"></p>
                             @file.Name
                         </figcaption>
                     </figure>
@@ -99,6 +100,8 @@
     <script>
     // Noted that the cache seems to prevent the image from changing.
         $(function () {
+            let tmp = [];
+
             $('#test[data-name]').each(function (i) {
 
                 $(this).on('click', function (e) {
@@ -148,52 +151,48 @@
 
             $("#Gallery figcaption").hide();
 
-
-            var tmp = [];
-
             // This needs to be the figure element instead of the image element.
             $('#Gallery figure').each(function (index, value) {
+                var dataArr = new Array();
+                var tmp = [];
+
                 $(this).on('mouseenter', function () {
+                    // Keeping it simple, we need to code the prepend in the HTML above directly otherwise it will not work.
                     $(this).find("figcaption").addClass('.overlay');
                     var name = $(this).find("figcaption").text();
-                    $(this).find("figcaption").empty();
-                    $(this).find("figcaption").prepend(`
-                    <div class="overlay">
-                    <p><input type="checkbox" name="image" id="myCheckbox" value="${name}"></p>
-                    ${name}
-                    </div>
-                `);
-
                     $(this).find("figcaption").show();
-
-                    // https://stackoverflow.com/questions/43962265/how-to-push-checked-checkboxes-values-into-an-array
-                    $('input[name="image"]').on("click", function () {
-                        if ($(this).is(':checked')) {
-                            var checked = ($(this).val());
-                            console.log(checked);
-                            tmp.push(checked);
-                        } else {
-                            tmp.splice($.inArray(checked, tmp), 1);
-                        }
-                    });
-                    for (var i = 0; i < tmp.length; i++) {
-                        console.log(tmp[i]);
-                    }
-
                 });
+                            
 
                 $(this).on('mouseleave', function () {
                     $(this).find("figcaption").removeClass(".overlay");
                     $(this).find("figcaption").hide();
                 });
 
-                
                
             });
+
+
+            $("input[name='image']:checked").each(function (index) {
+                $(this).on('click', function (e) {
+                    e.preventDefault();
+                    var1 = $(this).val();
+                    tmp.push(index);
+                    console.log(tmp.length);
+                });
+               
+            });
+            console.log(tmp.length);
+            for (var i = 0; i < tmp.length; i++) {
+                console.log(tmp[i]);
+            }
             
-     
+  
+            // https://stackoverflow.com/questions/43962265/how-to-push-checked-checkboxes-values-into-an-array
+
+               
         });
-       
+
 
 
 
