@@ -98,40 +98,40 @@
 @section Scripts {
     <script>
     // Noted that the cache seems to prevent the image from changing.
-    $(function () {
-        $('#test[data-name]').each(function (i) {
+        $(function () {
+            $('#test[data-name]').each(function (i) {
 
-			$(this).on('click', function (e) {
-				e.preventDefault();
-				var name = $(this).data('name');
-				var album = $(this).data('album');
+                $(this).on('click', function (e) {
+                    e.preventDefault();
+                    var name = $(this).data('name');
+                    var album = $(this).data('album');
 
-				$.ajax({
-					method: "POST",
-					url: "@Url.Action("AjaxDbCheck", "Photos")",
-					data: { name: name },
-					dataType: "text",
-					success: function (message) {
-						if (message) {
-							$("#IsInDb").append("<a href='#' id='AddToDb'>Add to Database</a>");
-							$("#IsInDb").attr("data-name", name); // Correct way to dynamically add data attributes in jQuery
-							//console.log($("#IsInDb").data('name'));
+                    $.ajax({
+                        method: "POST",
+                        url: "@Url.Action("AjaxDbCheck", "Photos")",
+                        data: { name: name },
+                        dataType: "text",
+                        success: function (message) {
+                            if (message) {
+                                $("#IsInDb").append("<a href='#' id='AddToDb'>Add to Database</a>");
+                                $("#IsInDb").attr("data-name", name); // Correct way to dynamically add data attributes in jQuery
+                                //console.log($("#IsInDb").data('name'));
 
-							$("#AddToDb").on("click", function (e) {
-								e.preventDefault();
-								console.log($(this).data('name'));
-							});
-						}
+                                $("#AddToDb").on("click", function (e) {
+                                    e.preventDefault();
+                                    console.log($(this).data('name'));
+                                });
+                            }
 
-					},
-					error: function (error) {
-						console.log(error);
-					}
-			});
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
 
 
-                $(".modal").empty();
-$(".modal").append(`
+                    $(".modal").empty();
+                    $(".modal").append(`
    <h1>${name}</h1>
    <figure>
    <img src="/Gallery/${album}/${name}" alt="${name}">
@@ -146,15 +146,57 @@ $(".modal").append(`
                 });
             });
 
-    });
+            $("#Gallery figcaption").hide();
 
-        $("#Gallery figcaption").hide();
 
-        $("#Gallery img").each(function (e) {
-            $(this).on("mouseover", function (e) {
-                ("figcaption").show();
+            var tmp = [];
+
+            // This needs to be the figure element instead of the image element.
+            $('#Gallery figure').each(function (index, value) {
+                $(this).on('mouseenter', function () {
+                    $(this).find("figcaption").addClass('.overlay');
+                    var name = $(this).find("figcaption").text();
+                    $(this).find("figcaption").empty();
+                    $(this).find("figcaption").prepend(`
+                    <div class="overlay">
+                    <p><input type="checkbox" name="image" id="myCheckbox" value="${name}"></p>
+                    ${name}
+                    </div>
+                `);
+
+                    $(this).find("figcaption").show();
+
+                    // https://stackoverflow.com/questions/43962265/how-to-push-checked-checkboxes-values-into-an-array
+                    $('input[name="image"]').on("click", function () {
+                        if ($(this).is(':checked')) {
+                            var checked = ($(this).val());
+                            console.log(checked);
+                            tmp.push(checked);
+                        } else {
+                            tmp.splice($.inArray(checked, tmp), 1);
+                        }
+                    });
+                    for (var i = 0; i < tmp.length; i++) {
+                        console.log(tmp[i]);
+                    }
+
+                });
+
+                $(this).on('mouseleave', function () {
+                    $(this).find("figcaption").removeClass(".overlay");
+                    $(this).find("figcaption").hide();
+                });
+
+                
+               
             });
+            
+     
         });
+       
+
+
+
 
     </script>
 }
