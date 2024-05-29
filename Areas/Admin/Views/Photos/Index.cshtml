@@ -100,7 +100,6 @@
     <script>
     // Noted that the cache seems to prevent the image from changing.
         $(function () {
-            let tmp = [];
 
             $('#test[data-name]').each(function (i) {
 
@@ -172,30 +171,13 @@
                
             });
 
-
-            $("input[name='image']:checked").each(function (index) {
-                $(this).on('click', function (e) {
-                    e.preventDefault();
-                    var1 = $(this).val();
-                    tmp.push(index);
-                    console.log(tmp.length);
-                });
-               
+            let tmp = [];
+            $("input[name='image']:checked").each(function () {
+                var1 = $(this).val();
+                tmp.push(var1);
             });
-            console.log(tmp.length);
-            for (var i = 0; i < tmp.length; i++) {
-                console.log(tmp[i]);
-            }
-            
-  
-            // https://stackoverflow.com/questions/43962265/how-to-push-checked-checkboxes-values-into-an-array
-
-               
+            console.log(tmp);
         });
-
-
-
-
 
     </script>
 }
