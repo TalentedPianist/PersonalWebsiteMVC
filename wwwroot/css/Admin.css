@@ -1,7 +1,6 @@
 ﻿#Gallery {
   position: relative;
   display: grid;
-  grid-template-rows: repeat(4, 0.5fr);
   grid-template-columns: repeat(4, 0.5fr);
   grid-gap: 1em;
 }

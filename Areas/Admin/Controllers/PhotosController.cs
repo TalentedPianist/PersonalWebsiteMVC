@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using Newtonsoft.Json;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
@@ -120,6 +121,20 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             {
                 Console.WriteLine(ex.Message);
             }
+        }
+
+        [Route("/Photos/AddMultipleToDb")]
+        [HttpPost]
+        public void AddMultipleToDb()
+        {
+            StringBuilder sb = new StringBuilder();
+
+            var form = Request.Form.Keys;
+            for (int i = 0; i < form.Count(); i++)
+            {
+                sb.Append(form);
+            }
+            Console.WriteLine(sb.ToString());
         }
 
     }

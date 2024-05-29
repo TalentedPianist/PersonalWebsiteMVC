@@ -47,7 +47,10 @@
                     </figure>
 
                 }
+
             }
+
+
         </div>
     }
     catch (DirectoryNotFoundException ex)
@@ -60,6 +63,8 @@
         </form>
     }
 }
+
+<p><a href="#" id="AddToDb">Add to Database</a></p>
 
 <div id="ex1" class="modal">
 
@@ -98,6 +103,8 @@
 
 @section Scripts {
     <script>
+        let tmp = [];
+
     // Noted that the cache seems to prevent the image from changing.
         $(function () {
 
@@ -152,6 +159,9 @@
 
             // This needs to be the figure element instead of the image element.
             $('#Gallery figure').each(function (index, value) {
+                // Check if image is in database
+
+
                 var dataArr = new Array();
                 var tmp = [];
 
@@ -161,23 +171,64 @@
                     var name = $(this).find("figcaption").text();
                     $(this).find("figcaption").show();
                 });
-                            
+
 
                 $(this).on('mouseleave', function () {
                     $(this).find("figcaption").removeClass(".overlay");
                     $(this).find("figcaption").hide();
                 });
 
-               
+
             });
 
-            let tmp = [];
-            $("input[name='image']:checked").each(function () {
-                var1 = $(this).val();
-                tmp.push(var1);
+
+
+            $('input[name="image"]').each(function (index, value) {
+                $(this).change(function (e) {
+                    if (($(this).is(':checked'))) {
+                        AddPic($(this).val());
+                        
+                    }
+                    else {
+                        RemovePic($(this).val(), index);
+                    }
+                });
             });
-            console.log(tmp);
+
+           
         });
+
+        // This needs to be done object oriented programming style for it to work.  Makes sense, since a single object can be processed outside the each loop.
+        function AddPic(name) {
+            tmp.push({ 'name': name });
+
+        }
+
+        // Function to remove pic from array with name and index parameters
+        function RemovePic(name, index) {
+            var index = tmp.indexOf(name);
+            if (index > -1) {
+                arr.splice(index, 1);
+            }
+        }
+
+        $("#AddToDb").on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("AddMultipleToDb", "Photos")",
+                data: JSON.stringify(tmp),
+                dataType: 'json',
+                success: function (message) {
+                    console.log(message);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        console.log(tmp);
 
     </script>
 }
