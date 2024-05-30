@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
@@ -125,18 +126,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public void AddMultipleToDb()
+        public void AddMultipleToDb([FromBody]JObject json)
         {
             StringBuilder sb = new StringBuilder();
 
-            var form = Request.Form.Keys;
-            for (int i = 0; i < form.Count(); i++)
+            foreach (var item in json)
             {
-                sb.Append(form);
+                sb.Append(item.Key);
             }
             Console.WriteLine(sb.ToString());
+           
         }
-
     }
 
 

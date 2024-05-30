@@ -217,8 +217,12 @@
             $.ajax({
                 method: "POST",
                 url: "@Url.Action("AddMultipleToDb", "Photos")",
+                headers: {
+              
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(tmp),
-                dataType: 'json',
                 success: function (message) {
                     console.log(message);
                 },

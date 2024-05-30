@@ -32,7 +32,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
     .AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
-builder.Services.AddMvc().AddRazorRuntimeCompilation();
+builder.Services.AddMvc(options =>
+{
+    options.MaxModelBindingCollectionSize = int.MaxValue;
+
+}).AddRazorRuntimeCompilation();
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
