@@ -200,7 +200,7 @@
 
         // This needs to be done object oriented programming style for it to work.  Makes sense, since a single object can be processed outside the each loop.
         function AddPic(name) {
-            tmp.push({ 'name': name });
+            tmp.push({ "name": name });
 
         }
 
@@ -217,11 +217,8 @@
             $.ajax({
                 method: "POST",
                 url: "@Url.Action("AddMultipleToDb", "Photos")",
-                headers: {
-              
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                contentType: 'application/json; charset=utf-8',
+                
+                contentType: 'application/x-www-form-urlencoded',
                 data: JSON.stringify(tmp),
                 success: function (message) {
                     console.log(message);

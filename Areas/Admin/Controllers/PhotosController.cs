@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
+using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
+using System.Text.Json;
+using System.Web;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -14,11 +17,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         private ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
         public IHttpContextAccessor Context { get; set; }
+  
         public PhotosController(ApplicationDbContext db, IWebHostEnvironment host, IHttpContextAccessor context)
         {
             _db = db;
             Host = host;
             Context = context;
+
         }
 
         [Route("Photos/Index")]
@@ -126,17 +131,18 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public void AddMultipleToDb([FromBody]JObject json)
+        public void AddMultipleToDb()
         {
-            StringBuilder sb = new StringBuilder();
 
-            foreach (var item in json)
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in Request.Form.Keys)
             {
-                sb.Append(item.Key);
+                sb.Append(item);
             }
             Console.WriteLine(sb.ToString());
+    
            
-        }
+        }   
     }
 
 
