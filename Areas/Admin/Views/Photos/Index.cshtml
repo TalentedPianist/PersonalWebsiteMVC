@@ -160,7 +160,17 @@
             // This needs to be the figure element instead of the image element.
             $('#Gallery figure').each(function (index, value) {
                 // Check if image is in database
-
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("AjaxDbCheck", "Photos")",
+                    data: { 'name': $("#Gallery a").data('name') },
+                    success: function (message) {
+                        console.log(message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
 
                 var dataArr = new Array();
                 var tmp = [];
@@ -216,10 +226,10 @@
             e.preventDefault();
             $.ajax({
                 method: "POST",
-                url: "@Url.Action("AddMultipleToDb", "Photos")",
+                url: "@Url.Action("AddMultipleToDb", "Photos", new { album = "York" })",
                 
                 contentType: 'application/x-www-form-urlencoded',
-                data: JSON.stringify(tmp),
+                data: tmp,
                 success: function (message) {
                     console.log(message);
                 },

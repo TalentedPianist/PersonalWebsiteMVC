@@ -17,7 +17,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         private ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
         public IHttpContextAccessor Context { get; set; }
-  
+
         public PhotosController(ApplicationDbContext db, IWebHostEnvironment host, IHttpContextAccessor context)
         {
             _db = db;
@@ -93,17 +93,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("/Photos/AjaxDbCheck")]
         public bool AjaxDbCheck()
         {
-            string name = HttpContext.Request.Form["name"]!;
-            //Console.WriteLine(name);
-            var photo = _db.Photos.Where(p => p.Name == name);
-            if (photo.Count() == 0)
+            StringBuilder sb = new StringBuilder();
+            foreach (var item in Request.Form)
             {
-                return false;
+                sb.Append(item);
             }
-            else
-            {
-                return true;
-            }
+            Console.WriteLine(sb.ToString());
+            return false;
         }
 
         [Route("/Photos/AddToDb")]
@@ -131,18 +127,24 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public void AddMultipleToDb()
+        public bool AddMultipleToDb(string album)
         {
 
             StringBuilder sb = new StringBuilder();
+            var albumName = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
+
+            List<Photos> photos = new List<Photos>();
+
+
             foreach (var item in Request.Form.Keys)
             {
-                sb.Append(item);
+                photos.Add(new Photos() { Name = item, AlbumID = albumName!.Id, ImageUrl = $"/Gallery/{album}/{item}" });
             }
-            Console.WriteLine(sb.ToString());
-    
-           
-        }   
+            _db.AddRange(photos);
+            _db.SaveChanges();
+            return true;
+
+        }
     }
 
 
