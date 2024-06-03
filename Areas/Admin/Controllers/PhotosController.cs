@@ -112,26 +112,32 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddToDb")]
         [HttpPost]
-        public void AddToDb()
+        public IActionResult AddToDb(string album)
         {
-            try
-            {
-                var strName = HttpContext.Request.Form["name"]!.ToString();
-                Console.WriteLine(strName);
-                var strAlbum = HttpContext.Request.Form["album"]!.ToString();
-                var album = _db.Albums.Where(a => a.Name == strAlbum).FirstOrDefault();
-                Photos photo = new Photos();
-                photo.Name = strName;
-                photo.AlbumID = album!.Id;
-                photo.ImageUrl = $"/Gallery/{album.Name}/{strName}";
-                _db.Photos.Add(photo);
-                _db.SaveChanges();
-            }
-            catch (NullReferenceException ex)
-            {
-                Console.WriteLine(ex.Message);
-            }
+            var pic = Request.Form["name"];
+            var albumRecord = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
+            Photos photos = new Photos();
+            photos.AlbumID = albumRecord!.Id;
+            photos.Name = pic;
+            photos.ImageUrl = $"/Gallery/{album}/{pic}";
+            _db.Photos.Add(photos);
+            _db.SaveChanges();
+            return Ok();
         }
+
+        [Route("/Photos/RemoveFromDb")]
+        [HttpPost]
+        public IActionResult RemoveFromDb(string album)
+        {
+            var pic = Request.Form["name"];
+            var albumRecord = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
+            var photo = _db.Photos.Where(p => p.Name == pic).FirstOrDefault();
+            _db.Remove(photo);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]

@@ -161,8 +161,8 @@
                                             console.log("Link was clicked");
                                             $.ajax({
                                                 method: "POST",
-                                                url: "@Url.Action("AddToDb", "Photos")",
-                                                data: { 'name': $('#addImg').data('name'), 'album': @ViewBag.AlbumName },
+                                                url: "@Url.Action("AddToDb", "Photos", new { album = "York" })",
+                                                data: { 'name': $('#addImg').data('name') },
                                                 success: function (message) {
                                                     console.log(message);
                                                 },
@@ -196,7 +196,7 @@
                     $.ajax({
                         method: "POST",
                         url: "@Url.Action("AjaxDbCheck", "Photos")",
-                        data: { name: name },
+                        data: { 'name': name },
                         dataType: "text",
                         success: function (message) {
                             if (message) {
@@ -207,6 +207,15 @@
                                 $("#AddToDb").on("click", function (e) {
                                     e.preventDefault();
                                     //console.log($(this).data('name'));
+                                });
+                            } else {
+                                $("#IsInDb").html(`
+                                    <a href="#">Remove from Database</a>
+                                `);
+                                $("#IsInDb a").attr("data-name", name);
+                                $("#IsInDb a").on('click', function (e) {
+                                    e.preventDefault();
+                                    console.log($(this).val());
                                 });
                             }
 
