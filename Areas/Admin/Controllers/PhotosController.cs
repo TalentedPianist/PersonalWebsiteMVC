@@ -94,9 +94,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public bool AjaxDbCheck()
         {
             StringBuilder sb = new StringBuilder();
-            foreach (var item in Request.Form)
+            
+            foreach (var item in Request.Form["name"])
             {
-                sb.Append(item);
+                if (_db.Photos.Any(p => p.Name == item))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             Console.WriteLine(sb.ToString());
             return false;
@@ -145,6 +153,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return true;
 
         }
+
+        
     }
 
 
