@@ -89,7 +89,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return false;
         }
 
-        [HttpPost]
+        [HttpGet]
         [Route("/Photos/AjaxDbCheck")]
         public bool AjaxDbCheck()
         {

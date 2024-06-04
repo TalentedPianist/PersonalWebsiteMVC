@@ -41,7 +41,7 @@
                     <figure>
                         <img id="thumbnail" src="@url" data-name="@file.Name">
                         <figcaption>
-                            <a id="test" href="#ex1" rel="modal:open" data-name="@file.Name">View</a>
+                            <a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
                         </figcaption>
                     </figure>
 
@@ -66,10 +66,7 @@
 <p><a href="#" id="AddToDb">Add to Database</a></p>
 
 <div id="ex1" class="modal">
-   <h2></h2>
-   <img>
-   <a id="AddImg">Add to Database</a>
-   <a id="DelImg">Delete from Database</a>
+
 </div>
 
 
@@ -103,44 +100,40 @@
 @section Scripts {
     <script>
         $(function () {
-            function CheckDb(name, album) {
+            function CheckDb(name, album, src) {
                 let result = false;
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("AjaxDbCheck", "Photos", new { album = ViewBag.AlbumName })",
-                    data: { 'name': name },
-                    dataType: 'text',
-                    success: function (message) {
-                        console.log(message);
-                        if (!message) {
-                            $("#AddImg").hide();
-                            $("#DelImg").show();
-                        }
-                        
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
+                let isInDb = `
+                    <h2>${name}</h2>
+                    <img src="${src}" alt="${name}">
+                    <a href="#" id="DelImg">Delete from Database</a>
+                `;
+                let notInDb = `
+                    <h2>${name}</h2>
+                    <img src="${src}" alt="${name}">
+                    <a href="#" id="AddImg">Add to Database</a>
+                `;
+                $.get("@Url.Action("AjaxDbCheck", "Photos", new { album = ViewBag.AlbumName })", function (data, status) {
+                    console.log("Data: " + data + "\nStatus: " + status);
                 });
-                return result;
-            }
+
+                $("#AddImg").on('click', function (e) {
+                console.log("Link was clicked");
+            });
+                        return result;
+                    }
             
 
             $("#Gallery figure").each(function (index, value) {
-                if (CheckDb($(value).find("img").data("name")) === true) {
-                    $("#ex1").find("#AddImg").hide();
-                }
+                
                 $(this).find("a").on('click', function (e) {
-                    let name = $(value).find("img").data('name');
-                    let src = $(value).find("img").attr('src');
-                    $("#ex1").find("h2").text(name);
-                    $("#ex1").find("img").attr("src", src);
-                    $("#ex1").find("img").attr("alt", name);
+                            let name = $(value).find("img").data('name');
+                            let src = $(value).find("img").attr('src');
+                            let album = $(value).find("a").data('album');
+                            CheckDb(name, album, src);
+                        });
+                    });
 
-                    
-                });
-            });
-         
+          
         });
     </script>
 }
