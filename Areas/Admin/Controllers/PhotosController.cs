@@ -129,7 +129,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult RemoveFromDb(string album)
         {
-            var pic = Request.Form["name"];
+            var pic = Request.Form["name"].ToString();
             var albumRecord = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
             var photo = _db.Photos.Where(p => p.Name == pic).FirstOrDefault();
             _db.Remove(photo);

@@ -41,8 +41,10 @@
                     <figure>
                         <a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName"><img id="thumbnail" src="@url" data-name="@file.Name"></a>
                         <figcaption>
+                            <a href="#ex1" rel="modal:open" data-name="@file.Name">View</a>
                             <p><input type="checkbox" name="image" value="@file.Name"></p>
                             @file.Name
+
                         </figcaption>
                     </figure>
 
@@ -67,7 +69,7 @@
 <p><a href="#" id="AddToDb">Add to Database</a></p>
 
 <div id="ex1" class="modal">
-
+  
 </div>
 
 
@@ -105,11 +107,11 @@
     <script>
         let tmp = [];
 
+
     // Noted that the cache seems to prevent the image from changing.
         $(function () {
 
-
-
+           
             function CheckDb(name) {
                 let result = false;
                 $.ajax({
@@ -119,133 +121,86 @@
                     contentType: 'application/x-www-form-urlencoded',
                     success: function (message) {
 
-                        if (message) {
+                        let AddImgLink = `
+                            <a href="#" id="AddImg">Add to Database</a>
+                        `;
+
+                        let DelImgLink = `
+                            <a href="#" id="DelImg">Delete from Database</a>
+                        `;
+
+
+                        let AddToDb = `
+                            <h1>${name}</h1>
+                            <img src="/Gallery/@ViewBag.AlbumName/${name}" alt="${name}">
+                            ${AddImgLink}
+}
+                        `;
+
+                        let DelFromDb = `
+                            <h1>${name}</h1>
+                            <img src="/Gallery/@ViewBag.AlbumName/${name}" alt="${name}">
+                            ${DelImgLink}
+                        `;
+
+                        if (!message) {
                             console.log(message);
-                            var el = undefined;
-                            $("#Gallery figure").each(function (index, value) {
-                                if ($(this).find("img").data('name') == name) {
-                                    $(this).find("figcaption").html(`
-                                        <a href="#ex1" rel="modal:open">View</a>
-                                    `);
-                                    $(this).find("figcaption a").data('name', name);
-                                    $(this).find("figcaption a").on('click', function (e) {
-                                        console.log($(this).data('name'));
-                                        $("#ex1").html(`
-                                            <h1>${name}</h1>
-                                            <img src="/Gallery/@ViewBag.AlbumName/${name}" alt="${name}">
-                                            <a href="#" id="removeImg">Remove from Database</a>
-                                            <h3>Comments</h3>
-                                        `);
-                                    });
-                                }
-
+                            $("#ex1").html(AddToDb);
+                            $("#AddImg").data('name', name);
+                            $("#AddImg").on('click', function (e) {
+                                e.preventDefault();
+                                console.log($(this).data('name'));
+                                $.ajax({
+                                    method: "POST",
+                                    url: "@Url.Action("AddToDb", "Photos", new { album = ViewBag.AlbumName })",
+                                    contentType: "application/x-www-form-urlencoded",
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    data: { 'name': name },
+                                    success: function (message) {
+                                        console.log(message);
+                                        
+                                        
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                });
                             });
-
-                        }
-                        else {
-                            $("#Gallery figure").each(function (index, value) {
-                                if ($(this).find("img").data('name') == name) {
-                                    $(this).find("figcaption").html(`
-                                        <a href="#ex1" rel="modal:open">View</a>
-                                    `);
-
-                                    $(this).find("figcaption a").on("click", function (e) {
-                                        $("#ex1").html(`
-                                            <h2>${name}</h2>
-                                            <img src="/Gallery/@ViewBag.AlbumName/${name}" alt="${name}">
-                                            <a href="#" id="addImg">Add to Database</a>
-                                        `);
-                                        $("#addImg").data('name', name);
-                                        $("#addImg").on('click', function (e) {
-                                            e.preventDefault();
-                                            console.log("Link was clicked");
-                                            $.ajax({
-                                                method: "POST",
-                                                url: "@Url.Action("AddToDb", "Photos", new { album = "York" })",
-                                                data: { 'name': $('#addImg').data('name') },
-                                                success: function (message) {
-                                                    console.log(message);
-                                                },
-                                                error: function (err) {
-                                                    console.log(err);
-                                                }
-                                            });
-});
-                                    });
-                                }
+                        } else {
+                            $("#ex1").html(DelFromDb);
+                            $("#DelImg").data('name', name);
+                            $("#DelImg").on('click', function (e) {
+                                e.preventDefault();
+                                console.log($(this).data('name'));
+                                $.ajax({
+                                    method: "POST",
+                                    url: "@Url.Action("RemoveFromDb", "Photos", new { album = ViewBag.AlbumName })",
+                                    contentType: 'application/x-www-form-urlencoded',
+                                    headers: {
+                                        'Content-Type': 'application/x-www-form-urlencoded',
+                                    },
+                                    data: { 'name': name },
+                                    success: function (message) {
+                                        
+                       
+                                    },
+                                    error: function (err) {
+                                        console.log(err)
+                                    }
+                                });
                             });
                         }
-                        result = message;
+
+                        return result;
                     },
                     error: function (err) {
                         console.log(err);
                     }
                 });
-                return result;
             }
 
-
-            $('#test[data-name]').each(function (i) {
-
-
-                $(this).on('click', function (e) {
-                    e.preventDefault();
-                    var name = $(this).data('name');
-                    var album = $(this).data('album');
-
-                    $.ajax({
-                        method: "POST",
-                        url: "@Url.Action("AjaxDbCheck", "Photos")",
-                        data: { 'name': name },
-                        dataType: "text",
-                        success: function (message) {
-                            if (message) {
-                                $("#IsInDb").append("<a href='#' id='AddToDb'>Add to Database</a>");
-                                $("#IsInDb").attr("data-name", name); // Correct way to dynamically add data attributes in jQuery
-                                //console.log($("#IsInDb").data('name'));
-
-                                $("#AddToDb").on("click", function (e) {
-                                    e.preventDefault();
-                                    //console.log($(this).data('name'));
-                                });
-                            } else {
-                                $("#IsInDb").html(`
-                                    <a href="#">Remove from Database</a>
-                                `);
-                                $("#IsInDb a").attr("data-name", name);
-                                $("#IsInDb a").on('click', function (e) {
-                                    e.preventDefault();
-                                    console.log($(this).val());
-                                });
-                            }
-
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-
-
-                    $(".modal").empty();
-                    $(".modal").append(`
-   <h1>${name}</h1>
-   <figure>
-   <img src="/Gallery/${album}/${name}" alt="${name}">
-   <figcaption>${name}</figcaption>
-   </figure>
-   <div id="IsInDb">
-
-   </div>
-   <div id="Comments"></div>
-   <a href="#" rel="modal:close" class="btn btn-secondary">Close</a>
-`);
-                });
-            });
-
-            $("#Gallery figcaption").hide();
-
-
-            // This needs to be the figure element instead of the image element.
             $('#Gallery figure').each(function (index, value) {
                 // Check if image is in database
 
@@ -254,7 +209,7 @@
                 var tmp = [];
 
                 var name = $(this).find('img').data('name');
-
+                $(this).find("figcaption").hide();
 
                 $(this).on('mouseenter', function () {
                     // Keeping it simple, we need to code the prepend in the HTML above directly otherwise it will not work.
@@ -290,39 +245,69 @@
             });
 
 
-        });
+            $('#test[data-name]').each(function (i) {
 
-        // This needs to be done object oriented programming style for it to work.  Makes sense, since a single object can be processed outside the each loop.
-        function AddPic(name) {
-            tmp.push({ "name": name });
 
-        }
+                $(this).on('click', function (e) {
+                    e.preventDefault();
+                    var name = $(this).data('name');
+                    var album = $(this).data('album');
 
-        // Function to remove pic from array with name and index parameters
-        function RemovePic(name, index) {
-            var index = tmp.indexOf(name);
-            if (index > -1) {
-                arr.splice(index, 1);
-            }
-        }
+                    $.ajax({
+                        method: "POST",
+                        url: "@Url.Action("AjaxDbCheck", "Photos")",
+                        data: { 'name': name },
+                        dataType: "text",
+                        success: function (message) {
+                            if (message) {
 
-        $("#AddToDb").on('click', function (e) {
-            e.preventDefault();
-            $.ajax({
-                method: "POST",
-                url: "@Url.Action("AddMultipleToDb", "Photos", new { album = "York" })",
+                            }
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
 
-                contentType: 'application/x-www-form-urlencoded',
-                data: tmp,
-                success: function (message) {
-                    console.log(message);
-                },
-                error: function (error) {
-                    console.log(error);
+                    $("#Gallery figcaption").hide();
+
+
+                    // This needs to be the figure element instead of the image element.
+
+
+                });
+
+                // This needs to be done object oriented programming style for it to work.  Makes sense, since a single object can be processed outside the each loop.
+                function AddPic(name) {
+                    tmp.push({ "name": name });
+
                 }
+
+                // Function to remove pic from array with name and index parameters
+                function RemovePic(name, index) {
+                    var index = tmp.indexOf(name);
+                    if (index > -1) {
+                        arr.splice(index, 1);
+                    }
+                }
+
+                $("#AddToDb").on('click', function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        method: "POST",
+                        url: "@Url.Action("AddMultipleToDb", "Photos", new { album = "York" })",
+
+                        contentType: 'application/x-www-form-urlencoded',
+                        data: tmp,
+                        success: function (message) {
+                            console.log(message);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
             });
         });
-
     </script>
 }
 
