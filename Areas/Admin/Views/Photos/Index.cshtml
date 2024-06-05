@@ -1,8 +1,8 @@
 ﻿@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Photos>
 @using Microsoft.AspNetCore.Hosting
@@ -12,55 +12,55 @@
 
 @TempData["Message"]
 @{
-	try
-	{
-		var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
-		var files = Directory.GetFiles(path);
-		int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
-		if (count == 0)
-		{
-			<p>No files exist for this album.  Add files?</p>
-			<form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
-				<div class="form-group">
-					<label for="Files">Add Files</label>
-					<input type="file" name="AddFiles" class="form-control-sm" multiple>
-				</div>
-				<input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
-				<button type="submit" class="btn btn-primary">Add</button>
-			</form>
-		}
+    try
+    {
+        var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
+        var files = Directory.GetFiles(path);
+        int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
+        if (count == 0)
+        {
+            <p>No files exist for this album.  Add files?</p>
+            <form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="Files">Add Files</label>
+                    <input type="file" name="AddFiles" class="form-control-sm" multiple>
+                </div>
+                <input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
+                <button type="submit" class="btn btn-primary">Add</button>
+            </form>
+        }
 
 
-		<div id="Gallery">
-			@{
+        <div id="Gallery">
+            @{
 
-				foreach (FileInfo file in ViewBag.Files)
-				{
-					var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
+                foreach (FileInfo file in ViewBag.Files)
+                {
+                    var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
 
-					<figure>
-						<img id="thumbnail" src="@url" data-name="@file.Name">
-						<figcaption>
-							<a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
-						</figcaption>
-					</figure>
+                    <figure>
+                        <img id="thumbnail" src="@url" data-name="@file.Name">
+                        <figcaption>
+                            <a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName" data-db="@(() => IsInDb(file.Name))">View</a>
+                        </figcaption>
+                    </figure>
 
-				}
+                }
 
-			}
+            }
 
 
-		</div>
-	}
-	catch (DirectoryNotFoundException ex)
-	{
-		@ex.Message
-		<p>Directory does not exist.  Create it?</p>
-		<form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
-			<input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
-			<button type="submit" class="btn btn-primary">Yes</button>
-		</form>
-	}
+        </div>
+    }
+    catch (DirectoryNotFoundException ex)
+    {
+        @ex.Message
+        <p>Directory does not exist.  Create it?</p>
+        <form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
+            <input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
+            <button type="submit" class="btn btn-primary">Yes</button>
+        </form>
+    }
 }
 
 <p><a href="#" id="AddToDb">Add to Database</a></p>
@@ -71,107 +71,90 @@
 
 
 @functions {
-	string GetBaseUrl()
-	{
-		var request = Context.Request;
-		var host = request.Host.ToUriComponent();
-		var pathBase = request.PathBase.ToUriComponent();
-		return $"{request.Scheme}://{host}{pathBase}";
-	}
+    string GetBaseUrl()
+    {
+        var request = Context.Request;
+        var host = request.Host.ToUriComponent();
+        var pathBase = request.PathBase.ToUriComponent();
+        return $"{request.Scheme}://{host}{pathBase}";
+    }
 
-	bool IsInDb(string fileName)
-	{
-		var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
-		try
-		{
-			if (photo!.Name == fileName)
-				return true;
-			else
-				return false;
-		}
-		catch (NullReferenceException ex)
-		{
-			return false;
-		}
+    bool IsInDb(string fileName)
+    {
+        var photo = _db.Photos.Where(p => p.Name == fileName).FirstOrDefault();
 
-	}
+        if (photo!.Name == fileName)
+            return true;
+        else
+            return false;
+    }
 }
 
 @section Scripts {
-	<script>
+    <script>
 		$(function () {
-			function CheckDb(name, album, src) {
-				let result = false;
-				
-				let response = '';
-				let request = $.ajax({
-
-					type: "GET",
-					url: "@Url.Action("AjaxDbCheck", "Photos")",
-					headers: {
-						'Content-Type': 'application/x-www-form-urlencoded',
-					},
-					contentType: "application/x-www-form-urlencoded",
-					async: false,
-					success: function (message) {
-						response = message;
-						
-					},
-					error: function (err) {
-						console.log(err);
-					}
-				});
-				if (response.responseText == false) {
-					
-				} else {
-					
-				}
-				
-
+				function DelImg(name) {
+					$.ajax({
+						method: "POST",
+						url: "@Url.Action("RemoveFromDb", "Photos", new { album = ViewBag.AlbumName})",
+						data: { 'name': name },
+						async: false,
+						cache: false,
+						success: function (message) {
+							console.log(message);
+						},
+						error: function (err) {
+							console.log(err);
+						}
+					});
 			}
 
-			$("#DelImg").on('click', function (e) {
-				e.preventDefault();
-				console.log('Link was clicked!');
-			});
 
 
 			$("#Gallery figure").each(function (index, value) {
+                let name = $(value).find("img").data('name');
+                let src = $(value).find("img").attr('src');
+                let album = $(value).find("a").data('album');
+
+                let db = $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("AjaxDbCheck", "Photos")",
+                    data: { 'name': name },
+                    dataType: 'text',
+                    success: function (message) {
+                        return message;
+                    },
+                    error: function (err) {
+                        console.log(err)
+                    }
+                });
+
+                $(this).find("figcaption").hide();
+
+                $(this).on('mouseenter', function (e) {
+                    e.preventDefault();
+                    $(this).find("figcaption").show();
+                });
+
+                $(this).on('mouseleave', function (e) {
+                    e.preventDefault();
+                    $(this).find("figcaption").hide();
+                });
 
 				$(this).find("a").on('click', function (e) {
-					let name = $(value).find("img").data('name');
-					let src = $(value).find("img").attr('src');
-					let album = $(value).find("a").data('album');
+                    console.log(db.responseText);
+        
 
-					$("#ex1").html(`
-						<h2>${name}</h2>
-						<img src="${src}" alt="${name}">
-						<a href="#" id="DelImg">Delete from Database</a>
-					`);
-
-					$("#DelImg").on('click', function (e) {
-						e.preventDefault();
-						DelImg(name);
-					});
 				});
+
+                $("#DelImg").on('click', function (e) {
+                    e.preventDefault();
+
+                });
 			});
-		
-			function DelImg(name) {
-				$.ajax({
-					method: "POST",
-					url: "@Url.Action("RemoveFromDb", "Photos", new { album = ViewBag.AlbumName})",
-					data: { 'name': name },
-					async: false,
-					cache: false,
-					success: function (message) {
-						console.log(message);
-					},
-					error: function (err) {
-						console.log(err);
-					}
-				});
-			}
+
+
         });
-	</script>
+    </script>
 }
 

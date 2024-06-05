@@ -89,7 +89,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return false;
         }
 
-        [HttpGet]
+        [HttpPost]
         [Route("/Photos/AjaxDbCheck")]
         public bool AjaxDbCheck()
         {
@@ -132,8 +132,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var pic = Request.Form["name"].ToString();
             var albumRecord = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
             var photo = _db.Photos.Where(p => p.Name == pic).FirstOrDefault();
-            _db.Remove(photo);
-            _db.SaveChanges();
+            if (photo is not null)
+            {
+                _db.Remove(photo);
+                _db.SaveChanges();
+            }
+            else
+            {
+                return Content("Photo not found");
+            }
             return Ok();
         }
 
