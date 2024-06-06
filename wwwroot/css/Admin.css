@@ -28,7 +28,8 @@
 #Gallery figcaption a:hover {
   text-decoration: none;
 }
-#Gallery .overlay {
+
+.overlay {
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
   position: absolute;
@@ -37,6 +38,7 @@
   right: 0;
   bottom: 0;
   object-fit: cover;
+  z-index: 10000;
 }
 
 .modal img {
