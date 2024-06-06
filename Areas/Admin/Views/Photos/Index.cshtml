@@ -10,7 +10,8 @@
 @inject ApplicationDbContext _db
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
-@TempData["Message"]
+@Html.Raw(TempData["Message"])
+
 @{
     try
     {
@@ -144,6 +145,15 @@
                 });
             }
 
+			function AddImg(name) {
+				add.push({ 'Name': name });
+				console.log(add.length);
+				for (let i = 0; i < add.push; i++) {
+					console.log(add[i]);
+				}
+				return add.length;
+			}
+
             function CheckDb(name) {
                 var result = false;
                 $.ajax({
@@ -237,33 +247,24 @@
                 $(this).find("figcaption").find("input[name=image]").on('click', function (e) {
                 
                     if (confirm === "Not in database") {
-                        add.push({ 'Name': $(this).val() });
+                        console.log(AddToDb(name));
                     }
 
                     if (confirm === "Is in database") {
-                        del.push({ 'Name': $(this).val() });
+                   
                     }
 
                     $("#AddToDb").on('click', function (e) {
-                        $.ajax({
-                            method: "POST",
-                            url: "@Url.Action("AddMultipleToDb", "Photos", new { album = ViewBag.AlbumName })",
-                            data: JSON.stringify(),
-                            dataType: 'json',
-                            success: function (message) {
-                                console.log(message);
-                            },
-                            error: function (err) {
-                                console.log(err);
-                            }
-                        });
+                  
+             
+                    
                     });
                 });
-                
+				
                 
             });
 
-
+           
 
         });
 
