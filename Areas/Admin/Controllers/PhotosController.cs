@@ -148,23 +148,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public bool AddMultipleToDb(string album)
+        public IActionResult AddMultipleToDb(List<Photos> data)
         {
-
             StringBuilder sb = new StringBuilder();
-            var albumName = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
-
-            List<Photos> photos = new List<Photos>();
-
-
-            foreach (var item in Request.Form.Keys)
+            foreach (var item in data)
             {
-                photos.Add(new Photos() { Name = item, AlbumID = albumName!.Id, ImageUrl = $"/Gallery/{album}/{item}" });
+                sb.Append(item.Name);
             }
-            _db.AddRange(photos);
-            _db.SaveChanges();
-            return true;
-
+            Console.WriteLine(sb.ToString());
+            return Json(new[] { data });
         }
 
         

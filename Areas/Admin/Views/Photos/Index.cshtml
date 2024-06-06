@@ -211,7 +211,7 @@
                     e.preventDefault();
                     $(this).find("figcaption").addClass('.overlay');
                     $(this).find("figcaption").show();
-                    console.log(confirm);
+;
                     if (CheckDb(name) === false) {
 
                         $(this).find("figcaption").find("p:first").text("Not in database");
@@ -231,17 +231,32 @@
 
                 $(this).find("figcaption").find("a").on('click', function (e) {
                     e.preventDefault();
-                    console.log("Link was clicked!");
-                    console.log(IsInDb(name, src));
+ 
                 });
 
                 $(this).find("figcaption").find("input[name=image]").on('click', function (e) {
                 
-                    add.push($(this).val());
+                    if (confirm === "Not in database") {
+                        add.push({ 'Name': $(this).val() });
+                    }
 
+                    if (confirm === "Is in database") {
+                        del.push({ 'Name': $(this).val() });
+                    }
 
                     $("#AddToDb").on('click', function (e) {
-                        console.log(confirm);
+                        $.ajax({
+                            method: "POST",
+                            url: "@Url.Action("AddMultipleToDb", "Photos", new { album = ViewBag.AlbumName })",
+                            data: JSON.stringify(),
+                            dataType: 'json',
+                            success: function (message) {
+                                console.log(message);
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
                     });
                 });
                 
