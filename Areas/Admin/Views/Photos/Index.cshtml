@@ -44,7 +44,7 @@
                         <figcaption>
                             <a id="test" href="#ex1" rel="modal:open" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
                             <p id="IsInDatabase"></p>
-                            <p><input type="checkbox" name="image" value="@file.Name"></p>
+                            <p><input id="checkbox" type="checkbox" name="image" value="@file.Name"></p>
                             @file.Name
                         </figcaption>
                     </figure>
@@ -98,12 +98,11 @@
 
 @section Scripts {
     <script>
-        var add = [];
-        var del = [];
 
         $(function () {
             let addLink = `<a href="#" id="AddImg">Add to Database</a>`;
             let delLink = `<a href="#" id="DelImg">Delete from Database</a>`;
+
 
             function DelFromDb(name) {
                 $.ajax({
@@ -145,14 +144,7 @@
                 });
             }
 
-			function AddImg(name) {
-				add.push({ 'Name': name });
-				console.log(add.length);
-				for (let i = 0; i < add.push; i++) {
-					console.log(add[i]);
-				}
-				return add.length;
-			}
+
 
             function CheckDb(name) {
                 var result = false;
@@ -221,7 +213,7 @@
                     e.preventDefault();
                     $(this).find("figcaption").addClass('.overlay');
                     $(this).find("figcaption").show();
-;
+                    ;
                     if (CheckDb(name) === false) {
 
                         $(this).find("figcaption").find("p:first").text("Not in database");
@@ -236,36 +228,38 @@
                     e.preventDefault();
                     $(this).find("figcaption").removeClass('.overlay');
                     $(this).find("figcaption").hide();
-   
+
                 });
 
-                $(this).find("figcaption").find("a").on('click', function (e) {
-                    e.preventDefault();
- 
-                });
 
-                $(this).find("figcaption").find("input[name=image]").on('click', function (e) {
-                
-                    if (confirm === "Not in database") {
-                        console.log(AddToDb(name));
-                    }
-
-                    if (confirm === "Is in database") {
-                   
-                    }
-
-                    $("#AddToDb").on('click', function (e) {
-                  
-             
-                    
-                    });
-                });
-				
-                
             });
 
-           
+            var add = [];
 
+            // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.  
+            let cb = document.querySelectorAll("input[name='image']");
+            cb.forEach(function (item, index) {
+                item.addEventListener('click', function () {
+                    //console.log(item.getAttribute("value"));
+                    add.push({ 'Name': item.getAttribute("value") });
+                });
+            });
+            $("#AddToDb").on('click', function (e) {
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("AddMultipleToDb", "Photos")",
+                    data: JSON.stringify(add),
+                    contentType: 'application/json',
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        console.log(message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
         });
 
     </script>

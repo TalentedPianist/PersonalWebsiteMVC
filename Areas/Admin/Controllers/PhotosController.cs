@@ -148,10 +148,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public JsonResult AddMultipleToDb([FromBody]List<Photos> data)
+        public IActionResult AddMultipleToDb([FromBody]List<Photos> data)
         {
             StringBuilder sb = new StringBuilder();
             Photos photo = new Photos();
+            foreach (var item in data)
+            {
+                sb.Append(item.Name + "<br>");
+            }
+            Console.WriteLine(sb.ToString());
+            TempData["Message"] = sb.ToString();
             _db.AddRange(data);
             _db.SaveChanges();
             return Json(new[] { data });
