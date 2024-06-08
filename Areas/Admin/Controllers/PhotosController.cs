@@ -110,6 +110,19 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return false;
         }
 
+        [HttpPost]
+        [Route("/Photos/GetPicId")]
+        public int GetPicId(string name)
+        {
+      
+            var pic = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
+            if (pic == null)
+                return 0;
+            else
+                return pic.Id;
+        }
+
+
         [Route("/Photos/AddToDb")]
         [HttpPost]
         public IActionResult AddToDb(string album)
@@ -163,6 +176,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return Json(new[] { data });
         }
 
+        [Route("/Photos/RemoveMultipleFromDb")]
+        [HttpPost]
+        public IActionResult RemoveMultipleFromDb([FromBody] List<Photos> data)
+        {
+            _db.Photos.RemoveRange(data);
+            _db.SaveChanges();
+            return Json(new[] { data });
+        }
         
     }
 

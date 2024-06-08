@@ -67,9 +67,9 @@
     }
 }
 
-<p><a href="#" id="AddToDb">Add to Database</a></p>
+<a href="#" id="AddToDb">Add to Database</a> |
+<a href="#" id="DelFromDb">Delete from Database</a>
 
-@ViewBag.AlbumName
 
 <div id="ex1" class="modal">
 
@@ -208,20 +208,21 @@
 
                 $(this).find("figcaption").hide();
 
+                if (CheckDb(name) === false) {
+
+                    $(this).find("figcaption").find("p:first").text("Not in database");
+                    confirm = $(this).find("figcaption").find("p:first").text();
+                } else {
+                    $(this).find("figcaption").find("p:first").text("Is in database.");
+                    confirm = $(this).find("figcaption").find("p:first").text();
+                }
 
                 $(this).on('mouseenter', function (e) {
                     e.preventDefault();
                     $(this).find("figcaption").addClass('.overlay');
                     $(this).find("figcaption").show();
-                    ;
-                    if (CheckDb(name) === false) {
-
-                        $(this).find("figcaption").find("p:first").text("Not in database");
-                        confirm = $(this).find("figcaption").find("p:first").text();
-                    } else {
-                        $(this).find("figcaption").find("p:first").text("Is in database.");
-                        confirm = $(this).find("figcaption").find("p:first").text();
-                    }
+                    
+                    
                 });
 
                 $(this).on('mouseleave', function (e) {
@@ -235,15 +236,25 @@
             });
 
             var add = [];
+            var del = [];
 
             // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.  
             let cb = document.querySelectorAll("input[name='image']");
             cb.forEach(function (item, index) {
+                let confirm = item.closest("figcaption").querySelector("p").innerText;
                 item.addEventListener('click', function () {
-                    //console.log(item.getAttribute("value"));
-                    add.push({ 'Name': item.getAttribute("value") });
+                    console.log(PicId(item.getAttribute("value")));
+                    var id = PicId(item.getAttribute("value"));
+
+                    if (confirm === "Is in database.") { // Wasn't working because a really simple string character was missing.
+                        del.push({ 'Id': id, 'Name': item.getAttribute("value") });
+                    } else {
+                        add.push({ 'Name': item.getAttribute("value") });
+                    }
                 });
             });
+            console.log(del);
+            
             $("#AddToDb").on('click', function (e) {
                 $.ajax({
                     method: "POST",
@@ -260,6 +271,42 @@
                     }
                 });
             });
+
+            $("#DelFromDb").on('click', function (e) {
+          
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
+                    data: JSON.stringify(del),
+                    contentType: 'application/json',
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        console.log(message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+
+            function PicId(name) {
+                var id = 0;
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("GetPicId", "Photos")",
+                    data: { 'name': name },
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        id = message;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+                return id;
+            }
         });
 
     </script>
