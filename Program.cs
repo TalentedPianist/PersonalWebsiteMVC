@@ -16,7 +16,6 @@ using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
 using KITT.Web.ReCaptcha.Http.v2;
-using AspNetCore.Unobtrusive.Ajax;
 
 var builder = WebApplication.CreateBuilder(args);
 
