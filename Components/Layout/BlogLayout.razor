@@ -1,56 +1,15 @@
 ﻿@inherits LayoutComponentBase
-@using MudBlazor
-@using PersonalWebsiteMVC.Components 
-@inject IDialogService Dialog
-@inject IJSRuntime JS
- 
-
-<MudThemeProvider />
-<MudDialogProvider />
-<MudSnackbarProvider />
-
-<MudHidden Breakpoint="Breakpoint.SmAndUp">
-
-	<Mobile />
-	
-</MudHidden>
-
-<MudHidden Breakpoint="Breakpoint.Xs">
-   
-    <header>
-        <nav>
-            <ul>
-                <li><a href="/">Home</a></li>
-                <li><a href="/About">About Me</a></li>
-                <li><a href="/Blog">Blog</a></li>
-                <li><a href="/Contact">Contact</a></li>
-                <li><a href="/Guestbook">Guestbook</a></li>
-            </ul>
-        </nav>
-
-      
-    </header>
-    <main>
 
 
-    </main>
-    <footer>
-    </footer>
-</MudHidden>
+<header>
+</header>
+
+<main>
+
+</main>
 
 
-@code { 
-	MudTheme MyCustomTheme = new MudTheme()
-	{
-		Typography = new Typography()
-		{
-			Default = new Default()
-			{
-				FontFamily = new[] { "Poppins", "Helvetica", "Arial", "sans-serif" }
-			}
-		}
-	};
-}
+
 
 
 
