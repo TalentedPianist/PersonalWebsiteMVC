@@ -17,7 +17,6 @@ using SolrNet;
 using Sitko.Blazor.CKEditor;
 using KITT.Web.ReCaptcha.Http.v2;
 using Microsoft.Extensions.FileProviders;
-using PersonalWebsiteMVC.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -124,8 +123,6 @@ app.UseAuthorization();
 app.UseAntiforgery();
 
 //app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
-
-app.UseMiddleware<MobileDetectionMiddleware>();
 
 app.UseAuthentication();
 

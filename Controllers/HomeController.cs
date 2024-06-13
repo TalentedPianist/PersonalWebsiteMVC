@@ -61,14 +61,11 @@ namespace PersonalWebsiteMVC.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        [HttpPost]
+        [Route("Home/GetWidth")]
+        public int GetWidth(int width)
         {
-            return View();
-        }
-
-        public IActionResult Register()
-        {
-            return View();
+            return Convert.ToInt32(width);
         }
 
 

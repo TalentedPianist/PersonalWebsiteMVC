@@ -20,18 +20,12 @@ p {
 
 
 header {
-
-    background-image: url(../images/scarboroughsunset.jpg);
-    background-repeat: no-repeat; 
-    background-size: cover;
-    height: 450px;
     width: 100%;
     position: relative;
     display: flex;
     flex-direction: row;
 
     nav {
-
         align-items: flex-start;
         position: relative;
         z-index: 10000;
@@ -39,7 +33,7 @@ header {
         position: relative;
 
         ul {
-            display: flex; 
+            display: flex;
             flex-direction: row;
             width: 100vw;
             background-color: rgba(0,0,0,0.6);
@@ -50,7 +44,7 @@ header {
             padding-bottom: 2em;
         }
 
-     
+
 
         a {
             font-size: x-large;
@@ -58,13 +52,39 @@ header {
         }
     }
 
-    h1 { 
-        display: flex;
+   
+
+    .wave-container {
         position: relative;
-        z-index: 10000;
+        text-align: center;
+        overflow: hidden;
+        width: 100vw;
+        z-index: -1;
+        
+        &:before { 
+            background-color: #ffa500; 
+            content: "";
+            width: 100vw;
+       
+            display: flex;
+            position: relative;
+            z-index: -1;
+        }
     }
 
+    .wave-container > h1 { 
+        background-color: #ffa500;
+    }
+
+    .wave-container > svg {
+        display: block;
+        transform-origin: bottom;
+        animation: animateWave 1000ms cubiz-bezier(0.23, steps(1, start), 0.32, 1) forwards;
+    }
 }
+
+
+
 
 form { 
     display: flex; 
@@ -331,5 +351,13 @@ main {
 }
 
 
+@keyframes animateWave {
+    0% {
+        transform: scale(1,0);
+    }
 
+    100% {
+        transform: scale(1,1);
+    }
+}
 

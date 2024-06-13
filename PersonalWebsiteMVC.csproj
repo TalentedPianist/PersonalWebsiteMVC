@@ -60,6 +60,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Middleware\" />
     <Folder Include="wwwroot\Gallery\York\" />
     <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\Uploads\" />
