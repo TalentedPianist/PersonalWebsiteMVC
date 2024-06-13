@@ -10,9 +10,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Common\**" />
     <Compile Remove="wwwroot\Gallery\**" />
+    <Content Remove="Common\**" />
     <Content Remove="wwwroot\Gallery\**" />
+    <EmbeddedResource Remove="Common\**" />
     <EmbeddedResource Remove="wwwroot\Gallery\**" />
+    <None Remove="Common\**" />
     <None Remove="wwwroot\Gallery\**" />
   </ItemGroup>
 
@@ -22,7 +26,8 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.14.0" />
+    <PackageReference Include="DeviceDetector.NET" Version="6.3.3" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.14.1" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.0" />
@@ -34,6 +39,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.32" />
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
@@ -41,6 +48,7 @@
     </PackageReference>
     <PackageReference Include="MudBlazor" Version="6.20.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
     <PackageReference Include="ReflectionIT.Mvc.Paging" Version="8.0.0" />
     <PackageReference Include="Sitko.Blazor.CKEditor" Version="4.2.1" />
     <PackageReference Include="Sitko.Blazor.CKEditor.Bundle" Version="4.2.1" />
@@ -52,7 +60,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Common\" />
     <Folder Include="wwwroot\Gallery\York\" />
     <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\Uploads\" />

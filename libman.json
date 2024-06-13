@@ -61,6 +61,11 @@
     {
       "library": "normalize@8.0.1",
       "destination": "wwwroot/lib/normalize/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "node_modules/jquery-breakpoints/",
+      "destination": "wwwroot/lib/jquery-breakpoints/"
     }
   ]
 }

@@ -1,17 +1,21 @@
 ﻿@inherits LayoutComponentBase
+@inject IJSRuntime jsRuntime 
 
+@if (!mobile)
+{
+    <p>I am a mobile device.</p>
+}
 
-<header>
-</header>
+@code {
+    private string isDevice { get; set; }
+    public bool mobile { get; set; }
 
-<main>
-
-</main>
-
-
-
-
-
+    public async Task FindResponsiveness()
+    {
+        mobile = await jsRuntime.InvokeAsync<bool>("isDevice");
+        isDevice = mobile ? "Mobile" : "Desktop";
+    }
+}
 
 
 

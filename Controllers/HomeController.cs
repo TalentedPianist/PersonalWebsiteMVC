@@ -3,22 +3,35 @@ using Microsoft.Extensions.Logging;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Diagnostics;
+using DeviceDetectorNET;
+using PersonalWebsiteMVC.Components;
 
 namespace PersonalWebsiteMVC.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly ApplicationDbContext _db; 
+        private readonly ApplicationDbContext _db;
+
 
         public HomeController(ILogger<HomeController> logger, ApplicationDbContext db)
         {
             _logger = logger;
             _db = db;
+
         }
 
         public IActionResult Index()
         {
+            /*if ((bool)HttpContext.Items["isMobile"]! == false)
+            {
+                return View();
+            }
+            else
+            {
+                return View("~/Views/Shared/Mobile.cshtml");
+            }*/
+
             return View();
         }
 
@@ -57,6 +70,7 @@ namespace PersonalWebsiteMVC.Controllers
         {
             return View();
         }
+
 
     }
 }

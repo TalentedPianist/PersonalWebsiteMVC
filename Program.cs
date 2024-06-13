@@ -16,6 +16,8 @@ using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
 using KITT.Web.ReCaptcha.Http.v2;
+using Microsoft.Extensions.FileProviders;
+using PersonalWebsiteMVC.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -96,6 +98,7 @@ builder.Services.AddReCaptchaV2HttpClient(options =>
 
 builder.Services.AddSession();
 
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -108,9 +111,10 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
+
 app.UseSession();
 
-app.MapRazorPages();
+//app.MapRazorPages();
 app.MapControllers();
 
 app.UseRouting();
@@ -119,8 +123,9 @@ app.UseAuthorization();
 
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+//app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
+app.UseMiddleware<MobileDetectionMiddleware>();
 
 app.UseAuthentication();
 
@@ -133,6 +138,7 @@ app.MapAreaControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
 
 
 

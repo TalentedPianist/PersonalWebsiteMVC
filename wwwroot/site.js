@@ -1,4 +1,12 @@
 ﻿
+
+
+
+function isDevice() {
+    return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
+}
+
+
 function DetectScroll() {
     $(window).on("scroll", function () {
         if ($(window).scrollTop() >= 530) {
