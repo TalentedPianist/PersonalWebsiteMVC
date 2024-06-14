@@ -25,7 +25,6 @@ header {
 header #topNav {
   background-color: #BFBEAA;
   padding-bottom: 1em;
-  /* https://stackoverflow.com/questions/917610/put-icon-inside-input-element-in-a-form */
 }
 header #topNav section {
   display: flex;
@@ -59,20 +58,12 @@ header #topNav .SearchIcon {
   position: absolute;
   left: 12em;
 }
-header #topNav:after {
-  display: flex;
-  height: 100%;
-  background-color: #F2E2C4;
-  position: relative;
-  content: "";
-  z-index: -1;
-}
-header #topNav nav {
+header nav {
   display: flex;
   flex-direction: row;
   flex: 0;
 }
-header #topNav nav ul {
+header nav ul {
   display: flex;
   flex-direction: row;
   flex: 0;
@@ -83,18 +74,18 @@ header #topNav nav ul {
   padding-bottom: 1em;
   background-color: #F2D2B6;
 }
-header #topNav nav a {
+header nav a {
   font-size: x-large;
 }
 @media only screen and (min-width: 600px) {
-  header #topNav {
+  header {
     display: flex;
     flex-direction: row;
     flex: 0;
     background-color: transparent;
   }
 }
-header #topNav .headerBackground {
+header .headerBackground {
   background-image: url("../images/scarboroughsunset.svg");
   background-repeat: no-repeat;
   height: 300px;
@@ -141,25 +132,35 @@ footer {
   flex: 0;
   align-items: center;
   clear: both;
-  background-color: burlywood;
   padding-top: 1em;
   padding-bottom: 1em;
   text-align: center;
 }
 @media only screen and (min-width: 600px) {
   footer {
-    background-color: white;
+    background-color: #BFBEAA;
   }
 }
 
 main {
   position: relative;
   background-color: #F2E2C4;
-  display: flex;
+  display: flex !important;
   flex-direction: column;
   flex: 0;
+  align-items: center;
   height: 45vh;
   width: 100%;
+}
+main:before {
+  display: flex;
+  height: 300px;
+  background-color: #f2e2c4;
+  position: absolute;
+  top: -10em;
+  content: ".";
+  z-index: -1 !important;
+  width: 100vw;
 }
 
 #Home {
@@ -363,13 +364,4 @@ main {
 
 .ck-dropdown__button {
   display: none !important;
-}
-
-@keyframes animateWave {
-  0% {
-    transform: scale(1, 0);
-  }
-  100% {
-    transform: scale(1, 1);
-  }
 }
