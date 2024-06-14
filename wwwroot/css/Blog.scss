@@ -1,6 +1,6 @@
-﻿* { 
-    margin: 0; 
-    padding: 0; 
+﻿* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box !important;
 }
 
@@ -8,7 +8,7 @@ body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section {  
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section {
     display: revert !important;
 }
 
@@ -22,40 +22,129 @@ p {
 
 header {
     text-align: center;
-    background-color: #ffa500;
     width: 100vw;
+    position: relative;
+
+    #topNav {
+        background-color: #BFBEAA;
+        padding-bottom: 1em;
+
+        section {
+            display: flex;
+            flex-direction: row;
+            flex: 0;
+            align-items: center;
+            justify-content: center;
+        }
+
+        article {
+            width: 50%;
+        }
+        /* https://stackoverflow.com/questions/917610/put-icon-inside-input-element-in-a-form */
+        .input-container {
+            display: flex;
+            flex-direction: column;
+            flex: 0;
+            justify-content: center;
+            align-items: center;
+            /*margin-left: auto;*/
+            padding-top: 1em;
+            width: 30vw;
+        }
+
+        input[type=search] {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            padding: 10px;
+            outline: none;
+            width: 20em;
+        }
+
+        .SearchIcon {
+            position: absolute;
+            left: 12em;
+        }
+
+        &:after {
+            display: flex;
+            height: 100%;
+            background-color: #F2E2C4;
+            position: relative;
+            content: "";
+            z-index: -1;
+        }
+
+        nav {
+            display: flex;
+            flex-direction: row;
+            flex: 0;
+
+            ul {
+                display: flex;
+                flex-direction: row;
+                flex: 0;
+                align-items: center;
+                justify-content: center;
+                gap: 5em;
+                padding-top: 1em;
+                padding-bottom: 1em;
+                background-color: #F2D2B6;
+            }
+
+            a {
+                font-size: x-large;
+            }
+        }
+
+        @media only screen and (min-width: 600px) {
+            display: flex;
+            flex-direction: row;
+            flex: 0;
+            background-color: transparent;
+        }
+
+        .headerBackground {
+            background-image: url('../images/scarboroughsunset.svg');
+            background-repeat: no-repeat;
+            height: 300px;
+            width: 100vw;
+            position: relative;
+            content: "";
+
+            
+        }
+    }
 }
 
 
-
-
-form { 
-    display: flex; 
+form {
+    display: flex;
     flex-direction: column;
-    flex: 0; 
+    flex: 0;
     gap: 2em;
     margin-top: 1em;
 
-    input { 
+    input {
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
         width: 90vw;
     }
 
-    div { 
-        display: flex; 
+    div {
+        display: flex;
         flex-direction: column;
         width: 100vw;
         align-items: center;
 
-        &:last-child { 
+        &:last-child {
             width: 100%;
             display: block;
         }
     }
 
-    button { 
-        display: flex; 
+    button {
+        display: flex;
         align-self: flex-start;
         margin: 0 auto !important;
     }
@@ -64,13 +153,12 @@ form {
         padding-left: 1.5em !important;
         padding-right: 1em !important;
     }
-
 }
 
-footer  {
-    display: flex; 
+footer {
+    display: flex;
     flex-direction: column;
-    flex: 0; 
+    flex: 0;
     align-items: center;
     clear: both;
     background-color: burlywood;
@@ -78,15 +166,15 @@ footer  {
     padding-bottom: 1em;
     text-align: center;
 
-    @media only screen and (min-width: 600px) { 
+    @media only screen and (min-width: 600px) {
         background-color: white;
     }
 }
 
 main {
     position: relative;
-    background-color: #F2D9BB;
-    display: flex; 
+    background-color: #F2E2C4;
+    display: flex;
     flex-direction: column;
     flex: 0;
     height: 45vh;
@@ -97,14 +185,14 @@ main {
 
 #Home {
     color: black;
-    display: flex; 
+    display: flex;
     flex-direction: column;
     flex: 1;
     position: relative;
     width: 100vw;
     height: 100vh;
 
-    section { 
+    section {
         background-color: #ffa500;
         text-align: center;
         display: flex !important;
@@ -113,39 +201,37 @@ main {
         gap: 2em !important;
         text-align: center;
 
-        button { 
+        button {
             align-self: flex-start;
             margin: 0 auto;
         }
     }
 
-    h1 { 
+    h1 {
         margin: 0 auto;
         font-size: 3em;
     }
 
-    h2 { 
-        margin: 0 auto; 
+    h2 {
+        margin: 0 auto;
         font-size: 2em;
     }
 
-    img { 
-        width: 50% ;
+    img {
+        width: 50%;
         border-radius: 50%;
-        display: flex; 
+        display: flex;
         margin: 0 auto;
     }
 
-    .wave-container > section { 
+    .wave-container > section {
         gap: 2em;
-     }
+    }
 
     .wave-container > h1, i {
         background-color: #ffa500;
         width: 100vw;
         height: 100%;
-
-     
     }
 
     .wave-container > svg {
@@ -154,8 +240,8 @@ main {
         animation: animateWave 1000ms cubiz-bezier(0.23, steps(1, start), 0.32, 1) forwards;
         font-size: 0;
 
-        &:before { 
-            display: flex; 
+        &:before {
+            display: flex;
             position: relative;
             height: 100%;
             content: "";
@@ -164,10 +250,10 @@ main {
     }
 }
 
-#About { 
+#About {
     display: flex;
     flex-direction: column;
-    flex: 0; 
+    flex: 0;
     align-items: center;
     background-color: orange;
     height: 100%;
@@ -180,14 +266,12 @@ main {
         padding-top: 1em;
         font-size: large;
     }
-
-   
 }
 
-#Blog { 
-    display: flex; 
+#Blog {
+    display: flex;
     flex-direction: column;
-    flex: 0; 
+    flex: 0;
     height: 100%;
     background-color: yellow !important;
     position: relative;
@@ -195,14 +279,14 @@ main {
     padding-left: 1em;
     padding-right: 1em;
 
-    h1, h2 { 
-        display: flex; 
+    h1, h2 {
+        display: flex;
         margin: 0 auto;
     }
-   
-   
-  
-    .mud-card-content, .mud-card-actions { 
+
+
+
+    .mud-card-content, .mud-card-actions {
         background-color: yellow !important;
     }
 }
@@ -218,32 +302,29 @@ main {
     padding-right: 1em;
     background-color: yellow;
 
-    button { 
-        display: flex; 
+    button {
+        display: flex;
         align-self: flex-start;
     }
 
-    img { 
+    img {
         height: 200px;
         width: 100%;
-        display: flex; 
+        display: flex;
     }
-
 }
 
-#Comments { 
-    display: flex; 
+#Comments {
+    display: flex;
     flex-direction: column;
     flex: 0;
     height: 100%;
     background-color: yellow;
     padding-bottom: 2em;
-
-
 }
 
-#Contact { 
-    display: flex; 
+#Contact {
+    display: flex;
     flex-direction: column;
     flex: 0;
     align-items: center;
@@ -251,63 +332,62 @@ main {
     height: 100%;
     padding-top: 1em;
     padding-bottom: 1em;
-
 }
 
-.overlay { 
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    right: 0; 
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
     bottom: 0;
     background-color: rgba(0,0,0,0.4);
 
-    * { 
+    * {
         z-index: 100;
         position: relative;
     }
- }
+}
 
-.sticky { 
+.sticky {
     position: sticky;
     top: 0;
-    display: flex; 
+    display: flex;
     z-index: 20000 !important;
     background-color: rgba(0,0,0,0.6);
 }
 
-.Menu { 
+.Menu {
     color: black;
     font-size: 5em;
 }
 
-.MobileMenu { 
+.MobileMenu {
     background-color: rgba(0,0,0,0.6);
     z-index: 2000 !important;
-    position: absolute; 
-    top: 0; 
-    bottom: 0; 
-    left: 0; 
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
     right: 0;
     color: white;
-    display: flex; 
+    display: flex;
     flex-direction: column;
-    flex: 0; 
+    flex: 0;
     gap: 2em;
     align-items: center;
     width: 100vw;
 
-    ul { 
-        display: flex; 
+    ul {
+        display: flex;
         flex-direction: column;
-        flex: 0; 
+        flex: 0;
         align-items: center;
         gap: 2em;
         position: relative;
         z-index: 20000 !important;
     }
 
-    a { 
+    a {
         color: white;
         font-size: xx-large;
         position: relative;
@@ -315,7 +395,7 @@ main {
     }
 }
 
-.ck-content { 
+.ck-content {
     max-height: 200px !important;
     min-height: 200px !important;
     width: 90vw !important;
@@ -323,7 +403,7 @@ main {
     margin-right: 1em !important;
 }
 
-.ck-dropdown__button { 
+.ck-dropdown__button {
     display: none !important;
 }
 
@@ -337,4 +417,3 @@ main {
         transform: scale(1,1);
     }
 }
-

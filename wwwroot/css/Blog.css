@@ -19,8 +19,88 @@ p {
 
 header {
   text-align: center;
-  background-color: #ffa500;
   width: 100vw;
+  position: relative;
+}
+header #topNav {
+  background-color: #BFBEAA;
+  padding-bottom: 1em;
+  /* https://stackoverflow.com/questions/917610/put-icon-inside-input-element-in-a-form */
+}
+header #topNav section {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  align-items: center;
+  justify-content: center;
+}
+header #topNav article {
+  width: 50%;
+}
+header #topNav .input-container {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  justify-content: center;
+  align-items: center;
+  /*margin-left: auto;*/
+  padding-top: 1em;
+  width: 30vw;
+}
+header #topNav input[type=search] {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  padding: 10px;
+  outline: none;
+  width: 20em;
+}
+header #topNav .SearchIcon {
+  position: absolute;
+  left: 12em;
+}
+header #topNav:after {
+  display: flex;
+  height: 100%;
+  background-color: #F2E2C4;
+  position: relative;
+  content: "";
+  z-index: -1;
+}
+header #topNav nav {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+}
+header #topNav nav ul {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  align-items: center;
+  justify-content: center;
+  gap: 5em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  background-color: #F2D2B6;
+}
+header #topNav nav a {
+  font-size: x-large;
+}
+@media only screen and (min-width: 600px) {
+  header #topNav {
+    display: flex;
+    flex-direction: row;
+    flex: 0;
+    background-color: transparent;
+  }
+}
+header #topNav .headerBackground {
+  background-image: url("../images/scarboroughsunset.svg");
+  background-repeat: no-repeat;
+  height: 300px;
+  width: 100vw;
+  position: relative;
+  content: "";
 }
 
 form {
@@ -74,7 +154,7 @@ footer {
 
 main {
   position: relative;
-  background-color: #F2D9BB;
+  background-color: #F2E2C4;
   display: flex;
   flex-direction: column;
   flex: 0;

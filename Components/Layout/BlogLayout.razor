@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-@inject IJSRuntime jsRuntime 
+@inject IJSRuntime jsRuntime
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -11,5 +11,35 @@
 </MudHidden>
 
 <MudHidden Breakpoint="Breakpoint.Xs">
-    <p>I am a desktop device.</p>
+    <header>
+        <div id="topNav">
+            <section>
+                <article>
+                   <div class="input-container">
+                        <MudIconButton Icon="@Icons.Material.Filled.Search" Color="Color.Primary" Class="SearchIcon" />
+                  
+                    <input type="search" placeholder="Search the website...">
+                    </div>
+                </article>
+                <article>
+                </article>
+            </section>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Photos</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </nav>
+        <div class="headerBackground"></div>
+    </header>
+    <main>
+        @Body
+    </main>
+    <footer>
+        Copyright &copy; douglasmcgregor.co.uk 2024
+    </footer>
 </MudHidden>
