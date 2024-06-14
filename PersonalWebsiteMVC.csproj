@@ -27,7 +27,7 @@
 
   <ItemGroup>
     <PackageReference Include="DeviceDetector.NET" Version="6.3.3" />
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.14.1" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.14.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.0" />
@@ -55,6 +55,8 @@
     <PackageReference Include="SolrNet" Version="1.1.1" />
     <PackageReference Include="SolrNet.Core" Version="1.1.1" />
     <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.1.1" />
+    <PackageReference Include="Wangkanai.Detection" Version="8.14.0" />
+    <PackageReference Include="Wangkanai.Responsive" Version="7.8.0" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="9.1.2" />
     <PackageReference Include="X.PagedList.Web.Common" Version="8.0.7" />
   </ItemGroup>
@@ -62,6 +64,7 @@
   <ItemGroup>
     <Folder Include="Middleware\" />
     <Folder Include="wwwroot\Gallery\York\" />
+    <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\Uploads\" />
   </ItemGroup>

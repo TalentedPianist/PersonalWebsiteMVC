@@ -1,21 +1,15 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime jsRuntime 
 
-@if (!mobile)
-{
-    <p>I am a mobile device.</p>
-}
-
-@code {
-    private string isDevice { get; set; }
-    public bool mobile { get; set; }
-
-    public async Task FindResponsiveness()
-    {
-        mobile = await jsRuntime.InvokeAsync<bool>("isDevice");
-        isDevice = mobile ? "Mobile" : "Desktop";
-    }
-}
+<MudThemeProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
 
 
+<MudHidden Breakpoint="Breakpoint.SmAndUp">
+    <Mobile />
+</MudHidden>
 
+<MudHidden Breakpoint="Breakpoint.Xs">
+    <p>I am a desktop device.</p>
+</MudHidden>

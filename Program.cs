@@ -95,7 +95,15 @@ builder.Services.AddReCaptchaV2HttpClient(options =>
     options.SecretKey = "6LdB-1kpAAAAAPEBR2GuCm8rTEucGiU89cQPMaC0";
 });
 
-builder.Services.AddSession();
+builder.Services.AddDetection();
+builder.Services.AddResponsive();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
 
 
 var app = builder.Build();
@@ -112,9 +120,12 @@ else
 app.UseStaticFiles();
 
 app.UseSession();
+app.UseResponsive();
 
 //app.MapRazorPages();
 app.MapControllers();
+
+app.UseDetection();
 
 app.UseRouting();
 app.UseAuthorization();
@@ -122,7 +133,7 @@ app.UseAuthorization();
 
 app.UseAntiforgery();
 
-//app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 app.UseAuthentication();
 
