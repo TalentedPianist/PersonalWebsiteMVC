@@ -11,8 +11,22 @@
 </MudHidden>
 
 <MudHidden Breakpoint="Breakpoint.Xs">
-    <header>
     
+    <header>
+        <div id="topNav">
+            <section>
+            <article>
+            
+                <input type="search" placeholder="Search the website...">
+                <MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
+       
+            </article>
+            <article>
+                <a href="#">Login</a>  
+                <a href="#">Register</a>
+            </article>
+            </section>
+        </div>
         <nav>
             <ul>
                 <li><a href="#">Home</a></li>
@@ -22,10 +36,9 @@
                 <li><a href="#">Contact</a></li>
             </ul>
         </nav>
-        <div class="headerBackground"></div>
     </header>
     <main>
-        <h1>Welcome</h1>
+        @Body
     </main>
     <footer>
         Copyright &copy; douglasmcgregor.co.uk 2024

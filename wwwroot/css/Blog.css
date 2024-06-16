@@ -8,60 +8,83 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section {
-  display: revert !important;
-}
-
 p {
   padding-left: 1em;
   padding-right: 1em;
+}
+
+h1 {
+  font-size: 3em;
+}
+
+h2 {
+  font-size: 2em;
 }
 
 header {
   text-align: center;
   width: 100vw;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  width: 100vw;
 }
 header #topNav {
-  background-color: #BFBEAA;
+  background-color: #942B99;
+  padding-bottom: 1em;
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 100vw;
+  padding-top: 1em;
   padding-bottom: 1em;
 }
 header #topNav section {
   display: flex;
   flex-direction: row;
-  flex: 0;
+  flex: 1;
   align-items: center;
   justify-content: center;
+  width: 100vw;
+  position: relative;
 }
 header #topNav article {
   width: 50%;
-}
-header #topNav .input-container {
-  display: flex;
-  flex-direction: column;
-  flex: 0;
-  justify-content: center;
-  align-items: center;
-  /*margin-left: auto;*/
-  padding-top: 1em;
-  width: 30vw;
-}
-header #topNav input[type=search] {
+  text-align: center;
   display: flex;
   flex-direction: row;
   flex: 1;
-  padding: 10px;
-  outline: none;
-  width: 20em;
+  align-items: center;
+  justify-content: center;
 }
-header #topNav .SearchIcon {
-  position: absolute;
-  left: 12em;
+header #topNav article:first-child {
+  align-items: flex-end;
+  margin: 0;
+}
+header #topNav article:first-child input[type=search] {
+  width: 25em;
+  padding: 10px;
+  border: 1px solid black;
+}
+header #topNav article:first-child .SearchIcon {
+  font-size: 3em !important;
+  fill: black !important;
+  margin-left: -1em;
+}
+header #topNav article:last-child {
+  gap: 2em;
+}
+header #topNav article:last-child a {
+  color: white;
+  font-size: large;
 }
 header nav {
+  width: 100vw;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   flex: 0;
+  clear: both;
 }
 header nav ul {
   display: flex;
@@ -72,18 +95,17 @@ header nav ul {
   gap: 5em;
   padding-top: 1em;
   padding-bottom: 1em;
-  background-color: #F2D2B6;
+  background-color: #C876CC;
+  color: white;
+  width: 100vw;
 }
 header nav a {
   font-size: x-large;
+  color: black;
+  font-weight: bold;
 }
-@media only screen and (min-width: 600px) {
-  header {
-    display: flex;
-    flex-direction: row;
-    flex: 0;
-    background-color: transparent;
-  }
+header nav a:hover {
+  text-decoration: underline;
 }
 header .headerBackground {
   background-image: url("../images/scarboroughsunset.svg");
@@ -92,6 +114,14 @@ header .headerBackground {
   width: 100vw;
   position: relative;
   content: "";
+}
+header .headerBackground:after {
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  content: "";
+  background-color: #cfadff;
+  z-index: 10000;
 }
 
 form {
@@ -138,29 +168,61 @@ footer {
 }
 @media only screen and (min-width: 600px) {
   footer {
-    background-color: #BFBEAA;
+    background-color: #FFEC6E;
   }
 }
 
 main {
   position: relative;
-  background-color: #F2E2C4;
+  background-color: #CFADFF;
   display: flex !important;
   flex-direction: column;
   flex: 0;
   align-items: center;
-  height: 45vh;
-  width: 100%;
+  padding-top: 2em;
+  padding-bottom: 2em;
 }
 main:before {
   display: flex;
   height: 300px;
-  background-color: #f2e2c4;
+  background-color: transparent;
   position: absolute;
   top: -10em;
   content: ".";
   z-index: -1 !important;
   width: 100vw;
+}
+main section {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+}
+@media only screen and (min-width: 600px) {
+  main section {
+    flex-direction: row !important;
+  }
+}
+main article {
+  width: 50%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+main article:first-child {
+  gap: 5em;
+}
+main article:last-child {
+  text-align: center;
+  align-items: center;
+}
+main article img {
+  width: 50%;
+  text-align: center;
+  border-radius: 50%;
 }
 
 #Home {
@@ -171,19 +233,6 @@ main:before {
   position: relative;
   width: 100vw;
   height: 100vh;
-}
-#Home section {
-  background-color: #ffa500;
-  text-align: center;
-  display: flex !important;
-  flex-direction: column !important;
-  flex: 0 !important;
-  gap: 2em !important;
-  text-align: center;
-}
-#Home section button {
-  align-self: flex-start;
-  margin: 0 auto;
 }
 #Home h1 {
   margin: 0 auto;
