@@ -21,6 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Components\About.razor" />
     <Content Remove="Components\YogiPaging.razor" />
   </ItemGroup>
 
@@ -67,6 +68,18 @@
     <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\icons\" />
     <Folder Include="wwwroot\Uploads\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\About.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\About.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Components\About.razor" />
   </ItemGroup>
 
 </Project>

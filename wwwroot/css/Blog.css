@@ -16,9 +16,19 @@ p {
 h1 {
   font-size: 3em;
 }
+@media only screen and (max-width: 400px) {
+  h1 {
+    font-size: 2em;
+  }
+}
 
 h2 {
   font-size: 2em;
+}
+@media only screen and (max-width: 400px) {
+  h2 {
+    font-size: 1.5em;
+  }
 }
 
 header {
@@ -29,6 +39,7 @@ header {
   flex-direction: column;
   flex: 0;
   width: 100vw;
+  background-color: #ffa500;
 }
 header #topNav {
   background-color: #942B99;
@@ -79,6 +90,11 @@ header #topNav article:last-child a {
   color: white;
   font-size: large;
 }
+@media only screen and (max-width: 600px) {
+  header #topNav {
+    display: none;
+  }
+}
 header nav {
   width: 100vw;
   display: flex;
@@ -107,6 +123,16 @@ header nav a {
 header nav a:hover {
   text-decoration: underline;
 }
+@media only screen and (max-width: 600px) {
+  header nav {
+    display: none;
+  }
+}
+@media only screen and (min-width: 600px) {
+  header nav {
+    display: none;
+  }
+}
 header .headerBackground {
   background-image: url("../images/scarboroughsunset.svg");
   background-repeat: no-repeat;
@@ -130,30 +156,71 @@ form {
   flex: 0;
   gap: 2em;
   margin-top: 1em;
+  margin-left: 2em;
+  margin-right: 2em;
+}
+@media only screen and (min-width: 600px) {
+  form label {
+    align-items: center;
+    width: 10em;
+    display: inline-block;
+    align-items: center;
+    height: 100%;
+    float: left;
+    padding-top: 5px;
+  }
 }
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
-  width: 90vw;
+  width: 25vw;
+}
+@media only screen and (min-width: 600px) {
+  form input {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 6.5em;
+  }
+}
+form textarea {
+  border: 1px solid black;
 }
 form div {
   display: flex;
   flex-direction: column;
-  width: 100vw;
+  width: 50vw;
   align-items: center;
 }
 form div:last-child {
   width: 100%;
   display: block;
 }
+@media only screen and (min-width: 600px) {
+  form div {
+    align-items: flex-start;
+    flex-direction: row;
+  }
+}
 form button {
   display: flex;
   align-self: flex-start;
   margin: 0 auto !important;
 }
+@media only screen and (min-width: 600px) {
+  form button {
+    margin: 0 !important;
+  }
+}
 form p {
   padding-left: 1.5em !important;
   padding-right: 1em !important;
+}
+@media only screen and (min-width: 600px) {
+  form p {
+    text-align: left !important;
+    display: flex;
+    align-self: flex-start;
+  }
 }
 
 footer {
@@ -224,6 +291,21 @@ main article img {
   text-align: center;
   border-radius: 50%;
 }
+@media only screen and (min-width: 600px) {
+  main article {
+    text-align: left;
+  }
+}
+@media only screen and (min-width: 600px) {
+  main article h1 {
+    margin-left: 2em;
+  }
+}
+@media only screen and (min-width: 600px) {
+  main p {
+    padding-left: 2em;
+  }
+}
 
 #Home {
   color: black;
@@ -234,14 +316,6 @@ main article img {
   width: 100vw;
   height: 100vh;
 }
-#Home h1 {
-  margin: 0 auto;
-  font-size: 3em;
-}
-#Home h2 {
-  margin: 0 auto;
-  font-size: 2em;
-}
 #Home img {
   width: 50%;
   border-radius: 50%;
@@ -249,7 +323,18 @@ main article img {
   margin: 0 auto;
 }
 #Home .wave-container > section {
-  gap: 2em;
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  gap: 1em;
+  background-color: #ffa500;
+  align-items: center;
+}
+@media only screen and (max-width: 400px) {
+  #Home .wave-container > section {
+    height: 70vh;
+    gap: 3em;
+  }
 }
 #Home .wave-container > h1, #Home i {
   background-color: #ffa500;
@@ -344,6 +429,17 @@ main article img {
   padding-top: 1em;
   padding-bottom: 1em;
 }
+@media only screen and (min-width: 600px) {
+  #Contact {
+    background-color: transparent;
+    padding-top: 0;
+    padding-bottom: 0;
+    align-items: flex-start;
+  }
+  #Contact article:first-child {
+    gap: 0;
+  }
+}
 
 .overlay {
   position: absolute;
@@ -406,7 +502,7 @@ main article img {
 .ck-content {
   max-height: 200px !important;
   min-height: 200px !important;
-  width: 90vw !important;
+  width: 35vw !important;
   margin-left: 1em !important;
   margin-right: 1em !important;
 }

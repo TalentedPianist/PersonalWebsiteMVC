@@ -1,45 +1,54 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
 @using Sitko.Blazor.CKEditor
 @using Sitko.Blazor.CKEditor.Bundle
+@page "/Contact"
 
 
 <div id="Contact">
 
     <h1>Contact</h1>
 
-    <p>I would love to hear from you.  Please fill out the form below and I will get back to you as soon as possible.</p>
+    <section>
+        <article>
 
-    <EditForm Model="Model" FormName="ContactForm" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
-        <DataAnnotationsValidator />
-        <ValidationSummary />
+            <p>I would love to hear from you.  Please fill out the form below and I will get back to you as soon as possible.</p>
 
-        <div>
-            <label for="Your Name">Your Name:</label>
-            <InputText @bind-Value="Model.Name" placeholder="Your Name e.g. John Smith" />
-        </div>
-        <div>
+            <EditForm Model="Model" FormName="ContactForm" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+                <DataAnnotationsValidator />
+                <ValidationSummary />
 
-            <label for="Your Email">Your Email Address:</label>
-            <InputText type="email" @bind-Value="Model.Email" placeholder="Your email address e.g. john@johnsmith.com" />
-        </div>
-        <div>
-            <label for="Your Website">Your Website:</label>
-            <InputText @bind-Value="Model.Website" placeholder="Your website url e.g. https://www.johnsmith.com" />
-        </div>
-        <div>
+                <div>
+                    <label for="Your Name">Your Name:</label>
+                    <InputText @bind-Value="Model.Name" placeholder="John Smith" />
+                </div>
+                <div>
 
-            <label for="Your Message">Your Message:</label>
-            <CKEditor @bind-Value="@Model.Message" Config="configCustom" Style="height: 200px;"></CKEditor>
-        </div>
+                    <label for="Your Email">Your Email Address:</label>
+                    <InputText type="email" @bind-Value="Model.Email" placeholder="john@johnsmith.com" />
+                </div>
+                <div>
+                    <label for="Your Website">Your Website:</label>
+                    <InputText @bind-Value="Model.Website" placeholder="https://www.johnsmith.com" />
+                </div>
+                <div>
+
+                    <label for="Your Message">Your Message:</label>
+                    <CKEditor @bind-Value="@Model.Message" Config="configCustom" Style="height: 200px;"></CKEditor>
+                </div>
 
 
-        <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Contact</MudButton>
-    </EditForm>
+                <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Contact</MudButton>
+            </EditForm>
+
+        </article>
+        <article>
+        </article>
+    </section>
 
 </div>
 
 @code {
-  
+
     private CKEditorConfig? config;
     private CKEditorConfig? configCustom;
 

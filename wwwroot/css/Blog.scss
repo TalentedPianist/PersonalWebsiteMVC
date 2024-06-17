@@ -16,10 +16,18 @@ p {
 
 h1 { 
     font-size: 3em;
+
+    @media only screen and (max-width: 400px) { 
+        font-size: 2em;
+    }
 }
 
 h2 { 
     font-size: 2em;
+
+    @media only screen and (max-width: 400px) { 
+        font-size: 1.5em;
+    }
 }
 
 header {
@@ -30,7 +38,7 @@ header {
     flex-direction: column;
     flex: 0;
     width: 100vw;
-
+    background-color: #ffa500;
 
     #topNav {
         background-color: #942B99;
@@ -89,6 +97,9 @@ header {
             }
         }
       
+        @media only screen and (max-width: 600px) { 
+            display: none;
+        }
     }
 
     nav {
@@ -122,6 +133,14 @@ header {
         a:hover {
             text-decoration: underline;
         }
+
+        @media only screen and (max-width: 600px) { 
+            display: none;
+        }
+
+        @media only screen and (min-width: 600px) { 
+            display: none;
+        }
     }
 
 
@@ -153,22 +172,51 @@ form {
     flex: 0;
     gap: 2em;
     margin-top: 1em;
+    margin-left: 2em;
+    margin-right: 2em;
+
+    label { 
+        @media only screen and (min-width: 600px) { 
+            align-items: center;
+            width: 10em;
+            display: inline-block;
+            align-items: center;
+            height: 100%;
+            float: left;
+            padding-top: 5px;
+        }
+    }
 
     input {
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
-        width: 90vw;
+        width: 25vw;
+
+        @media only screen and (min-width: 600px) { 
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 6.5em;
+        }
+    }
+
+    textarea { 
+        border: 1px solid black;
     }
 
     div {
         display: flex;
         flex-direction: column;
-        width: 100vw;
+        width: 50vw;
         align-items: center;
 
         &:last-child {
             width: 100%;
             display: block;
+        }
+
+        @media only screen and (min-width: 600px) { 
+            align-items: flex-start;
+            flex-direction: row;
         }
     }
 
@@ -176,11 +224,21 @@ form {
         display: flex;
         align-self: flex-start;
         margin: 0 auto !important;
+
+        @media only screen and (min-width: 600px) { 
+            margin: 0 !important; 
+        }
     }
 
     p {
         padding-left: 1.5em !important;
         padding-right: 1em !important;
+
+        @media only screen and (min-width: 600px) { 
+            text-align: left !important; 
+            display: flex; 
+            align-self: flex-start;
+        }
     }
 }
 
@@ -254,6 +312,22 @@ main {
             text-align: center;
             border-radius: 50%;
         }
+
+        @media only screen and (min-width: 600px) { 
+            text-align: left;
+        } 
+
+        h1 { 
+            @media only screen and (min-width: 600px) { 
+                margin-left: 2em;
+            }
+        }
+    }
+
+    p { 
+        @media only screen and (min-width: 600px) { 
+            padding-left: 2em;
+        }
     }
 }
 
@@ -268,16 +342,6 @@ main {
     width: 100vw;
     height: 100vh;
 
-    h1 {
-        margin: 0 auto;
-        font-size: 3em;
-    }
-
-    h2 {
-        margin: 0 auto;
-        font-size: 2em;
-    }
-
     img {
         width: 50%;
         border-radius: 50%;
@@ -286,7 +350,18 @@ main {
     }
 
     .wave-container > section {
-        gap: 2em;
+        display: flex; 
+        flex-direction: column;
+        flex: 0;
+        gap: 1em;
+        background-color: #ffa500;
+        
+        align-items: center;
+
+        @media only screen and (max-width: 400px) { 
+            height: 70vh;
+            gap: 3em;
+        }
     }
 
     .wave-container > h1, i {
@@ -393,6 +468,19 @@ main {
     height: 100%;
     padding-top: 1em;
     padding-bottom: 1em;
+
+    @media only screen and (min-width: 600px) { 
+        background-color: transparent;
+        padding-top: 0; 
+        padding-bottom: 0;
+        align-items: flex-start;
+
+        article { 
+            &:first-child { 
+                gap: 0;
+            }
+        }
+    }
 }
 
 .overlay {
@@ -459,7 +547,7 @@ main {
 .ck-content {
     max-height: 200px !important;
     min-height: 200px !important;
-    width: 90vw !important;
+    width: 35vw !important;
     margin-left: 1em !important;
     margin-right: 1em !important;
 }
