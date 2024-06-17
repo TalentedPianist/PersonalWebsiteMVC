@@ -1,19 +1,21 @@
 ﻿@inject IJSRuntime JS
 
-<MudDialog Class="MobileMenu">
+<MudHidden Breakpoint="Breakpoint.SmAndDown">
+	<MudDialog Class="MobileMenu">
 
-	<DialogContent>
-		<ul>
-			<li><MudButton Style="color: white; font-size: xx-large;" OnClick="CloseDialog">X</MudButton></li>
-			<li><NavLink href="#Home" @onclick="(() => Navigate(Home))">Home</NavLink></li>
-			<li><NavLink href="#About" @onclick="(() => Navigate(About))">About</NavLink></li>
-			<li><NavLink href="#Blog" @onclick="(() => Navigate(Blog))">Blog</NavLink></li>
-			<li><NavLink href="#Contact" @onclick="(() => Navigate(Contact))">Contact</NavLink></li>
-			<li><NavLink href="#Guestbook" @onclick="(() => Navigate(Guestbook))">Guestbook</NavLink></li>
-		</ul>
-	</DialogContent>
+		<DialogContent>
+			<ul>
+				<li><MudButton Style="color: white; font-size: xx-large;" OnClick="CloseDialog">X</MudButton></li>
+				<li><NavLink href="#Home" @onclick="(() => Navigate(Home))">Home</NavLink></li>
+				<li><NavLink href="#About" @onclick="(() => Navigate(About))">About</NavLink></li>
+				<li><NavLink href="#Blog" @onclick="(() => Navigate(Blog))">Blog</NavLink></li>
+				<li><NavLink href="#Contact" @onclick="(() => Navigate(Contact))">Contact</NavLink></li>
+				<li><NavLink href="#Guestbook" @onclick="(() => Navigate(Guestbook))">Guestbook</NavLink></li>
+			</ul>
+		</DialogContent>
 
-</MudDialog>
+	</MudDialog>
+</MudHidden>
 
 @code {
 	[CascadingParameter]
@@ -40,7 +42,7 @@
 		MudDialog!.Close(DialogResult.Ok(false));
 		await JS.InvokeVoidAsync("SmoothScroll", url);
 		await JS.InvokeVoidAsync("ShowIcon");
-		// Two calls to JavaScript functions required to get this working properly!! 
+		// Two calls to JavaScript functions required to get this working properly!!
 	}
 }
 

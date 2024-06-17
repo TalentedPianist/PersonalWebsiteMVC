@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @inject IJSRuntime jsRuntime
+@inject IDialogService Dialog
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -10,37 +11,25 @@
     <Mobile />
 </MudHidden>
 
-<MudHidden Breakpoint="Breakpoint.Xs">
-    
-    <header>
-        <div id="topNav">
-            <section>
-            <article>
-            
-                <input type="search" placeholder="Search the website...">
-                <MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
-       
-            </article>
-            <article>
-                <a href="#">Login</a>  
-                <a href="#">Register</a>
-            </article>
-            </section>
-        </div>
-        <nav>
-            <ul>
-                <li><NavLink Match="NavLinkMatch.All" href="/">Home</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/About">About</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/Blog">Blog</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/Photos">Photos</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/Contact">Contact</NavLink></li>
-            </ul>
-        </nav>
-    </header>
-    <main>
-        @Body
-    </main>
-    <footer>
-        Copyright &copy; douglasmcgregor.co.uk 2024
-    </footer>
+
+
+<MudHidden Breakpoint="Breakpoint.Md">
+	<p>I am a tablet device.</p>
+	
 </MudHidden>
+
+<MudHidden Breakpoint="Breakpoint.MdAndUp">
+	<p>I am a desktop device.</p>
+</MudHidden>
+
+
+
+@code { 
+	public async Task OpenDialog()
+	{
+		await jsRuntime.InvokeVoidAsync("HideIcon");
+		var options = new DialogOptions { CloseOnEscapeKey = true };
+		var dialog = Dialog.Show<MobileNav>("", options);
+		var result = await dialog.Result;
+	}
+}
