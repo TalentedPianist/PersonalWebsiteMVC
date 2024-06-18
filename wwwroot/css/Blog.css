@@ -71,10 +71,6 @@ header #topNav article {
   align-items: center;
   justify-content: center;
 }
-header #topNav article:first-child {
-  align-items: flex-end;
-  margin: 0;
-}
 header #topNav article:first-child input[type=search] {
   width: 25em;
   padding: 10px;
@@ -84,6 +80,7 @@ header #topNav article:first-child .SearchIcon {
   font-size: 3em !important;
   fill: black !important;
   margin-left: -1em;
+  position: relative;
 }
 header #topNav article:last-child {
   gap: 2em;
@@ -124,11 +121,6 @@ header nav a {
 }
 header nav a:hover {
   text-decoration: underline;
-}
-@media only screen and (min-width: 600px) {
-  header nav {
-    display: none;
-  }
 }
 header .headerBackground {
   background-image: url("../images/scarboroughsunset.svg");

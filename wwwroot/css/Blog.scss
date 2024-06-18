@@ -72,8 +72,7 @@ header {
             justify-content: center;
 
             &:first-child { 
-                align-items: flex-end;
-                margin: 0;
+              
 
                 input[type=search] { 
                     width: 25em;
@@ -85,6 +84,8 @@ header {
                     font-size: 3em !important;
                     fill: black !important;
                     margin-left: -1em;
+                    position: relative;
+
                  }
             }
 
@@ -136,9 +137,7 @@ header {
             text-decoration: underline;
         }
 
-        @media only screen and (min-width: 600px)  {
-            display: none;
-        }
+    
     }
 
 

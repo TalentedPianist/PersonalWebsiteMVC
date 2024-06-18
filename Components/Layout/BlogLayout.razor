@@ -8,18 +8,68 @@
 
 
 <MudHidden Breakpoint="Breakpoint.SmAndUp">
+	<!-- Breakpoint for mobile devices -->
     <Mobile />
 </MudHidden>
 
 
 
-<MudHidden Breakpoint="Breakpoint.Md">
-	<p>I am a tablet device.</p>
+<MudHidden Breakpoint="Breakpoint.MdAndUp">
+	<!-- Breakpoint for tablet devices -->
+	<header>
+	<div id="topNav">
+		<section>
+			<article>
+				<input type="search" placeholder="Search the website....">
+				<MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
+			</article>
+			<article>
+				<a href="#">Login</a>
+				<a href="#">Register</a>
+			</article>
+		</section>
+	</div>
+	</header>
 	
 </MudHidden>
 
-<MudHidden Breakpoint="Breakpoint.MdAndUp">
-	<p>I am a desktop device.</p>
+<MudHidden Breakpoint="Breakpoint.SmAndDown">
+	<!-- Breakpoint for desktop devices -->
+    <header>
+        <div id="topNav">
+            <section>
+                <article>
+                    <input type="search" placeholder="Search the website....">
+                    <MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
+                </article>
+                <article>
+                    <a href="#">Login</a>
+                    <a href="#">Register</a>
+                </article>
+            </section>
+        </div>
+		<nav>
+			<ul>
+				<li><NavLink Match="NavLinkMatch.All" href="/">Home</NavLink></li>
+				<li><NavLink Match="NavLinkMatch.All" href="/About">About</NavLink></li>
+				<li><NavLink Match="NavLinkMatch.All" href="/Blog">Blog</NavLink></li>
+				<li><NavLink Match="NavLinkMatch.All" href="/Photos">Photos</NavLink></li>
+				<li><NavLink Match="NavLinkMatch.All" href="/Contact">Contact</NavLink></li>
+			</ul>
+		</nav>
+    </header>
+	<main>
+		<section>
+			<article>
+				@Body
+			</article>
+			<article>
+			</article>
+		</section>
+	</main>
+	<footer>
+		Copyright &copy; douglasmcgregor.co.uk 2024
+	</footer>
 </MudHidden>
 
 
