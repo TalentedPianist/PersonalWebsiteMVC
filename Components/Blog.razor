@@ -1,7 +1,73 @@
 ﻿@page "/Blog"
+@inject ApplicationDbContext _db
+@inject NavigationManager _nav 
+@using System.Text.RegularExpressions
 
-<h3>Blog</h3>
+@if (_db.Posts.Count() == 0)
+{
+    <h1>Blog</h1>
+
+    <p>No posts have been found just now.  Please check back later.</p>
+}
+else
+{
+    <div id="Blog">
+        @foreach (var item in _db.Posts)
+        {
+            try
+            {
+                var result = Truncate(item.PostContent!, 200);
+
+                <MudCard>
+                    <MudCardMedia Image=@($"/Uploads/{item.FeaturedImage}") Height="200" />
+                    <MudCardContent>
+                        <h2>@item.PostTitle</h2>
+                        <p>@RemoveHTMLTags(result)</p>
+                    </MudCardContent>
+                    <MudCardActions>
+                        <MudButton Variant="Variant.Filled" Color="Color.Primary">Read More</MudButton>
+                    </MudCardActions>
+                </MudCard>
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+    </div>
+}
+
+@functions { 
+    public int GetQueryString() 
+    {
+        var uri = _nav.ToAbsoluteUri(_nav.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var id))
+        {
+            return Convert.ToInt32(id);
+        }
+        else
+        {
+            return 0;
+        }
+    }
+
+    public static string Truncate(string value, int maxChars)
+    {
+        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "....";
+    }
+
+    public static string RemoveHTMLTags(string html)
+    {
+        return Regex.Replace(html, "<.*?>", string.Empty);
+    }
+}
+
 
 @code {
+  
 
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+    }
 }
