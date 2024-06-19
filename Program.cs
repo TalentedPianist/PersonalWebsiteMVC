@@ -16,7 +16,10 @@ using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
 using KITT.Web.ReCaptcha.Http.v2;
+using KITT.Web.ReCaptcha.Http.Internals;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Mvc;
+using PersonalWebsiteMVC.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,8 +98,6 @@ builder.Services.AddReCaptchaV2HttpClient(options =>
     options.SecretKey = "6LdB-1kpAAAAAPEBR2GuCm8rTEucGiU89cQPMaC0";
 });
 
-builder.Services.AddDetection();
-builder.Services.AddResponsive();
 
 builder.Services.AddSession(options =>
 {
@@ -105,6 +106,7 @@ builder.Services.AddSession(options =>
     options.Cookie.IsEssential = true;
 });
 
+builder.Services.AddScoped<IReCaptchaFormClient, ReCaptchaFormClient>();
 
 var app = builder.Build();
 
@@ -120,12 +122,11 @@ else
 app.UseStaticFiles();
 
 app.UseSession();
-app.UseResponsive();
 
 //app.MapRazorPages();
 app.MapControllers();
 
-app.UseDetection();
+
 
 app.UseRouting();
 app.UseAuthorization();
@@ -148,7 +149,15 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-
+app.MapPost("api/send", async (ReCaptchaService reCaptcha, [FromBody] ReCaptchaModel model) =>
+{
+    var result = await reCaptcha.VerifyAsync(model.CaptchaResponse);
+    if (!result.Success)
+    {
+        return Results.BadRequest(result.ErrorCodes);
+    }
+    return Results.Ok();
+});
 
 
 app.Run();

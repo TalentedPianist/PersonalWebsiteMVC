@@ -13,10 +13,15 @@ body {
 p {
   padding-left: 1em;
   padding-right: 1em;
+  margin-bottom: 1em;
+  color: black;
 }
 
 h1 {
   font-size: 3em;
+  color: black;
+  margin-left: 0.5em;
+  position: relative;
 }
 @media only screen and (max-width: 400px) {
   h1 {
@@ -26,11 +31,21 @@ h1 {
 
 h2 {
   font-size: 2em;
+  color: black;
+  margin-left: 0.5em;
+  position: relative;
 }
 @media only screen and (max-width: 400px) {
   h2 {
     font-size: 1.5em;
   }
+}
+
+h3 {
+  font-size: 1.5em;
+  color: black;
+  margin-left: 0.5em;
+  position: relative;
 }
 
 header {
@@ -40,8 +55,9 @@ header {
   display: flex;
   flex-direction: column;
   flex: 0;
+  align-items: center;
   width: 100%;
-  background-color: #ffa500;
+  background-color: #FF9810;
 }
 header #topNav {
   background-color: #942B99;
@@ -145,8 +161,12 @@ form {
   flex: 0;
   gap: 2em;
   margin-top: 1em;
-  margin-left: 2em;
-  margin-right: 2em;
+  width: 100vw;
+}
+form label {
+  display: flex !important;
+  text-align: left;
+  color: black;
 }
 @media only screen and (min-width: 600px) {
   form label {
@@ -157,19 +177,13 @@ form {
     height: 100%;
     float: left;
     padding-top: 5px;
+    color: black;
   }
 }
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
-  width: 25vw;
-}
-@media only screen and (min-width: 600px) {
-  form input {
-    display: inline-block;
-    vertical-align: middle;
-    margin-left: 6.5em;
-  }
+  width: 90vw;
 }
 form textarea {
   border: 1px solid black;
@@ -177,12 +191,13 @@ form textarea {
 form div {
   display: flex;
   flex-direction: column;
-  width: 50vw;
-  align-items: center;
+  flex: 0;
+  width: 100%;
+  padding-left: 0.5em;
+  padding-right: 0.5em;
 }
 form div:last-child {
-  width: 100%;
-  display: block;
+  padding: 0;
 }
 @media only screen and (min-width: 600px) {
   form div {
@@ -211,6 +226,16 @@ form p {
     align-self: flex-start;
   }
 }
+form .ck-content {
+  max-height: 200px !important;
+  min-height: 200px !important;
+}
+form .ck-dropdown__button {
+  display: none !important;
+}
+form .ck-voice-label {
+  display: none !important;
+}
 
 footer {
   display: flex;
@@ -221,6 +246,8 @@ footer {
   padding-top: 1em;
   padding-bottom: 1em;
   text-align: center;
+  font-size: large;
+  background-color: #0FFAF0;
 }
 @media only screen and (min-width: 600px) {
   footer {
@@ -318,15 +345,34 @@ main article img {
   display: flex;
   flex-direction: column;
   flex: 0;
-  gap: 1em;
-  background-color: #ffa500;
+  gap: 3em;
+  background-color: #FF9810;
   align-items: center;
   width: 100vw;
 }
-@media only screen and (max-width: 400px) {
+#Home .wave-container > section button {
+  background-color: lightblue;
+  padding-left: 1em;
+  padding-bottom: 0.5em;
+  padding-top: 0.5em;
+  padding-right: 1em;
+  border: 1px solid black;
+  font-size: large;
+}
+@media only screen and (min-width: 400px) {
   #Home .wave-container > section {
-    height: 70vh;
-    gap: 3em;
+    height: 100vh;
+    gap: 2em;
+  }
+}
+@media only screen and (min-width: 600px) {
+  #Home .wave-container > section {
+    gap: 0 !important;
+  }
+}
+@media only screen and (min-width: 500px) {
+  #Home .wave-container > section {
+    gap: 1em;
   }
 }
 #Home .wave-container > h1, #Home i {
@@ -348,13 +394,22 @@ main article img {
   content: "";
   background-color: #ffa500;
 }
+#Home:after {
+  position: absolute;
+  bottom: 0;
+  height: 250px;
+  width: 100vw;
+  content: ".";
+  background-color: #DEBB0B;
+  z-index: -1;
+}
 
 #About {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
-  background-color: orange;
+  background-color: #DEBB0B;
   height: 100%;
   padding-bottom: 2em;
 }
@@ -370,7 +425,7 @@ main article img {
   flex-direction: column;
   flex: 0;
   height: 100%;
-  background-color: yellow !important;
+  background-color: #9FF500;
   position: relative;
   align-items: center;
   padding-left: 1em;
@@ -381,22 +436,29 @@ main article img {
   margin: 0 auto;
 }
 #Blog .mud-card-content, #Blog .mud-card-actions {
-  background-color: yellow !important;
+  background-color: #9FF500 !important;
+}
+#Blog .mud-card-content {
+  padding: 0 !important;
 }
 
 #SinglePost {
   display: flex;
   flex-direction: column;
   flex: 0;
-  gap: 2em;
+  gap: 0.5em;
   align-items: center;
-  padding-left: 1em;
-  padding-right: 1em;
   background-color: yellow;
+  padding-bottom: 2em;
 }
 #SinglePost button {
   display: flex;
+  margin: 0 auto;
   align-self: flex-start;
+  background-color: green;
+  color: white;
+  font-size: large;
+  padding: 5px 5px 5px 5px;
 }
 #SinglePost img {
   height: 200px;
@@ -412,23 +474,31 @@ main article img {
   background-color: yellow;
   padding-bottom: 2em;
 }
+#Comments button {
+  background-color: purple;
+}
 
 #Contact {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
-  background-color: lightskyblue;
+  background-color: #0BDE39;
   height: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
+}
+#Contact section {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  align-items: center;
 }
 @media only screen and (min-width: 600px) {
   #Contact {
     background-color: transparent;
     padding-top: 0;
     padding-bottom: 0;
-    align-items: flex-start;
   }
   #Contact article:first-child {
     gap: 0;
@@ -452,13 +522,19 @@ main article img {
   position: sticky;
   top: 0;
   display: flex;
+  flex-direction: column;
+  flex: 0;
+  align-items: center;
   z-index: 20000 !important;
   background-color: rgba(0, 0, 0, 0.6);
+}
+.sticky .Menu {
+  color: white;
 }
 
 .Menu {
   color: black;
-  font-size: 5em;
+  font-size: 5em !important;
 }
 
 .MobileMenu {
@@ -493,14 +569,6 @@ main article img {
   z-index: 20000 !important;
 }
 
-.ck-content {
-  max-height: 200px !important;
-  min-height: 200px !important;
-  width: 35vw !important;
-  margin-left: 1em !important;
-  margin-right: 1em !important;
-}
-
-.ck-dropdown__button {
-  display: none !important;
+#recaptcha {
+  display: block !important;
 }

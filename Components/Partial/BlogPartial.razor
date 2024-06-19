@@ -3,7 +3,7 @@
 @inject NavigationManager nav
 @inject IJSRuntime JS 
 @layout BlogLayout
- 
+
 
 @if (_db.Posts.Count() == 0)
 {
@@ -47,8 +47,8 @@ else
                             <MudCard>
                                 <MudCardMedia Image=@($"/Uploads/{item.FeaturedImage}") Height="200" />
                                 <MudCardContent>
-                                    <MudText Typo="Typo.h5">@item.PostTitle</MudText>
-                                    <MudText Typo="Typo.body1">@RemoveHTMLTags(result)</MudText>
+                                   <h2>@item.PostTitle</h2>
+                                   <p>@RemoveHTMLTags(result)</p>
                                 </MudCardContent>
                                 <MudCardActions>
                                     <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewPost(item.PostID))">Read More</MudButton>
@@ -82,6 +82,12 @@ else
 @code { 
     [SupplyParameterFromQuery(Name="id")]
     public int Id { get; set; } = new();
+    public string? Message { get; set; }
+
+    [Inject]
+    public NavigationManager NavManager { get; set; } = default!;
+
+  
 
 #pragma warning disable
     public async Task ViewPost(int id)

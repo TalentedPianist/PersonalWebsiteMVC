@@ -9,20 +9,22 @@
 @inject NavigationManager nav
 
 <header>
-    
-    <MudIcon Variant="Variant.Filled" Icon="@Icons.Material.Filled.Menu" @onclick="OpenDialog" Size="Size.Large" Class="Menu" />
+
+    <MudIcon Variant="Variant.Filled" Icon="@Icons.Material.Filled.Menu" @onclick="OpenDialog" Class="Menu" />
 </header>
 
+
 <div id="Home">
+
     <div class="wave-container">
-       <section>
-        <h1>Hi, I'm Douglas!</h1>
-        <img src="/images/me.jpg" alt="Me">
-        <h2>Thanks for visiting.</h2>
-        <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="AboutMe">About Me</MudButton>
+        <section>
+            <h1>Hi, I'm Douglas!</h1>
+            <img src="/images/me.jpg" alt="Me">
+            <h2>Thanks for visiting.</h2>
+            <button type="button" @onclick="AboutMe">About Me</button>
         </section>
 
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#ffa500" fill-opacity="1" d="M0,96L48,101.3C96,107,192,117,288,138.7C384,160,480,192,576,192C672,192,768,160,864,149.3C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#FF9810" fill-opacity="1" d="M0,96L48,101.3C96,107,192,117,288,138.7C384,160,480,192,576,192C672,192,768,160,864,149.3C960,139,1056,149,1152,165.3C1248,181,1344,203,1392,213.3L1440,224L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
     </div>
 </div>
 
@@ -41,8 +43,7 @@
 
 </div>
 
-
-<Blog />
+<BlogPartial />
 <Contact />
 
 <footer>
@@ -53,8 +54,20 @@
 
 @code {
     public string? Message { get; set; }
-    [SupplyParameterFromQuery(Name ="id")]
+    [SupplyParameterFromQuery(Name = "id")]
     public int? PostID { get; set; }
+
+    [Inject]
+    public NavigationManager NavManager { get; set; } = default!;
+
+    protected override void OnInitialized()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var id))
+        {
+            Message = id.ToString();
+        }
+    }
 
     public async Task AboutMe()
     {

@@ -1,0 +1,193 @@
+﻿@using Sitko.Blazor.CKEditor
+@using Sitko.Blazor.CKEditor.Bundle
+@using KITT.Web.ReCaptcha.Blazor.v2 
+
+
+@Message
+
+<div id="Comments">
+    @{
+        var post = _db.Posts.Where(p => p.PostID == PostID).FirstOrDefault();
+        if (_db.Comments.Count() == 0)
+        {
+            <h2>Comments</h2>
+            <p>No comments found for post @post!.PostTitle.  Be the first to add a comment using the form below.</p>
+        }
+        else
+        {
+            foreach (Comments comment in AllComments)
+            {
+                <MudText>
+                    <img src="http://www.gravatar.com/avatar/?d=mp">
+                    Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd dd MMMM yyyy");
+                    @((MarkupString)comment.CommentContent!)
+                </MudText>
+            }
+        }
+    }
+
+
+    <h3>Add A Comment</h3>
+
+    <p>Share your thoughts on this post using the form below.  Your email address is required but will not be shown.</p>
+
+    <EditForm Model="Model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+        <DataAnnotationsValidator />
+        <ValidationSummary />
+
+        <div>
+            <label>Your Name:</label>
+            <InputText @bind-Value="Model!.CommentAuthor" placeholder="Joe Bloggs" />
+        </div>
+        <div>
+            <label>Your Email Address:</label>
+            <InputText @bind-Value="Model!.CommentAuthorEmail" placeholder="joe@joebloggs.com" />
+        </div>
+        <div>
+            <label>Your Website Address:</label>
+            <InputText @bind-Value="Model!.CommentAuthorUrl" placeholder="http://www.joebloggs.com" />
+        </div>
+        <div>
+            <label>Your Comment:</label>
+            <CKEditor @bind-Value="Model!.CommentContent" Config="configCustom"></CKEditor>
+        </div>
+        <ReCaptcha SiteKey="6LdB-1kpAAAAAIrKiCJ69QwDCGODBhAgZe4x9ciz"
+            @bind-Value="model.CaptchaResponse"
+            Theme="Theme.Dark"
+            Size="KITT.Web.ReCaptcha.Blazor.v2.Size.Normal"
+            TabIndex="1" />
+       
+        <button type="submit">Submit</button>
+    </EditForm>
+
+</div>
+
+@code {
+    public string? Message { get; set; } = string.Empty;
+
+    public void HandleHiddenChanged(ChangeEventArgs e)
+    {
+        Message = e.Value!.ToString();
+    }
+
+    [Parameter]
+    public int? PostID { get; set; }
+
+    public int _postID { get; set; }
+
+    [SupplyParameterFromForm]
+    public Comments? Model { get; set; } = new Comments();
+
+    public List<Comments> AllComments { get; set; } = new List<Comments>();
+
+    [Inject]
+    public IHttpContextAccessor _http { get; set; } = default!;
+    [Inject]
+    public ApplicationDbContext _db { get; set; } = default!;
+    [Inject]
+    public NavigationManager _nav { get; set; } = default!;
+    [Inject]
+    public IJSRuntime JS { get; set; } = default!;
+    [Inject]
+    public PersonalWebsiteMVC.Services.IReCaptchaFormClient Client { get; set; } = default!;
+
+    private CKEditorConfig? config;
+    private CKEditorConfig? configCustom;
+
+    protected override void OnInitialized()
+    {
+        context = new EditContext(model);
+        context.OnFieldChanged += OnFieldChangedHandler;
+
+        base.OnInitialized();
+        config = CKEditorBundleOptions.DefaultConfig.WithHtmlEditing();
+        configCustom = CKEditorBundleOptions.DefaultConfig;
+        configCustom.Toolbar = new CKEditorToolbar
+        {
+            Items = []
+        };
+    }
+
+    // Begin code for Recaptcha
+    private EditContext? context;
+    private ReCaptchaModel model = new();
+    private bool disabled = true;
+    private bool isSuccessMessage;
+
+    private string[] errorCodes = [];
+
+
+    private void OnFieldChangedHandler(object? sender, FieldChangedEventArgs e)
+    {
+        disabled = !(context!.Validate());
+        StateHasChanged();
+    }
+
+    /* void IDisposable.Dispose()
+     {
+         context!.OnFieldChanged -= OnFieldChangedHandler;
+     }*/
+    // End code for recaptcha
+
+    public async Task HandleValidSubmit()
+    {
+        try
+        {
+            var result = await Client.SendAsync(model);
+            Message = result.ToString();
+            if (result == PersonalWebsiteMVC.Services.ReCaptchaFormResult.Succeeded)
+            {
+                Console.WriteLine(result.ToString());
+
+                /* Comments comment = new Comments();
+                 comment.CommentAuthor = Model!.CommentAuthor;
+                 comment.CommentAuthorEmail = Model.CommentAuthorEmail;
+                 comment.CommentAuthorUrl = Model.CommentAuthorUrl;
+                 comment.CommentContent = Model.CommentContent;
+                 comment.PostID = Model.PostID;
+                 comment.CommentDate = DateTime.Now;
+                 comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
+                 _db.Comments.Add(comment);
+                 _db.SaveChanges();
+
+                 // Set up query string for redirection back to this page
+                 var query = new Dictionary<string, string>
+         {
+                     {"id", PostID.ToString()! }
+                 };
+                 _nav.NavigateTo(QueryHelpers.AddQueryString("#Comments", query!));*/
+            }
+            else
+            {
+                isSuccessMessage = false;
+                Message = result.ErrorMessage;
+                errorCodes = result.ErrorCodes;
+            }
+        }
+        catch (System.ArgumentException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
+    public void HandleInvalidSubmit()
+    {
+        Console.WriteLine("An error has occurred.");
+    }
+
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            var uri = _nav.ToAbsoluteUri(_nav.Uri);
+            if (uri.Fragment.Contains("#Comments"))
+            {
+                await JS.InvokeVoidAsync("SmoothScroll", "Comments");
+            }
+        }
+    }
+
+
+
+}

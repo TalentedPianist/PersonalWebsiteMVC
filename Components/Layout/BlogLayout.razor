@@ -1,40 +1,35 @@
 ﻿@inherits LayoutComponentBase
-@inject IJSRuntime jsRuntime
-@inject IDialogService Dialog
+
 
 <MudThemeProvider />
 <MudDialogProvider />
 <MudSnackbarProvider />
 
 
+@Message
+
 <MudHidden Breakpoint="Breakpoint.SmAndUp">
-	<!-- Breakpoint for mobile devices -->
-    <Mobile />
+    <!-- Breakpoint for mobile devices -->
+    @if (IsBlog)
+    {
+        <header>
+            <MudIcon Icon="@Icons.Material.Filled.Menu" Class="Menu" @onclick="OpenDialog" />
+        </header>
+        <SinglePost PostId="PostId" />
+        <footer>
+            Copyright &copy; douglasmcgregor.co.uk 2024
+        </footer>
+    }
+    else
+    {
+        <Mobile />
+    }
 </MudHidden>
 
 
 
 <MudHidden Breakpoint="Breakpoint.MdAndUp">
-	<!-- Breakpoint for tablet devices -->
-	<header>
-	<div id="topNav">
-		<section>
-			<article>
-				<input type="search" placeholder="Search the website....">
-				<MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
-			</article>
-			<article>
-				<a href="#">Login</a>
-				<a href="#">Register</a>
-			</article>
-		</section>
-	</div>
-	</header>
-	
-</MudHidden>
-
-<MudHidden Breakpoint="Breakpoint.SmAndDown">
-	<!-- Breakpoint for desktop devices -->
+    <!-- Breakpoint for tablet devices -->
     <header>
         <div id="topNav">
             <section>
@@ -48,38 +43,80 @@
                 </article>
             </section>
         </div>
-		<nav>
-			<ul>
-				<li><NavLink Match="NavLinkMatch.All" href="/">Home</NavLink></li>
-				<li><NavLink Match="NavLinkMatch.All" href="/About">About</NavLink></li>
-				<li><NavLink Match="NavLinkMatch.All" href="/Blog">Blog</NavLink></li>
-				<li><NavLink Match="NavLinkMatch.All" href="/Photos">Photos</NavLink></li>
-				<li><NavLink Match="NavLinkMatch.All" href="/Contact">Contact</NavLink></li>
-			</ul>
-		</nav>
     </header>
-	<main>
-		<section>
-			<article>
-				@Body
-			</article>
-			<article>
-			</article>
-		</section>
-	</main>
-	<footer>
-		Copyright &copy; douglasmcgregor.co.uk 2024
-	</footer>
+
+</MudHidden>
+
+<MudHidden Breakpoint="Breakpoint.SmAndDown">
+    <!-- Breakpoint for desktop devices -->
+    <header>
+        <div id="topNav">
+            <section>
+                <article>
+                    <input type="search" placeholder="Search the website....">
+                    <MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
+                </article>
+                <article>
+                    <a href="#">Login</a>
+                    <a href="#">Register</a>
+                </article>
+            </section>
+        </div>
+        <nav>
+            <ul>
+                <li><NavLink Match="NavLinkMatch.All" href="/">Home</NavLink></li>
+                <li><NavLink Match="NavLinkMatch.All" href="/About">About</NavLink></li>
+                <li><NavLink Match="NavLinkMatch.All" href="/Blog">Blog</NavLink></li>
+                <li><NavLink Match="NavLinkMatch.All" href="/Photos">Photos</NavLink></li>
+                <li><NavLink Match="NavLinkMatch.All" href="/Contact">Contact</NavLink></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <article>
+                @Body
+            </article>
+            <article>
+            </article>
+        </section>
+    </main>
+    <footer>
+        Copyright &copy; douglasmcgregor.co.uk 2024
+    </footer>
 </MudHidden>
 
 
 
-@code { 
-	public async Task OpenDialog()
-	{
-		await jsRuntime.InvokeVoidAsync("HideIcon");
-		var options = new DialogOptions { CloseOnEscapeKey = true };
-		var dialog = Dialog.Show<MobileNav>("", options);
-		var result = await dialog.Result;
-	}
+@code {
+    public string? Message { get; set; }
+
+    [Inject]
+    public NavigationManager NavManager { get; set; } = default!;
+    [Inject]
+    public IJSRuntime jsRuntime { get; set; } = default!;
+    [Inject]
+    public IDialogService Dialog { get; set; } = default!;
+
+    public bool IsBlog { get; set; } = false;
+    public int PostId { get; set; } = 0;
+
+    protected override void OnInitialized()
+    {
+        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var id))
+        {
+            IsBlog = true;
+            PostId = Convert.ToInt32(id);
+        }
+    }
+
+
+    public async Task OpenDialog()
+    {
+        await jsRuntime.InvokeVoidAsync("HideIcon");
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var dialog = Dialog.Show<MobileNav>("", options);
+        var result = await dialog.Result;
+    }
 }

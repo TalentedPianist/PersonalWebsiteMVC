@@ -9,21 +9,6 @@
 	  <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="Common\**" />
-    <Compile Remove="wwwroot\Gallery\**" />
-    <Content Remove="Common\**" />
-    <Content Remove="wwwroot\Gallery\**" />
-    <EmbeddedResource Remove="Common\**" />
-    <EmbeddedResource Remove="wwwroot\Gallery\**" />
-    <None Remove="Common\**" />
-    <None Remove="wwwroot\Gallery\**" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Content Remove="Components\About.razor" />
-    <Content Remove="Components\YogiPaging.razor" />
-  </ItemGroup>
 
 
   <ItemGroup>

@@ -14,23 +14,40 @@ body {
 p {
     padding-left: 1em;
     padding-right: 1em;
+    margin-bottom: 1em;
+    color: black;
 }
 
-h1 { 
+h1 {
     font-size: 3em;
+    color: black;
+    margin-left: 0.5em;
+    position: relative;
 
-    @media only screen and (max-width: 400px) { 
+    @media only screen and (max-width: 400px) {
         font-size: 2em;
     }
 }
 
-h2 { 
+h2 {
     font-size: 2em;
+    color: black;
+    margin-left: 0.5em;
+    position: relative;
 
-    @media only screen and (max-width: 400px) { 
+    @media only screen and (max-width: 400px) {
         font-size: 1.5em;
     }
 }
+
+h3 { 
+    font-size: 1.5em;
+    color: black;
+    margin-left: 0.5em;
+    position: relative;
+}
+
+
 
 header {
     text-align: center;
@@ -39,8 +56,9 @@ header {
     display: flex;
     flex-direction: column;
     flex: 0;
+    align-items: center;
     width: 100%;
-    background-color: #ffa500;
+    background-color: #FF9810;
 
     #topNav {
         background-color: #942B99;
@@ -65,16 +83,16 @@ header {
         article {
             width: 50%;
             text-align: center;
-            display: flex; 
+            display: flex;
             flex-direction: row;
             flex: 1;
             align-items: center;
             justify-content: center;
 
-            &:first-child { 
-              
+            &:first-child {
 
-                input[type=search] { 
+
+                input[type=search] {
                     width: 25em;
                     padding: 10px;
                     border: 1px solid black;
@@ -85,22 +103,20 @@ header {
                     fill: black !important;
                     margin-left: -1em;
                     position: relative;
-
-                 }
+                }
             }
 
-            &:last-child { 
+            &:last-child {
                 gap: 2em;
 
                 a {
                     color: white;
                     font-size: large;
-                   
                 }
             }
         }
-      
-        @media only screen and (max-width: 600px) { 
+
+        @media only screen and (max-width: 600px) {
             display: none;
         }
     }
@@ -130,14 +146,11 @@ header {
             font-size: x-large;
             color: black;
             font-weight: bold;
-            
         }
 
         a:hover {
             text-decoration: underline;
         }
-
-    
     }
 
 
@@ -169,11 +182,14 @@ form {
     flex: 0;
     gap: 2em;
     margin-top: 1em;
-    margin-left: 2em;
-    margin-right: 2em;
+    width: 100vw;
 
-    label { 
-        @media only screen and (min-width: 600px) { 
+    label {
+        display: flex !important;
+        text-align: left;
+        color: black;
+
+        @media only screen and (min-width: 600px) {
             align-items: center;
             width: 10em;
             display: inline-block;
@@ -181,37 +197,35 @@ form {
             height: 100%;
             float: left;
             padding-top: 5px;
+            color: black;
         }
     }
 
     input {
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
-        width: 25vw;
+        width: 90vw;
 
-        @media only screen and (min-width: 600px) { 
-            display: inline-block;
-            vertical-align: middle;
-            margin-left: 6.5em;
-        }
+       
     }
 
-    textarea { 
+    textarea {
         border: 1px solid black;
     }
 
     div {
         display: flex;
         flex-direction: column;
-        width: 50vw;
-        align-items: center;
+        flex: 0;
+        width: 100%;
+        padding-left: 0.5em;
+        padding-right: 0.5em;
 
         &:last-child {
-            width: 100%;
-            display: block;
+            padding: 0;
         }
 
-        @media only screen and (min-width: 600px) { 
+        @media only screen and (min-width: 600px) {
             align-items: flex-start;
             flex-direction: row;
         }
@@ -222,8 +236,8 @@ form {
         align-self: flex-start;
         margin: 0 auto !important;
 
-        @media only screen and (min-width: 600px) { 
-            margin: 0 !important; 
+        @media only screen and (min-width: 600px) {
+            margin: 0 !important;
         }
     }
 
@@ -231,11 +245,25 @@ form {
         padding-left: 1.5em !important;
         padding-right: 1em !important;
 
-        @media only screen and (min-width: 600px) { 
-            text-align: left !important; 
-            display: flex; 
+        @media only screen and (min-width: 600px) {
+            text-align: left !important;
+            display: flex;
             align-self: flex-start;
         }
+    }
+
+    .ck-content {
+        max-height: 200px !important;
+        min-height: 200px !important;
+     
+    }
+
+    .ck-dropdown__button {
+        display: none !important;
+    }
+
+    .ck-voice-label { 
+        display: none !important;
     }
 }
 
@@ -248,7 +276,10 @@ footer {
     padding-top: 1em;
     padding-bottom: 1em;
     text-align: center;
+    font-size: large;
 
+    background-color: #0FFAF0;
+    
     @media only screen and (min-width: 600px) {
         background-color: #FFEC6E;
     }
@@ -312,15 +343,13 @@ main {
             border-radius: 50%;
         }
 
-        @media only screen and (min-width: 600px) { 
+        @media only screen and (min-width: 600px) {
             text-align: left;
-        } 
-
-     
+        }
     }
 
-    p { 
-        @media only screen and (min-width: 600px) { 
+    p {
+        @media only screen and (min-width: 600px) {
             padding-left: 2em;
         }
     }
@@ -337,11 +366,11 @@ main {
     width: 100vw;
     height: 100vh;
 
-    h1 { 
+    h1 {
         text-align: center;
     }
 
-    h2 { 
+    h2 {
         text-align: center;
     }
 
@@ -353,17 +382,35 @@ main {
     }
 
     .wave-container > section {
-        display: flex; 
+        display: flex;
         flex-direction: column;
         flex: 0;
-        gap: 1em;
-        background-color: #ffa500;
+        gap: 3em;
+        background-color: #FF9810;
         align-items: center;
         width: 100vw;
 
-        @media only screen and (max-width: 400px) { 
-            height: 70vh;
-            gap: 3em;
+        button {
+            background-color: lightblue;
+            padding-left: 1em;
+            padding-bottom: 0.5em;
+            padding-top: 0.5em;
+            padding-right: 1em;
+            border: 1px solid black;
+            font-size: large;
+        }
+
+        @media only screen and (min-width: 400px) {
+            height: 100vh;
+            gap: 2em;
+        }
+
+        @media only screen and (min-width: 600px) {
+            gap: 0 !important;
+        }
+
+        @media only screen and (min-width: 500px) {
+            gap: 1em;
         }
     }
 
@@ -388,6 +435,16 @@ main {
             background-color: #ffa500;
         }
     }
+
+    &:after {
+        position: absolute;
+        bottom: 0;
+        height: 250px;
+        width: 100vw;
+        content: ".";
+        background-color: #DEBB0B;
+        z-index: -1;
+    }
 }
 
 #About {
@@ -395,7 +452,7 @@ main {
     flex-direction: column;
     flex: 0;
     align-items: center;
-    background-color: orange;
+    background-color: #DEBB0B;
     height: 100%;
     padding-bottom: 2em;
 
@@ -413,7 +470,7 @@ main {
     flex-direction: column;
     flex: 0;
     height: 100%;
-    background-color: yellow !important;
+    background-color: #9FF500;
     position: relative;
     align-items: center;
     padding-left: 1em;
@@ -427,7 +484,11 @@ main {
 
 
     .mud-card-content, .mud-card-actions {
-        background-color: yellow !important;
+        background-color: #9FF500 !important;
+    }
+
+    .mud-card-content { 
+        padding: 0 !important;
     }
 }
 
@@ -436,15 +497,19 @@ main {
     display: flex;
     flex-direction: column;
     flex: 0;
-    gap: 2em;
+    gap: 0.5em;
     align-items: center;
-    padding-left: 1em;
-    padding-right: 1em;
     background-color: yellow;
+    padding-bottom: 2em;
 
     button {
         display: flex;
+        margin: 0 auto;
         align-self: flex-start;
+        background-color: green;
+        color: white;
+        font-size: large;
+        padding: 5px 5px 5px 5px;
     }
 
     img {
@@ -452,6 +517,8 @@ main {
         width: 100%;
         display: flex;
     }
+
+   
 }
 
 #Comments {
@@ -461,6 +528,10 @@ main {
     height: 100%;
     background-color: yellow;
     padding-bottom: 2em;
+
+    button { 
+        background-color: purple;
+    }
 }
 
 #Contact {
@@ -468,19 +539,26 @@ main {
     flex-direction: column;
     flex: 0;
     align-items: center;
-    background-color: lightskyblue;
+    background-color: #0BDE39;
     height: 100%;
     padding-top: 1em;
     padding-bottom: 1em;
 
-    @media only screen and (min-width: 600px) { 
-        background-color: transparent;
-        padding-top: 0; 
-        padding-bottom: 0;
-        align-items: flex-start;
+    section { 
+        display: flex; 
+        flex-direction: column;
+        flex: 0;
+        align-items: center;
+    }
 
-        article { 
-            &:first-child { 
+    @media only screen and (min-width: 600px) {
+        background-color: transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+      
+
+        article {
+            &:first-child {
                 gap: 0;
             }
         }
@@ -505,13 +583,20 @@ main {
     position: sticky;
     top: 0;
     display: flex;
+    flex-direction: column;
+    flex: 0; 
+    align-items: center;
     z-index: 20000 !important;
     background-color: rgba(0,0,0,0.6);
+
+    .Menu { 
+        color: white;
+    }
 }
 
 .Menu {
     color: black;
-    font-size: 5em;
+    font-size: 5em !important;
 }
 
 .MobileMenu {
@@ -548,14 +633,8 @@ main {
     }
 }
 
-.ck-content {
-    max-height: 200px !important;
-    min-height: 200px !important;
-    width: 35vw !important;
-    margin-left: 1em !important;
-    margin-right: 1em !important;
+#recaptcha { 
+    display: block !important;
 }
 
-.ck-dropdown__button {
-    display: none !important;
-}
+
