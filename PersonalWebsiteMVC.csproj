@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <PackageReference Include="Blazor.Pagination" Version="2.0.2" />
+    <PackageReference Include="BlazorPagination" Version="0.2.16" />
     <PackageReference Include="DeviceDetector.NET" Version="6.3.3" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.14.2" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />

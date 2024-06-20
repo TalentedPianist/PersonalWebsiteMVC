@@ -2,7 +2,7 @@
 @inject ApplicationDbContext _db
 @inject NavigationManager _nav 
 @using System.Text.RegularExpressions
-@using Blazor.Pagination
+@using BlazorPagination 
 
 @if (_db.Posts.Count() == 0)
 {
@@ -13,7 +13,7 @@
 else
 {
     <div id="Blog">
-        @foreach (var item in _db.Posts)
+        @foreach (var item in _data!.Results)
         {
             try
             {
@@ -67,6 +67,8 @@ else
 
 @code {
     // https://github.com/villainoustourist/Blazor.Pagination/
+    private PagedResult<Posts>? _data;
+
 
     protected override void OnInitialized()
     {
