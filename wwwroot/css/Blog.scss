@@ -470,7 +470,7 @@ main {
     flex-direction: column;
     flex: 0;
     height: 100%;
-    background-color: #9FF500;
+
     position: relative;
     align-items: center;
     padding-left: 1em;
@@ -481,14 +481,35 @@ main {
         margin: 0 auto;
     }
 
+    .MudCard { 
+        border: 0;
+       
+        h2 { 
+            @media only screen and (min-width: 600px) { 
+                margin-left: 1em;
+            }
+        }
 
+        button { 
+            @media only screen and (min-width: 600px) { 
+                margin-left: 1em;
+            }
+        }
 
-    .mud-card-content, .mud-card-actions {
-        background-color: #9FF500 !important;
+        p { 
+            @media only screen and (min-width: 600px) { 
+                font-size: medium;
+            }
+        }
     }
 
     .mud-card-content { 
         padding: 0 !important;
+    }
+
+    @media only screen and (min-width: 600px) { 
+        gap: 2em;
+        background-color: transparent;
     }
 }
 

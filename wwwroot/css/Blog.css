@@ -425,7 +425,6 @@ main article img {
   flex-direction: column;
   flex: 0;
   height: 100%;
-  background-color: #9FF500;
   position: relative;
   align-items: center;
   padding-left: 1em;
@@ -435,11 +434,32 @@ main article img {
   display: flex;
   margin: 0 auto;
 }
-#Blog .mud-card-content, #Blog .mud-card-actions {
-  background-color: #9FF500 !important;
+#Blog .MudCard {
+  border: 0;
+}
+@media only screen and (min-width: 600px) {
+  #Blog .MudCard h2 {
+    margin-left: 1em;
+  }
+}
+@media only screen and (min-width: 600px) {
+  #Blog .MudCard button {
+    margin-left: 1em;
+  }
+}
+@media only screen and (min-width: 600px) {
+  #Blog .MudCard p {
+    font-size: medium;
+  }
 }
 #Blog .mud-card-content {
   padding: 0 !important;
+}
+@media only screen and (min-width: 600px) {
+  #Blog {
+    gap: 2em;
+    background-color: transparent;
+  }
 }
 
 #SinglePost {
