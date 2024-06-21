@@ -1,6 +1,5 @@
 ﻿@page "/Blog"
-@inject ApplicationDbContext _db
-@inject NavigationManager _nav
+
 @using System.Text.RegularExpressions
 @using BlazorPagination
 
@@ -89,7 +88,9 @@ else
     private string _direction = "desc";
 
     [Inject]
-    public ApplicationDbContext _db { get; set; } 
+    public ApplicationDbContext _db { get; set; } = default!;
+    [Inject]
+    public NavigationManager _nav { get; set; } = default!;
 
     protected override async Task OnInitializedAsync()
     {

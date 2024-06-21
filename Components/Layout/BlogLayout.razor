@@ -73,6 +73,7 @@
         </nav>
     </header>
     <main>
+        @_nav.Uri.ToString()
         <section>
             <article>
                 @Body
@@ -92,7 +93,7 @@
     public string? Message { get; set; }
 
     [Inject]
-    public NavigationManager NavManager { get; set; } = default!;
+    public NavigationManager _nav { get; set; } = default!;
     [Inject]
     public IJSRuntime jsRuntime { get; set; } = default!;
     [Inject]
@@ -103,7 +104,7 @@
 
     protected override void OnInitialized()
     {
-        var uri = NavManager.ToAbsoluteUri(NavManager.Uri);
+        var uri = _nav.ToAbsoluteUri(_nav.Uri);
         if (QueryHelpers.ParseQuery(uri.Query).TryGetValue("id", out var id))
         {
             IsBlog = true;

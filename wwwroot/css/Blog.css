@@ -266,6 +266,11 @@ main {
   text-align: center;
   width: 100%;
 }
+main p {
+  margin-bottom: 1.5em;
+  font-size: medium;
+  line-height: 1.5em;
+}
 main:before {
   display: flex;
   height: 300px;
@@ -295,9 +300,6 @@ main article {
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-main article:first-child {
-  gap: 5em;
 }
 main article:last-child {
   text-align: center;
