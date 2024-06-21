@@ -13,7 +13,6 @@ body {
 p {
   padding-left: 1em;
   padding-right: 1em;
-  margin-bottom: 1em;
   color: black;
 }
 
@@ -457,11 +456,30 @@ main article img {
 }
 @media only screen and (min-width: 600px) {
   #Blog {
-    gap: 2em;
     background-color: transparent;
   }
 }
-
+#Blog hr {
+  color: #d9d9d9;
+  display: flex;
+  width: 100vw;
+}
+#Blog nav ul {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  gap: 1em;
+  align-items: center;
+}
+#Blog nav ul .sr-only {
+  display: none;
+}
+#Blog nav ul li:nth-of-type(2) {
+  background-color: white;
+  padding: 5px 5px 5px 5px;
+  border: 1px solid black;
+  font-size: medium;
+}
 #SinglePost {
   display: flex;
   flex-direction: column;

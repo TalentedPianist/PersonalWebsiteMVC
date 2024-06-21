@@ -14,7 +14,6 @@ body {
 p {
     padding-left: 1em;
     padding-right: 1em;
-    margin-bottom: 1em;
     color: black;
 }
 
@@ -508,8 +507,41 @@ main {
     }
 
     @media only screen and (min-width: 600px) { 
-        gap: 2em;
+
         background-color: transparent;
+    }
+
+    hr { 
+        color: #d9d9d9;
+        display: flex; 
+        width: 100vw;
+    }
+
+    nav { 
+        ul { 
+            display: flex; 
+            flex-direction: row;
+            flex: 0;
+            gap: 1em;
+            align-items: center;
+
+            .sr-only { 
+                display: none;
+            }
+
+           li { 
+               &:nth-of-type(2) { 
+                   background-color: white;
+                   padding: 5px 5px 5px 5px;
+                   border: 1px solid black;
+                   font-size: medium;
+                }
+            }
+        }
+    } 
+
+    p { 
+      
     }
 }
 
