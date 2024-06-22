@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "ckeditor5": "^41.4.2",
     "jquery-breakpoints": "^1.8.1"
   }
 }

@@ -66,6 +66,15 @@
       "provider": "filesystem",
       "library": "node_modules/jquery-breakpoints/",
       "destination": "wwwroot/lib/jquery-breakpoints/"
+    },
+    {
+      "library": "ckeditor5@41.4.2",
+      "destination": "wwwroot/lib/ckeditor5/"
+    },
+    {
+      "provider": "filesystem",
+      "library": "node_modules/ckeditor5/",
+      "destination": "wwwroot/lib/ckeditor5/"
     }
   ]
 }
