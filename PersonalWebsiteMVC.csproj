@@ -20,6 +20,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.0" />
+    <PackageReference Include="MailKit" Version="4.6.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.6" />
@@ -56,24 +57,5 @@
     <PackageReference Include="X.PagedList.Web.Common" Version="8.0.7" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Middleware\" />
-    <Folder Include="wwwroot\Gallery\York\" />
-    <Folder Include="wwwroot\icons\" />
-    <Folder Include="wwwroot\icons\" />
-    <Folder Include="wwwroot\Uploads\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <UpToDateCheckInput Remove="Components\About.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <_ContentIncludedByDefault Remove="Components\About.razor" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="Components\About.razor" />
-  </ItemGroup>
 
 </Project>

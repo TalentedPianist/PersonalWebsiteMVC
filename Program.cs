@@ -21,6 +21,7 @@ using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Services;
 using PersonalWebsiteMVC.Areas.Identity.Data;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,6 +36,8 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 //.AddEntityFrameworkStores<ApplicationDbContext>();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
+
+
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddMvc(options =>
@@ -110,6 +113,8 @@ builder.Services.AddSession(options =>
 
 builder.Services.AddScoped<IReCaptchaFormClient, ReCaptchaFormClient>();
 
+builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -125,7 +130,7 @@ app.UseStaticFiles();
 
 app.UseSession();
 
-//app.MapRazorPages();
+app.MapRazorPages();
 app.MapControllers();
 
 
