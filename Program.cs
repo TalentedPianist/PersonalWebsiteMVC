@@ -37,7 +37,6 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddMvc(options =>
@@ -82,7 +81,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-    options.LoginPath = "/Identity/Account/Login";
+    options.LoginPath = "/Accounts/Login";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
