@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -52,13 +53,18 @@ namespace PersonalWebsiteMVC.Controllers
         }
 
         [HttpGet]
-        [AllowAnonymous]
-        [Route("/Account/Logout")]
-        public async Task<IActionResult> Logout()
+        public IActionResult Logout()
         {
-#nullable enable
-            await HttpContext.SignOutAsync();
-            return RedirectToAction("Login", "Account");
+            return View();
+        }
+
+        [Route("/Account/Logout")]
+        [HttpPost]
+        public async Task<IActionResult> AppLogout()
+        {
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+          
+            return Ok();
         }
 
         public IActionResult Index()

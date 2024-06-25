@@ -104,8 +104,7 @@ header #topNav article:first-child .SearchIcon {
   position: relative;
 }
 header #topNav article:last-child {
-  gap: 0.5em;
-  flex-direction: column;
+  gap: 2em;
   color: white;
 }
 @media only screen and (max-width: 600px) {
