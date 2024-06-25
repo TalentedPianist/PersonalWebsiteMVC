@@ -69,6 +69,13 @@ header {
         padding-top: 1em;
         padding-bottom: 1em;
 
+        p, a { 
+            color: white;
+            font-size: medium;
+            display: flex; 
+            flex-direction: column;
+        }
+
         section {
             display: flex;
             flex-direction: row;
@@ -106,12 +113,10 @@ header {
             }
 
             &:last-child {
-                gap: 2em;
-
-                a {
-                    color: white;
-                    font-size: large;
-                }
+                gap: 0.5em;
+                flex-direction: column;
+                color: white;
+                
             }
         }
 
@@ -384,6 +389,12 @@ main {
         border-radius: 50%;
         display: flex;
         margin: 0 auto;
+    }
+
+    article { 
+        display: flex; 
+        flex-direction: column;
+        gap: 5em;
     }
 
     .wave-container > section {

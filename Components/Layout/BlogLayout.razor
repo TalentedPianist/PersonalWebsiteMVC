@@ -1,5 +1,5 @@
 ﻿@inherits LayoutComponentBase
-
+@attribute [Microsoft.AspNetCore.Authorization.Authorize]
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -38,8 +38,14 @@
                     <MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
                 </article>
                 <article>
-                    <a href="#">Login</a>
-                    <a href="#">Register</a>
+                    <AuthorizeView>
+                        <Authorized>
+                        </Authorized>
+                        <NotAuthorized>
+                            <NavLink href="/Login" NavLinkMatch="NavLinkMatch.All">Login</NavLink>
+                            <a href="#">Register</a>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </article>
             </section>
         </div>
@@ -57,8 +63,16 @@
                     <MudIcon Icon="@Icons.Material.Filled.Search" Class="SearchIcon" />
                 </article>
                 <article>
-                    <a href="#">Login</a>
-                    <a href="#">Register</a>
+                    <AuthorizeView>
+                        <Authorized>
+                            Hello @_http.HttpContext!.User.Identity!.Name
+                            <a href="/Logout">Logout</a>
+                        </Authorized>
+                        <NotAuthorized>
+                            <a href="/Login">Login</a>
+                            <a href="#">Register</a>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </article>
             </section>
         </div>
@@ -73,7 +87,7 @@
         </nav>
     </header>
     <main>
-  
+
         <section>
             <article>
                 @Body
@@ -98,6 +112,8 @@
     public IJSRuntime jsRuntime { get; set; } = default!;
     [Inject]
     public IDialogService Dialog { get; set; } = default!;
+    [Inject]
+    public IHttpContextAccessor _http { get; set; } = default!;
 
     public bool IsBlog { get; set; } = false;
     public int PostId { get; set; } = 0;

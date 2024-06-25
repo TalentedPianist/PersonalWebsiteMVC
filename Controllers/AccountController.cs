@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Models;
@@ -17,7 +18,7 @@ namespace PersonalWebsiteMVC.Controllers
             signInManager = signinMgr;
         }
 
-        [Route("Accounts/Login")]
+    
         [AllowAnonymous]
         public IActionResult Login(string returnUrl)
         {
@@ -40,10 +41,24 @@ namespace PersonalWebsiteMVC.Controllers
                     Microsoft.AspNetCore.Identity.SignInResult result = await signInManager.PasswordSignInAsync(appUser, login.Password!, false, false);
                     if (result.Succeeded)
                         return Redirect(login.ReturnUrl ?? "/");
+                    else
+                    {
+                        Console.WriteLine(result.ToString());
+                    }
                 }
-                ModelState.AddModelError(nameof(login.Email), "Login Failed: Invalid Email or password");
+                //ModelState.AddModelError(nameof(login.Email), "Login Failed: Invalid Email or password");
             }
             return View(login);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        [Route("/Account/Logout")]
+        public async Task<IActionResult> Logout()
+        {
+#nullable enable
+            await HttpContext.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
 
         public IActionResult Index()

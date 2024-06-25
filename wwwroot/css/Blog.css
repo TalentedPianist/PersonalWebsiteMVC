@@ -68,6 +68,12 @@ header #topNav {
   padding-top: 1em;
   padding-bottom: 1em;
 }
+header #topNav p, header #topNav a {
+  color: white;
+  font-size: medium;
+  display: flex;
+  flex-direction: column;
+}
 header #topNav section {
   display: flex;
   flex-direction: row;
@@ -98,11 +104,9 @@ header #topNav article:first-child .SearchIcon {
   position: relative;
 }
 header #topNav article:last-child {
-  gap: 2em;
-}
-header #topNav article:last-child a {
+  gap: 0.5em;
+  flex-direction: column;
   color: white;
-  font-size: large;
 }
 @media only screen and (max-width: 600px) {
   header #topNav {
@@ -341,6 +345,11 @@ main article img {
   border-radius: 50%;
   display: flex;
   margin: 0 auto;
+}
+#Home article {
+  display: flex;
+  flex-direction: column;
+  gap: 5em;
 }
 #Home .wave-container > section {
   display: flex;

@@ -37,7 +37,7 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<ApplicationDbContext>();
 
-builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider();
+builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider().AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddMvc(options =>
 {
@@ -73,15 +73,23 @@ builder.Services.Configure<IdentityOptions>(options =>
     // User settings
     options.User.AllowedUserNameCharacters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
     options.User.RequireUniqueEmail = false;
+
+    // Sign in settings
+    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedAccount = false; // Needed to get passed the "NotAllowed" error
+    
 });
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
+    options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+   
 
-    options.LoginPath = "/Accounts/Login";
+    options.LoginPath = "/Account/Login";
+    options.LogoutPath = "/Account/Logout";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
@@ -105,7 +113,8 @@ builder.Services.AddReCaptchaV2HttpClient(options =>
 
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.Name = ".Identity.Application";
+    options.IdleTimeout = TimeSpan.FromSeconds(5);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });
@@ -113,6 +122,10 @@ builder.Services.AddSession(options =>
 builder.Services.AddScoped<IReCaptchaFormClient, ReCaptchaFormClient>();
 
 builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
+
+builder.Services.AddCascadingAuthenticationState();
+
+builder.Services.AddAuthentication();
 
 var app = builder.Build();
 
@@ -129,7 +142,7 @@ app.UseStaticFiles();
 
 app.UseSession();
 
-app.MapRazorPages();
+//app.MapRazorPages();
 app.MapControllers();
 
 
