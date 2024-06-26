@@ -193,13 +193,14 @@ form textarea {
 form div {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   width: 100%;
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
 form div:last-child {
   padding: 0;
+  align-self: flex-start;
 }
 @media only screen and (min-width: 600px) {
   form div {
@@ -545,6 +546,9 @@ main article img {
   align-items: center;
   padding-left: 5em;
 }
+#Contact form div:last-child {
+  flex-direction: column;
+}
 @media only screen and (min-width: 600px) {
   #Contact {
     background-color: transparent;
@@ -622,4 +626,8 @@ main article img {
 
 #recaptcha {
   display: block !important;
+}
+
+.ck .ck-editor__main {
+  width: 30vw !important;
 }

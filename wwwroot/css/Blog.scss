@@ -219,13 +219,14 @@ form {
     div {
         display: flex;
         flex-direction: column;
-        flex: 0;
+        flex: 1;
         width: 100%;
         padding-left: 0.5em;
         padding-right: 0.5em;
 
         &:last-child {
             padding: 0;
+            align-self: flex-start;
         }
 
         @media only screen and (min-width: 600px) {
@@ -627,6 +628,15 @@ main {
     
     }
 
+    form 
+        {
+            div { 
+                &:last-child { 
+                    flex-direction: column;
+                 }
+            }
+        }
+
     @media only screen and (min-width: 600px) {
         background-color: transparent;
         padding-top: 0;
@@ -711,6 +721,11 @@ main {
 
 #recaptcha { 
     display: block !important;
+}
+
+.ck .ck-editor__main { 
+    width: 30vw !important;
+
 }
 
 
