@@ -185,7 +185,7 @@ form label {
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
-  width: 90vw;
+  width: 40vw;
 }
 form textarea {
   border: 1px solid black;
@@ -316,11 +316,6 @@ main article img {
 @media only screen and (min-width: 600px) {
   main article {
     text-align: left;
-  }
-}
-@media only screen and (min-width: 600px) {
-  main p {
-    padding-left: 2em;
   }
 }
 
@@ -535,12 +530,20 @@ main article img {
   height: 100%;
   padding-top: 1em;
   padding-bottom: 1em;
+  font-size: medium;
+}
+#Contact input {
+  width: 30vw;
+}
+#Contact label {
+  width: 12em;
 }
 #Contact section {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
+  padding-left: 5em;
 }
 @media only screen and (min-width: 600px) {
   #Contact {

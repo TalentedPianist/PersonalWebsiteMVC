@@ -207,7 +207,7 @@ form {
     input {
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
-        width: 90vw;
+        width: 40vw;
 
        
     }
@@ -357,11 +357,7 @@ main {
         }
     }
 
-    p {
-        @media only screen and (min-width: 600px) {
-            padding-left: 2em;
-        }
-    }
+
 }
 
 
@@ -612,12 +608,23 @@ main {
     height: 100%;
     padding-top: 1em;
     padding-bottom: 1em;
+    font-size: medium;
+
+    input { 
+        width: 30vw;
+    }
+
+    label { 
+        width: 12em;
+    }
 
     section { 
         display: flex; 
         flex-direction: column;
         flex: 0;
         align-items: center;
+        padding-left: 5em;
+    
     }
 
     @media only screen and (min-width: 600px) {
