@@ -60,9 +60,9 @@ namespace PersonalWebsiteMVC.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> AppLogout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            await signInManager.SignOutAsync();
             Console.WriteLine("User is logged out.");
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Login", "Account");
         }
 
         public IActionResult Index()

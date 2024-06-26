@@ -28,7 +28,16 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-			
+			        @if (User.Identity!.IsAuthenticated)
+                    {
+                        <p>Hello @User.Identity.Name</p>
+                        <form method="post" asp-controller="Account" asp-action="AppLogout" asp-route-returnUrl="/">
+                            <button type="submit" class="btn btn-link">Logout</button>
+                        </form>
+                    }
+                    else
+                    {
+                    }
                 </div>
             </div>
         </nav>

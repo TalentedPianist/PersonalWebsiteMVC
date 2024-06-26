@@ -122,7 +122,7 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 
 builder.Services.AddCascadingAuthenticationState();
 
-builder.Services.AddAuthentication();
+builder.Services.AddAuthentication(); // This is needed for logout to work otherwise nothing happens.
 
 builder.Services.AddHttpContextAccessor();
 
