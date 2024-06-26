@@ -22,6 +22,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Services;
 using PersonalWebsiteMVC.Areas.Identity.Data;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -54,6 +55,8 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.PropertyNamingPolicy = null;
     });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
+
 
 builder.Services.Configure<IdentityOptions>(options =>
 {
@@ -66,7 +69,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequiredUniqueChars = 0;
 
     // Lockout settings.
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+    //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
 
@@ -85,7 +88,7 @@ builder.Services.ConfigureApplicationCookie(options =>
     // Cookie settings
     options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+    //options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
    
 
     options.LoginPath = "/Account/Login";
@@ -111,13 +114,7 @@ builder.Services.AddReCaptchaV2HttpClient(options =>
 });
 
 
-builder.Services.AddSession(options =>
-{
-    options.Cookie.Name = ".Identity.Application";
-    options.IdleTimeout = TimeSpan.FromSeconds(5);
-    options.Cookie.HttpOnly = true;
-    options.Cookie.IsEssential = true;
-});
+builder.Services.AddSession();
 
 builder.Services.AddScoped<IReCaptchaFormClient, ReCaptchaFormClient>();
 
@@ -126,6 +123,8 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddAuthentication();
+
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 

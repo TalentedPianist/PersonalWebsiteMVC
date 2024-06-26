@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject IHttpContextAccessor _http 
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -26,19 +28,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
                     </ul>
-					<div>
-						@if (User.Identity!.IsAuthenticated)
-						{
-							<form asp-controller="Account" asp-action="AppLogout" asp-route-returnUrl="@Url.Page("/")" method="post">
-								<button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
-							</form>
-						}
-						else
-						{
-							<a asp-controller="Account" asp-action="Register">Register</a>
-							<a asp-controller="Account" asp-action="Login">Login</a>
-						}
-					</div>
+			
                 </div>
             </div>
         </nav>

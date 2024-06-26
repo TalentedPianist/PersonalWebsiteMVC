@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -12,11 +13,13 @@ namespace PersonalWebsiteMVC.Controllers
     {
         private UserManager<ApplicationUser> userManager;
         private SignInManager<ApplicationUser> signInManager;
+        private IHttpContextAccessor _http;
 
-        public AccountController(UserManager<ApplicationUser> userMgr, SignInManager<ApplicationUser> signinMgr)
+        public AccountController(UserManager<ApplicationUser> userMgr, SignInManager<ApplicationUser> signinMgr, IHttpContextAccessor http)
         {
             userManager = userMgr;
             signInManager = signinMgr;
+            _http = http;
         }
 
     
@@ -52,19 +55,14 @@ namespace PersonalWebsiteMVC.Controllers
             return View(login);
         }
 
-        [HttpGet]
-        public IActionResult Logout()
-        {
-            return View();
-        }
 
-        [Route("/Account/Logout")]
         [HttpPost]
+        [AllowAnonymous]
         public async Task<IActionResult> AppLogout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-          
-            return Ok();
+            Console.WriteLine("User is logged out.");
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult Index()

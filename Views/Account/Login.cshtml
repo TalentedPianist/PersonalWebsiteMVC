@@ -12,7 +12,9 @@
  @if (_http.HttpContext!.User.Identity!.IsAuthenticated)
  {
     <p>Hello @_http.HttpContext!.User.Identity!.Name</p>
-    <a asp-controller="Account" asp-action="Logout">Logout</a>
+    <form asp-controller="Account" asp-action="AppLogout" method="post">
+        <button type="submit" class="nav-link btn btn-link text-dark">Click here to Logout</button>
+    </form>
  }
  else
  {
