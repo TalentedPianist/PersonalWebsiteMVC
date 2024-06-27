@@ -2,6 +2,7 @@
 using MimeKit;
 using PersonalWebsiteMVC.Models;
 using MailKit.Net.Smtp;
+using System.Linq.Expressions;
 
 namespace PersonalWebsiteMVC.Services
 {
@@ -15,17 +16,18 @@ namespace PersonalWebsiteMVC.Services
         }
 
         // https://mailtrap.io/blog/asp-net-core-send-email/
-        public async Task<bool> SendMailAsync(string email, string name, string body)
+        public async Task<bool> SendMailAsync(string name, string email, string subject, string body)
         {
             try
             {
                 using (MimeMessage emailMessage = new MimeMessage())
                 {
-                    MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
+                    MailboxAddress emailFrom = new MailboxAddress(name, email);
                     MailboxAddress emailTo = new MailboxAddress(name, email);
                     emailMessage.To.Add(emailTo);
+                    emailMessage.From.Add(emailFrom);
 
-                    emailMessage.Subject = "Contact Form";
+                    emailMessage.Subject = subject;
 
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
                     emailBodyBuilder.TextBody = body;
@@ -35,7 +37,7 @@ namespace PersonalWebsiteMVC.Services
 
                     using (SmtpClient mailClient = new SmtpClient())
                     {
-                        
+
                         await mailClient.ConnectAsync(_mailSettings.Server, Convert.ToInt32(_mailSettings.Port), MailKit.Security.SecureSocketOptions.StartTls);
                         await mailClient.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
                         await mailClient.SendAsync(emailMessage);
@@ -46,16 +48,18 @@ namespace PersonalWebsiteMVC.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message + " - " + ex.Source);
+                Console.WriteLine(ex.Message);
                 return false;
             }
+
         }
 
-       
+        
     }
-
     public interface IMailService
     {
-        Task<bool> SendMailAsync(string email, string name, string body);
+        Task<bool> SendMailAsync(string name, string email, string subject, string body);
     }
 }
+
+

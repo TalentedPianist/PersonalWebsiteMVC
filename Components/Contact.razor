@@ -72,7 +72,7 @@
 
     public async Task HandleValidSubmit()
     {
-        await mailService.SendMailAsync(Model.Email!, Model.Name!, Model.Message!);
+        await mailService.SendMailAsync(Model.Name!, Model.Email!, "Contact Form", Model.Message!);
     }
 
     public async Task HandleInvalidSubmit()
