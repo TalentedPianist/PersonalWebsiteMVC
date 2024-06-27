@@ -15,20 +15,20 @@ namespace PersonalWebsiteMVC.Services
         }
 
         // https://mailtrap.io/blog/asp-net-core-send-email/
-        public async Task<bool> SendMailAsync(MailData mailData)
+        public async Task<bool> SendMailAsync(string email, string name, string body)
         {
             try
             {
                 using (MimeMessage emailMessage = new MimeMessage())
                 {
                     MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
-                    MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+                    MailboxAddress emailTo = new MailboxAddress(name, email);
                     emailMessage.To.Add(emailTo);
 
-                    emailMessage.Subject = mailData.EmailSubject;
+                    emailMessage.Subject = "Contact Form";
 
                     BodyBuilder emailBodyBuilder = new BodyBuilder();
-                    emailBodyBuilder.TextBody = mailData.EmailBody;
+                    emailBodyBuilder.TextBody = body;
 
                     emailMessage.Body = emailBodyBuilder.ToMessageBody();
                     // this is the SmtpClient from the Mailkit.Net.Smtp namespace, not the System.Net.Mail one
@@ -46,14 +46,16 @@ namespace PersonalWebsiteMVC.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.Message + " - " + ex.Source);
                 return false;
             }
         }
+
+       
     }
 
     public interface IMailService
     {
-        Task<bool> SendMailAsync(MailData mailData);
+        Task<bool> SendMailAsync(string email, string name, string body);
     }
 }

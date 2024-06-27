@@ -6,6 +6,7 @@
 @page "/Contact"
 
 
+
 <div id="Contact">
 
     <h1>Contact</h1>
@@ -50,7 +51,8 @@
 </div>
 
 @code {
-
+    [Inject]
+    private PersonalWebsiteMVC.Services.IMailService mailService { get; set; } = default!;
 
     private CKEditorConfig? config;
     private CKEditorConfig? configCustom;
@@ -70,7 +72,7 @@
 
     public async Task HandleValidSubmit()
     {
-        await Task.CompletedTask;
+        await mailService.SendMailAsync(Model.Email!, Model.Name!, Model.Message!);
     }
 
     public async Task HandleInvalidSubmit()
