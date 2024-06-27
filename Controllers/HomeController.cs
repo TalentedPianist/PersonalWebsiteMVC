@@ -62,12 +62,10 @@ namespace PersonalWebsiteMVC.Controllers
         }
 
         [HttpPost]
-        [Route("Home/GetWidth")]
-        public int GetWidth(int width)
+        public IActionResult SubmitContactForm()
         {
-            return Convert.ToInt32(width);
+            return Ok();
         }
-
 
     }
 }

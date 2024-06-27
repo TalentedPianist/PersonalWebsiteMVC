@@ -1,54 +1,59 @@
-﻿using MailKit.Security;
-using MailKit;
-using Microsoft.Extensions.Options;
+﻿using Microsoft.Extensions.Options;
 using MimeKit;
 using PersonalWebsiteMVC.Models;
 using MailKit.Net.Smtp;
 
-
 namespace PersonalWebsiteMVC.Services
 {
-    // https://codewithmukesh.com/blog/send-emails-with-aspnet-core/
     public class MailService : IMailService
     {
         private readonly MailSettings _mailSettings;
-        public MailService(IOptions<MailSettings> mailSettings)
+
+        public MailService(IOptions<MailSettings> mailSettingsOptions)
         {
-            _mailSettings = mailSettings.Value;
+            _mailSettings = mailSettingsOptions.Value;
         }
 
-        public async Task SendEmailAsync(MailRequest mailRequest)
+        // https://mailtrap.io/blog/asp-net-core-send-email/
+        public async Task<bool> SendMailAsync(MailData mailData)
         {
-            var email = new MimeMessage();
-            email.Sender = MailboxAddress.Parse(_mailSettings.Mail);
-            email.To.Add(MailboxAddress.Parse(mailRequest.ToEmail));
-            email.Subject = mailRequest.Subject;
-            var builder = new BodyBuilder();
-            if (mailRequest.Attachments != null)
+            try
             {
-                byte[] fileBytes;
-                foreach (var file in mailRequest.Attachments)
+                using (MimeMessage emailMessage = new MimeMessage())
                 {
-                    if (file.Length > 0)
+                    MailboxAddress emailFrom = new MailboxAddress(_mailSettings.SenderName, _mailSettings.SenderEmail);
+                    MailboxAddress emailTo = new MailboxAddress(mailData.EmailToName, mailData.EmailToId);
+                    emailMessage.To.Add(emailTo);
+
+                    emailMessage.Subject = mailData.EmailSubject;
+
+                    BodyBuilder emailBodyBuilder = new BodyBuilder();
+                    emailBodyBuilder.TextBody = mailData.EmailBody;
+
+                    emailMessage.Body = emailBodyBuilder.ToMessageBody();
+                    // this is the SmtpClient from the Mailkit.Net.Smtp namespace, not the System.Net.Mail one
+
+                    using (SmtpClient mailClient = new SmtpClient())
                     {
-                        using (var ms = new MemoryStream())
-                        {
-                            file.CopyTo(ms);
-                            fileBytes = ms.ToArray();
-                        }
-                        builder.Attachments.Add(file.FileName, fileBytes, ContentType.Parse(file.ContentType));
+                        
+                        await mailClient.ConnectAsync(_mailSettings.Server, Convert.ToInt32(_mailSettings.Port), MailKit.Security.SecureSocketOptions.StartTls);
+                        await mailClient.AuthenticateAsync(_mailSettings.UserName, _mailSettings.Password);
+                        await mailClient.SendAsync(emailMessage);
+                        await mailClient.DisconnectAsync(true);
                     }
                 }
+                return true;
             }
-            builder.HtmlBody = mailRequest.Body;
-            email.Body = builder.ToMessageBody();
-            using var smtp = new SmtpClient();
-#pragma warning disable CS8629 // Nullable value type may be null.
-            smtp.Connect(_mailSettings.Host, (int)_mailSettings.Port, SecureSocketOptions.StartTls);
-#pragma warning restore CS8629 // Nullable value type may be null.
-            smtp.Authenticate(_mailSettings.Mail, _mailSettings.Password);
-            await smtp.SendAsync(email);
-            smtp.Disconnect(true);
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
+    }
+
+    public interface IMailService
+    {
+        Task<bool> SendMailAsync(MailData mailData);
     }
 }

@@ -239,6 +239,9 @@ form .ck-dropdown__button {
 form .ck-voice-label {
   display: none !important;
 }
+form .ck-placeholder {
+  width: 100vw !important;
+}
 
 footer {
   display: flex;

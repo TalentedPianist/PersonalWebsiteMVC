@@ -1,6 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Components.Forms
 @using Sitko.Blazor.CKEditor
 @using Sitko.Blazor.CKEditor.Bundle
+@using MailKit 
+@using PersonalWebsiteMVC.Services 
 @page "/Contact"
 
 
@@ -48,6 +50,7 @@
 </div>
 
 @code {
+
 
     private CKEditorConfig? config;
     private CKEditorConfig? configCustom;
