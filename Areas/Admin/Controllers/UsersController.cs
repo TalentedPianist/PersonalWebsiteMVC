@@ -35,19 +35,22 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           {
                if (ModelState.IsValid)
                {
-                    ApplicationUser appUser = new ApplicationUser
+                ApplicationUser appUser = new ApplicationUser
+                {
+                    UserName = user.Name,
+                    Email = user.Email,
+                };
+                IdentityResult result = await userManager.CreateAsync(appUser, user.Password!);
+
+                if (result.Succeeded)
+                    return RedirectToAction("Index");
+                else
+                {
+                    foreach (IdentityError error in result.Errors)
                     {
-                         UserName = user.Username,
-                         Email = user.Email
-                    };
-                    IdentityResult result = await userManager.CreateAsync(appUser, user.Password!);
-                    if (result.Succeeded)
-                         return RedirectToAction("Index");
-                    else
-                    {
-                         foreach (IdentityError error in result.Errors)
-                              ModelState.AddModelError("", error.Description);
+                        ModelState.AddModelError("", error.Description);
                     }
+                }
                }
                return View(user);
           }

@@ -20,9 +20,9 @@ using KITT.Web.ReCaptcha.Http.Internals;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Services;
-using PersonalWebsiteMVC.Areas.Identity.Data;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +35,10 @@ builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
 //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
 //.AddEntityFrameworkStores<ApplicationDbContext>();
-builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+    .AddEntityFrameworkStores<ApplicationDbContext>()
+    .AddDefaultTokenProviders()
+    .AddDefaultUI();
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider().AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
@@ -70,7 +72,7 @@ builder.Services.Configure<IdentityOptions>(options =>
 
     // Lockout settings.
     //options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
-    options.Lockout.MaxFailedAccessAttempts = 5;
+    //options.Lockout.MaxFailedAccessAttempts = 5;
     options.Lockout.AllowedForNewUsers = true;
 
     // User settings
@@ -80,19 +82,20 @@ builder.Services.Configure<IdentityOptions>(options =>
     // Sign in settings
     options.SignIn.RequireConfirmedEmail = false;
     options.SignIn.RequireConfirmedAccount = false; // Needed to get passed the "NotAllowed" error
-    
+    options.SignIn.RequireConfirmedPhoneNumber = false;
+
 });
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
     // Cookie settings
-    options.Cookie.Name = ".AspNetCore.Identity.Application";
+    //options.Cookie.Name = ".AspNetCore.Identity.Application";
     options.Cookie.HttpOnly = true;
     //options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
    
 
-    options.LoginPath = "/Account/Login";
-    options.LogoutPath = "/Account/Logout";
+    options.LoginPath = "/Identity/Account/Login";
+    options.LogoutPath = "/Identity/Account/Logout";
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.SlidingExpiration = true;
 });
@@ -147,7 +150,7 @@ app.UseStaticFiles();
 
 app.UseSession();
 
-//app.MapRazorPages();
+app.MapRazorPages();
 app.MapControllers();
 
 
@@ -171,6 +174,8 @@ app.MapAreaControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+
 
 
 app.MapPost("api/send", async (ReCaptchaService reCaptcha, [FromBody] ReCaptchaModel model) =>
