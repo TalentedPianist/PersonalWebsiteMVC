@@ -1,12 +1,5 @@
 ﻿
 
-
-
-function isDevice() {
-    return /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini|mobile/i.test(navigator.userAgent);
-}
-
-
 function DetectScroll() {
     $(window).on("scroll", function () {
         if ($(window).scrollTop() >= 530) {
@@ -43,13 +36,13 @@ function ShowIcon() {
 function LoadMore() {
     $(function () {
         // class .mud-paper seems to work here
-        $('.mud-paper').hide();
-        $('.mud-paper').slice(0, 3).show();
+        $('.BlogItem').hide();
+        $('.BlogItem').slice(0, 1).show();
         x = 3; 
         $('.loadMorePosts').on('click', function (e) {
             e.preventDefault();
             x = x + 1;
-            $('.mud-paper').slice(0, x).show(); // show x amount of images
+            $('.BlogItem').slice(0, x).show(); // show x amount of images
         });
     });
 }

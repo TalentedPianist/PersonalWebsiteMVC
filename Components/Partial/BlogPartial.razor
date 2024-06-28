@@ -1,7 +1,5 @@
 ﻿@using System.Text.RegularExpressions
-@inject ApplicationDbContext _db
-@inject NavigationManager nav
-@inject IJSRuntime JS 
+
 @layout BlogLayout
 
 
@@ -14,7 +12,7 @@ else
 {
     if (Id > 0)
     {
-        var uri = nav.ToAbsoluteUri(nav.Uri);
+        var uri = _nav.ToAbsoluteUri(_nav.Uri);
         if (uri.Fragment.Contains("Comments"))
         {
             <BlogComments PostID="Id" />
@@ -44,7 +42,7 @@ else
                         {
                             var result = Truncate(item.PostContent!, 200);
 
-                            <MudCard>
+                            <MudCard Class="BlogItem">
                                 <MudCardMedia Image=@($"/Uploads/{item.FeaturedImage}") Height="200" />
                                 <MudCardContent>
                                    <h2>@item.PostTitle</h2>
@@ -61,8 +59,9 @@ else
                         }
                     
                 }
-            
+            <button class="loadMorePosts">Load More</button>    
         </div>
+
     }
 }
 
@@ -80,14 +79,28 @@ else
 
 
 @code { 
-    [SupplyParameterFromQuery(Name="id")]
-    public int Id { get; set; } = new();
+        [SupplyParameterFromQuery(Name="id")]
+        public int Id { get; set; } = new();
     public string? Message { get; set; }
-
     [Inject]
-    public NavigationManager NavManager { get; set; } = default!;
+    public ApplicationDbContext _db { get; set; } = default!;
+    [Inject]
+    public NavigationManager _nav { get; set; } = default!;
+    [Inject]
+    public IJSRuntime JS { get; set; } = default!;
 
-  
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            await JS.InvokeVoidAsync("LoadMore");
+        }
+        catch (JSDisconnectedException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+
 
 #pragma warning disable
     public async Task ViewPost(int id)
@@ -96,7 +109,7 @@ else
         {
             {"id", id.ToString() },
         };
-        nav.NavigateTo(QueryHelpers.AddQueryString("#Blog", query));
+        _nav.NavigateTo(QueryHelpers.AddQueryString("#Blog", query));
         await JS.InvokeVoidAsync("location.reload");
     }
 
@@ -106,7 +119,7 @@ else
         {
             {"id", id.ToString() }
         };
-        nav.NavigateTo(QueryHelpers.AddQueryString("#Comments", query));
+        _nav.NavigateTo(QueryHelpers.AddQueryString("#Comments", query));
         await JS.InvokeVoidAsync("location.reload");
     }
 }

@@ -432,7 +432,9 @@ main article img {
   display: flex;
   flex-direction: column;
   flex: 0;
+  gap: 1em;
   height: 100%;
+  background-color: #9FF500;
   position: relative;
   align-items: center;
   padding-left: 1em;
