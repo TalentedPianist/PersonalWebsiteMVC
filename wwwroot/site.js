@@ -36,13 +36,13 @@ function ShowIcon() {
 function LoadMore() {
     $(function () {
         // class .mud-paper seems to work here
-        $('.BlogItem').hide();
-        $('.BlogItem').slice(0, 1).show();
-        x = 3; 
+        $('.mud-paper').hide();
+        $('.mud-paper').slice(0, 1).show();
+        x = 1; 
         $('.loadMorePosts').on('click', function (e) {
             e.preventDefault();
             x = x + 1;
-            $('.BlogItem').slice(0, x).show(); // show x amount of images
+            $('.mud-paper').slice(0, x).show(); // show x amount of images
         });
     });
 }

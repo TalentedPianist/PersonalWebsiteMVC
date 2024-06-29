@@ -185,7 +185,6 @@ form label {
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
-  width: 40vw;
 }
 form textarea {
   border: 1px solid black;
@@ -194,7 +193,6 @@ form div {
   display: flex;
   flex-direction: column;
   flex: 1;
-  width: 100%;
   padding-left: 0.5em;
   padding-right: 0.5em;
 }
@@ -330,7 +328,6 @@ main article img {
   flex: 1;
   position: relative;
   width: 100vw;
-  height: 100vh;
 }
 #Home h1 {
   text-align: center;
@@ -417,7 +414,6 @@ main article img {
   flex-direction: column;
   flex: 0;
   align-items: center;
-  background-color: #DEBB0B;
   height: 100%;
   padding-bottom: 2em;
 }
@@ -427,6 +423,37 @@ main article img {
   padding-top: 1em;
   font-size: large;
 }
+#About section {
+  background-color: #DEBB0B;
+}
+#About .wave-container > h1, #About i {
+  background-color: #ffa500;
+  width: 100vw;
+  height: 100%;
+  text-align: center;
+}
+#About .wave-container > svg {
+  display: block;
+  transform-origin: bottom;
+  animation: animateWave 1000ms cubiz-bezier(0.23, steps(1, start), 0.32, 1) forwards;
+  font-size: 0;
+}
+#About .wave-container > svg:before {
+  display: flex;
+  position: relative;
+  height: 100%;
+  content: "";
+  background-color: #ffa500;
+}
+#About:after {
+  position: absolute;
+  bottom: 0;
+  height: 250px;
+  width: 100vw;
+  content: ".";
+  background-color: #DEBB0B;
+  z-index: -1;
+}
 
 #Blog {
   display: flex;
@@ -434,15 +461,21 @@ main article img {
   flex: 0;
   gap: 1em;
   height: 100%;
-  background-color: #9FF500;
   position: relative;
   align-items: center;
-  padding-left: 1em;
-  padding-right: 1em;
 }
 #Blog h1, #Blog h2 {
   display: flex;
   margin: 0 auto;
+}
+#Blog section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+  background-color: #9ff500;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 #Blog .MudCard {
   border: 0;
@@ -491,6 +524,17 @@ main article img {
   border: 1px solid black;
   font-size: medium;
 }
+#Blog:before {
+  display: flex;
+  position: absolute;
+  top: -10em;
+  height: 200px;
+  width: 100vw;
+  content: ".";
+  background-color: #9ff500;
+  z-index: -1;
+}
+
 #SinglePost {
   display: flex;
   flex-direction: column;
@@ -537,22 +581,23 @@ main article img {
   padding-top: 1em;
   padding-bottom: 1em;
   font-size: medium;
-}
-#Contact input {
-  width: 30vw;
-}
-#Contact label {
-  width: 12em;
+  position: relative;
 }
 #Contact section {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
-  padding-left: 5em;
 }
-#Contact form div:last-child {
-  flex-direction: column;
+#Contact:before {
+  position: relative;
+  top: -10em;
+  background-color: #0BDE39;
+  width: 100vw;
+  padding-top: 5em;
+  padding-bottom: 5em;
+  content: ".";
+  z-index: -1;
 }
 @media only screen and (min-width: 600px) {
   #Contact {
