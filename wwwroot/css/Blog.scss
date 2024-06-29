@@ -191,6 +191,8 @@ form {
         display: flex !important;
         text-align: left;
         color: black;
+        margin-left: 1em;
+        margin-right: 1em;
 
         @media only screen and (min-width: 600px) {
             align-items: center;
@@ -207,23 +209,21 @@ form {
     input {
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
+        margin-left: 1em;
+        margin-right: 1em;
     }
 
     textarea {
         border: 1px solid black;
+        width: 90vw !important;
     }
 
     div {
         display: flex;
         flex-direction: column;
         flex: 1;
-        padding-left: 0.5em;
-        padding-right: 0.5em;
 
-        &:last-child {
-            padding: 0;
-            align-self: flex-start;
-        }
+
 
         @media only screen and (min-width: 600px) {
             align-items: flex-start;
@@ -252,24 +252,25 @@ form {
         }
     }
 
-    .ck-content {
-        max-height: 200px !important;
-        min-height: 200px !important;
-     
+    .ck .ck-editor__main {
+        width: 90vw;
+        min-height: 250px;
+        align-self: center;
     }
 
-    .ck-dropdown__button {
+
+    .ck-voice-label {
         display: none !important;
     }
 
-    .ck-voice-label { 
-        display: none !important;
-    }
-
-    .ck-placeholder { 
+    .ck-placeholder {
         width: 100vw !important;
     }
 }
+
+
+
+
 
 footer {
     display: flex;
@@ -395,11 +396,12 @@ main {
     .wave-container > section {
         display: flex;
         flex-direction: column;
-        flex: 0;
+        flex: 1;
         gap: 3em;
         background-color: #FF9810;
         align-items: center;
         width: 100vw;
+        height: 80vh;
 
         button {
             background-color: lightblue;
@@ -465,6 +467,7 @@ main {
     align-items: center;
     height: 100%;
     padding-bottom: 2em;
+    position: relative;
 
 
     p {
@@ -511,100 +514,111 @@ main {
         }
     }
 
-    #Blog {
+#Blog {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    gap: 1em;
+    height: 100%;
+    position: relative;
+    position: relative;
+    align-items: center;
+
+    h1, h2 {
+        display: flex;
+        margin: 0 auto;
+    }
+
+    section {
         display: flex;
         flex-direction: column;
-        flex: 0;
-        gap: 1em;
+        flex: 1;
         height: 100%;
-        
-        position: relative;
-        align-items: center;
+        background-color: #9ff500;
+        padding-left: 1em;
+        padding-right: 1em;
+    }
 
-        h1, h2 {
+    .MudCard {
+        border: 0;
+
+        h2 {
+            @media only screen and (min-width: 600px) {
+                margin-left: 1em;
+            }
+        }
+
+        button {
+            @media only screen and (min-width: 600px) {
+                margin-left: 1em;
+            }
+        }
+
+        p {
+            @media only screen and (min-width: 600px) {
+                font-size: medium;
+            }
+        }
+    }
+
+    .mud-card-content {
+        padding: 0 !important;
+    }
+
+    @media only screen and (min-width: 600px) {
+        background-color: transparent;
+    }
+
+    hr {
+        color: #d9d9d9;
+        display: flex;
+        width: 100vw;
+    }
+
+    nav {
+        ul {
             display: flex;
-            margin: 0 auto;
-        }
+            flex-direction: row;
+            flex: 0;
+            gap: 1em;
+            align-items: center;
 
-        section { 
-            display: flex; 
-            flex-direction: column;
-            flex: 1;
-            height: 100%;
-            background-color: #9ff500;
-            padding-left: 1em;
-            padding-right: 1em;
-        }
-
-        .MudCard {
-            border: 0;
-
-            h2 {
-                @media only screen and (min-width: 600px) {
-                    margin-left: 1em;
-                }
+            .sr-only {
+                display: none;
             }
 
-            button {
-                @media only screen and (min-width: 600px) {
-                    margin-left: 1em;
-                }
-            }
-
-            p {
-                @media only screen and (min-width: 600px) {
+            li {
+                &:nth-of-type(2) {
+                    background-color: white;
+                    padding: 5px 5px 5px 5px;
+                    border: 1px solid black;
                     font-size: medium;
                 }
             }
         }
-
-        .mud-card-content {
-            padding: 0 !important;
-        }
-
-        @media only screen and (min-width: 600px) {
-            background-color: transparent;
-        }
-
-        hr {
-            color: #d9d9d9;
-            display: flex;
-            width: 100vw;
-        }
-
-        nav {
-            ul {
-                display: flex;
-                flex-direction: row;
-                flex: 0;
-                gap: 1em;
-                align-items: center;
-
-                .sr-only {
-                    display: none;
-                }
-
-                li {
-                    &:nth-of-type(2) {
-                        background-color: white;
-                        padding: 5px 5px 5px 5px;
-                        border: 1px solid black;
-                        font-size: medium;
-                    }
-                }
-            }
-        }
-        &:before { 
-            display: flex; 
-            position: absolute; 
-            top: -10em; 
-            height: 200px;
-            width: 100vw; 
-            content: ".";
-            background-color: #9ff500;
-            z-index: -1;
-        }
     }
+
+    &:before {
+        display: flex;
+        position: absolute;
+        top: -10em;
+        height: 200px;
+        width: 100vw;
+        content: ".";
+        background-color: #9ff500;
+        z-index: -1;
+    }
+
+    &:after {
+        position: absolute;
+        bottom: 0;
+        background-color: #0BDE39;
+        width: 100vw;
+        height: 200px;
+        content: ".";
+        z-index: -1;
+    }
+}
 
 
     #SinglePost {
@@ -615,6 +629,7 @@ main {
         align-items: center;
         background-color: yellow;
         padding-bottom: 2em;
+        position: relative;
 
         button {
             display: flex;
@@ -640,6 +655,7 @@ main {
         height: 100%;
         background-color: yellow;
         padding-bottom: 2em;
+        position: relative;
 
         button {
             background-color: purple;
@@ -652,9 +668,6 @@ main {
     flex: 0;
     align-items: center;
     background-color: #0BDE39;
-    height: 100%;
-    padding-top: 1em;
-    padding-bottom: 1em;
     font-size: medium;
     position: relative;
 
@@ -665,16 +678,7 @@ main {
         align-items: center;
     }
 
-    &:before {
-        position: relative;
-        top: -10em;
-        background-color: #0BDE39;
-        width: 100vw;
-        padding-top: 5em;
-        padding-bottom: 5em;
-        content: ".";
-        z-index: -1;
-    }
+   
 
 
     @media only screen and (min-width: 600px) {
@@ -763,8 +767,6 @@ main {
         display: block !important;
     }
 
-    .ck .ck-editor__main {
-        width: 30vw !important;
-    }
+  
 
 

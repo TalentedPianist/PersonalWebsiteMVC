@@ -169,6 +169,8 @@ form label {
   display: flex !important;
   text-align: left;
   color: black;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 @media only screen and (min-width: 600px) {
   form label {
@@ -185,20 +187,17 @@ form label {
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
+  margin-left: 1em;
+  margin-right: 1em;
 }
 form textarea {
   border: 1px solid black;
+  width: 90vw !important;
 }
 form div {
   display: flex;
   flex-direction: column;
   flex: 1;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-}
-form div:last-child {
-  padding: 0;
-  align-self: flex-start;
 }
 @media only screen and (min-width: 600px) {
   form div {
@@ -227,12 +226,10 @@ form p {
     align-self: flex-start;
   }
 }
-form .ck-content {
-  max-height: 200px !important;
-  min-height: 200px !important;
-}
-form .ck-dropdown__button {
-  display: none !important;
+form .ck .ck-editor__main {
+  width: 90vw;
+  min-height: 250px;
+  align-self: center;
 }
 form .ck-voice-label {
   display: none !important;
@@ -349,11 +346,12 @@ main article img {
 #Home .wave-container > section {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   gap: 3em;
   background-color: #FF9810;
   align-items: center;
   width: 100vw;
+  height: 80vh;
 }
 #Home .wave-container > section button {
   background-color: lightblue;
@@ -416,6 +414,7 @@ main article img {
   align-items: center;
   height: 100%;
   padding-bottom: 2em;
+  position: relative;
 }
 #About p {
   padding-left: 1em;
@@ -461,6 +460,7 @@ main article img {
   flex: 0;
   gap: 1em;
   height: 100%;
+  position: relative;
   position: relative;
   align-items: center;
 }
@@ -534,6 +534,15 @@ main article img {
   background-color: #9ff500;
   z-index: -1;
 }
+#Blog:after {
+  position: absolute;
+  bottom: 0;
+  background-color: #0BDE39;
+  width: 100vw;
+  height: 200px;
+  content: ".";
+  z-index: -1;
+}
 
 #SinglePost {
   display: flex;
@@ -543,6 +552,7 @@ main article img {
   align-items: center;
   background-color: yellow;
   padding-bottom: 2em;
+  position: relative;
 }
 #SinglePost button {
   display: flex;
@@ -566,6 +576,7 @@ main article img {
   height: 100%;
   background-color: yellow;
   padding-bottom: 2em;
+  position: relative;
 }
 #Comments button {
   background-color: purple;
@@ -577,9 +588,6 @@ main article img {
   flex: 0;
   align-items: center;
   background-color: #0BDE39;
-  height: 100%;
-  padding-top: 1em;
-  padding-bottom: 1em;
   font-size: medium;
   position: relative;
 }
@@ -588,16 +596,6 @@ main article img {
   flex-direction: column;
   flex: 0;
   align-items: center;
-}
-#Contact:before {
-  position: relative;
-  top: -10em;
-  background-color: #0BDE39;
-  width: 100vw;
-  padding-top: 5em;
-  padding-bottom: 5em;
-  content: ".";
-  z-index: -1;
 }
 @media only screen and (min-width: 600px) {
   #Contact {
@@ -676,8 +674,4 @@ main article img {
 
 #recaptcha {
   display: block !important;
-}
-
-.ck .ck-editor__main {
-  width: 30vw !important;
 }
