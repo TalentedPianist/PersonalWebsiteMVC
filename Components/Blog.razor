@@ -5,7 +5,7 @@
 
 @if (GetQueryString() > 0)
 {
-    
+    <SinglePost PostId="GetQueryString()" />
 }
 else
 {
@@ -19,39 +19,45 @@ else
     {
         <div id="Blog">
             <h1>Blog</h1>
-            @foreach (var item in _data!.Results)
-            {
-                try
-                {
-                    var result = Truncate(item.PostContent!, 200);
+            <section>
+                <article>
+                    @foreach (var item in _data!.Results)
+                    {
+                        try
+                        {
+                            var result = Truncate(item.PostContent!, 200);
 
-                    <MudCard Class="MudCard">
-                        <MudCardMedia Image=@($"/Uploads/{item.FeaturedImage}") Height="200" />
-                        <MudCardContent>
-                            <h2>@item.PostTitle</h2>
-                            <p>@RemoveHTMLTags(result)</p>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary">Read More</MudButton>
-                        </MudCardActions>
-                    </MudCard>
-                }
-                catch (NullReferenceException ex)
-                {
-                    Console.WriteLine(ex.Message);
-                }
-            }
-            <hr>
-            <p>You are on page @_page of @_data.PageCount</p>
-            <BlazorPager CurrentPage="@_data.CurrentPage"
-                         PageCount="@_data.PageCount"
-                         VisiblePages="1"
-                         ShowFirstLast="false"
-                         ShowPageNumbers="true"
-                         OnPageChanged="(async e => { _page = e; await GetData(); })">
-            </BlazorPager>
+                            <MudCard Class="BlogItem">
+                                <MudCardMedia Image=@($"/Uploads/{item.FeaturedImage}") Height="200" />
+                                <MudCardContent>
+                                    <h2>@item.PostTitle</h2>
+                                    <p>@RemoveHTMLTags(result)</p>
+                                </MudCardContent>
+                                <MudCardActions>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Href=@($"/Blog?id={item.PostID}")>Read More</MudButton>
+                                </MudCardActions>
+                            </MudCard>
+                        }
+                        catch (NullReferenceException ex)
+                        {
+                            Console.WriteLine(ex.Message);
+                        }
+                    }
+                   
+                    <p>You are on page @_page of @_data.PageCount</p>
+                    <BlazorPager CurrentPage="@_data.CurrentPage"
+                                 PageCount="@_data.PageCount"
+                                 VisiblePages="3"
+                                 ShowFirstLast="false"
+                                 ShowPageNumbers="true"
+                                 OnPageChanged="(async e => { _page = e; await GetData(); })">
+                    </BlazorPager>
+                </article>
+            </section>
         </div>
+
     }
+
 }
 
 @functions {
@@ -67,6 +73,7 @@ else
             return 0;
         }
     }
+
 
     public static string Truncate(string value, int maxChars)
     {
@@ -99,7 +106,7 @@ else
 
     private async Task GetData()
     {
-        _data = _db.Posts.ToPagedResult<Posts>(_page, 1);
+        _data = _db.Posts.ToPagedResult<Posts>(_page, 3);
         StateHasChanged();
         await Task.CompletedTask;
 
@@ -107,6 +114,6 @@ else
 
     private void GetPost(int id)
     {
-      
+
     }
 }

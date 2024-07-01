@@ -11,15 +11,12 @@ body {
 }
 
 p {
-  padding-left: 1em;
-  padding-right: 1em;
   color: black;
 }
 
 h1 {
   font-size: 3em;
   color: black;
-  margin-left: 0.5em;
   position: relative;
 }
 @media only screen and (max-width: 400px) {
@@ -31,7 +28,6 @@ h1 {
 h2 {
   font-size: 2em;
   color: black;
-  margin-left: 0.5em;
   position: relative;
 }
 @media only screen and (max-width: 400px) {
@@ -43,7 +39,6 @@ h2 {
 h3 {
   font-size: 1.5em;
   color: black;
-  margin-left: 0.5em;
   position: relative;
 }
 
@@ -175,7 +170,7 @@ form label {
 @media only screen and (min-width: 600px) {
   form label {
     align-items: center;
-    width: 10em;
+    width: 12em;
     display: inline-block;
     align-items: center;
     height: 100%;
@@ -264,15 +259,11 @@ main {
   background-color: #CFADFF;
   display: flex !important;
   flex-direction: column;
-  flex: 0;
-  align-items: center;
-  padding-top: 2em;
-  padding-bottom: 2em;
-  text-align: center;
+  flex: 1;
   width: 100%;
 }
 main p {
-  margin-bottom: 1.5em;
+  margin-left: 0;
   font-size: medium;
   line-height: 1.5em;
 }
@@ -289,26 +280,19 @@ main:before {
 main section {
   display: flex;
   flex-direction: column;
-  flex: 0;
-  align-items: center;
+  flex: 1;
+  gap: 1em;
   justify-content: center;
   width: 100vw;
 }
 @media only screen and (min-width: 600px) {
   main section {
-    flex-direction: row !important;
+    padding-left: 1em;
+    gap: 1em;
   }
 }
 main article {
   width: 50%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-main article:last-child {
-  text-align: center;
-  align-items: center;
 }
 main article img {
   width: 50%;
@@ -461,9 +445,7 @@ main article img {
   display: flex;
   flex-direction: column;
   flex: 0;
-  gap: 1em;
   height: 100%;
-  position: relative;
   position: relative;
   align-items: center;
 }
@@ -474,32 +456,27 @@ main article img {
 #Blog section {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0;
+  justify-content: space-between;
   height: 100%;
   background-color: #9ff500;
   padding-left: 1em;
   padding-right: 1em;
 }
-#Blog .MudCard {
-  border: 0;
-}
 @media only screen and (min-width: 600px) {
-  #Blog .MudCard h2 {
-    margin-left: 1em;
+  #Blog section {
+    background-color: transparent;
   }
 }
-@media only screen and (min-width: 600px) {
-  #Blog .MudCard button {
-    margin-left: 1em;
-  }
+#Blog article {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  gap: 1em;
 }
-@media only screen and (min-width: 600px) {
-  #Blog .MudCard p {
-    font-size: medium;
-  }
-}
-#Blog .mud-card-content {
-  padding: 0 !important;
+#Blog article .BlogItem:last-child {
+  gap: 0;
 }
 @media only screen and (min-width: 600px) {
   #Blog {
@@ -571,6 +548,16 @@ main article img {
   width: 100%;
   display: flex;
 }
+#SinglePost p {
+  text-align: left;
+}
+@media only screen and (min-width: 600px) {
+  #SinglePost {
+    background-color: transparent;
+    align-items: flex-start;
+    gap: 0;
+  }
+}
 
 #Comments {
   display: flex;
@@ -579,10 +566,18 @@ main article img {
   height: 100%;
   background-color: yellow;
   padding-bottom: 2em;
+  padding-left: 1em;
   position: relative;
 }
 #Comments button {
   background-color: purple;
+}
+@media only screen and (min-width: 600px) {
+  #Comments {
+    background-color: transparent;
+    align-items: flex-start;
+    width: 50%;
+  }
 }
 
 #Contact {

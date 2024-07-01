@@ -1,17 +1,21 @@
 ﻿
 <div id="SinglePost">
 
-    @Message
 
-    <button type="button" @onclick="GoBack">Back</button>
 
-    <h1>@Post!.PostTitle</h1>
+    <section>
+        <article>
 
-    @((MarkupString)Post.PostContent!)
+            <h1>@Post!.PostTitle</h1>
+
+            @((MarkupString)Post.PostContent!)
+        </article>
+    </section>
 
     <hr>
 
-    <CommentsPartial PostID="PostId" />
+    <BlogComments PostID="PostId" />
+
 </div>
 
 @code {
