@@ -221,12 +221,8 @@ form {
     div {
         display: flex;
         flex-direction: column;
-        flex: 1;
-
-
 
         @media only screen and (min-width: 600px) {
-            align-items: flex-start;
             flex-direction: row;
         }
     }
@@ -254,8 +250,12 @@ form {
 
     .ck .ck-editor__main {
         width: 90vw;
-        min-height: 250px;
+        height: 200px !important;
         align-self: center;
+
+        @media only screen and (min-width: 600px) { 
+            width: 30vw;
+        }
     }
 
 

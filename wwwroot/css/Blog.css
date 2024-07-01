@@ -197,11 +197,9 @@ form textarea {
 form div {
   display: flex;
   flex-direction: column;
-  flex: 1;
 }
 @media only screen and (min-width: 600px) {
   form div {
-    align-items: flex-start;
     flex-direction: row;
   }
 }
@@ -228,8 +226,13 @@ form p {
 }
 form .ck .ck-editor__main {
   width: 90vw;
-  min-height: 250px;
+  height: 200px !important;
   align-self: center;
+}
+@media only screen and (min-width: 600px) {
+  form .ck .ck-editor__main {
+    width: 30vw;
+  }
 }
 form .ck-voice-label {
   display: none !important;

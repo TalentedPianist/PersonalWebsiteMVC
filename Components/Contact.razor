@@ -16,7 +16,7 @@
 
             <p>I would love to hear from you.  Please fill out the form below and I will get back to you as soon as possible.</p>
 
-            <EditForm Model="Model" FormName="ContactForm" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+            <EditForm Model="Model" FormName="ContactForm" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit" hidden="@HideForm">
                 <DataAnnotationsValidator />
                 <ValidationSummary />
 
@@ -51,6 +51,8 @@
 </div>
 
 @code {
+    private bool HideForm { get; set; } = false;
+
     [Inject]
     private PersonalWebsiteMVC.Services.IMailService mailService { get; set; } = default!;
 
@@ -72,6 +74,7 @@
 
     public async Task HandleValidSubmit()
     {
+        HideForm = true;
         await mailService.SendMailAsync(Model.Name!, Model.Email!, "Contact Form", Model.Message!);
     }
 
