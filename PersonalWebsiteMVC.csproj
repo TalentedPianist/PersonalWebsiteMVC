@@ -9,11 +9,6 @@
 	  <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Content Remove="Components\Navbar.razor" />
-  </ItemGroup>
-
-
 
   <ItemGroup>
     <PackageReference Include="Blazor.Pagination" Version="2.0.2" />

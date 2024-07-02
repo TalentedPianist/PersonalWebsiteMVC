@@ -1,5 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @attribute [Microsoft.AspNetCore.Authorization.Authorize]
+@using PersonalWebsiteMVC.Components
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -49,6 +50,7 @@
                 </article>
             </section>
         </div>
+        <Navbar />
     </header>
 
 </MudHidden>

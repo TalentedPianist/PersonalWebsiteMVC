@@ -127,6 +127,26 @@ header nav ul {
   color: white;
   width: 100vw;
 }
+@media only screen and (min-width: 600px) {
+  header nav ul {
+    gap: 3em;
+  }
+}
+@media only screen and (min-width: 700px) {
+  header nav ul {
+    gap: 4em;
+  }
+}
+@media only screen and (min-width: 800px) {
+  header nav ul {
+    gap: 5em;
+  }
+}
+@media only screen and (mid-with: 900px) {
+  header nav ul {
+    gap: 6em;
+  }
+}
 header nav a {
   font-size: x-large;
   color: black;
