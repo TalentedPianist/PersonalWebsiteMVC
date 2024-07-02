@@ -315,12 +315,12 @@ main {
         flex-direction: column;
         flex: 1;
         gap: 1em;
-        justify-content: center;
         width: 100vw;
 
         @media only screen and (min-width: 600px) { 
             padding-left: 1em;
-            gap: 1em;
+         
+    
         }
     }
 
@@ -351,6 +351,8 @@ main {
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-items: center;
+    justify-content: center;
     position: relative;
     width: 100vw;
 
@@ -369,10 +371,19 @@ main {
         margin: 0 auto;
     }
 
+    section { 
+        @media only screen and (min-width: 600px) { 
+            flex-direction: row; 
+            align-items: center;
+        }
+    }
+
     article {
         display: flex;
         flex-direction: column;
         gap: 5em;
+
+        
     }
 
     .wave-container > section {
@@ -402,6 +413,8 @@ main {
 
         @media only screen and (min-width: 600px) {
             gap: 0 !important;
+            flex-direction: row; 
+            justify-content: center;
         }
 
         @media only screen and (min-width: 500px) {
@@ -418,8 +431,6 @@ main {
 
     .wave-container > svg {
         display: block;
-        transform-origin: bottom;
-        animation: animateWave 1000ms cubiz-bezier(0.23, steps(1, start), 0.32, 1) forwards;
         font-size: 0;
 
         &:before {
@@ -440,6 +451,12 @@ main {
         background-color: #DEBB0B;
         z-index: -1;
     }
+
+    @media only screen and (min-width: 600px) { 
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
 }
 
 #About {
@@ -512,8 +529,8 @@ main {
     section {
         display: flex;
         flex-direction: column;
-        flex: 0;
-        justify-content: space-between;
+        flex: 1; 
+        flex-wrap: wrap;
         height: 100%;
         background-color: #9ff500;
         padding-left: 1em;
@@ -529,15 +546,17 @@ main {
         width: 50%;
         display: flex; 
         flex-direction: column;
-        flex: 0; 
-        gap: 1em;
+        flex: 1; 
+        
+        
+    }
 
-        .BlogItem { 
-            &:last-child { 
-                gap: 0; 
+    .BlogItem { 
+        /* Blog item was nested wrongly here, this is why css selectors didn't work */
+        margin-bottom: 2em; 
 
-            }
-
+        &:last-of-type {
+            margin-bottom: 0;
         }
     }
 
@@ -602,8 +621,8 @@ main {
 #SinglePost {
     display: flex;
     flex-direction: column;
-    flex: 0;
-    gap: 0.5em;
+    flex: 1;
+    gap: 1em;
     align-items: center;
     background-color: yellow;
     padding-bottom: 2em;
@@ -644,17 +663,44 @@ main {
     height: 100%;
     background-color: yellow;
     padding-bottom: 2em;
-    padding-left: 1em;
     position: relative;
+    margin-top: 1em;
 
     button {
         background-color: purple;
     }
 
+    section {
+        display: flex; 
+        flex-direction: column;
+        flex: 0; 
+        align-items: flex-start;
+
+        article { 
+            &:first-child { 
+                display: flex; 
+                flex-direction: column;
+                align-items: center;
+
+                @media only screen and (min-width: 600px) { 
+                    flex-direction: row; 
+                }
+
+                img { 
+                    width: 100px; 
+                    height: 100px;
+                    margin-right: 2em;
+                }
+            }
+        }
+
+        
+    }
+
     @media only screen and (min-width: 600px) { 
         background-color: transparent;
         align-items: flex-start;
-        width: 50%;
+        width: 50vw;
     }
 }
 

@@ -5,7 +5,7 @@
 
 @if (GetQueryString() > 0)
 {
-    <SinglePost PostId="GetQueryString()" />
+    <SinglePost PostId="GetQueryString()" @ref="singlePost" />
 }
 else
 {
@@ -34,7 +34,7 @@ else
                                     <p>@RemoveHTMLTags(result)</p>
                                 </MudCardContent>
                                 <MudCardActions>
-                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" Href=@($"/Blog?id={item.PostID}")>Read More</MudButton>
+                                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => GetPost(item.PostID))">Read More</MudButton>
                                 </MudCardActions>
                             </MudCard>
                         }
@@ -74,6 +74,7 @@ else
         }
     }
 
+    
 
     public static string Truncate(string value, int maxChars)
     {
@@ -99,6 +100,8 @@ else
     [Inject]
     public NavigationManager _nav { get; set; } = default!;
 
+    public SinglePost? singlePost;
+
     protected override async Task OnInitializedAsync()
     {
         await GetData();
@@ -114,6 +117,11 @@ else
 
     private void GetPost(int id)
     {
-
+        var queryParams = new Dictionary<string, string>
+        {
+            ["id"] = id.ToString()
+        };
+        _nav.NavigateTo(QueryHelpers.AddQueryString("Blog", queryParams!), true);
+        StateHasChanged();
     }
 }

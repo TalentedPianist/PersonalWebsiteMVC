@@ -282,13 +282,11 @@ main section {
   flex-direction: column;
   flex: 1;
   gap: 1em;
-  justify-content: center;
   width: 100vw;
 }
 @media only screen and (min-width: 600px) {
   main section {
     padding-left: 1em;
-    gap: 1em;
   }
 }
 main article {
@@ -310,6 +308,8 @@ main article img {
   display: flex;
   flex-direction: column;
   flex: 1;
+  align-items: center;
+  justify-content: center;
   position: relative;
   width: 100vw;
 }
@@ -324,6 +324,12 @@ main article img {
   border-radius: 50%;
   display: flex;
   margin: 0 auto;
+}
+@media only screen and (min-width: 600px) {
+  #Home section {
+    flex-direction: row;
+    align-items: center;
+  }
 }
 #Home article {
   display: flex;
@@ -358,6 +364,8 @@ main article img {
 @media only screen and (min-width: 600px) {
   #Home .wave-container > section {
     gap: 0 !important;
+    flex-direction: row;
+    justify-content: center;
   }
 }
 @media only screen and (min-width: 500px) {
@@ -373,8 +381,6 @@ main article img {
 }
 #Home .wave-container > svg {
   display: block;
-  transform-origin: bottom;
-  animation: animateWave 1000ms cubiz-bezier(0.23, steps(1, start), 0.32, 1) forwards;
   font-size: 0;
 }
 #Home .wave-container > svg:before {
@@ -392,6 +398,12 @@ main article img {
   content: ".";
   background-color: #DEBB0B;
   z-index: -1;
+}
+@media only screen and (min-width: 600px) {
+  #Home {
+    padding-top: 1em;
+    padding-bottom: 1em;
+  }
 }
 
 #About {
@@ -456,8 +468,8 @@ main article img {
 #Blog section {
   display: flex;
   flex-direction: column;
-  flex: 0;
-  justify-content: space-between;
+  flex: 1;
+  flex-wrap: wrap;
   height: 100%;
   background-color: #9ff500;
   padding-left: 1em;
@@ -472,11 +484,14 @@ main article img {
   width: 50%;
   display: flex;
   flex-direction: column;
-  flex: 0;
-  gap: 1em;
+  flex: 1;
 }
-#Blog article .BlogItem:last-child {
-  gap: 0;
+#Blog .BlogItem {
+  /* Blog item was nested wrongly here, this is why css selectors didn't work */
+  margin-bottom: 2em;
+}
+#Blog .BlogItem:last-of-type {
+  margin-bottom: 0;
 }
 @media only screen and (min-width: 600px) {
   #Blog {
@@ -527,8 +542,8 @@ main article img {
 #SinglePost {
   display: flex;
   flex-direction: column;
-  flex: 0;
-  gap: 0.5em;
+  flex: 1;
+  gap: 1em;
   align-items: center;
   background-color: yellow;
   padding-bottom: 2em;
@@ -566,17 +581,38 @@ main article img {
   height: 100%;
   background-color: yellow;
   padding-bottom: 2em;
-  padding-left: 1em;
   position: relative;
+  margin-top: 1em;
 }
 #Comments button {
   background-color: purple;
+}
+#Comments section {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  align-items: flex-start;
+}
+#Comments section article:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+@media only screen and (min-width: 600px) {
+  #Comments section article:first-child {
+    flex-direction: row;
+  }
+}
+#Comments section article:first-child img {
+  width: 100px;
+  height: 100px;
+  margin-right: 2em;
 }
 @media only screen and (min-width: 600px) {
   #Comments {
     background-color: transparent;
     align-items: flex-start;
-    width: 50%;
+    width: 50vw;
   }
 }
 

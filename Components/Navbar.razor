@@ -1,0 +1,26 @@
+﻿
+<nav>
+    <ul>
+        <li><NavLink href="/" Match="NavLinkMatch.All" @onclick="(() => Navigate(Home))">Home</NavLink></li>
+        <li><NavLink href="/About" Match="NavLinkMatch.All" @onclick="(() => Navigate(About))">About</NavLink></li>
+        <li><NavLink href="/Blog" Match="NavLinkMatch.All" @onclick="(() => Navigate(Blog))">Blog</NavLink></li>
+        <li><NavLink href="/Photos" Match="NavLinkMatch.All" @onclick="(() => Navigate(Photos))">Photos</NavLink></li>
+        <li><NavLink href="/Contact" Match="NavLinkMatch.All" @onclick="(() => Navigate(Contact))">Contact</NavLink></li>
+    </ul>
+</nav>
+
+
+@code { 
+    public string Home { get; set; } = "/";
+    public string About { get; set; } = "/About";
+    public string Blog { get; set; } = "/Blog";
+    public string Photos { get; set; } = "/Photos";
+    public string Contact { get; set; } = "/Contact";
+
+    [Inject]
+    public NavigationManager _nav { get; set; } = default!; 
+
+    public void Navigate(string url) {
+        _nav.NavigateTo(url, true);
+    }
+}

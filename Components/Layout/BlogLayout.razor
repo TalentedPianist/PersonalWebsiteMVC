@@ -76,15 +76,7 @@
                 </article>
             </section>
         </div>
-        <nav>
-            <ul>
-                <li><NavLink Match="NavLinkMatch.All" href="/">Home</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/About">About</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/Blog">Blog</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/Photos">Photos</NavLink></li>
-                <li><NavLink Match="NavLinkMatch.All" href="/Contact">Contact</NavLink></li>
-            </ul>
-        </nav>
+        <Navbar />
     </header>
     <main>
         @Body
@@ -129,5 +121,9 @@
         var options = new DialogOptions { CloseOnEscapeKey = true };
         var dialog = Dialog.Show<MobileNav>("", options);
         var result = await dialog.Result;
+    }
+
+    public void Navigate(string url) {
+        _nav.NavigateTo(url, true);
     }
 }

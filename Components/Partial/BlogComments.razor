@@ -16,64 +16,68 @@
         }
         else
         {
+            <h2>Comments</h2>
+
+            if (AllComments.Count() == 1)
+            {
+                <p>One comment has been found for this post.</p>
+            }
+
             <section>
-                <article>
-                    @foreach (Comments comment in AllComments)
-                    {
-                    <MudText>
+                @foreach (Comments comment in AllComments)
+                {
+                    <article>
                         <img src="http://www.gravatar.com/avatar/?d=mp">
-                        Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd dd MMMM yyyy");
+                        <p>Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd dd MMMM yyyy");</p>
+                    </article>
+                    <article>
                         @((MarkupString)comment.CommentContent!)
-                    </MudText>
-                    }
-                </article>
+                    </article>
+
+                }
             </section>
         }
     }
 
-    <section>
-        <article>
-
-            <h3>Add A Comment</h3>
-
-            <p>Share your thoughts on this post using the form below.  Your email address is required but will not be shown.</p>
-
-            <EditForm Model="Model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
-                <DataAnnotationsValidator />
-                <ValidationSummary />
-
-                <div>
-                    <label>Your Name:</label>
-                    <InputText @bind-Value="Model!.CommentAuthor" placeholder="Joe Bloggs" />
-                </div>
-                <div>
-                    <label>Your Email Address:</label>
-                    <InputText @bind-Value="Model!.CommentAuthorEmail" placeholder="joe@joebloggs.com" />
-                </div>
-                <div>
-                    <label>Your Website Address:</label>
-                    <InputText @bind-Value="Model!.CommentAuthorUrl" placeholder="http://www.joebloggs.com" />
-                </div>
-                <div>
-                    <label>Your Comment:</label>
-                    <CKEditor @bind-Value="Model!.CommentContent" Config="configCustom" Class="ckEditor "></CKEditor>
-                </div>
-                <ReCaptcha SiteKey="6LdB-1kpAAAAAIrKiCJ69QwDCGODBhAgZe4x9ciz"
-                           @bind-Value="model.CaptchaResponse"
-                           Theme="Theme.Dark"
-                           Size="KITT.Web.ReCaptcha.Blazor.v2.Size.Normal"
-                           TabIndex="1" />
-
-                <button type="submit">Submit</button>
-            </EditForm>
-
-        </article>
-    </section>
-
 </div>
+
+<h3>Add A Comment</h3>
+
+<p>Share your thoughts on this post using the form below.  Your email address is required but will not be shown.</p>
+
+<EditForm Model="Model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit" hidden="@HideForm">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div>
+        <label>Your Name:</label>
+        <InputText @bind-Value="Model!.CommentAuthor" placeholder="Joe Bloggs" />
+    </div>
+    <div>
+        <label>Your Email Address:</label>
+        <InputText @bind-Value="Model!.CommentAuthorEmail" placeholder="joe@joebloggs.com" />
+    </div>
+    <div>
+        <label>Your Website Address:</label>
+        <InputText @bind-Value="Model!.CommentAuthorUrl" placeholder="http://www.joebloggs.com" />
+    </div>
+    <div>
+        <label>Your Comment:</label>
+        <CKEditor @bind-Value="Model!.CommentContent" Config="configCustom" Class="ckEditor "></CKEditor>
+    </div>
+    <ReCaptcha SiteKey="6LdB-1kpAAAAAIrKiCJ69QwDCGODBhAgZe4x9ciz"
+               @bind-Value="model.CaptchaResponse"
+               Theme="Theme.Dark"
+               Size="KITT.Web.ReCaptcha.Blazor.v2.Size.Normal"
+               TabIndex="1" />
+
+    <button type="submit">Submit</button>
+</EditForm>
+
 
 @code {
     public string? Message { get; set; } = string.Empty;
+    public bool HideForm { get; set; } = false;
 
     public void HandleHiddenChanged(ChangeEventArgs e)
     {
@@ -116,7 +120,8 @@
         {
             Items = []
         };
-
+        AllComments = _db.Comments.Where(c => c.PostID == PostID).ToList();
+        StateHasChanged();
     }
 
     // Begin code for Recaptcha
@@ -155,7 +160,7 @@
                 comment.CommentAuthorEmail = Model.CommentAuthorEmail;
                 comment.CommentAuthorUrl = Model.CommentAuthorUrl;
                 comment.CommentContent = Model.CommentContent;
-                comment.PostID = Model.PostID;
+                comment.PostID = Convert.ToInt32(PostID);
                 comment.CommentDate = DateTime.Now;
                 comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
                 _db.Comments.Add(comment);
@@ -163,7 +168,7 @@
 
                 // Set up query string for redirection back to this page
                 var query = new Dictionary<string, string>
-         {
+     {
                      {"id", PostID.ToString()! }
                  };
                 //_nav.NavigateTo(QueryHelpers.AddQueryString("#Comments", query!));
