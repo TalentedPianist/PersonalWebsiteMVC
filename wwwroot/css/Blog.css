@@ -345,6 +345,12 @@ main article img {
   display: flex;
   margin: 0 auto;
 }
+#Home section {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  height: 80vh;
+}
 @media only screen and (min-width: 600px) {
   #Home section {
     flex-direction: row;
@@ -364,7 +370,6 @@ main article img {
   background-color: #FF9810;
   align-items: center;
   width: 100vw;
-  height: 80vh;
 }
 #Home .wave-container > section button {
   background-color: lightblue;
@@ -377,7 +382,8 @@ main article img {
 }
 @media only screen and (min-width: 400px) {
   #Home .wave-container > section {
-    height: 100vh;
+    height: 70vh;
+    padding-bottom: 2em;
     gap: 2em;
   }
 }
@@ -413,7 +419,8 @@ main article img {
 #Home:after {
   position: absolute;
   bottom: 0;
-  height: 250px;
+  margin-bottom: 5em;
+  height: 100px;
   width: 100vw;
   content: ".";
   background-color: #DEBB0B;
@@ -434,6 +441,7 @@ main article img {
   height: 100%;
   padding-bottom: 2em;
   position: relative;
+  height: 100vh;
 }
 #About p {
   padding-left: 1em;
@@ -462,6 +470,14 @@ main article img {
   height: 100%;
   content: "";
   background-color: #ffa500;
+}
+#About:before {
+  position: absolute;
+  bottom: 0;
+  height: 300px;
+  width: 100vw;
+  content: ".";
+  background-color: #debb0b;
 }
 #About:after {
   position: absolute;
