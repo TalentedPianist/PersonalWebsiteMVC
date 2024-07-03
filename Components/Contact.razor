@@ -38,7 +38,7 @@
                 <div>
 
                     <label for="Your Message">Your Message:</label>
-                    <CKEditor @bind-Value="@Model.Message" Config="configCustom" Class="ckEditor"></CKEditor>
+                    <CKEditor @bind-Value="@Model.Message" Config="configCustom"></CKEditor>
                 </div>
 
 
@@ -72,7 +72,7 @@
         {
             Items = []
         };
-
+        
     }
 
     public async Task HandleValidSubmit()

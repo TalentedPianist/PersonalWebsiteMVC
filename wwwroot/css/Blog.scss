@@ -7,7 +7,7 @@
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: relative;
-    width: 100%;
+    width: 100vw;
 }
 
 
@@ -127,9 +127,6 @@ header {
         flex: 0;
         clear: both;
 
-        @media only screen and (min-width: 400px) { 
-            display: none;
-        }
 
         ul {
             display: flex;
@@ -144,24 +141,28 @@ header {
             color: white;
             width: 100vw;
 
-            @media only screen and (max-width: 400px) { 
+            @media only screen and (max-width: 600px) { 
                 display: none;
             }
 
             @media only screen and (min-width: 600px) { 
                 gap: 3em;
+                
             }
 
             @media only screen and (min-width: 700px) { 
                 gap: 4em;
+               
             }
 
             @media only screen and (min-width: 800px) { 
                 gap: 5em;
+              
             }
 
             @media only screen and (mid-with: 900px) { 
                 gap: 6em;
+               
             }
         }
 
@@ -205,6 +206,7 @@ form {
     flex: 0;
     gap: 2em;
     margin-top: 1em;
+    margin-bottom: 1em;
     width: 100vw;
 
     label {
@@ -270,12 +272,19 @@ form {
 
     .ck .ck-editor__main {
         width: 90vw;
+        min-height: 200px !important;
+        max-height: 200px !important;
         height: 200px !important;
         align-self: center;
 
         @media only screen and (min-width: 600px) {
             width: 30vw;
+            min-height: 200px !important;
         }
+    }
+
+    .ck .ck-content { 
+        height: 200px !important;
     }
 
 
@@ -286,6 +295,7 @@ form {
     .ck-placeholder {
         width: 100vw !important;
     }
+
 }
 
 
@@ -298,14 +308,37 @@ footer {
     flex: 0;
     align-items: center;
     clear: both;
-    padding-top: 1em;
-    padding-bottom: 1em;
     text-align: center;
     font-size: large;
-    background-color: #0FFAF0;
+
+    section {
+        background-color: #0ffaf0;
+        padding-top: 1em;
+        padding-bottom: 1em;
+    }
+
+    svg {
+        display: block;
+        position: relative;
+        bottom: -1px;
+        z-index: -1;
+    }
+
 
     @media only screen and (min-width: 600px) {
         background-color: #FFEC6E;
+    }
+
+
+    &:before {
+        display: flex;
+        position: absolute;
+        bottom: 0;
+        height: 500px;
+        width: 100vw;
+        content: "Howdy";
+        background-color: #0bde39;
+        z-index: -1;
     }
 }
 
@@ -379,6 +412,7 @@ main {
     justify-content: center;
     position: relative;
     width: 100vw;
+    height: 100vh;
 
     h1 {
         text-align: center;
@@ -399,18 +433,8 @@ main {
         display: flex;
         flex-direction: column;
         flex: 0;
-        height: 80vh;
 
-        &:after { 
-            display: flex; 
-            background-color: #debb0b;
-            position: absolute; 
-            bottom: 0; 
-            height: 100px;
-            content: ".";
-            width: 100vw;
-            z-index: -1;
-        }
+       
 
         @media only screen and (min-width: 600px) {
             flex-direction: row;
@@ -458,34 +482,15 @@ main {
         @media only screen and (min-width: 500px) {
             gap: 1em;
         }
-    }
 
-    .wave-container > h1, i {
-        background-color: #ffa500;
-        width: 100vw;
-        height: 100%;
-        text-align: center;
-    }
-
-    .wave-container > svg {
-        display: block;
-        font-size: 0;
-
-        &:before {
-            display: flex;
-            position: relative;
-            height: 100%;
-            content: "";
-            background-color: #debb0b;
-        }
-
-        &:after { 
-            display: flex; 
-            position: absolute; 
-            bottom: 0; 
-            height: 150px; 
-            content: ""; 
-            background-color: #debb0b;
+       &:before { 
+           display: flex; 
+           position: absolute; 
+           top: 0;
+           content: "";
+           background-color: #ff9810;
+           width: 100vw;
+           height: 100px;
         }
     }
 
@@ -494,12 +499,14 @@ main {
         padding-top: 1em;
         padding-bottom: 1em;
     }
+
+
 }
 
 #About {
     display: flex;
     flex-direction: column;
-    flex: 0;
+    flex: 1;
     align-items: center;
     height: 100%;
     padding-bottom: 2em;
@@ -515,6 +522,26 @@ main {
 
     section {
         background-color: #DEBB0B;
+        display: flex; 
+        flex-direction: column;
+        flex: 1;
+
+        &:before {
+            display: flex;
+            position: absolute;
+            top: 0;
+            height: 150px;
+            width: 100vw;
+            content: "Howdy";
+            background-color: #debb0b;
+            z-index: -1;
+            margin-bottom: 5em;
+        }
+    }
+
+    h1 { 
+        display: flex; 
+        margin: 0 auto;
     }
 
     .wave-container > h1, i {
@@ -526,19 +553,37 @@ main {
 
     .wave-container > svg {
         display: block;
-        transform-origin: bottom;
-        animation: animateWave 1000ms cubiz-bezier(0.23, steps(1, start), 0.32, 1) forwards;
-        font-size: 0;
+    }
 
-        &:before {
-            display: flex;
-            position: relative;
-            height: 100%;
-            content: "";
-            background-color: #ffa500;
+    .wave-container > section { 
+        &:after { 
+            display: flex; 
+            position: absolute; 
+            bottom: 0;
+            height: 150px;
+            width: 100vw;
+            content: "Howdy";
+            z-index: -1; 
+            background-color: #9ff500;
         }
     }
 
+    &:before { 
+        display: flex; 
+        position: absolute; 
+        top: -11em;
+        background-color: #debb0b;
+        height: 160px;
+        width: 100vw;
+        content: "";
+        z-index: -1;
+    }
+
+    button { 
+        display: flex; 
+        align-self: center;
+        margin-top: 1em;
+    }
 }
 
 #Blog {
@@ -557,33 +602,41 @@ main {
     section {
         display: flex;
         flex-direction: column;
-        flex: 1; 
+        flex: 1;
         flex-wrap: wrap;
         height: 100%;
         background-color: #9ff500;
-        padding-left: 1em;
-        padding-right: 1em;
 
-       
+
 
         @media only screen and (min-width: 600px) {
             background-color: transparent;
+        }
 
+        &:after {
+            display: flex;
+            position: absolute;
+            bottom: 0;
+            height: 100px;
+            width: 100vw;
+            z-index: -1;
+            content: "";
+            background-color: #0bde39;
         }
     }
 
     article {
         width: 50%;
-        display: flex; 
+        display: flex;
         flex-direction: column;
-        flex: 1; 
-        
-        
+        flex: 1;
     }
 
-    .BlogItem { 
+    .BlogItem {
         /* Blog item was nested wrongly here, this is why css selectors didn't work */
-        margin-bottom: 2em; 
+        margin-bottom: 2em;
+        margin-left: 1em;
+        margin-right: 1em;
 
         &:last-of-type {
             margin-bottom: 0;
@@ -625,18 +678,17 @@ main {
         }
     }
 
-    &:before {
-        display: flex;
-        position: absolute;
-        top: 0;
-        height: 200px;
-        width: 100vw;
-        content: ".";
-        background-color: #9ff500;
-        z-index: -1;
+    .wave-container {
     }
 
-  
+    .loadMorePosts { 
+        background-color: pink; 
+        padding: 5px 5px 5px 5px; 
+        border: 1px solid black;
+        display: flex; 
+        align-self: center;
+        font-size: medium;
+    }
 }
 
 
@@ -742,6 +794,10 @@ main {
         align-items: center;
     }
 
+    p { 
+        padding-left: 1em;
+        padding-right: 1em;
+    }
 
 
 
@@ -757,6 +813,7 @@ main {
             }
         }
     }
+
 }
 
 .overlay {
