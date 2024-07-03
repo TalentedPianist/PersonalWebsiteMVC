@@ -127,6 +127,10 @@ header {
         flex: 0;
         clear: both;
 
+        @media only screen and (min-width: 400px) { 
+            display: none;
+        }
+
         ul {
             display: flex;
             flex-direction: row;
@@ -139,6 +143,10 @@ header {
             background-color: #C876CC;
             color: white;
             width: 100vw;
+
+            @media only screen and (max-width: 400px) { 
+                display: none;
+            }
 
             @media only screen and (min-width: 600px) { 
                 gap: 3em;
@@ -387,14 +395,25 @@ main {
         margin: 0 auto;
     }
 
-    section { 
-        display: flex; 
+    section {
+        display: flex;
         flex-direction: column;
-        flex: 0; 
+        flex: 0;
         height: 80vh;
 
-        @media only screen and (min-width: 600px) { 
-            flex-direction: row; 
+        &:after { 
+            display: flex; 
+            background-color: #debb0b;
+            position: absolute; 
+            bottom: 0; 
+            height: 100px;
+            content: ".";
+            width: 100vw;
+            z-index: -1;
+        }
+
+        @media only screen and (min-width: 600px) {
+            flex-direction: row;
             align-items: center;
         }
     }
@@ -403,8 +422,6 @@ main {
         display: flex;
         flex-direction: column;
         gap: 5em;
-
-        
     }
 
     .wave-container > section {
@@ -434,7 +451,7 @@ main {
 
         @media only screen and (min-width: 600px) {
             gap: 0 !important;
-            flex-direction: row; 
+            flex-direction: row;
             justify-content: center;
         }
 
@@ -459,26 +476,24 @@ main {
             position: relative;
             height: 100%;
             content: "";
-            background-color: #ffa500;
+            background-color: #debb0b;
+        }
+
+        &:after { 
+            display: flex; 
+            position: absolute; 
+            bottom: 0; 
+            height: 150px; 
+            content: ""; 
+            background-color: #debb0b;
         }
     }
 
-    &:after {
-        position: absolute;
-        bottom: 0;
-        margin-bottom: 5em;
-        height: 100px;
-        width: 100vw;
-        content: ".";
-        background-color: #DEBB0B;
-        z-index: -1;
-    }
 
-    @media only screen and (min-width: 600px) { 
+    @media only screen and (min-width: 600px) {
         padding-top: 1em;
         padding-bottom: 1em;
     }
-
 }
 
 #About {
@@ -524,25 +539,6 @@ main {
         }
     }
 
-    &:before { 
-        position: absolute; 
-        bottom: 0; 
-        height: 300px;
-        width: 100vw;
-        content: ".";
-        background-color: #debb0b;
-    }
-
-    &:after {
-        position: absolute;
-        bottom: 0;
-        height: 250px;
-        width: 100vw;
-        content: ".";
-        background-color: #DEBB0B;
-        z-index: -1;
-
-    }
 }
 
 #Blog {
@@ -567,6 +563,8 @@ main {
         background-color: #9ff500;
         padding-left: 1em;
         padding-right: 1em;
+
+       
 
         @media only screen and (min-width: 600px) {
             background-color: transparent;
@@ -630,7 +628,7 @@ main {
     &:before {
         display: flex;
         position: absolute;
-        top: -10em;
+        top: 0;
         height: 200px;
         width: 100vw;
         content: ".";
@@ -638,15 +636,7 @@ main {
         z-index: -1;
     }
 
-    &:after {
-        position: absolute;
-        bottom: 0;
-        background-color: #0BDE39;
-        width: 100vw;
-        height: 200px;
-        content: ".";
-        z-index: -1;
-    }
+  
 }
 
 

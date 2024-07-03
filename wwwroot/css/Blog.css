@@ -114,6 +114,11 @@ header nav {
   flex: 0;
   clear: both;
 }
+@media only screen and (min-width: 400px) {
+  header nav {
+    display: none;
+  }
+}
 header nav ul {
   display: flex;
   flex-direction: row;
@@ -126,6 +131,11 @@ header nav ul {
   background-color: #C876CC;
   color: white;
   width: 100vw;
+}
+@media only screen and (max-width: 400px) {
+  header nav ul {
+    display: none;
+  }
 }
 @media only screen and (min-width: 600px) {
   header nav ul {
@@ -351,6 +361,16 @@ main article img {
   flex: 0;
   height: 80vh;
 }
+#Home section:after {
+  display: flex;
+  background-color: #debb0b;
+  position: absolute;
+  bottom: 0;
+  height: 100px;
+  content: ".";
+  width: 100vw;
+  z-index: -1;
+}
 @media only screen and (min-width: 600px) {
   #Home section {
     flex-direction: row;
@@ -414,17 +434,15 @@ main article img {
   position: relative;
   height: 100%;
   content: "";
-  background-color: #ffa500;
+  background-color: #debb0b;
 }
-#Home:after {
+#Home .wave-container > svg:after {
+  display: flex;
   position: absolute;
   bottom: 0;
-  margin-bottom: 5em;
-  height: 100px;
-  width: 100vw;
-  content: ".";
-  background-color: #DEBB0B;
-  z-index: -1;
+  height: 150px;
+  content: "";
+  background-color: #debb0b;
 }
 @media only screen and (min-width: 600px) {
   #Home {
@@ -470,23 +488,6 @@ main article img {
   height: 100%;
   content: "";
   background-color: #ffa500;
-}
-#About:before {
-  position: absolute;
-  bottom: 0;
-  height: 300px;
-  width: 100vw;
-  content: ".";
-  background-color: #debb0b;
-}
-#About:after {
-  position: absolute;
-  bottom: 0;
-  height: 250px;
-  width: 100vw;
-  content: ".";
-  background-color: #DEBB0B;
-  z-index: -1;
 }
 
 #Blog {
@@ -558,20 +559,11 @@ main article img {
 #Blog:before {
   display: flex;
   position: absolute;
-  top: -10em;
+  top: 0;
   height: 200px;
   width: 100vw;
   content: ".";
   background-color: #9ff500;
-  z-index: -1;
-}
-#Blog:after {
-  position: absolute;
-  bottom: 0;
-  background-color: #0BDE39;
-  width: 100vw;
-  height: 200px;
-  content: ".";
   z-index: -1;
 }
 
