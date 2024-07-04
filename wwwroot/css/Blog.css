@@ -195,14 +195,11 @@ form label {
 }
 @media only screen and (min-width: 600px) {
   form label {
-    align-items: center;
     width: 12em;
-    display: inline-block;
-    align-items: center;
-    height: 100%;
-    float: left;
     padding-top: 5px;
     color: black;
+    margin-left: 0;
+    margin-right: 0;
   }
 }
 form input {
@@ -327,29 +324,9 @@ main:before {
   z-index: -1 !important;
   width: 100vw;
 }
-main section {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 1em;
-  width: 100vw;
-}
 @media only screen and (min-width: 600px) {
-  main section {
+  main {
     padding-left: 1em;
-  }
-}
-main article {
-  width: 50%;
-}
-main article img {
-  width: 50%;
-  text-align: center;
-  border-radius: 50%;
-}
-@media only screen and (min-width: 600px) {
-  main article {
-    text-align: left;
   }
 }
 
@@ -624,10 +601,17 @@ main article img {
 #SinglePost img {
   height: 200px;
   width: 100%;
-  display: flex;
 }
 #SinglePost p {
   text-align: left;
+}
+#SinglePost section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#SinglePost article {
+  width: 50%;
 }
 @media only screen and (min-width: 600px) {
   #SinglePost {
@@ -640,36 +624,62 @@ main article img {
 #Comments {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
   height: 100%;
+  width: 50%;
   background-color: yellow;
   padding-bottom: 2em;
   position: relative;
   margin-top: 1em;
 }
-#Comments button {
-  background-color: purple;
-}
 #Comments section {
   display: flex;
   flex-direction: column;
-  flex: 0;
-  align-items: flex-start;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 2em;
 }
-#Comments section article:first-child {
+#Comments section div {
+  /* Floated items need to be wrapped in a div with align-items: center */
+}
+#Comments section div:first-child {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
   align-items: center;
 }
-@media only screen and (min-width: 600px) {
-  #Comments section article:first-child {
-    flex-direction: row;
-  }
+#Comments section nav ul {
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  gap: 1em;
+  align-items: center;
 }
-#Comments section article:first-child img {
+#Comments section nav ul .sr-only {
+  display: none;
+}
+#Comments section nav ul li:nth-of-type(2) {
+  background-color: white;
+  padding: 5px 5px 5px 5px;
+  border: 1px solid black;
+  font-size: medium;
+}
+#Comments button {
+  background-color: purple;
+}
+#Comments img {
   width: 100px;
   height: 100px;
   margin-right: 2em;
+}
+#Comments div {
+  clear: both;
+}
+#Comments h3 {
+  margin-top: 1em;
 }
 @media only screen and (min-width: 600px) {
   #Comments {

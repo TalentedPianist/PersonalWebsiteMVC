@@ -23,8 +23,6 @@ h1 {
     @media only screen and (max-width: 400px) {
         font-size: 2em;
     }
-
-   
 }
 
 h2 {
@@ -141,28 +139,24 @@ header {
             color: white;
             width: 100vw;
 
-            @media only screen and (max-width: 600px) { 
+            @media only screen and (max-width: 600px) {
                 display: none;
             }
 
-            @media only screen and (min-width: 600px) { 
+            @media only screen and (min-width: 600px) {
                 gap: 3em;
-                
             }
 
-            @media only screen and (min-width: 700px) { 
+            @media only screen and (min-width: 700px) {
                 gap: 4em;
-               
             }
 
-            @media only screen and (min-width: 800px) { 
+            @media only screen and (min-width: 800px) {
                 gap: 5em;
-              
             }
 
-            @media only screen and (mid-with: 900px) { 
+            @media only screen and (mid-with: 900px) {
                 gap: 6em;
-               
             }
         }
 
@@ -217,14 +211,11 @@ form {
         margin-right: 1em;
 
         @media only screen and (min-width: 600px) {
-            align-items: center;
             width: 12em;
-            display: inline-block;
-            align-items: center;
-            height: 100%;
-            float: left;
             padding-top: 5px;
             color: black;
+            margin-left: 0;
+            margin-right: 0;
         }
     }
 
@@ -283,7 +274,7 @@ form {
         }
     }
 
-    .ck .ck-content { 
+    .ck .ck-content {
         height: 200px !important;
     }
 
@@ -295,7 +286,6 @@ form {
     .ck-placeholder {
         width: 100vw !important;
     }
-
 }
 
 
@@ -367,37 +357,9 @@ main {
         width: 100vw;
     }
 
-    section {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 1em;
-        width: 100vw;
 
-        @media only screen and (min-width: 600px) { 
-            padding-left: 1em;
-         
-    
-        }
-    }
-
-    article {
-        width: 50%;
-        
-
-        img {
-            width: 50%;
-            text-align: center;
-            border-radius: 50%;
-        }
-
-        @media only screen and (min-width: 600px) {
-            text-align: left;
-            
-          
-        }
-
-      
+    @media only screen and (min-width: 600px) {
+        padding-left: 1em;
     }
 }
 
@@ -434,7 +396,7 @@ main {
         flex-direction: column;
         flex: 0;
 
-       
+
 
         @media only screen and (min-width: 600px) {
             flex-direction: row;
@@ -483,14 +445,14 @@ main {
             gap: 1em;
         }
 
-       &:before { 
-           display: flex; 
-           position: absolute; 
-           top: 0;
-           content: "";
-           background-color: #ff9810;
-           width: 100vw;
-           height: 100px;
+        &:before {
+            display: flex;
+            position: absolute;
+            top: 0;
+            content: "";
+            background-color: #ff9810;
+            width: 100vw;
+            height: 100px;
         }
     }
 
@@ -499,8 +461,6 @@ main {
         padding-top: 1em;
         padding-bottom: 1em;
     }
-
-
 }
 
 #About {
@@ -522,7 +482,7 @@ main {
 
     section {
         background-color: #DEBB0B;
-        display: flex; 
+        display: flex;
         flex-direction: column;
         flex: 1;
 
@@ -539,8 +499,8 @@ main {
         }
     }
 
-    h1 { 
-        display: flex; 
+    h1 {
+        display: flex;
         margin: 0 auto;
     }
 
@@ -555,22 +515,22 @@ main {
         display: block;
     }
 
-    .wave-container > section { 
-        &:after { 
-            display: flex; 
-            position: absolute; 
+    .wave-container > section {
+        &:after {
+            display: flex;
+            position: absolute;
             bottom: 0;
             height: 150px;
             width: 100vw;
             content: "Howdy";
-            z-index: -1; 
+            z-index: -1;
             background-color: #9ff500;
         }
     }
 
-    &:before { 
-        display: flex; 
-        position: absolute; 
+    &:before {
+        display: flex;
+        position: absolute;
         top: -11em;
         background-color: #debb0b;
         height: 160px;
@@ -579,8 +539,8 @@ main {
         z-index: -1;
     }
 
-    button { 
-        display: flex; 
+    button {
+        display: flex;
         align-self: center;
         margin-top: 1em;
     }
@@ -681,11 +641,11 @@ main {
     .wave-container {
     }
 
-    .loadMorePosts { 
-        background-color: pink; 
-        padding: 5px 5px 5px 5px; 
+    .loadMorePosts {
+        background-color: pink;
+        padding: 5px 5px 5px 5px;
         border: 1px solid black;
-        display: flex; 
+        display: flex;
         align-self: center;
         font-size: medium;
     }
@@ -715,13 +675,21 @@ main {
     img {
         height: 200px;
         width: 100%;
-        display: flex;
     }
 
     p {
         text-align: left;
     }
 
+    section {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    article {
+        width: 50%;
+    }
 
     @media only screen and (min-width: 600px) {
         background-color: transparent;
@@ -733,45 +701,79 @@ main {
 #Comments {
     display: flex;
     flex-direction: column;
-    flex: 0;
+    flex: 1;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
     height: 100%;
+    width: 50%;
     background-color: yellow;
     padding-bottom: 2em;
     position: relative;
     margin-top: 1em;
 
+    section {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        flex-wrap: wrap;
+        gap: 2em;
+
+        div {
+            /* Floated items need to be wrapped in a div with align-items: center */
+
+            &:first-child {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                align-items: center;
+            }
+        }
+
+        nav {
+            ul {
+                display: flex;
+                flex-direction: row;
+                flex: 0;
+                gap: 1em;
+                align-items: center;
+
+                .sr-only {
+                    display: none;
+                }
+
+                li {
+                    &:nth-of-type(2) {
+                        background-color: white;
+                        padding: 5px 5px 5px 5px;
+                        border: 1px solid black;
+                        font-size: medium;
+                    }
+                }
+            }
+        }
+    }
+
     button {
         background-color: purple;
     }
 
-    section {
-        display: flex; 
-        flex-direction: column;
-        flex: 0; 
-        align-items: flex-start;
 
-        article { 
-            &:first-child { 
-                display: flex; 
-                flex-direction: column;
-                align-items: center;
-
-                @media only screen and (min-width: 600px) { 
-                    flex-direction: row; 
-                }
-
-                img { 
-                    width: 100px; 
-                    height: 100px;
-                    margin-right: 2em;
-                }
-            }
-        }
-
-        
+    img {
+        width: 100px;
+        height: 100px;
+        margin-right: 2em;
     }
 
-    @media only screen and (min-width: 600px) { 
+    div {
+        clear: both;
+    }
+
+    h3 {
+        margin-top: 1em;
+    }
+
+    @media only screen and (min-width: 600px) {
         background-color: transparent;
         align-items: flex-start;
         width: 50vw;
@@ -794,7 +796,7 @@ main {
         align-items: center;
     }
 
-    p { 
+    p {
         padding-left: 1em;
         padding-right: 1em;
     }
@@ -813,7 +815,6 @@ main {
             }
         }
     }
-
 }
 
 .overlay {

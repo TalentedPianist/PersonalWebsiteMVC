@@ -1,7 +1,7 @@
 ﻿@using Sitko.Blazor.CKEditor
 @using Sitko.Blazor.CKEditor.Bundle
 @using KITT.Web.ReCaptcha.Blazor.v2
-
+@using BlazorPagination 
 
 @Message
 
@@ -24,21 +24,29 @@
             }
 
             <section>
-                @foreach (Comments comment in AllComments)
+                @foreach (Comments comment in _data!.Results)
                 {
-                    <article>
+                   <div>
                         <img src="http://www.gravatar.com/avatar/?d=mp">
-                        <p>Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd dd MMMM yyyy");</p>
-                    </article>
-                    <article>
+                        Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd dd MMMM yyyy")
+                    </div>
+                    <div>   
                         @((MarkupString)comment.CommentContent!)
-                    </article>
+                      </div>
+                  
 
                 }
+                <p>You are on page @_page of @_data.PageCount</p>
+                <BlazorPager CurrentPage="@_data.CurrentPage"
+                    PageCount="@_data.PageCount"
+                    VisiblePages="1"
+                    ShowFirstLast="false"
+                    ShowPageNumbers="true"
+                    OnPageChanged="(async e => { _page = e; await GetData(); })">
+                </BlazorPager>
             </section>
         }
     }
-
 </div>
 
 <h3>Add A Comment</h3>
@@ -73,6 +81,7 @@
 
     <button type="submit">Submit</button>
 </EditForm>
+
 
 
 @code {
@@ -120,8 +129,6 @@
         {
             Items = []
         };
-        AllComments = _db.Comments.Where(c => c.PostID == PostID).ToList();
-        StateHasChanged();
     }
 
     // Begin code for Recaptcha
@@ -172,7 +179,7 @@
                      {"id", PostID.ToString()! }
                  };
                 //_nav.NavigateTo(QueryHelpers.AddQueryString("#Comments", query!));
-                _nav.NavigateTo(QueryHelpers.AddQueryString("Blog", query!));
+                _nav.NavigateTo(QueryHelpers.AddQueryString("Blog", query!), true);
             }
             else
             {
@@ -205,6 +212,20 @@
         }
     }
 
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
 
+    private PagedResult<Comments>? _data; // Variable for BlazorPager
+    private int _page = 1; // Variable for BlazorPager - sets the start page
+    private string _sort = "Date"; // Variable for BlazorPager
+    private string _direction = "desc"; // Variable for BlazorPager
 
+    private async Task GetData()
+    {
+        _data = _db.Comments.Where(c => c.PostID == PostID).ToPagedResult<Comments>(_page, 1);
+        StateHasChanged();
+        await Task.CompletedTask;
+    }
 }
