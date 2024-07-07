@@ -16,8 +16,4 @@ namespace PersonalWebsiteMVC.Models
         
     }
 
-    public class PhotosTest
-    {
-        public string? Name { get; set; }
-    }
 }
