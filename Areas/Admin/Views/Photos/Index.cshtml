@@ -100,9 +100,7 @@
     <script>
 
         $(function () {
-            let addLink = `<a href="#" id="AddImg">Add to Database</a>`;
-            let delLink = `<a href="#" id="DelImg">Delete from Database</a>`;
-
+           
 
             function DelFromDb(name) {
                 $.ajax({
@@ -232,7 +230,7 @@
 
                 });
 
-
+                
             });
 
             var add = [];
@@ -241,6 +239,17 @@
             // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.  
             let cb = document.querySelectorAll("input[name='image']");
             cb.forEach(function (item, index) {
+                let src = item.getAttribute("src");
+
+                $("#test").on('click', function () {
+                    $("#ex1").html(`
+                        <img src="${src}">
+                        ${item.getAttribute("id")
+}
+                    `);
+                });
+
+
                 let confirm = item.closest("figcaption").querySelector("p").innerText;
                 item.addEventListener('click', function () {
                     console.log(PicId(item.getAttribute("value")));

@@ -1,10 +1,13 @@
 ﻿
+var elementExists = document.getElementById("#ckeditor1");
 
-ClassicEditor
-    .create(document.querySelector('#ckeditor1'))
-    .then(editor => {
-        console.log(editor);
-    })
-    .catch(error => {
-        console.error(error);
-    });
+if (elementExists) {
+    ClassicEditor
+        .create(document.querySelector('#ckeditor1'))
+        .then(editor => {
+            console.log(editor);
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
