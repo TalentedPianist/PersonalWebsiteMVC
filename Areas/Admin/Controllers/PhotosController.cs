@@ -8,6 +8,7 @@ using PersonalWebsiteMVC.Models;
 using System.Text;
 using System.Text.Json;
 using System.Web;
+using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -48,8 +49,29 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             }
 
             ViewBag.Message = sb.ToString();
-            ViewBag.Files = di.GetFiles();
+            ViewBag.Files = GetFiles(1);
             return View();
+        }
+
+        private IPagedList<FileInfo> GetFiles(int? page)
+        {
+            if (page.HasValue && page < 1)
+            {
+                return null!;
+            }
+
+            // set directory location
+            DirectoryInfo di = new DirectoryInfo(ViewBag.Path);
+            var listUnpaged = di.GetFiles();
+            // page the list
+            var listPaged = listUnpaged.ToPagedList(page ?? 1, 1);
+
+            // return a 404 if user browses to pages beyond last page.  Special case first page if no items exist
+            if (listPaged.PageNumber != 1 && page.HasValue && page > listPaged.PageCount)
+            {
+                return null!;
+            }
+            return listPaged;
         }
 
         [HttpPost]

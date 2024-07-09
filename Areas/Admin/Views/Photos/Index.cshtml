@@ -1,70 +1,81 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model IEnumerable<Photos>
 @using Microsoft.AspNetCore.Hosting
 @inject IWebHostEnvironment env
 @inject ApplicationDbContext _db
+@using X.PagedList.Mvc.Core
+@using X.PagedList
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
 @Html.Raw(TempData["Message"])
 
 @{
-    try
-    {
-        var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
-        var files = Directory.GetFiles(path);
-        int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
-        if (count == 0)
-        {
-            <p>No files exist for this album.  Add files?</p>
-            <form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
-                <div class="form-group">
-                    <label for="Files">Add Files</label>
-                    <input type="file" name="AddFiles" class="form-control-sm" multiple>
-                </div>
-                <input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
-                <button type="submit" class="btn btn-primary">Add</button>
-            </form>
-        }
+	try
+	{
+		var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
+		var files = Directory.GetFiles(path);
+		int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
+		if (count == 0)
+		{
+			<p>No files exist for this album.  Add files?</p>
+			<form method="post" asp-action="AddFiles" asp-controller="Photos" asp-area="Admin" enctype="multipart/form-data">
+				<div class="form-group">
+					<label for="Files">Add Files</label>
+					<input type="file" name="AddFiles" class="form-control-sm" multiple>
+				</div>
+				<input type="hidden" name="AlbumID" value="@ViewBag.AlbumID">
+				<button type="submit" class="btn btn-primary">Add</button>
+			</form>
+		}
 
 
-        <div id="Gallery">
-            @{
+		<div id="Gallery">
+			@{
 
-                foreach (FileInfo file in ViewBag.Files)
-                {
-                    var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
+				foreach (FileInfo file in ViewBag.Files)
+				{
+					var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
 
-                    <figure>
-                        <img id="thumbnail" src="@url" data-name="@file.Name">
-                        <figcaption>
-                            <a id="test" href="" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
-                            <p id="IsInDatabase"></p>
-                            <p><input id="checkbox" type="checkbox" name="image" value="@file.Name"></p>
-                            @file.Name
-                        </figcaption>
-                    </figure>
+					<figure>
+						<img id="thumbnail" src="@url" data-name="@file.Name">
+						<figcaption>
+							<a id="test" href="" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
+							<p id="IsInDatabase"></p>
+							<p><input id="checkbox" type="checkbox" name="image" value="@file.Name"></p>
+							@file.Name
+						</figcaption>
+					</figure>
 
-                }
+				}
 
-            }
+			}
 
 
-        </div>
-                }
-                catch (DirectoryNotFoundException ex)
-                {
-        @ex.Message
-        <p>Directory does not exist.  Create it?</p>
-        <form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
-            <input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
-            <button type="submit" class="btn btn-primary">Yes</button>
-        </form>
-                }
+
+		</div>
+		@Html.PagedListPager((IPagedList)ViewBag.Files, page => Url.Action("Index", "Photos", new { page, Area = "Admin" }), new PagedListRenderOptions
+{
+PageClasses = new string[] { "page-link" },
+UlElementClasses = new string[] { "pagination" },
+LiElementClasses = new String[] { "page-item" },
+DisplayItemSliceAndTotal = true,
+});
+
+	}
+	catch (DirectoryNotFoundException ex)
+	{
+		@ex.Message
+		<p>Directory does not exist.  Create it?</p>
+		<form method="post" asp-action="CreateFolder" asp-controller="Gallery" asp-area="Admin">
+			<input type="hidden" name="GalleryID" value="@ViewBag.GalleryID">
+			<button type="submit" class="btn btn-primary">Yes</button>
+		</form>
+	}
 }
 
 <a href="#" id="AddToDb">Add to Database</a> |
@@ -72,29 +83,52 @@
 
 
 <div class="modal fade" id="myModal" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title"></h5>
-            </div>
-            <div class="modal-body">
-                <img src="" alt="" id="image">
-                 <div id="IsInDb">
-                <a href="#" id="AddToDb">Add to Database</a>
-                <a href="#" id="DelFromDb">Delete from Database</a>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title"></h5>
+			</div>
+			<div class="modal-body">
+				<img src="" alt="" id="image">
+				<div id="IsInDb">
+					<a href="#" id="AddToDb">Add to Database</a>
+					<a href="#" id="DelFromDb">Delete from Database</a>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 
+@functions {
+	private IPagedList<FileInfo> GetFiles(int? page)
+	{
+		// return a 404 if user browses to before the first page
+		if (page.HasValue && page < 1)
+		{
+			return null!;
+		}
+
+		// Retrieve list from wherever
+		var listUnPaged = ViewBag.Files;
+		// page the list
+		var listPaged = listUnPaged.ToPagedList(page ?? 1, 1);
+
+		// return a 404 if user browses to pages beyond last page.  Special case first page if no items exist.
+		if (listPaged.PageNumber != 1 && page.HasValue && page > listPaged.PageCount)
+		{
+			return null!;
+		}
+		return listPaged;
+	}
+}
+
 
 @section Scripts {
-    <script>
+	<script>
 
         $(function () {
 
@@ -117,7 +151,7 @@
                 return result;
             }
 
-           
+
 
 
             $("#Gallery figure").each(function (index, value) {
@@ -134,15 +168,16 @@
                     $("#myModal").on('shown.bs.modal', function () {
                         $("#myModal").find('.modal-header').html(`<h3>${strName}</h3>`);
                         $("#myModal").find('.modal-body').find('img').attr('src', src);
-                  
-                        if (CheckDb(strName) === true) {
-                            $("#myModal").find("IsInDb").toggle();
-                                $("#myModal").find("#AddToDb").hide();
-                            } else {
-                                $("#myModal").find("#DelFromDb").show();
 
-                            }
-                       
+                        $("#myModal").find("#AddToDb").hide();
+                        $("#myModal").find("#DelFromDb").hide();
+
+                        if (CheckDb(strName) === false) {
+                            $("#myModal").find("#AddToDb").show();
+                        } else {
+                            $("#myModal").find("#DelFromDb").show();
+                        }
+
                         $("#myModal").find("#AddToDb").on('click', function (event) {
                             if (AddToDb(strName) === true) {
                                 $("#AddToDb").hide();
@@ -154,7 +189,7 @@
                                 $("#DelFromDb").hide();
                                 $("#AddToDb").show();
                             }
-                            
+
                         });
                     });
                 });
@@ -278,7 +313,7 @@
         });
 
 
-       
-    </script>
+
+	</script>
 }
 
