@@ -41,7 +41,24 @@
   z-index: 10000;
 }
 
-.modal img {
-  width: 100%;
-  object-fit: cover;
+#myModal {
+  z-index: 10000 !important;
+  border: none !important;
+}
+
+.modal {
+  height: revert !important;
+  position: absolute !important;
+  top: 0 !important;
+}
+
+.modal-content {
+  border: 0 !important;
+}
+
+.modal-body {
+  border: 0 !important;
+}
+.modal-body img {
+  width: 100% !important;
 }

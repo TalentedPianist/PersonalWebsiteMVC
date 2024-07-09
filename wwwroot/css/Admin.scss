@@ -51,10 +51,27 @@
     z-index: 10000;
 }
 
+#myModal {
+    z-index: 10000 !important;
+    border: none !important;
 
-.modal { 
+    
+}
+
+.modal {
+    height: revert !important;
+    position: absolute !important;
+    top: 0 !important;
+}
+
+.modal-content {
+    border: 0 !important;
+}
+
+.modal-body {
+    border: 0 !important;
+
     img { 
-        width: 100%; 
-        object-fit: cover;
+        width: 100% !important;
     }
 }

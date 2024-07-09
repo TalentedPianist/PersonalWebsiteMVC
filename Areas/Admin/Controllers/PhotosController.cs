@@ -138,7 +138,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return Ok();
         }
 
-        [Route("/Photos/RemoveFromDb")]
+        [Route("/Photos/DelFromDb")]
         [HttpPost]
         public IActionResult RemoveFromDb(string album)
         {
