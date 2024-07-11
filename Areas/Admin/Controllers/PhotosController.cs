@@ -8,7 +8,7 @@ using PersonalWebsiteMVC.Models;
 using System.Text;
 using System.Text.Json;
 using System.Web;
-using X.PagedList;
+using Sakura.AspNetCore;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -78,7 +78,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     }
                 }
             }
-            catch (DirectoryNotFoundException ex)
+            catch (DirectoryNotFoundException)
             {
             }
 

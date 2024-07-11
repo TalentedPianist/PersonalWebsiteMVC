@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
-using X.PagedList;
+using Sakura.AspNetCore;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {

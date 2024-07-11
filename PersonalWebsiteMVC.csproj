@@ -47,6 +47,8 @@
     <PackageReference Include="MudBlazor" Version="7.1.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
+    <PackageReference Include="Sakura.AspNetCore.Mvc.PagedList" Version="3.0.2" />
+    <PackageReference Include="Sakura.AspNetCore.PagedList" Version="2.0.2" />
     <PackageReference Include="ServiceStack.Extensions" Version="8.3.0" />
     <PackageReference Include="Sitko.Blazor.CKEditor" Version="4.2.1" />
     <PackageReference Include="Sitko.Blazor.CKEditor.Bundle" Version="4.2.1" />
@@ -55,8 +57,6 @@
     <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.1.1" />
     <PackageReference Include="Wangkanai.Detection" Version="8.14.0" />
     <PackageReference Include="Wangkanai.Responsive" Version="7.8.0" />
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="9.1.2" />
-    <PackageReference Include="X.PagedList.Web.Common" Version="8.0.7" />
   </ItemGroup>
 
 

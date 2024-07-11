@@ -24,6 +24,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Elastic.Clients.Elasticsearch.IndexManagement;
+using Microsoft.AspNetCore.Mvc.Razor;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -144,6 +145,13 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 builder.Services.AddTransient<IMailService, MailService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+builder.Services.Configure<RazorViewEngineOptions>(options =>
+{
+    options.AreaPageViewLocationFormats.Clear();
+    options.AreaViewLocationFormats.Add("/Admin/{2}/Views/{1}/{0}.cshtml");
+    options.AreaViewLocationFormats.Add("/Admin/{2}/Views/Shared/{0}.cshtml");
+    
+});
 
 
 var app = builder.Build();

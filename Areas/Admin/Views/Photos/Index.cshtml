@@ -8,10 +8,11 @@
 @using Microsoft.AspNetCore.Hosting
 @inject IWebHostEnvironment env
 @inject ApplicationDbContext _db
-@using X.PagedList.Mvc.Core
+@using Sakura.AspNetCore 
+
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
-@Html.Raw(TempData["Message"])
+@TempData["Message"]
 
 @{
     try
@@ -63,13 +64,6 @@
         </div>
 
 
-        @Html.PagedListPager((IPagedList)GetFiles(1), page => Url.Action("Index", new { page }), new PagedListRenderOptions
-   {
-       PageClasses = new string[] { "page-link " },
-       UlElementClasses = new string[] { "pagination" },
-       LiElementClasses = new string[] { "page-item" },
-       DisplayItemSliceAndTotal = true,
-   });
 
     }
     catch (DirectoryNotFoundException ex)
@@ -109,25 +103,16 @@
 
 
 @functions {
-    private IPagedList<FileInfo> GetFiles(int? page)
+    PagedList<IEnumerable<FileInfo>, PagedList<FileInfo>> GetFiles()
     {
-        // return a 404 if user browses to before the first page
-        if (page.HasValue && page < 1)
-        {
-            return null!;
-        }
+        // https://github.com/sgjsakura/AspNetCore/blob/master/PagerDemo.md
+        var pageNumber = 1;
+        var pageSize = 1;
 
-        // Retrieve list from wherever
-        var listUnPaged = ViewBag.Files;
-        // page the list
-        var listPaged = listUnPaged.ToPagedList(page ?? 1, 1);
-
-        // return a 404 if user browses to pages beyond last page.  Special case first page if no items exist.
-        if (listPaged.PageNumber != 1 && page.HasValue && page > listPaged.PageCount)
-        {
-            return null!;
-        }
-        return listPaged;
+        DirectoryInfo di = new DirectoryInfo(ViewBag.Path);
+        var data = di.GetFiles();
+        var pagedData = data.ToPagedList(pageSize, pageNumber);
+        return pagedData;
     }
 }
 
