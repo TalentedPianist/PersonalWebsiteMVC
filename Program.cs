@@ -23,6 +23,7 @@ using PersonalWebsiteMVC.Services;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.UI.Services;
+using Elastic.Clients.Elasticsearch.IndexManagement;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -42,11 +43,19 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.S
 
 builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider().AddRazorRuntimeCompilation();
 builder.Services.AddRazorPages().AddNewtonsoftJson();
+
+
 builder.Services.AddMvc(options =>
 {
     options.MaxModelBindingCollectionSize = int.MaxValue;
+   
 
 }).AddRazorRuntimeCompilation();
+
+
+
+
+
 builder.Services.AddControllers()
     .AddNewtonsoftJson(options =>
     {
@@ -135,6 +144,8 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 builder.Services.AddTransient<IMailService, MailService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -150,19 +161,21 @@ app.UseStaticFiles();
 
 app.UseSession();
 
+
+
 app.MapRazorPages();
-app.MapControllers();
-
-
 
 app.UseRouting();
 app.UseAuthentication();
 app.UseAuthorization();
 
 
+
+
 app.UseAntiforgery();
 
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+
 
 app.MapAreaControllerRoute(
     name: "Admin",
@@ -173,8 +186,6 @@ app.MapAreaControllerRoute(
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
-
 
 
 app.MapPost("api/send", async (ReCaptchaService reCaptcha, [FromBody] ReCaptchaModel model) =>

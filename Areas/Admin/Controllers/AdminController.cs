@@ -12,7 +12,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Route("Admin")]
-	[Authorize(Roles = "Admin")]
+	
 	public class AdminController : Controller
 	{
 

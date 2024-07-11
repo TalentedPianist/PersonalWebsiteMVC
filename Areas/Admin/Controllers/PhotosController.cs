@@ -30,8 +30,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("Photos/Index")]
         [Route("Photos/Index/{id}")]
         [Route("Areas/Admin/Photos/Index")]
-        public IActionResult Index(int id)
+
+        public IActionResult Index()
         {
+            int id = Convert.ToInt32(Context.HttpContext!.Request.Query["id"]);
+            int page = Convert.ToInt32(Context.HttpContext!.Request.Query["page"]);
+
             var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
             var photos = _db.Photos.Where(p => p.AlbumID == id);
             var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
@@ -49,30 +53,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             }
 
             ViewBag.Message = sb.ToString();
-            ViewBag.Files = GetFiles(1);
+            ViewBag.Files = di.GetFiles();
+            
             return View();
         }
 
-        private IPagedList<FileInfo> GetFiles(int? page)
-        {
-            if (page.HasValue && page < 1)
-            {
-                return null!;
-            }
-
-            // set directory location
-            DirectoryInfo di = new DirectoryInfo(ViewBag.Path);
-            var listUnpaged = di.GetFiles();
-            // page the list
-            var listPaged = listUnpaged.ToPagedList(page ?? 1, 1);
-
-            // return a 404 if user browses to pages beyond last page.  Special case first page if no items exist
-            if (listPaged.PageNumber != 1 && page.HasValue && page > listPaged.PageCount)
-            {
-                return null!;
-            }
-            return listPaged;
-        }
+   
 
         [HttpPost]
         public async Task<IActionResult> AddFiles([FromForm(Name = "AddFiles")] List<IFormFile> files, [FromForm(Name = "AlbumID")] int AlbumID)
