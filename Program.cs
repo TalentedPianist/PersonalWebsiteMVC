@@ -26,6 +26,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.AspNetCore.Mvc.Razor;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -49,7 +50,8 @@ builder.Services.AddRazorPages().AddNewtonsoftJson();
 builder.Services.AddMvc(options =>
 {
     options.MaxModelBindingCollectionSize = int.MaxValue;
-   
+    options.EnableEndpointRouting = false;
+    
 
 }).AddRazorRuntimeCompilation();
 
@@ -138,6 +140,14 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 builder.Services.AddCascadingAuthenticationState();
 
 builder.Services.AddAuthentication(); // This is needed for logout to work otherwise nothing happens.
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin",
+        authBuilder =>
+        {
+            authBuilder.RequireRole("Admin");
+        });
+});
 
 builder.Services.AddHttpContextAccessor();
 
@@ -145,13 +155,12 @@ builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailS
 builder.Services.AddTransient<IMailService, MailService>();
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
-builder.Services.Configure<RazorViewEngineOptions>(options =>
+builder.Services.Configure<RouteOptions>(options =>
 {
-    options.AreaPageViewLocationFormats.Clear();
-    options.AreaViewLocationFormats.Add("/Admin/{2}/Views/{1}/{0}.cshtml");
-    options.AreaViewLocationFormats.Add("/Admin/{2}/Views/Shared/{0}.cshtml");
-    
+    options.AppendTrailingSlash = true;
 });
+
+
 
 
 var app = builder.Build();
@@ -169,7 +178,10 @@ app.UseStaticFiles();
 
 app.UseSession();
 
-
+app.UseMvc(routes =>
+{
+    app.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
+});
 
 app.MapRazorPages();
 
@@ -185,15 +197,15 @@ app.UseAntiforgery();
 app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 
-app.MapAreaControllerRoute(
+/*app.MapAreaControllerRoute(
     name: "Admin",
     areaName: "Admin",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");*/
 
 
-app.MapControllerRoute(
+/*app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");*/
 
 
 app.MapPost("api/send", async (ReCaptchaService reCaptcha, [FromBody] ReCaptchaModel model) =>

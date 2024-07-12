@@ -4,11 +4,12 @@
 @{
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
-@model IEnumerable<Photos>
+
 @using Microsoft.AspNetCore.Hosting
 @inject IWebHostEnvironment env
 @inject ApplicationDbContext _db
-@using Sakura.AspNetCore 
+@using X.PagedList.Mvc.Core
+@using X.PagedList
 
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
@@ -38,7 +39,7 @@
             @{
                 try
                 {
-                    foreach (FileInfo file in ViewBag.Files)
+                    foreach (FileInfo file in ViewBag.OnePageOfFiles)
                     {
                         var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
 
@@ -80,6 +81,20 @@
 <a href="#" id="AddToDb">Add to Database</a> |
 <a href="#" id="DelFromDb">Delete from Database</a>
 
+<!--
+    
+    In order to get this working I had to disable endpoint routing in Program.cs and add app.UseMvc and map the route to the area.  There is also a bug in X.PagedList as described below.
+   https://github.com/dncuug/X.PagedList/issues/133
+
+-->
+
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = ViewBag.AlbumID }), new PagedListRenderOptions
+{
+    PageClasses = new string[] { "page-link" },
+    UlElementClasses = new string[] { "pagination" },
+    LiElementClasses = new string[] { "page-item" },
+    DisplayItemSliceAndTotal = true,
+});
 
 <div class="modal fade" id="myModal" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -103,17 +118,7 @@
 
 
 @functions {
-    PagedList<IEnumerable<FileInfo>, PagedList<FileInfo>> GetFiles()
-    {
-        // https://github.com/sgjsakura/AspNetCore/blob/master/PagerDemo.md
-        var pageNumber = 1;
-        var pageSize = 1;
 
-        DirectoryInfo di = new DirectoryInfo(ViewBag.Path);
-        var data = di.GetFiles();
-        var pagedData = data.ToPagedList(pageSize, pageNumber);
-        return pagedData;
-    }
 }
 
 

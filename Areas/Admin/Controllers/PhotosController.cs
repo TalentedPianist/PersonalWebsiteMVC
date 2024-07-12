@@ -8,7 +8,8 @@ using PersonalWebsiteMVC.Models;
 using System.Text;
 using System.Text.Json;
 using System.Web;
-using Sakura.AspNetCore;
+using X.PagedList;
+
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -31,34 +32,44 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("Photos/Index/{id}")]
         [Route("Areas/Admin/Photos/Index")]
 
-        public IActionResult Index()
-        {
-            int id = Convert.ToInt32(Context.HttpContext!.Request.Query["id"]);
-            int page = Convert.ToInt32(Context.HttpContext!.Request.Query["page"]);
-
-            var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
-            var photos = _db.Photos.Where(p => p.AlbumID == id);
-            var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
-            ViewBag.AlbumName = album.Name;
-            ViewBag.AlbumID = album.Id;
-            ViewBag.Path = filePath;
-
-            StringBuilder sb = new StringBuilder();
-            DirectoryInfo di = new DirectoryInfo(filePath);
-
-            foreach (FileInfo file in di.GetFiles())
+        public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
+        { // X.PagedList is now working after adding the FromQuery attribute forcing it to use the pageNumber querystring.
+            try
             {
-                sb.Append(file.Name);
+                int id = Convert.ToInt32(Context.HttpContext!.Request.Query["id"]);
 
+
+                var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+                var photos = _db.Photos.Where(p => p.AlbumID == id);
+                var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
+                ViewBag.AlbumName = album.Name;
+                ViewBag.AlbumID = album.Id;
+                ViewBag.Path = filePath;
+
+                StringBuilder sb = new StringBuilder();
+                DirectoryInfo di = new DirectoryInfo(filePath);
+
+                foreach (FileInfo file in di.GetFiles())
+                {
+                    sb.Append(file.Name);
+
+                }
+
+                ViewBag.Message = sb.ToString();
+                ViewBag.Files = di.GetFiles();
+
+                var pageNumber = page ?? 1; // If no page was specified in the querystring, default to the first page (1)
+                var onePageOfFiles = di.GetFiles().ToPagedList(pageNumber, 1);
+                ViewBag.OnePageOfFiles = onePageOfFiles;
             }
-
-            ViewBag.Message = sb.ToString();
-            ViewBag.Files = di.GetFiles();
-            
+            catch (FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
             return View();
         }
 
-   
+
 
         [HttpPost]
         public async Task<IActionResult> AddFiles([FromForm(Name = "AddFiles")] List<IFormFile> files, [FromForm(Name = "AlbumID")] int AlbumID)
@@ -102,7 +113,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public bool AjaxDbCheck()
         {
             StringBuilder sb = new StringBuilder();
-            
+
             foreach (var item in Request.Form["name"])
             {
                 if (_db.Photos.Any(p => p.Name == item))
@@ -122,7 +133,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("/Photos/GetPicId")]
         public int GetPicId(string name)
         {
-      
+
             var pic = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
             if (pic == null)
                 return 0;
@@ -169,7 +180,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public IActionResult AddMultipleToDb([FromBody]List<Photos> data)
+        public IActionResult AddMultipleToDb([FromBody] List<Photos> data)
         {
             StringBuilder sb = new StringBuilder();
             Photos photo = new Photos();
@@ -192,7 +203,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             _db.SaveChanges();
             return Json(new[] { data });
         }
-        
+
     }
 
 

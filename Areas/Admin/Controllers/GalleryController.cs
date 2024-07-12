@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
-using Sakura.AspNetCore;
+
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -56,14 +56,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             var model = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
             System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(Host.WebRootPath + "\\Gallery\\" + model!.Name);
-            try
-            {
-                ViewBag.Files = info.GetFiles().ToPagedList(page, 5);
-            }
-            catch (ArgumentOutOfRangeException ex)
-            {
-                ViewBag.Files = info.GetFiles().ToPagedList(1, 5);
-            }
+           
             return View(model);
         }
 

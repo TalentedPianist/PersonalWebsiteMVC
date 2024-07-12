@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Diagnostics;
-using DeviceDetectorNET;
 using PersonalWebsiteMVC.Components;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -23,14 +22,7 @@ namespace PersonalWebsiteMVC.Controllers
 
         public IActionResult Index()
         {
-            /*if ((bool)HttpContext.Items["isMobile"]! == false)
-            {
-                return View();
-            }
-            else
-            {
-                return View("~/Views/Shared/Mobile.cshtml");
-            }*/
+            
 
             return View();
         }
