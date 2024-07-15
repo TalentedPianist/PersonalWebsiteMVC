@@ -14,6 +14,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
+       
         public GalleryController(ApplicationDbContext db, IWebHostEnvironment env) 
         {
             _db = db;
@@ -37,6 +38,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Create")]
         public IActionResult CreateAlbum(Album model)
         {
             if (ModelState.IsValid)
@@ -50,6 +52,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 album.Location = model.Location;
                 _db.Add(album);
                 _db.SaveChanges();
+
+                if (Directory.Exists(Host.WebRootPath + "\\Gallery\\" + model.Name))
+                {
+                    // Directory exists in folder, do nothing
+                }
+                else
+                {
+                    Directory.CreateDirectory(Host.WebRootPath + "\\Gallery\\" + model.Name); // Create directory in Gallery folder
+                }
+
                 return RedirectToAction("Index");
             }
             return View("Create", model);
@@ -65,6 +77,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
    
+        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Update")]
         public IActionResult UpdateAlbum(Album model, [FromForm(Name="AlbumID")]int AlbumID)
         {
             var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
@@ -87,6 +101,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View(model);
         }
 
+        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Delete/{id?}")]
         public IActionResult Delete(int id)
         {
             var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
