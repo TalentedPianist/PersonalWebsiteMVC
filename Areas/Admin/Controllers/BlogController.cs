@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -25,9 +26,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Blog")]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
         {
-            return View(_db.Posts.ToList());
+            var posts = _db.Posts;
+            var pageNumber = page ?? 1;
+            var model = posts.ToPagedList(pageNumber, 1);
+            return View(model);
         }
 
         [Microsoft.AspNetCore.Mvc.Route("/Admin/Blog/Create")]

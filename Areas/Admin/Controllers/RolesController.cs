@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteBlazor.Models;
 using PersonalWebsiteMVC.Models;
+using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -24,8 +25,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                userManager = userMgr;
           }
 
-            [Route("Admin/Roles")]
-          public ViewResult Index() => View(roleManager.Roles);
+        [Route("Admin/Roles")]
+        public ViewResult Index([FromQuery(Name = "pageNumber")]int? page)
+        {
+            var roles = roleManager.Roles;
+
+            var pageNumber = page ?? 1;
+            var model = roles.ToPagedList(pageNumber, 1);
+            return View(model);
+        }
 
           [HttpGet]
           public IActionResult Create() => View();

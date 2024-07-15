@@ -7,25 +7,29 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using Microsoft.AspNetCore.Http;
+using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-     [Area("Admin")]
-     [Authorize(Policy = "Admin")]
+    [Area("Admin")]
     public class CommentsController : Controller
     {
-          private readonly ApplicationDbContext _db;
+        private readonly ApplicationDbContext _db;
         private readonly IHttpContextAccessor _http;
 
-          public CommentsController(ApplicationDbContext db, IHttpContextAccessor http)
-          {
-               _db = db; 
-            _http = http;
-          }
-
-        public IActionResult Index()
+        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http)
         {
-            return View(_db.Comments.ToList());
+            _db = db;
+            _http = http;
+        }
+
+        [Route("Admin/Comments")]
+        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
+        {
+            var comments = _db.Comments;
+            var pageNumber = page ?? 1;
+            var model = comments.ToPagedList(pageNumber, 1);
+            return View(model);
         }
 
           public IActionResult Create()

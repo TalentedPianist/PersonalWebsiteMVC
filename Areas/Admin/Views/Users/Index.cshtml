@@ -1,8 +1,10 @@
-﻿@model IEnumerable<ApplicationUser>
+﻿@model X.PagedList.IPagedList<ApplicationUser>
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
+@using X.PagedList
+@using X.PagedList.Mvc.Core 
 
 <h1 class="bg-info text-white">Users</h1>
 <a asp-action="Create" asp-area="Admin" asp-controller="Users" class="btn btn-secondary">Create a User</a>
@@ -21,3 +23,11 @@
           </tr>
      }
 </table>
+
+@Html.PagedListPager((X.PagedList.IPagedList)Model, page => Url.Action("Index", new { pageNumber = page, area = "Admin" }),
+    new X.PagedList.Mvc.Core.PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = true,
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })

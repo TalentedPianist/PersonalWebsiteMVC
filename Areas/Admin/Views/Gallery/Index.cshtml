@@ -2,8 +2,9 @@
 @{
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
-@model IEnumerable<Album>
-
+@model PagedList<Album>
+@using X.PagedList
+@using X.PagedList.Mvc.Core 
 
 <h1 class="bg bg-info p-1">Albums</h1>
 <a asp-action="Create" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Create</a>
@@ -29,3 +30,11 @@
 }
     </tbody>
 </table>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { pageNumber = page, area = "Admin" }),
+    new PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = true,
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })

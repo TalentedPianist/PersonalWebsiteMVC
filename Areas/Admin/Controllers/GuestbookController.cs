@@ -11,7 +11,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
 #nullable enable
     [Area("Admin")]
-     [Authorize(Policy = "Admin")]
      public class GuestbookController : Controller
      {
           private readonly ApplicationDbContext _db;
@@ -21,6 +20,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                _db = db;
           }
 
+          [Route("Admin/Guestbook")]
           public IActionResult Index()
           {
                return View(_db.Guestbook.ToList());

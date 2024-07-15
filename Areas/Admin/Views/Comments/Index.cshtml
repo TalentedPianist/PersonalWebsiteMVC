@@ -1,8 +1,11 @@
-﻿@model IEnumerable<Comments> 
+﻿@model PagedList<Comments> 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
 
 <h1 class="bg-info text-white">Comments</h1>
 <a asp-action="Create" class="btn btn-secondary">Create</a>
@@ -22,3 +25,11 @@
      }
 </table>
 
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { pageNumber = page }),
+    new PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = true,
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -21,9 +22,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [Route("Admin/Categories")]
-          public IActionResult Index()
+          public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
           {
-               return View(_db.Categories);
+                var categories = _db.Categories;
+            var pageNumber = page ?? 1;
+            var model = categories.ToPagedList(pageNumber, 1);
+               return View(model);
           }
 
           public IActionResult Create()

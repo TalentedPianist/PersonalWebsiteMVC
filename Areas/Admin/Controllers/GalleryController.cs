@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
+using X.PagedList;
 
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
@@ -21,9 +22,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery")]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
         {
-            return View(_db.Albums);
+            var gallery = _db.Albums;
+            var pageNumber = page ?? 1;
+            var model = gallery.ToPagedList(pageNumber, 1);
+            return View(model);
         }
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Create")]

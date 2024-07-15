@@ -1,5 +1,8 @@
-﻿@model IEnumerable<IdentityRole>
+﻿@model PagedList<IdentityRole>
 @using PersonalWebsiteMVC.CustomTagHelpers
+@using X.PagedList
+@using X.PagedList.Mvc.Core
+
 
 @{
     ViewData["Title"] = "Index";
@@ -23,3 +26,12 @@
           </tr>
      }
 </table>
+
+@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Roles", new { pageNumber = page, area = "Admin" }),
+    new PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = true,
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new string[] { "page-link" }
+    })
+
