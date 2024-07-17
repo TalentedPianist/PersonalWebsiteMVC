@@ -11,9 +11,8 @@ using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-#nullable enable
-    [Area("Admin")]
 
+    [Area("Admin")]
     public class BlogController : Controller
     {
 
@@ -30,33 +29,61 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             var posts = _db.Posts;
             var pageNumber = page ?? 1;
-            var model = posts.ToPagedList(pageNumber, 1);
+            var model = posts.ToPagedList(pageNumber, 5);
             return View(model);
         }
 
-        [Microsoft.AspNetCore.Mvc.Route("/Admin/Blog/Create")]
+        [Microsoft.AspNetCore.Mvc.Route("Admin/Blog/Create")]
+        [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
         public IActionResult Create()
         {
             return View();
         }
 
+       
+
         [HttpPost]
         [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
-        public async Task<IActionResult> SaveBlog(Posts model, [FromForm(Name="File1")]IFormFile file)
+        public async Task<IActionResult> SavePost(Posts model, [FromForm(Name="File1")]IFormFile file)
         {
-            var filePath = file.FileName;
-
-            if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
+            // This wasn't working because IFormFile was null.  Checking for null with a conditional fixed the problem.
+            if (file is not null)
             {
-                ModelState.AddModelError("", "File already exists.");
+                var filePath = file.FileName;
+
+                if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
+                {
+                    ModelState.AddModelError("", "File already exists.");
+                }
+                else
+                {
+                    using (var stream = System.IO.File.Create("wwwroot/Uploads/" + filePath))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
+
+                    if (ModelState.IsValid)
+                    {
+                        var b = new Posts();
+                        b.PostContent = Request.Form["txtPost"];
+                        b.PostExcerpt = model.PostExcerpt;
+                        b.PostTitle = model.PostTitle;
+                        b.CategoryID = model.CategoryID;
+                        b.PostAuthor = model.PostAuthor;
+                        b.PostLocation = model.PostLocation;
+                        b.FeaturedImage = file.FileName;
+                        b.PostDate = DateTime.Now;
+                        b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
+                        b.PostActive = "No";
+                        _db.Posts.Add(b);
+                        _db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                }
             }
             else
             {
-                using (var stream = System.IO.File.Create("wwwroot/Uploads/" + filePath))
-                {
-                    await file.CopyToAsync(stream);
-                }
-
+                ModelState.Clear(); // Clear the model state to avoid file field is required error
                 if (ModelState.IsValid)
                 {
                     var b = new Posts();
@@ -66,7 +93,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     b.CategoryID = model.CategoryID;
                     b.PostAuthor = model.PostAuthor;
                     b.PostLocation = model.PostLocation;
-                    b.FeaturedImage = file.FileName;
                     b.PostDate = DateTime.Now;
                     b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
                     b.PostActive = "No";
@@ -76,7 +102,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 }
             }
 
-            return View("Create", model); // Works when nothing else will.  Makes sense because it's in the root Blog folder.
+            return View("Create", model); // View only needs the file name to work without any other paths or extensions.
         }
 
 

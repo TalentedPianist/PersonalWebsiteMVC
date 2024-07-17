@@ -17,19 +17,19 @@
     <div class="form-group">
         <label asp-for="PostContent">Content:</label>
         <!-- Note: textarea needs the name attribute or else data posted will be null -->
-        <textarea asp-for="PostContent" id="ckeditor1" name="txtPost"></textarea>
+        <textarea asp-for="PostContent" id="ckeditor1" name="txtPost" class="form-control"></textarea>
     </div>
     <div class="form-group">
         <label asp-for="PostTitle">Title:</label>
-        <input asp-for="PostTitle" />
+        <input asp-for="PostTitle" class="form-control" />
     </div>
     <div class="form-group">
         <label class="form-label col-sm-2">Featured Image:</label>
-        <input type="file" name="File1">
+        <input type="file" name="File1" class="form-control">
     </div>
     <div class="form-group">
         <label asp-for="CategoryID">Category:</label>
-        <select asp-for="CategoryID">
+        <select asp-for="CategoryID" class="form-control">
             @foreach (var item in db.Categories)
             {
                 <option value="@item.CategoryID" />
@@ -37,7 +37,7 @@
             }
         </select>
     </div>
-    <button type="submit" class="btn btn-primary">Publish</button>
+    <button type="submit" class="btn btn-primary">Submit</button>
 
 
 </form>

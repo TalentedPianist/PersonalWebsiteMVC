@@ -178,9 +178,13 @@ app.UseStaticFiles();
 
 app.UseSession();
 
+
+
+
 app.UseMvc(routes =>
 {
-    app.MapAreaControllerRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
+    routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
+    
 });
 
 app.MapRazorPages();

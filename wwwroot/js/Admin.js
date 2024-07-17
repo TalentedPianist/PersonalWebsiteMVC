@@ -1,7 +1,4 @@
 ﻿
-var elementExists = document.getElementById("#ckeditor1");
-
-if (elementExists) {
     ClassicEditor
         .create(document.querySelector('#ckeditor1'))
         .then(editor => {
@@ -10,4 +7,3 @@ if (elementExists) {
         .catch(error => {
             console.error(error);
         });
-}
