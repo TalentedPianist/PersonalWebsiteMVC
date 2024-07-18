@@ -45,7 +45,9 @@
 
                         <figure>
                             <img id="thumbnail" src="@url" data-name="@file.Name" title="@file.Name">
-                    
+                                <div>
+                                <input id="checkbox" type="checkbox" name="image" value="@file.Name">
+                                </div>
                             @if (IsInDb(file.Name))
                             {
                                 if (GetPicId(file.Name) > 0)
@@ -56,7 +58,7 @@
                                         <a asp-action="Details" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Details</a>
                                         <a asp-action="Delete" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Delete</a>
                                     </div>
-                                    <input id="checkbox" type="checkbox" name="image" value="@file.Name">
+                                    
 
                                 }
                                 else
@@ -95,8 +97,10 @@
     }
 }
 
+<div id="DbLinks">
 <a href="#" id="AddToDb">Add to Database</a> |
 <a href="#" id="DelFromDb">Delete from Database</a>
+</div>
 
 <!--
 
@@ -207,7 +211,6 @@
                 let album = $(value).find("a").data('album');
                 let open = $(value).find("a");
                 let confirm = undefined;
-                $(this).find("figcaption").hide();
 
                 $(open).on('click', function (event) {
                     event.preventDefault();
@@ -252,22 +255,33 @@
                 }
                 */
 
+
+
                 $(this).on('mouseenter', function (e) {
                     e.preventDefault();
-
-                    $(this).find("figcaption").addClass('.overlay');
-                    //$(this).find("figcaption").show();
-                    let img = $(this).find("img");
-                    $(img).insertAfter($(img).data("name"));
-                    $(img).after("<p class='title'>" + $(img).data("name") + "</p>");
+                    $(value).find("#DbCheck").addClass("overlay");
+                    $(value).find("div:nth-of-type(1)").css("display", "flex");
+                    $(value).find("div:nth-of-type(1)").addClass("overlay");
+                 
+                    if (CheckDb(strName) == true) {
+                        $(value).find("div:nth-of-type(1)").html(`
+                            <input type="checkbox" value="${strName}">
+                            <input type="hidden" value="Delete">
+                            Is in database
+                        `);
+                    } else {
+                        $(value).find("div:nth-of-type(1)").html(`
+                            <input type="checkbox" value="${strName}">
+                            <input type="hidden" value="Add">
+                            Not in database
+                        `);
+                    }
                 });
 
                 $(this).on('mouseleave', function (e) {
                     e.preventDefault();
-
-                    $(this).find("figcaption").removeClass('.overlay');
-                    //$(this).find("figcaption").hide();
-                    $(img).after().hide();
+                    $(value).find("div:nth-of-type(1)").css("display", "none");
+                    $(value).find("div:nth-of-type(1)").removeClass("overlay");
                 });
 
 
@@ -364,7 +378,14 @@
             }
         });
 
-
+        function AddMultipleToDb(name) {
+            let result = undefined;
+            $.ajax({
+                method: "POST",
+                url: "@Url.Action("AddMultipleToDb", "Photos")",
+               
+            });
+        }
 
     </script>
 }
