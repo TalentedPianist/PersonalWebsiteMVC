@@ -45,6 +45,7 @@
 
                         <figure>
                             <img id="thumbnail" src="@url" data-name="@file.Name" title="@file.Name">
+                    
                             @if (IsInDb(file.Name))
                             {
                                 if (GetPicId(file.Name) > 0)
@@ -257,10 +258,8 @@
                     $(this).find("figcaption").addClass('.overlay');
                     //$(this).find("figcaption").show();
                     let img = $(this).find("img");
-                    $(img).tooltip('enable');
-
-                    console.log($(img).data('name'));
-
+                    $(img).insertAfter($(img).data("name"));
+                    $(img).after("<p class='title'>" + $(img).data("name") + "</p>");
                 });
 
                 $(this).on('mouseleave', function (e) {
@@ -268,7 +267,7 @@
 
                     $(this).find("figcaption").removeClass('.overlay');
                     //$(this).find("figcaption").hide();
-
+                    $(img).after().hide();
                 });
 
 

@@ -10,6 +10,7 @@
 
     img {
         width: 100%;
+        position: relative;
     }
 
     figure {
@@ -45,7 +46,10 @@
     }
 
    
-    
+    #title { 
+        position: absolute; 
+        top: 0;
+    }
 }
 
 .showTitle {

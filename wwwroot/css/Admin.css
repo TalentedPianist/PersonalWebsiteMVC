@@ -7,6 +7,7 @@
 }
 #Gallery img {
   width: 100%;
+  position: relative;
 }
 #Gallery figure {
   position: relative;
@@ -31,6 +32,10 @@
 }
 #Gallery figcaption a:hover {
   text-decoration: none;
+}
+#Gallery #title {
+  position: absolute;
+  top: 0;
 }
 
 .showTitle {
