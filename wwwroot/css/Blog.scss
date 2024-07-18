@@ -912,3 +912,29 @@ main {
 #recaptcha {
     display: block !important;
 }
+
+#Albums { 
+    display: flex; 
+    flex-direction: column;
+    flex: 0; 
+    gap: 1em;
+
+    img { 
+        width: 100%;
+    }
+
+    @media only screen and (min-width: 600px) { 
+        display: grid;
+        grid-template-columns: repeat(8, 1fr);
+        grid-template-rows: repeat(8, 5vw);
+        grid-gap: 15px;
+    }
+}
+
+#Photos { 
+    display: flex; 
+    flex-direction: column;
+    flex: 0;
+    gap: 1em;
+
+}

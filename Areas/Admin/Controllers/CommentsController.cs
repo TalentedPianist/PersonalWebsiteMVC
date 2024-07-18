@@ -28,7 +28,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             var comments = _db.Comments;
             var pageNumber = page ?? 1;
-            var model = comments.ToPagedList(pageNumber, 1);
+            var model = comments.ToPagedList(pageNumber, 5);
             return View(model);
         }
 

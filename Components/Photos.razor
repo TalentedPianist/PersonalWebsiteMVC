@@ -1,0 +1,38 @@
+﻿@page "/Photos"
+
+<h1>Photos</h1>
+
+@if (Albums.Count() == 0)
+{
+    <p>No photos have been found just now.  Please check back later.</p>
+}
+else
+{
+    <div id="Albums">
+        @foreach (Album album in Albums)
+        {
+            <MudCard Class="AlbumItem">
+                <MudCardMedia Image="@album.CoverPhoto" Height="200" />
+                <MudCardContext>
+                    <MudText Typo="Typo.h3">@album.Name</MudText>
+                </MudCardContext>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Color="Color.Primary">View</MudButton>
+                </MudCardActions>
+            </MudCard>
+        }
+    </div>
+}
+
+
+@code {
+    [Inject]
+    public ApplicationDbContext _db { get; set; } = default!;
+    public IEnumerable<Album> Albums { get; set; } = new List<Album>();
+
+    protected override void OnInitialized()
+    {
+        base.OnInitialized();
+        Albums = _db.Albums;
+    }
+}

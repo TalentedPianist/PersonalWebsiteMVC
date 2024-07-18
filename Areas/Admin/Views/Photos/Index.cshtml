@@ -1,5 +1,5 @@
 ﻿@*
-For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
@@ -44,12 +44,28 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                         var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
 
                         <figure>
-                            <img id="thumbnail" src="@url" data-name="@file.Name">
+                            <img id="thumbnail" src="@url" data-name="@file.Name" title="@file.Name">
+                            @if (IsInDb(file.Name))
+                            {
+                                if (GetPicId(file.Name) > 0)
+                                {
+                                    <div>
+                                        <a id="test" href="" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
+                                        <a asp-action="Update" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Update</a>
+                                        <a asp-action="Details" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Delete</a>
+                                    </div>
+                                    <input id="checkbox" type="checkbox" name="image" value="@file.Name">
+
+                                }
+                                else
+                                {
+
+                                }
+                            }
                             <figcaption>
-                                <a id="test" href="" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
-                                <p id="IsInDatabase"></p>
-                                <p><input id="checkbox" type="checkbox" name="image" value="@file.Name"></p>
                                 @file.Name
+
                             </figcaption>
                         </figure>
 
@@ -89,11 +105,11 @@ For more information on enabling MVC for empty projects, visit https://go.micros
 -->
 
 @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new
-    {
-        pageNumber = page,
-        area = "Admin",
-        id = ViewBag.AlbumID
-    }), new PagedListRenderOptions
+{
+    pageNumber = page,
+    area = "Admin",
+    id = ViewBag.AlbumID
+}), new PagedListRenderOptions
 {
     PageClasses = new string[] { "page-link" },
     UlElementClasses = new string[] { "pagination" },
@@ -102,7 +118,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
 });
 
 <div class="modal fade" id="myModal" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-    aria-hidden="true">
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -114,7 +130,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                     <a href="#" id="AddToDb">Add to Database</a>
                     <a href="#" id="DelFromDb">Delete from Database</a>
                 </div>
-                <h3>Comments</h3>
+
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -123,9 +139,21 @@ For more information on enabling MVC for empty projects, visit https://go.micros
     </div>
 </div>
 
-
 @functions {
+    bool IsInDb(string name)
+    {
+        var exist = _db.Photos.Any(p => p.Name == name);
+        if (!exist)
+            return false;
+        else
+            return true;
+    }
 
+    int GetPicId(string name)
+    {
+        var pic = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
+        return pic!.Id;
+    }
 }
 
 
@@ -212,6 +240,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                     });
                 });
 
+                /*
                 if (CheckDb(strName) === false) {
 
                     $(this).find("figcaption").find("p:first").text("Not in database");
@@ -220,19 +249,25 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                     $(this).find("figcaption").find("p:first").text("Is in database.");
                     confirm = $(this).find("figcaption").find("p:first").text();
                 }
+                */
 
                 $(this).on('mouseenter', function (e) {
                     e.preventDefault();
-                    $(this).find("figcaption").addClass('.overlay');
-                    $(this).find("figcaption").show();
 
+                    $(this).find("figcaption").addClass('.overlay');
+                    //$(this).find("figcaption").show();
+                    let img = $(this).find("img");
+                    $(img).tooltip('enable');
+
+                    console.log($(img).data('name'));
 
                 });
 
                 $(this).on('mouseleave', function (e) {
                     e.preventDefault();
+
                     $(this).find("figcaption").removeClass('.overlay');
-                    $(this).find("figcaption").hide();
+                    //$(this).find("figcaption").hide();
 
                 });
 
@@ -247,7 +282,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
             cb.forEach(function (item, index) {
 
 
-
+            /*
                 let confirm = item.closest("figcaption").querySelector("p").innerText;
                 item.addEventListener('click', function () {
                     console.log(PicId(item.getAttribute("value")));
@@ -259,6 +294,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                         add.push({ 'Name': item.getAttribute("value") });
                     }
                 });
+                */
             });
 
 

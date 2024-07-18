@@ -3,21 +3,25 @@
   display: grid;
   grid-template-columns: repeat(4, 0.5fr);
   grid-gap: 1em;
+  text-align: center;
 }
 #Gallery img {
   width: 100%;
 }
 #Gallery figure {
   position: relative;
+  margin: 0 !important;
+}
+#Gallery figure div {
+  display: flex;
+  gap: 1em;
+  clear: both;
 }
 #Gallery figcaption {
   color: white;
-  position: relative;
   text-align: center;
   padding: 15px;
-  position: absolute;
-  top: 0%;
-  left: 0%;
+  position: relative;
   width: 100%;
   height: 100%;
 }
@@ -27,6 +31,12 @@
 }
 #Gallery figcaption a:hover {
   text-decoration: none;
+}
+
+.showTitle {
+  position: relative;
+  top: 0;
+  color: white;
 }
 
 .overlay {

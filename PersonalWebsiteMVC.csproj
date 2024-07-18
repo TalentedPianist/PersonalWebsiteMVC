@@ -57,4 +57,19 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <UpToDateCheckInput Remove="Components\Photos.razor" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="Components\Photos.razor" />
+  </ItemGroup>
+
+
+  <ItemGroup>
+    <None Include="Components\Photos.razor" />
+  </ItemGroup>
+
+
 </Project>
