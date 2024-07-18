@@ -59,7 +59,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 ViewBag.Files = di.GetFiles();
 
                 var pageNumber = page ?? 1; // If no page was specified in the querystring, default to the first page (1)
-                var onePageOfFiles = di.GetFiles().ToPagedList(pageNumber, 1);
+                var onePageOfFiles = di.GetFiles().ToPagedList(pageNumber, 10);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
             }
             catch (FormatException ex)
@@ -204,7 +204,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return Json(new[] { data });
         }
 
+        public int Comments(int id)
+        {
+            var comments = _db.Comments.Where(c => c.CommentID == id);
+            return comments.Count();
+        }
     }
-
-
 }
