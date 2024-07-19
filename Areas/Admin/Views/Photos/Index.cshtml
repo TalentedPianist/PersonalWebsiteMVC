@@ -284,28 +284,34 @@
                 
 
                 item.addEventListener('click', function (event) {
+
                     //event.preventDefault();
                     // Here we don't use event.preventDefault() as that simply makes checkbox click not work.  Basics.
-                    let confirm = item.querySelector("p").innerHTML;
-                    if (confirm === "Is in database.") { // Wasn't working because a really simple string character was missing.
+                    let confirm = item.querySelector("div").querySelector("p");
+                    let value = item.querySelector("input").getAttribute("value");
+                    console.log(value);   
+    
+                    add.push({ 'Name': value });
+                    /*if (confirm === "Is in database") { // Wasn't working because a really simple string character was missing.
                         del.push({ 'Id': id, 'Name': item.getAttribute("value") });
                     } else {
-                        add.push({ 'Name': item.getAttribute("value") });
-                    }
+                        add.push({ 'Name': value });
+                    }*/
                 });
                 
             });
 
             $("#AddToDb").on('click', function (e) {
                 // Here we create an ajax request to add the selected checkbox values to the database.  We don't even have to use a separate function as this is handled by a click event.  It's that simple.
-                e.preventDefault();
+                //e.preventDefault();
+                console.log(add);
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Photos")",
-                    dataType: "json",
-                    data: JSON.stringify({
-                        add
-                    }),
+                    data: add,
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
                     async: false,
                     cache: false,
                     success: function (message) {

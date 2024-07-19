@@ -180,8 +180,23 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public IActionResult AddMultipleToDb( List<Photos> data)
+        public IActionResult AddMultipleToDb([FromBody]List<Photos> data)
         {
+            Console.WriteLine(data);
+            try
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (var photo in data)
+                {
+                    sb.Append(photo.Name);
+                }
+                TempData["Message"] = sb.ToString();
+                Console.WriteLine(sb.ToString());
+            }
+            catch (NullReferenceException ex)
+            {
+                Console.Write(ex.Message);
+            }
             return Json(new[] { data });
         }
 
@@ -189,13 +204,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult RemoveMultipleFromDb([FromBody] List<Photos> data)
         {
-            StringBuilder sb = new StringBuilder();
-            foreach (var item in data)
-            {
-                sb.Append(item.Name);
-            }
-            TempData["Message"] = sb.ToString();
-            _db.Photos.RemoveRange(data);
+                        _db.Photos.RemoveRange(data);
             _db.SaveChanges();
             return Json(new[] { data });
         }
