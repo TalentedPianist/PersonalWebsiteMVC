@@ -302,7 +302,10 @@
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Photos")",
-                    data: { add },
+                    dataType: "json",
+                    data: JSON.stringify({
+                        add
+                    }),
                     async: false,
                     cache: false,
                     success: function (message) {
