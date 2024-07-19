@@ -46,7 +46,7 @@
                         <figure>
                             <img id="thumbnail" src="@url" data-name="@file.Name" title="@file.Name">
                                 <div>
-                                <input id="checkbox" type="checkbox" name="image" value="@file.Name">
+                               
                                 </div>
                             @if (IsInDb(file.Name))
                             {
@@ -244,38 +244,26 @@
                     });
                 });
 
-                /*
-                if (CheckDb(strName) === false) {
+               
 
-                    $(this).find("figcaption").find("p:first").text("Not in database");
-                    confirm = $(this).find("figcaption").find("p:first").text();
+                if (CheckDb(strName) === true) {
+                    $(value).find("div:nth-of-type(1)").html(`
+                        <p>Is in database</p>
+                        <input type="checkbox" value="${strName}">
+                    `);
                 } else {
-                    $(this).find("figcaption").find("p:first").text("Is in database.");
-                    confirm = $(this).find("figcaption").find("p:first").text();
+                    $(value).find("div:nth-of-type(1)").html(`
+                        <p>Not in database</p>
+                        <input type="checkbox" value="${strName}">
+                    `);
                 }
-                */
-
 
 
                 $(this).on('mouseenter', function (e) {
                     e.preventDefault();
                     $(value).find("#DbCheck").addClass("overlay");
                     $(value).find("div:nth-of-type(1)").css("display", "flex");
-                    $(value).find("div:nth-of-type(1)").addClass("overlay");
-                 
-                    if (CheckDb(strName) == true) {
-                        $(value).find("div:nth-of-type(1)").html(`
-                            <input type="checkbox" value="${strName}">
-                            <input type="hidden" value="Delete">
-                            Is in database
-                        `);
-                    } else {
-                        $(value).find("div:nth-of-type(1)").html(`
-                            <input type="checkbox" value="${strName}">
-                            <input type="hidden" value="Add">
-                            Not in database
-                        `);
-                    }
+                    $(value).find("div:nth-of-type(1)").addClass("overlay"); 
                 });
 
                 $(this).on('mouseleave', function (e) {
@@ -291,26 +279,40 @@
             var del = [];
 
             // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.
-            let cb = document.querySelectorAll("input[name='image']");
+            let cb = document.querySelectorAll("figure");
             cb.forEach(function (item, index) {
+                
 
-
-            /*
-                let confirm = item.closest("figcaption").querySelector("p").innerText;
-                item.addEventListener('click', function () {
-                    console.log(PicId(item.getAttribute("value")));
-                    var id = PicId(item.getAttribute("value"));
-
+                item.addEventListener('click', function (event) {
+                    //event.preventDefault();
+                    // Here we don't use event.preventDefault() as that simply makes checkbox click not work.  Basics.
+                    let confirm = item.querySelector("p").innerHTML;
                     if (confirm === "Is in database.") { // Wasn't working because a really simple string character was missing.
                         del.push({ 'Id': id, 'Name': item.getAttribute("value") });
                     } else {
                         add.push({ 'Name': item.getAttribute("value") });
                     }
                 });
-                */
+                
             });
 
-
+            $("#AddToDb").on('click', function (e) {
+                // Here we create an ajax request to add the selected checkbox values to the database.  We don't even have to use a separate function as this is handled by a click event.  It's that simple.
+                e.preventDefault();
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("AddMultipleToDb", "Photos")",
+                    data: { add },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        console.log(message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
 
             function PicId(name) {
                 var id = 0;
@@ -378,14 +380,6 @@
             }
         });
 
-        function AddMultipleToDb(name) {
-            let result = undefined;
-            $.ajax({
-                method: "POST",
-                url: "@Url.Action("AddMultipleToDb", "Photos")",
-               
-            });
-        }
 
     </script>
 }
