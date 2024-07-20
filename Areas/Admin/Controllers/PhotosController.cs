@@ -32,7 +32,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("Photos/Index/{id}")]
         [Route("Areas/Admin/Photos/Index")]
 
-        public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
+        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
         { // X.PagedList is now working after adding the FromQuery attribute forcing it to use the pageNumber querystring.
             try
             {
@@ -180,39 +180,38 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public IActionResult AddMultipleToDb([FromBody]List<Photos> data)
+        public IActionResult AddMultipleToDb([FromBody] List<Photos> data)
         {
-            Console.WriteLine(data);
-            try
-            {
-                StringBuilder sb = new StringBuilder();
-                foreach (var photo in data)
-                {
-                    sb.Append(photo.Name);
-                }
-                TempData["Message"] = sb.ToString();
-                Console.WriteLine(sb.ToString());
-            }
-            catch (NullReferenceException ex)
-            {
-                Console.Write(ex.Message);
-            }
-            return Json(new[] { data });
+            List<Photos> list = new List<Photos>();
+            list = data;
+            _db.AddRange(list);
+            _db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         [Route("/Photos/RemoveMultipleFromDb")]
         [HttpPost]
         public IActionResult RemoveMultipleFromDb([FromBody] List<Photos> data)
         {
-                        _db.Photos.RemoveRange(data);
+            List<Photos> list = new List<Photos>();
+            list = data;
+            _db.Photos.RemoveRange(list);
             _db.SaveChanges();
-            return Json(new[] { data });
+            return RedirectToAction("Index");
         }
 
-        public int Comments(int id)
+        [HttpPost]
+        public int GetId([FromForm(Name="name")]string name)
         {
-            var comments = _db.Comments.Where(c => c.CommentID == id);
-            return comments.Count();
+            try
+            {
+                var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.Id;
+                return id;
+            }
+            catch (NullReferenceException)
+            {
+                return 0;
+            }
         }
     }
 }
