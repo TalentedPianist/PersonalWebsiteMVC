@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Web;
 using X.PagedList;
+using X.PagedList.Extensions;
 
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
@@ -49,11 +50,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 StringBuilder sb = new StringBuilder();
                 DirectoryInfo di = new DirectoryInfo(filePath);
 
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    sb.Append(file.Name);
-
-                }
 
                 ViewBag.Message = sb.ToString();
                 ViewBag.Files = di.GetFiles();
@@ -61,13 +57,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 var pageNumber = page ?? 1; // If no page was specified in the querystring, default to the first page (1)
                 var onePageOfFiles = di.GetFiles().ToPagedList(pageNumber, 10);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
+
+                return View();
             }
-            catch (FormatException ex)
+            catch (NullReferenceException)
             {
-                Console.WriteLine(ex.Message);
+
+                return View();
             }
-            return View();
         }
+
+
 
 
 
@@ -110,23 +110,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("/Photos/AjaxDbCheck")]
-        public bool AjaxDbCheck()
+        public bool AjaxDbCheck([FromForm(Name = "name")] string name)
         {
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var item in Request.Form["name"])
-            {
-                if (_db.Photos.Any(p => p.Name == item))
-                {
-                    return true;
-                }
-                else
-                {
-                    return false;
-                }
-            }
-            Console.WriteLine(sb.ToString());
-            return false;
+            if (_db.Photos.Where(p => p.Name == name).Any())
+                return true;
+            else
+                return false;
         }
 
         [HttpPost]
@@ -182,36 +171,58 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddMultipleToDb([FromBody] List<Photos> data)
         {
-            List<Photos> list = new List<Photos>();
-            list = data;
-            _db.AddRange(list);
+            // Here we are just deleting the photos from the database and ajax success function handles response on client side to refresh page.
+
+            _db.Photos.AddRange(data);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return Ok();
+
         }
 
         [Route("/Photos/RemoveMultipleFromDb")]
-        [HttpPost]
+        [HttpPost("/Photos/RemoveMultipleFromDb")]
         public IActionResult RemoveMultipleFromDb([FromBody] List<Photos> data)
         {
-            List<Photos> list = new List<Photos>();
-            list = data;
-            _db.Photos.RemoveRange(list);
+            // Here we are just deleting the photos from the database and ajax success function handles response on client side to refresh page.
+            _db.Photos.RemoveRange(data);
             _db.SaveChanges();
-            return RedirectToAction("Index");
+            return Ok();
+
         }
 
         [HttpPost]
-        public int GetId([FromForm(Name="name")]string name)
+        public int GetId([FromForm(Name = "name")] string name)
         {
-            try
+
+            var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.Id;
+            return id;
+
+
+        }
+
+        // Resuming normal functions for update, details and delete.
+        public IActionResult Update(int id)
+        {
+            var model = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            return View(model);
+        }
+
+        [HttpPost("Photos/UpdatePhoto")]
+        public IActionResult UpdatePhoto(Photos model)
+        {
+            var photo = _db.Photos.Where(p => p.Equals(model)).FirstOrDefault();
+            if (ModelState.IsValid)
             {
-                var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.Id;
-                return id;
+                photo!.Name = model.Name;
+                photo.Description = model.Description;
+                photo.Author = model.Author;
+                photo.ImageUrl = model.ImageUrl;
+                photo.AlbumID = model.AlbumID;
+                _db.Photos.Update(photo);
+                _db.SaveChanges();
+                return RedirectToAction("Update", model);
             }
-            catch (NullReferenceException)
-            {
-                return 0;
-            }
+            return View("Update", model);
         }
     }
 }

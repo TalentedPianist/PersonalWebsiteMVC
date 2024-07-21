@@ -17,7 +17,7 @@
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.0" />
-    <PackageReference Include="MailKit" Version="4.7.0" />
+    <PackageReference Include="MailKit" Version="4.7.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.7" />
@@ -43,17 +43,17 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="8.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="8.0.3" />
-    <PackageReference Include="MudBlazor" Version="7.1.0" />
+    <PackageReference Include="MudBlazor" Version="7.3.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
     <PackageReference Include="ServiceStack.Extensions" Version="8.3.0" />
     <PackageReference Include="Sitko.Blazor.CKEditor" Version="4.2.1" />
     <PackageReference Include="Sitko.Blazor.CKEditor.Bundle" Version="4.2.1" />
-    <PackageReference Include="SolrNet" Version="1.1.1" />
-    <PackageReference Include="SolrNet.Core" Version="1.1.1" />
-    <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.1.1" />
-    <PackageReference Include="X.PagedList" Version="9.1.2" />
-    <PackageReference Include="X.PagedList.Mvc.Core" Version="9.1.2" />
+    <PackageReference Include="SolrNet" Version="1.1.2" />
+    <PackageReference Include="SolrNet.Core" Version="1.1.2" />
+    <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.1.2" />
+    <PackageReference Include="X.PagedList" Version="10.0.3" />
+    <PackageReference Include="X.PagedList.Mvc.Core" Version="10.0.3" />
   </ItemGroup>
 
 

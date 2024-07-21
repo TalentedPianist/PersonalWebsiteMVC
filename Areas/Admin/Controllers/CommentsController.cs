@@ -8,6 +8,7 @@ using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using Microsoft.AspNetCore.Http;
 using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {

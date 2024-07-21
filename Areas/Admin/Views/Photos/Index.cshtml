@@ -45,20 +45,20 @@
 
                         <figure>
                             <img id="thumbnail" src="@url" data-name="@file.Name" title="@file.Name">
-                                <div>
-                               
-                                </div>
+                            <div>
+
+                            </div>
                             @if (IsInDb(file.Name))
                             {
                                 if (GetPicId(file.Name) > 0)
                                 {
                                     <div>
-                                        <a id="test" href="" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
-                                        <a asp-action="Update" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Update</a>
-                                        <a asp-action="Details" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Details</a>
-                                        <a asp-action="Delete" asp-route-id="@GetPicId(file.Name)" asp-controller="Photos" asp-area="Admin">Delete</a>
+                                        <a href="#" data-name="@file.Name" data-album="@ViewBag.AlbumName">View</a>
+                                        <a asp-action="Update" asp-route-id="@GetPicId(file.Name)" asp-route-album="@ViewBag.AlbumID" asp-controller="Photos" asp-area="Admin">Update</a>
+                                        <a asp-action="Details" asp-route-id="@GetPicId(file.Name)" asp-route-album="@ViewBag.AlbumID" asp-controller="Photos" asp-area="Admin">Details</a>
+                                        <a asp-action="Delete" asp-route-id="@GetPicId(file.Name)" asp-route-album="@ViewBag.AlbumID" asp-controller="Photos" asp-area="Admin">Delete</a>
                                     </div>
-                                    
+
 
                                 }
                                 else
@@ -74,9 +74,8 @@
 
                     }
                 }
-                catch (NullReferenceException ex)
+                catch (NullReferenceException)
                 {
-                    @ex.Message
                 }
             }
 
@@ -98,8 +97,8 @@
 }
 
 <div id="DbLinks">
-<a href="#" id="AddToDb">Add to Database</a> |
-<a href="#" id="DelFromDb">Delete from Database</a>
+    <a href="#" id="AddToDb">Add to Database</a> |
+    <a href="#" id="DelFromDb">Delete from Database</a>
 </div>
 
 <!--
@@ -166,11 +165,12 @@
     <script>
 
         $(function () {
+
             function GetId(name) {
                 let result = undefined;
                 $.ajax({
                     method: "POST",
-                    url: "@Url.Action("GetId", "Photos")",
+                    url: "@Url.Action("GetPicId", "Photos")",
                     data: {
                         'name': name,
                     },
@@ -194,12 +194,12 @@
                     data: { 'name': name },
                     cache: false,
                     async: false,
-                }).done(function (data, textStatus, xhr) {
-
-                    if (xhr.responseText === "false") {
-                        result = false;
-                    } else {
-                        result = true;
+                    success: function (message) {
+                        //console.log(message);
+                        result = message;
+                    },
+                    error: function (err) {
+                        //console.log(err);
                     }
                 });
                 return result;
@@ -212,7 +212,7 @@
                 let strName = $(value).find("img").data('name');
                 let src = $(value).find("img").attr('src');
                 let album = $(value).find("a").data('album');
-                let open = $(value).find("a");
+                let open = $(value).find("a:first-child");
                 let confirm = undefined;
 
                 $(open).on('click', function (event) {
@@ -247,7 +247,7 @@
                     });
                 });
 
-               
+
 
                 if (CheckDb(strName) === true) {
                     $(value).find("div:nth-of-type(1)").html(`
@@ -266,7 +266,7 @@
                     e.preventDefault();
                     $(value).find("#DbCheck").addClass("overlay");
                     $(value).find("div:nth-of-type(1)").css("display", "flex");
-                    $(value).find("div:nth-of-type(1)").addClass("overlay"); 
+                    $(value).find("div:nth-of-type(1)").addClass("overlay");
                 });
 
                 $(this).on('mouseleave', function (e) {
@@ -284,7 +284,7 @@
             // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.
             let cb = document.querySelectorAll("figure");
             cb.forEach(function (item, index) {
-                
+
 
                 item.addEventListener('click', function (event) {
 
@@ -292,23 +292,21 @@
                     // Here we don't use event.preventDefault() as that simply makes checkbox click not work.  Basics.
                     let confirm = item.querySelector("div").querySelector("p").innerHTML;
                     let value = item.querySelector("input").getAttribute("value");
-             
-                    let id = GetId(value);
-            
-                        if (confirm == "Is in database") { // Wasn't working because a really simple string character was missing.
+                    let img = document.querySelector("#Gallery figure").querySelector("img").getAttribute("src");
+                    
+                    if (confirm === "Is in database") { // Wasn't working because a really simple string character was missing.
+                        let id = GetId(value);
                             del.push({ 'Id': id, 'Name': item.getAttribute("value") });
                         } else {
-                            add.push({ 'Name': value });
+                            add.push({ 'Name': value, 'AlbumID': @ViewBag.AlbumID, 'ImageUrl': img  });
                         }
-                    
+
                 });
-                
+
             });
 
             $("#AddToDb").on('click', function (e) {
                 // Here we create an ajax request to add the selected checkbox values to the database.  We don't even have to use a separate function as this is handled by a click event.  It's that simple.
-                //e.preventDefault();
-                console.log(add);
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Photos")",
@@ -320,14 +318,16 @@
                     cache: false,
                     success: function (message) {
                         console.log(message);
+                        window.location.reload(); // Needed since we are just trying to update the page with ajax and don't need a server side redirect.
                     },
                     error: function (err) {
-                        console.log(err);
+                        //console.log(err);
                     }
                 });
             });
 
             $("#DelFromDb").on('click', function (event) {
+                event.preventDefault();
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
@@ -339,6 +339,7 @@
                     cache: false,
                     success: function (message) {
                         console.log(message);
+                        window.location.reload(); // Needed since we are just trying to update page data with ajax and don't need server side redirect.
                     },
                     error: function (err) {
                         console.log(err);
@@ -346,70 +347,8 @@
                 });
             });
 
-            function PicId(name) {
-                var id = 0;
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("GetPicId", "Photos", new { album = ViewBag.AlbumName })",
-                    data: { 'name': name },
-                    cache: false,
-                    async: false,
-                    success: function (message) {
-                        id = message;
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-                return id;
-            }
 
-            function AddToDb(name) {
-                let result = undefined;
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("AddToDb", "Photos", new { album = ViewBag.AlbumName })",
-                    data: { name: name },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        //console.log(message);
-                        result = true;
-                        $("#myModal").find("#AddToDb").hide();
-                        $("#myModal").find("#DelFromDb").show();
-                    },
-                    error: function (err) {
-                        //console.log(err);
-                        result = false;
-                    }
-                });
-                return result;
-            }
 
-            function DelFromDb(name) {
-                let result = undefined;
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("DelFromDb", "Photos", new { album = ViewBag.Album })",
-                    data: { name: name },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        //console.log(message);
-                        result = true;
-                        /*
-                            For future reference, the code below is key to what I want to achieve.  Having it in the success function of ajax makes perfect sense!!
-                        */
-                        $("#myModal").find("#DelFromDb").hide();
-                        $("#myModal").find("#AddToDb").show();
-                    },
-                    error: function (err) {
-                        //console.log(err);
-                        result = false;
-                    }
-                });
-                return result;
-            }
         });
 
 

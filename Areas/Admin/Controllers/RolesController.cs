@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteBlazor.Models;
 using PersonalWebsiteMVC.Models;
 using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {

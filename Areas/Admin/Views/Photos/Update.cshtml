@@ -1,0 +1,54 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model Photos
+@inject ApplicationDbContext _db
+@inject UserManager<ApplicationUser> _userManager
+
+@TempData["Message"]
+
+<h1 class="bg bg-info text-white">Update</h1>
+<a asp-action="Index" asp-route-id="@Context.Request.Query["album"]" asp-controller="Photos" asp-area="Admin" class="btn btn-link">Back</a>
+
+<form method="post" asp-action="UpdatePhoto">
+    <div asp-validation-summary="All"></div>
+    <div class="form-group">
+        <label>Id:</label>
+        <input asp-for="Id" class="form-control" disabled">
+    </div>
+    <div class="form-group">
+        <label>Name:</label>
+        <input asp-for="Name" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Description:</label>
+        <textarea asp-for="Description" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+        <label>Author:</label>
+        <select asp-for="Author" class="form-control">
+            @foreach (var item in _userManager.Users)
+            {
+                <option value="@item.Id">@item.UserName</option>
+            }
+        </select>
+    </div>
+    <div class="form-group">
+        <label>Image Url:</label>
+        <input asp-for="ImageUrl" class="form-control">
+    </div>
+    <div class="form-group">
+        <label>Album:</label>
+        <select asp-for="AlbumID" class="form-control">
+            @foreach (var item in _db.Albums)
+            {
+                <option value="@item.Id">@item.Name</option>
+            }
+        </select>
+    </div>
+    <input type="hidden" asp-for="Id" value="@Model.Id">
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
