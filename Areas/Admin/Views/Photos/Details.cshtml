@@ -1,0 +1,26 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model Photos
+
+<h1 class="bg bg-info">Details</h1>
+<a asp-action="Index" asp-route-id="@Context.Request.Query["album"]" class="btn btn-link">Back</a>
+
+<dl class="list-group list-disc">
+    <dt>Name:</dt>
+    <dd>@Model.Name</dd>
+    <dt>Description:</dt>
+    <dd>@Model.Description</dd>
+    <dt>Author:</dt>
+    <dd>@Model.Author</dd>
+    <dt>Image Url:</dt>
+    <dd>@Model.ImageUrl</dd>
+    <dt>Album ID:</dt>
+    <dd>@Model.AlbumID</dd>
+</dl>
+
+<a asp-action="Update" asp-route-id="@Model.Id" class="btn btn-link">Update</a> | 
+<a asp-action="Delete" asp-route-id="@Model.Id" class="btn btn-link">Delete</a>

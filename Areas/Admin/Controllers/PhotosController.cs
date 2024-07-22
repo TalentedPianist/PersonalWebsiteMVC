@@ -224,5 +224,24 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             }
             return View("Update", model);
         }
+
+        public IActionResult Details(int id)
+        {
+            var model = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            return View(model);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            var model = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult DeletePhoto(Photos model)
+        {
+            TempData["Message"] = model.Id;
+            return View("~/Areas/Admin/Views/Photos/Delete.cshtml", model);
+        }
     }
 }

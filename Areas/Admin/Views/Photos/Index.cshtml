@@ -293,13 +293,14 @@
                     let confirm = item.querySelector("div").querySelector("p").innerHTML;
                     let value = item.querySelector("input").getAttribute("value");
                     let img = document.querySelector("#Gallery figure").querySelector("img").getAttribute("src");
-                    
+
                     if (confirm === "Is in database") { // Wasn't working because a really simple string character was missing.
                         let id = GetId(value);
-                            del.push({ 'Id': id, 'Name': item.getAttribute("value") });
-                        } else {
-                            add.push({ 'Name': value, 'AlbumID': @ViewBag.AlbumID, 'ImageUrl': img  });
-                        }
+                        del.push({ 'Id': id, 'Name': item.getAttribute("value") });
+                    } else {
+                        add.push({ 'Name': value, 'AlbumID': @ViewBag.AlbumID, 'ImageUrl': img });
+                    }
+                
 
                 });
 
