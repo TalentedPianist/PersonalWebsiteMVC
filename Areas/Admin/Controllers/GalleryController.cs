@@ -28,7 +28,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             var gallery = _db.Albums;
             var pageNumber = page ?? 1;
-            var model = gallery.ToPagedList(pageNumber, 1);
+            var model = gallery.ToPagedList(pageNumber, 10);
             return View(model);
         }
 
@@ -40,7 +40,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Create")]
-        public IActionResult CreateAlbum(Album model)
+        public IActionResult CreateAlbum(Album model, [FromForm(Name="coverPhoto")]IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -48,7 +48,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 album.Id = model.Id;
                 album.DateCreated = DateTime.Now;
                 album.Description = model.Description;
-                album.CoverPhoto = model.CoverPhoto;
+                album.CoverPhoto = file.FileName;
                 album.Name = model.Name;
                 album.Location = model.Location;
                 _db.Add(album);
@@ -80,7 +80,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
    
         [HttpPost]
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Update")]
-        public IActionResult UpdateAlbum(Album model, [FromForm(Name="AlbumID")]int AlbumID)
+        public IActionResult UpdateAlbum(Album model, [FromForm(Name="AlbumID")]int AlbumID, [FromForm(Name="coverPhoto")]IFormFile file)
         {
             var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
             if (ModelState.IsValid)
@@ -88,12 +88,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 album!.Name = model.Name;
                 album.Location = model.Location;
                 album.Description = model.Description;
-                album.CoverPhoto = model.CoverPhoto;
+                album.CoverPhoto = file.FileName;
                 _db.Update(album);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(model);
+
+            return View("~/Areas/Admin/Views/Gallery/Update.cshtml", model);
         }
 
         public IActionResult Details(int id)

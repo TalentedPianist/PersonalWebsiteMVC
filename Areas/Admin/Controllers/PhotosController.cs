@@ -222,6 +222,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Update", model);
             }
+   
             return View("Update", model);
         }
 
