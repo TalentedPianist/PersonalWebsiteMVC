@@ -25,6 +25,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.AspNetCore.Mvc.Razor;
+using HGO.ASPNetCore.FileManager;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -160,8 +161,7 @@ builder.Services.Configure<RouteOptions>(options =>
     options.AppendTrailingSlash = true;
 });
 
-
-
+builder.Services.AddHgoFileManager();
 
 var app = builder.Build();
 
@@ -175,6 +175,7 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
+app.UseHgoFileManager();
 
 app.UseSession();
 

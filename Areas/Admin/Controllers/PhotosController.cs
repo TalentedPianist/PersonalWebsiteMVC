@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HGO.ASPNetCore.FileManager.CommandsProcessor;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.Extensions.Primitives;
 using Newtonsoft.Json;
@@ -20,13 +21,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         private ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
         public IHttpContextAccessor Context { get; set; }
+        private readonly IFileManagerCommandsProcessor _processor;
 
-        public PhotosController(ApplicationDbContext db, IWebHostEnvironment host, IHttpContextAccessor context)
+        public PhotosController(ApplicationDbContext db, IWebHostEnvironment host, IHttpContextAccessor context, IFileManagerCommandsProcessor processor)
         {
             _db = db;
             Host = host;
             Context = context;
-
+            _processor = processor;
         }
 
         [Route("Photos/Index")]
@@ -243,6 +245,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             TempData["Message"] = model.Id;
             return View("~/Areas/Admin/Views/Photos/Delete.cshtml", model);
+        }
+
+        //HgoAspNetCore filemanager 
+        [HttpGet, HttpPost]
+        public async Task<IActionResult> HgoApi(string id, string command, string parameters, IFormFile file)
+        {
+            return await _processor.ProcessCommandAsync(id, command, parameters, file);
         }
     }
 }

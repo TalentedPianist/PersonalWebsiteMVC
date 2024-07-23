@@ -14,6 +14,7 @@
     <PackageReference Include="Blazor.Pagination" Version="2.0.2" />
     <PackageReference Include="BlazorPagination" Version="0.2.16" />
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.14.6" />
+    <PackageReference Include="HGO.ASPNetCore.FileManager" Version="1.0.7" />
     <PackageReference Include="HtmlAgilityPack" Version="1.11.61" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.0" />

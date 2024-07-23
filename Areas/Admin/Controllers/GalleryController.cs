@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using HGO.ASPNetCore.FileManager.CommandsProcessor;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PersonalWebsiteMVC.Data;
@@ -15,11 +16,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
+        private readonly IFileManagerCommandsProcessor _processor;
        
-        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env) 
+        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env, IFileManagerCommandsProcessor processor) 
         {
             _db = db;
             Host = env;
+            _processor = processor;
         }
 
 
@@ -120,7 +123,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/Gallery/Update.cshtml", album);
         }
 
-
-    
+        [HttpPost, HttpGet]
+        public async Task<IActionResult> HgoApi(string id, string command, string parameters, IFormFile file)
+        {
+            return await _processor.ProcessCommandAsync(id, command, parameters, file);
+        }
     }
 }

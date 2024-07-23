@@ -5,10 +5,14 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Extensions
 @inject IHttpContextAccessor http
+@using HGO.ASPNetCore.FileManager.ViewComponentsModel
+@using HGO.ASPNetCore.FileManager.ViewComponents
+@using HGO.ASPNetCore.FileManager
 
 <!DOCTYPE html>
 <html manifest="cache.manifest">
 <head>
+    <base href="~/Admin"> <!-- This is needed for external packages to work properly!! -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="expires" content="0">
@@ -17,6 +21,10 @@
     <link rel="stylesheet" href="/lib/jquery-modal/jquery.modal.min.css">
     <link rel="stylesheet" href="/css/Admin.css?v=@n">
     <title>@ViewBag.Title</title>
+
+    @*HGO.AspNetCore.FileManager Styles*@
+    @this.RenderHgoFileManagerCss(true)
+    @*---------------------------------*@
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
@@ -84,8 +92,11 @@
 
     <script src="/js/Admin.js?v=@n"></script>
 
-
+    @*HGO.AspNetCore.FileManager Scripts*@
+    @this.RenderHgoFileManagerJavaScripts()
+    @*----------------------------------*@
     @RenderSection("Scripts", required: false)
+
 
 </body>
 </html>

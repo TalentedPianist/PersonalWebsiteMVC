@@ -78,19 +78,21 @@
 }
 
 .modal {
-    height: revert !important;
+    z-index: 10000 !important;
     position: absolute !important;
     top: 0 !important;
-}
+    max-width: unset !important;
+    height: 100vw !important;
 
-.modal-content {
-    border: 0 !important;
-}
+    /* max-width: unset is required both in root element and modal-dialog to work properly */
+    .modal-dialog { 
+        max-width: unset !important;
+    }
 
-.modal-body {
-    border: 0 !important;
-
-    img { 
-        width: 100% !important;
+    .modal-body { 
+        height: 100vw !important;
     }
 }
+
+
+
