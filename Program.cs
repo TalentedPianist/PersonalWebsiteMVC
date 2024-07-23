@@ -175,6 +175,17 @@ else
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
+
+var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Gallery"));
+var options = new FileServerOptions
+{
+    FileProvider = fileProvider,
+    RequestPath = "/Gallery",
+    EnableDirectoryBrowsing = true,
+    
+};
+app.UseFileServer(options);
+
 app.UseHgoFileManager();
 
 app.UseSession();

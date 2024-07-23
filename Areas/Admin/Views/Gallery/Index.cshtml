@@ -4,37 +4,63 @@
 }
 @model PagedList<Album>
 @using X.PagedList
-@using X.PagedList.Mvc.Core 
+@using X.PagedList.Mvc.Core
+@using HGO.ASPNetCore.FileManager.ViewComponentsModel
+@inject IWebHostEnvironment _env
+
 
 <h1 class="bg bg-info p-1">Albums</h1>
 <a asp-action="Create" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Create</a>
 
-<table class="table table-bordered">
-    <thead>
-    <tr>
-    <th>Name</th>
-    <th>Update</th>
-    <th>Details</th>
-    <th>Delete</th>
-   </tr>
-   </thead>
-    <tbody>
-@foreach (Album album in Model)
-{
-    <tr>
-    <td><a asp-action="Index" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Photos">@album.Name</a></td>
-    <td><a asp-action="Update" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Gallery">Update</a></td>
-    <td><a asp-action="Details" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Gallery">Details</a></td>
-    <td><a asp-action="Delete" asp-route-id="@album.Id" asp-area="Admin" asp-controller="Gallery">Delete</a></td>
-    </tr>
-}
-    </tbody>
-</table>
+@TempData["Message"]
 
-@Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { pageNumber = page, area = "Admin" }),
-    new PagedListRenderOptions
-    {
-        DisplayItemSliceAndTotal = true,
-        LiElementClasses = new string[] { "page-item" },
-        PageClasses = new string[] { "page-link" }
-    })
+@if (ViewBag.NoAlbums)
+{
+    <p>No albums have been found.</p>
+    <button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Create Album</button>
+}
+else
+{
+    <div id="Albums">
+        @foreach (DirectoryInfo info in ViewBag.AllDirectories)
+        {
+            <figure>
+                <svg enable-background="new 0 0 48 48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                <figcaption>
+                    @info.Name
+                </figcaption>
+            </figure>
+           
+        }
+    </div>
+}
+
+
+<div class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+           {
+                Id = "FM1",
+                RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
+                ApiEndPoint = Url.Action("HgoApi")!,
+                Config = new FileManagerConfig(),
+           })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+}

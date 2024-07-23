@@ -1,10 +1,12 @@
 ﻿using HGO.ASPNetCore.FileManager.CommandsProcessor;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
+using System.Web;
 using X.PagedList;
 using X.PagedList.Extensions;
 
@@ -29,6 +31,23 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery")]
         public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
         {
+            var filePath = Path.Combine(Host.ContentRootPath, "Gallery");
+            DirectoryInfo di = new DirectoryInfo(filePath);
+
+            if (System.IO.Directory.GetDirectories(filePath).Length > 0)
+            {
+                ViewBag.NoAlbums = false;
+            }
+            else
+            {
+                ViewBag.NoAlbums = true;
+            }
+
+            if (ViewBag.NoAlbums == false)
+            {
+                ViewBag.AllDirectories = di.GetDirectories();
+            }
+
             var gallery = _db.Albums;
             var pageNumber = page ?? 1;
             var model = gallery.ToPagedList(pageNumber, 10);
@@ -127,6 +146,28 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public async Task<IActionResult> HgoApi(string id, string command, string parameters, IFormFile file)
         {
             return await _processor.ProcessCommandAsync(id, command, parameters, file);
+        }
+
+
+
+        public bool DirectoryIsEmpty(string path)
+        {
+            int fileCount = Directory.GetFiles(path).Length;
+            if (fileCount > 0)
+            {
+                return false;
+            }
+
+            string[] dirs = Directory.GetDirectories(path);
+            foreach (string dir in dirs)
+            {
+                if (!DirectoryIsEmpty(dir))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
     }
 }

@@ -90,7 +90,22 @@
     }
 
     .modal-body { 
-        height: 100vw !important;
+        height: 40vw !important;
+    }
+}
+
+#Albums { 
+    display: grid;
+    grid-template-columns: repeat(4, 0.5fr);
+    position: relative;
+    align-items: center;
+
+    figcaption { 
+        text-align: center;
+    }
+
+    svg { 
+        width: 100%;
     }
 }
 

@@ -44,8 +44,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
                 var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
                 var photos = _db.Photos.Where(p => p.AlbumID == id);
-                var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
-                ViewBag.AlbumName = album.Name;
+                var filePath = Path.Combine(Host.ContentRootPath, "Gallery");
+                ViewBag.AlbumName = album!.Name;
                 ViewBag.AlbumID = album.Id;
                 ViewBag.Path = filePath;
 
@@ -80,7 +80,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
             long size = files.Sum(f => f.Length);
             StringBuilder sb = new StringBuilder();
-            var filePath = Host.WebRootPath + "\\Gallery\\" + album!.Name;
+            var filePath = Path.Combine(Host.ContentRootPath, "Gallery");
             try
             {
                 foreach (IFormFile file in files)

@@ -65,5 +65,18 @@
   max-width: unset !important;
 }
 .modal .modal-body {
-  height: 100vw !important;
+  height: 40vw !important;
+}
+
+#Albums {
+  display: grid;
+  grid-template-columns: repeat(4, 0.5fr);
+  position: relative;
+  align-items: center;
+}
+#Albums figcaption {
+  text-align: center;
+}
+#Albums svg {
+  width: 100%;
 }
