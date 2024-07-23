@@ -58,5 +58,10 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Folder Include="Gallery\" />
+  </ItemGroup>
+
+
 
 </Project>

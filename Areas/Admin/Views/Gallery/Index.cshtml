@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @model PagedList<Album>
 @using X.PagedList
@@ -16,51 +16,106 @@
 
 @if (ViewBag.NoAlbums)
 {
-    <p>No albums have been found.</p>
-    <button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Create Album</button>
+	<p>No albums have been found.</p>
+	<button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Create Album</button>
 }
 else
 {
-    <div id="Albums">
-        @foreach (DirectoryInfo info in ViewBag.AllDirectories)
-        {
-            <figure>
-                <svg enable-background="new 0 0 48 48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-                <figcaption>
-                    @info.Name
-                </figcaption>
-            </figure>
-           
-        }
-    </div>
+	<div id="Albums">
+		@foreach (DirectoryInfo info in ViewBag.AllDirectories)
+		{
+			<figure>
+				<svg enable-background="new 0 0 48 48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+				<div></div>
+				<figcaption data-name="@info.Name">
+					@info.Name
+				</figcaption>
+			</figure>
+
+		}
+	</div>
 }
 
 
 <div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
-           {
-                Id = "FM1",
-                RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
-                ApiEndPoint = Url.Action("HgoApi")!,
-                Config = new FileManagerConfig(),
-           })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+		   {
+				Id = "FM1",
+				RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
+				ApiEndPoint = Url.Action("HgoApi")!,
+				Config = new FileManagerConfig(),
+		   })
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 @section Scripts {
+
+	<script>
+        $(function () {
+
+            function CheckDb(name) {
+                let result = undefined;
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("CheckDb", "Gallery")",
+                    data: { 'name': name },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        console.log(message);
+                        result = message;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+                return result;
+            }
+
+            $("#Albums figure").each(function (index, value) {
+                let name = $(this).find("figcaption").text();
+                CheckDb(name);
+                $(this).on('mouseenter', function (event) {
+                    $(this).addClass('overlay');
+					if (CheckDb(name) == false) {
+						$(this).find('div').html(`
+						<p>Not in database</p>
+						<input type="checkbox" id="AddToDb" value="${name}">
+                    `);
+					} else {
+						$(this).find('div').html(`
+							<p>Is in database</p>
+							<input type="checkbox" id="DelFromDb" value="${name}">
+						`);
+					}
+                });
+
+                $(this).on('mouseleave', function (event) {
+                    $(this).removeClass('overlay');
+				});
+
+				let checkbox = $(this).find("div").find("checkbox");
+				checkbox.addEventListener('click', function (event) {
+					console.log('Clicked');
+				});
+            });
+		});
+
+		
+	</script>
 }

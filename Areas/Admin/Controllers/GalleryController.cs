@@ -169,5 +169,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
             return true;
         }
+
+        [HttpPost]
+        public bool CheckDb([FromForm(Name="name")]string name)
+        {
+            var photo = _db.Albums.Where(a => a.Name == name).Any();
+            if (photo)
+                return true;
+            else
+                return false;
+
+            
+        }
     }
 }

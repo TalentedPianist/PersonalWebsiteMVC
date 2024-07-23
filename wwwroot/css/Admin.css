@@ -42,10 +42,11 @@
 }
 
 .overlay {
-  position: absolute !important;
-  top: 0;
-  left: 0;
+  position: relative;
+  width: inherit;
   background-color: rgba(0, 0, 0, 0.6);
+  z-index: 10000 !important;
+  text-align: center;
 }
 
 #myModal {
@@ -73,10 +74,25 @@
   grid-template-columns: repeat(4, 0.5fr);
   position: relative;
   align-items: center;
+  justify-content: center;
+  text-align: center;
 }
 #Albums figcaption {
   text-align: center;
 }
 #Albums svg {
+  width: 100%;
+  position: relative;
+  z-index: -1;
+}
+#Albums div {
+  position: absolute;
+  top: 40%;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  color: white;
+  text-align: center;
+  margin: 0 auto;
   width: 100%;
 }
