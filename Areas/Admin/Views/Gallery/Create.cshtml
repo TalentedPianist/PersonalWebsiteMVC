@@ -6,6 +6,7 @@
 }
 @model Album
 @using HGO.ASPNetCore.FileManager.ViewComponentsModel
+@inject IWebHostEnvironment _env 
 
 <h1 class="bg bg-info p-1">Create Album</h1>
 <a asp-action="Index" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Back</a>
@@ -47,7 +48,7 @@
                 @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
                 {
                     Id = "FM1",
-                    RootFolder = AppDomain.CurrentDomain.BaseDirectory,
+                    RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
                     ApiEndPoint = Url.Action("HgoApi")!,
                     Config = new FileManagerConfig()
                 });
