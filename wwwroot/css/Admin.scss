@@ -1,4 +1,7 @@
 ﻿
+figure {
+    margin: revert !important;
+}
 
 
 #Gallery {
@@ -7,7 +10,7 @@
     grid-template-columns: repeat(4, 0.5fr);
     grid-gap: 1em;
 
-    
+
 
     img {
         width: 100%;
@@ -17,11 +20,11 @@
     figure {
         position: relative;
         margin: 0 !important;
-   
+
 
         div {
-            &:nth-of-type(1) { 
-                position: absolute; 
+            &:nth-of-type(1) {
+                position: absolute;
                 top: 0;
                 width: 100%;
                 align-items: center;
@@ -35,25 +38,20 @@
                 padding-bottom: 2em;
             }
 
-            &:nth-of-type(2) { 
-                display: flex; 
+            &:nth-of-type(2) {
+                display: flex;
                 gap: 1em;
             }
         }
 
-        p { 
+        p {
             position: relative;
             z-index: 500 !important;
         }
-
-    
-       
     }
 
     figcaption {
     }
-
-  
 }
 
 #DbLinks {
@@ -74,8 +72,6 @@
 #myModal {
     z-index: 10000 !important;
     border: none !important;
-
-    
 }
 
 .modal {
@@ -84,53 +80,102 @@
     top: 0 !important;
     max-width: unset !important;
     height: 100vw !important;
-
     /* max-width: unset is required both in root element and modal-dialog to work properly */
-    .modal-dialog { 
+    .modal-dialog {
         max-width: unset !important;
     }
 
-    .modal-body { 
+    .modal-body {
         height: 40vw !important;
     }
 }
 
-#Albums { 
+#Albums {
     display: grid;
     grid-template-columns: repeat(4, 0.5fr);
     position: relative;
-    align-items: center;
     justify-content: center;
     text-align: center;
+    margin-bottom: 1em;
+    padding-bottom: 1em;
+    border-bottom: 1px solid black;
 
-    figcaption { 
-        text-align: center;
+    figure {
+        position: relative;
+        margin: 0 !important;
+        display: flex; 
+        flex-direction: column;
+        flex: 0; 
+        align-items: center;
+
+        svg { 
+            width: 100%;
+            height: 100%;
+        }
     }
 
-    svg { 
+    figcaption {
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        flex: 0;
+        align-items: center;
+        
+
+        div { 
+            display: none !important;
+        }
+
+        ul { 
+            list-style-type: none;
+            display: flex; 
+            flex-direction: column;
+            flex: 0; 
+            align-items: flex-start;
+            width: 100%;
+            margin-left: 0;
+            padding-left: 0;
+
+            @media only screen and (min-width: 600px) { 
+                flex-direction: row;
+                gap: 1em;
+            }
+        }
+    }
+
+    svg {
         width: 100%;
         position: relative;
         z-index: -1;
     }
 
-    div { 
-        position: absolute; 
-        top: 40%; 
+    div {
+        &:nth-of-type(1) {
+            position: absolute;
+            top: 40%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto;
+            width: inherit;
+            z-index: 50000;
+        }
+
+        &:nth-of-type(2) { 
+            position: relative;
+            display: flex;
+
+          
+        }
+
+    }
+
+    .overlay {
         display: flex;
         flex-direction: column;
         align-items: center;
-        justify-content: center;
-        margin: 0 auto;
-        width: inherit;
     }
 
-    .overlay { 
-        display: flex; 
-        flex-direction: column;
-        align-items: center;
-        
-    }
+
 }
-
-
-

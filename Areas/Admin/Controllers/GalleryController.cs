@@ -181,5 +181,28 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
             
         }
+
+        [HttpPost]
+        public IActionResult AddMultipleToDb([FromBody]List<Album> data)
+        {
+            _db.Albums.AddRange(data);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult RemoveMultipleFromDb([FromBody] List<Album> data)
+        {
+            _db.Albums.RemoveRange(data);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost]
+        public int GetId(string name)
+        {
+            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+            return album!.Id;
+        }
     }
 }

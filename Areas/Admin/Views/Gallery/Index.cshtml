@@ -7,6 +7,7 @@
 @using X.PagedList.Mvc.Core
 @using HGO.ASPNetCore.FileManager.ViewComponentsModel
 @inject IWebHostEnvironment _env
+@inject ApplicationDbContext _db
 
 
 <h1 class="bg bg-info p-1">Albums</h1>
@@ -25,9 +26,25 @@ else
         @foreach (DirectoryInfo info in ViewBag.AllDirectories)
         {
             <figure>
-                <svg enable-background="new 0 0 48 48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                <svg preserveAspectRatio="none" enable-background="new 0 0 48 48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
                 <div></div>
                 <figcaption data-name="@info.Name">
+                    @if (IsInDb(info.Name))
+                    {
+                        <ul> 
+                            <li><a href="#">View</a></li>
+                            <li><a asp-action="Update" asp-route-id="@GetId(info.Name)">Update</a></li>
+                            <li><a asp-action="Details" asp-route-id="@GetId(info.Name)">Details</a></li>
+                            <li><a asp-action="Delete" asp-route-id="@GetId(info.Name)">Delete</a></li>
+                            </ul>
+                        
+                    }
+                    else
+                    {
+                        <ul>
+                            <li><a href="#">View</a></li>
+                        </ul>
+                    }
                     @info.Name
                 </figcaption>
             </figure>
@@ -56,10 +73,10 @@ else
             <div class="modal-body">
                 @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
            {
-                Id = "FM1",
-                RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
-                ApiEndPoint = Url.Action("HgoApi")!,
-                Config = new FileManagerConfig(),
+               Id = "FM1",
+               RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
+               ApiEndPoint = Url.Action("HgoApi")!,
+               Config = new FileManagerConfig(),
            })
             </div>
             <div class="modal-footer">
@@ -68,6 +85,24 @@ else
         </div>
     </div>
 </div>
+
+
+@functions {
+    bool IsInDb(string name)
+    {
+        var album = _db.Albums.Where(a => a.Name == name).Any();
+        if (album)
+            return true;
+        else
+            return false;
+    }
+
+    int GetId(string name)
+    {
+        var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+        return album!.Id;
+    }
+}
 
 
 @section Scripts {
@@ -94,30 +129,51 @@ else
                 return result;
             }
 
+            function GetId(name) {
+                let result = 0;
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("GetId", "Gallery")",
+                    data: { 'name': name },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        result = message;
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+                return result;
+            }
+
             $("#Albums figure").each(function (index, value) {
-                let name = $(this).find("figcaption").text();
+                let name = $(this).find("figcaption").data('name');
+                $(this).find('div:nth-of-type(1)').hide();
 
                 if (CheckDb(name) === false) {
-                    $(this).find('div').html(`
+                    $(this).find('div:nth-of-type(1)').html(`
 				<p>Not in database</p>
 				<input type="checkbox" value="${name}">
 `);
-					$(this).find('div').hide();
+				
 
                 } else {
-                    $(this).find('div').html(`
+                    $(this).find('div:nth-of-type(1)').html(`
 					<p>Is in database</p>
 					<input type="checkbox" value="${name}">
 				`);
                 }
+               
+
                 $(this).on('mouseenter', function (event) {
-                    $(this).addClass('overlay');
-					$(this).find('div').show();
+                    $(this).find('svg').addClass('overlay');
+					$(this).find('div:nth-of-type(1)').show();
                 });
 
                 $(this).on('mouseleave', function (event) {
-					$(this).removeClass('overlay');
-					$(this).find('div').hide();
+					$(this).find('svg').removeClass('overlay');
+					$(this).find('div:nth-of-type(1)').hide();
 				});
 
 				let checkbox = value.querySelector("input[type='checkbox']");
@@ -128,15 +184,66 @@ else
 
 
 				checkbox.addEventListener('click', function (e) {
-					if (confirm == "Not in database") {
-						add.push(e.target.value);
+					if (confirm === "Not in database") {
+                        add.push({ 'Name': e.target.value });
 					}
-					if (confirm == "Is in database") {
-						del.push(e.target.value);
+					if (confirm === "Is in database") {
+                        del.push({ 'Id': GetId(e.target.value), 'Name': e.target.value });
 					}
 					console.log(add.length);
-				});
+                });
+
+                $("#AddToDb").on('click', function (event) {
+                    event.preventDefault();
+
+                    $.ajax({
+                        method: "POST",
+                        url: "@Url.Action("AddMultipleToDb", "Gallery")",
+                        data: JSON.stringify(add),
+                        dataType: 'json',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        async: false,
+                        cache: false,
+                        success: function (message) {
+                            //console.log(message);
+                            window.location.reload();
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                });
+
+                $("#DelFromDb").on('click', function (event) {
+                    event.preventDefault();
+                    $.ajax({
+                        method: "POST",
+                        url: "@Url.Action("RemoveMultipleFromDb", "Gallery")",
+                        data: JSON.stringify(del),
+                        dataType: 'json',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        async: false,
+                        cache: false,
+                        success: function (message) {
+                            //console.log(message);
+                            window.location.reload();
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+                });
+
+                $(this).find('div:nth-of-type(2)').find('a').on('click', function (e) {
+                    e.preventDefault();
+                    console.log('First link was clicked');
+                });
 			});
+
 
 		});
 
