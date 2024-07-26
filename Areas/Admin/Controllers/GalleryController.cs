@@ -29,29 +29,21 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery")]
-        public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
+        public IActionResult Index()
         {
-            var filePath = Path.Combine(Host.ContentRootPath, "Gallery");
-            DirectoryInfo di = new DirectoryInfo(filePath);
-
-            if (System.IO.Directory.GetDirectories(filePath).Length > 0)
+            DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine("Gallery"));
+            if (di.GetDirectories().Count() == 0)
             {
-                ViewBag.NoAlbums = false;
+                TempData["Message"] = "No albums have been found just now.";
             }
             else
             {
-                ViewBag.NoAlbums = true;
+                ViewBag.Albums = di.GetDirectories();
+                foreach (DirectoryInfo dirs in di.GetDirectories())
+                {
+                }
             }
-
-            if (ViewBag.NoAlbums == false)
-            {
-                ViewBag.AllDirectories = di.GetDirectories();
-            }
-
-            var gallery = _db.Albums;
-            var pageNumber = page ?? 1;
-            var model = gallery.ToPagedList(pageNumber, 10);
-            return View(model);
+            return View();
         }
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Create")]
