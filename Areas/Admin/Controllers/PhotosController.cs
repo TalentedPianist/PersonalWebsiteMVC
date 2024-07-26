@@ -48,6 +48,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 ViewBag.AlbumName = album!.Name;
                 ViewBag.AlbumID = album.Id;
                 ViewBag.Path = filePath;
+                ViewBag.Url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/Gallery/{album.Name}";
 
                 StringBuilder sb = new StringBuilder();
                 DirectoryInfo di = new DirectoryInfo(filePath);
@@ -253,5 +254,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             return await _processor.ProcessCommandAsync(id, command, parameters, file);
         }
+
     }
 }
