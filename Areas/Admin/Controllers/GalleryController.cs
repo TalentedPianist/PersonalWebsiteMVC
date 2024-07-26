@@ -204,5 +204,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
             return album!.Id;
         }
+
+        [HttpPost]
+        public IActionResult GetAlbum([FromForm(Name ="id")]int id)
+        {
+            var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+            return Ok(album);
+        }
     }
 }

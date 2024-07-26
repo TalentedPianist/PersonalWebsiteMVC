@@ -6,7 +6,7 @@
 }
 
 @using Microsoft.AspNetCore.Hosting
-@inject IWebHostEnvironment env
+@inject IWebHostEnvironment _env
 @inject ApplicationDbContext _db
 @using X.PagedList.Mvc.Core
 @using X.PagedList
@@ -18,7 +18,7 @@
 @{
     try
     {
-        var path = env.WebRootPath + "\\Gallery\\" + ViewBag.AlbumName;
+        var path = System.IO.Path.Combine(_env.ContentRootPath, "Gallery", ViewBag.AlbumName);
         var files = Directory.GetFiles(path);
         int count = Directory.GetFiles(path, "*", SearchOption.AllDirectories).Length;
         if (count == 0)
@@ -41,7 +41,8 @@
                 {
                     foreach (FileInfo file in ViewBag.OnePageOfFiles)
                     {
-                        var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}";
+                        //var url = $"/Gallery/{ViewBag.AlbumName}/{file.Name}"
+                       
 
                         <figure>
                             <img id="thumbnail" src="@url" data-name="@file.Name" title="@file.Name">

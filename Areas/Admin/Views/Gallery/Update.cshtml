@@ -9,7 +9,7 @@
 @using Microsoft.AspNetCore.Http
 @inject IWebHostEnvironment env
 @inject IHttpContextAccessor http
-
+@using HGO.ASPNetCore.FileManager.ViewComponentsModel 
 
 
 <h1 class="bg bg-info p-1">Update Album</h1>
@@ -24,7 +24,7 @@
     </div>
     <div class="form-group">
         <label>Description:</label>
-        <textarea asp-for="Description" rows="10" cols="30" class="form-control"></textarea>
+        <textarea asp-for="Description" class="form-control"></textarea>
     </div>
     <div class="form-group">
         <label>Location:</label>
@@ -36,65 +36,35 @@
     </div>
     <input type="hidden" name="AlbumID" value="@Model.Id">
     <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#fileManager">Manage Photos</button>
 </form>
 
 
+<div class="modal fade" id="fileManager" tabindex="-1" role="dialog" aria-labelledby="fileManagerLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="fileManagerLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body border-0">
+                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+           {
+                Id = "FM1",
+                RootFolder = System.IO.Path.Combine(env.ContentRootPath, "Gallery"),
+                ApiEndPoint = Url.Action("HgoApi")!,
+                Config = new FileManagerConfig()
 
-@{
-
-    if (System.IO.Directory.Exists(env.WebRootPath + "\\Gallery\\" + Model.Name))
-    {
-        <h2 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Folder</h2>
-        <p>Do you wish to delete the album folder?</p>
-        <form asp-action="DeleteFolder" asp-area="Admin" asp-controller="Gallery">
-            <input type="hidden" value="@Model.Id" name="GalleryID">
-            <button type="submit" class="btn btn-primary mb-5">Yes</button>
-        </form>
-    }
-    else
-    {
-        <h2 class="bg bg-info p-1 text-white mt-5 col-md-12">Gallery Info</h2>
-        <p>Gallery folder does not exist.  Create it?</p>
-        <form asp-action="CreateFolder" asp-area="Admin" asp-controller="Gallery">
-            <input type="hidden" value="@Model.Id" name="GalleryID">
-            <button type="submit" class="btn btn-primary mb-5">Yes</button>
-        </form>
-    }
-}
-
-<h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Add Photos</h3>
-<p>Add photos to the current album @Model.Name</p>
-<form method="post" asp-action="AddPhotos" enctype="multipart/form-data">
-    <div class="form-group">
-        <input type="file" name="AlbumPhotos" multiple class="form-control" id="files">
+           });
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
     </div>
-    <input type="hidden" name="AlbumID" value="@Model.Id">
-    <button type="submit" class="btn btn-primary mb-5">Submit</button>
-</form>
-
-<h3 class="bg bg-info p-1 text-white mt-5 col-md-12">Delete Photos</h3>
-<p>Delete photos from the current album @Model.Name</p>
-
-<form method="post" asp-action="DeleteFiles" asp-area="Admin" asp-controller="Gallery">
-
-    @{
-        if (ViewBag.Files is null)
-        {
-        }
-        else
-        {
-            foreach (System.IO.FileInfo files in ViewBag.Files)
-            {
-                <label for="@files.Name">@files.Name</label>
-                <input type="checkbox" class="form-control" value="@files.Name" name="FileName" id="FileID">
-                <input type="hidden" name="FilePath" value="@files.FullName">
-            }
-        }
-
-    }
-    <input type="hidden" name="AlbumID" value="@Model.Id">
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
+</div>
 
 
 @section Scripts { 

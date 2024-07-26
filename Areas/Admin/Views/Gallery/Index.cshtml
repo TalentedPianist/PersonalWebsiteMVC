@@ -31,18 +31,18 @@ else
                 <figcaption data-name="@info.Name">
                     @if (IsInDb(info.Name))
                     {
-                        <ul> 
-                            <li><a href="#">View</a></li>
+                        <ul>
+                            <li><a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(info.Name)">View</a></li>
                             <li><a asp-action="Update" asp-route-id="@GetId(info.Name)">Update</a></li>
                             <li><a asp-action="Details" asp-route-id="@GetId(info.Name)">Details</a></li>
                             <li><a asp-action="Delete" asp-route-id="@GetId(info.Name)">Delete</a></li>
-                            </ul>
-                        
+                        </ul>
+
                     }
                     else
                     {
                         <ul>
-                            <li><a href="#">View</a></li>
+                            <li><a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(info.Name)">View</a></li>
                         </ul>
                     }
                     @info.Name
@@ -63,27 +63,27 @@ else
 
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-          <div class="modal-content">
-              <div class="modal-header">
-                  <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
-                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                       <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-              <div class="modal-body">
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-              </div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
         </div>
     </div>
 </div>
 
+
 <!-- Modal for file manager -->
-<div class="modal" tabindex="-1" role="dialog">
+<div class="modal border-0" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
-        <div class="modal-content">
+        <div class="modal-content border-0">
             <div class="modal-header">
                 <h5 class="modal-title">Modal title</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -176,7 +176,7 @@ else
 				<p>Not in database</p>
 				<input type="checkbox" value="${name}">
 `);
-				
+
 
                 } else {
                     $(this).find('div:nth-of-type(1)').html(`
@@ -184,7 +184,7 @@ else
 					<input type="checkbox" value="${name}">
 				`);
                 }
-               
+
 
                 $(this).on('mouseenter', function (event) {
                     $(this).find('svg').addClass('overlay');
@@ -258,11 +258,30 @@ else
                     });
                 });
 
-                // li:first-child selector seems to work instead of a:first-child
+                @*// li:first-child selector seems to work instead of a:first-child
                 $(this).find("figcaption").find("ul").find("li:first-child").find("a").on('click', function (e) {
                     e.preventDefault();
-                    console.log("Link was clicked!");
-                });
+                    if ($(this).attr('data-name')) {
+                        console.log($(this).data('name'));
+                        $("#myModal").find("h5").html($(this).data('name'));
+                    }
+                    if ($(this).attr('data-id')) {
+                        $.ajax({
+                            method: "POST",
+                            url: "@Url.Action("GetAlbum", "Gallery")",
+                            data: { 'id': $(this).data('id') },
+                            async: false,
+                            cache: false,
+                            success: function (message) {
+                                console.log(message);
+                                $("#myModal").find("h5").html(message.Name);
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                });*@
 			});
 
 
