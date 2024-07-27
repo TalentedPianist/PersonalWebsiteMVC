@@ -16,17 +16,23 @@
 @TempData["Message"]
 
 <div id="Albums">
-@foreach (DirectoryInfo di in ViewBag.Albums)
-{
-    <figure>
-        <div></div>
-		<svg enable-background="new 0 0 48 48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-        <figcaption>@di.Name</figcaption>
-    </figure>
-}
+	@foreach (DirectoryInfo di in ViewBag.Albums)
+	{
+		<figure>
+			<div></div>
+			<svg enable-background="new 0 0 48 48" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+			<figcaption>@di.Name</figcaption>
+		</figure>
+		@if (IsInDb(di.Name))
+		{
+            @GetId(di.Name);
+		}
+	}
 
 </div>
 
+<a href="#" id="AddToDb">Add to Database</a> |
+<a href="#" id="DelFromDb">Delete from Database</a>
 
 <!-- Modal for file manager -->
 <div class="modal border-0" tabindex="-1" role="dialog">
@@ -152,20 +158,23 @@
 				});
 
 				let checkbox = value.querySelector("input[type='checkbox']");
-				let confirm = value.querySelector("p").innerHTML;
+                let confirm = value.querySelector("p").innerHTML;
+                let strName = value.querySelector("figcaption").innerText;
 
                 let add = [];
                 let del = [];
 
 
-				checkbox.addEventListener('click', function (e) {
+                checkbox.addEventListener('click', function (e) {
+
+
 					if (confirm === "Not in database") {
-                        add.push({ 'Name': e.target.value });
+                        add.push({ 'Name': strName });
 					}
 					if (confirm === "Is in database") {
-                        del.push({ 'Id': GetId(e.target.value), 'Name': e.target.value });
+                        del.push({ 'Id': GetId(e.target.value), 'Name': strName });
 					}
-					console.log(add.length);
+
                 });
 
                 $("#AddToDb").on('click', function (event) {
