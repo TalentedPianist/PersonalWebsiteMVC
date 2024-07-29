@@ -1,6 +1,6 @@
 ﻿
 @{
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 
 @using X.PagedList
@@ -16,26 +16,36 @@
 @TempData["Message"]
 
 <div id="Albums">
-    @foreach (DirectoryInfo di in ViewBag.Albums)
-    {
-        <figure>
-            <div></div>
-            <svg preserveAspectRatio="none" enable-background="new 0 0 48 48" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-            <figcaption>
-                @if (IsInDb(di.Name))
-                {
-                    <ul>
-                        <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
-                        <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
-                        <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
-                    </ul>
+	@foreach (DirectoryInfo di in ViewBag.Albums)
+	{
+		<figure>
+			<div></div>
 
-                }
-                @di.Name
-            </figcaption>
-        </figure>
+			@if (IsInDb(di.Name))
+			{
+                var photo = _db.Albums.Where(a => a.Id == GetId(di.Name)).FirstOrDefault();
+                <img src="/Gallery/@di.Name/@photo!.CoverPhoto">
+			}
+			else
+			{
+				<svg preserveAspectRatio="none" enable-background="new 0 0 48 48" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+			}
+			<figcaption>
+				@if (IsInDb(di.Name))
+				{
+					<ul>
+                        <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a>
+						<li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
+						<li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
+						<li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
+					</ul>
 
-    }
+				}
+				@di.Name
+			</figcaption>
+		</figure>
+
+	}
 
 </div>
 
@@ -44,59 +54,59 @@
 
 <!-- Modal for file manager -->
 <div class="modal border-0" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content border-0">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
-           {
-               Id = "FM1",
-               RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
-               ApiEndPoint = Url.Action("HgoApi")!,
-               Config = new FileManagerConfig(),
-           })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content border-0">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+		   {
+			   Id = "FM1",
+			   RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
+			   ApiEndPoint = Url.Action("HgoApi")!,
+			   Config = new FileManagerConfig(),
+		   })
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 
 @functions {
-    bool IsInDb(string name)
-    {
-        var album = _db.Albums.Where(a => a.Name == name).Any();
-        if (album)
-            return true;
-        else
-            return false;
-    }
+	bool IsInDb(string name)
+	{
+		var album = _db.Albums.Where(a => a.Name == name).Any();
+		if (album)
+			return true;
+		else
+			return false;
+	}
 
-    int GetId(string name)
-    {
-        try
-        {
-            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-            return album!.Id;
-        }
-        catch (NullReferenceException)
-        {
-            return 0;
-        }
-    }
+	int GetId(string name)
+	{
+		try
+		{
+			var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+			return album!.Id;
+		}
+		catch (NullReferenceException)
+		{
+			return 0;
+		}
+	}
 }
 
 
 @section Scripts {
 
-    <script>
+	<script>
         $(function () {
 
             function CheckDb(name) {
@@ -259,5 +269,5 @@
 
 		});
 
-    </script>
+	</script>
 }
