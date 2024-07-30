@@ -53,16 +53,27 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 ViewBag.Files = di.GetFiles();
 
                 var pageNumber = page ?? 1; // If no page was specified in the querystring, default to the first page (1)
-                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 10);
+                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
+                ViewBag.OnePageOfFiles = onePageOfFiles;
+
+                return View();
+
+            }
+            catch (NullReferenceException)
+            {
+                // Here is where any file operations should go when the album is not in the database.
+                ViewBag.AlbumName = HttpContext.Request.Query["album"];
+                DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery", HttpContext.Request.Query["album"]!));
+                ViewBag.AllFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG"));
+
+                var pageNumber = page ?? 1;
+                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
 
                 return View();
             }
-            catch (NullReferenceException ex)
-            {
-                TempData["Message"] = ex.Message;
-                return View();
-            }
+
+           
         }
 
 
@@ -220,7 +231,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 _db.SaveChanges();
                 return RedirectToAction("Update", model);
             }
-   
+
             return View("Update", model);
         }
 

@@ -1,8 +1,8 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 
 @using Microsoft.AspNetCore.Hosting
@@ -17,97 +17,103 @@
 @TempData["Message"]
 
 <div id="Gallery">
-    @{
-        DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine("Gallery", ViewBag.AlbumName));
-        if (di.GetFiles().Count() == 0)
-        {
-            <p>No photos found for this album.</p>
-        }
-        else
-        {
-            foreach (FileInfo file in ViewBag.OnePageOfFiles)
-            {
-            
-                    <figure>
-                        <div></div>
-                        <img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name">
-                        <figcaption>@file.Name</figcaption>
-                    </figure>
-                
-            }
-        }
-    }
+	@{
+		foreach (FileInfo file in ViewBag.OnePageOfFiles)
+		{
+
+			<figure>
+				<div></div>
+				<img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name">
+				<figcaption>@file.Name</figcaption>
+			</figure>
+
+		}
+	}
+
 
 </div>
 
-@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
-    new PagedListRenderOptions
-    {
-        DisplayItemSliceAndTotal = true,
-        LiElementClasses = new string[] { "page-item" },
-        PageClasses = new String[] { "page-link" }
-    })
+@if (string.IsNullOrEmpty(Context.Request.Query["album"]))
+{
+	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
+				new PagedListRenderOptions
+				{
+					DisplayItemSliceAndTotal = true,
+					LiElementClasses = new string[] { "page-item" },
+					PageClasses = new String[] { "page-link" }
+				})
+}
+else
+{
+	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", album = Context.Request.Query["album"] }),
+		new PagedListRenderOptions
+		{
+			DisplayItemSliceAndTotal = true,
+			LiElementClasses = new string[] { "page-item" },
+			PageClasses = new String[] { "page-link" }
+		})
+}
 
 <button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Manage Album</button>
 
 
 
 <div class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
-           {
-               Id = "FM1",
-               RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
-               ApiEndPoint = Url.Action("HgoApi")!,
-               Config = new FileManagerConfig()
-           })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				@await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+		   {
+			   Id = "FM1",
+			   RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
+			   ApiEndPoint = Url.Action("HgoApi")!,
+			   Config = new FileManagerConfig()
+		   })
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
-<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true" data-backdrop="static">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="photoModalLabel">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
+<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="photoModalLabel">Modal title</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+			</div>
+		</div>
+	</div>
 </div>
 
 @functions {
-    bool IsInDb(string name)
-    {
-        var album = _db.Albums.Where(a => a.Name == name).Any();
-        if (album)
-            return true;
-        else
-            return false;
-    }
+	bool IsInDb(string name)
+	{
+		var album = _db.Albums.Where(a => a.Name == name).Any();
+		if (album)
+			return true;
+		else
+			return false;
+	}
 }
 
 @section Scripts {
-    <script>
+	<script>
 
         $(function () {
 
@@ -169,21 +175,21 @@
                 if (CheckDb(strName) === true) {
                     $(value).find("div:nth-of-type(1)").html(`
                         <p>Is in database</p>
-                     
+
                         <input type="checkbox" value="${strName}">
                     `);
-                    
+
                 } else {
                     $(value).find("div:nth-of-type(1)").html(`
                         <p>Not in database</p>
                         <a href="#">View</a>
                         <input type="checkbox" value="${strName}">
                     `);
-            
+
                 }
 
-      
-         
+
+
                 $(value).find("a").on('click', function (event) {
                     event.preventDefault();
                     $("#photoModal").modal('show');
@@ -199,8 +205,8 @@
                     });
                 });
 
-        
-                
+
+
 
 
                 $(this).on('mouseenter', function (e) {
@@ -235,13 +241,17 @@
                     let value = item.querySelector("input").getAttribute("value");
                     let img = document.querySelector("#Gallery figure").querySelector("img").getAttribute("src");
 
-                    if (confirm === "Is in database") { // Wasn't working because a really simple string character was missing.
-                        let id = GetId(value);
-                        del.push({ 'Id': id, 'Name': item.getAttribute("value") });
+                    if (confirm === "") {
                     } else {
-                        add.push({ 'Name': value, 'AlbumID': @ViewBag.AlbumID, 'ImageUrl': img });
-                    }
+                        if (confirm == "Is in database") { // Wasn't working because a really simple string character was missing.
+                            let id = GetId(value);
 
+                            del.push({ 'Id': id, 'Name': item.getAttribute("value") });
+                        } else {
+                            let id = @ViewBag.AlbumID
+                            add.push({ 'Name': value, 'AlbumID': id, 'ImageUrl': img });
+                        }
+                    }
 
                 });
 
@@ -296,6 +306,6 @@
             });
         });
 
-    </script>
+	</script>
 
 }
