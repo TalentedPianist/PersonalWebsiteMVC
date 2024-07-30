@@ -44,28 +44,23 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
                 var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
                 var photos = _db.Photos.Where(p => p.AlbumID == id);
-                var filePath = Path.Combine(Host.ContentRootPath, "Gallery");
                 ViewBag.AlbumName = album!.Name;
                 ViewBag.AlbumID = album.Id;
-                ViewBag.Path = filePath;
-                ViewBag.Url = $"{this.Request.Scheme}://{this.Request.Host}{this.Request.PathBase}/Gallery/{album.Name}";
 
-                StringBuilder sb = new StringBuilder();
-                DirectoryInfo di = new DirectoryInfo(filePath);
+                // Here we need to combine three paths in the param[] array since it is the photos view and not the album view.  
+                DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album.Name!));
 
-
-                ViewBag.Message = sb.ToString();
                 ViewBag.Files = di.GetFiles();
 
                 var pageNumber = page ?? 1; // If no page was specified in the querystring, default to the first page (1)
-                var onePageOfFiles = di.GetFiles().ToPagedList(pageNumber, 10);
+                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 10);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
 
                 return View();
             }
-            catch (NullReferenceException)
+            catch (NullReferenceException ex)
             {
-
+                TempData["Message"] = ex.Message;
                 return View();
             }
         }
