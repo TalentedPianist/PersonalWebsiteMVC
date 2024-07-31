@@ -1,8 +1,8 @@
 ﻿@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 
 @using Microsoft.AspNetCore.Hosting
@@ -17,41 +17,42 @@
 @TempData["Message"]
 
 <div id="Gallery">
-	@{
-		foreach (FileInfo file in ViewBag.OnePageOfFiles)
-		{
+    @{
+        foreach (FileInfo file in ViewBag.OnePageOfFiles)
+        {
 
-			<figure>
-				<div></div>
-				<img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name">
-				<figcaption>@file.Name</figcaption>
-			</figure>
 
-		}
-	}
+            <figure>
+                <div></div>
+                <img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name">
+                <figcaption>@file.Name</figcaption>
+            </figure>
+
+        }
+    }
 
 
 </div>
 
 @if (string.IsNullOrEmpty(Context.Request.Query["album"]))
 {
-	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
-				new PagedListRenderOptions
-				{
-					DisplayItemSliceAndTotal = true,
-					LiElementClasses = new string[] { "page-item" },
-					PageClasses = new String[] { "page-link" }
-				})
+    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
+                new PagedListRenderOptions
+                {
+                    DisplayItemSliceAndTotal = true,
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new String[] { "page-link" }
+                })
 }
 else
 {
-	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", album = Context.Request.Query["album"] }),
-		new PagedListRenderOptions
-		{
-			DisplayItemSliceAndTotal = true,
-			LiElementClasses = new string[] { "page-item" },
-			PageClasses = new String[] { "page-link" }
-		})
+    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", album = Context.Request.Query["album"] }),
+        new PagedListRenderOptions
+        {
+            DisplayItemSliceAndTotal = true,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new String[] { "page-link" }
+        })
 }
 
 <button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Manage Album</button>
@@ -59,61 +60,61 @@ else
 
 
 <div class="modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Modal title</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				@await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
-		   {
-			   Id = "FM1",
-			   RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
-			   ApiEndPoint = Url.Action("HgoApi")!,
-			   Config = new FileManagerConfig()
-		   })
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+           {
+               Id = "FM1",
+               RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery", ViewBag.AlbumName),
+               ApiEndPoint = Url.Action("HgoApi")!,
+               Config = new FileManagerConfig()
+           })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="photoModalLabel">Modal title</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="photoModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @functions {
-	bool IsInDb(string name)
-	{
-		var album = _db.Albums.Where(a => a.Name == name).Any();
-		if (album)
-			return true;
-		else
-			return false;
-	}
+    bool IsInDb(string name)
+    {
+        var album = _db.Albums.Where(a => a.Name == name).Any();
+        if (album)
+            return true;
+        else
+            return false;
+    }
 }
 
 @section Scripts {
-	<script>
+    <script>
 
         $(function () {
 
@@ -193,15 +194,62 @@ else
                 $(value).find("a").on('click', function (event) {
                     event.preventDefault();
                     $("#photoModal").modal('show');
-                    $("#photoModal").find('.modal-title').html(`<h1>${strName}</h1>`);
+                    $("#photoModal").find('.modal-title').html(`
+                        <h1>${strName}</h1>
+                        <a href="#">Edit</a>
+                    `);
                     $("#photoModal").find(".modal-body").html(`
-                        <img src="/Gallery/@ViewBag.AlbumName/${strName}">
+                        <img src="/Gallery/@ViewBag.AlbumName/${strName}" data-name="${strName}">
                         <a href="#">Make cover photo</a>
                     `);
                     $("#photoModal").find(".modal-body").find("a").on('click', function (e) {
                         e.preventDefault();
-                        console.log("Link was clicked!");
                         // Ajax here to make cover photo.....
+                        let name = $("#photoModal").find(".modal-body").find("img").data('name');
+                        $.ajax({
+                            method: "POST",
+                            url: "@Url.Action("SetCoverPic", "Photos", new { id = ViewBag.AlbumID })",
+                            data: { 'name': name },
+                            async: false,
+                            cache: false,
+                            success: function (message) {
+                                console.log(message);
+                                window.location.assign('@Url.Action("Index", "Gallery")');
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    });
+                    $("#photoModal").find(".modal-header").find("a").on('click', function (e) {
+                        e.preventDefault();
+                        $("#photoModal").find(".modal-header").html(`
+                            <form method="post">
+                                <div class="form-group">
+                                    <label>Name:</label>
+                                    <input type="text" class="form-control" value="${strName}">
+                                </div>
+                                <button type="submit" class="btn btn-link">Update</button>
+                            </form>
+                        `);
+                        // Here we check if the form was subitted and perform ajax operations to rename the file
+                        $("#photoModal").find(".modal-header").find("form").submit(function (e) {
+                            e.preventDefault();
+                            let name = $("#photoModal").find(".modal-header").find("input[type='text']").val();
+                            $.ajax({
+                                method: "POST",
+                                url: "@Url.Action("RenameFile", "Photos", new { album = ViewBag.AlbumName })",
+                                data: { 'name': name },
+                                async: false,
+                                cache: false,
+                                success: function (message) {
+                                    console.log(message);
+                                },
+                                error: function (err) {
+                                    console.log(err);
+                                }
+                            });
+                        });
                     });
                 });
 
@@ -307,9 +355,9 @@ else
             });
 
         });
-        
 
 
-	</script>
+
+    </script>
 
 }

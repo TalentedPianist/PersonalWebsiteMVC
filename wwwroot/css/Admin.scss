@@ -79,7 +79,7 @@ figure {
     position: absolute !important;
     top: 0 !important;
     max-width: unset !important;
-    height: 100vw !important;
+    height: 100vh !important;
     /* max-width: unset is required both in root element and modal-dialog to work properly */
     .modal-dialog {
         max-width: unset !important;
@@ -154,15 +154,7 @@ figure {
 
     div {
         &:nth-of-type(1) {
-            position: absolute;
-            top: 40%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto;
-            width: inherit;
-            z-index: 50000;
+           
         }
 
         &:nth-of-type(2) {
@@ -174,7 +166,14 @@ figure {
     .overlay {
         display: flex;
         flex-direction: column;
+        flex: 0;
         align-items: center;
+        color: white;
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        right: 0;
+        bottom: 9em;
     }
 }
 
@@ -182,8 +181,9 @@ figure {
     position: absolute; 
     top: 0;
     bottom: 0;
-    height: auto;
+    height: 50vh;
     border: 0;
+    overflow-y: scroll !important;
 
     img { 
         width: 100%;
@@ -192,4 +192,9 @@ figure {
     .modal-content { 
         border: 0 !important;
     }
+
+    .modal-open { 
+        overflow-y: scroll !important;
+    }
+
 }

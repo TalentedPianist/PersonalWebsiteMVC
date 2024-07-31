@@ -56,6 +56,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
 
+                if (di.GetFiles().Count() == 0)
+                {
+                    TempData["Message"] = "No files found at this time.";
+                }
+
                 return View();
 
             }
@@ -69,11 +74,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 var pageNumber = page ?? 1;
                 var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
-
+                TempData["Message"] = DateTime.Now;
                 return View();
             }
 
-           
+
         }
 
 
@@ -262,10 +267,20 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult MakeCoverPhoto([FromForm(Name="name")]string name)
+        public IActionResult SetCoverPic([FromForm(Name = "name")] string name, int id)
         {
+            var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+            album!.CoverPhoto = name;
+            _db.Update(album);
+            _db.SaveChanges();
             return Ok();
         }
 
+        [HttpPost]
+        public IActionResult RenameFile([FromForm(Name = "name")] string name, string album)
+        {
+            // Investigate syntax to rename file in specified folder from album variable
+            return Ok(album);
+        }
     }
 }

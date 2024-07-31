@@ -29,9 +29,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery")]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         {
-            DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine("Gallery"));
+            DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery"));
             if (di.GetDirectories().Count() == 0)
             {
                 TempData["Message"] = "No albums have been found just now.";
@@ -39,9 +39,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             else
             {
                 ViewBag.Albums = di.GetDirectories();
-                foreach (DirectoryInfo dirs in di.GetDirectories())
-                {
-                }
+                var pageNumber = page ?? 1;
+                var onePageOfFiles = di.GetDirectories().ToPagedList(pageNumber, 10);
+                ViewBag.OnePageOfFiles = onePageOfFiles;
             }
 
          
