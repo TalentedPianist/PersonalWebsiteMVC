@@ -261,5 +261,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return await _processor.ProcessCommandAsync(id, command, parameters, file);
         }
 
+        [HttpPost]
+        public IActionResult MakeCoverPhoto([FromForm(Name="name")]string name)
+        {
+            return Ok();
+        }
+
     }
 }

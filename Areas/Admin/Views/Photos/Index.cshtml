@@ -243,12 +243,13 @@ else
 
                     if (confirm === "") {
                     } else {
+                        let id = GetId(value);
                         if (confirm == "Is in database") { // Wasn't working because a really simple string character was missing.
-                            let id = GetId(value);
+
 
                             del.push({ 'Id': id, 'Name': item.getAttribute("value") });
                         } else {
-                            let id = @ViewBag.AlbumID
+
                             add.push({ 'Name': value, 'AlbumID': id, 'ImageUrl': img });
                         }
                     }
@@ -297,14 +298,17 @@ else
                         console.log(err);
                     }
                 });
+
+                $("#photoModal").find(".modal-body").find("a").on('click', function (e) {
+                    e.preventDefault();
+                    console.log("Link was clicked!");
+                    console.log($(e.target.html()));
+                });
             });
 
-
-            $("#photoModal").find(".modal-body").find("a").on('click', function (e) {
-                e.preventDefault();
-                console.log("Link was clicked!");
-            });
         });
+        
+
 
 	</script>
 

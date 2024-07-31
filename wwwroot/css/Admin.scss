@@ -179,9 +179,17 @@ figure {
 }
 
 #photoModal {
-    height: 30em !important;
+    position: absolute; 
+    top: 0;
+    bottom: 0;
+    height: auto;
+    border: 0;
 
     img { 
         width: 100%;
+    }
+
+    .modal-content { 
+        border: 0 !important;
     }
 }

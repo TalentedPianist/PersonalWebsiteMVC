@@ -152,8 +152,15 @@
 }
 
 #photoModal {
-  height: 30em !important;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  height: auto;
+  border: 0;
 }
 #photoModal img {
   width: 100%;
+}
+#photoModal .modal-content {
+  border: 0 !important;
 }
