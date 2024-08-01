@@ -206,5 +206,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
             return Ok(album);
         }
+
+        [HttpPost]
+        public IActionResult AddToDb(Album album, List<Photos> photos)
+        {
+            return Ok();
+        }
     }
 }

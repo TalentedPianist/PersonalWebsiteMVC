@@ -18,47 +18,48 @@
 <div id="Albums">
 	@foreach (DirectoryInfo di in ViewBag.OnePageOfFiles)
 	{
-		<figure>
-			<div></div>
+        <figure>
+            <div></div>
 
-			@{
-				try
-				{
-					var photo = _db.Albums.Where(a => a.Id == GetId(di.Name)).FirstOrDefault();
-					if (photo!.CoverPhoto is not null)
-					{
-						<img src="/Gallery/@di.Name/@photo!.CoverPhoto">
-					}
-					else
-					{
-						<svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-					}
-				}
-				catch (NullReferenceException)
-				{
-				}
-			}
+            @{
+                try
+                {
+                    var photo = _db.Albums.Where(a => a.Id == GetId(di.Name)).FirstOrDefault();
+                    if (photo!.CoverPhoto is not null)
+                    {
+                        <img src="/Gallery/@di.Name/@photo!.CoverPhoto">
+                    }
+                    else
+                    {
+                        <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                    }
+                }
+                catch (NullReferenceException)
+                {
+                    <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                }
+            }
 
 
 
-			<figcaption>
-				@if (IsInDb(di.Name))
-				{
-					<ul>
-						<a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a>
-						<li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
-						<li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
-						<li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
-					</ul>
+            <figcaption>
+                @if (IsInDb(di.Name))
+                {
+                    <ul>
+                        <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a>
+                        <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
+                        <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
+                        <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
+                    </ul>
 
-				}
-				else
-				{
-					<a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-album="@di.Name">View</a>
-				}
-				@di.Name
-			</figcaption>
-		</figure>
+                }
+                else
+                {
+                    <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-album="@di.Name">View</a>
+                }
+                @di.Name
+            </figcaption>
+        </figure>
 
 	}
 
@@ -188,18 +189,16 @@
 					<input type="checkbox" value="${name}">
 				`);
                 }
-
+                
 
                 $(this).on('mouseenter', function (event) {
                     $(this).find('svg').addClass('overlay');
-                    $(this).find('div').addClass('overlay');
-					$(this).find('div:nth-of-type(1)').show();
+					$(this).find('div').show();
                 });
 
                 $(this).on('mouseleave', function (event) {
                     $(this).find('svg').removeClass('overlay');
-                    $(this).find('div').removeClass('overlay');
-					$(this).find('div:nth-of-type(1)').hide();
+					$(this).find('div').hide();
 				});
 
 				let checkbox = value.querySelector("input[type='checkbox']");
