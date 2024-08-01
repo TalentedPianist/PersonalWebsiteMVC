@@ -277,12 +277,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult RenameFile([FromForm(Name="strOld")]string strOld, [FromForm(Name="strNew")]string strNew)
+        public IActionResult RenameFile([FromBody]RenameFile data, string album)
         {
             // Investigate syntax to rename file in specified folder from album variable
-            //var path = System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album);
-            
-            return Ok(strOld);
+            var path = System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album);
+            System.IO.File.Move(System.IO.Path.Combine(path, data.strOld!), System.IO.Path.Combine(path, data.strNew!));
+            return Ok();
         }
     }
 }

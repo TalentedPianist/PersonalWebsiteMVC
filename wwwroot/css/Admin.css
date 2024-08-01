@@ -150,10 +150,10 @@
 #photoModal {
   position: absolute;
   top: 0;
-  bottom: 0;
-  height: 50vh;
   border: 0;
   overflow-y: scroll !important;
+  margin-top: 1em !important;
+  margin-bottom: 1em !important;
 }
 #photoModal img {
   width: 100%;
