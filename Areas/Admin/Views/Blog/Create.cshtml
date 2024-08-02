@@ -50,7 +50,11 @@
                 e.preventDefault();
                 //let data = $("#createPost").serialize();
                 var formData = {
-                    PostTitle: $("#title").val()
+                    PostContent: $("#ckeditor1").val(),
+                    PostTitle: $("#title").val(),
+                    PostPublished: false,
+                    PostDate: @DateTime.Now,
+                    CommentCount: 0,
                 };
                 console.log(formData);
                 $.ajax({
