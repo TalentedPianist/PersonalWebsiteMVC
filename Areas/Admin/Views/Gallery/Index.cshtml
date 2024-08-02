@@ -180,20 +180,28 @@
             }
 
             $("#Albums figure").each(function (index, value) {
-                let name = $(this).find("figcaption").data('name');
+				let strName = undefined;
+				if ($(value).has('img')) {
+                    strName = $(this).find('img').attr('src');
+                
+				}
+				if ($(value).has('svg')) {
+					strName = $(value).find('svg').data('name');
+                }
+
                 $(this).find('div:nth-of-type(1)').hide();
 
-                if (CheckDb(name) == false) {
+                if (CheckDb(strName) == false) {
                     $(this).find('div:nth-of-type(1)').html(`
 				<p>Not in database</p>
-				<input type="checkbox" value="${name}">
+				<input type="checkbox" value="${strName}">
 `);
 
 
                 } else {
                     $(this).find('div:nth-of-type(1)').html(`
 					<p>Is in database</p>
-					<input type="checkbox" value="${name}">
+					<input type="checkbox" value="${strName}">
 				`);
                 }
 
@@ -211,14 +219,8 @@
 
                 let checkbox = value.querySelector("input[type='checkbox']");
                 let confirm = value.querySelector("p").innerHTML;
-                let strName = undefined;
-                if ($(value).has('img')) {
-                    strName = $(value).find('img').data('name');
-                } 
-                if ($(value).has('svg')) {
-                    strName = $(value).find('svg').data('name');
-                }
-
+                
+                //console.log($(value).html());
          
                 let add = [];
                 let del = [];
@@ -231,7 +233,7 @@
                         add.push({ 'Name': strName });
                     }
                     if (confirm === "Is in database") {
-                        del.push({ 'Id': GetId(e.target.value), 'Name': strName });
+                        del.push({ 'Id': GetId(strName), 'Name': strName });
                     }
 
                 });

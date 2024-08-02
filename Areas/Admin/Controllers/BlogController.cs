@@ -166,5 +166,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             return View(_db.Posts.Where(b => b.PostID == id).FirstOrDefault());
         }
+
+        [HttpPost]
+        public IActionResult SaveDraft([FromBody]Posts model)
+        {
+            return Ok(model);
+        }
     }
 }
