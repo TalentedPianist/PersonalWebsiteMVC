@@ -1,6 +1,6 @@
 ﻿
 @{
-	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 
 @using X.PagedList
@@ -16,8 +16,8 @@
 @TempData["Message"]
 
 <div id="Albums">
-	@foreach (DirectoryInfo di in ViewBag.OnePageOfFiles)
-	{
+    @foreach (DirectoryInfo di in ViewBag.OnePageOfFiles)
+    {
         <figure>
             <div></div>
 
@@ -27,41 +27,47 @@
                     var photo = _db.Albums.Where(a => a.Id == GetId(di.Name)).FirstOrDefault();
                     if (photo!.CoverPhoto is not null)
                     {
-                        <img src="/Gallery/@di.Name/@photo!.CoverPhoto">
+                        <img src="/Gallery/@di.Name/@photo!.CoverPhoto" data-name="@di.Name">
                     }
                     else
                     {
-                        <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                        <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@di.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
                     }
                 }
                 catch (NullReferenceException)
                 {
-                    <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                    <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@di.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
                 }
             }
 
 
 
             <figcaption>
-                @if (IsInDb(di.Name))
+                @try
                 {
-                    <ul>
-                        <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a>
-                        <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
-                        <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
-                        <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
-                    </ul>
+                    if (IsInDb(di.Name))
+                    {
+                        <ul>
+                            <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a>
+                            <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
+                            <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
+                            <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
+                        </ul>
 
+                    }
+                    else
+                    {
+                        <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-album="@di.Name">View</a>
+                    }
+                    @di.Name
                 }
-                else
+                catch (NullReferenceException)
                 {
-                    <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-album="@di.Name">View</a>
                 }
-                @di.Name
             </figcaption>
         </figure>
 
-	}
+    }
 
 </div>
 
@@ -71,68 +77,68 @@
 <!-- X.PagedList component for pagination -->
 <!-- Wasn't working because Url.Action was pointing to the wrong controller.  Eejit. -->
 @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Gallery", new { pageNumber = page, area = "Admin" }),
-		new PagedListRenderOptions
-		{
-			DisplayItemSliceAndTotal = true,
-			LiElementClasses = new string[] { "page-item" },
-			PageClasses = new String[] { "page-link" }
-		})
+        new PagedListRenderOptions
+        {
+            DisplayItemSliceAndTotal = true,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new String[] { "page-link" }
+        })
 
 <!-- Modal for file manager -->
 <div class="modal border-0" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content border-0">
-			<div class="modal-header">
-				<h5 class="modal-title">Modal title</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				@await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
-		   {
-			   Id = "FM1",
-			   RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
-			   ApiEndPoint = Url.Action("HgoApi")!,
-			   Config = new FileManagerConfig(),
-		   })
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content border-0">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+           {
+               Id = "FM1",
+               RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery"),
+               ApiEndPoint = Url.Action("HgoApi")!,
+               Config = new FileManagerConfig(),
+           })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 
 @functions {
-	bool IsInDb(string name)
-	{
-		var album = _db.Albums.Where(a => a.Name == name).Any();
-		if (album)
-			return true;
-		else
-			return false;
-	}
+    bool IsInDb(string name)
+    {
+        var album = _db.Albums.Where(a => a.Name == name).Any();
+        if (album)
+            return true;
+        else
+            return false;
+    }
 
-	int GetId(string name)
-	{
-		try
-		{
-			var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-			return album!.Id;
-		}
-		catch (NullReferenceException)
-		{
-			return 0;
-		}
-	}
+    int GetId(string name)
+    {
+        try
+        {
+            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+            return album!.Id;
+        }
+        catch (NullReferenceException)
+        {
+            return 0;
+        }
+    }
 }
 
 
 @section Scripts {
 
-	<script>
+    <script>
         $(function () {
 
             function CheckDb(name) {
@@ -163,6 +169,7 @@
                     async: false,
                     cache: false,
                     success: function (message) {
+                        //console.log(message);
                         result = message;
                     },
                     error: function (err) {
@@ -176,7 +183,7 @@
                 let name = $(this).find("figcaption").data('name');
                 $(this).find('div:nth-of-type(1)').hide();
 
-                if (CheckDb(name) === false) {
+                if (CheckDb(name) == false) {
                     $(this).find('div:nth-of-type(1)').html(`
 				<p>Not in database</p>
 				<input type="checkbox" value="${name}">
@@ -189,40 +196,49 @@
 					<input type="checkbox" value="${name}">
 				`);
                 }
-                
+
 
                 $(this).on('mouseenter', function (event) {
-                    $(this).find('svg').addClass('overlay');
-					$(this).find('div').show();
+
+                    $(this).find('div').addClass('overlay');
+                    $(this).find('div').show();
                 });
 
                 $(this).on('mouseleave', function (event) {
-                    $(this).find('svg').removeClass('overlay');
-					$(this).find('div').hide();
-				});
+                    $(this).find('div').removeClass('overlay');
+                    $(this).find('div').hide();
+                });
 
-				let checkbox = value.querySelector("input[type='checkbox']");
+                let checkbox = value.querySelector("input[type='checkbox']");
                 let confirm = value.querySelector("p").innerHTML;
-                let strName = value.querySelector("figcaption").innerText;
+                let strName = undefined;
+                if ($(value).has('img')) {
+                    strName = $(value).find('img').data('name');
+                } 
+                if ($(value).has('svg')) {
+                    strName = $(value).find('svg').data('name');
+                }
 
+         
                 let add = [];
                 let del = [];
 
 
                 checkbox.addEventListener('click', function (e) {
+                    console.log(strName);
 
-
-					if (confirm === "Not in database") {
+                    if (confirm === "Not in database") {
                         add.push({ 'Name': strName });
-					}
-					if (confirm === "Is in database") {
+                    }
+                    if (confirm === "Is in database") {
                         del.push({ 'Id': GetId(e.target.value), 'Name': strName });
-					}
+                    }
 
                 });
 
                 $("#AddToDb").on('click', function (event) {
                     event.preventDefault();
+                    //console.log(strName);
 
                     $.ajax({
                         method: "POST",
@@ -235,7 +251,7 @@
                         async: false,
                         cache: false,
                         success: function (message) {
-                            //console.log(message);
+                            console.log(message);
                             window.location.reload();
                         },
                         error: function (err) {
@@ -252,7 +268,7 @@
                         data: JSON.stringify(del),
                         dataType: 'json',
                         headers: {
-                            'Content-Type': 'application/json',
+                            'Content-Type': 'application/json'
                         },
                         async: false,
                         cache: false,
@@ -267,10 +283,8 @@
                 });
 
 
-			});
+            });
+        });
 
-
-		});
-
-	</script>
+    </script>
 }

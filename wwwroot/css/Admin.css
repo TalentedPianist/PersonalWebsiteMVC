@@ -131,27 +131,25 @@
 #Albums div:nth-of-type(1) {
   position: absolute;
   top: 0;
-  bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 5em;
   z-index: 5000;
+  color: white;
 }
 #Albums div:nth-of-type(1) svg {
   z-index: -1;
 }
-#Albums div:nth-of-type(2) {
-  position: relative;
-  display: flex;
-}
-#Albums .overlay {
+#Albums div:nth-of-type(1) .overlay {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
-  color: white;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 9em;
+  position: relative;
+}
+#Albums div:nth-of-type(1):nth-of-type(2) {
+  position: relative;
+  display: flex;
 }
 
 #photoModal {

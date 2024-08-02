@@ -182,7 +182,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             _db.Albums.AddRange(data);
             _db.SaveChanges();
-            return Ok();
+            return Ok(data);
         }
 
         [HttpPost]
@@ -194,10 +194,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public int GetId(string name)
+        public IActionResult GetId(string name)
         {
-            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-            return album!.Id;
+            try
+            {
+                var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+                return Ok(album);
+            }
+            catch (NullReferenceException)
+            {
+                return Ok();
+            }
         }
 
         [HttpPost]

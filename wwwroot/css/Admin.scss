@@ -113,7 +113,7 @@ figure {
         flex: 0;
         align-items: center;
 
-        img { 
+        img {
             width: 100%;
         }
     }
@@ -151,33 +151,32 @@ figure {
 
     div {
         &:nth-of-type(1) {
-           position: absolute; 
-           top: 0; 
-           bottom: 0;
-           z-index: 5000;
+            position: absolute;
+            top: 0;
+            left: 0; 
+            right: 0;
+            bottom: 5em;
+            z-index: 5000;
+            color: white;
 
-           svg { 
-               z-index: -1;
-           }
+            svg {
+                z-index: -1;
+            }
+
+            .overlay {
+                display: flex;
+                flex-direction: column;
+                flex: 0;
+                align-items: center;
+                position: relative;
+ 
+            }
+
+            &:nth-of-type(2) {
+                position: relative;
+                display: flex;
+            }
         }
-
-        &:nth-of-type(2) {
-            position: relative;
-            display: flex;
-        }
-    }
-
-    .overlay {
-        display: flex;
-        flex-direction: column;
-        flex: 0;
-        align-items: center;
-        color: white;
-        position: absolute; 
-        top: 0; 
-        left: 0; 
-        right: 0;
-        bottom: 9em;
     }
 }
 
