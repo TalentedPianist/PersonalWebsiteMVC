@@ -170,6 +170,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult SaveDraft([FromBody]Posts model)
         {
+            _db.Posts.Add(model);
+            _db.SaveChanges();
             return Ok(model);
         }
     }

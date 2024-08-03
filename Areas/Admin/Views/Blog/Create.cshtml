@@ -38,7 +38,7 @@
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="#">Save Draft</a>
+    <a href="#" id="draft">Save Draft</a>
 
 </form>
 
@@ -46,14 +46,26 @@
 @section Scripts { 
     <script>
         $(function () {
-            $(this).find('a').on('click', function (e) {
+            function GetDateTime() {
+                var currentdate = new Date();
+                var datetime = currentdate.getDate() + "/"
+                    + (currentdate.getMonth() + 1) + "/"
+                    + currentdate.getFullYear() + " "
+                    + currentdate.getHours() + ":"
+                    + currentdate.getMinutes() + ":"
+                    + currentdate.getSeconds();
+                return datetime;
+            }
+
+
+            $("#draft").on('click', function (e) {
                 e.preventDefault();
-                //let data = $("#createPost").serialize();
+
                 var formData = {
                     PostContent: $("#ckeditor1").val(),
                     PostTitle: $("#title").val(),
                     PostPublished: false,
-                    PostDate: @DateTime.Now,
+                    PostDate: GetDateTime(),
                     CommentCount: 0,
                 };
                 console.log(formData);
