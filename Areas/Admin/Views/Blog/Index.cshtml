@@ -52,7 +52,23 @@
         $(function () {
             $("#delete").on('click', function (e) {
                 e.preventDefault();
-                console.log(del);
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("DeleteMultiple", "Blog")",
+                    data: JSON.stringify(del),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        console.log(message);
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
         });
     </script>

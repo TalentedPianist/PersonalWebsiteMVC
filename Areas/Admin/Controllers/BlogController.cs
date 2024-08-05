@@ -174,5 +174,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             _db.SaveChanges();
             return Ok(model);
         }
+
+        [HttpPost]
+        public IActionResult DeleteMultiple([FromBody]List<Posts> posts)
+        {
+            _db.Posts.RemoveRange(posts);
+            _db.SaveChanges();
+            return Ok();
+        }
     }
 }
