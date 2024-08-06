@@ -55,6 +55,7 @@
     <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.1.2" />
     <PackageReference Include="X.PagedList" Version="10.0.3" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="10.1.2" />
+    <PackageReference Include="X.Web.PagedList" Version="10.1.2" />
   </ItemGroup>
 
 

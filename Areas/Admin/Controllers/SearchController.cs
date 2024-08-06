@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -15,7 +17,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Search")]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
             try
             {
@@ -52,6 +54,20 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             catch (NullReferenceException ex)
             {
                 TempData["Message"] = ex.Message;
+            }
+
+            var settings = new ElasticsearchClientSettings(new Uri("http://localhost:9200"))
+                .Authentication(new BasicAuthentication("elastic", "Inkyfrog1"));
+            var client = new ElasticsearchClient(settings);
+            // https://stackoverflow.com/questions/56917365/upgrading-to-elastic-search-nest-7-0-1-breaks-code-that-checks-if-an-index-exist
+            var exists = await client.Indices.ExistsAsync("PersonalWebsiteMVC");
+            if (exists.Exists)
+            {
+                TempData["Message"] = "Index exists";
+            }
+            else
+            {
+                TempData["Message"] = "Index does not exist.  Create it?";
             }
             return View();
         }

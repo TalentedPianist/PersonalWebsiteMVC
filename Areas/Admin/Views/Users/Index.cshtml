@@ -4,7 +4,8 @@
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @using X.PagedList
-@using X.PagedList.Mvc.Core 
+@using X.PagedList.Extensions
+@using X.Web.PagedList
 
 <h1 class="bg-info text-white">Users</h1>
 <a asp-action="Create" asp-area="Admin" asp-controller="Users" class="btn btn-secondary">Create a User</a>
@@ -25,7 +26,7 @@
 </table>
 
 @Html.PagedListPager((X.PagedList.IPagedList)Model, page => Url.Action("Index", new { pageNumber = page, area = "Admin" }),
-    new X.PagedList.Mvc.Core.PagedListRenderOptions
+    new PagedListRenderOptions
     {
         DisplayItemSliceAndTotal = true,
         LiElementClasses = new string[] { "page-item" },

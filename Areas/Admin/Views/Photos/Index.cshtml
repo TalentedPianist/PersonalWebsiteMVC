@@ -8,8 +8,10 @@
 @using Microsoft.AspNetCore.Hosting
 @inject IWebHostEnvironment _env
 @inject ApplicationDbContext _db
-@using X.PagedList.Mvc.Core
+@using X.PagedList.Extensions
 @using X.PagedList
+@using X.Web.PagedList 
+ 
 @using HGO.ASPNetCore.FileManager.ViewComponentsModel
 
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
