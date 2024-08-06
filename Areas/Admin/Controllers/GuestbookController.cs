@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -21,9 +22,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [Route("Admin/Guestbook")]
-          public IActionResult Index()
+          public IActionResult Index([FromQuery(Name ="pageNumber")]int? page)
           {
-               return View(_db.Guestbook.ToList());
+            var g = _db.Guestbook;
+            var pageNumber = page ?? 1;
+            var model = g.ToPagedList(pageNumber, 5);
+            ViewBag.OnePageOfFiles = model;
+               return View(model);
           }
 
           public IActionResult Create()
@@ -87,5 +92,20 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View(_db.Guestbook.Where(g => g.Id == id).FirstOrDefault());
           }
 
+        [HttpPost]
+        public IActionResult SaveDraft([FromBody]Guestbook guestbook)
+        {
+            _db.Guestbook.Add(guestbook);
+            _db.SaveChanges();
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult DeleteMultiple([FromBody]List<Guestbook> data)
+        {
+            _db.Guestbook.RemoveRange(data);
+            _db.SaveChanges();
+            return Ok();
+        }
      }
 }

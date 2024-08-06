@@ -4,7 +4,17 @@
 @{
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
+@using Microsoft.AspNetCore.Http 
 
 <h1 class="bg bg-info p-1">Search</h1>
 <p><a asp-action="Create" asp-controller="Search" asp-area="Admin">Create</a> new search document.</p>
+
+@TempData["Message"]
+
+@foreach (var item in ViewBag.Files)
+{
+    var url = $"{ViewBag.Url}/{item}";
+    @url
+    <br>
+}
 

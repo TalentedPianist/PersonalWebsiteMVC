@@ -11,19 +11,58 @@
 <form method="post">
      <div class="form-group">
           <label asp-for="GuestbookContent">Comment:</label>
-          <textarea asp-for="GuestbookContent" rows="10" cols="30" class="form-control"></textarea>
+          <textarea asp-for="GuestbookContent" class="form-control" id="comment"></textarea>
      </div>
      <div class="form-group">
           <label asp-for="GuestbookAuthor">Name:</label>
-          <input asp-for="GuestbookAuthor" class="form-control" />
+          <input asp-for="GuestbookAuthor" class="form-control" id="name" />
      </div>
      <div class="form-group">
           <label asp-for="GuestbookAuthorEmail">Email:</label>
-          <input asp-for="GuestbookAuthorEmail" class="form-control" />
+          <input asp-for="GuestbookAuthorEmail" class="form-control" id="email" />
      </div>
      <div class="form-group">
           <label asp-for="GuestbookAuthorUrl">Website:</label>
-          <input asp-for="GuestbookAuthorUrl" class="form-control" />
+          <input asp-for="GuestbookAuthorUrl" class="form-control" id="website" />
      </div>
      <button type="submit" class="btn btn-primary">Save</button>
+     <a href="#" id="draft">Save Draft</a>
 </form>
+
+@section Scripts { 
+    <script>
+        $(function () {
+            $("#draft").on('click', function (e) {
+                e.preventDefault();
+                var formData = {
+                    GuestbookAuthor: $("#name").val(),
+                    GuestbookAuthorEmail: $("#email").val(),
+                    GuestbookContent: $("#comment").val(),
+                    GuestbookApproved: "No",
+                    DatePosted: "@DateTime.Now",
+                    GuestbookAuthorIP: "@Context.Connection.RemoteIpAddress",
+                    GuestbookAuthorUrl: $("#website").val()
+                };
+                console.log(formData);
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("SaveDraft", "Guestbook")",
+                    data: JSON.stringify(formData),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    async: false,
+                    cache: false,
+                    processData: false,
+                    success: function (message) {
+                        //window.location.reload();
+                        console.log(message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+}

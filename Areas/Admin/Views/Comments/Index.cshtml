@@ -11,10 +11,11 @@
 <a asp-action="Create" class="btn btn-secondary">Create</a>
 
 <table class="table">
-     <tr><th>CommentID</th><th>BlogID</th><th>User</th><th>Comment Type<th>Update</th><th>Details</th><th>Delete</th></tr>
+     <tr><th></th><th>CommentID</th><th>BlogID</th><th>User</th><th>Comment Type<th>Update</th><th>Details</th><th>Delete</th></tr>
      @foreach (var item in Model)
      {
           <tr>
+          <td><input type="checkbox" name="delete" value="@item.CommentID"></td>
           <td>@item.CommentID</td>
           <td>@item.PostID</td>
           <td>@item.CommentAuthor</td>
@@ -34,3 +35,42 @@
         LiElementClasses = new string[] { "page-item" },
         PageClasses = new string[] { "page-link" }
     })
+
+
+<a href="#" id="delete">Delete</a>
+
+@section Scripts { 
+    <script>
+        let del = [];
+        [].forEach.call(
+            document.querySelectorAll('input[type="checkbox"]'),
+            function (cb) {
+                cb.addEventListener('click', function (e) {
+                    del.push({ 'CommentID': cb.value });
+                });
+            }
+        );
+        $(function () {
+            $("#delete").on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("DeleteMultiple", "Comments")",
+                    data: JSON.stringify(del),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        console.log(message);
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>
+}

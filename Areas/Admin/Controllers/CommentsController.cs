@@ -93,5 +93,21 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           {
                return View(_db.Comments.Where(c => c.CommentID == id).FirstOrDefault());
           }
+
+        [HttpPost]
+        public IActionResult SaveDraft(Comments comment)
+        {
+            _db.Comments.Add(comment);
+            _db.SaveChanges();
+            return Ok(comment);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteMultiple([FromBody]List<Comments> comments)
+        {
+            _db.Comments.RemoveRange(comments);
+            _db.SaveChanges();
+            return Ok(comments);
+        }
     }
 }

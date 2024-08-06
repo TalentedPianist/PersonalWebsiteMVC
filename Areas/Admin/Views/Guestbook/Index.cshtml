@@ -3,15 +3,18 @@
     ViewData["Title"] = "Index";
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
+@using X.PagedList
+@using X.PagedList.Mvc.Core
 
 <h1 class="bg-info text-white">Guestbook</h1>
 <a asp-action="Create" class="btn btn-secondary">Create</a>
 
 <table class="table">
-     <tr><th>ID</th><th>User</th><th>Email</th><th>Update</th><th>Details</th><th>Delete</th></tr>
-     @foreach (var item in Model)
+     <tr><th></th><th>ID</th><th>User</th><th>Email</th><th>Update</th><th>Details</th><th>Delete</th></tr>
+     @foreach (Guestbook item in ViewBag.OnePageOfFiles)
      {
           <tr>
+          <td><input type="checkbox" name="delete" value="@item.Id"></td>
           <td>@item.Id</td>
           <td>@item.GuestbookAuthor</td>
           <td>@item.GuestbookAuthorEmail</td>
@@ -22,3 +25,48 @@
      }
 </table>
 
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Guestbook", new { pageNumber = page, area = "Admin" }),
+    new PagedListRenderOptions
+    {
+        DisplayItemSliceAndTotal = true,
+        LiElementClasses = new string[] { "page-item" },
+        PageClasses = new String[] { "page-link" }
+    })
+
+
+<a href="#" id="delete">Delete</a>
+
+@section Scripts { 
+    <script>
+        let del = [];
+        [].forEach.call(
+            document.querySelectorAll('input[type="checkbox"]'),
+            function (cb) {
+                cb.addEventListener('click', function (e) {
+                    del.push({ 'Id': cb.value });
+                });
+            }
+        );
+        $(function () {
+            $("#delete").on('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("DeleteMultiple", "Guestbook")",
+                    data: JSON.stringify(del),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+        });
+    </script>   
+}
