@@ -4,6 +4,7 @@ using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
 using Microsoft.AspNetCore.Html;
 using PersonalWebsiteMVC.Models;
+using ServiceStack;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -126,12 +127,22 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateIndex([FromForm(Name="name")]string name)
+        public async Task<IActionResult> CreateIndex([FromForm(Name = "name")] string name)
         {
-            var settings = new ElasticsearchClientSettings(new Uri("https://localhost:9200"))
+            var settings = new ElasticsearchClientSettings(new Uri("http://localhost:9200"))
                 .Authentication(new BasicAuthentication("elastic", "Inkyfrog1"));
             var client = new ElasticsearchClient(settings);
-            await client.Indices.CreateAsync(name);
+
+            var response = await client.Indices.CreateAsync("personalwebsitemvc");
+            // https://stackoverflow.com/questions/67048961/how-i-create-another-index-using-the-elastic-search
+            if (!response.IsValidResponse)
+            {
+                throw new Exception(response.DebugInformation);
+            }
+            if (!response.IsValidResponse)
+            {
+                throw new Exception(response.DebugInformation);
+            }
             return Ok(name);
         }
     }
