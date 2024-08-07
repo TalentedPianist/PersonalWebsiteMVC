@@ -1,20 +1,54 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
-@using Microsoft.AspNetCore.Http 
+@using Microsoft.AspNetCore.Http
 
 <h1 class="bg bg-info p-1">Search</h1>
 <p><a asp-action="Create" asp-controller="Search" asp-area="Admin">Create</a> new search document.</p>
 
 @TempData["Message"]
 
-@foreach (var item in ViewBag.Files)
+@if (ViewBag.Exists == false)
 {
-    var url = $"{ViewBag.Url}/{item}";
-    @url
-    <br>
+	@ViewBag.Form
+}
+else
+{
+
+	foreach (var item in ViewBag.Files)
+	{
+		var url = $"{ViewBag.Url}/{item}";
+		@url
+		<br>
+	}
+
+}
+
+@section Scripts { 
+	
+	<script>
+		$(function () {
+			$("button").on('click', function (e) {
+				e.preventDefault();
+	
+				$.ajax({
+					method: "POST",
+					url: "@Url.Action("CreateIndex", "Search")",
+					data: { 'name': $("#name").val() },
+					async: false,
+					cache: false,
+					success: function (message) {
+						console.log(message);
+					},
+					error: function (err) {
+						console.log(err);
+					}
+				});
+			});
+		});
+	</script>
 }
 

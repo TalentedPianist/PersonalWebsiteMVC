@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
+using Microsoft.AspNetCore.Html;
+using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -63,11 +65,19 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var exists = await client.Indices.ExistsAsync("PersonalWebsiteMVC");
             if (exists.Exists)
             {
+                ViewBag.Exists = true;
                 TempData["Message"] = "Index exists";
             }
             else
             {
+                ViewBag.Exists = false;
                 TempData["Message"] = "Index does not exist.  Create it?";
+                IHtmlContentBuilder strForm = new HtmlContentBuilder();
+                strForm.AppendHtml("<form method='post'>");
+                strForm.AppendHtml("<input type='hidden' name='txtName' value='PersonalWebsiteMVC' id='name'>");
+                strForm.AppendHtml("<button type='submit' class='btn btn-primary'>Yes</button>");
+                strForm.AppendHtml("</form>");
+                ViewBag.Form = strForm;
             }
             return View();
         }
@@ -114,5 +124,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             }
             return View();
         }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateIndex([FromForm(Name="name")]string name)
+        {
+            var settings = new ElasticsearchClientSettings(new Uri("https://localhost:9200"))
+                .Authentication(new BasicAuthentication("elastic", "Inkyfrog1"));
+            var client = new ElasticsearchClient(settings);
+            await client.Indices.CreateAsync(name);
+            return Ok(name);
+        }
     }
+
+   
 }
