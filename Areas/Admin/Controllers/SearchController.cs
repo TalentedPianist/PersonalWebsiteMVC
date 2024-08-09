@@ -5,6 +5,7 @@ using Elastic.Transport;
 using Microsoft.AspNetCore.Html;
 using PersonalWebsiteMVC.Models;
 using ServiceStack;
+using Elastic.Clients.Elasticsearch.QueryDsl;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -64,10 +65,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var client = new ElasticsearchClient(settings);
             // https://stackoverflow.com/questions/56917365/upgrading-to-elastic-search-nest-7-0-1-breaks-code-that-checks-if-an-index-exist
             var exists = await client.Indices.ExistsAsync("PersonalWebsiteMVC");
-            if (exists.Exists)
+            if (!exists.Exists)
             {
                 ViewBag.Exists = true;
                 TempData["Message"] = "Index exists";
+
+
+               
             }
             else
             {
@@ -82,6 +86,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             }
             return View();
         }
+
+  
 
 
         [Microsoft.AspNetCore.Mvc.Route("Search/Create")]
@@ -138,8 +144,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             if (!response.IsValidResponse)
             {
                 throw new Exception(response.DebugInformation);
+              
             }
-            if (!response.IsValidResponse)
+            if (response.IsValidResponse)
             {
                 throw new Exception(response.DebugInformation);
             }
