@@ -9,6 +9,7 @@
 @using Elastic.Clients.Elasticsearch.QueryDsl
 @using HtmlAgilityPack
 @using System.Net
+@using System.Linq
 @inject IWebHostEnvironment _env
 
 <h1 class="bg bg-info p-1">Search</h1>
@@ -18,12 +19,13 @@
 
 
 @{
-	string[] exclude = { "_Imports.razor", "App.razor" };
+	var exclude = new List<string>() { "App.razor" };
 	string path = System.IO.Path.Combine(_env.ContentRootPath, "Components");
 	DirectoryInfo dirs = new DirectoryInfo(path);
-	foreach (FileInfo file in dirs.GetFiles().Where(f => f.Extension.Contains("razor")).Except(exclude))
+	List<FileInfo> files = new List<FileInfo>();
+	files.AddRange(dirs.GetFiles().ToList());
+	foreach (FileInfo file in files.Except(exclude))
 	{
-		@file.Name<br>
 	}
 }
 
