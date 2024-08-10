@@ -1,5 +1,5 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
@@ -9,48 +9,24 @@
 @using Elastic.Clients.Elasticsearch.QueryDsl
 @using HtmlAgilityPack
 @using System.Net
+@inject IWebHostEnvironment _env
 
 <h1 class="bg bg-info p-1">Search</h1>
 <p><a asp-action="Create" asp-controller="Search" asp-area="Admin">Create</a> new search document.</p>
 
-@TempData["Message"]
+<p>@TempData["Message"]</p>
 
-@if (ViewBag.Exists == false)
-{
-    @ViewBag.Form
-}
-else
-{
 
-	foreach (var item in ViewBag.Files)
+@{
+	string[] exclude = { "_Imports.razor", "App.razor" };
+	string path = System.IO.Path.Combine(_env.ContentRootPath, "Components");
+	DirectoryInfo dirs = new DirectoryInfo(path);
+	foreach (FileInfo file in dirs.GetFiles().Where(f => f.Extension.Contains("razor")).Except(exclude))
 	{
-		var url = $"{ViewBag.Url}/{item}";
-        @url
-        <br>
+		@file.Name<br>
 	}
-
-	var settings = new Elastic.Clients.Elasticsearch.ElasticsearchClientSettings(new Uri("http://localhost:9200"))
-		.Authentication(new Elastic.Transport.BasicAuthentication("elastic", "Inkyfrog1"));
-	var client = new Elastic.Clients.Elasticsearch.ElasticsearchClient(settings);
-
-	// https://www.bytefish.de/blog/elasticsearch_code_search_part1_backend_elasticsearch.html
-	var request = client.SearchAsync<SearchModel>(s => s.Query(q => q
-	.QueryString(new QueryStringQuery()
-	{
-		AllowLeadingWildcard = true,
-		Query = "*:*"
-	})
-	)
-	);
-
-	if (request.Result.Documents.Count() == 0)
-	{
-		@GetHtml(ViewBag.Files[0])
-
-	}
-
-
 }
+
 
 
 @functions {
@@ -65,7 +41,7 @@ else
 
 @section Scripts {
 
-    <script>
+	<script>
 		$(function () {
 			$("button").on('click', function (e) {
 				e.preventDefault();
@@ -86,6 +62,6 @@ else
 				});
 			});
 		});
-    </script>
+	</script>
 }
 
