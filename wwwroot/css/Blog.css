@@ -834,3 +834,37 @@ main:before {
   flex: 0;
   gap: 1em;
 }
+
+.mobile {
+  position: relative;
+  content: "I am a mobile device.";
+}
+@media only screen and (min-width: 400px) {
+  .mobile {
+    display: none;
+  }
+}
+
+.tablet {
+  display: none;
+}
+@media only screen and (min-width: 401px) {
+  .tablet {
+    display: flex;
+    position: relative;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .tablet {
+    display: none;
+  }
+}
+
+.desktop {
+  display: none;
+}
+@media only screen and (min-width: 768px) {
+  .desktop {
+    display: flex;
+  }
+}

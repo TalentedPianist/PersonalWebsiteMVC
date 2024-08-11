@@ -938,3 +938,36 @@ main {
     gap: 1em;
 
 }
+
+.mobile { 
+    position: relative;
+    content: "I am a mobile device.";
+
+    @media only screen and (min-width: 400px) { 
+        display: none;
+    }
+}
+
+.tablet {
+    display: none;
+
+    @media only screen and (min-width: 401px) { 
+        display: flex; 
+        position: relative;
+   
+    }
+
+    @media only screen and (min-width: 768px) { 
+        display: none;
+    }
+}
+
+.desktop { 
+    display: none;
+    
+    @media only screen and (min-width: 768px) { 
+        display: flex;
+    }
+
+
+}

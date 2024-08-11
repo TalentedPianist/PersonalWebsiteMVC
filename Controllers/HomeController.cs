@@ -20,6 +20,7 @@ namespace PersonalWebsiteMVC.Controllers
 
         }
 
+        [Route("/")]
         public IActionResult Index()
         {
             

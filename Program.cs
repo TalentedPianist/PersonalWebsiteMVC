@@ -210,7 +210,7 @@ app.UseAuthorization();
 
 app.UseAntiforgery();
 
-app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
+//app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 
 /*app.MapAreaControllerRoute(

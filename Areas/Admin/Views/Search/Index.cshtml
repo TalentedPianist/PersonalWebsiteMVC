@@ -24,9 +24,7 @@
 	DirectoryInfo dirs = new DirectoryInfo(path);
 	List<FileInfo> files = new List<FileInfo>();
 	files.AddRange(dirs.GetFiles().ToList());
-	foreach (FileInfo file in files.Except(exclude))
-	{
-	}
+	
 }
 
 
