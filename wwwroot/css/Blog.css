@@ -93,6 +93,7 @@ header {
   display: flex;
   flex-direction: column;
   flex: 0;
+  height: 100vh;
 }
 #Blog section {
   display: flex;
