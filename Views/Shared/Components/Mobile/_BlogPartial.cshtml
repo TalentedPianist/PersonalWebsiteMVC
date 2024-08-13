@@ -1,0 +1,29 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@inject ApplicationDbContext _db
+
+@if (_db.Posts.Count() == 0)
+{
+
+    <h1>Blog</h1>
+
+    <p>No posts have been found just now.  Please check back later.</p>
+
+}
+else
+{
+    <div id="Blog">
+        <section>
+        <h1>Blog</h1>
+
+        @foreach (Posts post in _db.Posts)
+        {
+
+        }
+        </section>
+    </div>
+
+}

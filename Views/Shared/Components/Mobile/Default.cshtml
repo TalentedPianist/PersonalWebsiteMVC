@@ -4,6 +4,16 @@
 @{
 }
 
+<header>
+    <a href="#menu" rel="modal:open">
+    <svg width="40" height="40" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 19H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+    </a>
+</header>
+
 <div id="Home">
     <div class="wave-container">
         <section>
@@ -31,6 +41,20 @@
 
             <button type="button">Blog</button>
         </section>
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#debb0b" fill-opacity="1" d="M0,256L48,218.7C96,181,192,107,288,85.3C384,64,480,96,576,101.3C672,107,768,85,864,112C960,139,1056,213,1152,224C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f7e339" fill-opacity="1" d="M0,256L48,218.7C96,181,192,107,288,85.3C384,64,480,96,576,101.3C672,107,768,85,864,112C960,139,1056,213,1152,224C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
     </div>
+</div>
+
+<partial name="_BlogPartial.cshtml" />
+
+
+<div id="menu">
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
 </div>

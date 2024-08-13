@@ -9,5 +9,7 @@ namespace PersonalWebsiteMVC.Views.Shared.ViewComponents
         {
             return await Task.FromResult((IViewComponentResult)View());
         }
+
+       
     }
 }
