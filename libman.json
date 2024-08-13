@@ -53,6 +53,10 @@
     {
       "library": "popper.js@2.11.8",
       "destination": "wwwroot/lib/popper.js/"
+    },
+    {
+      "library": "foundation@6.8.1",
+      "destination": "wwwroot/lib/foundation/"
     }
   ]
 }

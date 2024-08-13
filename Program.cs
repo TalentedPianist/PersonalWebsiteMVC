@@ -26,7 +26,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.AspNetCore.Mvc.Razor;
 using HGO.ASPNetCore.FileManager;
-
+using Wangkanai.Responsive;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -162,6 +162,7 @@ builder.Services.Configure<RouteOptions>(options =>
 });
 
 builder.Services.AddHgoFileManager();
+builder.Services.AddResponsive();
 
 var app = builder.Build();
 
