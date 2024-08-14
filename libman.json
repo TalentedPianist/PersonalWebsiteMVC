@@ -58,5 +58,6 @@
       "library": "foundation@6.8.1",
       "destination": "wwwroot/lib/foundation/"
     }
+ 
   ]
 }

@@ -24,7 +24,9 @@ namespace PersonalWebsiteMVC.Views.Shared.ViewComponents
                  }
 
              };*/
-
+            return new PartialViewResult()
+            {
+            };
      
         }
     }

@@ -5,7 +5,7 @@
 }
 
 <header>
-    <a href="#menu" rel="modal:open">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#menu">
     <svg width="40" height="40" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
@@ -48,13 +48,19 @@
 <partial name="_BlogPartial.cshtml" />
 
 
-<div id="menu" class="modal">
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
+<div class="modal fade" id="menu" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="menuLabel">Menu</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-close="Close"></button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -27,7 +27,7 @@ header {
     display: flex;
     flex-direction: column;
     flex: 0;
-
+    position: relative;
 
     section {
         display: flex;
@@ -38,6 +38,7 @@ header {
         gap: 3em;
         background-color: #ffa500;
         height: 80vh;
+        position: relative;
 
         button {
             display: flex;
@@ -70,6 +71,7 @@ header {
     display: flex;
     flex-direction: column;
     flex: 0;
+    position: relative;
 
     section {
         padding-top: 5em;
@@ -78,6 +80,7 @@ header {
         flex: 0;
         height: 80vh;
         background-color: #F7E339;
+        position: relative;
 
         p {
             padding-left: 1em;
@@ -95,13 +98,28 @@ header {
             color: white;
         }
     }
+
+
+    &:after {
+        position: absolute;
+        bottom: 0;
+        height: 200px;
+        width: 100vw;
+        content: ".";
+        background-color: #9ff739;
+        display: flex;
+        z-index: -1;
+    }
 }
+
 
 #Blog {
     display: flex;
     flex-direction: column;
     flex: 0;
     height: 100vh;
+    position: relative;
+
 
     section {
         display: flex;
@@ -109,5 +127,33 @@ header {
         flex: 0;
         background-color: #9FF739;
         height: 80vh;
+        position: relative;
+    }
+}
+
+#menu { 
+    position: absolute; 
+    top: 1em; 
+    left: 0;
+    right: 0;
+    display: none; 
+    margin: 0 auto;
+    background: transparent !important;
+    color: white;
+    border: 0 !important;
+
+    ul { 
+        list-style-type: none;
+        display: flex; 
+        flex-direction: column;
+        flex: 1;
+        align-items: center;
+        gap: 3em;
+    }
+
+    a {
+        color: white;
+        font-size: xx-large;
+        text-decoration: none;
     }
 }
