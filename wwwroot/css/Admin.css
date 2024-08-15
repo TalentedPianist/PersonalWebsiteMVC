@@ -1,4 +1,8 @@
-﻿figure {
+﻿img {
+  width: 100% !important;
+}
+
+figure {
   margin: revert !important;
 }
 

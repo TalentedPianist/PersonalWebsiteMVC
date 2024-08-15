@@ -23,10 +23,6 @@
       "destination": "wwwroot/lib/animate.css/"
     },
     {
-      "library": "bootstrap@4.6.2",
-      "destination": "wwwroot/lib/bootstrap/"
-    },
-    {
       "library": "jquery-validation-unobtrusive@4.0.0",
       "destination": "wwwroot/lib/jquery-validation-unobtrusive/"
     },
@@ -57,7 +53,10 @@
     {
       "library": "foundation@6.8.1",
       "destination": "wwwroot/lib/foundation/"
+    },
+    {
+      "library": "bootstrap@5.3.3",
+      "destination": "wwwroot/lib/bootstrap/"
     }
- 
   ]
 }

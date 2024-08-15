@@ -4,6 +4,10 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 img {
   width: 100%;
 }
@@ -21,6 +25,25 @@ header {
   justify-content: center;
   padding-top: 1em;
   padding-bottom: 1em;
+}
+header svg {
+  position: relative;
+  z-index: 500;
+  color: black;
+  width: 50px;
+  height: 50px;
+}
+
+.sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.sticky svg {
+  color: white;
 }
 
 #Home {
@@ -52,6 +75,10 @@ header {
   width: 50%;
   border-radius: 50%;
 }
+#Home svg {
+  position: relative;
+  top: -1px;
+}
 #Home:after {
   display: flex;
   position: absolute;
@@ -75,8 +102,8 @@ header {
   flex-direction: column;
   flex: 0;
   height: 80vh;
-  background-color: #F7E339;
   position: relative;
+  background-color: #f7e339;
 }
 #About section p {
   padding-left: 1em;
@@ -92,14 +119,9 @@ header {
   background-color: darkolivegreen;
   color: white;
 }
-#About:after {
+#About svg {
   position: absolute;
-  bottom: 0;
-  height: 200px;
-  width: 100vw;
-  content: ".";
-  background-color: #9ff739;
-  display: flex;
+  top: -1px;
   z-index: -1;
 }
 
@@ -107,16 +129,33 @@ header {
   display: flex;
   flex-direction: column;
   flex: 0;
-  height: 100vh;
+  height: 100%;
   position: relative;
 }
 #Blog section {
   display: flex;
   flex-direction: column;
   flex: 0;
+  gap: 1em;
   background-color: #9FF739;
   height: 80vh;
   position: relative;
+  padding-left: 1em;
+  padding-right: 1em;
+}
+#Blog section h1 {
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+#Blog:before {
+  position: absolute;
+  top: 0;
+  content: "";
+  height: 100px;
+  width: 100vw;
+  display: flex;
+  background-color: #9ff739;
+  z-index: -1;
 }
 
 #menu {
@@ -126,7 +165,7 @@ header {
   right: 0;
   display: none;
   margin: 0 auto;
-  background: transparent !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
   color: white;
   border: 0 !important;
 }
@@ -142,4 +181,18 @@ header {
   color: white;
   font-size: xx-large;
   text-decoration: none;
+}
+#menu .modal-content {
+  background-color: transparent !important;
+  border: 0 !important;
+}
+#menu .modal-body {
+  padding: 0 !important;
+  border-bottom: 0 !important;
+}
+#menu .modal-header {
+  border-bottom: 0 !important;
+}
+#menu .modal-header .btn-close {
+  color: white !important;
 }
