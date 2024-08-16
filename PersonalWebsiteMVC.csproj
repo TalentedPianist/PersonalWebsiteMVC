@@ -15,41 +15,42 @@
     <PackageReference Include="Blazor.Pagination" Version="2.0.2" />
     <PackageReference Include="BlazorPagination" Version="0.2.16" />
     <PackageReference Include="DeviceDetector.NET" Version="6.3.3" />
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.15.0" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.15.1" />
     <PackageReference Include="HGO.ASPNetCore.FileManager" Version="1.0.7" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.62" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.63" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.0" />
     <PackageReference Include="MailKit" Version="4.7.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Components" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.7" />
-    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="8.0.8" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="8.0.8" />
     <PackageReference Include="Microsoft.AspNetCore.SpaServices" Version="3.1.32" />
-    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.7">
+    <PackageReference Include="Microsoft.AspNetCore.SpaServices.Extensions" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.8">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.7" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.7">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.8" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="8.0.8">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="8.0.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="8.0.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.3" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="8.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="8.0.4" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
     <PackageReference Include="MudBlazor" Version="7.6.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
     <PackageReference Include="ServiceStack.Extensions" Version="8.3.0" />
     <PackageReference Include="Sitko.Blazor.CKEditor" Version="4.2.1" />
     <PackageReference Include="Sitko.Blazor.CKEditor.Bundle" Version="4.2.1" />

@@ -52,4 +52,10 @@
         $(".card").slice(0, x).show(); // Show x amount of images
     });
     // End blog card slice
+
+    $("#singlePost").on('click', function (e) {
+        //e.preventDefault();
+        console.log("Link was clicked");
+    });
 });
+

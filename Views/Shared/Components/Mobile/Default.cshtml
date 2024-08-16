@@ -14,6 +14,12 @@
     </a>
 </header>
 
+@if (Context.Request.Query["type"] == "post")
+{
+   @await Component.InvokeAsync("SinglePost", new { id = Convert.ToInt32(Context.Request.Query["id"]) })
+}
+else
+{
 <div id="Home">
     <div class="wave-container">
         <section>
@@ -71,3 +77,5 @@
         </div>
     </div>
 </div>
+
+}
