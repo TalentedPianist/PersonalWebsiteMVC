@@ -10,9 +10,23 @@
 
 
 <div id="Post">
-    <h1>@Model.PostTitle</h1>
 
+	<a href='@($"{Context.Request.Scheme}://{Context.Request.Host.Value}#Blog")'>Back</a>
+	<h1>@Model.PostTitle</h1>
+
+	@Html.Raw(Model.PostContent)
+
+
+	@await Component.InvokeAsync("Comments", new { id = Convert.ToInt32(Context.Request.Query["id"]) })
 </div>
+
+
+
+
+
+
+
+
 
 
 

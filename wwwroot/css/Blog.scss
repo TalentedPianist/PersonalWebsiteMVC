@@ -17,7 +17,7 @@ body {
 }
 
 header {
-    position: absolute;
+    position: relative;
     display: flex;
     align-items: center;
     width: 100vw;
@@ -36,8 +36,6 @@ header {
 
         
     }
-
-    
 }
 
 .sticky {
@@ -230,4 +228,15 @@ header {
 
 #Post { 
     background-color: beige;
+    display: flex; 
+    flex-direction: column;
+    flex: 0;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+
+    p { 
+        padding-left: 1em;
+        padding-right: 1em;
+    }
 }
