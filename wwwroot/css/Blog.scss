@@ -233,10 +233,18 @@ header {
     flex: 0;
     align-items: center;
     justify-content: flex-start;
-    height: 100vh;
+    height: 100%;
 
     p { 
         padding-left: 1em;
         padding-right: 1em;
+    }
+}
+
+#Comments { 
+    form  {
+        label { 
+            display: none;
+        }
     }
 }

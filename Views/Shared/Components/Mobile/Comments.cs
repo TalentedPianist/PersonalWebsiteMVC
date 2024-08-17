@@ -18,6 +18,7 @@ namespace PersonalWebsiteMVC.Views.Shared.Components.Mobile
             var model = new MixModel();
             model.AllComments = _db.Comments.Where(c => c.PostID == id).ToList();
             model.Comments = new Models.Comments();
+            ViewBag.PostID = id;
             return View("~/Views/Shared/Components/Mobile/Comments.cshtml", model);
         }
     }

@@ -4,6 +4,7 @@
 @{
 }
 @model MixModel
+@inject ApplicationDbContext _db
 
 @TempData["Message"]
 
@@ -11,9 +12,11 @@
 
     <h3>Comments</h3>
 
-    @if (Model.Count() == 0)
+    
+
+    @if (Model.AllComments.Count() == 0)
     {
-        <p>No comments have been found for this post.  Be the first one to add a comment using the form below.</p>
+        <p>No comments have been found for this post.  Be the first to add a comment using the form below.</p>
     }
     else
     {
@@ -30,6 +33,23 @@
             <label asp-for="Comments.CommentAuthorEmail">Email:</label>
             <input asp-for="Comments.CommentAuthorEmail">
         </div>
+        <div class="form-group">
+            <label asp-for="Comments.CommentAuthorUrl">Website:</label>
+            <input asp-for="Comments.CommentAuthorEmail">
+        </div>
+        <div class="form-group">
+            <label asp-for="Comments.CommentContent">Comment:</label>
+            <textarea asp-for="Comments.CommentContent" rows="10" cols="30" id="ckeditor1"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 
 </div>
+
+
+@section Scripts { 
+
+    <script>
+        console.log("Hello World!");
+    </script>
+}

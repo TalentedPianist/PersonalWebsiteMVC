@@ -28,7 +28,7 @@
 
     });
 
-   
+
     window.addEventListener("scroll", () => {
         // https://webdesign.tutsplus.com/create-an-animated-sticky-header-on-scroll-with-a-bit-of-javascript--cms-93428t
         const currentScroll = window.pageYOffset;
@@ -57,5 +57,18 @@
         //e.preventDefault();
         console.log("Link was clicked");
     });
+
+    ClassicEditor
+        .create(document.querySelector("#ckeditor1") {
+            plugins: [],
+            toolbar: []
+        })
+        .then(editor => {
+            window.editor = editor;
+        })
+        .catch(error => {
+            console.error(error);
+        }
+       
 });
 
