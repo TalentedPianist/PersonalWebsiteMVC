@@ -58,17 +58,18 @@
         console.log("Link was clicked");
     });
 
+
     ClassicEditor
-        .create(document.querySelector("#ckeditor1") {
-            plugins: [],
-            toolbar: []
+        .create(document.querySelector("#ckeditor1"), {
+            // To make editor typable, the plugins[] bit needs to be taken out in spie of documentation.
+            toolbar: [],
         })
         .then(editor => {
-            window.editor = editor;
+            editor = editor;
         })
         .catch(error => {
             console.error(error);
-        }
+        });
        
 });
 

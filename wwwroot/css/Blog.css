@@ -34,6 +34,14 @@ header svg {
   height: 50px;
 }
 
+form {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+  width: 100vw;
+}
+
 .sticky {
   position: fixed;
   top: 0;
@@ -213,4 +221,8 @@ header svg {
 
 #Comments form label {
   display: none;
+}
+
+.ck-editor__editable_inline {
+  min-height: 50px !important;
 }

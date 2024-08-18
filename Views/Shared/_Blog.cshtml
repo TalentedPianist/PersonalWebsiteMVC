@@ -12,26 +12,27 @@
 <body>
 
 
-	@RenderBody()
+    @RenderBody()
 
 
-	<device include="Mobile">
-		@await Component.InvokeAsync("Mobile")
-	</device>
+    <device include="Mobile">
+        @await Component.InvokeAsync("Mobile")
+    </device>
 
-	<device include="Tablet">
-		<p>I am a tablet device.</p>
-	</device>
+    <device include="Tablet">
+        <p>I am a tablet device.</p>
+    </device>
 
-	<device include="Desktop">
-		<p>I am a desktop device.</p>
-	</device>
+    <device include="Desktop">
+        <p>I am a desktop device.</p>
+    </device>
 
-	<script src="/lib/jquery/jquery.min.js"></script>
-	<script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<script src="/lib/ckeditor5/ckeditor.min.js"></script>
-	<script src="/site.js" asp-append-version="true"></script>
-	@RenderSection("Scripts", false)
-	
+    <script src="/lib/jquery/jquery.min.js"></script>
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/lib/ckeditor5/ckeditor.min.js"></script>
+    <script src="/site.js" asp-append-version="true"></script>
+    
+    @RenderSection("Scripts", false)
+
 </body>
 </html>

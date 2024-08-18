@@ -57,6 +57,10 @@
     {
       "library": "bootstrap@5.3.3",
       "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "ckeditor5@43.0.0",
+      "destination": "wwwroot/lib/ckeditor5/"
     }
   ]
 }
