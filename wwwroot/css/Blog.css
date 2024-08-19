@@ -14,6 +14,7 @@ img {
 
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
+  position: relative;
 }
 
 form {
@@ -24,18 +25,6 @@ form {
   width: 100vw;
 }
 
-.sticky {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 99;
-  background-color: rgba(0, 0, 0, 0.6);
-}
-.sticky svg {
-  color: white;
-}
-
 #Home {
   display: flex;
   flex-direction: column;
@@ -43,24 +32,20 @@ form {
   position: relative;
 }
 #Home header {
-  position: relative;
   display: flex;
   flex-direction: column;
   flex: 0;
-  text-align: center;
-  background-color: #ffa500;
 }
-#Home header a {
-  display: block;
+#Home header .sticky {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.6);
 }
-#Home header svg {
-  position: relative;
-  color: black;
-  width: 50px;
-  height: 50px;
-  z-index: 50000 !important;
-  display: flex;
-  margin: 0 auto;
+#Home header .sticky svg {
+  color: white;
 }
 #Home section {
   display: flex;
@@ -191,20 +176,6 @@ form {
   color: white;
   font-size: xx-large;
   text-decoration: none;
-}
-#menu .modal-content {
-  background-color: transparent !important;
-  border: 0 !important;
-}
-#menu .modal-body {
-  padding: 0 !important;
-  border-bottom: 0 !important;
-}
-#menu .modal-header {
-  border-bottom: 0 !important;
-}
-#menu .modal-header .btn-close {
-  color: white !important;
 }
 
 #Post {

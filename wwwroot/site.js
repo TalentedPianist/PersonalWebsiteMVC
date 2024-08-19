@@ -4,10 +4,14 @@
 
     $("#menu a").on('click', function (e) {
         e.preventDefault();
-        $(".modal").modal('hide');
+    
         // User has clicked navbar link, perform smooth scrolling
         if (this.hash !== "") {
             e.preventDefault();
+            $("header").addClass("sticky");
+            var parentElement = document.querySelector("body");
+            parentElement.appendChild(document.querySelector("#Home header"));
+
             // Store hash
             var hash = this.hash;
 
@@ -65,6 +69,12 @@
         .catch(error => {
             console.error(error);
         });*/
-       
+
+
+    $("header a").on('click', function (e) {
+        e.preventDefault();
+        console.log("Link was clicked");
+        $("#menu").modal();
+    });
 });
 

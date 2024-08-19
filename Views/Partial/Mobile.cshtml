@@ -8,7 +8,7 @@
 <div id="Home">
     <header>
     
-           <a href="#menu" id="menu" rel="modal:open"><svg preserveAspectRatio="none" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+           <a href="#"><svg preserveAspectRatio="none" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M3 19H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
@@ -52,12 +52,14 @@
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f7e339" fill-opacity="1" d="M0,256L48,218.7C96,181,192,107,288,85.3C384,64,480,96,576,101.3C672,107,768,85,864,112C960,139,1056,213,1152,224C1248,235,1344,181,1392,154.7L1440,128L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
 </div>
 
+<partial name="~/Views/Blog/Index.cshtml" />
+
 <div id="menu" class="modal">
     <ul>
-        <li><a href="#" rel="modal:close">Close</a></li>
-        <li><a href="#Home">Home</a></li>
-        <li><a href="#About">About</a></li>
-        <li><a href="#Blog">Blog</a></li>
-        <li><a href="#Contact">Contact</a></li>
+        <li><a href="#" rel="modal:close">X</a></li>
+        <li><a href="#Home" rel="modal:close">Home</a></li>
+        <li><a href="#About" rel="modal:close">About</a></li>
+        <li><a href="#Blog" rel="modal:close">Blog</a></li>
+        <li><a href="#Contact" rel="modal:close">Contact</a></li>
     </ul>
 </div>
