@@ -3,14 +3,14 @@
    
 
     $("#menu a").on('click', function (e) {
-        e.preventDefault();
+        $("header").show();
     
         // User has clicked navbar link, perform smooth scrolling
+
         if (this.hash !== "") {
-            e.preventDefault();
-            $("header").addClass("sticky");
-            var parentElement = document.querySelector("body");
-            parentElement.appendChild(document.querySelector("#Home header"));
+         
+        
+            
 
             // Store hash
             var hash = this.hash;
@@ -21,6 +21,8 @@
             }, 800, function () {
                 // Add hash (#) to the URL when done scrolling (default click behaviour) 
                 window.location.hash = hash;
+                $("header").removeClass("sticky");
+                $(".modal").modal('hide');
             });
         }// End if
 
@@ -73,8 +75,8 @@
 
     $("header a").on('click', function (e) {
         e.preventDefault();
-        console.log("Link was clicked");
-        $("#menu").modal();
+        $("header").hide();
+        $("#menu").modal('show');
     });
 });
 

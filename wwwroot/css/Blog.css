@@ -25,6 +25,34 @@ form {
   width: 100vw;
 }
 
+header {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+}
+header svg {
+  width: 30px;
+  height: 30px;
+}
+
+.sticky {
+  display: flex;
+  z-index: 50000;
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.6);
+  width: 100vw;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.sticky svg {
+  display: flex;
+  margin: 0 auto;
+  color: white;
+  font-weight: bold;
+  width: 50px;
+  height: 50px;
+}
+
 #Home {
   display: flex;
   flex-direction: column;
@@ -154,15 +182,8 @@ form {
 }
 
 #menu {
-  position: absolute;
-  top: 1em;
-  left: 0;
-  right: 0;
-  display: none;
-  margin: 0 auto;
-  background-color: rgba(0, 0, 0, 0.6) !important;
-  color: white;
   border: 0 !important;
+  background-color: transparent !important;
 }
 #menu ul {
   list-style-type: none;
@@ -198,4 +219,13 @@ form {
 
 .ck-editor__editable_inline {
   min-height: 50px !important;
+}
+
+.modal-content {
+  background-color: transparent !important;
+  border: 0 !important;
+}
+
+.modal-body {
+  border: 0 !important;
 }

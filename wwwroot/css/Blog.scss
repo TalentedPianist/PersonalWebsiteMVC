@@ -4,7 +4,7 @@
     padding: 0;
 }
 
-html { 
+html {
     scroll-behavior: smooth;
 }
 
@@ -19,15 +19,43 @@ body {
 
 
 
-form { 
-    display: flex; 
+form {
+    display: flex;
     flex-direction: column;
     flex: 1;
     gap: 1em;
     width: 100vw;
 }
 
+header {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
 
+    svg {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.sticky {
+    display: flex;
+    z-index: 50000;
+    position: fixed;
+    background-color: rgba(0,0,0,0.6);
+    width: 100vw;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    svg {
+        display: flex;
+        margin: 0 auto;
+        color: white;
+        font-weight: bold;
+        width: 50px;
+        height: 50px;
+    }
+}
 
 
 #Home {
@@ -38,9 +66,9 @@ form {
 
 
     header {
-        display: flex; 
+        display: flex;
         flex-direction: column;
-        flex: 0; 
+        flex: 0;
 
         .sticky {
             position: fixed;
@@ -99,134 +127,136 @@ form {
     }
 }
 
-    #About {
+#About {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    position: relative;
+
+    section {
+        padding-top: 5em;
         display: flex;
         flex-direction: column;
         flex: 0;
+        height: 80vh;
         position: relative;
-
-        section {
-            padding-top: 5em;
-            display: flex;
-            flex-direction: column;
-            flex: 0;
-            height: 80vh;
-            position: relative;
-            background-color: #f7e339;
-
-            p {
-                padding-left: 1em;
-                padding-right: 1em;
-                padding-bottom: 1em;
-            }
-
-            button {
-                display: flex;
-                align-self: flex-start;
-                margin: 0 auto;
-                padding: 5px 5px 5px 5px;
-                border: 1px solid black;
-                background-color: darkolivegreen;
-                color: white;
-            }
-        }
-
-        svg {
-            position: absolute;
-            top: -1px;
-            z-index: -1;
-        }
-    }
-
-
-    #Blog {
-        display: flex;
-        flex-direction: column;
-        flex: 0;
-        height: 100%;
-        position: relative;
-
-
-        section {
-
-            h1 {
-                padding-top: 1em;
-                padding-bottom: 1em;
-            }
-
-            display: flex;
-            flex-direction: column;
-            flex: 0;
-            gap: 1em;
-            background-color: #9FF739;
-            height: 80vh;
-            position: relative;
-            padding-left: 1em;
-            padding-right: 1em;
-        }
-
-        &:before {
-            position: absolute;
-            top: 0;
-            content: "";
-            height: 100px;
-            width: 100vw;
-            display: flex;
-            background-color: #9ff739;
-            z-index: -1;
-        }
-    }
-
-    #menu {
-        position: absolute;
-        top: 1em;
-        left: 0;
-        right: 0;
-        display: none;
-        margin: 0 auto;
-        background-color: rgba(0,0,0,0.6) !important;
-        color: white;
-        border: 0 !important;
-
-        ul {
-            list-style-type: none;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            align-items: center;
-            gap: 3em;
-        }
-
-        a {
-            color: white;
-            font-size: xx-large;
-            text-decoration: none;
-        }
-    }
-
-    #Post {
-        background-color: beige;
-        display: flex;
-        flex-direction: column;
-        flex: 0;
-        align-items: center;
-        justify-content: flex-start;
-        height: 100%;
+        background-color: #f7e339;
 
         p {
             padding-left: 1em;
             padding-right: 1em;
+            padding-bottom: 1em;
+        }
+
+        button {
+            display: flex;
+            align-self: flex-start;
+            margin: 0 auto;
+            padding: 5px 5px 5px 5px;
+            border: 1px solid black;
+            background-color: darkolivegreen;
+            color: white;
         }
     }
 
-    #Comments {
-        form {
-            label {
-                display: none;
-            }
+    svg {
+        position: absolute;
+        top: -1px;
+        z-index: -1;
+    }
+}
+
+
+#Blog {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    height: 100%;
+    position: relative;
+
+
+    section {
+
+        h1 {
+            padding-top: 1em;
+            padding-bottom: 1em;
         }
+
+        display: flex;
+        flex-direction: column;
+        flex: 0;
+        gap: 1em;
+        background-color: #9FF739;
+        height: 80vh;
+        position: relative;
+        padding-left: 1em;
+        padding-right: 1em;
     }
 
-    .ck-editor__editable_inline {
-        min-height: 50px !important;
+    &:before {
+        position: absolute;
+        top: 0;
+        content: "";
+        height: 100px;
+        width: 100vw;
+        display: flex;
+        background-color: #9ff739;
+        z-index: -1;
     }
+}
+
+#menu {
+    border: 0 !important;
+    background-color: transparent !important;
+
+    ul {
+        list-style-type: none;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        align-items: center;
+        gap: 3em;
+    }
+
+    a {
+        color: white;
+        font-size: xx-large;
+        text-decoration: none;
+    }
+}
+
+#Post {
+    background-color: beige;
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100%;
+
+    p {
+        padding-left: 1em;
+        padding-right: 1em;
+    }
+}
+
+#Comments {
+    form {
+        label {
+            display: none;
+        }
+    }
+}
+
+.ck-editor__editable_inline {
+    min-height: 50px !important;
+}
+
+.modal-content { 
+    background-color: transparent !important;
+    border: 0 !important;
+}
+
+.modal-body { 
+    border: 0 !important;
+}
