@@ -11,7 +11,7 @@ namespace PersonalWebsiteMVC.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddComment([FromForm(Name="ckeditor1")]string message, MixModel model)
+        public IActionResult AddComment()
         {
             TempData["Message"] = DateTime.Now;
             return View("~/Views/Shared/Components/Mobile/Comments.cshtml");

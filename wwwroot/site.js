@@ -1,12 +1,6 @@
 ﻿$(function () {
 
-    $('#menu').on('shown.bs.modal', function () {
-        $("header svg").css("display", "none");
-    });
-
-    $('#menu').on('hide.bs.modal', function () {
-        $("header svg").css("display", "flex");
-    });
+   
 
     $("#menu a").on('click', function (e) {
         e.preventDefault();
@@ -59,17 +53,18 @@
     });
 
 
-    ClassicEditor
+  /*  ClassicEditor
         .create(document.querySelector("#ckeditor1"), {
             // To make editor typable, the plugins[] bit needs to be taken out in spie of documentation.
             toolbar: [],
         })
         .then(editor => {
             editor = editor;
+            editor.setData('<p>Blah blah blah</p>');
         })
         .catch(error => {
             console.error(error);
-        });
+        });*/
        
 });
 

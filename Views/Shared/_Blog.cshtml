@@ -1,4 +1,5 @@
 @using DeviceDetectorNET
+@addTagHelper *, PersonalWebsiteMVC
 
 <!DOCTYPE html>
 <html>
@@ -6,6 +7,7 @@
 	<base href="/">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <link rel="stylesheet" href="/lib/jquery-modal/jquery.modal.min.css">
 	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/css/Blog.min.css">
 </head>
@@ -16,20 +18,17 @@
 
 
     <device include="Mobile">
-        @await Component.InvokeAsync("Mobile")
+       <partial name="~/Views/Partial/Mobile.cshtml" />
+
+      
     </device>
 
-    <device include="Tablet">
-        <p>I am a tablet device.</p>
-    </device>
 
-    <device include="Desktop">
-        <p>I am a desktop device.</p>
-    </device>
 
     <script src="/lib/jquery/jquery.min.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
+    <script src="/lib/jquery-modal/jquery.modal.min.js"></script>
     <script src="/site.js" asp-append-version="true"></script>
     
     @RenderSection("Scripts", false)
