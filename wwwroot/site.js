@@ -33,9 +33,11 @@
         // https://webdesign.tutsplus.com/create-an-animated-sticky-header-on-scroll-with-a-bit-of-javascript--cms-93428t
         const currentScroll = window.pageYOffset;
         if (currentScroll > 150) {
+            $("header").prependTo("body");
             document.querySelector("header").classList.add("sticky");
         } else {
             document.querySelector("header").classList.remove("sticky");
+            $("header").prependTo("#Home section");
         }
     });
 

@@ -25,16 +25,6 @@ form {
   width: 100vw;
 }
 
-header {
-  display: flex;
-  flex-direction: column;
-  flex: 0;
-}
-header svg {
-  width: 30px;
-  height: 30px;
-}
-
 .sticky {
   display: flex;
   z-index: 50000;
@@ -53,18 +43,24 @@ header svg {
   height: 50px;
 }
 
-#Home {
+header {
   display: flex;
   flex-direction: column;
   flex: 0;
   position: relative;
+  z-index: 50000 !important;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
-#Home header {
-  display: flex;
-  flex-direction: column;
-  flex: 0;
+header a {
+  display: block;
 }
-#Home header .sticky {
+header svg {
+  width: 50px;
+  height: 50px;
+  color: black;
+}
+header .sticky {
   position: fixed;
   top: 0;
   left: 0;
@@ -72,16 +68,25 @@ header svg {
   z-index: 99;
   background-color: rgba(0, 0, 0, 0.6);
 }
-#Home header .sticky svg {
+header .sticky svg {
   color: white;
+  width: 30px;
+  height: 30px;
+  display: flex;
+}
+
+#Home {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  position: relative;
 }
 #Home section {
   display: flex;
   flex-direction: column;
   flex: 0;
-  align-items: center;
-  justify-content: center;
   gap: 3em;
+  align-items: center;
   background-color: #ffa500;
   height: 80vh;
   position: relative;
@@ -152,7 +157,7 @@ header svg {
   display: flex;
   flex-direction: column;
   flex: 0;
-  height: 100%;
+  height: 100vh;
   position: relative;
 }
 #Blog section {
@@ -161,7 +166,7 @@ header svg {
   flex: 0;
   gap: 1em;
   background-color: #9FF739;
-  height: 80vh;
+  height: 100vh;
   position: relative;
   padding-left: 1em;
   padding-right: 1em;

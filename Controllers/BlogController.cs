@@ -13,7 +13,8 @@ namespace PersonalWebsiteMVC.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            
+            return View(_db.Posts);
         }
 
        
