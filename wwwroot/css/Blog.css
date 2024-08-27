@@ -164,12 +164,22 @@ header .sticky svg {
   display: flex;
   flex-direction: column;
   flex: 0;
+  align-items: center;
+  justify-content: center;
   gap: 1em;
   background-color: #9FF739;
   height: 100vh;
   position: relative;
   padding-left: 1em;
   padding-right: 1em;
+}
+#Blog section:after {
+  display: flex;
+  height: 100px;
+  background-color: gold;
+  position: absolute;
+  bottom: 0;
+  content: "";
 }
 #Blog section h1 {
   padding-top: 1em;
@@ -183,6 +193,16 @@ header .sticky svg {
   width: 100vw;
   display: flex;
   background-color: #9ff739;
+  z-index: -1;
+}
+#Blog:after {
+  position: absolute;
+  top: 0;
+  content: ".";
+  height: 500px;
+  width: 100vw;
+  display: flex;
+  background-color: #f7e339;
   z-index: -1;
 }
 
@@ -211,15 +231,23 @@ header .sticky svg {
   flex: 0;
   align-items: center;
   justify-content: flex-start;
-  height: 100%;
+  height: 100vh;
 }
 #Post p {
   padding-left: 1em;
   padding-right: 1em;
+  line-height: 2;
 }
 
 #Comments form label {
   display: none;
+}
+
+#Contact {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  background-color: gold;
 }
 
 .ck-editor__editable_inline {

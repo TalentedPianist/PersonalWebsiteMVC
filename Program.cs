@@ -205,8 +205,6 @@ try
 
     app.UseSession();
 
-    app.UseNodeModules();
-
 
     app.UseMvc(routes =>
     {
