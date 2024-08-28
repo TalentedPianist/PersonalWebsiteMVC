@@ -1,0 +1,35 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model PagedList<Comments>
+@using X.PagedList
+@using X.PagedList.Extensions
+@using X.Web.PagedList
+
+<h3>Comments</h3>
+
+@ViewBag.strId
+
+@if (Model.Count() == 0)
+{
+    <p>No comments have been found for this post.  Be the first to add a comment using the form below.</p>
+}
+else
+{
+    foreach (Comments comment in Model)
+    {
+        <ul>
+        <li>@comment.CommentAuthor</li>
+        </ul>
+    }
+
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Blog", new { pageNumber = page, area = "Blog" }),
+        new PagedListRenderOptions
+        {
+            DisplayItemSliceAndTotal = true,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new String[] { "page-link" }
+        })
+}

@@ -65,4 +65,9 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Folder Include="Areas\Blog\Data\" />
+  </ItemGroup>
+
+
 </Project>
