@@ -6,11 +6,11 @@
 }
 @model PersonalWebsiteMVC.Areas.Blog.Models.BlogCommentViewModel
 
+<div id="Post">
+    <h1>@Model.Post!.PostTitle</h1>
 
-<h1>@Model.Post!.PostTitle</h1>
+    @Html.Raw(Model.Post!.PostContent)
 
-@Html.Raw(Model.Post!.PostContent)
-
-<hr>
+</div>
 
 <partial name="Comments" model="@Model.PagedComments" view-data="ViewData" />

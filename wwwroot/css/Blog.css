@@ -231,7 +231,6 @@ header .sticky svg {
   flex: 0;
   align-items: center;
   justify-content: flex-start;
-  height: 100vh;
 }
 #Post p {
   padding-left: 1em;
@@ -239,6 +238,13 @@ header .sticky svg {
   line-height: 2;
 }
 
+#Comments {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  background-color: yellow;
+  position: relative;
+}
 #Comments form label {
   display: none;
 }

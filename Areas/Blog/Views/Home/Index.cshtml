@@ -37,7 +37,7 @@
 						@RemoveHTMLTags(result)
 					</div>
 					<div class="card-footer">
-						<a asp-action="SinglePost" asp-route-id="@post.PostID" asp-area="Blog" class="btn btn-primary">Read More</a>
+						<a asp-action="SinglePost" asp-area="Blog" asp-route-id="@post.PostID" class="btn btn-primary">Read More</a>
 					</div>
 				</div>
 			}
@@ -49,12 +49,7 @@
 
 
 @functions {
-	public string BaseUrl()
-	{
-		string scheme = _http.HttpContext!.Request.Scheme;
-		string host = _http.HttpContext!.Request.Host.Value;
-		return $"{scheme}//{host}";
-	}
+
 
 	public static string Truncate(string value, int maxChars)
 	{
