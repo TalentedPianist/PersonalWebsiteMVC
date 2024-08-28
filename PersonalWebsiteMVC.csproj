@@ -65,12 +65,5 @@
   </ItemGroup>
 
 
-  <ItemGroup>
-    <Content Update="Areas\Blog\Views\_ViewImports.cshtml">
-      <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </Content>
-  </ItemGroup>
-
 
 </Project>

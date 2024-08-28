@@ -15,12 +15,14 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         {
             _db = db;
         }
+
+        [Route("Areas/Blog/Views/Index")]
         public IActionResult Index()
         {                   
             return View();
         }
 
-        [Route("/Blog/SinglePost/{id}")]
+        [Route("Blog/SinglePost/{id}")]
         public IActionResult SinglePost(int id, [FromQuery(Name="pageNumber")]int? page)
         { // https://www.codeproject.com/Articles/1108855/10-Ways-to-Bind-Multiple-Models-on-a-View-in-MVC
             BlogCommentViewModel model = new BlogCommentViewModel();

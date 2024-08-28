@@ -209,7 +209,7 @@ try
     app.UseMvc(routes =>
     {
         routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
-        routes.MapAreaRoute("Blog", "Blog", "Blog/{action}/{id?}");
+        routes.MapAreaRoute("Blog", "Blog", "{controller}/{action}/{id?}");
     });
 
     app.MapRazorPages();

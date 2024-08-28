@@ -22,9 +22,9 @@
     {
         foreach (Comments comment in Model)
         {
-            <ul>
-                <li>@comment.CommentAuthor</li>
-            </ul>
+            
+                <img src="https://www.gravatar.com/avatar">
+                @comment.CommentAuthor
         }
 
         // Use the load more jQuery code for mobile
