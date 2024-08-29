@@ -15,7 +15,6 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 
         public IActionResult Index(int id)
         {
-            
             var model = _db.Comments.Where(c => c.PostID == id).ToList();   
             return View(model);
         }

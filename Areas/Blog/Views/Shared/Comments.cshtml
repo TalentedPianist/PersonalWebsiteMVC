@@ -3,7 +3,7 @@
 *@
 @{
 }
-@model PagedList<Comments>
+@model BlogCommentViewModel
 @using X.PagedList
 @using X.PagedList.Extensions
 @using X.Web.PagedList
@@ -13,28 +13,47 @@
     <h3>Comments</h3>
 
     @ViewBag.strId
-
-    @if (Model.Count() == 0)
+   
+    @try
+    {
+    @if (Model.Comments!.Count() == 0)
     {
         <p>No comments have been found for this post.  Be the first to add a comment using the form below.</p>
     }
     else
     {
-        foreach (Comments comment in Model)
+        foreach (Comments comment in Model.PagedComments!)
         {
-            
+
                 <img src="https://www.gravatar.com/avatar">
                 @comment.CommentAuthor
+
         }
 
         // Use the load more jQuery code for mobile
-        @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Blog", new { pageNumber = page, area = "Blog" }),
-            new PagedListRenderOptions
-            {
-                DisplayItemSliceAndTotal = true,
-                LiElementClasses = new string[] { "page-item" },
-                PageClasses = new String[] { "page-link" }
-            })
+
     }
 
+    }
+    catch (ArgumentNullException ex)
+    {
+        @ex.Message
+    }
+
+    <form method="post" asp-action="AddComment" asp-controller="Comments" asp-area="Blog">
+        <div asp-validation-summary="All" class="text-danger"></div>
+        <div>
+            <label asp-for="Comment!.CommentAuthor">Name:</label>
+            <input asp-for="Comment!.CommentAuthor">
+        </div>
+        <div>
+            <label asp-for="Comment!.CommentAuthorEmail">Email:</label>
+            <input type="email" asp-for="Comment!.CommentAuthorEmail">
+        </div>
+        <div>
+            <label asp-for="Comment!.CommentAuthorUrl">Url:</label>
+            <input asp-for="Comment!.CommentAuthorUrl">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
