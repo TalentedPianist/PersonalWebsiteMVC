@@ -11,9 +11,11 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         public int PostID { get; set; } = 0;
-        public HomeController(ApplicationDbContext db)
+        private IConfiguration _configuration;
+        public HomeController(ApplicationDbContext db, IConfiguration config)
         {
             _db = db;
+            _configuration = config;
         }
 
         [Route("Areas/Blog/Views/Index")]
@@ -42,6 +44,8 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             ViewBag.CommentCount = comments.Count();
             BlogCommentViewModel model = new BlogCommentViewModel();
             model.Comments = comments;
+            ViewData["ReCaptchaKey"] = _configuration.GetSection("GoogleReCaptcha:key").Value;
+
             return PartialView("~/Areas/Blog/Views/Home/Comments.cshtml");
         }
     }

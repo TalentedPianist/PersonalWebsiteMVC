@@ -177,6 +177,7 @@ try
 
     builder.Services.AddHgoFileManager();
     builder.Services.AddResponsive();
+    builder.Services.AddSingleton(Log.Logger);
 
     var app = builder.Build();
 
