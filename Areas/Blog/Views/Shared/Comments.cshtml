@@ -12,27 +12,33 @@
 <div id="Comments">
     <h3>Comments</h3>
 
-    @ViewBag.strId
-   
+    @TempData["Message"]
+
     @try
     {
-    @if (Model.Comments!.Count() == 0)
-    {
-        <p>No comments have been found for this post.  Be the first to add a comment using the form below.</p>
-    }
-    else
-    {
-        foreach (Comments comment in Model.PagedComments!)
-        {
-
-                <img src="https://www.gravatar.com/avatar">
-                @comment.CommentAuthor
-
+        @if (Model.Comments.Count() == 0)
+        { // This was set to the wrong model.  It was completely different from what I was trying to fix.
+            <p>No comments have been found for this post.  Be the first to add a comment using the form below.</p>
         }
+        else
+        {
+            <p>@Model.Comments.Count() comments have been found for this post.  Share your thoughts using the form below.</p>
+            <hr>
+            <section>
 
-        // Use the load more jQuery code for mobile
+                @foreach (Comments comment in Model.Comments)
+                {
+                    <div>
+                        <img src="https://www.gravatar.com/avatar">
+                        Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd M yyyy t")
+                        @Html.Raw(comment.CommentContent)
+                    </div>
+                }
 
-    }
+            </section>
+            // Use the load more jQuery code for mobile
+            <button class="btn btn-secondary loadMoreComments">Load More</button>
+        }
 
     }
     catch (ArgumentNullException ex)
@@ -40,20 +46,27 @@
         @ex.Message
     }
 
+    <hr>
     <form method="post" asp-action="AddComment" asp-controller="Comments" asp-area="Blog">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div>
-            <label asp-for="Comment!.CommentAuthor">Name:</label>
-            <input asp-for="Comment!.CommentAuthor">
+            <label asp-for="Comment.CommentAuthor">Name:</label>
+            <input asp-for="Comment.CommentAuthor" placeholder="John Smith">
         </div>
         <div>
             <label asp-for="Comment!.CommentAuthorEmail">Email:</label>
-            <input type="email" asp-for="Comment!.CommentAuthorEmail">
+            <input type="email" asp-for="Comment!.CommentAuthorEmail" placeholder="john@johnsmith.com">
         </div>
         <div>
             <label asp-for="Comment!.CommentAuthorUrl">Url:</label>
-            <input asp-for="Comment!.CommentAuthorUrl">
+            <input asp-for="Comment!.CommentAuthorUrl" placeholder="https://www.johnsmith.com" value="https://www.johnsmith.com">
         </div>
+        <div>
+            <label asp-for="Comment.CommentContent">Comment:</label>
+            <textarea id="ckeditor1" asp-for="Comment.CommentContent"></textarea>
+        </div>
+        <input type="hidden" asp-for="Comment!.PostID" value="@ViewBag.strId">
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
+

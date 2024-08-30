@@ -17,14 +17,30 @@ body {
     position: relative;
 }
 
-
+p { 
+    margin: 0 !important;
+}
 
 form {
     display: flex;
     flex-direction: column;
-    flex: 1;
+    flex: 0;
     gap: 1em;
     width: 100vw;
+
+    div:empty { 
+        display: none;
+    }
+
+    input { 
+        border: 1px solid black;
+        padding: 5px 5px 5px 5px;
+    }
+
+    textarea { 
+        border: 1px solid black;
+        padding: 5px 5px 5px 5px;
+    }
 }
 
 
@@ -274,10 +290,32 @@ header {
     flex: 0; 
     background-color: yellow;
     position: relative;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-left: 1em;
+    padding-right: 1em;
+    height: 100% !important;
+
+    img { 
+        width: 15%;
+        vertical-align: top !important;
+    }
+
+    button { 
+        align-self: flex-start;
+    }
+
 
     form {
+        width: 100%;
+        margin-top: 1em;
+
         label {
             display: none;
+        }
+
+        input { 
+            width: 100%; 
         }
     }
 }

@@ -17,12 +17,27 @@ body {
   position: relative;
 }
 
+p {
+  margin: 0 !important;
+}
+
 form {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0;
   gap: 1em;
   width: 100vw;
+}
+form div:empty {
+  display: none;
+}
+form input {
+  border: 1px solid black;
+  padding: 5px 5px 5px 5px;
+}
+form textarea {
+  border: 1px solid black;
+  padding: 5px 5px 5px 5px;
 }
 
 .sticky {
@@ -244,9 +259,28 @@ header .sticky svg {
   flex: 0;
   background-color: yellow;
   position: relative;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  height: 100% !important;
+}
+#Comments img {
+  width: 15%;
+  vertical-align: top !important;
+}
+#Comments button {
+  align-self: flex-start;
+}
+#Comments form {
+  width: 100%;
+  margin-top: 1em;
 }
 #Comments form label {
   display: none;
+}
+#Comments form input {
+  width: 100%;
 }
 
 #Contact {
