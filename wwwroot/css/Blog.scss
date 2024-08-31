@@ -26,20 +26,35 @@ form {
     flex-direction: column;
     flex: 0;
     gap: 1em;
-    width: 100vw;
+    width: 70vw;
+    position: relative;
+   
 
-    div:empty { 
-        display: none;
+   div { 
+       width: 100vw;
+       position: relative;
     }
 
     input { 
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
+        width: 100vw;
     }
 
-    textarea { 
+    textarea {
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
+        align-self: flex-start;
+    }
+
+    label { 
+        @media only screen and (max-width: 400px) { 
+            display: none;
+        }
+    }
+
+    button { 
+        align-self: flex-start;
     }
 }
 
@@ -161,7 +176,7 @@ header {
         display: flex;
         flex-direction: column;
         flex: 0;
-        height: 80vh;
+        height: 100vh;
         position: relative;
         background-color: #f7e339;
 
@@ -180,6 +195,16 @@ header {
             background-color: darkolivegreen;
             color: white;
         }
+
+        &:after  {
+            position: absolute; 
+            bottom: 0; 
+            background-color: #f7e339;
+            display: flex; 
+            content: "";
+            height: 200px;
+            z-index: -1;
+        }
     }
 
     svg {
@@ -194,27 +219,26 @@ header {
     display: flex;
     flex-direction: column;
     flex: 0;
-    height: 100vh;
     position: relative;
-
+    
 
     section {
         display: flex;
         flex-direction: column;
         flex: 0;
-        align-items: center;
-        justify-content: center;
+        align-items: flex-start;
         gap: 1em;
         background-color: #9FF739;
-        height: 100vh;
         position: relative;
         padding-left: 1em;
         padding-right: 1em;
+        height: 100vh;
+        min-height: 100vh;
 
         &:after { 
             display: flex; 
             height: 100px;
-            background-color: gold;
+        
             position: absolute; 
             bottom: 0; 
             content: "";
@@ -233,18 +257,18 @@ header {
         height: 100px;
         width: 100vw;
         display: flex;
-        background-color: #9ff739;
         z-index: -1;
+        background-color: #f7e339;
     }
 
     &:after { 
         position: absolute; 
-        top: 0;
-        content: ".";
+        bottom: 0;
+        content: "";
         height: 500px;
         width: 100vw;
         display: flex; 
-        background-color: #f7e339;
+       background-color: cyan;
         z-index: -1;
     }
 }
@@ -324,11 +348,37 @@ header {
     display: flex; 
     flex-direction: column;
     flex: 0;
-    background-color: gold;
+    position: relative;
+    height: 100vh;
+    min-height: 100vh;
+    background-color: cyan;
+
+    section { 
+        display: flex; 
+        flex-direction: column;
+        flex: 0;
+        background-color: cyan;
+        height: 100vh;
+        min-height: 100vh;
+        width: 100vw;
+
+    }
+
+    &:before { 
+        position: absolute; 
+        top: 0;
+        content: ".";
+        background-color: cyan;
+        height: 100px;
+        z-index: -1;
+        display: flex;
+    }
 }
 
 .ck-editor__editable_inline {
-    min-height: 50px !important;
+    min-height: 100px !important;
+    width: 100% !important;
+    min-width: 100% !important;
 }
 
 .modal-content { 

@@ -47,11 +47,11 @@
     // Begin blog card slice
     $(".card").not(':eq(0)').hide();
     $(".card").slice(0, 1);
-    $("#Blog").css("height", "100vh");
+    //$("#Blog").css("height", "100vh");
     let x = 1;
     $(".loadMorePosts").on('click', function (e) {
         e.preventDefault();
-        $("#Blog").css("height", "100%");
+        //$("#Blog").css("height", "100%");
         x = x + 1;
         $(".card").css('flex-direction', 'column');
         $(".card").slice(0, x).show(); // Show x amount of images
@@ -75,20 +75,20 @@
         console.log("Link was clicked");
     });
 
-
-    ClassicEditor
-        .create(document.querySelector("#ckeditor1"), {
-            // To make editor typable, the plugins[] bit needs to be taken out in spie of documentation.
-            toolbar: [],
-        })
-        .then(editor => {
-            editor = editor;
-            editor.setData('<p>Blah blah blah</p>');
-        })
-        .catch(error => {
-            console.error(error);
-        });
-
+    if (document.querySelector("#ckeditor1")) {
+        ClassicEditor
+            .create(document.querySelector("#ckeditor1"), {
+                // To make editor typable, the plugins[] bit needs to be taken out in spie of documentation.
+                toolbar: [],
+            })
+            .then(editor => {
+                editor = editor;
+                editor.setData('<p>Blah blah blah</p>');
+            })
+            .catch(error => {
+                console.error(error);
+            });
+    }
 
     $("header a").on('click', function (e) {
         e.preventDefault();

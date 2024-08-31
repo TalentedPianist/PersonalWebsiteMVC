@@ -178,6 +178,10 @@ try
     builder.Services.AddHgoFileManager();
     builder.Services.AddResponsive();
 
+    var emailConfig = builder.Configuration
+        .GetSection("MailSettings")
+        .Get<MailSettings>();
+
     var app = builder.Build();
 
     // Configure the HTTP request pipeline.
