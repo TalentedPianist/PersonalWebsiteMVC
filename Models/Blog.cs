@@ -19,7 +19,7 @@ namespace PersonalWebsiteMVC.Models
      {
           [Key]
           public int PostID { get; set; }
-          public int CategoryID { get; set; }
+          public int? CategoryID { get; set; }
         public string? FeaturedImage { get; set; }
         public string? PostContent { get; set; } 
         public string? PostExcerpt { get; set; } 
@@ -28,16 +28,16 @@ namespace PersonalWebsiteMVC.Models
         public string? PostLocation { get; set; } 
         public string? PostIP { get; set; } 
         public string? PostActive { get; set; } 
-        public bool PostPublished { get; set; } 
-        public DateTime PostDate { get; set; } 
-          public int CommentCount { get; set; }
+        public bool? PostPublished { get; set; } 
+        public DateTime? PostDate { get; set; } 
+          public int? CommentCount { get; set; }
      }
 
      public class Comments
      {
           [Key]
           public int CommentID { get; set; }
-          public int PostID { get; set; }
+          public int? PostID { get; set; }
         public string? PhotoID { get; set; } 
         [Display(Name = "Name")]
         public string? CommentAuthor { get; set; } 

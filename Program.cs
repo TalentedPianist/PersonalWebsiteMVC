@@ -177,7 +177,6 @@ try
 
     builder.Services.AddHgoFileManager();
     builder.Services.AddResponsive();
-    builder.Services.AddSingleton(Log.Logger);
 
     var app = builder.Build();
 
@@ -251,8 +250,8 @@ try
 
     app.Run();
 
-}
-catch (Exception ex)
+} // https://stackoverflow.com/questions/70247187/microsoft-extensions-hosting-hostfactoryresolverhostinglistenerstopthehostexce
+catch (Exception ex) when (ex is not HostAbortedException)
 {
     Log.Fatal(ex, "server terminated unexpectedly");
 }

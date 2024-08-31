@@ -41,9 +41,10 @@
         }
 
     }
-    catch (ArgumentNullException ex)
+    catch (NullReferenceException ex)
     {
         @ex.Message
+     
     }
 
     <hr>
@@ -65,7 +66,7 @@
 			<label asp-for="Comment.CommentContent">Comment:</label>
 			<textarea id="ckeditor1" asp-for="Comment.CommentContent"></textarea>
 		</div>
-		<input type="hidden" asp-for="Comment!.PostID" value="@ViewBag.strId">
+		<input type="hidden" asp-for="Comment.PostID" value="@ViewBag.strId">
 		<div class="g-recaptcha" data-sitekey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"></div>
 		<button type="submit" class="btn btn-primary">Submit</button>
 	</form>

@@ -30,9 +30,8 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             BlogCommentViewModel model = new BlogCommentViewModel();
             model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
             model.Comments = _db.Comments.Where(c => c.PostID == id).ToList(); 
-            
-            PostID = id;
-            //Comments();
+           
+            ViewBag.PostID = id;
             return View(model);
         }
 

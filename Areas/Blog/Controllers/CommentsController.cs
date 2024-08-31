@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Areas.Blog.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using System.Text;
 
 namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 {
@@ -11,9 +13,9 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         public ApplicationDbContext _db { get; set; }
         public IHttpContextAccessor _http { get; set; }
         private IConfiguration _configuration { get; set; }
-        private ILogger _Logger { get; set; }
+        public ILogger<CommentsController> _Logger { get; set; }
 
-        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger logger)
+        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<CommentsController> logger)
         {
             _db = db;
             _http = http;
@@ -29,15 +31,16 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         }
 
         [Route("Comments/AddComment")]
+        [HttpPost]
         public IActionResult AddComment(BlogCommentViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (!ReCaptchaPassed(
-                    Request.Form["g-recatcha-response"]!,
-                    _configuration.GetSection("GoogleReCaptcha:secret").Value!,
+                if (ReCaptchaPassed(
+                    Request.Form["g-recaptcha-response"]!,
+                    _configuration.GetSection("reCaptcha:secret").Value!,
                     _Logger
-                  
+                    
                     ))
                 {
                     Comments comment = new Comments();
@@ -51,11 +54,18 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                     comment.CommentType = "Post";
                     _db.Comments.Add(comment);
                     _db.SaveChanges();
-                    return RedirectToAction("SinglePost", new { controller = "Home", area = "Blog", id = model.Comment!.PostID });
+                    return RedirectToAction("SinglePost", new { controller = "Home", area = "Blog", id = model.Comment.PostID });
                 }
-                return View("~/Areas/Blog/Views/Shared/SinglePost", model);
+                return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
             }
-            return View("~/Areas/Blog/Views/Shared/SinglePost", model);
+            else
+            {
+                ModelState.AddModelError("", "Please check the recaptcha to prove that you're not a bot.");
+                TempData["Message"] = Request.Form["g-recaptcha-response"];
+            }
+    
+                return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml");
+           
         }
 
         public static bool ReCaptchaPassed(string gRecaptchaResponse, string secret, ILogger _Logger)
@@ -70,6 +80,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 
             string JSONres = res.Content.ReadAsStringAsync().Result;
             dynamic JSONdata = JObject.Parse(JSONres);
+            Console.WriteLine(JSONdata);
             if (JSONdata.success != "true")
             {
                 return false;
