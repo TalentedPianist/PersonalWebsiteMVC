@@ -178,14 +178,32 @@ header {
         display: flex;
         flex-direction: column;
         flex: 0;
+        gap: 2em;
         height: 100vh;
         position: relative;
         background-color: #f7e339;
+
+        h1 { 
+            display: flex; 
+            margin: 0 auto;
+        }
 
         p {
             padding-left: 1em;
             padding-right: 1em;
             padding-bottom: 1em;
+        }
+
+        ul { 
+            display: flex; 
+            flex-direction: column;
+            flex: 0; 
+            gap: 0.5em;
+            margin-top: 1em;
+            margin-left: 1em;
+            padding-left: 1em;
+            padding-right: 1em;
+            font-size: large;
         }
 
         button {
@@ -196,6 +214,13 @@ header {
             border: 1px solid black;
             background-color: darkolivegreen;
             color: white;
+        }
+
+        img { 
+            display: flex; 
+            margin: 0 auto;
+            width: 50%;
+            border-radius: 50%;
         }
 
         &:after  {
@@ -268,15 +293,21 @@ header {
 
 #menu {
     border: 0 !important;
-    background-color: transparent !important;
+    background-color: rgba(0,0,0,0.6) !important;
+    width: 100vw !important; 
+    padding: 0 !important;
 
     ul {
         list-style-type: none;
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 0;
         align-items: center;
         gap: 3em;
+        width: 100%;
+        min-width: 100%;
+        margin: 0 !important; 
+        padding: 0 !important;
     }
 
     a {
@@ -364,8 +395,25 @@ header {
 .modal-content { 
     background-color: transparent !important;
     border: 0 !important;
+    width: 100% !important;
+    min-width: 100vw !important;
 }
 
 .modal-body { 
-    border: 0 !important;
+    padding: 0 !important;
+
+   ul { 
+       width: 100% !important; 
+       margin: 0 !important;
+       padding: 0 !important;
+    }
+}
+
+.modal-dialog { 
+    margin: 0 !important;
+}
+
+.modal { 
+    width: 100vw !important;
+    min-width: 100vw !important;
 }

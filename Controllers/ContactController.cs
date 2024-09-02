@@ -12,13 +12,15 @@ namespace PersonalWebsiteMVC.Controllers
         public IHttpContextAccessor _http { get; set; }
         public IConfiguration _configuration { get; set; }
         public ILogger<ContactController> _Logger { get; set; }
+        public IMailService _mailService { get; set; } 
 
-        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<ContactController> logger)
+        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<ContactController> logger, IMailService mailService)
         {
             _db = db;
             _http = http;
             _configuration = config;
             _Logger = logger;
+            _mailService = mailService;
         }
 
         public IActionResult Index()
@@ -27,6 +29,7 @@ namespace PersonalWebsiteMVC.Controllers
         }
 
         [HttpPost]
+        [Route("ContactForm")]
         public async Task<IActionResult> ContactForm(ContactFormModel model)
         {
             if (ModelState.IsValid)
@@ -37,7 +40,7 @@ namespace PersonalWebsiteMVC.Controllers
                 _Logger
                 ))
                 {
-                   
+                    await _mailService.SendMailAsync(model.Name!, "douglas@douglasmcgregor.co.uk", "Contact Form", model.Email!);
                     return View("~/Views/Partial/Contact.cshtml");
                 }
             }

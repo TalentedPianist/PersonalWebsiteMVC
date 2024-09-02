@@ -21,7 +21,7 @@
             }, 800, function () {
                 // Add hash (#) to the URL when done scrolling (default click behaviour) 
                 window.location.hash = hash;
-                $("header").removeClass("sticky");
+                //$("header").removeClass("sticky");
                 $(".modal").modal('hide');
             });
         }// End if
@@ -95,5 +95,7 @@
         $("header").hide();
         $("#menu").modal('show');
     });
+
+  
 });
 
