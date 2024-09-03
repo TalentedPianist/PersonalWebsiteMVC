@@ -1,6 +1,5 @@
 ﻿
-var element = document.getElementById('#ckeditor1');
-if (typeof (element) != 'undefined' && element != null) {
+if (document.querySelector("#ckeditor1")) {
     ClassicEditor
         .create(document.querySelector('#ckeditor1'))
         .then(editor => {
@@ -9,6 +8,7 @@ if (typeof (element) != 'undefined' && element != null) {
         .catch(error => {
             console.error(error);
         });
-
 }
+
+
 

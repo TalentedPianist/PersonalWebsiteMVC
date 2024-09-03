@@ -13,11 +13,19 @@
 <body>
 
 
+	<device include="mobile">
+		<partial name="~/Views/Partial/Mobile.cshtml" />
+	</device>
+
+	<device include="tablet">
+		<partial name="~/Views/Partial/Tablet.cshtml" />
+	</device>
+
+	<device include="desktop">
+		<p>I am a desktop device.</p>
+	</device>
+
 	@RenderBody()
-
-
-
-	@TempData["Message"]
 
 
 	<script src="/lib/jquery/jquery.min.js"></script>

@@ -29,42 +29,7 @@ namespace PersonalWebsiteMVC.Controllers
         [HttpGet]
         public IActionResult Index([FromQuery(Name="id")]int? id)
         {
-            Microsoft.Extensions.Primitives.StringValues queryVal;
-
-            if (Request.Query.TryGetValue("id", out queryVal))
-            {
-                TempData["Message"] = queryVal;
-            }
-
-            DeviceDetector.SetVersionTruncation(VersionTruncation.VERSION_TRUNCATION_NONE);
-            var userAgent = Request.Headers.UserAgent;
-            var headers = Request.Headers.ToDictionary(a => a.Key, a => a.Value.ToArray().FirstOrDefault());
-            var clientHints = ClientHints.Factory(headers);
-
-            var dd = new DeviceDetector(userAgent, clientHints);
-            dd.DiscardBotInformation();
-            dd.Parse();
-
-            if (dd.IsBot())
-            {
-                return Content("Go away bot!");
-            }
-            else
-            {
-                var clientInfo = dd.GetClient();
-                var osInfo = dd.GetOs();
-                var device = dd.GetDeviceName();
-                var brand = dd.GetBrandName();
-                var model = dd.GetModel();
-
-                if (device == "smartphone")
-                {
-                   
-                        return View("~/Views/Partial/Mobile.cshtml");
-                    
-                }
-            }
-         
+    
             return View();
         }
 

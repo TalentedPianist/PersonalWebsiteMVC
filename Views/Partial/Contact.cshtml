@@ -12,20 +12,21 @@
             <div asp-validation-summary="All" class="text-danger"></div>
             <div>
                 <label asp-for="Name">Name:</label>
-                <input asp-for="Name" placeholder="John Smith" value="John Smith">
+                <input asp-for="Name" placeholder="John Smith">
             </div>
             <div>
                 <label asp-for="Email">Email:</label>
-                <input asp-for="Email" type="email" placeholder="john@@johnsmith.com" value="john@@johnsmith.com">
+                <input asp-for="Email" type="email" placeholder="john@@johnsmith.com">
             </div>
             <div>
                 <label asp-for="Website">Website:</label>
-                <input asp-for="Website" type="text" placeholder="https://www.johnsmith.com" value="https://www.johnsmith.com">
+                <input asp-for="Website" type="text" placeholder="https://www.johnsmith.com">
             </div>
             <div>
                 <label asp-for="Message">Message:</label>
                 <textarea asp-for="Message" id="ckeditor1"></textarea>
             </div>
+            <div class="g-recaptcha" data-sitekey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"></div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
 

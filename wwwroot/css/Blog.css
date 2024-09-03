@@ -15,9 +15,14 @@ img {
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   position: relative;
+  width: 100%;
 }
 
 p {
+  margin: 0 !important;
+}
+
+ul {
   margin: 0 !important;
 }
 
@@ -80,6 +85,9 @@ header {
   z-index: 50000 !important;
   padding-top: 1em;
   padding-bottom: 1em;
+  width: 100vw;
+  align-items: center;
+  justify-content: center;
 }
 header a {
   display: block;
@@ -88,6 +96,43 @@ header svg {
   width: 50px;
   height: 50px;
   color: black;
+}
+header nav {
+  display: flex;
+  align-items: center;
+  width: 100vw;
+  position: relative;
+  margin: 0 auto;
+  justify-content: center;
+}
+header nav ul {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  list-style-type: none;
+  position: relative;
+  width: 100vw;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+@media only screen and (min-width: 400px) {
+  header nav ul {
+    flex-direction: row;
+  }
+}
+header nav a {
+  text-decoration: none;
+  font-size: x-large;
+  color: black;
+}
+@media only screen and (min-width: 400px) {
+  header nav {
+    background-color: deepskyblue;
+    padding: 0 !important;
+  }
 }
 header .sticky {
   position: fixed;
@@ -102,6 +147,18 @@ header .sticky svg {
   width: 30px;
   height: 30px;
   display: flex;
+}
+@media only screen and (min-width: 400px) {
+  header {
+    padding: 0;
+  }
+}
+
+footer {
+  text-align: center;
+  width: 100vw;
+  padding-top: 1em;
+  padding-bottom: 1em;
 }
 
 #Home {
@@ -120,6 +177,9 @@ header .sticky svg {
   height: 80vh;
   position: relative;
 }
+#Home section:first-child {
+  gap: 3em;
+}
 #Home section button {
   display: flex;
   align-self: flex-start;
@@ -132,9 +192,22 @@ header .sticky svg {
   width: 50%;
   border-radius: 50%;
 }
+@media only screen and (min-width: 400px) {
+  #Home section {
+    flex-direction: row;
+    gap: 0;
+    justify-content: center;
+  }
+}
+#Home article {
+  width: 50%;
+}
 #Home svg {
   position: relative;
   top: -1px;
+}
+#Home button {
+  align-self: flex-start;
 }
 #Home:after {
   display: flex;
@@ -146,7 +219,11 @@ header .sticky svg {
   width: 100vw;
   background-color: #F7E339;
 }
-
+@media only screen and (min-width: 400px) {
+  #Home:after {
+    display: none;
+  }
+}
 #About {
   display: flex;
   flex-direction: column;
@@ -218,6 +295,7 @@ header .sticky svg {
   flex-direction: column;
   flex: 0;
   position: relative;
+  width: 100%;
 }
 #Blog section {
   display: flex;
@@ -227,14 +305,26 @@ header .sticky svg {
   gap: 1em;
   background-color: #9FF739;
   position: relative;
-  padding-left: 1em;
-  padding-right: 1em;
   height: 100vh;
   min-height: 100vh;
+  width: 100%;
+  min-width: 100%;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 #Blog section h1 {
   padding-top: 1em;
   padding-bottom: 1em;
+}
+#Blog section div:last-child {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  flex: 0;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  gap: 2em;
 }
 #Blog:before {
   position: absolute;
@@ -255,6 +345,9 @@ header .sticky svg {
   display: flex;
   z-index: -1;
   background-color: cyan;
+}
+#Blog .card {
+  width: 100% !important;
 }
 
 #menu {
@@ -338,7 +431,7 @@ header .sticky svg {
   flex-direction: column;
   flex: 0;
   background-color: cyan;
-  height: 80vh;
+  height: 100vh;
   padding-top: 5em;
 }
 

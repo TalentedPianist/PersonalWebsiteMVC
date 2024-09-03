@@ -44,7 +44,7 @@
         }
     });
 
-    // Begin blog card slice
+    // Begin blog card slice for load more
     $(".card").not(':eq(0)').hide();
     $(".card").slice(0, 1);
     //$("#Blog").css("height", "100vh");
@@ -56,7 +56,16 @@
         $(".card").css('flex-direction', 'column');
         $(".card").slice(0, x).show(); // Show x amount of images
     });
-    // End blog card slice
+    // End blog card slice for load more
+    // Begin code for show less button
+    $(".loadLessPosts").on('click', function (e) {
+        e.preventDefault();
+     
+        console.log('Show less button was clicked');
+   
+        $(".card").slice(1, x).hide();
+    });
+ 
 
     // Begin comments slice for mobile view
     $("#Comments section div").not(':eq(0)').hide();
@@ -95,6 +104,7 @@
         $("header").hide();
         $("#menu").modal('show');
     });
+
 
   
 });
