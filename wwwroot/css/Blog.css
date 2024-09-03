@@ -121,6 +121,7 @@ header nav ul {
 @media only screen and (min-width: 400px) {
   header nav ul {
     flex-direction: row;
+    background-color: #BF9169;
   }
 }
 header nav a {
@@ -152,6 +153,14 @@ header .sticky svg {
   header {
     padding: 0;
   }
+}
+
+.coverPhoto {
+  display: block;
+  background-image: url("../images/hill.jpg");
+  width: 100vw;
+  height: 100vw;
+  content: "";
 }
 
 footer {
