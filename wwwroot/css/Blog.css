@@ -121,13 +121,25 @@ header nav ul {
 @media only screen and (min-width: 400px) {
   header nav ul {
     flex-direction: row;
-    background-color: #BF9169;
+    background-color: #A1FC6A;
   }
 }
 header nav a {
   text-decoration: none;
   font-size: x-large;
   color: black;
+}
+@media (orientation: landscape) {
+  header nav a {
+    font-size: small;
+  }
+}
+@media (orientation: landscape) {
+  header nav {
+    background-color: transparent !important;
+    justify-content: flex-start;
+    width: 100vw;
+  }
 }
 @media only screen and (min-width: 400px) {
   header nav {

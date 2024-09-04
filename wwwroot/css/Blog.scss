@@ -16,6 +16,10 @@ body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: relative;
     width: 100%;
+
+    @media (orientation: landscape) { 
+        width: 100vw;
+    }
 }
 
 p { 
@@ -110,8 +114,10 @@ header {
 
     nav {
         display: flex;
+        flex-direction: column;
+        flex: 0;
         align-items: center;
-        width: 100vw;
+        width: 100%;
         position: relative;
         margin: 0 auto;
         justify-content: center;
@@ -131,7 +137,12 @@ header {
 
             @media only screen and (min-width: 400px) {
                 flex-direction: row;
-                background-color: #BF9169;
+                background-color: #A1FC6A;
+            }
+
+            @media (orientation: landscape) { 
+                width: 100vw !important;
+                min-width: 100vw;
             }
         }
 
@@ -139,9 +150,19 @@ header {
             text-decoration: none;
             font-size: x-large;
             color: black;
+
+            @media (orientation: landscape) { 
+                font-size: small;
+            }
         }
 
-      
+
+        @media (orientation: landscape) {
+            background-color: transparent !important;
+            justify-content: flex-start;
+            width: 100vw;
+        }
+
 
         @media only screen and (min-width: 400px) {
             background-color: deepskyblue;
