@@ -21,7 +21,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         [Route("Areas/Blog/Views/Index")]
         public IActionResult Index()
         {                   
-            return View();
+            return View("~/Areas/Blog/Views/Index.cshtml");
         }
 
         [Route("Blog/SinglePost/{id}")]

@@ -28,21 +28,22 @@
 
     });
 
-
-    window.addEventListener("scroll", () => {
-        // https://webdesign.tutsplus.com/create-an-animated-sticky-header-on-scroll-with-a-bit-of-javascript--cms-93428t
-        const currentScroll = window.pageYOffset;
-        var header = document.querySelector("header");
-        if (header) {
-            if (currentScroll > 150) {
-                $("header").prependTo("body");
-                document.querySelector("header").classList.add("sticky");
-            } else {
-                document.querySelector("header").classList.remove("sticky");
-                $("header").prependTo("#Home section");
+    if (!/Mobi/.test(navigator.userAgent)) {
+        window.addEventListener("scroll", () => {
+            // https://webdesign.tutsplus.com/create-an-animated-sticky-header-on-scroll-with-a-bit-of-javascript--cms-93428t
+            const currentScroll = window.pageYOffset;
+            var header = document.querySelector("header");
+            if (header) {
+                if (currentScroll > 150) {
+                    $("header").prependTo("body");
+                    document.querySelector("header").classList.add("sticky");
+                } else {
+                    document.querySelector("header").classList.remove("sticky");
+                    $("header").prependTo("#Home section");
+                }
             }
-        }
-    });
+        });
+    }
 
     // Begin blog card slice for load more
     $(".card").not(':eq(0)').hide();
@@ -100,9 +101,11 @@
     }
 
     $("header a").on('click', function (e) {
-        e.preventDefault();
-        $("header").hide();
-        $("#menu").modal('show');
+        if (!/Mobi/.test(navigator.userAgent)) {
+            e.preventDefault();
+            $("header").hide();
+            $("#menu").modal('show');
+        }
     });
 
 

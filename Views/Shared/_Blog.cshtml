@@ -11,7 +11,9 @@
 	<link rel="stylesheet" href="/css/Blog.min.css">
 </head>
 <body>
-
+	@{
+		RenderBody();
+	}
 
 	<device include="mobile">
 		<partial name="~/Views/Partial/Mobile.cshtml" />
@@ -22,10 +24,11 @@
 	</device>
 
 	<device include="desktop">
-		<p>I am a desktop device.</p>
+
+	
 	</device>
 
-	@RenderBody()
+
 
 
 	<script src="/lib/jquery/jquery.min.js"></script>

@@ -2,6 +2,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
 }
 
 html {
@@ -99,39 +104,52 @@ header svg {
 }
 header nav {
   display: flex;
+  flex-direction: column;
+  flex: 0;
   align-items: center;
-  width: 100vw;
+  width: 100%;
   position: relative;
-  margin: 0 auto;
   justify-content: center;
 }
 header nav ul {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   list-style-type: none;
   position: relative;
   width: 100vw;
   align-items: center;
   justify-content: space-between;
-  gap: 5em;
   padding-top: 1em;
   padding-bottom: 1em;
+  margin-left: 0;
 }
 @media only screen and (min-width: 400px) {
   header nav ul {
     flex-direction: row;
-    background-color: #A1FC6A;
+    justify-content: space-evenly;
+    background-color: #365902;
+  }
+}
+@media only screen and (orientation: landscape) {
+  header nav ul {
+    gap: 2em;
+  }
+}
+@media only screen and (orientation: portrait) {
+  header nav ul {
+    gap: 1em;
+    padding-right: 2em;
   }
 }
 header nav a {
   text-decoration: none;
   font-size: x-large;
-  color: black;
+  color: white;
 }
-@media (orientation: landscape) {
+@media only screen and (orientation: landscape) {
   header nav a {
-    font-size: small;
+    font-size: x-large;
   }
 }
 @media (orientation: landscape) {
@@ -169,10 +187,19 @@ header .sticky svg {
 
 .coverPhoto {
   display: block;
-  background-image: url("../images/hill.jpg");
+  background-image: url("../images/butterfly.jpg");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-attachment: fixed;
   width: 100vw;
-  height: 100vw;
+  height: 300px;
   content: "";
+}
+@media only screen and (orientation: landscape) {
+  .coverPhoto {
+    display: flex;
+    height: 400px;
+  }
 }
 
 footer {
@@ -180,6 +207,9 @@ footer {
   width: 100vw;
   padding-top: 1em;
   padding-bottom: 1em;
+  background-color: #BF5B04;
+  color: white;
+  clear: both;
 }
 
 #Home {
@@ -192,14 +222,10 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 0;
-  gap: 3em;
+  gap: 4em;
   align-items: center;
   background-color: #ffa500;
-  height: 80vh;
   position: relative;
-}
-#Home section:first-child {
-  gap: 3em;
 }
 #Home section button {
   display: flex;
@@ -220,17 +246,47 @@ footer {
     justify-content: center;
   }
 }
-#Home article {
-  width: 50%;
+@media only screen and (min-width: 600px) {
+  #Home section {
+    background-color: #F2B705;
+  }
 }
-#Home svg {
+@media only screen and (orientation: portrait) {
+  #Home section:first-child {
+    padding-top: 1em;
+    padding-bottom: 1em;
+    margin-bottom: -1px;
+  }
+}
+@media only screen and (orientation: portrait) {
+  #Home section:last-child {
+    height: 50vh;
+    min-height: 50vh;
+  }
+}
+@media only screen and (orientation: portriat) {
+  #Home section {
+    gap: 0;
+  }
+}
+#Home section article {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+}
+#Home section article:first-child {
+  gap: 3em;
+}
+#Home section svg {
   position: relative;
   top: -1px;
 }
-#Home button {
+#Home section button {
   align-self: flex-start;
 }
-#Home:after {
+#Home section:after {
   display: flex;
   position: absolute;
   bottom: 0;
@@ -241,17 +297,17 @@ footer {
   background-color: #F7E339;
 }
 @media only screen and (min-width: 400px) {
-  #Home:after {
+  #Home section:after {
     display: none;
   }
 }
-#About {
+#Home #About {
   display: flex;
   flex-direction: column;
   flex: 0;
   position: relative;
 }
-#About section {
+#Home #About section {
   padding-top: 5em;
   display: flex;
   flex-direction: column;
@@ -261,16 +317,16 @@ footer {
   position: relative;
   background-color: #f7e339;
 }
-#About section h1 {
+#Home #About section h1 {
   display: flex;
   margin: 0 auto;
 }
-#About section p {
+#Home #About section p {
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em;
 }
-#About section ul {
+#Home #About section ul {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -281,7 +337,7 @@ footer {
   padding-right: 1em;
   font-size: large;
 }
-#About section button {
+#Home #About section button {
   display: flex;
   align-self: flex-start;
   margin: 0 auto;
@@ -290,13 +346,13 @@ footer {
   background-color: darkolivegreen;
   color: white;
 }
-#About section img {
+#Home #About section img {
   display: flex;
   margin: 0 auto;
   width: 50%;
   border-radius: 50%;
 }
-#About section:after {
+#Home #About section:after {
   position: absolute;
   bottom: 0;
   background-color: #f7e339;
@@ -305,20 +361,19 @@ footer {
   height: 200px;
   z-index: -1;
 }
-#About svg {
+#Home #About svg {
   position: absolute;
   top: -1px;
   z-index: -1;
 }
-
-#Blog {
+#Home #Blog {
   display: flex;
   flex-direction: column;
   flex: 0;
   position: relative;
   width: 100%;
 }
-#Blog section {
+#Home #Blog section {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -333,11 +388,11 @@ footer {
   padding-left: 1em;
   padding-right: 1em;
 }
-#Blog section h1 {
+#Home #Blog section h1 {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-#Blog section div:last-child {
+#Home #Blog section div:last-child {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -347,7 +402,7 @@ footer {
   width: 100vw;
   gap: 2em;
 }
-#Blog:before {
+#Home #Blog:before {
   position: absolute;
   top: 0;
   content: "";
@@ -357,7 +412,7 @@ footer {
   z-index: -1;
   background-color: #f7e339;
 }
-#Blog:after {
+#Home #Blog:after {
   position: absolute;
   bottom: 0;
   content: "";
@@ -367,17 +422,16 @@ footer {
   z-index: -1;
   background-color: cyan;
 }
-#Blog .card {
+#Home #Blog .card {
   width: 100% !important;
 }
-
-#menu {
+#Home #menu {
   border: 0 !important;
   background-color: rgba(0, 0, 0, 0.6) !important;
   width: 100vw !important;
   padding: 0 !important;
 }
-#menu ul {
+#Home #menu ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -389,13 +443,12 @@ footer {
   margin: 0 !important;
   padding: 0 !important;
 }
-#menu a {
+#Home #menu a {
   color: white;
   font-size: xx-large;
   text-decoration: none;
 }
-
-#Post {
+#Home #Post {
   background-color: beige;
   display: flex;
   flex-direction: column;
@@ -403,13 +456,12 @@ footer {
   align-items: center;
   justify-content: flex-start;
 }
-#Post p {
+#Home #Post p {
   padding-left: 1em;
   padding-right: 1em;
   line-height: 2;
 }
-
-#Comments {
+#Home #Comments {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -421,25 +473,24 @@ footer {
   padding-right: 1em;
   height: 100% !important;
 }
-#Comments img {
+#Home #Comments img {
   width: 15%;
   vertical-align: top !important;
 }
-#Comments button {
+#Home #Comments button {
   align-self: flex-start;
 }
-#Comments form {
+#Home #Comments form {
   width: 100%;
   margin-top: 1em;
 }
-#Comments form label {
+#Home #Comments form label {
   display: none;
 }
-#Comments form input {
+#Home #Comments form input {
   width: 100%;
 }
-
-#Contact {
+#Home #Contact {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -447,7 +498,7 @@ footer {
   height: 100vh;
   min-height: 100vh;
 }
-#Contact section {
+#Home #Contact section {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -455,34 +506,29 @@ footer {
   height: 100vh;
   padding-top: 5em;
 }
-
-.ck-editor__editable_inline {
+#Home .ck-editor__editable_inline {
   min-height: 200px !important;
   width: 100% !important;
   min-width: 100% !important;
 }
-
-.modal-content {
+#Home .modal-content {
   background-color: transparent !important;
   border: 0 !important;
   width: 100% !important;
   min-width: 100vw !important;
 }
-
-.modal-body {
+#Home .modal-body {
   padding: 0 !important;
 }
-.modal-body ul {
+#Home .modal-body ul {
   width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
 }
-
-.modal-dialog {
+#Home .modal-dialog {
   margin: 0 !important;
 }
-
-.modal {
+#Home .modal {
   width: 100vw !important;
   min-width: 100vw !important;
 }
