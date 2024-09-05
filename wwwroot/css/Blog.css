@@ -251,19 +251,6 @@ footer {
     background-color: #F2B705;
   }
 }
-@media only screen and (orientation: portrait) {
-  #Home section:first-child {
-    padding-top: 1em;
-    padding-bottom: 1em;
-    margin-bottom: -1px;
-  }
-}
-@media only screen and (orientation: portrait) {
-  #Home section:last-child {
-    height: 50vh;
-    min-height: 50vh;
-  }
-}
 @media only screen and (orientation: portriat) {
   #Home section {
     gap: 0;
@@ -289,9 +276,9 @@ footer {
 #Home section:after {
   display: flex;
   position: absolute;
-  bottom: 0;
+  bottom: -6em;
   z-index: -1;
-  height: 200px;
+  height: 100px;
   content: ".";
   width: 100vw;
   background-color: #F7E339;
@@ -301,13 +288,14 @@ footer {
     display: none;
   }
 }
-#Home #About {
+
+#About {
   display: flex;
   flex-direction: column;
   flex: 0;
   position: relative;
 }
-#Home #About section {
+#About section {
   padding-top: 5em;
   display: flex;
   flex-direction: column;
@@ -315,18 +303,18 @@ footer {
   gap: 2em;
   height: 100vh;
   position: relative;
-  background-color: #f7e339;
+  background-color: #f7e339 !important;
 }
-#Home #About section h1 {
+#About section h1 {
   display: flex;
   margin: 0 auto;
 }
-#Home #About section p {
+#About section p {
   padding-left: 1em;
   padding-right: 1em;
   padding-bottom: 1em;
 }
-#Home #About section ul {
+#About section ul {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -337,7 +325,7 @@ footer {
   padding-right: 1em;
   font-size: large;
 }
-#Home #About section button {
+#About section button {
   display: flex;
   align-self: flex-start;
   margin: 0 auto;
@@ -346,13 +334,13 @@ footer {
   background-color: darkolivegreen;
   color: white;
 }
-#Home #About section img {
+#About section img {
   display: flex;
   margin: 0 auto;
   width: 50%;
   border-radius: 50%;
 }
-#Home #About section:after {
+#About section:after {
   position: absolute;
   bottom: 0;
   background-color: #f7e339;
@@ -361,19 +349,20 @@ footer {
   height: 200px;
   z-index: -1;
 }
-#Home #About svg {
+#About svg {
   position: absolute;
   top: -1px;
   z-index: -1;
 }
-#Home #Blog {
+
+#Blog {
   display: flex;
   flex-direction: column;
   flex: 0;
   position: relative;
   width: 100%;
 }
-#Home #Blog section {
+#Blog section {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -388,11 +377,11 @@ footer {
   padding-left: 1em;
   padding-right: 1em;
 }
-#Home #Blog section h1 {
+#Blog section h1 {
   padding-top: 1em;
   padding-bottom: 1em;
 }
-#Home #Blog section div:last-child {
+#Blog section div:last-child {
   position: relative;
   display: flex;
   flex-direction: row;
@@ -402,7 +391,7 @@ footer {
   width: 100vw;
   gap: 2em;
 }
-#Home #Blog:before {
+#Blog:before {
   position: absolute;
   top: 0;
   content: "";
@@ -412,7 +401,7 @@ footer {
   z-index: -1;
   background-color: #f7e339;
 }
-#Home #Blog:after {
+#Blog:after {
   position: absolute;
   bottom: 0;
   content: "";
@@ -422,16 +411,17 @@ footer {
   z-index: -1;
   background-color: cyan;
 }
-#Home #Blog .card {
+#Blog .card {
   width: 100% !important;
 }
-#Home #menu {
+
+#menu {
   border: 0 !important;
   background-color: rgba(0, 0, 0, 0.6) !important;
   width: 100vw !important;
   padding: 0 !important;
 }
-#Home #menu ul {
+#menu ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -443,12 +433,13 @@ footer {
   margin: 0 !important;
   padding: 0 !important;
 }
-#Home #menu a {
+#menu a {
   color: white;
   font-size: xx-large;
   text-decoration: none;
 }
-#Home #Post {
+
+#Post {
   background-color: beige;
   display: flex;
   flex-direction: column;
@@ -456,12 +447,13 @@ footer {
   align-items: center;
   justify-content: flex-start;
 }
-#Home #Post p {
+#Post p {
   padding-left: 1em;
   padding-right: 1em;
   line-height: 2;
 }
-#Home #Comments {
+
+#Comments {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -473,24 +465,25 @@ footer {
   padding-right: 1em;
   height: 100% !important;
 }
-#Home #Comments img {
+#Comments img {
   width: 15%;
   vertical-align: top !important;
 }
-#Home #Comments button {
+#Comments button {
   align-self: flex-start;
 }
-#Home #Comments form {
+#Comments form {
   width: 100%;
   margin-top: 1em;
 }
-#Home #Comments form label {
+#Comments form label {
   display: none;
 }
-#Home #Comments form input {
+#Comments form input {
   width: 100%;
 }
-#Home #Contact {
+
+#Contact {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -498,7 +491,7 @@ footer {
   height: 100vh;
   min-height: 100vh;
 }
-#Home #Contact section {
+#Contact section {
   display: flex;
   flex-direction: column;
   flex: 0;
@@ -506,29 +499,34 @@ footer {
   height: 100vh;
   padding-top: 5em;
 }
-#Home .ck-editor__editable_inline {
+
+.ck-editor__editable_inline {
   min-height: 200px !important;
   width: 100% !important;
   min-width: 100% !important;
 }
-#Home .modal-content {
+
+.modal-content {
   background-color: transparent !important;
   border: 0 !important;
   width: 100% !important;
   min-width: 100vw !important;
 }
-#Home .modal-body {
+
+.modal-body {
   padding: 0 !important;
 }
-#Home .modal-body ul {
+.modal-body ul {
   width: 100% !important;
   margin: 0 !important;
   padding: 0 !important;
 }
-#Home .modal-dialog {
+
+.modal-dialog {
   margin: 0 !important;
 }
-#Home .modal {
+
+.modal {
   width: 100vw !important;
   min-width: 100vw !important;
 }

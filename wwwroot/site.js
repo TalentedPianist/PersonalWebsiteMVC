@@ -28,7 +28,7 @@
 
     });
 
-    if (!/Mobi/.test(navigator.userAgent)) {
+    if (/Mobi/.test(navigator.userAgent)) {
         window.addEventListener("scroll", () => {
             // https://webdesign.tutsplus.com/create-an-animated-sticky-header-on-scroll-with-a-bit-of-javascript--cms-93428t
             const currentScroll = window.pageYOffset;

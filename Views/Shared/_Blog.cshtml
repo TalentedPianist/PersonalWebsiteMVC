@@ -11,23 +11,8 @@
 	<link rel="stylesheet" href="/css/Blog.min.css">
 </head>
 <body>
-	@{
-		RenderBody();
-	}
 
-	<device include="mobile">
-		<partial name="~/Views/Partial/Mobile.cshtml" />
-	</device>
-
-	<device include="tablet">
-		<partial name="~/Views/Partial/Tablet.cshtml" />
-	</device>
-
-	<device include="desktop">
-
-	
-	</device>
-
+	@RenderBody()
 
 
 

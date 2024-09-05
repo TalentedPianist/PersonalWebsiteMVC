@@ -20,20 +20,9 @@
 </header>
 
 <main>
-    @{
-        string path = Context.Request.Path.Value!;
-        switch (path)
-        {
-            case var s when path.Contains("Blog"):
-                <partial name="~/Areas/Blog/Views/TabletLayout.cshtml" />
-                break;
-            default:
-                <partial name="~/Views/Home/Index.cshtml" />
-                break;
+  
+@TempData["Message"]
 
-        }
-    }
-   
 </main>
 
 
