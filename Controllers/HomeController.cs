@@ -52,15 +52,7 @@ namespace PersonalWebsiteMVC.Controllers
                 var model = dd.GetModel();
 
                 // https://stackoverflow.com/questions/39870298/how-do-i-specify-different-layouts-in-the-asp-net-core-mvc
-                if (device == "smartphone")
-                {
-                    return View("~/Views/Partial/Mobile.cshtml");
-                }
-                if (device == "tablet")
-                {
-                    
-                    return View("~/Views/Partial/Tablet.cshtml");
-                }
+                
             }
 
             // End DeviceDetector.NET code

@@ -46,38 +46,41 @@
     }
 
     // Begin blog card slice for load more
-    $(".card").not(':eq(0)').hide();
-    $(".card").slice(0, 1);
-    //$("#Blog").css("height", "100vh");
-    let x = 1;
-    $(".loadMorePosts").on('click', function (e) {
-        e.preventDefault();
-        //$("#Blog").css("height", "100%");
-        x = x + 1;
-        $(".card").css('flex-direction', 'column');
-        $(".card").slice(0, x).show(); // Show x amount of images
-    });
-    // End blog card slice for load more
-    // Begin code for show less button
-    $(".loadLessPosts").on('click', function (e) {
-        e.preventDefault();
-     
-        console.log('Show less button was clicked');
-   
-        $(".card").slice(1, x).hide();
-    });
- 
+    if (!/Mobi/.test(navigator.userAgent)) {
+        $(".card").not(':eq(0)').hide();
+        $(".card").slice(0, 1);
+        //$("#Blog").css("height", "100vh");
+        let x = 1;
+        $(".loadMorePosts").on('click', function (e) {
+            e.preventDefault();
+            //$("#Blog").css("height", "100%");
+            x = x + 1;
+            $(".card").css('flex-direction', 'column');
+            $(".card").slice(0, x).show(); // Show x amount of images
+        });
+        // End blog card slice for load more
+        // Begin code for show less button
+        $(".loadLessPosts").on('click', function (e) {
+            e.preventDefault();
+
+            console.log('Show less button was clicked');
+
+            $(".card").slice(1, x).hide();
+        });
+    }
 
     // Begin comments slice for mobile view
-    $("#Comments section div").not(':eq(0)').hide();
-    $("#Comments section div").slice(0, 1);
-    let y = 2; 
-    $(".loadMoreComments").on('click', function (e) {
-        e.preventDefault();
-        console.log("Button was clicked");
-        y = y + 1; 
-        $("#Comments section div").slice(0, y).show();
-    });
+    if (!/Mobi/.test(navigator.userAgent)) {
+        $("#Comments section div").not(':eq(0)').hide();
+        $("#Comments section div").slice(0, 1);
+        let y = 2;
+        $(".loadMoreComments").on('click', function (e) {
+            e.preventDefault();
+            console.log("Button was clicked");
+            y = y + 1;
+            $("#Comments section div").slice(0, y).show();
+        });
+    }
     // End comments slice for mobile view
 
     $("#singlePost").on('click', function (e) {

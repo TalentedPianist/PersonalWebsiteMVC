@@ -222,10 +222,30 @@ footer {
     clear: both;
 }
 
+main { 
+   display: flex;
+
+   section { 
+       display: flex; 
+       flex-direction: column;
+       flex: 1; 
+       width: 100vw;
+    }
+
+   article { 
+       width: 50%;
+    }
+
+   @media only screen and (min-width: 600px) { 
+       background-color: #ffa500;
+    }
+}
+
 #Home {
     display: flex;
     flex-direction: column;
-    flex: 0;
+    flex: 1;
+
     position: relative;
 
 
@@ -233,7 +253,7 @@ footer {
     section {
         display: flex;
         flex-direction: column;
-        flex: 0;
+        flex: 1;
         gap: 4em;
         align-items: center;
         background-color: #ffa500;
@@ -252,6 +272,11 @@ footer {
         img {
             width: 50%;
             border-radius: 50%;
+
+            @media only screen and (min-width: 600px) { 
+                text-align: center;
+                margin: 0 auto;
+            }
         }
 
 
@@ -264,6 +289,14 @@ footer {
 
         @media only screen and (min-width: 600px) {
             background-color: #F2B705;
+            align-items: flex-start;
+            flex-direction: row;   
+            flex-grow: 1;
+            margin-top: -1px;
+          
+            &:nth-of-type(2) { 
+                min-height: 600px;
+            }
         }
 
 
@@ -274,13 +307,23 @@ footer {
 
         article {
             width: 50%;
-            display: flex;
-            flex-direction: column;
-            flex: 1;
-            align-items: center;
+            text-align: center;
 
             &:first-child {
-                gap: 3em;
+           
+            }
+
+            &:last-child { 
+                align-self: center;
+            }
+
+            p {
+                @media only screen and (min-width: 600px) { 
+                    font-size: x-large;
+                    padding-left: 2em;
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                }
             }
         }
 
@@ -419,12 +462,34 @@ footer {
             &:last-child {
                 position: relative;
                 display: flex;
-                flex-direction: row;
+                flex-direction: column;
                 flex: 0;
                 align-items: center;
                 justify-content: center;
                 width: 100vw;
                 gap: 2em;
+
+                @media only screen and (min-width: 600px) { 
+                    justify-content: flex-start;
+                    align-items: flex-start;
+                    flex: none;
+                    background-color: transparent;
+                    margin-top: -1px;
+                    width: revert;
+                   
+
+                }
+            }
+        }
+
+
+        @media only screen and (min-width: 600px) {
+            background-color: yellow;
+            height: revert; 
+            min-height: revert;
+
+            &:nth-of-type(2){ 
+                flex-direction: row;
             }
         }
     }
@@ -438,6 +503,11 @@ footer {
         display: flex;
         z-index: -1;
         background-color: #f7e339;
+
+        @media only screen and (min-width: 600px) {
+            background-color: transparent;
+            height: revert;
+        }
     }
 
     &:after {
@@ -449,11 +519,38 @@ footer {
         display: flex;
         z-index: -1;
         background-color: cyan;
+
+        @media only screen and (min-width: 600px) { 
+            background-color: transparent;
+            height: revert;
+        }
     }
 
     .card {
         width: 100% !important;
+        min-height: 200px;
+
+        button { 
+            justify-self: flex-start;
+        }
+
+        @media only screen and (min-width: 600px) { 
+            width: 20em !important;
+            height: revert;
+          
+        }
     }
+
+    @media only screen and (min-width: 600px) { 
+        
+        height: revert;
+
+        &:nth-of-type(2) { 
+            flex-direction: row;
+        }
+    }
+
+
 }
 
 #menu {
