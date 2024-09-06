@@ -4,12 +4,9 @@
 @{
     // Need to think of the best way to handle multiple models for different devices.
 }
-<device include="mobile">
-@model List<Posts>
-</device>
-<device include="tablet">
-    @model PagedList<Posts>
-</device>
+
+@model BlogCommentViewModel
+
 @inject ApplicationDbContext _db
 @inject IHttpContextAccessor _http
 @using Microsoft.Extensions.Hosting
@@ -37,8 +34,9 @@
         </section>
         <section>
 
-
-            @foreach (Posts post in _db.Posts)
+        @try
+        {
+            @foreach (Posts post in Model.PagedPosts!)
             {
                 var result = Truncate(post.PostContent!, 200);
 
@@ -53,6 +51,11 @@
                     </div>
                 </div>
             }
+        }
+        catch (NullReferenceException ex)
+        {
+            @ex.Message
+        }
             <device include="mobile">
                 <div>
                     <button type="button" class="loadMorePosts btn btn-info">See More</button>
@@ -64,7 +67,7 @@
 
         <device exclude="mobile">
             <section>
-                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", "Home", new { pageNumber = page, area = "Blog" }),
+                @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page, area = "Blog" }),
                 new PagedListRenderOptions
                 {
                     DisplayItemSliceAndTotal = true,
