@@ -1,4 +1,4 @@
-﻿img {
+img {
   width: 100% !important;
 }
 
@@ -15,12 +15,14 @@ figure {
 #Gallery figure {
   position: relative;
   margin: 0 !important;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 #Gallery figure img {
   width: 100%;
   position: relative;
-  object-fit: contain;
+  -o-object-fit: contain;
+     object-fit: contain;
 }
 #Gallery figure div {
   /*
@@ -172,4 +174,4 @@ figure {
 }
 #photoModal .modal-open {
   overflow-y: scroll !important;
-}
+}/*# sourceMappingURL=Admin.css.map */

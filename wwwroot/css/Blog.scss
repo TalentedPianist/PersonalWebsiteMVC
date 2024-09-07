@@ -11,6 +11,7 @@
 
 html {
     scroll-behavior: smooth;
+    height: 100%;
 }
 
 img {
@@ -222,24 +223,7 @@ footer {
     clear: both;
 }
 
-main { 
-   display: flex;
 
-   section { 
-       display: flex; 
-       flex-direction: column;
-       flex: 1; 
-       width: 100vw;
-    }
-
-   article { 
-       width: 50%;
-    }
-
-   @media only screen and (min-width: 600px) { 
-       background-color: #ffa500;
-    }
-}
 
 #Home {
     display: flex;
@@ -294,9 +278,7 @@ main {
             flex-grow: 1;
             margin-top: -1px;
           
-            &:nth-of-type(2) { 
-                min-height: 600px;
-            }
+          
         }
 
 
@@ -314,7 +296,7 @@ main {
             }
 
             &:last-child { 
-                align-self: center;
+                
             }
 
             p {

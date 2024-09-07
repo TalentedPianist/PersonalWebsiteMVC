@@ -22,11 +22,33 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         }
 
         [Route("Areas/Blog/Views/Index")]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         {
+            // Begin code for device detector
+            DeviceDetector.SetVersionTruncation(VersionTruncation.VERSION_TRUNCATION_NONE);
+
+            var userAgent = Request.Headers["User-Agent"];
+            var headers = Request.Headers.ToDictionary(a => a.Key, a => a.Value.ToArray().FirstOrDefault());
+            var clientHints = ClientHints.Factory(headers);
+
+            var dd = new DeviceDetector(userAgent, clientHints);
+            dd.Parse();
+
+            if (dd.IsBot()) { 
+                return Content("Go away bot!");
+            } else { 
+                var clientInfo = dd.GetClient();
+                var osInfo = dd.GetOs();
+                var device = dd.GetDeviceName();
+                var brand = dd.GetBrandName();
+                
+            }
+            // End code for device detector
+
             // Spending ages editing the wrong function and wondering why nothing's happening is something I will need to watch.
             BlogCommentViewModel model = new BlogCommentViewModel();
-            model.PagedPosts = _db.Posts.ToPagedList(1, 1);
+            var pageNumber = page ?? 1;
+            model.PagedPosts = _db.Posts.ToPagedList(pageNumber, 2);
 
             return View("~/Areas/Blog/Views/Index.cshtml", model);
         }

@@ -1,4 +1,4 @@
-﻿* {
+* {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -11,6 +11,7 @@
 
 html {
   scroll-behavior: smooth;
+  height: 100%;
 }
 
 img {
@@ -212,24 +213,6 @@ footer {
   clear: both;
 }
 
-main {
-  display: flex;
-}
-main section {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  width: 100vw;
-}
-main article {
-  width: 50%;
-}
-@media only screen and (min-width: 600px) {
-  main {
-    background-color: #ffa500;
-  }
-}
-
 #Home {
   display: flex;
   flex-direction: column;
@@ -278,9 +261,6 @@ main article {
     flex-grow: 1;
     margin-top: -1px;
   }
-  #Home section:nth-of-type(2) {
-    min-height: 600px;
-  }
 }
 @media only screen and (orientation: portriat) {
   #Home section {
@@ -290,9 +270,6 @@ main article {
 #Home section article {
   width: 50%;
   text-align: center;
-}
-#Home section article:last-child {
-  align-self: center;
 }
 @media only screen and (min-width: 600px) {
   #Home section article p {
@@ -615,4 +592,4 @@ main article {
 .modal {
   width: 100vw !important;
   min-width: 100vw !important;
-}
+}/*# sourceMappingURL=Blog.css.map */
