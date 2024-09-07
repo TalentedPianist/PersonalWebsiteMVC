@@ -21,5 +21,9 @@
         {
             Layout = "~/Views/Shared/_BlogTablet.cshtml";
         }
+
+        if (dd.GetDeviceName() == "smartphone") { 
+            Layout = "~/Views/Shared/_BlogMobile.cshtml";
+        }
     }
 }
