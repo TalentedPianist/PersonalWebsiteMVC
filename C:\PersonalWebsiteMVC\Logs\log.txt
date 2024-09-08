@@ -165,3 +165,4 @@ System.InvalidOperationException: RenderBody has not been called for the page at
    at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Session.SessionMiddleware.Invoke(HttpContext context)
    at Microsoft.AspNetCore.Diagnostics.DeveloperExceptionPageMiddlewareImpl.Invoke(HttpContext context)
+2024-09-07 07:45:57.811 +01:00 [INF] Application is shutting down...
