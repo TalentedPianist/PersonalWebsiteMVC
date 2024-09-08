@@ -17,12 +17,17 @@
     }
     else
     {
+        if (dd.GetDeviceName() == "desktop")
+        {
+            Layout = "~/Views/Shared/_BlogDesktop.cshtml";
+        }
+
         if (dd.GetDeviceName() == "tablet")
         {
             Layout = "~/Views/Shared/_BlogTablet.cshtml";
         }
 
-        if (dd.GetDeviceName() == "smartphone") { 
+        if (dd.GetDeviceName() == "smartphone") {
             Layout = "~/Views/Shared/_BlogMobile.cshtml";
         }
     }

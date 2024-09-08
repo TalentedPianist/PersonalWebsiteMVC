@@ -1,8 +1,12 @@
-/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
+﻿/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+}
+
+html, body {
+  height: 100%;
 }
 
 html {
@@ -77,6 +81,13 @@ form button {
   font-weight: bold;
   width: 50px;
   height: 50px;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  height: 100vh;
 }
 
 header {
@@ -220,7 +231,6 @@ footer {
   flex-direction: column;
   flex: 1;
   gap: 4em;
-  align-items: center;
   background-color: #ffa500;
   position: relative;
 }
@@ -255,6 +265,7 @@ footer {
     align-items: flex-start;
     flex-direction: row;
     flex-grow: 1;
+    flex: unset;
     margin-top: -1px;
   }
 }
@@ -588,4 +599,4 @@ footer {
 .modal {
   width: 100vw !important;
   min-width: 100vw !important;
-}/*# sourceMappingURL=Blog.css.map */
+}

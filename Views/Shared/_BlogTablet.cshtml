@@ -1,42 +1,44 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-<base href="/">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/Blog.css" asp-append-version="true">
-    <title>@ViewBag.Title</title>
+	<base href="/">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width">
+	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" href="/css/Blog.css" asp-append-version="true">
+	<title>@ViewBag.Title</title>
 </head>
 <body>
 
-    <header>
-        <nav>
-            <ul>
-                <li><a asp-action="Index" asp-controller="Home">Home</a></li>
-                <li><a asp-action="About" asp-controller="Home">About</a></li>
-                <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
-                <li><a asp-action="Index" asp-controller="Home" asp-area="Photos">Photos</a></li>
-                <li><a asp-action="Index" asp-controller="Home" asp-area="Portfolio">Portfolio</a></li>
-                <li><a asp-action="Index" asp-controller="Contact">Contact</a></li>
-            </ul>
-        </nav>
+	<main>
+		<header>
+			<nav>
+				<ul>
+					<li><a asp-action="Index" asp-controller="Home">Home</a></li>
+					<li><a asp-action="About" asp-controller="Home">About</a></li>
+					<li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
+					<li><a asp-action="Index" asp-controller="Home" asp-area="Photos">Photos</a></li>
+					<li><a asp-action="Index" asp-controller="Home" asp-area="Portfolio">Portfolio</a></li>
+					<li><a asp-action="Index" asp-controller="Contact">Contact</a></li>
+				</ul>
+			</nav>
 
-    </header>
+		</header>
 
 
-                @RenderBody()
+		@RenderBody()
 
-    <footer>
-        Copyright &copy; douglasmcgregor.co.uk
-    </footer>
+		<footer>
+			Copyright &copy; douglasmcgregor.co.uk
+		</footer>
+	</main>
 
-    <script src="/lib/jquery/jquery.min.js"></script>
-    <script src="/lib/ckeditor5/ckeditor.min.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
-    <script src="/site.js" asp-append-version="true"></script>
+	<script src="/lib/jquery/jquery.min.js"></script>
+	<script src="/lib/ckeditor5/ckeditor.min.js"></script>
+	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+	<script src="/site.js" asp-append-version="true"></script>
 
-    @RenderSection("Scripts", false);
+	@RenderSection("Scripts", false)
 </body>
 </html>

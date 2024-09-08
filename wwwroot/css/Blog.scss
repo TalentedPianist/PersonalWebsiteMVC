@@ -6,6 +6,10 @@
     padding: 0;
 }
 
+html, body { 
+    height: 100%;
+}
+
 html {
     scroll-behavior: smooth;
     height: 100%;
@@ -86,6 +90,14 @@ form {
         width: 50px;
         height: 50px;
     }
+}
+
+main { 
+    display: flex; 
+    flex-direction: column;
+    flex: 0; 
+    height: 100vh;
+   
 }
 
 header {
@@ -226,20 +238,17 @@ footer {
     display: flex;
     flex-direction: column;
     flex: 1;
-
     position: relative;
-
-
+   
 
     section {
         display: flex;
         flex-direction: column;
         flex: 1;
         gap: 4em;
-        align-items: center;
         background-color: #ffa500;
         position: relative;
-
+        
 
         button {
             display: flex;
@@ -254,7 +263,7 @@ footer {
             width: 50%;
             border-radius: 50%;
 
-            @media only screen and (min-width: 600px) { 
+            @media only screen and (min-width: 600px) {
                 text-align: center;
                 margin: 0 auto;
             }
@@ -271,11 +280,11 @@ footer {
         @media only screen and (min-width: 600px) {
             background-color: #F2B705;
             align-items: flex-start;
-            flex-direction: row;   
+            flex-direction: row;
             flex-grow: 1;
+            flex: unset;
             margin-top: -1px;
-          
-          
+
         }
 
 
@@ -288,10 +297,10 @@ footer {
             width: 50%;
             text-align: center;
 
-         
+
 
             p {
-                @media only screen and (min-width: 600px) { 
+                @media only screen and (min-width: 600px) {
                     font-size: x-large;
                     padding-left: 2em;
                     justify-content: flex-start;
@@ -442,15 +451,13 @@ footer {
                 width: 100vw;
                 gap: 2em;
 
-                @media only screen and (min-width: 600px) { 
+                @media only screen and (min-width: 600px) {
                     justify-content: flex-start;
                     align-items: flex-start;
                     flex: none;
                     background-color: transparent;
                     margin-top: -1px;
                     width: revert;
-                   
-
                 }
             }
         }
@@ -458,10 +465,10 @@ footer {
 
         @media only screen and (min-width: 600px) {
             background-color: yellow;
-            height: revert; 
+            height: revert;
             min-height: revert;
 
-            &:nth-of-type(2){ 
+            &:nth-of-type(2) {
                 flex-direction: row;
             }
         }
@@ -493,7 +500,7 @@ footer {
         z-index: -1;
         background-color: cyan;
 
-        @media only screen and (min-width: 600px) { 
+        @media only screen and (min-width: 600px) {
             background-color: transparent;
             height: revert;
         }
@@ -503,27 +510,23 @@ footer {
         width: 100% !important;
         min-height: 200px;
 
-        button { 
+        button {
             justify-self: flex-start;
         }
 
-        @media only screen and (min-width: 600px) { 
+        @media only screen and (min-width: 600px) {
             width: 20em !important;
             height: revert;
-          
         }
     }
 
-    @media only screen and (min-width: 600px) { 
-        
+    @media only screen and (min-width: 600px) {
         height: revert;
 
-        &:nth-of-type(2) { 
+        &:nth-of-type(2) {
             flex-direction: row;
         }
     }
-
-
 }
 
 #menu {
