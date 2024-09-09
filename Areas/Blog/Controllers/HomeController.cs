@@ -41,16 +41,18 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                 var osInfo = dd.GetOs();
                 var device = dd.GetDeviceName();
                 var brand = dd.GetBrandName();
-                
+
+                BlogCommentViewModel model = new BlogCommentViewModel();
+                var pageNumber = page ?? 1;
+                model.PagedPosts = _db.Posts.ToPagedList(pageNumber, 3);
+                return View("~/Areas/Blog/Views/Index.cshtml", model);
             }
             // End code for device detector
 
             // Spending ages editing the wrong function and wondering why nothing's happening is something I will need to watch.
-            BlogCommentViewModel model = new BlogCommentViewModel();
-            var pageNumber = page ?? 1;
-            model.PagedPosts = _db.Posts.ToPagedList(pageNumber, 2);
+            
 
-            return View("~/Areas/Blog/Views/Index.cshtml", model);
+
         }
 
         [Route("Blog/SinglePost/{id}")]

@@ -65,5 +65,11 @@
   </ItemGroup>
 
 
+  <ItemGroup>
+    <Folder Include="Areas\Photos\Data\" />
+    <Folder Include="Areas\Photos\Models\" />
+  </ItemGroup>
+
+
 
 </Project>

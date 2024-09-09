@@ -1,7 +1,5 @@
 ﻿$(function () {
 
-   
-
     $("#menu a").on('click', function (e) {
         $("header").show();
     
@@ -46,7 +44,7 @@
     }
 
     // Begin blog card slice for load more
-    if (!/Mobi/.test(navigator.userAgent)) {
+    if (/Mobi/.test(navigator.userAgent)) {
         $(".card").not(':eq(0)').hide();
         $(".card").slice(0, 1);
         //$("#Blog").css("height", "100vh");
@@ -104,7 +102,7 @@
     }
 
     $("header a").on('click', function (e) {
-        if (!/Mobi/.test(navigator.userAgent)) {
+        if (/Mobi/.test(navigator.userAgent)) {
             e.preventDefault();
             $("header").hide();
             $("#menu").modal('show');

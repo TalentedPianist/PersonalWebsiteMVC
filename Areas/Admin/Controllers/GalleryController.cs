@@ -215,7 +215,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToDb(Album album, List<Photos> photos)
+        public IActionResult AddToDb(Album album, List<PersonalWebsiteMVC.Models.Photos> photos)
         {
             return Ok();
         }

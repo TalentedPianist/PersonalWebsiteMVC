@@ -12,7 +12,6 @@ html, body {
 
 html {
     scroll-behavior: smooth;
-    height: 100%;
 }
 
 img {
@@ -22,7 +21,7 @@ img {
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: relative;
-    width: 100%;
+    
 }
 
 p {
@@ -40,8 +39,6 @@ form {
     gap: 1em;
     width: 100%;
     position: relative;
-    padding-left: 1em;
-    padding-right: 1em;
 
     div {
         width: 100%;
@@ -95,9 +92,13 @@ form {
 main { 
     display: flex; 
     flex-direction: column;
-    flex: 0; 
-    height: 100vh;
-   
+    flex: 1;
+    flex-grow: 1;
+    height: 100vh !important;
+    min-height: 100vh;
+    position: relative;
+
+    
 }
 
 header {
@@ -158,16 +159,19 @@ header {
                 gap: 1em;
                 padding-right: 2em;
             }
+
+            @media only screen and (min-width: 1900px) { 
+                gap: 0;
+                
+            }
         }
 
         a {
             text-decoration: none;
-            font-size: x-large;
+            font-size: large;
             color: white;
 
-            @media only screen and (orientation: landscape) {
-                font-size: x-large;
-            }
+         
         }
 
 
@@ -239,7 +243,7 @@ footer {
     flex-direction: column;
     flex: 1;
     position: relative;
-   
+    
 
     section {
         display: flex;
@@ -248,7 +252,7 @@ footer {
         gap: 4em;
         background-color: #ffa500;
         position: relative;
-        
+      
 
         button {
             display: flex;
@@ -267,6 +271,10 @@ footer {
                 text-align: center;
                 margin: 0 auto;
             }
+
+            @media screen and (min-width: 1190px) { 
+                width: 30%;
+            }
         }
 
 
@@ -279,12 +287,9 @@ footer {
 
         @media only screen and (min-width: 600px) {
             background-color: #F2B705;
-            align-items: flex-start;
             flex-direction: row;
-            flex-grow: 1;
-            flex: unset;
+            flex: 1 1 auto;
             margin-top: -1px;
-
         }
 
 
@@ -332,6 +337,11 @@ footer {
                 display: none;
             }
         }
+    }
+
+
+    @media screen and (min-width: 1190px) {
+        
     }
 }
 
@@ -438,38 +448,20 @@ footer {
             padding-bottom: 1em;
         }
 
-        div {
-
-
-            &:last-child {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                flex: 0;
-                align-items: center;
-                justify-content: center;
-                width: 100vw;
-                gap: 2em;
-
-                @media only screen and (min-width: 600px) {
-                    justify-content: flex-start;
-                    align-items: flex-start;
-                    flex: none;
-                    background-color: transparent;
-                    margin-top: -1px;
-                    width: revert;
-                }
-            }
+        &:nth-of-type(3) { 
+            padding-top: 1em;
+            padding-bottom: 1em;
         }
 
 
         @media only screen and (min-width: 600px) {
-            background-color: yellow;
+            background-color: #ffa500;
             height: revert;
             min-height: revert;
 
             &:nth-of-type(2) {
                 flex-direction: row;
+                align-items: unset;
             }
         }
     }
@@ -527,6 +519,11 @@ footer {
             flex-direction: row;
         }
     }
+
+    article { 
+        padding-left: 1em;
+        padding-right: 1em;
+    }
 }
 
 #menu {
@@ -556,17 +553,29 @@ footer {
 }
 
 #Post {
-    background-color: beige;
     display: flex;
     flex-direction: column;
     flex: 0;
     align-items: center;
     justify-content: flex-start;
+    background-color: gold;
 
     p {
-        padding-left: 1em;
-        padding-right: 1em;
+    
         line-height: 2;
+    }
+
+    section {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        padding-bottom: 1em;
+
+       article { 
+           width: 50%;
+           padding-left: 1em;
+           padding-right: 1em;
+        }
     }
 }
 
@@ -574,12 +583,7 @@ footer {
     display: flex;
     flex-direction: column;
     flex: 0;
-    background-color: yellow;
     position: relative;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    padding-left: 1em;
-    padding-right: 1em;
     height: 100% !important;
 
     img {
@@ -654,4 +658,13 @@ footer {
 .modal {
     width: 100vw !important;
     min-width: 100vw !important;
+}
+
+#Albums { 
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    background-color: #ffa500;
+    padding-left: 1em;
+    padding-right: 1em;
 }

@@ -115,7 +115,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public bool IsInDb(string name)
         {
-            List<Photos> photos = _db.Photos.Where(p => p.Name == name).ToList();
+            List<PersonalWebsiteMVC.Models.Photos> photos = _db.Photos.Where(p => p.Name == name).ToList();
             bool hasPic = photos.Any();
             if (hasPic)
                 return true;
@@ -151,7 +151,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             var pic = Request.Form["name"];
             var albumRecord = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
-            Photos photos = new Photos();
+            PersonalWebsiteMVC.Models.Photos photos = new PersonalWebsiteMVC.Models.Photos();
             photos.AlbumID = albumRecord!.Id;
             photos.Name = pic;
             photos.ImageUrl = $"/Gallery/{album}/{pic}";
@@ -183,7 +183,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public IActionResult AddMultipleToDb([FromBody] List<Photos> data)
+        public IActionResult AddMultipleToDb([FromBody] List<PersonalWebsiteMVC.Models.Photos> data)
         {
             // Here we are just deleting the photos from the database and ajax success function handles response on client side to refresh page.
 
@@ -195,10 +195,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/RemoveMultipleFromDb")]
         [HttpPost("/Photos/RemoveMultipleFromDb")]
-        public IActionResult RemoveMultipleFromDb([FromBody] List<Photos> data)
+        public IActionResult RemoveMultipleFromDb([FromBody] List<PersonalWebsiteMVC.Models.Photos> data)
         {
             // Here we are just deleting the photos from the database and ajax success function handles response on client side to refresh page.
-            _db.Photos.RemoveRange(data);
+            _db.Photos.RemoveRange((IEnumerable<Models.Photos>)data);
             _db.SaveChanges();
             return Ok();
 
@@ -222,7 +222,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost("Photos/UpdatePhoto")]
-        public IActionResult UpdatePhoto(Photos model)
+        public IActionResult UpdatePhoto(PersonalWebsiteMVC.Models.Photos model)
         {
             var photo = _db.Photos.Where(p => p.Equals(model)).FirstOrDefault();
             if (ModelState.IsValid)
@@ -253,7 +253,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult DeletePhoto(Photos model)
+        public IActionResult DeletePhoto(PersonalWebsiteMVC.Models.Photos model)
         {
             TempData["Message"] = model.Id;
             return View("~/Areas/Admin/Views/Photos/Delete.cshtml", model);

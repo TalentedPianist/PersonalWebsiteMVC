@@ -7,16 +7,23 @@
 @model PersonalWebsiteMVC.Areas.Blog.Models.BlogCommentViewModel
 
 <div id="Post">
-    @try
-    {
-    <h1>@Model.Post!.PostTitle</h1>
+    <section>
+        <article>
+            @try
+            {
+                <h1>@Model.Post!.PostTitle</h1>
 
-    @Html.Raw(Model.Post!.PostContent)
-    }
-    catch (NullReferenceException ex)
-    {
-        @ex.Message
-    }
+                @Html.Raw(Model.Post!.PostContent)
+            }
+            catch (NullReferenceException ex)
+            {
+                @ex.Message
+            }
+
+
+            <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" model="@Model" view-data="ViewData" />
+        </article>
+        <article>
+        </article>
+    </section>
 </div>
-
-<partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" model="@Model" view-data="ViewData" />
