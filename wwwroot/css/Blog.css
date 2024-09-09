@@ -1,4 +1,4 @@
-﻿/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
+/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -598,15 +598,23 @@ footer {
 #Albums {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
   background-color: #ffa500;
   padding-left: 1em;
   padding-right: 1em;
 }
 #Albums svg {
-  width: 15%;
+  width: 100%;
 }
 #Albums section {
-  display: grid;
-  grid-template-columns: repeat(1fr, 4);
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
 }
+#Albums section figure figcaption {
+  text-align: center;
+}
+@media only screen and (min-width: 600px) {
+  #Albums section {
+    flex-direction: row;
+  }
+}/*# sourceMappingURL=Blog.css.map */

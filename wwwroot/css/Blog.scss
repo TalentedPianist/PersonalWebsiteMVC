@@ -663,20 +663,28 @@ footer {
 #Albums { 
     display: flex; 
     flex-direction: column;
-    flex: 1 1 auto;
     background-color: #ffa500;
     padding-left: 1em;
     padding-right: 1em;
 
     svg {
-        width: 15%;
+        width: 100%;
     }
 
     section {
+        display: flex; 
+        flex-direction: column;
+        flex: 1 1 auto;
+
+        figure  {
+            figcaption { 
+                text-align: center;
+            }
+        }
         
-            display: grid;
-            grid-template-columns: repeat(1fr, 4);
-          
+        @media only screen and (min-width: 600px)  {
+            flex-direction: row;
+        }
         
     }
 }

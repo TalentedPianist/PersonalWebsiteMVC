@@ -1,10 +1,10 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-@using PersonalWebsiteMVC.Models 
-@model IEnumerable<Album>  
+@using PersonalWebsiteMVC.Models
+@model IEnumerable<Album>
 
 <div id="Albums">
 
@@ -15,15 +15,21 @@
     <section>
         @if (Model.Count() == 0)
         {
-            <p>No albums have been found just now.  Please check back later.</p>
+            <p>No albums have been found just now. Please check back later.</p>
         }
         else
         {
             foreach (Album album in Model)
             {
+
                 if (album.CoverPhoto is null)
                 {
-    <svg enable-background="new 4 8 40 32" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                    <figure>
+                        <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">                             
+                        <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>                             
+                        <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28"></path>                         </svg>
+                        <figcaption>@album.Name</figcaption>
+                    </figure>
                 }
             }
         }
