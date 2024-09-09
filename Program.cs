@@ -216,7 +216,7 @@ try
     {
         routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
         routes.MapAreaRoute("Blog", "Blog", "Blog/{controller}/{action}/{id?}");
-        routes.MapAreaRoute("Photos", "Photos", "Photos/{action}/{id?}");
+        routes.MapAreaRoute("Photos", "Photos", "Photos/{controller}/{action}/{id?}");
     });
 
     app.MapRazorPages();

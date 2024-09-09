@@ -661,10 +661,13 @@ footer {
 }
 
 #Albums { 
-    display: flex;
-    flex-direction: column;
-    flex: 1; 
+    display: grid;
+    grid-template-rows: repeat(1fr, 4);
     background-color: #ffa500;
     padding-left: 1em;
     padding-right: 1em;
+
+    svg {
+        width: 15%;
+    }
 }
