@@ -227,7 +227,7 @@ footer {
 #Home section {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0 1;
   gap: 4em;
   background-color: #ffa500;
   position: relative;
@@ -266,8 +266,11 @@ footer {
   #Home section {
     background-color: #F2B705;
     flex-direction: row;
-    flex: 1 1 auto;
+    flex: 1;
     margin-top: -1px;
+  }
+  #Home section:first-child {
+    flex: 0;
   }
 }
 @media only screen and (orientation: portriat) {
@@ -378,14 +381,14 @@ footer {
 #Blog {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   position: relative;
   width: 100%;
 }
 #Blog section {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   align-items: flex-start;
   gap: 1em;
   background-color: #9FF739;
@@ -410,6 +413,9 @@ footer {
     background-color: #ffa500;
     height: revert;
     min-height: revert;
+  }
+  #Blog section:nth-of-type(1) {
+    flex: 0;
   }
   #Blog section:nth-of-type(2) {
     flex-direction: row;
@@ -608,7 +614,7 @@ footer {
 #Albums section {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   align-items: flex-start;
 }
 #Albums section figure figcaption {
@@ -618,9 +624,13 @@ footer {
   #Albums section {
     flex-direction: row;
     gap: 1em;
+    height: 100vh;
   }
 }
 @media only screen and (min-width: 1900px) {
+  #Albums section {
+    height: 100vh;
+  }
   #Albums section:nth-of-type(2) {
     flex: 1 1 auto;
   }

@@ -245,7 +245,7 @@ footer {
     section {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 0 1;
         gap: 4em;
         background-color: #ffa500;
         position: relative;
@@ -285,8 +285,12 @@ footer {
         @media only screen and (min-width: 600px) {
             background-color: #F2B705;
             flex-direction: row;
-            flex: 1 1 auto;
+            flex: 1;
             margin-top: -1px;
+
+            &:first-child { 
+                flex: 0;
+            }
         }
 
 
@@ -421,14 +425,14 @@ footer {
 #Blog {
     display: flex;
     flex-direction: column;
-    flex: 0;
+    flex: 1;
     position: relative;
     width: 100%;
 
     section {
         display: flex;
         flex-direction: column;
-        flex: 0;
+        flex: 1;
         align-items: flex-start;
         gap: 1em;
         background-color: #9FF739;
@@ -455,6 +459,10 @@ footer {
             background-color: #ffa500;
             height: revert;
             min-height: revert;
+
+            &:nth-of-type(1) { 
+                flex: 0;
+            }
 
             &:nth-of-type(2) {
                 flex-direction: row;
@@ -664,6 +672,7 @@ footer {
     background-color: #ffa500;
     padding-left: 1em;
     padding-right: 1em;
+   
 
     svg {
         width: 100%;
@@ -672,9 +681,9 @@ footer {
     section {
         display: flex; 
         flex-direction: column;
-        flex: 0;
+        flex: 1;
         align-items: flex-start;
-        
+       
 
         figure  {
             figcaption { 
@@ -685,9 +694,12 @@ footer {
         @media only screen and (min-width: 600px)  {
             flex-direction: row;
             gap: 1em;
+            height: 100vh;
         }
 
-        @media only screen and (min-width: 1900px) { 
+        @media only screen and (min-width: 1900px) {
+            height: 100vh;
+
             &:nth-of-type(2) { 
                 flex: 1 1 auto;
             }

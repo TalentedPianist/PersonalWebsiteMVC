@@ -65,9 +65,6 @@
   </ItemGroup>
 
 
-  <ItemGroup>
-    <Folder Include="Areas\Photos\Data\" />
-  </ItemGroup>
 
 
 
