@@ -211,13 +211,13 @@ try
 
     app.UseSession();
 
-
+/*
     app.UseMvc(routes =>
     {
         routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
         routes.MapAreaRoute("Blog", "Blog", "Blog/{controller}/{action}/{id?}");
-        routes.MapAreaRoute("Photos", "Photos", "Photos/{controller}/{action}/{id?}");
-    });
+        routes.MapAreaRoute("Photos", "Photos", "Photos/{action}/{id?}");
+    });*/
 
     app.MapRazorPages();
 
@@ -233,15 +233,20 @@ try
     //app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 
-    /*app.MapAreaControllerRoute(
+    app.MapAreaControllerRoute(
         name: "Admin",
         areaName: "Admin",
-        pattern: "{controller=Home}/{action=Index}/{id?}");*/
+        pattern: "{controller=Home}/{action=Index}/{id?}");
+
+    app.MapAreaControllerRoute(
+        name: "Photos",
+        areaName: "Photos",
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
-    /*app.MapControllerRoute(
+    app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");*/
+        pattern: "{controller=Home}/{action=Index}/{id?}");
 
 
     app.MapPost("api/send", async (ReCaptchaService reCaptcha, [FromBody] ReCaptchaModel model) =>

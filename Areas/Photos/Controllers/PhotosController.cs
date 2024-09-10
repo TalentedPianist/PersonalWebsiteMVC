@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Data;
-using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 {
     [Area("Photos")]
-    public class HomeController : Controller
+    public class PhotosController : Controller
     {
         public ApplicationDbContext _db { get; set; }
-        public HomeController(ApplicationDbContext db)
+
+        public PhotosController(ApplicationDbContext db)
         {
             _db = db;
         }
 
-        [Route("Album")]
+        [Route("Photos")]
         public IActionResult Index()
         {
-            List<PersonalWebsiteMVC.Models.Album> model = _db.Albums.ToList();
-            return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
+
+            return View();
         }
     }
 }
