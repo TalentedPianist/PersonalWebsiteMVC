@@ -46,6 +46,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 var photos = _db.Photos.Where(p => p.AlbumID == id);
                 ViewBag.AlbumName = album!.Name;
                 ViewBag.AlbumID = album.Id;
+               
 
                 // Here we need to combine three paths in the param[] array since it is the photos view and not the album view.  
                 DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album.Name!));
