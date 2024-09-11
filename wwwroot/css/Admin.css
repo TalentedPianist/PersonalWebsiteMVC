@@ -1,4 +1,4 @@
-﻿html, body {
+html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -14,12 +14,17 @@ figure {
 
 #Gallery {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 0.5fr);
   grid-template-rows: repeat(8, auto);
+  gap: 0;
+  grid-column-gap: 0;
   position: relative;
 }
 #Gallery figure {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0;
 }
 #Gallery figure div {
   display: none;
@@ -72,8 +77,8 @@ figure {
 
 #Albums {
   display: grid;
-  grid-template-rows: repeat(4, 0fr);
-  grid-template-columns: repeat(8, auto);
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(8, 1fr);
   align-items: center;
   position: relative;
 }
@@ -84,6 +89,9 @@ figure {
 }
 #Albums figure {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 0;
 }
 #Albums figure img {
   width: 100%;
@@ -159,4 +167,4 @@ figure {
 }
 #photoModal .modal-open {
   overflow-y: scroll !important;
-}
+}/*# sourceMappingURL=Admin.css.map */

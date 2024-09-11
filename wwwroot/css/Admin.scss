@@ -15,12 +15,17 @@ figure {
 
 #Gallery {
    display: grid;
-   grid-template-columns: repeat(4, 1fr);
+   grid-template-columns: repeat(4, 0.5fr);
    grid-template-rows: repeat(8, auto);
+   gap: 0;
+   grid-column-gap: 0;
    position: relative;
     
    figure { 
        position: relative;
+        display: flex; 
+        flex-direction: column;
+        flex: 0;
 
        div { 
            display: none;
@@ -76,8 +81,8 @@ figure {
 
 #Albums {
     display: grid; 
-    grid-template-rows: repeat(4, 0fr);
-    grid-template-columns: repeat(8, auto);
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(8, 1fr);
     align-items: center;
     position: relative;
 
@@ -89,7 +94,9 @@ figure {
 
     figure {
         position: relative;
-     
+        display: flex; 
+        flex-direction: column;
+        flex: 0;
 
         img {
             width: 100%;

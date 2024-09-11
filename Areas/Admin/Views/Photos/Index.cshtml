@@ -19,10 +19,7 @@
 @TempData["Message"]
 
 <div id="Gallery">
-    @if (_db.Photos.Count() == 0)
-    {
-    <a id="select-all" href="#">Select All</a>
-    }
+  
 	@{
         foreach (FileInfo file in ViewBag.OnePageOfFiles)
         {

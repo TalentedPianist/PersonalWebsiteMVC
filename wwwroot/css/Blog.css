@@ -1,4 +1,4 @@
-﻿/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
+/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -634,4 +634,4 @@ footer {
   #Albums section:nth-of-type(2) {
     flex: 1 1 auto;
   }
-}
+}/*# sourceMappingURL=Blog.css.map */

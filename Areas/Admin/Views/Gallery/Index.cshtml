@@ -28,7 +28,7 @@
                     var photo = _db.Albums.Where(a => a.Id == GetId(di.Name)).FirstOrDefault();
                     if (photo!.CoverPhoto is not null)
                     {
-                        <img src="/Gallery/@di.Name/@photo!.CoverPhoto" data-name="@di.Name">
+                        <img src="/Gallery/@di.Name/@photo.CoverPhoto" data-name="@di.Name">
                     }
                     else
                     {
