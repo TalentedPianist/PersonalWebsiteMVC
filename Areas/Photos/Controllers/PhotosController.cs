@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
+using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 {
@@ -7,17 +9,22 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
     public class PhotosController : Controller
     {
         public ApplicationDbContext _db { get; set; }
+        public IHttpContextAccessor _http { get; set; }
 
-        public PhotosController(ApplicationDbContext db)
+        public PhotosController(ApplicationDbContext db, IHttpContextAccessor http)
         {
             _db = db;
+            _http = http;
         }
 
         [Route("Photos")]
-        public IActionResult Index()
+        public IActionResult Index([FromQuery(Name="pageNumber")]int? pageNumber)
         {
-
-            return View();
+            PhotosViewModel model = new PhotosViewModel();
+            var photos = _db.Photos.Where(p => p.Name == _http.HttpContext!.Request.Query["name"].ToString());
+            ViewBag.Photos = photos;
+                
+            return View(model);
         }
     }
 }

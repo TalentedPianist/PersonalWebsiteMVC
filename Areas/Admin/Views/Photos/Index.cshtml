@@ -19,6 +19,7 @@
 @TempData["Message"]
 
 <div id="Gallery">
+    
 	@{
 		foreach (FileInfo file in ViewBag.OnePageOfFiles)
 		{
@@ -32,7 +33,7 @@
 
 		}
 	}
-
+   
 
 </div>
 
@@ -273,8 +274,7 @@ else
 
                 $(this).on('mouseenter', function (e) {
                     e.preventDefault();
-                    $(value).find("#DbCheck").addClass("overlay");
-                    $(value).find("div:nth-of-type(1)").css("display", "flex");
+                    $(value).find("div:nth-of-type(1)").css("display", "inline");
                     $(value).find("div:nth-of-type(1)").addClass("overlay");
                 });
 

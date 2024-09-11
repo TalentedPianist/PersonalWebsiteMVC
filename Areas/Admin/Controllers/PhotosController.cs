@@ -53,7 +53,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 ViewBag.Files = di.GetFiles();
 
                 var pageNumber = page ?? 1; // If no page was specified in the querystring, default to the first page (1)
-                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
+                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 16);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
 
                 if (di.GetFiles().Count() == 0)

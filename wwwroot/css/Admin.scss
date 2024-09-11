@@ -1,6 +1,11 @@
-﻿
+﻿html, body { 
+    margin: 0; 
+    padding: 0;
+    box-sizing: border-box;
+}
+
 img { 
-    width: 100% !important;
+    width: 100%;
 }
 
 figure {
@@ -9,49 +14,22 @@ figure {
 
 
 #Gallery {
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(4, 0.5fr);
-    grid-gap: 1em;
+   display: grid;
+   grid-template-columns: repeat(4, 1fr);
+   grid-template-rows: repeat(8, auto);
+   position: relative;
+    
+   figure { 
+       position: relative;
 
-
-
-    figure {
-        position: relative;
-        margin: 0 !important;
-        object-fit: contain;
-
-        img { 
-            width: 100%;
-            position: relative;
-            object-fit: contain;
-        }
-
-        div {
-  /*
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                width: 100%;
-                align-items: center;
-                text-align: center;
-                display: none;
-                flex-direction: column;
-                flex: 0;
-                gap: 1em;
-                color: white;
-                padding-top: 2em;
-                padding-bottom: 2em;*/
-            
-
-        }
-
-        p {
-            position: relative;
-            z-index: 500 !important;
+       div { 
+           display: none;
         }
     }
-    
+
+   @media only screen and (min-width: 600px)  {
+       flex-direction: row;
+    }
   
 }
 
@@ -63,11 +41,16 @@ figure {
 }
 
 .overlay {
-    position: relative;
-    width: inherit;
+    position: absolute;
+    top: 0;
+    width: 100%;
     background-color: rgba(0,0,0,0.6);
     z-index: 10000 !important;
     text-align: center;
+    color: white;
+    display: flex; 
+    flex-direction: column;
+    flex: 1;
 }
 
 #myModal {
@@ -92,16 +75,9 @@ figure {
 }
 
 #Albums {
-    display: grid;
-    grid-template-columns: repeat(4, 0.5fr);
-    grid-gap: 1em;
+    display: grid; 
+    grid-template-rows: repeat(1fr, 4);
     position: relative;
-    justify-content: center;
-    text-align: center;
-    margin-bottom: 1em;
-    margin-top: 1em;
-    padding-bottom: 1em;
-    border-bottom: 1px solid black;
 
     svg {
         display: flex;
@@ -114,11 +90,16 @@ figure {
         margin: 0 !important;
         display: flex;
         flex-direction: column;
-        flex: 0;
+        flex: 1;
         align-items: center;
 
         img {
             width: 100%;
+        }
+
+        .overlay { 
+            position: absolute; 
+            top: 0;
         }
     }
 

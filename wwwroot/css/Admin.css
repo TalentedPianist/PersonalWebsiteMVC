@@ -1,5 +1,11 @@
+﻿html, body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 img {
-  width: 100% !important;
+  width: 100%;
 }
 
 figure {
@@ -7,42 +13,21 @@ figure {
 }
 
 #Gallery {
-  position: relative;
   display: grid;
-  grid-template-columns: repeat(4, 0.5fr);
-  grid-gap: 1em;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(8, auto);
+  position: relative;
 }
 #Gallery figure {
   position: relative;
-  margin: 0 !important;
-  -o-object-fit: contain;
-     object-fit: contain;
-}
-#Gallery figure img {
-  width: 100%;
-  position: relative;
-  -o-object-fit: contain;
-     object-fit: contain;
 }
 #Gallery figure div {
-  /*
-                position: absolute;
-                top: 0;
-                bottom: 0;
-                width: 100%;
-                align-items: center;
-                text-align: center;
-                display: none;
-                flex-direction: column;
-                flex: 0;
-                gap: 1em;
-                color: white;
-                padding-top: 2em;
-                padding-bottom: 2em;*/
+  display: none;
 }
-#Gallery figure p {
-  position: relative;
-  z-index: 500 !important;
+@media only screen and (min-width: 600px) {
+  #Gallery {
+    flex-direction: row;
+  }
 }
 
 #DbLinks {
@@ -53,11 +38,16 @@ figure {
 }
 
 .overlay {
-  position: relative;
-  width: inherit;
+  position: absolute;
+  top: 0;
+  width: 100%;
   background-color: rgba(0, 0, 0, 0.6);
   z-index: 10000 !important;
   text-align: center;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 #myModal {
@@ -82,15 +72,8 @@ figure {
 
 #Albums {
   display: grid;
-  grid-template-columns: repeat(4, 0.5fr);
-  grid-gap: 1em;
+  grid-template-rows: repeat(1fr, 4);
   position: relative;
-  justify-content: center;
-  text-align: center;
-  margin-bottom: 1em;
-  margin-top: 1em;
-  padding-bottom: 1em;
-  border-bottom: 1px solid black;
 }
 #Albums svg {
   display: flex;
@@ -102,11 +85,15 @@ figure {
   margin: 0 !important;
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   align-items: center;
 }
 #Albums figure img {
   width: 100%;
+}
+#Albums figure .overlay {
+  position: absolute;
+  top: 0;
 }
 #Albums figcaption {
   text-align: center;
@@ -174,4 +161,4 @@ figure {
 }
 #photoModal .modal-open {
   overflow-y: scroll !important;
-}/*# sourceMappingURL=Admin.css.map */
+}
