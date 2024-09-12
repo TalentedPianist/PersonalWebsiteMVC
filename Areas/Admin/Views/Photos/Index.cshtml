@@ -18,12 +18,18 @@
 
 @TempData["Message"]
 
-<div id="Gallery">
-  
+<div id="Photos">
+    @if (ViewBag.ShowLink == true)
+    {
+        <section>
+        <a id="selectAll" href="#">Select All</a>
+        </section>
+    }
+
+    <section>
 	@{
         foreach (FileInfo file in ViewBag.OnePageOfFiles)
         {
-
 
 			<figure>
 				<div></div>
@@ -33,7 +39,7 @@
 
 		}
 	}
-   
+   </section>
 
 </div>
 
@@ -182,14 +188,14 @@ else
                 console.log(checkbox.text());
 
                 if (CheckDb(strName) === true) {
-                    $(value).find("div:nth-of-type(1)").html(`
+                    $(value).find("section").find("div:nth-of-type(1)").html(`
                         <p>Is in database</p>
 
                         <input type="checkbox" value="${strName}">
                     `);
                     
                 } else {
-                    $(value).find("div:nth-of-type(1)").html(`
+                    $(value).find("section").find("div:nth-of-type(1)").html(`
                         <p>Not in database</p>
                         <a href="#">View</a>
                         <input type="checkbox" value="${strName}">
@@ -298,15 +304,16 @@ else
             // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.
             let cb = document.querySelectorAll("figure");
             cb.forEach(function (item, index) {
-
-
+          
+                let confirm = item.querySelector("div").innerHTML;
+                //let value = item.querySelector("input").getAttribute("value");
+                let img = item.querySelectorAll("img");
+                console.log(img.innerHTML);
                 item.addEventListener('click', function (event) {
 
                     //event.preventDefault();
                     // Here we don't use event.preventDefault() as that simply makes checkbox click not work.  Basics.
-                    let confirm = item.querySelector("div").querySelector("p").innerHTML;
-                    let value = item.querySelector("input").getAttribute("value");
-                    let img = document.querySelector("#Gallery figure").querySelector("img").getAttribute("src");
+                  
 
                     if (confirm === "") {
                     } else {

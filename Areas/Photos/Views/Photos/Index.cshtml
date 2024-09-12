@@ -5,9 +5,18 @@
 }
 @model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
 
-<h1>@Context.Request.Query["name"]</h1>
+<div id="Photos">
+    <h1>@Context.Request.Query["name"]</h1>
 
-@foreach (var item in ViewBag.Photos)
-{
-    @item.Name
-}
+    @if (Model.PagedPhotos is not null)
+    {
+        foreach (var item in Model.PagedPhotos)
+        {
+            @item.Name
+        }
+    }
+    else
+    {
+        <p>No photos have been found just now.  Please check back later.</p>
+    }
+</div>

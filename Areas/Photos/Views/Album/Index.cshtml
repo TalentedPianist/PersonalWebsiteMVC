@@ -31,6 +31,13 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                         <figcaption><a asp-action="Index" asp-controller="Photos" asp-area="Photos" asp-route-name="@album.Name">@album.Name</a></figcaption>
                     </figure>
                 }
+                else
+                {
+                    <figure>
+                        <img src="/Gallery/@album.Name/@album.CoverPhoto">
+                        <figcaption><a asp-action="Index" asp-controller="Photos" asp-area="Photos" asp-route-name="@album.Name" asp-route-id="@album.Id">@album.Name</a></figcaption>
+                    </figure>
+                }
             }
         }
     </section>

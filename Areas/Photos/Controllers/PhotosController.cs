@@ -22,7 +22,8 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         {
             PhotosViewModel model = new PhotosViewModel();
             var photos = _db.Photos.Where(p => p.Name == _http.HttpContext!.Request.Query["name"].ToString());
-            ViewBag.Photos = photos;
+            var page = pageNumber ?? 1;
+            model.PagedPhotos = photos.ToPagedList(Convert.ToInt32(page), 5);
                 
             return View(model);
         }

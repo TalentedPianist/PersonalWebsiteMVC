@@ -1,4 +1,4 @@
-html, body {
+﻿html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -12,27 +12,25 @@ figure {
   margin: revert !important;
 }
 
-#Gallery {
-  display: grid;
-  grid-template-columns: repeat(4, 0.5fr);
-  grid-template-rows: repeat(8, auto);
-  gap: 0;
-  grid-column-gap: 0;
+#Photos {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   position: relative;
 }
-#Gallery figure {
+#Photos section figure {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 0;
 }
-#Gallery figure div {
+#Photos section figure div {
   display: none;
 }
-@media only screen and (min-width: 600px) {
-  #Gallery {
-    flex-direction: row;
-  }
+#Photos section:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
 }
 
 #DbLinks {
@@ -76,31 +74,30 @@ figure {
 }
 
 #Albums {
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(8, 1fr);
-  align-items: center;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
   position: relative;
 }
-#Albums svg {
+#Albums section svg {
   display: flex;
   margin: 0;
   border: none;
 }
-#Albums figure {
+#Albums section figure {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 0;
 }
-#Albums figure img {
+#Albums section figure img {
   width: 100%;
 }
-#Albums figure .overlay {
+#Albums section figure .overlay {
   position: absolute;
   top: 0;
 }
-#Albums figcaption {
+#Albums section figcaption {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -109,10 +106,10 @@ figure {
   justify-content: center;
   margin: 0 auto;
 }
-#Albums figcaption div {
+#Albums section figcaption div {
   display: none !important;
 }
-#Albums figcaption ul {
+#Albums section figcaption ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -122,12 +119,12 @@ figure {
   margin: 0 auto;
 }
 @media only screen and (min-width: 600px) {
-  #Albums figcaption ul {
+  #Albums section figcaption ul {
     flex-direction: row;
     gap: 1em;
   }
 }
-#Albums div:nth-of-type(1) {
+#Albums section div:nth-of-type(1) {
   position: absolute;
   top: 0;
   left: 0;
@@ -136,17 +133,17 @@ figure {
   z-index: 5000;
   color: white;
 }
-#Albums div:nth-of-type(1) svg {
+#Albums section div:nth-of-type(1) svg {
   z-index: -1;
 }
-#Albums div:nth-of-type(1) .overlay {
+#Albums section div:nth-of-type(1) .overlay {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
   position: relative;
 }
-#Albums div:nth-of-type(1):nth-of-type(2) {
+#Albums section div:nth-of-type(1):nth-of-type(2) {
   position: relative;
   display: flex;
 }
@@ -167,4 +164,4 @@ figure {
 }
 #photoModal .modal-open {
   overflow-y: scroll !important;
-}/*# sourceMappingURL=Admin.css.map */
+}

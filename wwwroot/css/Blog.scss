@@ -695,6 +695,12 @@ footer {
             flex-direction: row;
             gap: 1em;
             height: 100vh;
+
+            &:nth-of-type(2) { 
+                display: grid; 
+                grid-template-columns: repeat(4, 1fr);
+                grid-template-rows: repeat(4, 1fr);
+            }
         }
 
         @media only screen and (min-width: 1900px) {
@@ -706,4 +712,11 @@ footer {
         }
         
     }
+}
+
+#Photos { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1;
+    background-color: #ffa500;
 }
