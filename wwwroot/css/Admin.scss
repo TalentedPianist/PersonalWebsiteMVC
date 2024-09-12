@@ -67,8 +67,7 @@ figure {
     z-index: 10000 !important;
     position: absolute !important;
     top: 0 !important;
-    max-width: unset !important;
-    height: 100vh !important;
+  
     /* max-width: unset is required both in root element and modal-dialog to work properly */
     .modal-dialog {
         max-width: unset !important;
@@ -176,8 +175,7 @@ figure {
     
     border: 0;
     overflow-y: scroll !important;
-    margin-top: 1em !important;
-    margin-bottom: 1em !important;
+
 
     img { 
         width: 100%;

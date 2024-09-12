@@ -1,4 +1,4 @@
-html, body {
+﻿html, body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -64,8 +64,6 @@ figure {
   z-index: 10000 !important;
   position: absolute !important;
   top: 0 !important;
-  max-width: unset !important;
-  height: 100vh !important;
   /* max-width: unset is required both in root element and modal-dialog to work properly */
 }
 .modal .modal-dialog {
@@ -156,8 +154,6 @@ figure {
   top: 0;
   border: 0;
   overflow-y: scroll !important;
-  margin-top: 1em !important;
-  margin-bottom: 1em !important;
 }
 #photoModal img {
   width: 100%;
@@ -167,4 +163,4 @@ figure {
 }
 #photoModal .modal-open {
   overflow-y: scroll !important;
-}/*# sourceMappingURL=Admin.css.map */
+}
