@@ -75,7 +75,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 var pageNumber = page ?? 1;
                 var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
-                TempData["Message"] = DateTime.Now;
+              
                 return View();
             }
 

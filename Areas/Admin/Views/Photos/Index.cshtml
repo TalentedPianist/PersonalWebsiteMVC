@@ -299,14 +299,16 @@ else
             let cb = document.querySelectorAll("figure");
             cb.forEach(function (item, index) {
 
+				
 
                 item.addEventListener('click', function (event) {
 
                     //event.preventDefault();
                     // Here we don't use event.preventDefault() as that simply makes checkbox click not work.  Basics.
-                    let confirm = item.querySelector("div").querySelector("p").innerHTML;
-                    let value = item.querySelector("input").getAttribute("value");
-                    let img = document.querySelector("#Gallery figure").querySelector("img").getAttribute("src");
+					let confirm = item.querySelector("div").querySelector("p").innerHTML;
+					let value = item.querySelector("input").getAttribute("value");
+					let img = item.querySelector("img").getAttribute("src");
+					console.log(img);
 
                     if (confirm === "") {
                     } else {
