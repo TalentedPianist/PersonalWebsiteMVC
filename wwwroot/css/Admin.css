@@ -69,9 +69,6 @@ figure {
 .modal .modal-dialog {
   max-width: unset !important;
 }
-.modal .modal-body {
-  height: 40vw !important;
-}
 
 #Albums {
   display: grid;
