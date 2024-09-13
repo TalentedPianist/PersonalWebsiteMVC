@@ -268,9 +268,11 @@ else
                 //let value = item.querySelector("input").getAttribute("value");
                 //let img = item.querySelector("img").getAttribute("src");
                 console.log(item.innerHTML);
-                $(item).find('img').on('mouseenter', function (e) {
-                    e.preventDefault();
-                    let name = $(this).data('name');
+
+                // Mouse enter and mouse leave functions need to be set on the parent element to the image, else we get unwanted flickering that makes the user interface not work.
+                $(item).on('mouseenter', function (e) {
+                    
+                    let name = $(this).find('img').data('name');
                  
                     $(item).find('div').css('display', 'flex');
                     $(item).find('div').html(`
@@ -280,11 +282,15 @@ else
                     `);
                 });
 
-                $(item).find('img').on('mouseleave', function (e) {
-                    e.preventDefault();
+                $(item).on('mouseleave', function (e) {
+                    
                     $(item).find('div').css('display', 'none');
                 });
 
+                $(item).find('div').find('a').on('click', function (e) {
+                    e.preventDefault();
+                    console.log('Link was clicked!');
+                });
 
                 item.addEventListener('click', function (event) {
 

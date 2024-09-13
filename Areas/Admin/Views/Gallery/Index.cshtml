@@ -16,7 +16,8 @@
 
 @TempData["Message"]
 
-<div id="Albums">
+<div id="Gallery">
+    <section>
     @foreach (DirectoryInfo di in ViewBag.OnePageOfFiles)
     {
         <figure>
@@ -40,7 +41,7 @@
                     <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@di.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
                 }
             }
-
+           
 
 
             <figcaption>
@@ -69,7 +70,7 @@
         </figure>
 
     }
-
+    </section>
 </div>
 
 <a href="#" id="AddToDb">Add to Database</a> |
@@ -180,7 +181,7 @@
                 return result;
             }
 
-            $("#Albums figure").each(function (index, value) {
+            $("#Gallery figure").each(function (index, value) {
 				let strName = undefined;
 				if ($(value).has('img')) {
                     strName = $(this).find('img').attr('src');
@@ -207,14 +208,11 @@
                 }
 
 
-                $(this).on('mouseenter', function (event) {
-
-                    $(this).find('div').addClass('overlay');
+                $(this).on('mouseover', function (event) {
                     $(this).find('div').show();
                 });
 
                 $(this).on('mouseleave', function (event) {
-                    $(this).find('div').removeClass('overlay');
                     $(this).find('div').hide();
                 });
 

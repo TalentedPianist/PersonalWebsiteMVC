@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+body {
+  position: relative;
+}
+
 img {
   width: 100%;
 }
@@ -26,6 +30,9 @@ figure {
 }
 #Photos section:nth-of-type(1) figure {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 #Photos section:nth-of-type(1) figure div {
   display: none;
@@ -34,13 +41,19 @@ figure {
   align-items: center;
   justify-content: center;
   gap: 2em;
-  padding-top: 2em;
-  padding-bottom: 2em;
   position: absolute;
   top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
   width: 100%;
+  z-index: 10000 !important;
+}
+#Photos section:nth-of-type(1) figure div a {
+  color: white;
+  position: relative;
   z-index: 50000;
 }
 #Photos section:nth-of-type(1) figure img .overlay {
@@ -85,30 +98,35 @@ figure {
   max-width: unset !important;
 }
 
-#Albums {
+#Gallery {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  position: relative;
+}
+#Gallery section:nth-of-type(1) {
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(4, auto);
+  grid-template-columns: repeat(4, auto);
+}
+#Gallery section:nth-of-type(1) figure {
+  position: relative;
+}
+#Gallery section:nth-of-type(1) figure div {
+  background-color: rgba(0, 0, 0, 0.6);
+  flex-direction: column;
+  flex: 1;
   align-items: center;
-  position: relative;
+  justify-content: center;
+  text-align: center;
 }
-#Albums section:nth-of-type(1) {
-  display: grid;
-  grid-template-rows: repeat(4, 1fr);
-  grid-template-columns: repeat(4, 1fr);
-}
-#Albums section:nth-of-type(1) figure {
-  position: relative;
-}
-#Albums section:nth-of-type(1) figure img {
+#Gallery section:nth-of-type(1) figure img {
   width: 100%;
 }
-#Albums svg {
-  display: flex;
-  margin: 0;
-  border: none;
+#Gallery section:nth-of-type(1) figure svg {
+  width: 100%;
 }
-#Albums figcaption {
+#Gallery figcaption {
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -117,10 +135,10 @@ figure {
   justify-content: center;
   margin: 0 auto;
 }
-#Albums figcaption div {
+#Gallery figcaption div {
   display: none !important;
 }
-#Albums figcaption ul {
+#Gallery figcaption ul {
   list-style-type: none;
   display: flex;
   flex-direction: column;
@@ -130,12 +148,12 @@ figure {
   margin: 0 auto;
 }
 @media only screen and (min-width: 600px) {
-  #Albums figcaption ul {
+  #Gallery figcaption ul {
     flex-direction: row;
     gap: 1em;
   }
 }
-#Albums div:nth-of-type(1) {
+#Gallery div:nth-of-type(1) {
   position: absolute;
   top: 0;
   left: 0;
@@ -144,17 +162,17 @@ figure {
   z-index: 5000;
   color: white;
 }
-#Albums div:nth-of-type(1) svg {
+#Gallery div:nth-of-type(1) svg {
   z-index: -1;
 }
-#Albums div:nth-of-type(1) .overlay {
+#Gallery div:nth-of-type(1) .overlay {
   display: flex;
   flex-direction: column;
   flex: 0;
   align-items: center;
   position: relative;
 }
-#Albums div:nth-of-type(1):nth-of-type(2) {
+#Gallery div:nth-of-type(1):nth-of-type(2) {
   position: relative;
   display: flex;
 }
