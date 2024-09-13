@@ -1,10 +1,10 @@
-﻿html, body { 
-    margin: 0; 
+﻿html, body {
+    margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-img { 
+img {
     width: 100%;
 }
 
@@ -13,29 +13,57 @@ figure {
 }
 
 
-#Gallery {
-   display: grid;
-   grid-template-columns: repeat(4, 0.5fr);
-   grid-template-rows: repeat(8, auto);
-   gap: 0;
-   grid-column-gap: 0;
-   position: relative;
-    
-   figure { 
-       position: relative;
-        display: flex; 
-        flex-direction: column;
-        flex: 0;
+#Photos {
+    position: relative;
+    display: flex; 
+    flex-direction: column;
+    flex: 0;
 
-       div { 
-           display: none;
+    section {
+        &:nth-of-type(1) {
+            display: grid;
+            grid-template-columns: repeat(4, auto);
+            grid-template-rows: repeat(8, auto);
+            position: relative;
+
+            figure {
+
+                position: relative;
+
+                div {
+                    display: none;
+                    flex-direction: column;
+                    flex: 1;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 2em;
+                    padding-top: 2em;
+                    padding-bottom: 2em;
+                    position: absolute; 
+                    top: 0;
+                    background-color: rgba(0,0,0,0.6);
+                    color: white;
+                    width: 100%;
+                    z-index: 50000;
+                }
+
+                img {
+                   
+
+                    .overlay {
+                       
+                        background-color: rgba(0,0,0,0.6);
+                    }
+                }
+            }
         }
     }
 
-   @media only screen and (min-width: 600px)  {
-       flex-direction: row;
+
+
+    @media only screen and (min-width: 600px) {
+        flex-direction: row;
     }
-  
 }
 
 #DbLinks {
@@ -53,9 +81,7 @@ figure {
     z-index: 10000 !important;
     text-align: center;
     color: white;
-    display: flex; 
-    flex-direction: column;
-    flex: 1;
+    display: flex;
 }
 
 #myModal {
@@ -67,7 +93,6 @@ figure {
     z-index: 10000 !important;
     position: absolute !important;
     top: 0 !important;
-  
     /* max-width: unset is required both in root element and modal-dialog to work properly */
     .modal-dialog {
         max-width: unset !important;
@@ -75,11 +100,28 @@ figure {
 }
 
 #Albums {
-    display: grid; 
+    display: grid;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: repeat(8, 1fr);
     align-items: center;
     position: relative;
+
+    section {
+        &:nth-of-type(1) {
+            display: grid;
+            grid-template-rows: repeat(4, 1fr);
+            grid-template-columns: repeat(4, 1fr);
+
+
+            figure {
+                position: relative;
+
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
 
     svg {
         display: flex;
@@ -87,21 +129,6 @@ figure {
         border: none;
     }
 
-    figure {
-        position: relative;
-        display: flex; 
-        flex-direction: column;
-        flex: 0;
-
-        img {
-            width: 100%;
-        }
-
-        .overlay { 
-            position: absolute; 
-            top: 0;
-        }
-    }
 
     figcaption {
         text-align: center;
@@ -138,7 +165,7 @@ figure {
         &:nth-of-type(1) {
             position: absolute;
             top: 0;
-            left: 0; 
+            left: 0;
             right: 0;
             bottom: 5em;
             z-index: 5000;
@@ -154,7 +181,6 @@ figure {
                 flex: 0;
                 align-items: center;
                 position: relative;
- 
             }
 
             &:nth-of-type(2) {
@@ -166,23 +192,21 @@ figure {
 }
 
 #photoModal {
-    position: absolute; 
+    position: absolute;
     top: 0;
-    
     border: 0;
     overflow-y: scroll !important;
 
 
-    img { 
+    img {
         width: 100%;
     }
 
-    .modal-content { 
+    .modal-content {
         border: 0 !important;
     }
 
-    .modal-open { 
+    .modal-open {
         overflow-y: scroll !important;
     }
-
 }

@@ -1,5 +1,5 @@
 ﻿@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
@@ -10,7 +10,7 @@
 @inject ApplicationDbContext _db
 @using X.PagedList.Extensions
 @using X.PagedList
-@using X.Web.PagedList 
+@using X.Web.PagedList
 @using HGO.ASPNetCore.FileManager.ViewComponentsModel
 @model String
 
@@ -18,44 +18,45 @@
 
 @TempData["Message"]
 
-<div id="Gallery">
-  
-	@{
-        foreach (FileInfo file in ViewBag.OnePageOfFiles)
-        {
+<div id="Photos">
+    <section>
+        @{
+            foreach (FileInfo file in ViewBag.OnePageOfFiles)
+            {
 
 
-			<figure>
-				<div></div>
-				<img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name">
-				<figcaption>@file.Name</figcaption>
-			</figure>
+                <figure>
+                    <div></div>
+                    <img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name">
+                    <figcaption>@file.Name</figcaption>
+                </figure>
 
-		}
-	}
-   
+            }
+        }
+    </section>
+
 
 </div>
 
 @if (string.IsNullOrEmpty(Context.Request.Query["album"]))
 {
-	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
-				new PagedListRenderOptions
-				{
-					DisplayItemSliceAndTotal = true,
-					LiElementClasses = new string[] { "page-item" },
-					PageClasses = new String[] { "page-link" }
-				})
+    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
+                new PagedListRenderOptions
+                {
+                    DisplayItemSliceAndTotal = true,
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new String[] { "page-link" }
+                })
 }
 else
 {
-	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", album = Context.Request.Query["album"] }),
-		new PagedListRenderOptions
-		{
-			DisplayItemSliceAndTotal = true,
-			LiElementClasses = new string[] { "page-item" },
-			PageClasses = new String[] { "page-link" }
-		})
+    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", album = Context.Request.Query["album"] }),
+        new PagedListRenderOptions
+        {
+            DisplayItemSliceAndTotal = true,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new String[] { "page-link" }
+        })
 }
 
 <button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Manage Album</button>
@@ -63,43 +64,43 @@ else
 
 
 <div class="modal" tabindex="-1" role="dialog">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title">Modal title</h5>
-				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-					<span aria-hidden="true">&times;</span>
-				</button>
-			</div>
-			<div class="modal-body">
-				@await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
-		   {
-			   Id = "FM1",
-			   RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery", ViewBag.AlbumName),
-			   ApiEndPoint = Url.Action("HgoApi")!,
-			   Config = new FileManagerConfig()
-		   })
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
+           {
+               Id = "FM1",
+               RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery", ViewBag.AlbumName),
+               ApiEndPoint = Url.Action("HgoApi")!,
+               Config = new FileManagerConfig()
+           })
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 <div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="photoModalLabel">Modal title</h5>
-			</div>
-			<div class="modal-body">
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-			</div>
-		</div>
-	</div>
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="photoModalLabel">Modal title</h5>
+            </div>
+            <div class="modal-body">
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
 </div>
 
 @functions {
@@ -112,11 +113,11 @@ else
             return false;
     }
 
-   
+
 }
 
 @section Scripts {
-	<script>
+    <script>
 
         $(function () {
 
@@ -176,24 +177,6 @@ else
                 let confirm = undefined;
 
                 let checkbox = $(value).find("div:nth-of-type(1)");
-                console.log(checkbox.text());
-
-                if (CheckDb(strName) === true) {
-                    $(value).find("div:nth-of-type(1)").html(`
-                        <p>Is in database</p>
-
-                        <input type="checkbox" value="${strName}">
-                    `);
-                    
-                } else {
-                    $(value).find("div:nth-of-type(1)").html(`
-                        <p>Not in database</p>
-                        <a href="#">View</a>
-                        <input type="checkbox" value="${strName}">
-                    `);
-
-                }
-
 
 
                 $(value).find("a").on('click', function (event) {
@@ -272,23 +255,6 @@ else
                     });
                 });
 
-          
-                
-                // Begin code to display figcaption on mouse enter
-                $(this).on('mouseenter', function (e) {
-                    e.preventDefault();
-                    $(value).find("div:nth-of-type(1)").css("display", "inline");
-                    $(value).find("div:nth-of-type(1)").addClass("overlay");
-                });
-                // End code to display figcaption on mouse enter
-
-                // Begin code to hide figcaption on mouse leave
-                $(this).on('mouseleave', function (e) {
-                    e.preventDefault();
-                    $(value).find("div:nth-of-type(1)").css("display", "none");
-                    $(value).find("div:nth-of-type(1)").removeClass("overlay");
-                });
-                // End code to hide figcaption on mouse leave
 
             });
 
@@ -298,19 +264,36 @@ else
             // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.
             let cb = document.querySelectorAll("figure");
             cb.forEach(function (item, index) {
+                //let confirm = item.querySelector("div").querySelector("p").innerHTML;
+                //let value = item.querySelector("input").getAttribute("value");
+                //let img = item.querySelector("img").getAttribute("src");
+                console.log(item.innerHTML);
+                $(item).find('img').on('mouseenter', function (e) {
+                    e.preventDefault();
+                    let name = $(this).data('name');
+                 
+                    $(item).find('div').css('display', 'flex');
+                    $(item).find('div').html(`
+                        ${name}<br>
+                        <a href="#">View</a>
+                        <input type="checkbox" value="${name}">
+                    `);
+                });
 
-				
+                $(item).find('img').on('mouseleave', function (e) {
+                    e.preventDefault();
+                    $(item).find('div').css('display', 'none');
+                });
+
 
                 item.addEventListener('click', function (event) {
 
                     //event.preventDefault();
                     // Here we don't use event.preventDefault() as that simply makes checkbox click not work.  Basics.
-					let confirm = item.querySelector("div").querySelector("p").innerHTML;
-					let value = item.querySelector("input").getAttribute("value");
-					let img = item.querySelector("img").getAttribute("src");
-					console.log(img);
+					
+				
 
-                    if (confirm === "") {
+                    /*if (confirm === "") {
                     } else {
                         let id = GetId(value);
                         if (confirm == "Is in database") { // Wasn't working because a really simple string character was missing.
@@ -321,7 +304,7 @@ else
 
                             add.push({ 'Name': value, 'AlbumID': id, 'ImageUrl': img });
                         }
-                    }
+                    }*/
 
                 });
 
@@ -379,6 +362,6 @@ else
 
 
 
-	</script>
+    </script>
 
 }
