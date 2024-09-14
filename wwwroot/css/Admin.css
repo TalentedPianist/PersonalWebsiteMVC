@@ -20,21 +20,26 @@ figure {
   position: relative;
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
 }
-#Photos section:nth-of-type(1) {
+#Photos section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#Photos section:nth-of-type(2) {
   display: grid;
   grid-template-columns: repeat(4, auto);
   grid-template-rows: repeat(8, auto);
   position: relative;
 }
-#Photos section:nth-of-type(1) figure {
+#Photos section:nth-of-type(2) figure {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
-#Photos section:nth-of-type(1) figure div {
+#Photos section:nth-of-type(2) figure div {
   display: none;
   flex-direction: column;
   flex: 1;
@@ -51,18 +56,13 @@ figure {
   width: 100%;
   z-index: 10000 !important;
 }
-#Photos section:nth-of-type(1) figure div a {
+#Photos section:nth-of-type(2) figure div a {
   color: white;
   position: relative;
   z-index: 50000;
 }
-#Photos section:nth-of-type(1) figure img .overlay {
+#Photos section:nth-of-type(2) figure img .overlay {
   background-color: rgba(0, 0, 0, 0.6);
-}
-@media only screen and (min-width: 600px) {
-  #Photos {
-    flex-direction: row;
-  }
 }
 
 #DbLinks {
@@ -106,8 +106,8 @@ figure {
 }
 #Gallery section:nth-of-type(1) {
   display: grid;
-  grid-template-rows: repeat(4, auto);
-  grid-template-columns: repeat(4, auto);
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
 }
 #Gallery section:nth-of-type(1) figure {
   position: relative;

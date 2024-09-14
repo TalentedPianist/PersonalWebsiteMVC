@@ -19,6 +19,11 @@
 @TempData["Message"]
 
 <div id="Photos">
+
+    <section>
+        <a href="#" id="toggleAll">Select All</a>
+    </section>
+
     <section>
         @{
             foreach (FileInfo file in ViewBag.OnePageOfFiles)
@@ -166,207 +171,38 @@ else
                 console.log("Link was clicked!");
             });
 
+            let section = document.querySelector("section:nth-of-type(2)");
+            let figure = section.querySelectorAll("figure");
+            figure.forEach(function (element, index) {
+                let name = $(element).find('img').data('name');
 
-
-
-            $("#Gallery figure").each(function (index, value) {
-                let strName = $(value).find("img").data('name');
-                let src = $(value).find("img").attr('src');
-                let album = $(value).find("a").data('album');
-                let open = $(value).find("a:first-child");
-                let confirm = undefined;
-
-                let checkbox = $(value).find("div:nth-of-type(1)");
-
-
-                $(value).find("a").on('click', function (event) {
-                    event.preventDefault();
-                    $("#photoModal").modal('show');
-                    $("#photoModal").find('.modal-title').html(`
-                        <h1>${strName}</h1>
-
-                        <a href="#">Edit</a>
-                    `);
-                    // Code for photoModal body .modal-body
-                    $("#photoModal").find(".modal-body").html(`
-                        <img src="/Gallery/@ViewBag.AlbumName/${strName}" data-name="${strName}" data-album="@ViewBag.AlbumName">
-                        <a href="#">Make cover photo</a>
-                    `);
-                    // Below code to perform ajax submit for cover photo
-                    $("#photoModal").find(".modal-body").find("a").on('click', function (e) {
-                        e.preventDefault();
-                        // Ajax here to make cover photo.....
-                        let name = $("#photoModal").find(".modal-body").find("img").data('name');
-                        $.ajax({
-                            method: "POST",
-                            url: "@Url.Action("SetCoverPic", "Photos", new { id = ViewBag.AlbumID })",
-                            data: { 'name': name },
-                            async: false,
-                            cache: false,
-                            success: function (message) {
-                                console.log(message);
-                                window.location.assign('@Url.Action("Index", "Gallery")');
-                            },
-                            error: function (err) {
-                                console.log(err);
-                            }
-                        });
-                    });
-                    // Below code to find .modal-header and display form on link clicked
-                    $("#photoModal").find(".modal-header").find("a").on('click', function (e) {
-                        // Here we populate the html bootstrap modal dynamically
-                        e.preventDefault();
-                        $("#photoModal").find(".modal-header").html(`
-                            <form method="post">
-                                <div class="form-group">
-                                    <label>Name:</label>
-                                    <input type="text" class="form-control" value="${strName}">
-                                    <input type="hidden" value="${strName}">
-                                </div>
-                                <button type="submit" class="btn btn-link">Update</button>
-                            </form>
-                        `);
-                        // Here we check if the form was subitted and perform ajax operations to rename the file
-                        $("#photoModal").find(".modal-header").find("form").submit(function (e) {
-                            e.preventDefault();
-                            let strNew = $("#photoModal").find(".modal-header").find("input[type='text']").val();
-                            let strOld = $("#photoModal").find(".modal-header").find("input[type='hidden']").val();
-                            let strAlbum = $("#photoModal").find(".modal-content").find("img").data('album');
-                            console.log(strOld);
-
-                            $.ajax({
-                                method: "POST",
-                                url: "@Url.Action("RenameFile", "Photos", new { album = ViewBag.AlbumName })",
-                                data: JSON.stringify({ 'strOld': strOld, 'strNew': strNew, 'album': strAlbum }),
-                                headers: {
-                                'Content-Type': 'application/json',
-                            },
-                                async: false,
-                                cache: false,
-                                success: function (message) {
-                                    console.log(message);
-                                    window.location.assign('@Url.Action("Index", "Photos", new { id = Context.Request.Query["id"], area = "Admin" })');
-                                },
-                                error: function (err) {
-                                            console.log(err);
-                                        }
-                                    });
-                        });
-                    });
-                });
-
-
-            });
-
-            var add = [];
-            var del = [];
-
-            // After spending a whole night on this, the conclusion is that it needs to be done in plain old JavaScript insted of jQuery.  With jQuery I am limited to variables inside event handlers where is JS lets me do exactly what I want.  This should be very easy so I'm surprised its so difficult in jQuery.
-            let cb = document.querySelectorAll("figure");
-            cb.forEach(function (item, index) {
-                //let confirm = item.querySelector("div").querySelector("p").innerHTML;
-                //let value = item.querySelector("input").getAttribute("value");
-                //let img = item.querySelector("img").getAttribute("src");
-                console.log(item.innerHTML);
-
-                // Mouse enter and mouse leave functions need to be set on the parent element to the image, else we get unwanted flickering that makes the user interface not work.
-                $(item).on('mouseenter', function (e) {
-                    
-                    let name = $(this).find('img').data('name');
-                 
-                    $(item).find('div').css('display', 'flex');
-                    $(item).find('div').html(`
-                        ${name}<br>
-                        <a href="#">View</a>
+                if (CheckDb(name) === true) {
+                    $(element).find('div').html(`
+                        <p>Is in database</p>
+                        ${name}
                         <input type="checkbox" value="${name}">
                     `);
-                });
+                } else {
+                    $(element).find('div').html(`
+                        <p>Not in database</p>
+                        <input type="checkbox" value="${name}">
+                    `);
+                }
 
-                $(item).on('mouseleave', function (e) {
-                    
-                    $(item).find('div').css('display', 'none');
-                });
-
-                $(item).find('div').find('a').on('click', function (e) {
+                $(element).on('mouseenter', function (e) {
                     e.preventDefault();
-                    console.log('Link was clicked!');
+                    $(element).find('div').css('display', 'flex');
                 });
 
-                item.addEventListener('click', function (event) {
-
-                    //event.preventDefault();
-                    // Here we don't use event.preventDefault() as that simply makes checkbox click not work.  Basics.
-					
-				
-
-                    /*if (confirm === "") {
-                    } else {
-                        let id = GetId(value);
-                        if (confirm == "Is in database") { // Wasn't working because a really simple string character was missing.
-
-
-                            del.push({ 'Id': id, 'Name': item.getAttribute("value") });
-                        } else {
-
-                            add.push({ 'Name': value, 'AlbumID': id, 'ImageUrl': img });
-                        }
-                    }*/
-
-                });
-
-            });
-
-            $("#AddToDb").on('click', function (e) {
-                // Here we create an ajax request to add the selected checkbox values to the database.  We don't even have to use a separate function as this is handled by a click event.  It's that simple.
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("AddMultipleToDb", "Photos")",
-                    data: JSON.stringify(add), // Data was always null here because of incorrect syntax use.  JSON.stringify(add) is the correct way to achieve this.
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        console.log(message);
-                        window.location.reload(); // Needed since we are just trying to update the page with ajax and don't need a server side redirect.
-                    },
-                    error: function (err) {
-                        //console.log(err);
-                    }
-                });
-            });
-
-            $("#DelFromDb").on('click', function (event) {
-                event.preventDefault();
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
-                    data: JSON.stringify(del),
-                    headers: {
-                        'Content-type': 'application/json',
-                    },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        console.log(message);
-                        window.location.reload(); // Needed since we are just trying to update page data with ajax and don't need server side redirect.
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-
-                $("#photoModal").find(".modal-body").find("a").on('click', function (e) {
+                $(element).on('mouseleave', function (e) {
                     e.preventDefault();
-                    console.log("Link was clicked!");
-                    console.log($(e.target.html()));
+                    $(element).find('div').css('display', 'none');
                 });
-            });
 
+                console.log(querySelector(element));
+
+            });
         });
-
-
 
     </script>
 
