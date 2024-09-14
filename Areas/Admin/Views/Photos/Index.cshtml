@@ -202,12 +202,18 @@ else
                
             });
 
+            let add = []; 
+            let del = [];
+
             document.querySelector("section:nth-of-type(1)").querySelector("a").addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector("section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
-                    console.log(element.querySelector('div').querySelector('input[type="checkbox"]').innerHTML);
+                    let cb = element.querySelector('div').querySelector('input[type="checkbox"]');
+                    cb.checked = true;
+                    add.push({ name: cb.value });
+
                 });
-           
+                console.log(add);
             });
         });
 
