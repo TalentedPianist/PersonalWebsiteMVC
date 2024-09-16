@@ -22,6 +22,8 @@
 
     <section>
         <a href="#" id="toggleAll">Select All</a>
+        <a href="#" id="addToDb">Add to Database</a>
+        <a href="#" id="delFromDb">Delete from Database</a>
     </section>
 
     <section>
@@ -205,15 +207,72 @@ else
             let add = []; 
             let del = [];
 
-            document.querySelector("section:nth-of-type(1)").querySelector("a").addEventListener('click', function (e) {
+            document.querySelector("#toggleAll").addEventListener('click', function (e) {
                 e.preventDefault();
                 document.querySelector("section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
                     let cb = element.querySelector('div').querySelector('input[type="checkbox"]');
-                    cb.checked = true;
-                    add.push({ name: cb.value });
+                    let confirm = element.querySelector('div').querySelector('p').innerHTML;
+                    let url = element.querySelector('img').getAttribute('src');
+                    cb.checked = true; // Very important to have this, otherwise nothing happens!
+
+                    if (confirm === "Is in database") {
+                        del.push({ Id: GetId(cb.value), name: cb.value });
+                      
+                    }  
+                    if (confirm === "Not in database") {
+                        add.push({ name: cb.value, AlbumID: @Context.Request.Query["id"], ImageUrl: url });
+                    }
 
                 });
-                console.log(add);
+                // Any other actions can be performed here once all photos are checked
+            });
+
+            document.querySelector("#delFromDb").addEventListener('click', function (e) {
+                e.preventDefault();
+
+            });
+
+            document.querySelector("#addToDb").addEventListener('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("AddMultipleToDb", "Photos")",
+                    data: JSON.stringify(add),
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        console.log(message);
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        
+                    }
+                });
+            });
+
+            document.querySelector("#delFromDb").addEventListener('click', function (e) {
+                e.preventDefault();
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
+                    data: JSON.stringify(del),
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    cache: false,
+                    async: false,
+                    succses: function (message) {
+                        console.log(message);
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
         });
 

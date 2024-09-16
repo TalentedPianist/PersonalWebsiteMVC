@@ -106,7 +106,6 @@ figure {
 }
 #Gallery section:nth-of-type(1) {
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(4, 1fr);
 }
 #Gallery section:nth-of-type(1) figure {

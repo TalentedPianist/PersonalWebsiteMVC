@@ -181,108 +181,44 @@
                 return result;
             }
 
-            $("#Gallery figure").each(function (index, value) {
-				let strName = undefined;
-				if ($(value).has('img')) {
-                    strName = $(this).find('img').attr('src');
-                
-				}
-				if ($(value).has('svg')) {
-					strName = $(value).find('svg').data('name');
+
+            let section = document.querySelector("section");
+            let figure = section.querySelectorAll("figure");
+            figure.forEach(function (element, index) {
+                let name = undefined; // Create undefined name variable to be populated by conditional below
+                if (element.getElementsByTagName('svg').length) {
+                    // element variable contains svg
+                    name = $(element).find('svg').data('name');
+                }
+                if (element.getElementsByTagName('img').length) {
+                // element variable contains img
+                    name = $(element).find('img').data('name');
                 }
 
-                $(this).find('div:nth-of-type(1)').hide();
+                if (CheckDb(name) === true) {
+                    $(element).find('div').html(`
+                        <p>Is in database</p>
+                        ${name}
+                        <input type="checkbox" value="${name}">
 
-                if (CheckDb(strName) == false) {
-                    $(this).find('div:nth-of-type(1)').html(`
-				<p>Not in database</p>
-				<input type="checkbox" value="${strName}">
-`);
-
-
+                    `);
                 } else {
-                    $(this).find('div:nth-of-type(1)').html(`
-					<p>Is in database</p>
-					<input type="checkbox" value="${strName}">
-				`);
+                    $(element).find('div').html(`
+                        <p>Not in database</p>
+                        ${name}
+                        <input type="checkbox" value="${name}">
+                    `);
                 }
 
-
-                $(this).on('mouseover', function (event) {
-                    $(this).find('div').show();
+                $(element).on('mouseenter', function (e) {
+                    e.preventDefault();
+                    $(element).find('div').css('display', 'flex');
                 });
 
-                $(this).on('mouseleave', function (event) {
-                    $(this).find('div').hide();
+                $(element).on('mouseleave', function (e) {
+                    e.preventDefault();
+                    $(element).find('div').css('display', 'none');
                 });
-
-                let checkbox = value.querySelector("input[type='checkbox']");
-                let confirm = value.querySelector("p").innerHTML;
-                
-                //console.log($(value).html());
-         
-                let add = [];
-                let del = [];
-
-
-                checkbox.addEventListener('click', function (e) {
-                    console.log(strName);
-
-                    if (confirm === "Not in database") {
-                        add.push({ 'Name': strName });
-                    }
-                    if (confirm === "Is in database") {
-                        del.push({ 'Id': GetId(strName), 'Name': strName });
-                    }
-
-                });
-
-                $("#AddToDb").on('click', function (event) {
-                    event.preventDefault();
-                    //console.log(strName);
-
-                    $.ajax({
-                        method: "POST",
-                        url: "@Url.Action("AddMultipleToDb", "Gallery")",
-                        data: JSON.stringify(add),
-                        dataType: 'json',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        async: false,
-                        cache: false,
-                        success: function (message) {
-                            console.log(message);
-                            window.location.reload();
-                        },
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    });
-                });
-
-                $("#DelFromDb").on('click', function (event) {
-                    event.preventDefault();
-                    $.ajax({
-                        method: "POST",
-                        url: "@Url.Action("RemoveMultipleFromDb", "Gallery")",
-                        data: JSON.stringify(del),
-                        dataType: 'json',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        async: false,
-                        cache: false,
-                        success: function (message) {
-                            //console.log(message);
-                            window.location.reload();
-                        },
-                        error: function (err) {
-                            console.log(err);
-                        }
-                    });
-                });
-
 
             });
         });
