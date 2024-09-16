@@ -112,6 +112,7 @@ figure {
   position: relative;
 }
 #Gallery section:nth-of-type(1) figure div {
+  display: none;
   background-color: rgba(0, 0, 0, 0.6);
   flex-direction: column;
   flex: 1;
