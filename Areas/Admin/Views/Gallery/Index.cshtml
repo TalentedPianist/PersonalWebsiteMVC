@@ -236,8 +236,8 @@
                 }
 
                 if (confirm === "Is in database") {
-                    console.log(cb.value);
-                    //del.push({ Id: GetId(cb.value), name: cb.value });
+                    //console.log(GetId(cb.value));
+                    del.push({ Id: GetId(cb.value), name: cb.value });
                 }
 
                 if (confirm === "Not in database") {
@@ -280,8 +280,8 @@
                     cache: false,
                     async: false,
                     success: function (message) {
-                        //console.log(message);
-                        window.location.reload();
+                        console.log(message);
+                        //window.location.reload();
                     },
                     error: function (err) {
                         console.log(err);
