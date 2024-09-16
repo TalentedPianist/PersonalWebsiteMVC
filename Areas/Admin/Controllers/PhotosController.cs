@@ -268,7 +268,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SetCoverPic([FromForm(Name = "name")] string name, int id)
+        public IActionResult SetCoverPic([FromBody] string name, int id)
         {
             var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
             album!.CoverPhoto = name;

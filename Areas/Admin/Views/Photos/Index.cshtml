@@ -24,6 +24,7 @@
         <a href="#" id="toggleAll">Select All</a>
         <a href="#" id="addToDb">Add to Database</a>
         <a href="#" id="delFromDb">Delete from Database</a>
+        <a href="#" id="manageAlbum">Manage Album</a>
     </section>
 
     <section>
@@ -66,11 +67,11 @@ else
         })
 }
 
-<button type="button" class="btn btn-link" data-toggle="modal" data-target=".modal">Manage Album</button>
 
 
 
-<div class="modal" tabindex="-1" role="dialog">
+
+<div id="fileManager" class="modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -120,13 +121,30 @@ else
             return false;
     }
 
-
+    string GetAlbum(int id) {
+        var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+        return album!.Name!;
+    }
 }
 
 @section Scripts {
     <script>
 
         $(function () {
+
+
+
+            document.querySelector("#manageAlbum").addEventListener('click', function (e) {
+                e.preventDefault();
+                $("#fileManager").show();
+            });
+
+            $("#fileManager").find('.modal-footer').find('button').on('click', function (e) {
+                e.preventDefault();
+                $("#fileManager").hide();
+            });
+
+  
 
             function GetId(name) {
                 let result = undefined;
@@ -183,7 +201,71 @@ else
                         <p>Is in database</p>
                         ${name}
                         <input type="checkbox" value="${name}">
+                        <a href="#">View</a>
                     `);
+
+                    $(element).find('div').find('a').on('click', function (e) {
+                        e.preventDefault();
+                        var myModal = new bootstrap.Modal(document.getElementById("photoModal"), {});
+                        myModal.show();
+                       
+                        $("#photoModal").find('.modal-header').find('.modal-title').html(`
+                            ${name}
+                            <a href="#">Edit</a>
+                        `);
+
+                        $("#photoModal").find('.modal-header').find('a').on('click', function (e) {
+                            e.preventDefault();
+                            $("#photoModal").find('.modal-header').html(`
+                                <form method="post" id="myForm">
+                                    <div class="form-group">
+                                        <label>Name:</label>
+                                        <input type="text" name="txtName" value="${name}">
+                                    </div>
+                                    <input type="hidden" value="${GetId(name)}" name="txtId">
+                                    <button type="submit" class="btn btn-primary">Submit</button>
+                                </form>
+                            `);
+
+                            $("#photoModal").find(".modal-header").find("#myForm").on('submit', function (e) {
+                                e.preventDefault();
+                                var name = $("input[name='txtName']").val();
+                                var id = $("input[name='txtId']").val();
+                                console.log(name);
+                                $.ajax({
+                                    method: "POST",
+                                    url: "@Url.Action("SetCoverPic", "Photos")",
+                                    data: {
+                                        'name': name,
+                                        'id': id
+                                    },
+                                    async: false,
+                                    cache: false,
+                                    headers: {
+                                        "Content-Type": "application/json"
+                                    },
+                                    success: function (message) {
+                                        console.log(message);
+                                        window.location.reload();
+                                    },
+                                    error: function (err) {
+                                        console.log(err);
+                                    }
+                                });
+                            });
+                        });
+
+                        
+
+                        $("#photoModal").find('.modal-body').html(`
+                            <img src="/Gallery/@ViewBag.AlbumName/${name}" alt="${name}">
+                            <a href="#">Make cover photo</a>
+                        `);
+
+                        $("#photoModal").find('.modal-body').find('a').on('click', function (e) {
+                            e.preventDefault();
+                        });
+                    });
                 } else {
                     $(element).find('div').html(`
                         <p>Not in database</p>
@@ -194,6 +276,8 @@ else
                 $(element).on('mouseenter', function (e) {
                     e.preventDefault();
                     $(element).find('div').css('display', 'flex');
+
+                    
                 });
 
                 $(element).on('mouseleave', function (e) {
@@ -201,7 +285,7 @@ else
                     $(element).find('div').css('display', 'none');
                 });
 
-               
+                
             });
 
             let add = []; 
@@ -227,10 +311,6 @@ else
                 // Any other actions can be performed here once all photos are checked
             });
 
-            document.querySelector("#delFromDb").addEventListener('click', function (e) {
-                e.preventDefault();
-
-            });
 
             document.querySelector("#addToDb").addEventListener('click', function (e) {
                 e.preventDefault();
@@ -244,7 +324,7 @@ else
                     cache: false,
                     async: false,
                     success: function (message) {
-                        console.log(message);
+                        
                         window.location.reload();
                     },
                     error: function (err) {
@@ -266,7 +346,7 @@ else
                     cache: false,
                     async: false,
                     succses: function (message) {
-                        console.log(message);
+                       
                         window.location.reload();
                     },
                     error: function (err) {
@@ -274,6 +354,9 @@ else
                     }
                 });
             });
+
+            
+           
         });
 
     </script>

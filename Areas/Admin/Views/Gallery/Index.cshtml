@@ -235,19 +235,26 @@
                     url = element.querySelector('img').getAttribute('src');
                 }
 
-                if (confirm === "Is in database") {
-                    console.log(cb.value);
-                    //del.push({ Id: GetId(cb.value), name: cb.value });
-                }
+                cb.addEventListener('click', function (e) {
+                // This logic was missing and why it wasn't working properly.  Very basic.
+                    //e.preventDefault();
+                    let strDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+                    if (confirm === "Not in database") {
+                        add.push({ Name: cb.value, DateCreated: strDate });
+                    }
 
-                if (confirm === "Not in database") {
-                    add.push({ name: cb.value, CoverPhoto: url });
-                }
+                    if (confirm === "Is in database") {
+                        del.push({ Id: GetId(cb.value) });
+                    }
+                });
+               
             });
             // Any other actions can be performed here once all albums are checked
+            
 
             document.querySelector("#AddToDb").addEventListener('click', function (e) {
                 e.preventDefault();
+                console.log(add);
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Gallery")",
@@ -257,6 +264,7 @@
                     },
                     cache: false,
                     async: false,
+
                     success: function (message) {
                         console.log(message);
                         window.location.reload();
@@ -280,7 +288,7 @@
                     cache: false,
                     async: false,
                     success: function (message) {
-                        //console.log(message);
+                        console.log(message);
                         window.location.reload();
                     },
                     error: function (err) {

@@ -19,8 +19,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
         private readonly IFileManagerCommandsProcessor _processor;
-       
-        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env, IFileManagerCommandsProcessor processor) 
+
+        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env, IFileManagerCommandsProcessor processor)
         {
             _db = db;
             Host = env;
@@ -29,7 +29,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
 
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery")]
-        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
+        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
         {
             DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery"));
             if (di.GetDirectories().Count() == 0)
@@ -44,8 +44,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 ViewBag.OnePageOfFiles = onePageOfFiles;
             }
 
-         
-           
+
+
             return View();
         }
 
@@ -57,7 +57,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Create")]
-        public IActionResult CreateAlbum(Album model, [FromForm(Name="coverPhoto")]IFormFile file)
+        public IActionResult CreateAlbum(Album model, [FromForm(Name = "coverPhoto")] IFormFile file)
         {
             if (ModelState.IsValid)
             {
@@ -86,18 +86,18 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public IActionResult Update(int id, [FromQuery(Name="page")]int page)
+        public IActionResult Update(int id, [FromQuery(Name = "page")] int page)
         {
             var model = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
             System.IO.DirectoryInfo info = new System.IO.DirectoryInfo(Host.WebRootPath + "\\Gallery\\" + model!.Name);
-           
+
             return View(model);
         }
 
-   
+
         [HttpPost]
         [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Update")]
-        public IActionResult UpdateAlbum(Album model, [FromForm(Name="AlbumID")]int AlbumID, [FromForm(Name="coverPhoto")]IFormFile file)
+        public IActionResult UpdateAlbum(Album model, [FromForm(Name = "AlbumID")] int AlbumID, [FromForm(Name = "coverPhoto")] IFormFile file)
         {
             var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
             if (ModelState.IsValid)
@@ -130,8 +130,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateFolder([FromForm(Name="GalleryID")]int GalleryID)
-        { 
+        public IActionResult CreateFolder([FromForm(Name = "GalleryID")] int GalleryID)
+        {
             var album = _db.Albums.Where(a => a.Id == GalleryID).FirstOrDefault();
             Directory.CreateDirectory(Host.WebRootPath + "\\Gallery\\" + album!.Name);
             return View("~/Areas/Admin/Views/Gallery/Update.cshtml", album);
@@ -166,7 +166,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public bool CheckDb([FromForm(Name="name")]string name)
+        public bool CheckDb([FromForm(Name = "name")] string name)
         {
             var photo = _db.Albums.Where(a => a.Name == name).Any();
             if (photo)
@@ -174,7 +174,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             else
                 return false;
 
-            
+
         }
 
         [HttpPost]
@@ -183,6 +183,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             _db.Albums.AddRange(data);
             _db.SaveChanges();
             return Ok(data);
+
         }
 
         [HttpPost]
@@ -196,16 +197,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult GetId(string name)
         {
-             var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-                return Ok(name);
-           
+            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+            return Ok(album!.Id);
+
         }
 
         [HttpPost]
-        public IActionResult GetAlbum([FromForm(Name ="id")]int id)
+        [Microsoft.AspNetCore.Mvc.Route("Photos/GetAlbum")]
+        public IActionResult GetAlbum(int id)
         {
             var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
-            return Ok(album);
+            return Ok(album!.Name);
         }
 
         [HttpPost]

@@ -57,7 +57,7 @@ figure {
                     background-color: rgba(0,0,0,0.6);
                     color: white;
                     width: 100%;
-                    z-index: 10000 !important;
+                    z-index: 20000 !important;
 
                     a { 
                         color: white;
@@ -97,20 +97,7 @@ figure {
     display: flex;
 }
 
-#myModal {
-    z-index: 10000 !important;
-    border: none !important;
-}
 
-.modal {
-    z-index: 10000 !important;
-    position: absolute !important;
-    top: 0 !important;
-    /* max-width: unset is required both in root element and modal-dialog to work properly */
-    .modal-dialog {
-        max-width: unset !important;
-    }
-}
 
 #Gallery {
     display: flex; 
@@ -212,22 +199,20 @@ figure {
     }
 }
 
-#photoModal {
+#photoModal { 
     position: absolute;
-    top: 0;
-    border: 0;
-    overflow-y: scroll !important;
-
-
-    img {
-        width: 100%;
-    }
-
-    .modal-content {
-        border: 0 !important;
-    }
-
-    .modal-open {
-        overflow-y: scroll !important;
-    }
+    top: 0; 
+    left: 0; 
+    right: 0;
+    height: 300px;
+    width: 800px;
+    min-width: 800px;
+    min-height: 100vh;
+    z-index: 10000;
+    display: flex !important; 
+    flex-direction: column;
+    flex: 1; 
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }

@@ -10,6 +10,6 @@ namespace PersonalWebsiteMVC.Models
         public string? Description { get; set; } 
         public string? Location { get; set; } 
         public string? CoverPhoto { get; set; }
-        public DateTime DateCreated { get; set; }
+        public DateTime? DateCreated { get; set; }
     }
 }

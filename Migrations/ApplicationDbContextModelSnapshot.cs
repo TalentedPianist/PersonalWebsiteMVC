@@ -154,7 +154,8 @@ namespace PersonalWebsiteMVC.Migrations
                     b.Property<string>("CoverPhoto")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("DateCreated")
+                    b.Property<string>("DateCreated")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Description")
@@ -168,7 +169,7 @@ namespace PersonalWebsiteMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Albums");
+                    b.ToTable("Albums", (string)null);
                 });
 
             modelBuilder.Entity("PersonalWebsiteMVC.Models.ApplicationUser", b =>
@@ -193,7 +194,7 @@ namespace PersonalWebsiteMVC.Migrations
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTimeOffset?>("LockoutEnd")
+                    b.Property<string>("LockoutEnd")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("NormalizedEmail")
@@ -245,7 +246,8 @@ namespace PersonalWebsiteMVC.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CategoryDate")
+                    b.Property<string>("CategoryDate")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("IP")
@@ -260,7 +262,7 @@ namespace PersonalWebsiteMVC.Migrations
 
                     b.HasKey("CategoryID");
 
-                    b.ToTable("Categories");
+                    b.ToTable("Categories", (string)null);
                 });
 
             modelBuilder.Entity("PersonalWebsiteMVC.Models.Comments", b =>
@@ -284,7 +286,8 @@ namespace PersonalWebsiteMVC.Migrations
                     b.Property<string>("CommentContent")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("CommentDate")
+                    b.Property<string>("CommentDate")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("CommentType")
@@ -298,7 +301,7 @@ namespace PersonalWebsiteMVC.Migrations
 
                     b.HasKey("CommentID");
 
-                    b.ToTable("Comments");
+                    b.ToTable("Comments", (string)null);
                 });
 
             modelBuilder.Entity("PersonalWebsiteMVC.Models.Guestbook", b =>
@@ -307,7 +310,8 @@ namespace PersonalWebsiteMVC.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("DatePosted")
+                    b.Property<string>("DatePosted")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("GuestbookApproved")
@@ -330,7 +334,7 @@ namespace PersonalWebsiteMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Guestbook");
+                    b.ToTable("Guestbook", (string)null);
                 });
 
             modelBuilder.Entity("PersonalWebsiteMVC.Models.Photos", b =>
@@ -359,7 +363,7 @@ namespace PersonalWebsiteMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Photos");
+                    b.ToTable("Photos", (string)null);
                 });
 
             modelBuilder.Entity("PersonalWebsiteMVC.Models.Posts", b =>
@@ -386,7 +390,7 @@ namespace PersonalWebsiteMVC.Migrations
                     b.Property<string>("PostContent")
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime?>("PostDate")
+                    b.Property<string>("PostDate")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PostExcerpt")
@@ -406,7 +410,7 @@ namespace PersonalWebsiteMVC.Migrations
 
                     b.HasKey("PostID");
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

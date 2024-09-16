@@ -61,6 +61,10 @@
     {
       "library": "ckeditor5@43.0.0",
       "destination": "wwwroot/lib/ckeditor5/"
+    },
+    {
+      "library": "moment.js@2.30.1",
+      "destination": "wwwroot/lib/moment.js/"
     }
   ]
 }
