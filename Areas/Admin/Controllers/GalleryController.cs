@@ -197,9 +197,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult GetId(string name)
         {
-            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-            return Ok(album!.Id);
-
+             var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+                return Ok(album!.Id);
+           
         }
 
         [HttpPost]
