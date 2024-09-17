@@ -168,6 +168,26 @@ else
                 return result;
             }
 
+            function GetAlbumId() {
+                var result = undefined;
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("GetAlbumId", "Photos")",
+                    data: {
+                        name: name
+                    },
+                    cache: false,
+                    async: false,
+                    success: function (message) {
+                        console.log(message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+                return result;
+            }
+
             function CheckDb(name) {
                 var result = false;
                 $.ajax({
@@ -258,11 +278,11 @@ else
 
                         $("#photoModal").find('.modal-body').find('a').on('click', function (e) {
                             e.preventDefault();
-                            console.log(GetId(name));
-                            @*$.ajax({
+                         
+                            $.ajax({
                                 method: "POST",
                                 url: "@Url.Action("SetCoverPic", "Photos")",
-                                data: JSON.stringify({ name: name, id: GetId(name) }),
+                                data: JSON.stringify({ 'Id': '@ViewBag.AlbumID','CoverPhoto': '/Gallery/@ViewBag.AlbumName/' + name }),
                                 headers: {
                                     "Content-Type": "application/json"
                                 },
@@ -270,13 +290,13 @@ else
                                 cache: false,
                                 success: function (message) {
                                     console.log(message);
-                                    window.location.reload();
+                                    //window.location.reload();
                                 },
                                 error: function (err) {
                                     console.log(err);
                                 }
 
-                            });*@
+                            });
                         });
                     });
                 } else {
@@ -297,29 +317,7 @@ else
                         myModal.show();
                     });
 
-                    $("#photoModal").find('.modal-body').find('a').on('click', function (e) {
-                        e.preventDefault();
-                        // This is the correct place to edit just now.
-                        // This is working.  It's returning the correct ID number.
-                        $.ajax({
-                            method: "POST",
-                            url: "@Url.Action("SetCoverPic", "Photos")",
-                            data: JSON.stringify({ 'Id': GetId(name), 'CoverPhoto':  `/Gallery/@ViewBag.AlbumName/${name}`}),
-                            headers: {
-                                "Content-Type": "application/json"
-                            },
-                            async: false,
-                            cache: false,
-                            success: function (message) {
-                                console.log(message);
-                                //window.location.reload();
-                            },
-                            error: function (err) {
-                                console.log(err);
-                            }
-
-                        });
-                    });
+       
                 }
 
 

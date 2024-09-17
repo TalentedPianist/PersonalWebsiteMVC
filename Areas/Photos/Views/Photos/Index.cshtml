@@ -4,14 +4,40 @@
 @{
 }
 @model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
-
+@using X.PagedList
+@using X.PagedList.Extensions
+@using X.Web.PagedList
 
 <div id="Photos">
-    <h1>@Context.Request.Query["name"]</h1>
+    <h1>@ViewBag.AlbumName</h1>
 
-    @foreach (var item in Model.PagedPhotos!)
-    {
-        @item.Name
-    }
-
+    <section>
+        @if (Model.PagedPhotos is not null)
+        {
+            foreach (var item in Model.PagedPhotos)
+            {
+                <figure>
+                    <a href="@item.ImageUrl" class="glightbox"><img src="@item.ImageUrl" alt="@item.Name"></a>
+                    <figcaption>@item.Name</figcaption>
+                </figure>
+            }
+        }
+    </section>
+    <section>
+        @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
+            new PagedListRenderOptions
+            {
+                DisplayItemSliceAndTotal = true,
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new String[] { "page-link" }
+            })
+    </section>
 </div>
+
+@section scripts { 
+    
+   <script>
+       const lightbox = GLightbox();
+   </script>
+
+}

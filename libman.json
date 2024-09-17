@@ -65,6 +65,22 @@
     {
       "library": "moment.js@2.30.1",
       "destination": "wwwroot/lib/moment.js/"
+    },
+    {
+      "library": "baguettebox.js@1.12.0",
+      "destination": "wwwroot/lib/baguettebox.js/"
+    },
+    {
+      "library": "bs5-lightbox@1.8.3",
+      "destination": "wwwroot/lib/bs5-lightbox/"
+    },
+    {
+      "library": "lightgallery@2.7.2",
+      "destination": "wwwroot/lib/lightgallery/"
+    },
+    {
+      "library": "glightbox@3.3.0",
+      "destination": "wwwroot/lib/glightbox/"
     }
   ]
 }

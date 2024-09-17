@@ -6,7 +6,7 @@
     padding: 0;
 }
 
-html, body { 
+html, body {
     height: 100%;
 }
 
@@ -21,7 +21,6 @@ img {
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
     position: relative;
-    
 }
 
 p {
@@ -89,8 +88,8 @@ form {
     }
 }
 
-main { 
-    display: flex; 
+main {
+    display: flex;
     flex-direction: column;
     flex: 1 1 auto;
     align-self: flex-start;
@@ -157,9 +156,8 @@ header {
                 padding-right: 2em;
             }
 
-            @media only screen and (min-width: 1900px) { 
+            @media only screen and (min-width: 1900px) {
                 gap: 0;
-                
             }
         }
 
@@ -167,8 +165,6 @@ header {
             text-decoration: none;
             font-size: large;
             color: white;
-
-         
         }
 
 
@@ -240,7 +236,7 @@ footer {
     flex-direction: column;
     flex: 1;
     position: relative;
-    
+
 
     section {
         display: flex;
@@ -249,7 +245,7 @@ footer {
         gap: 4em;
         background-color: #ffa500;
         position: relative;
-      
+
 
         button {
             display: flex;
@@ -269,7 +265,7 @@ footer {
                 margin: 0 auto;
             }
 
-            @media screen and (min-width: 1190px) { 
+            @media screen and (min-width: 1190px) {
                 width: 30%;
             }
         }
@@ -288,7 +284,7 @@ footer {
             flex: 1;
             margin-top: -1px;
 
-            &:first-child { 
+            &:first-child {
                 flex: 0;
             }
         }
@@ -342,7 +338,6 @@ footer {
 
 
     @media screen and (min-width: 1190px) {
-        
     }
 }
 
@@ -449,7 +444,7 @@ footer {
             padding-bottom: 1em;
         }
 
-        &:nth-of-type(3) { 
+        &:nth-of-type(3) {
             padding-top: 1em;
             padding-bottom: 1em;
         }
@@ -460,7 +455,7 @@ footer {
             height: revert;
             min-height: revert;
 
-            &:nth-of-type(1) { 
+            &:nth-of-type(1) {
                 flex: 0;
             }
 
@@ -525,7 +520,7 @@ footer {
         }
     }
 
-    article { 
+    article {
         padding-left: 1em;
         padding-right: 1em;
     }
@@ -566,7 +561,6 @@ footer {
     background-color: gold;
 
     p {
-    
         line-height: 2;
     }
 
@@ -576,10 +570,10 @@ footer {
         flex: 1;
         padding-bottom: 1em;
 
-       article { 
-           width: 50%;
-           padding-left: 1em;
-           padding-right: 1em;
+        article {
+            width: 50%;
+            padding-left: 1em;
+            padding-right: 1em;
         }
     }
 }
@@ -665,33 +659,35 @@ footer {
     min-width: 100vw !important;
 }
 
-#Albums { 
-    display: flex; 
+#Albums {
+    display: flex;
     flex-direction: column;
     flex: 1;
     background-color: #ffa500;
     padding-left: 1em;
     padding-right: 1em;
-   
+
 
     svg {
         width: 100%;
     }
 
     section {
-        display: flex; 
+        display: flex;
         flex-direction: column;
-        flex: 1;
+        flex: 0;
         align-items: flex-start;
-       
 
-        figure  {
-            figcaption { 
+
+
+
+        figure {
+            figcaption {
                 text-align: center;
             }
         }
-        
-        @media only screen and (min-width: 600px)  {
+
+        @media only screen and (min-width: 600px) {
             flex-direction: row;
             gap: 1em;
             height: 100vh;
@@ -700,17 +696,35 @@ footer {
         @media only screen and (min-width: 1900px) {
             height: 100vh;
 
-            &:nth-of-type(2) { 
-                flex: 1 1 auto;
+
+            &:nth-of-type(2) {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
             }
         }
-        
     }
 }
 
-#Photos { 
-    display: flex; 
+#Photos {
+    display: flex;
     flex-direction: column;
     flex: 1;
     background-color: #ffa500;
+
+    section {
+        @media only screen and (min-width: 1900px) {
+            height: 100vh;
+
+            &:nth-of-type(1) {
+                display: grid;
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 2em;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 1900px) { 
+        padding-left: 2em;
+        padding-right: 2em;
+    }
 }

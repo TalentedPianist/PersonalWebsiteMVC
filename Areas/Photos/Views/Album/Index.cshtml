@@ -10,7 +10,7 @@ For more information on enabling MVC for empty projects, visit https://go.micros
 
     <section>
         <h1>Photo Albums</h1>
-
+        @ViewBag.Message
     </section>
     <section>
         @if (Model.Count() == 0)
@@ -29,6 +29,13 @@ For more information on enabling MVC for empty projects, visit https://go.micros
                         <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>                             
                         <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28"></path>                         </svg>
                         <figcaption><a asp-action="Index" asp-controller="Photos" asp-area="Photos" asp-route-name="@album.Name">@album.Name</a></figcaption>
+                    </figure>
+                }
+                else
+                {
+                    <figure>
+                        <img src="@album.CoverPhoto">
+                        <figcaption><a asp-action="Index" asp-controller="Photos" asp-area="Photos" asp-route-name="@album.Name" asp-route-id="@album.Id">@album.Name</a></figcaption>
                     </figure>
                 }
             }

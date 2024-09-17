@@ -46,7 +46,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 var photos = _db.Photos.Where(p => p.AlbumID == id);
                 ViewBag.AlbumName = album!.Name;
                 ViewBag.AlbumID = album.Id;
-               
+
 
                 // Here we need to combine three paths in the param[] array since it is the photos view and not the album view.  
                 DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album.Name!));
@@ -75,7 +75,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 var pageNumber = page ?? 1;
                 var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
                 ViewBag.OnePageOfFiles = onePageOfFiles;
-              
+
                 return View();
             }
 
@@ -208,9 +208,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
             var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.Id;
             return id;
-
-
         }
+
 
         // Resuming normal functions for update, details and delete.
         public IActionResult Update(int id)
@@ -268,14 +267,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("Photos/SetCoverPic")]
         public IActionResult SetCoverPic([FromBody] Album data)
         {
-            /*var album = _db.Albums.Where(a => a.Id == data.Id).FirstOrDefault();
-            _db.Albums.Update(album!);
-            _db.SaveChanges();*/
+            var album = _db.Albums.Where(a => a.Id == data.Id).FirstOrDefault();
+            album!.CoverPhoto = data.CoverPhoto;
+            album!.DateCreated = DateTime.Now;
+            _db.Albums.Update(album);
+            _db.SaveChanges();
+
             return Ok(data);
         }
 
         [HttpPost]
-        public IActionResult RenameFile([FromBody]RenameFile data, string album)
+        public IActionResult RenameFile([FromBody] RenameFile data, string album)
         {
             // Investigate syntax to rename file in specified folder from album variable
             var path = System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album);

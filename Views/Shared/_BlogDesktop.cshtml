@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, viewport-fit=cover">
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/lib/glightbox/css/glightbox.min.css">
     <link rel="stylesheet" href="/css/Blog.css">
     <title>@ViewBag.Title</title>
 </head>
@@ -34,6 +35,8 @@
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="/lib/glightbox/js/glightbox.min.js"></script>
     <script src="/site.js" asp-append-version="true"></script>
+    @RenderSection("scripts", false)
 </body>
 </html>
