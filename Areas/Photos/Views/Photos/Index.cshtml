@@ -5,9 +5,13 @@
 }
 @model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
 
-<h1>@Context.Request.Query["name"]</h1>
 
-@foreach (var item in ViewBag.Photos)
-{
-    @item.Name
-}
+<div id="Photos">
+    <h1>@Context.Request.Query["name"]</h1>
+
+    @foreach (var item in Model.PagedPhotos!)
+    {
+        @item.Name
+    }
+
+</div>

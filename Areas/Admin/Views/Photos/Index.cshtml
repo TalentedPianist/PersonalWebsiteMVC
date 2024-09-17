@@ -125,6 +125,7 @@ else
         var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
         return album!.Name!;
     }
+
 }
 
 @section Scripts {
@@ -158,6 +159,7 @@ else
                     cache: false,
                     success: function (message) {
                         result = message;
+                        //console.log(message);
                     },
                     error: function (err) {
                         console.log(err);
@@ -186,11 +188,6 @@ else
             }
 
 
-            $("#photoModal").find(".modal-body button").on('click', function (e) {
-                e.preventDefault();
-                console.log("Link was clicked!");
-            });
-
             let section = document.querySelector("section:nth-of-type(2)");
             let figure = section.querySelectorAll("figure");
             figure.forEach(function (element, index) {
@@ -208,7 +205,7 @@ else
                         e.preventDefault();
                         var myModal = new bootstrap.Modal(document.getElementById("photoModal"), {});
                         myModal.show();
-                       
+
                         $("#photoModal").find('.modal-header').find('.modal-title').html(`
                             ${name}
                             <a href="#">Edit</a>
@@ -229,16 +226,13 @@ else
 
                             $("#photoModal").find(".modal-header").find("#myForm").on('submit', function (e) {
                                 e.preventDefault();
-                                var name = $("input[name='txtName']").val();
-                                var id = $("input[name='txtId']").val();
+                                //var name = $("input[name='txtName']").val();
+                                //var id = $("input[name='txtId']").val();
                                 console.log(name);
                                 $.ajax({
                                     method: "POST",
-                                    url: "@Url.Action("SetCoverPic", "Photos")",
-                                    data: {
-                                        'name': name,
-                                        'id': id
-                                    },
+                                    url: "@Url.Action("RenameFile", "Photos", new { album = ViewBag.AlbumName })",
+                                    data: JSON.stringify({ 'strOld': name, strNew: $("input[name='txtName']").val() }),
                                     async: false,
                                     cache: false,
                                     headers: {
@@ -255,7 +249,7 @@ else
                             });
                         });
 
-                        
+
 
                         $("#photoModal").find('.modal-body').html(`
                             <img src="/Gallery/@ViewBag.AlbumName/${name}" alt="${name}">
@@ -264,14 +258,70 @@ else
 
                         $("#photoModal").find('.modal-body').find('a').on('click', function (e) {
                             e.preventDefault();
+                            console.log(GetId(name));
+                            @*$.ajax({
+                                method: "POST",
+                                url: "@Url.Action("SetCoverPic", "Photos")",
+                                data: JSON.stringify({ name: name, id: GetId(name) }),
+                                headers: {
+                                    "Content-Type": "application/json"
+                                },
+                                async: false,
+                                cache: false,
+                                success: function (message) {
+                                    console.log(message);
+                                    window.location.reload();
+                                },
+                                error: function (err) {
+                                    console.log(err);
+                                }
+
+                            });*@
                         });
                     });
                 } else {
                     $(element).find('div').html(`
                         <p>Not in database</p>
                         <input type="checkbox" value="${name}">
+                        <a href="#">View</a>
                     `);
+
+                    $(element).find('div').find('a').on('click', function (e) {
+                        e.preventDefault();
+                        var myModal = new bootstrap.Modal(document.getElementById("photoModal"), {});
+                        $("#photoModal").find('.modal-header').find('.modal-title').html(name);
+                        $("#photoModal").find('.modal-body').html(`
+                            <img src="/Gallery/@ViewBag.AlbumName/${name}">
+                        `);
+
+                        myModal.show();
+                    });
+
+                    $("#photoModal").find('.modal-body').find('a').on('click', function (e) {
+                        e.preventDefault();
+                        // This is the correct place to edit just now.
+                        // This is working.  It's returning the correct ID number.
+                        $.ajax({
+                            method: "POST",
+                            url: "@Url.Action("SetCoverPic", "Photos")",
+                            data: JSON.stringify({ 'Id': GetId(name), 'CoverPhoto':  `/Gallery/@ViewBag.AlbumName/${name}`}),
+                            headers: {
+                                "Content-Type": "application/json"
+                            },
+                            async: false,
+                            cache: false,
+                            success: function (message) {
+                                console.log(message);
+                                //window.location.reload();
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+
+                        });
+                    });
                 }
+
 
                 $(element).on('mouseenter', function (e) {
                     e.preventDefault();

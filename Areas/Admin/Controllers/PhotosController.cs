@@ -139,10 +139,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
 
             var pic = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
-            if (pic == null)
-                return 0;
-            else
-                return pic.Id;
+            return pic!.Id;
         }
 
 
@@ -268,13 +265,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult SetCoverPic([FromBody] string name, int id)
+        [Route("Photos/SetCoverPic")]
+        public IActionResult SetCoverPic([FromBody] Album data)
         {
-            var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
-            album!.CoverPhoto = name;
-            _db.Update(album);
-            _db.SaveChanges();
-            return Ok();
+            /*var album = _db.Albums.Where(a => a.Id == data.Id).FirstOrDefault();
+            _db.Albums.Update(album!);
+            _db.SaveChanges();*/
+            return Ok(data);
         }
 
         [HttpPost]
@@ -282,7 +279,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             // Investigate syntax to rename file in specified folder from album variable
             var path = System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album);
-            System.IO.File.Move(System.IO.Path.Combine(path, data.strOld!), System.IO.Path.Combine(path, data.strNew!));
+            System.IO.File.Move(System.IO.Path.Combine(path, data.strOld!), System.IO.Path.Combine(path, data.strNew!), false);
+
             return Ok();
         }
     }
