@@ -17,7 +17,7 @@
             foreach (var item in Model.PagedPhotos)
             {
                 <figure>
-                    <a href="@item.ImageUrl" class="glightbox"><img src="@item.ImageUrl" alt="@item.Name"></a>
+                    <a class="gallery" href="@item.ImageUrl"><img src="@item.ImageUrl" alt="@item.Name"></a>
                     <figcaption>@item.Name</figcaption>
                 </figure>
             }
@@ -34,10 +34,9 @@
     </section>
 </div>
 
-@section scripts { 
-    
-   <script>
-       const lightbox = GLightbox();
-   </script>
+@section scripts {
+    <script>
+        $("#Photos section").find("figure").find("a.gallery").colorbox();
+    </script>
 
 }

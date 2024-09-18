@@ -81,6 +81,10 @@
     {
       "library": "glightbox@3.3.0",
       "destination": "wwwroot/lib/glightbox/"
+    },
+    {
+      "library": "jquery.colorbox@1.6.4",
+      "destination": "wwwroot/lib/jquery.colorbox/"
     }
   ]
 }
