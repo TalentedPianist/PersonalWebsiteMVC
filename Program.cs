@@ -241,7 +241,7 @@ try
     app.MapAreaControllerRoute(
         name: "Photos",
         areaName: "Photos",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
 
     app.MapControllerRoute(

@@ -21,13 +21,10 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         public IActionResult Index([FromQuery(Name="pageNumber")]int? pageNumber)
         {
             PhotosViewModel model = new PhotosViewModel();
-            int id = Convert.ToInt32(_http.HttpContext!.Request.Query["id"]);
-            var photos = _db.Photos.Where(p => p.AlbumID == id);
+            var albums = _db.Albums;
             var page = pageNumber ?? 1;
-            model.PagedPhotos = photos.ToPagedList(page, 8);
-            model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
-            ViewBag.AlbumName = _http.HttpContext.Request.Query["name"];
-            return View(model);
+            model.PagedAlbums = albums.ToPagedList(page, 1);
+            return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }
     }
 }

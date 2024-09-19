@@ -11,13 +11,13 @@
 
 
   <ItemGroup>
-    <PackageReference Include="Avalonia.Xaml.Interactions.Responsive" Version="11.1.0" />
+    <PackageReference Include="Avalonia.Xaml.Interactions.Responsive" Version="11.1.0.4" />
     <PackageReference Include="Blazor.Pagination" Version="2.0.2" />
     <PackageReference Include="BlazorPagination" Version="0.2.16" />
     <PackageReference Include="DeviceDetector.NET" Version="6.3.3" />
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.15.2" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.15.6" />
     <PackageReference Include="HGO.ASPNetCore.FileManager" Version="1.0.7" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.64" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.65" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.0" />
     <PackageReference Include="MailKit" Version="4.7.1.1" />
@@ -43,16 +43,16 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="8.0.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="8.0.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="8.0.4" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="8.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="8.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.5" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="8.0.5" />
     <PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="2.1.175" />
-    <PackageReference Include="MudBlazor" Version="7.6.0" />
+    <PackageReference Include="MudBlazor" Version="7.8.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.2" />
-    <PackageReference Include="ServiceStack.Extensions" Version="8.3.0" />
+    <PackageReference Include="ServiceStack.Extensions" Version="8.4.0" />
     <PackageReference Include="Sitko.Blazor.CKEditor" Version="4.2.1" />
     <PackageReference Include="Sitko.Blazor.CKEditor.Bundle" Version="4.2.1" />
     <PackageReference Include="SolrNet" Version="1.1.2" />

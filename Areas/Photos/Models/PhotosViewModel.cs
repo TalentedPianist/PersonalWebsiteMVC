@@ -7,5 +7,6 @@ namespace PersonalWebsiteMVC.Areas.Photos.Models
     {
         public List<PersonalWebsiteMVC.Models.Photos>? Photos { get; set; } 
         public IPagedList<PersonalWebsiteMVC.Models.Photos>? PagedPhotos { get; set; }
+        public IPagedList<PersonalWebsiteMVC.Models.Album>? PagedAlbums { get; set; }
     }
 }

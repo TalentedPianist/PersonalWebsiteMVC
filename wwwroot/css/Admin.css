@@ -54,7 +54,7 @@ figure {
   background-color: rgba(0, 0, 0, 0.6);
   color: white;
   width: 100%;
-  z-index: 20000 !important;
+  z-index: 50000 !important;
 }
 #Photos section:nth-of-type(2) figure div a {
   color: white;

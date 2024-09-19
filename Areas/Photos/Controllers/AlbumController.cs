@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
+using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 {
@@ -15,10 +17,15 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             _http = http;
         }
 
-        public IActionResult Index()
+       
+        public IActionResult Index(int? page)
         {
             ViewBag.Message = DateTime.Now;
-            return View();
+            PhotosViewModel model = new PhotosViewModel();
+            var albums = _db.Albums;
+            var pageNumber = page ?? 1;
+            model.PagedAlbums = albums.ToPagedList(pageNumber, 1);
+            return View(model);
         }
     }
 }
