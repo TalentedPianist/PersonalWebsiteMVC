@@ -36,7 +36,10 @@
 
 @section scripts {
     <script>
-        $("#Photos section").find("figure").find("a.gallery").colorbox();
+        $("#Photos section").find("figure").each(function (index, element) {
+            console.log($(element).find('img').attr('src'));
+            
+        });
     </script>
 
 }
