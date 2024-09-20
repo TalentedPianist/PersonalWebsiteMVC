@@ -713,9 +713,9 @@ footer {
 
     section {
         @media only screen and (min-width: 1900px) {
-            height: 100vh;
+            
 
-            &:nth-of-type(1) {
+            &:nth-of-type(2) {
                 display: grid;
                 grid-template-columns: repeat(4, 1fr);
                 grid-gap: 2em;
@@ -726,5 +726,21 @@ footer {
     @media only screen and (min-width: 1900px) { 
         padding-left: 2em;
         padding-right: 2em;
+    }
+}
+
+#SinglePhoto { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+
+    .overlay { 
+        background-color: rgba(0,0,0,0.6);
+        position: absolute; 
+        top: 0; 
+        left: 0; 
+        bottom: 0; 
+        right: 0; 
+        z-index: 20000;
     }
 }

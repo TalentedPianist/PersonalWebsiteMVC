@@ -241,12 +241,12 @@ try
     app.MapAreaControllerRoute(
         name: "Photos",
         areaName: "Photos",
-        pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
+        pattern: "Photos/{controller=Photos}/{action=Index}/{id?}");
 
 
     app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+        pattern: "{controller=Home}/{id?}");
 
 
     app.MapPost("api/send", async (ReCaptchaService reCaptcha, [FromBody] ReCaptchaModel model) =>

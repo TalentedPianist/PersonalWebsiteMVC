@@ -85,6 +85,10 @@
     {
       "library": "jquery.colorbox@1.6.4",
       "destination": "wwwroot/lib/jquery.colorbox/"
+    },
+    {
+      "library": "featherlight@1.7.13",
+      "destination": "wwwroot/lib/featherlight/"
     }
   ]
 }

@@ -1,0 +1,33 @@
+﻿using Microsoft.AspNetCore.Mvc;
+using PersonalWebsiteMVC.Data;
+
+namespace PersonalWebsiteMVC.Areas.Photos.Controllers
+{
+    public class CommentsController : Controller
+    {
+        public ApplicationDbContext _db;
+        public IHttpContextAccessor _http;
+        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http)
+        {
+            _db = db;
+            _http = http;
+        }
+
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("GetComments")]
+        public IActionResult GetComments(int id)
+        {
+            var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).Count();
+            if (comments == 0)
+            {
+                return Content("<p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>");
+            }
+            return Ok();
+        }
+    }
+}

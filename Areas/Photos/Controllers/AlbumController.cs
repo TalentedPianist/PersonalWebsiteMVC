@@ -17,15 +17,19 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             _http = http;
         }
 
-       
-        public IActionResult Index(int? page)
+       [Route("Photos/Album")]
+        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         {
-            ViewBag.Message = DateTime.Now;
+            int id = Convert.ToInt32(_http.HttpContext!.Request.Query["id"]);
             PhotosViewModel model = new PhotosViewModel();
-            var albums = _db.Albums;
             var pageNumber = page ?? 1;
-            model.PagedAlbums = albums.ToPagedList(pageNumber, 1);
-            return View(model);
+            model.PagedPhotos = _db.Photos.Where(p => p.AlbumID == id).ToPagedList(pageNumber, 8);
+            model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
+            
+
+            var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+            ViewBag.AlbumName = album!.Name;
+            return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }
     }
 }

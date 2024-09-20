@@ -1,56 +1,112 @@
 ﻿@*
-For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
-@using PersonalWebsiteMVC.Models
-@using PersonalWebsiteMVC.Areas.Photos.Models
-@model PhotosViewModel
+@model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
 
-<div id="Albums">
 
+<div id="Photos">
     <section>
-        <h1>Albums</h1>
-        @ViewBag.Message
+        <h1>@ViewBag.AlbumName</h1>
     </section>
     <section>
-        @if (Model.PagedAlbums!.Count() == 0)
-        {
-            <p>No albums have been found just now. Please check back later.</p>
-        }
-        else
-        {
-            foreach (var album in Model.PagedAlbums!)
-            {
 
-                if (album.CoverPhoto is null)
-                {
-                    <figure>
-                        <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">                             
-                        <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>                             
-                        <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28"></path>                         </svg>
-                        <figcaption><a asp-action="Index" asp-controller="Photos" asp-area="Photos" asp-route-name="@album.Name">@album!.Name</a></figcaption>
-                    </figure>
-                }
-                else
-                {
-                    <figure>
-                        <img src="@album.CoverPhoto">
-                        <figcaption><a asp-action="Index" asp-controller="Photos" asp-area="Photos" asp-route-name="@album.Name" asp-route-id="@album.Id">@album.Name</a></figcaption>
-                    </figure>
-                }
-            }
+        @foreach (var photo in Model.PagedPhotos!)
+        {
+            <figure>
+                <img src="/Gallery/@Context.Request.Query["name"]/@photo.Name" data-id="@photo.Id">
+                <figcaption><a href="#photoElement" class="f1">@photo.Name</a></figcaption>
+            </figure>
         }
+
     </section>
-    <device include="desktop">
-        <section>
-           @Html.PagedListPager((IPagedList)Model.PagedAlbums!, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Photos" }),
-                new PagedListRenderOptions
-                {
-                    DisplayItemSliceAndTotal = true,
-                    LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new String[] { "page-link" }
-                })
-        </section>
-    </device>
+    <section>
+        @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new { pageNumber = page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
+new PagedListRenderOptions
+{
+    DisplayItemSliceAndTotal = true,
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new String[] { "page-link" }
+})
+    </section>
 </div>
+
+<div id="photoElement">
+
+</div>
+
+
+
+
+@section Scripts {
+    <script>
+        document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
+            let name = element.querySelector("figcaption").querySelector("a").innerText;
+            let src = element.querySelector("img").getAttribute("src");
+            let id = $(element).find('img').data('id');
+
+
+
+            $(element).find("figcaption").find("a").on('click', function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("GetComments", "Comments")",
+                    data: { 'id': id },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        console.log(message);
+
+                        $("#photoElement").html(`
+                            <img src="${src}">
+                            <hr>
+                            <h3>Comments</h3>
+                            ${message}
+                            <form method="post">
+                            <div>
+                                <label>Name:</label>
+                                <input type="text" name="txtName">
+                            </div>
+                            <div>
+                                <label>Email:</label>
+                                <input type="email" name="txtEmail">
+                            </div>
+                            <div>
+                                <label>Website:</label>
+                                <input type="text" name="txtWebsite">
+                            </div>
+                            <div>
+                                <label>Comment:</label>
+                                <textarea id="ckeditor1"></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Comment</button>
+                        </form>
+                        `);
+                        $.featherlight('#photoElement',
+                            {
+                                close: function (e) {
+                                    e.preventDefault();
+                                    window.location.reload();
+                                }
+                        });
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
+ });
+
+
+
+
+        function GetComments(id) {
+            let result = undefined;
+
+            return result;
+        }
+    </script>
+}
