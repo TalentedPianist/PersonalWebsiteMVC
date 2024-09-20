@@ -41,6 +41,14 @@ form {
 form div {
   width: 100%;
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+@media only screen and (min-width: 600px) {
+  form div {
+    flex-direction: row;
+  }
 }
 form input {
   border: 1px solid black;
@@ -59,6 +67,11 @@ form textarea {
 }
 form button {
   align-self: flex-start;
+}
+@media only screen and (min-width: 600px) {
+  form {
+    flex-direction: row;
+  }
 }
 
 .sticky {
@@ -642,6 +655,11 @@ footer {
   flex-direction: column;
   flex: 1;
   background-color: #ffa500;
+}
+#Photos section:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2em;
 }
 @media only screen and (min-width: 1900px) {
   #Photos section:nth-of-type(2) {

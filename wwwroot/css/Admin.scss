@@ -200,6 +200,7 @@ figure {
 }
 
 #photoModal { 
+    /* This needs display to be set to none other wise it messes up functionality of mouseenter on some elements */
     position: absolute;
     top: 0; 
     left: 0; 
@@ -209,10 +210,11 @@ figure {
     min-width: 800px;
     min-height: 100vh;
     z-index: 10000;
-    display: flex !important; 
+    display: none;
     flex-direction: column;
     flex: 1; 
     align-items: center;
     justify-content: center;
     margin: 0 auto;
 }
+

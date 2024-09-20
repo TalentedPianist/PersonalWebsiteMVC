@@ -320,20 +320,14 @@ else
        
                 }
 
-
+                // Is it really the modal that's causing this problem?
                 $(element).on('mouseenter', function (e) {
-                    e.preventDefault();
                     $(element).find('div').css('display', 'flex');
-
-                    
                 });
 
                 $(element).on('mouseleave', function (e) {
-                    e.preventDefault();
                     $(element).find('div').css('display', 'none');
                 });
-
-                
             });
 
             let add = []; 
