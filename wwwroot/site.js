@@ -1,5 +1,6 @@
 ﻿$(function () {
 
+
     $("#menu a").on('click', function (e) {
         $("header").show();
     
@@ -86,20 +87,7 @@
         console.log("Link was clicked");
     });
 
-    if (document.querySelector("#ckeditor1")) {
-        ClassicEditor
-            .create(document.querySelector("#ckeditor1"), {
-                // To make editor typable, the plugins[] bit needs to be taken out in spie of documentation.
-                toolbar: [],
-            })
-            .then(editor => {
-                editor = editor;
-                editor.setData('<p>Blah blah blah</p>');
-            })
-            .catch(error => {
-                console.error(error);
-            });
-    }
+
 
     $("header a").on('click', function (e) {
         if (/Mobi/.test(navigator.userAgent)) {
@@ -109,7 +97,7 @@
         }
     });
 
-
+   
   
 });
 

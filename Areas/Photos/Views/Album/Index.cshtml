@@ -40,6 +40,8 @@ new PagedListRenderOptions
 
 
 @section Scripts {
+
+
     <script>
         document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
             let name = element.querySelector("figcaption").querySelector("a").innerText;
@@ -60,33 +62,39 @@ new PagedListRenderOptions
                     success: function (message) {
                         console.log(message);
 
+
                         $("#photoElement").html(`
                             <img src="${src}">
                             <hr>
                             <div id="Comments">
                             <h3>Comments</h3>
                             ${message}
+                            </div>
                             <form method="post">
                             <div>
-                                <label>Name:</label>
-                                <input type="text" name="txtName">
+                                <label for="name">Name:</label>
+                                <input id="name" type="text" name="txtName">
                             </div>
                             <div>
-                                <label>Email:</label>
-                                <input type="email" name="txtEmail">
+                                <label for="email">Email:</label>
+                                <input id="email" type="email" name="txtEmail">
                             </div>
                             <div>
-                                <label>Website:</label>
-                                <input type="text" name="txtWebsite">
+                                <label for="website">Website:</label>
+                                <input id="website" type="text" name="txtWebsite">
                             </div>
                             <div>
                                 <label>Comment:</label>
-                                <textarea id="ckeditor1"></textarea>
+                                <textarea id="ckeditor1" name="txtComment"></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Comment</button>
                         </form>
-                        </div>
+
                         `);
+
+
+
+
                         $.featherlight('#photoElement',
                             {
                                 close: function (e) {
@@ -100,6 +108,11 @@ new PagedListRenderOptions
                     }
                 });
             });
+
+
+
+
+
  });
 
 
@@ -109,6 +122,42 @@ new PagedListRenderOptions
             let result = undefined;
 
             return result;
+        }
+
+
+    </script>
+
+    <script type="importmap">
+        {
+            "imports": {
+                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.js",
+                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.1.0/"
+            }
+        }
+    </script>
+
+    <script type="module">
+        import {
+            ClassicEditor,
+            Essentials,
+            Bold,
+            Italic,
+            Font,
+            Paragraph
+        } from 'ckeditor5';
+
+
+        if (document.querySelector("#ckeditor1")) {
+            ClassicEditor
+                .create(document.querySelector('#ckeditor1'), {
+                    plugins: [Essentials, Bold, Italic, Font, Paragraph],
+                    toolbar: [
+                        'undo', 'redo', '|', 'bold', 'italic', '|',
+                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
+                    ]
+                })
+                .then( /* ... */)
+                .catch( /* ... */);
         }
     </script>
 }

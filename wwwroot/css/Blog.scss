@@ -42,12 +42,18 @@ form {
     div {
         width: 100%;
         position: relative;
-        display: flex; 
+        display: flex;
         flex-direction: column;
         flex: 1;
 
-        @media only screen and (min-width: 600px) { 
-            flex-direction: row;
+        label {
+            @media only screen and (max-width: 400px) {
+                display: none;
+            }
+
+            @media only screen and (min-width: 600px) {
+                display: flex;
+            }
         }
     }
 
@@ -63,18 +69,10 @@ form {
         align-self: flex-start;
     }
 
-    label {
-        @media only screen and (max-width: 400px) {
-            display: none;
-        }
-    }
+
 
     button {
         align-self: flex-start;
-    }
-
-    @media only screen and (min-width: 600px) { 
-        flex-direction: row;
     }
 }
 
@@ -759,5 +757,41 @@ footer {
         bottom: 0; 
         right: 0; 
         z-index: 20000;
+    }
+}
+
+#photoElement { 
+    background-color: transparent !important;
+
+    form { 
+        label { 
+            @media only screen and (min-width: 600px) { 
+                display: inline-block;
+                padding-top: 5px;
+                width: 240px;
+            }
+        }
+
+        input { 
+            @media only screen and (min-width: 1900px) { 
+                width: 30%;
+            }
+        }
+
+        div { 
+            @media only screen and (min-width: 600px) { 
+                flex-direction: row; 
+            }
+        }
+
+        textarea { 
+            width: 30%;
+        }
+    }
+
+    .featherlight { 
+        .featherlight-content { 
+            display: flex !important; 
+        }
     }
 }

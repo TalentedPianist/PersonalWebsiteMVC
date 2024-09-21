@@ -45,9 +45,14 @@ form div {
   flex-direction: column;
   flex: 1;
 }
+@media only screen and (max-width: 400px) {
+  form div label {
+    display: none;
+  }
+}
 @media only screen and (min-width: 600px) {
-  form div {
-    flex-direction: row;
+  form div label {
+    display: flex;
   }
 }
 form input {
@@ -60,18 +65,8 @@ form textarea {
   padding: 5px 5px 5px 5px;
   align-self: flex-start;
 }
-@media only screen and (max-width: 400px) {
-  form label {
-    display: none;
-  }
-}
 form button {
   align-self: flex-start;
-}
-@media only screen and (min-width: 600px) {
-  form {
-    flex-direction: row;
-  }
 }
 
 .sticky {
@@ -688,4 +683,31 @@ footer {
   bottom: 0;
   right: 0;
   z-index: 20000;
+}
+
+#photoElement {
+  background-color: transparent !important;
+}
+@media only screen and (min-width: 600px) {
+  #photoElement form label {
+    display: inline-block;
+    padding-top: 5px;
+    width: 240px;
+  }
+}
+@media only screen and (min-width: 1900px) {
+  #photoElement form input {
+    width: 30%;
+  }
+}
+@media only screen and (min-width: 600px) {
+  #photoElement form div {
+    flex-direction: row;
+  }
+}
+#photoElement form textarea {
+  width: 30%;
+}
+#photoElement .featherlight .featherlight-content {
+  display: flex !important;
 }
