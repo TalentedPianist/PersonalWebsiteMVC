@@ -45,11 +45,6 @@ form div {
   flex-direction: column;
   flex: 1;
 }
-@media only screen and (min-width: 600px) {
-  form div {
-    flex-direction: row;
-  }
-}
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
@@ -68,12 +63,6 @@ form textarea {
 form button {
   align-self: flex-start;
 }
-@media only screen and (min-width: 600px) {
-  form {
-    flex-direction: row;
-  }
-}
-
 .sticky {
   display: flex;
   z-index: 50000;
@@ -660,6 +649,13 @@ footer {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2em;
+}
+@media only screen and (min-width: 600px) {
+  #Photos section:nth-of-type(2) {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 2em;
+  }
 }
 @media only screen and (min-width: 1900px) {
   #Photos section:nth-of-type(2) {

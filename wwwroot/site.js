@@ -1,4 +1,6 @@
-﻿$(function () {
+﻿
+
+$(function () {
 
     $("#menu a").on('click', function (e) {
         $("header").show();
@@ -6,10 +8,8 @@
         // User has clicked navbar link, perform smooth scrolling
 
         if (this.hash !== "") {
-         
+             
         
-            
-
             // Store hash
             var hash = this.hash;
 

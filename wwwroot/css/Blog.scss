@@ -47,7 +47,7 @@ form {
         flex: 1;
 
         @media only screen and (min-width: 600px) { 
-            flex-direction: row;
+            
         }
     }
 
@@ -74,7 +74,7 @@ form {
     }
 
     @media only screen and (min-width: 600px) { 
-        flex-direction: row;
+       
     }
 }
 
@@ -729,6 +729,15 @@ footer {
             grid-gap: 2em;
         }
 
+        @media only screen and (min-width: 600px) {
+            &:nth-of-type(2) { 
+                display: grid; 
+                grid-template-columns: repeat(4, 1fr);
+                grid-gap: 2em;
+
+            }
+        }
+
         @media only screen and (min-width: 1900px) {
             
 
@@ -760,4 +769,6 @@ footer {
         right: 0; 
         z-index: 20000;
     }
+
+    
 }
