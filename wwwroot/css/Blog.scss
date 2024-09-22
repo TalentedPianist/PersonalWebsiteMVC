@@ -762,6 +762,7 @@ footer {
 
 #photoElement { 
     background-color: transparent !important;
+    display: none;
 
     form { 
         label { 
@@ -794,4 +795,5 @@ footer {
             display: flex !important; 
         }
     }
+
 }

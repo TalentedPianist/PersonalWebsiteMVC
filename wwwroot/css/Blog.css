@@ -687,6 +687,7 @@ footer {
 
 #photoElement {
   background-color: transparent !important;
+  display: none;
 }
 @media only screen and (min-width: 600px) {
   #photoElement form label {

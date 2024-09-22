@@ -33,13 +33,27 @@ new PagedListRenderOptions
 </div>
 
 <div id="photoElement">
-
+    <header>
+    </header>
+    <section>
+    </section>
+    <footer>
+        <form method="post" asp-action="AddComment" asp-controller="Comments">
+            <div>
+                <label for="ckeditor1">Message:</label>
+                <textarea id="ckeditor1"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Subit</button>
+        </form>
+    </footer>
+    
 </div>
 
 
 
 
 @section Scripts {
+
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
     <script>
@@ -55,67 +69,26 @@ new PagedListRenderOptions
 
                 $.ajax({
                     method: "POST",
-                    url: "@Url.Action("GetComments", "Comments")",
+                    url: "@Url.Action("GetPhoto", "Album")",
                     data: { 'id': id },
                     async: false,
                     cache: false,
                     success: function (message) {
-                        console.log(message);
-						
 
-
-
-                        $("#photoElement").html(`
-                            <img src="${src}">
-                            <hr>
-                            <div id="Comments">
-                            <h3>Comments</h3>
-                            ${message}
-                            </div>
-                            <form method="post">
-                            <div>
-                                <label for="name">Name:</label>
-                                <input id="name" type="text" name="txtName">
-                            </div>
-                            <div>
-                                <label for="email">Email:</label>
-                                <input id="email" type="email" name="txtEmail">
-                            </div>
-                            <div>
-                                <label for="website">Website:</label>
-                                <input id="website" type="text" name="txtWebsite">
-                            </div>
-                            <div>
-                                <label>Comment:</label>
-                                <textarea id="ckeditor1" name="txtComment"></textarea>
-                            </div>
-                            <button type="submit" class="btn btn-primary">Comment</button>
-                        </form>
-
-                        `);
-						
-
-                        $.featherlight('#photoElement',
-                            {
-                                close: function (e) {
-                                    e.preventDefault();
-                                    window.location.reload();
-                                },
-                                afterOpen: function (e) {
-                                    e.preventDefault();
-
-                                    ClassicEditor
-                                        .create(document.querySelector("#ckeditor1"), {
-                                            toolbar: [],
-                                        })
-                                        .then(editor => {
-                                            console.log(editor);
-                                        })
-                                        .catch(error => {
-                                            console.log(error);
-                                        })
-                                }
+                        $.featherlight({
+                            targetAttr: 'href'
                         });
+                       
+
+                        $("#photoElement").find('header').html(`    
+                        <h1>${message.Name}</h1>
+                        `);
+
+                        
+
+                        
+
+                       
                     },
                     error: function (err) {
                         console.log(err);
@@ -141,42 +114,5 @@ new PagedListRenderOptions
 
     </script>
 
-    <script type="importmap">
-        {
-            "imports": {
-                "ckeditor5": "https://cdn.ckeditor.com/ckeditor5/43.1.0/ckeditor5.js",
-                "ckeditor5/": "https://cdn.ckeditor.com/ckeditor5/43.1.0/"
-            }
-        }
-    </script>
 
-    <script type="module">
-        import {
-            ClassicEditor,
-            Essentials,
-            Bold,
-            Italic,
-            Font,
-            Paragraph
-        } from 'ckeditor5';
-
-
-        if (document.querySelector("#ckeditor1")) {
-            ClassicEditor
-                .create(document.querySelector('#ckeditor1'), {
-                    plugins: [Essentials, Bold, Italic, Font, Paragraph],
-                    toolbar: [
-                        'undo', 'redo', '|', 'bold', 'italic', '|',
-                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor'
-                    ]
-                })
-                .then( /* ... */)
-                .catch( /* ... */);
-        }
-    </script>
-
-    <script>
-
-		
-        </script>
 }

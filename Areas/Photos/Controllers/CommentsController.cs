@@ -22,12 +22,8 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         [Route("GetComments")]
         public IActionResult GetComments(int id)
         {
-            var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).Count();
-            if (comments == 0)
-            {
-                return Content("<p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>");
-            }
-            return Ok();
+            var comments = _db.Comments.Where(c => c.PostID == id).ToList();
+            return Ok(comments);
         }
     }
 }

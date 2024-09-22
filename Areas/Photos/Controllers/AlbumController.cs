@@ -31,5 +31,12 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             ViewBag.AlbumName = album!.Name;
             return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }
+
+        [HttpPost]
+        public IActionResult GetPhoto(int id)
+        {
+            var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            return Ok(photo);
+        }
     }
 }
