@@ -11,12 +11,12 @@
         <h1>@ViewBag.AlbumName</h1>
         <p>Click on an image for a photo swipe effect.</p>
     </section>
-    <section>
+    <section data-featherlight-gallery data-featherlight-filter="a">
 
         @foreach (var photo in Model.PagedPhotos!)
         {
             <figure>
-                <a href="@photo.ImageUrl" data-id="@photo.Id" data-lightbox="@photo.ImageUrl"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
+                <a href="@photo.ImageUrl" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
                 <figcaption>@photo.Name</figcaption>
 
             </figure>
@@ -46,11 +46,6 @@ new PagedListRenderOptions
 
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
-    <script>
-        const lightbox = Glightbox();
-
-    </script>
-    
 
     <script>
 
