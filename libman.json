@@ -101,6 +101,10 @@
     {
       "library": "fancybox@3.5.7",
       "destination": "wwwroot/lib/fancybox/"
+    },
+    {
+      "library": "lightbox2@2.11.4",
+      "destination": "wwwroot/lib/lightbox2/"
     }
   ]
 }

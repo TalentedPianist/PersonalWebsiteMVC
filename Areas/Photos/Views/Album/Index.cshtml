@@ -16,7 +16,7 @@
         @foreach (var photo in Model.PagedPhotos!)
         {
             <figure>
-                <a href="@photo.ImageUrl" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
+                <a href="@photo.ImageUrl" data-id="@photo.Id" data-lightbox="@photo.ImageUrl"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
                 <figcaption>@photo.Name</figcaption>
 
             </figure>
@@ -46,9 +46,13 @@ new PagedListRenderOptions
 
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
+    <script>
+        const lightbox = Glightbox();
+
+    </script>
+    
 
     <script>
-
 
         document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
             //let name = element.querySelector("figcaption").querySelector("a").innerText;
