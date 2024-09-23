@@ -16,9 +16,9 @@
         @foreach (var photo in Model.PagedPhotos!)
         {
             <figure>
-                <a href="@photo.ImageUrl"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
-                <figcaption>@photo.Name <a href="#">Comments</a></figcaption>
-                
+                <a href="@photo.ImageUrl" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
+                <figcaption>@photo.Name</figcaption>
+
             </figure>
         }
 
@@ -35,8 +35,8 @@ new PagedListRenderOptions
 </div>
 
 <div id="photoElement">
-  
-    
+    <h1>Welcome</h1>
+
 </div>
 
 
@@ -46,34 +46,23 @@ new PagedListRenderOptions
 
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
-    <script>
-        var lightbox = new PhotoSwipeLightbox({
-            gallery: '#Photos section:nth-of-type(2)',
-            children: 'img',
-            pswpModule: PhotoSwipe,
-        });
-        lightbox.init();
-    </script>
 
     <script>
+
+
         document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
-            let name = element.querySelector("figcaption").querySelector("a").innerText;
+            //let name = element.querySelector("figcaption").querySelector("a").innerText;
             let src = element.querySelector("img").getAttribute("src");
             let id = $(element).find('img').data('id');
 
 
 
-            $(element).find("figcaption").find("a").on('click', function (e) {
+            $(this).find("a").on('click', function (e) {
                 e.preventDefault();
-             
-                
+                console.log("Link was clicked");
             });
 
-
-
-
-
- });
+        });
 
 
 

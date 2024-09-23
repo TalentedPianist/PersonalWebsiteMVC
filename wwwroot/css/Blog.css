@@ -712,3 +712,17 @@ footer {
 #photoElement .featherlight .featherlight-content {
   display: flex !important;
 }
+
+#cboxLoadedContent {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  color: white;
+  position: absolute;
+  z-index: 50000;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+#colorbox {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+}

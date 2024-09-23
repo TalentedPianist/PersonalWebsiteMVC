@@ -93,6 +93,14 @@
     {
       "library": "photoswipe@5.4.4",
       "destination": "wwwroot/lib/photoswipe/"
+    },
+    {
+      "library": "simplelightbox@2.14.3",
+      "destination": "wwwroot/lib/simplelightbox/"
+    },
+    {
+      "library": "fancybox@3.5.7",
+      "destination": "wwwroot/lib/fancybox/"
     }
   ]
 }
