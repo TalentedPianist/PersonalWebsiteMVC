@@ -9,14 +9,16 @@
 <div id="Photos">
     <section>
         <h1>@ViewBag.AlbumName</h1>
+        <p>Click on an image for a photo swipe effect.</p>
     </section>
     <section>
 
         @foreach (var photo in Model.PagedPhotos!)
         {
             <figure>
-                <img src="/Gallery/@Context.Request.Query["name"]/@photo.Name" data-id="@photo.Id">
-                <figcaption><a href="#photoElement" class="f1">@photo.Name</a></figcaption>
+                <a href="@photo.ImageUrl"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
+                <figcaption>@photo.Name <a href="#">Comments</a></figcaption>
+                
             </figure>
         }
 
@@ -33,19 +35,7 @@ new PagedListRenderOptions
 </div>
 
 <div id="photoElement">
-    <header>
-    </header>
-    <section>
-    </section>
-    <footer>
-        <form method="post" asp-action="AddComment" asp-controller="Comments">
-            <div>
-                <label for="ckeditor1">Message:</label>
-                <textarea id="ckeditor1"></textarea>
-            </div>
-            <button type="submit" class="btn btn-primary">Subit</button>
-        </form>
-    </footer>
+  
     
 </div>
 
@@ -57,6 +47,15 @@ new PagedListRenderOptions
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
     <script>
+        var lightbox = new PhotoSwipeLightbox({
+            gallery: '#Photos section:nth-of-type(2)',
+            children: 'img',
+            pswpModule: PhotoSwipe,
+        });
+        lightbox.init();
+    </script>
+
+    <script>
         document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
             let name = element.querySelector("figcaption").querySelector("a").innerText;
             let src = element.querySelector("img").getAttribute("src");
@@ -66,34 +65,8 @@ new PagedListRenderOptions
 
             $(element).find("figcaption").find("a").on('click', function (e) {
                 e.preventDefault();
-
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("GetPhoto", "Album")",
-                    data: { 'id': id },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-
-                        $.featherlight({
-                            targetAttr: 'href'
-                        });
-                       
-
-                        $("#photoElement").find('header').html(`    
-                        <h1>${message.Name}</h1>
-                        `);
-
-                        
-
-                        
-
-                       
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
+             
+                
             });
 
 

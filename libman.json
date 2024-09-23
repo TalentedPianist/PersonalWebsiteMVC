@@ -89,6 +89,10 @@
     {
       "library": "featherlight@1.7.13",
       "destination": "wwwroot/lib/featherlight/"
+    },
+    {
+      "library": "photoswipe@5.4.4",
+      "destination": "wwwroot/lib/photoswipe/"
     }
   ]
 }
