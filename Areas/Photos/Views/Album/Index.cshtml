@@ -11,12 +11,12 @@
         <h1>@ViewBag.AlbumName</h1>
         <p>Click on an image for a photo swipe effect.</p>
     </section>
-    <section data-featherlight-gallery data-featherlight-filter="a">
+    <section>
 
         @foreach (var photo in Model.PagedPhotos!)
         {
             <figure>
-                <a href="@photo.ImageUrl" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
+                <a href="@photo.ImageUrl" data-toggle="lightbox" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
                 <figcaption>@photo.Name</figcaption>
 
             </figure>
@@ -34,12 +34,6 @@ new PagedListRenderOptions
     </section>
 </div>
 
-<div id="photoElement">
-    <h1>Welcome</h1>
-
-</div>
-
-
 
 
 @section Scripts {
@@ -49,22 +43,59 @@ new PagedListRenderOptions
 
     <script>
 
-        document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
-            //let name = element.querySelector("figcaption").querySelector("a").innerText;
-            let src = element.querySelector("img").getAttribute("src");
-            let id = $(element).find('img').data('id');
+        $(function ($) {
+            document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
 
 
+                let name = element.querySelector("figcaption").innerHTML;
+                let src = element.querySelector("img").getAttribute("src");
+                let id = $(element).find('img').data('id');
 
-            $(this).find("a").on('click', function (e) {
-                e.preventDefault();
-                console.log("Link was clicked");
+                $(element).find('img').on('click', function (e) {
+                    e.preventDefault();
+    
+                    $.ajax({
+                        method: "POST",
+                        url: "@Url.Action("GetPhotos", "Album")",
+                        data: { 'id': id },
+                        cache: false,
+                        async: false,
+                        success: function (message) {
+                            $.colorbox({
+                                
+                                html: `
+                                <h1>${message}</h1>
+                                <form method="post">
+                                    <div class="form-group">
+                                        <textarea id="ckeditor1"></textarea>
+                                    </div>
+                                </form>
+                                `
+                            });
+
+                            ClassicEditor
+                                .create(document.querySelector("#ckeditor1"), {
+                                    plugins: [],
+                                    toolbar: [],
+                                })
+                                .then(editor => {
+                                    console.log(editor);
+                                })
+                                .catch(error => {
+                                    console.log(error);
+                                });
+
+                        },
+                        error: function (err) {
+                            console.log(err);
+                        }
+                    });
+             
+                });
             });
-
         });
-
-
-
+            
+                
 
         function GetComments(id) {
             let result = undefined;

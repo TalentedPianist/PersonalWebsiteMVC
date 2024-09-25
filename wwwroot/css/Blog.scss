@@ -760,54 +760,10 @@ footer {
     }
 }
 
-#photoElement { 
-    background-color: transparent !important;
-    display: none;
-
-    form { 
-        label { 
-            @media only screen and (min-width: 600px) { 
-                display: inline-block;
-                padding-top: 5px;
-                width: 240px;
-            }
-        }
-
-        input { 
-            @media only screen and (min-width: 1900px) { 
-                width: 30%;
-            }
-        }
-
-        div { 
-            @media only screen and (min-width: 600px) { 
-                flex-direction: row; 
-            }
-        }
-
-        textarea { 
-            width: 30%;
-        }
-    }
-
-    .featherlight { 
-        .featherlight-content { 
-            display: flex !important; 
-        }
-    }
-
-}
-
 #cboxLoadedContent { 
-    background-color: rgba(0,0,0,0.6) !important;
-    color: white;
-    position: absolute; 
+    width: 800px;
+    height: 500px;
+    background-color: rgba(0,0,0,0.6);
     z-index: 50000;
-    display: flex; 
-    flex-direction: column;
-    flex: 1;
-}
-
-#colorbox { 
-    background-color: rgba(0,0,0,0.6) !important;
+    color: white;
 }

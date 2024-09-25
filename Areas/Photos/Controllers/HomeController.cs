@@ -24,5 +24,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
            
             return View("~/Areas/Photos/Views/Home/Index.cshtml", model);
         }
+
+    
     }
 }

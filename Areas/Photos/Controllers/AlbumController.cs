@@ -33,10 +33,10 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetPhoto(int id)
+        [Route("Photos/Album/GetPhotos")]
+        public IActionResult GetPhotos(int id)
         {
-            var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
-            return Ok(photo);
+            return Ok(DateTime.Now);
         }
     }
 }
