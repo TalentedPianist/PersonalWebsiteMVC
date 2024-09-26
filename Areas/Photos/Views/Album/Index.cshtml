@@ -61,10 +61,12 @@ new PagedListRenderOptions
                         cache: false,
                         async: false,
                         success: function (message) {
+                            console.log(message);
                             $.colorbox({
                                 
                                 html: `
-                                <h1>${message}</h1>
+                                <h1>${message.Name}</h1>
+                                <img src="${message.ImageUrl}" alt="${message.Name}">
                                 <form method="post">
                                     <div class="form-group">
                                         <textarea id="ckeditor1"></textarea>

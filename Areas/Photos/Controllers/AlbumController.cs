@@ -36,7 +36,8 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         [Route("Photos/Album/GetPhotos")]
         public IActionResult GetPhotos(int id)
         {
-            return Ok(DateTime.Now);
+            var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            return Ok(photo);
         }
     }
 }
