@@ -5,21 +5,24 @@
 }
 @model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
 
+@TempData["Message"]
 
 <div id="Photos">
     <section>
         <h1>@ViewBag.AlbumName</h1>
-        <p>Click on an image for a photo swipe effect.</p>
+
     </section>
     <section>
 
         @foreach (var photo in Model.PagedPhotos!)
         {
-            <figure>
-                <a href="@photo.ImageUrl" data-toggle="lightbox" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
-                <figcaption>@photo.Name</figcaption>
+            
+                <figure>
+                    <a class="gallery" href="@photo.ImageUrl" data-toggle="lightbox" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id" rel="slideshow"></a>
+                    <figcaption>@photo.Name</figcaption>
 
-            </figure>
+                </figure>
+            
         }
 
     </section>
@@ -51,9 +54,15 @@ new PagedListRenderOptions
                 let src = element.querySelector("img").getAttribute("src");
                 let id = $(element).find('img').data('id');
 
+                $(element).find('img').colorbox({ rel: 'image', slideshow: true });
+
                 $(element).find('img').on('click', function (e) {
                     e.preventDefault();
-    
+                    $("nav").hide();
+                    $("body h1").hide();
+                    $("main footer").hide();
+                    $("main").css("z-index", "-1");
+                    $(".page-link").css("z-index", "-50000");
                     $.ajax({
                         method: "POST",
                         url: "@Url.Action("GetPhotos", "Album")",
@@ -62,18 +71,52 @@ new PagedListRenderOptions
                         async: false,
                         success: function (message) {
                             console.log(message);
+
                             $.colorbox({
-                                
+                                closeButton: false,
+                                slideshow: true,
                                 html: `
-                                <h1>${message.Name}</h1>
-                                <img src="${message.ImageUrl}" alt="${message.Name}">
-                                <form method="post">
-                                    <div class="form-group">
-                                        <textarea id="ckeditor1"></textarea>
-                                    </div>
-                                </form>
+                                <button type="button">Close</button>
+
+                                    <h1>${message.Name}</h1>
+
+
+                                    <img src="${message.ImageUrl}" alt="${message.Name}">
+
+                                    <h2>Comments</h2>
+                                    @if (ViewBag.Comments is not null) {
+                                        if (ViewBag.Comments.Count() == 0) {
+                                        <p>No comments have been found just now.  Be the first to add a comment using the form below.  Your email address is required but will not be published.</p>
+                                        }
+                                    } else {
+                                        <p>No comments have been found just now.  Be the first to add a comment using the form below.  Your email address is required but will not be published.</p>
+
+                                    }
+                                    <form method="post">
+                                        <div>
+                                            <label>Name:</label>
+                                            <input type="text" name="txtName" placeholder="John Smith">
+                                        </div>
+                                        <div>
+                                            <label>Email:</label>
+                                            <input type="email" name="txtEmail" placeholder="john@johnsmith.com">
+                                        </div>
+                                        <div>
+                                            <label>Website:</label>
+                                            <input type="text" name="txtWebsite" placeholder="http://www.johnsmith.com">
+                                        </div>
+                                        <div>
+                                            <label>Comment:</label>
+                                            <textarea id="ckeditor1" placeholder="Type your comment here"></textarea>
+                                        </div>
+                                        <button type="submit" class="btn btn-primary">Submit</button>
+                                    </form>
+
+
                                 `
                             });
+
+
 
                             ClassicEditor
                                 .create(document.querySelector("#ckeditor1"), {
@@ -92,12 +135,16 @@ new PagedListRenderOptions
                             console.log(err);
                         }
                     });
-             
+
+                    $("#colorbox").find("button").on('click', function (e) {
+                        e.preventDefault();
+                        window.location.reload();
+                    });
                 });
             });
         });
-            
-                
+
+
 
         function GetComments(id) {
             let result = undefined;

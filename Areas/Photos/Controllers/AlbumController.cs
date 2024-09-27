@@ -37,6 +37,9 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         public IActionResult GetPhotos(int id)
         {
             var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).ToList();
+            ViewBag.Comments = comments;
+           
             return Ok(photo);
         }
     }

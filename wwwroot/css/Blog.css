@@ -7,10 +7,13 @@
 
 html, body {
   height: 100%;
+  min-width: 100% !important;
+  width: 100% !important;
 }
 
 html {
   scroll-behavior: smooth;
+  width: 100% !important;
 }
 
 img {
@@ -20,6 +23,8 @@ img {
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
   position: relative;
+  width: 100%;
+  overflow-x: hidden;
 }
 
 p {
@@ -61,7 +66,7 @@ form input {
   width: 100%;
 }
 form textarea {
-  border: 1px solid black;
+  border: 2px solid black;
   padding: 5px 5px 5px 5px;
   align-self: flex-start;
 }
@@ -93,7 +98,9 @@ main {
   flex: 1 1 auto;
   align-self: flex-start;
   min-height: 100vh;
-  height: 100vh;
+  height: 100%;
+  width: 100vw;
+  min-width: 100vw;
 }
 
 header {
@@ -224,6 +231,8 @@ footer {
   background-color: #BF5B04;
   color: white;
   clear: both;
+  position: relative;
+  z-index: -1;
 }
 
 #Home {
@@ -670,17 +679,47 @@ footer {
   }
 }
 
-#SinglePhoto {
+.SinglePhoto {
   display: flex;
   flex-direction: column;
   flex: 1;
-}
-#SinglePhoto .overlay {
   background-color: rgba(0, 0, 0, 0.6);
+  min-width: 100%;
+}
+
+#colorbox {
   position: absolute;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  z-index: 20000;
+  top: 0 !important;
+  bottom: 0 !important;
+  background-color: #ffa500;
+  margin: 0 auto;
+  color: black;
+}
+#colorbox h1, #colorbox h2 {
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  align-self: center !important;
+  margin: 0 auto !important;
+  position: relative !important;
+  text-align: center !important;
+}
+#colorbox img {
+  width: 40% !important;
+  position: relative;
+  margin: 0 auto;
+  display: flex;
+}
+#colorbox button {
+  display: flex !important;
+  position: relative !important;
+  margin: 0 auto !important;
+}
+#colorbox form {
+  width: 30%;
+  display: felx;
+  margin: 0 auto;
+}
+#colorbox p {
+  text-align: center;
 }

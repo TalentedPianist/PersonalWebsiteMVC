@@ -38,6 +38,7 @@ namespace PersonalWebsiteMVC.Models
           [Key]
           public int CommentID { get; set; }
           public int? PostID { get; set; }
+        
         public string? PhotoID { get; set; } 
         [Display(Name = "Name")]
         public string? CommentAuthor { get; set; } 
