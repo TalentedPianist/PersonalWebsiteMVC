@@ -643,6 +643,15 @@ footer {
     gap: 1em;
     height: 100vh;
   }
+  #Albums section:nth-of-type(2) {
+    display: grid;
+    grid-template-rows: repeat(auto, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    align-items: center;
+  }
+  #Albums section:nth-of-type(2) img {
+    vertical-align: middle;
+  }
 }
 @media only screen and (min-width: 1900px) {
   #Albums section {
@@ -651,6 +660,7 @@ footer {
   #Albums section:nth-of-type(2) {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(4, 1fr);
   }
 }
 
@@ -687,39 +697,33 @@ footer {
   min-width: 100%;
 }
 
-#colorbox {
+#photoModal {
+  display: none;
+  flex-direction: column;
+  flex: 1;
   position: absolute;
-  top: 0 !important;
-  bottom: 0 !important;
-  background-color: #ffa500;
-  margin: 0 auto;
-  color: black;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
 }
-#colorbox h1, #colorbox h2 {
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  align-self: center !important;
-  margin: 0 auto !important;
-  position: relative !important;
-  text-align: center !important;
-}
-#colorbox img {
-  width: 40% !important;
-  position: relative;
-  margin: 0 auto;
+
+.featherlight .featherlight-content {
+  width: 80%;
+  height: 50%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
   display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
 }
-#colorbox button {
-  display: flex !important;
-  position: relative !important;
-  margin: 0 auto !important;
-}
-#colorbox form {
-  width: 30%;
-  display: felx;
-  margin: 0 auto;
-}
-#colorbox p {
-  text-align: center;
+@media only screen and (min-width: 600px) {
+  .featherlight .featherlight-content {
+    left: 10%;
+    top: 20%;
+  }
 }

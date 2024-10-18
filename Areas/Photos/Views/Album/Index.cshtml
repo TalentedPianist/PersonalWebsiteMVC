@@ -16,13 +16,13 @@
 
         @foreach (var photo in Model.PagedPhotos!)
         {
-            
+
                 <figure>
-                    <a class="gallery" href="@photo.ImageUrl" data-toggle="lightbox" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id" rel="slideshow"></a>
+                    <a class="gallery" href="@photo.ImageUrl" data-id="@photo.Id" data-featherlight="@Html.Raw(Comments(photo.ImageUrl!))"><img src="@photo.ImageUrl" data-id="@photo.Id" rel="slideshow"></a>
                     <figcaption>@photo.Name</figcaption>
 
                 </figure>
-            
+
         }
 
     </section>
@@ -37,51 +37,47 @@ new PagedListRenderOptions
     </section>
 </div>
 
+<div id="photoModal">
+    @DateTime.Now
+</div>
+
+
+@functions {
+    static IHtmlContent Comments(string src)
+    {
+        var fullHtml = $@"
+            <h1>{src}</h1>
+            <div class='form-group'>
+                <label>Name:</label>
+                <input name='txtName' placeholder='John Smith'>
+            </div>
+            <button type='submit' class='btn btn-primary'>Submit</button>
+        ";
+       
+        return new HtmlString(fullHtml);
+    }
+}
 
 
 @section Scripts {
 
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
-    <script type="importmap">
-        {
-            "imports": { 
-                "bs5-lightbox": "./lib/bs5-lightbox/index.bundle.min.js"
-             }
-        }
-    </script>
-
-    <script type="module">
-        import Lightbox from 'bs5-lightbox';
-    </script>
-
     <script>
-
-        $(function ($) {
-            document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
-
-
-                let name = element.querySelector("figcaption").innerHTML;
-                let src = element.querySelector("img").getAttribute("src");
-                let id = $(element).find('img').data('id');
-
-                document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("img").forEach((el) => el.addEventListener('click', function (e) {
-                    e.preventDefault();
-                    console.log("Image was clicked");
-                }));
-
+        $(function () {
+           
+            $("#Photos section:nth-of-type(2) img").each(function (index) { 
+                let src = $(this).attr('src');
+                let a = $(this).closest('a');
+                console.log(a.text());
+            });
+            $("#Photos section:nth-of-type(2) a").on('click', function (e) {
+                e.preventDefault();
+                
+                
             });
         });
-
-
-
-        function GetComments(id) {
-            let result = undefined;
-
-            return result;
-        }
-
-
+        
     </script>
 
 
