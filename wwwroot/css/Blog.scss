@@ -651,31 +651,8 @@ footer {
     min-width: 100% !important;
 }
 
-.modal-content {
-    background-color: transparent !important;
-    border: 0 !important;
-    width: 100% !important;
-    min-width: 100vw !important;
-}
 
-.modal-body {
-    padding: 0 !important;
 
-    ul {
-        width: 100% !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-}
-
-.modal-dialog {
-    margin: 0 !important;
-}
-
-.modal {
-    width: 100vw !important;
-    min-width: 100vw !important;
-}
 
 #Albums {
     display: flex;
@@ -765,41 +742,8 @@ footer {
     }
 }
 
-.SinglePhoto { 
-    display: flex; 
-    flex-direction: column;
-    flex: 1; 
-    background-color: rgba(0,0,0,0.6);
-    min-width: 100%;
-    
-}
-
-#photoModal { 
-    display: none;
-    flex-direction: column;
-    flex: 1;
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    bottom: 0; 
-    right: 0;
-}
-
-.featherlight .featherlight-content { 
+.featherlight-content { 
     width: 80%;
-    height: 50%;
-    position: absolute; 
-    top: 0; 
-    left: 0; 
-    bottom: 0; 
-    right: 0;
-    display: flex; 
-    flex-direction: column;
-    flex: 1; 
-    align-items: center;
-
-    @media only screen and (min-width: 600px) { 
-        left: 10%;
-        top: 20%;
-    }
+    height: 80%;
 }
+

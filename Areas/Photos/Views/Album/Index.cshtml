@@ -12,15 +12,17 @@
         <h1>@ViewBag.AlbumName</h1>
 
     </section>
-    <section>
+    <section data-featherlight-gallery data-featherlight-filter="a">
 
         @foreach (var photo in Model.PagedPhotos!)
         {
 
                 <figure>
-                    <a class="gallery" href="@photo.ImageUrl" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id"></a>
+                
+                    <a class="gallery" href="#photoModal" data-id="@photo.Id" data-src="@photo.ImageUrl" data-name="@photo.Name"><img src="@photo.ImageUrl" data-id="@photo.Id" data-featherlight="@Comments(photo.ImageUrl!)"></a>
+                
                     <figcaption>@photo.Name</figcaption>
-
+                    
                 </figure>
 
         }
@@ -38,7 +40,7 @@ new PagedListRenderOptions
 </div>
 
 <div id="photoModal">
-    @DateTime.Now
+    
 </div>
 
 
@@ -65,24 +67,17 @@ new PagedListRenderOptions
 
     <script>
         $(function () {
+ 
 
-			$('.gallery').featherlightGallery({
-				previousIcon: '<<',
-				nextIcon: '>>',
-				galleryFadeIn: 300,
-				openSpeed: 300
-			});
-           
-            $("#Photos section:nth-of-type(2) img").each(function (index) { 
-                let src = $(this).attr('src');
-                let a = $(this).closest('a');
-                console.log(a.text());
+            $('.gallery').featherlightGallery({
+                previousIcon: '<<',
+                nextIcon: '>>',
+                galleryFadeIn: 300,
+                openSpeed: 300,
+                contentFilters: 'html'
             });
-            $("#Photos section:nth-of-type(2) a").on('click', function (e) {
-                //e.preventDefault();
-                
-                
-            });
+
+            
         });
         
     </script>

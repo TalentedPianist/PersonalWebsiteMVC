@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
+using ServiceStack;
 using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Photos.Controllers
@@ -17,7 +18,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             _http = http;
         }
 
-       [Route("Photos/Album")]
+       [Microsoft.AspNetCore.Mvc.Route("Photos/Album")]
         public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         {
             int id = Convert.ToInt32(_http.HttpContext!.Request.Query["id"]);
@@ -33,7 +34,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         }
 
         [HttpPost]
-        [Route("Photos/Album/GetPhotos")]
+        [Microsoft.AspNetCore.Mvc.Route("Photos/Album/GetPhotos")]
         public IActionResult GetPhotos(int id)
         {
             var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
@@ -41,6 +42,13 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             ViewBag.Comments = comments;
            
             return Ok(photo);
+        }
+
+        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("Photos/Album/SinglePhoto")]
+        public IActionResult SinglePhoto()
+        {
+            return Ok();
         }
     }
 }
