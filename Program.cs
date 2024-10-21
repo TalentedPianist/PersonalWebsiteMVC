@@ -225,7 +225,7 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-
+    app.UseCors();
 
 
     app.UseAntiforgery();

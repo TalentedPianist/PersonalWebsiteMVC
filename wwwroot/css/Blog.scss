@@ -747,3 +747,13 @@ footer {
     height: 80%;
 }
 
+#photoModal { 
+    display: none;
+    position: absolute; 
+    top: 0; 
+    
+}
+
+.visible {
+    display: flex;
+}

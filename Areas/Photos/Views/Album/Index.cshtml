@@ -18,8 +18,8 @@
         {
 
                 <figure>
-                
-                    <a class="gallery" href="#photoModal" data-id="@photo.Id" data-src="@photo.ImageUrl" data-name="@photo.Name"><img src="@photo.ImageUrl" data-id="@photo.Id" data-featherlight="@Comments(photo.ImageUrl!)"></a>
+                    <!-- Note to self: the href content is key to getting thifs working!!! -->
+                    <a class="gallery" href="@photo.ImageUrl"><img src="@photo.ImageUrl" data-id="@photo.Id" data-name="@photo.Name"></a>
                 
                     <figcaption>@photo.Name</figcaption>
                     
@@ -39,45 +39,29 @@ new PagedListRenderOptions
     </section>
 </div>
 
+
 <div id="photoModal">
     
 </div>
-
-
-@functions {
-    static IHtmlContent Comments(string src)
-    {
-        var fullHtml = $@"
-            <h1>{src}</h1>
-            <div class='form-group'>
-                <label>Name:</label>
-                <input name='txtName' placeholder='John Smith'>
-            </div>
-            <button type='submit' class='btn btn-primary'>Submit</button>
-        ";
-       
-        return new HtmlString(fullHtml);
-    }
-}
-
 
 @section Scripts {
 
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
     <script>
-        $(function () {
- 
-
-            $('.gallery').featherlightGallery({
-                previousIcon: '<<',
-                nextIcon: '>>',
-                galleryFadeIn: 300,
-                openSpeed: 300,
-                contentFilters: 'html'
+        $(function () {   
+            $("a.gallery").featherlightGallery({
+                // https://github.com/noelboss/featherlight/blob/master/test/featherlight_gallery_test.js
+                afterOpen: function (e) {
+                    let name = $(this).data('name');
+                    let src = $(e.target).attr('src');
+                    let id = $(e.target).data('id');
+                    console.log(id);
+                    this.$instance.find('.featherlight-content').prepend(`
+                    <h1>${name}</h1>
+                    `);
+                }
             });
-
-            
         });
         
     </script>
