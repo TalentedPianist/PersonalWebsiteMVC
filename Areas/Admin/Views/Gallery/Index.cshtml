@@ -24,34 +24,13 @@
             <figure>
                 <div></div>
 
-                @{
-                    try
-                    {
-                        var photo = _db.Albums.Where(a => a.Id == GetId(di.Name)).FirstOrDefault();
-                        if (photo!.CoverPhoto is not null)
-                        {
-                            <img src="/Gallery/@di.Name/@photo.CoverPhoto" data-name="@di.Name">
-                        }
-                        else
-                        {
-                            <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@di.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-                        }
-                    }
-                    catch (NullReferenceException)
-                    {
-                        <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@di.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-                    }
-                }
-
-
-
                 <figcaption>
                     @try
                     {
                         if (IsInDb(di.Name))
                         {
                             <ul>
-                                <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a>
+                                <li><a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a></li>
                                 <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
                                 <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
                                 <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
@@ -183,73 +162,6 @@
             }
 
 
-            let section = document.querySelector("section");
-            let figure = section.querySelectorAll("figure");
-            figure.forEach(function (element, index) {
-                let name = undefined; // Create undefined name variable to be populated by conditional below
-                if (element.getElementsByTagName('svg').length) {
-                    // element variable contains svg
-                    name = $(element).find('svg').data('name');
-                }
-                if (element.getElementsByTagName('img').length) {
-                    // element variable contains img
-                    name = $(element).find('img').data('name');
-                }
-
-                if (CheckDb(name) === true) {
-                    $(element).find('div').html(`
-                        <p>Is in database</p>
-                        ${name}
-                        <input type="checkbox" value="${name}">
-
-                    `);
-                } else {
-                    $(element).find('div').html(`
-                        <p>Not in database</p>
-                        ${name}
-                        <input type="checkbox" value="${name}">
-                    `);
-                }
-
-                $(element).on('mouseenter', function (e) {
-                    e.preventDefault();
-                    $(element).find('div').css('display', 'flex');
-                });
-
-                $(element).on('mouseleave', function (e) {
-                    e.preventDefault();
-                    $(element).find('div').css('display', 'none');
-                });
-
-            });
-
-            let add = [];
-            let del = [];
-
-            document.querySelector("section").querySelectorAll("figure").forEach(function (element, index) {
-                let cb = element.querySelector('div').querySelector('input[type="checkbox"]');
-                let confirm = element.querySelector('div').querySelector('p').innerHTML;
-                let url = undefined;
-
-                if (element.getElementsByTagName('img').length) {
-                    url = element.querySelector('img').getAttribute('src');
-                }
-
-                cb.addEventListener('click', function (e) {
-                // This logic was missing and why it wasn't working properly.  Very basic.
-                    //e.preventDefault();
-                    let strDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-                    if (confirm === "Not in database") {
-                        add.push({ Name: cb.value, DateCreated: strDate });
-                    }
-
-                    if (confirm === "Is in database") {
-                        del.push({ Id: GetId(cb.value) });
-                    }
-                });
-               
-            });
-            // Any other actions can be performed here once all albums are checked
             
 
             document.querySelector("#AddToDb").addEventListener('click', function (e) {

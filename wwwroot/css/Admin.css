@@ -27,42 +27,40 @@ figure {
   flex-direction: column;
   flex: 1;
 }
+#Photos section:nth-of-type(1) ul {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 3em;
+  list-style-type: none;
+}
 #Photos section:nth-of-type(2) {
   display: grid;
-  grid-template-columns: repeat(4, auto);
+  grid-template-columns: repeat(4, 1fr);
   grid-template-rows: repeat(8, auto);
   position: relative;
+  width: 100%;
 }
 #Photos section:nth-of-type(2) figure {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
 }
-#Photos section:nth-of-type(2) figure div {
-  display: none;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  gap: 2em;
+#Photos section:nth-of-type(2) div {
   position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background-color: rgba(0, 0, 0, 0.6);
-  color: white;
   width: 100%;
-  z-index: 50000 !important;
-}
-#Photos section:nth-of-type(2) figure div a {
   color: white;
-  position: relative;
-  z-index: 50000;
+  z-index: 50000 !important;
+  display: flex;
 }
-#Photos section:nth-of-type(2) figure img .overlay {
+#Photos section:nth-of-type(2) img {
+  position: relative;
+}
+
+.overlay {
   background-color: rgba(0, 0, 0, 0.6);
+  height: 100%;
+  display: flex;
+  z-index: 3000;
+  position: absolute;
 }
 
 #DbLinks {
@@ -70,17 +68,6 @@ figure {
   margin-top: 1em;
   margin-bottom: 1em;
   padding-top: 1em;
-}
-
-.overlay {
-  position: absolute;
-  top: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  z-index: 10000 !important;
-  text-align: center;
-  color: white;
-  display: flex;
 }
 
 #Gallery {
@@ -104,6 +91,8 @@ figure {
   align-items: center;
   justify-content: center;
   text-align: center;
+  position: absolute;
+  top: 50%;
 }
 #Gallery section:nth-of-type(1) figure img {
   width: 100%;

@@ -19,7 +19,7 @@
 
                 <figure>
                     <!-- Note to self: the href content is key to getting thifs working!!! -->
-                    <a class="gallery" href="@photo.ImageUrl" data-name="@photo.Name"><img src="@photo.ImageUrl" data-id="@photo.Id" data-name="@photo.Name"></a>
+                    <a class="gallery" href="@photo.ImageUrl" data-name="@photo.Name" data-id="@photo.Id"><img src="@photo.ImageUrl" data-id="@photo.Id" data-name="@photo.Name"></a>
                 
                     <figcaption>@photo.Name</figcaption>
                     
@@ -57,11 +57,29 @@ new PagedListRenderOptions
                     lastCurrent = this.$currentTarget[0];
                     let name = $(lastCurrent).data('name');
                     let src = $(lastCurrent).find('img').attr('src');
-                    console.log(src);
+                    let id = $(lastCurrent).data('id');
+                    let photo = $.ajax({
+                        method: "POST",
+                        data: { 'Id': id },
+                        url: "@Url.Action("SinglePhoto", "Album")",
+                        async: false,
+                        cache: false,
+                        success: function (message) {
+                            return message;
+                        },
+                        error: function (err) {
+                            return err;
+                        }
+                    });
+                    console.log(photo);
+                    //console.log(photo.responseJSON[0]);
+
                     this.$instance.find('.featherlight-content').html(`
                        <h1>${name}</h1>
                        <img src="${src}">
                  `);
+
+                 
                 }
                
             });

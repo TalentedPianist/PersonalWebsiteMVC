@@ -48,7 +48,9 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         [Microsoft.AspNetCore.Mvc.Route("Photos/Album/SinglePhoto")]
         public IActionResult SinglePhoto()
         {
-            return Ok();
+            var id = Request.Form["id"];
+            var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            return Ok(photo);
         }
     }
 }

@@ -11,7 +11,6 @@
 @using X.PagedList.Extensions
 @using X.PagedList
 @using X.Web.PagedList
-@using HGO.ASPNetCore.FileManager.ViewComponentsModel
 @model String
 
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
@@ -21,22 +20,26 @@
 <div id="Photos">
 
     <section>
-        <a href="#" id="toggleAll">Select All</a>
-        <a href="#" id="addToDb">Add to Database</a>
-        <a href="#" id="delFromDb">Delete from Database</a>
-        <a href="#" id="manageAlbum">Manage Album</a>
+        <ul>
+        <li><a href="#" id="toggleAll">Select All</a></li>
+        <li><a href="#" id="addToDb">Add to Database</a></li>
+        <li><a href="#" id="delFromDb">Delete from Database</a></li>
+        <li><a href="#" id="manageAlbum">Manage Album</a></li>
+        </ul>
     </section>
 
     <section>
+    
         @{
             foreach (FileInfo file in ViewBag.OnePageOfFiles)
             {
 
 
                 <figure>
-                    <div></div>
-                    <img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name">
-                    <figcaption>@file.Name</figcaption>a
+                            <div></div>
+                    <a class="gallery" href="#" data-name="@file.Name" data-src="Gallery/@ViewBag.AlbumName/@file.Name"><img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name"></a>
+                    
+                    <figcaption>@file.Name</figcaption>
                 </figure>
 
             }
@@ -70,335 +73,61 @@ else
 
 
 
-
-<div id="fileManager" class="modal" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title">Modal title</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                @await Component.InvokeAsync("FileManagerComponent", new FileManagerModel()
-           {
-               Id = "FM1",
-               RootFolder = System.IO.Path.Combine(_env.ContentRootPath, "Gallery", ViewBag.AlbumName),
-               ApiEndPoint = Url.Action("HgoApi")!,
-               Config = new FileManagerConfig()
-           })
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="photoModal" tabindex="-1" role="dialog" aria-labelledby="photoModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="photoModalLabel">Modal title</h5>
-            </div>
-            <div class="modal-body">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Close</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-@functions {
-    bool IsInDb(string name)
-    {
-        var album = _db.Albums.Where(a => a.Name == name).Any();
-        if (album)
-            return true;
-        else
-            return false;
-    }
-
-    string GetAlbum(int id) {
-        var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
-        return album!.Name!;
-    }
-
-}
-
 @section Scripts {
     <script>
 
         $(function () {
-
-
-
-            document.querySelector("#manageAlbum").addEventListener('click', function (e) {
-                e.preventDefault();
-                $("#fileManager").show();
-            });
-
-            $("#fileManager").find('.modal-footer').find('button').on('click', function (e) {
-                e.preventDefault();
-                $("#fileManager").hide();
-            });
-
-  
-
-            function GetId(name) {
-                let result = undefined;
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("GetPicId", "Photos")",
-                    data: {
-                        'name': name,
-                    },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        result = message;
-                        //console.log(message);
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-                return result;
-            }
-
-            function GetAlbumId() {
-                var result = undefined;
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("GetAlbumId", "Photos")",
-                    data: {
-                        name: name
-                    },
-                    cache: false,
-                    async: false,
-                    success: function (message) {
-                        console.log(message);
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-                return result;
-            }
-
-            function CheckDb(name) {
-                var result = false;
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("AjaxDbCheck", "Photos")",
-                    data: { 'name': name },
-                    cache: false,
-                    async: false,
-                    success: function (message) {
-                        //console.log(message);
-                        result = message;
-                    },
-                    error: function (err) {
-                        //console.log(err);
-                    }
-                });
-                return result;
-            }
-
-
-            let section = document.querySelector("section:nth-of-type(2)");
-            let figure = section.querySelectorAll("figure");
-            figure.forEach(function (element, index) {
-                let name = $(element).find('img').data('name');
-
-                if (CheckDb(name) === true) {
-                    $(element).find('div').html(`
-                        <p>Is in database</p>
-                        ${name}
-                        <input type="checkbox" value="${name}">
-                        <a href="#">View</a>
+            $("a.gallery").featherlightGallery({
+                afterContent: function () {
+                    lastCurrent = this.$currentTarget[0];
+                    let name = $(lastCurrent).data('name');
+                    let src = $(lastCurrent).find('img').attr('src');
+                    this.$instance.find('.featherlight-content').html(`
+                        <h1>${name}</h1> <span><a href="#">Edit</a></span>
+                        <img src="${src}" alt="${name}">
                     `);
 
-                    $(element).find('div').find('a').on('click', function (e) {
-                        e.preventDefault();
-                        var myModal = new bootstrap.Modal(document.getElementById("photoModal"), {});
-                        myModal.show();
 
-                        $("#photoModal").find('.modal-header').find('.modal-title').html(`
-                            ${name}
-                            <a href="#">Edit</a>
-                        `);
-
-                        $("#photoModal").find('.modal-header').find('a').on('click', function (e) {
-                            e.preventDefault();
-                            $("#photoModal").find('.modal-header').html(`
-                                <form method="post" id="myForm">
-                                    <div class="form-group">
-                                        <label>Name:</label>
-                                        <input type="text" name="txtName" value="${name}">
-                                    </div>
-                                    <input type="hidden" value="${GetId(name)}" name="txtId">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </form>
-                            `);
-
-                            $("#photoModal").find(".modal-header").find("#myForm").on('submit', function (e) {
-                                e.preventDefault();
-                                //var name = $("input[name='txtName']").val();
-                                //var id = $("input[name='txtId']").val();
-                                console.log(name);
-                                $.ajax({
-                                    method: "POST",
-                                    url: "@Url.Action("RenameFile", "Photos", new { album = ViewBag.AlbumName })",
-                                    data: JSON.stringify({ 'strOld': name, strNew: $("input[name='txtName']").val() }),
-                                    async: false,
-                                    cache: false,
-                                    headers: {
-                                        "Content-Type": "application/json"
-                                    },
-                                    success: function (message) {
-                                        console.log(message);
-                                        window.location.reload();
-                                    },
-                                    error: function (err) {
-                                        console.log(err);
-                                    }
-                                });
-                            });
-                        });
-
-
-
-                        $("#photoModal").find('.modal-body').html(`
-                            <img src="/Gallery/@ViewBag.AlbumName/${name}" alt="${name}">
-                            <a href="#">Make cover photo</a>
-                        `);
-
-                        $("#photoModal").find('.modal-body').find('a').on('click', function (e) {
-                            e.preventDefault();
-                         
-                            $.ajax({
-                                method: "POST",
-                                url: "@Url.Action("SetCoverPic", "Photos")",
-                                data: JSON.stringify({ 'Id': '@ViewBag.AlbumID','CoverPhoto': '/Gallery/@ViewBag.AlbumName/' + name }),
-                                headers: {
-                                    "Content-Type": "application/json"
-                                },
-                                async: false,
-                                cache: false,
-                                success: function (message) {
-                                    console.log(message);
-                                    //window.location.reload();
-                                },
-                                error: function (err) {
-                                    console.log(err);
-                                }
-
-                            });
-                        });
-                    });
-                } else {
-                    $(element).find('div').html(`
-                        <p>Not in database</p>
-                        <input type="checkbox" value="${name}">
-                        <a href="#">View</a>
-                    `);
-
-                    $(element).find('div').find('a').on('click', function (e) {
-                        e.preventDefault();
-                        var myModal = new bootstrap.Modal(document.getElementById("photoModal"), {});
-                        $("#photoModal").find('.modal-header').find('.modal-title').html(name);
-                        $("#photoModal").find('.modal-body').html(`
-                            <img src="/Gallery/@ViewBag.AlbumName/${name}">
-                        `);
-
-                        myModal.show();
-                    });
-
-       
                 }
-
-                // Is it really the modal that's causing this problem?
-                $(element).on('mouseenter', function (e) {
-                    $(element).find('div').css('display', 'flex');
-                });
-
-                $(element).on('mouseleave', function (e) {
-                    $(element).find('div').css('display', 'none');
-                });
-            });
-
-            let add = []; 
-            let del = [];
-
-            document.querySelector("#toggleAll").addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector("section:nth-of-type(2)").querySelectorAll("figure").forEach(function (element, index) {
-                    let cb = element.querySelector('div').querySelector('input[type="checkbox"]');
-                    let confirm = element.querySelector('div').querySelector('p').innerHTML;
-                    let url = element.querySelector('img').getAttribute('src');
-                    cb.checked = true; // Very important to have this, otherwise nothing happens!
-
-                    if (confirm === "Is in database") {
-                        del.push({ Id: GetId(cb.value), name: cb.value });
-                      
-                    }  
-                    if (confirm === "Not in database") {
-                        add.push({ name: cb.value, AlbumID: @Context.Request.Query["id"], ImageUrl: url });
-                    }
-
-                });
-                // Any other actions can be performed here once all photos are checked
-            });
-
-
-            document.querySelector("#addToDb").addEventListener('click', function (e) {
-                e.preventDefault();
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("AddMultipleToDb", "Photos")",
-                    data: JSON.stringify(add),
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    cache: false,
-                    async: false,
-                    success: function (message) {
-                        
-                        window.location.reload();
-                    },
-                    error: function (err) {
-                        console.log(err);
-                        
-                    }
-                });
-            });
-
-            document.querySelector("#delFromDb").addEventListener('click', function (e) {
-                e.preventDefault();
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
-                    data: JSON.stringify(del),
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    cache: false,
-                    async: false,
-                    succses: function (message) {
-                       
-                        window.location.reload();
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
             });
 
             
-           
+
+            document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("img").forEach((element) => { 
+                    let name = $(element).find('a').data('name');
+                    let src = $(element).find('a').data('src');
+                    let div = $(element).parent().parent().find('div');
+                
+                    
+                    let isInDb = $.ajax({
+                        method: "POST", 
+                        url: "@Url.Action("AjaxDbCheck", "Photos")",
+                        data: { 'name': name },
+                        async: false,
+                        cache: false,
+                        success: function(message) { 
+                            return message;
+                        }, 
+                        error: function(err) { 
+                            return err;
+                        }
+                    });
+
+                 
+
+                    $(element).on('mouseenter', function(e) { 
+                        e.preventDefault();
+                        $(div).addClass('overlay');
+                        $(div).html('Hello World!');
+                    });
+
+                    $(element).on('mouseleave', function(e) { 
+                        e.preventDefault();
+                        $(div).removeClass('overlay');
+                        $(div).html('');
+                     });
+            });
+
         });
 
     </script>

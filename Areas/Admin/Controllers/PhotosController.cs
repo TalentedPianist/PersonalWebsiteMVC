@@ -256,12 +256,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/Photos/Delete.cshtml", model);
         }
 
-        //HgoAspNetCore filemanager 
-        [HttpGet, HttpPost]
-        public async Task<IActionResult> HgoApi(string id, string command, string parameters, IFormFile file)
-        {
-            return await _processor.ProcessCommandAsync(id, command, parameters, file);
-        }
+       
 
         [HttpPost]
         [Route("Photos/SetCoverPic")]

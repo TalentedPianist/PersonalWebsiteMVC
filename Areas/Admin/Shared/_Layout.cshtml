@@ -5,9 +5,7 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Extensions
 @inject IHttpContextAccessor http
-@using HGO.ASPNetCore.FileManager.ViewComponentsModel
-@using HGO.ASPNetCore.FileManager.ViewComponents
-@using HGO.ASPNetCore.FileManager
+
 
 <!DOCTYPE html>
 <html manifest="cache.manifest">
@@ -18,13 +16,12 @@
     <meta http-equiv="expires" content="0">
     <meta http-equiv="pragma" content="no-cache">
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/jquery-modal/jquery.modal.min.css">
+    <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
+    <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
     <link rel="stylesheet" href="/css/Admin.css?v=@n">
     <title>@ViewBag.Title</title>
 
-    @*HGO.AspNetCore.FileManager Styles*@
-    @this.RenderHgoFileManagerCss(true)
-    @*---------------------------------*@
+
 </head>
 <body>
     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
@@ -85,16 +82,15 @@
 
     <script src="/lib/jquery/jquery.min.js"></script>
     <script src="/lib/jquery-validate/jquery.validate.min.js"></script>
-    <script src="/lib/ckeditor5/ckeditor.min.js"></script>
     <!-- For popper we need to use the build from the umd folder.  The cdn folder gives an export not found error. -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
     <script src="/lib/moment.js/moment.min.js"></script>
+    <script src="/lib/featherlight/featherlight.min.js"></script>
+    <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
     <script src="/js/Admin.js?v=@n"></script>
 
-    @*HGO.AspNetCore.FileManager Scripts*@
-    @this.RenderHgoFileManagerJavaScripts()
-    @*----------------------------------*@
+
     @RenderSection("Scripts", required: false)
 
 
