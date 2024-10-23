@@ -195,10 +195,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult GetId(string name)
+        public int GetId([FromForm(Name = "name")]string name)
         {
              var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-                return Ok(album!.Id);
+            return album!.Id;
            
         }
 
@@ -214,6 +214,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public IActionResult AddToDb(Album album, List<PersonalWebsiteMVC.Models.Photos> photos)
         {
             return Ok();
+        }
+
+        [HttpPost]
+        [Microsoft.AspNetCore.Mvc.Route("/Gallery/AjaxDbCheck")]
+        public bool AjaxDbCheck([FromForm(Name = "name")] string name)
+        {
+            if (_db.Albums.Where(a => a.Name == name).Any())
+                return true;
+            else
+                return false;
         }
     }
 }

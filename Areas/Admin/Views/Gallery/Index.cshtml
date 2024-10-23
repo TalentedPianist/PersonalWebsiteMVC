@@ -63,7 +63,7 @@
     </section>
 </div>
 
-<a href="#" id="selectAll">Select All</a>
+<a href="#" id="selectAll">Select All</a> |
 <a href="#" id="AddToDb">Add to Database</a> |
 <a href="#" id="DelFromDb">Delete from Database</a>
 
@@ -118,6 +118,36 @@
             let add = [];
             let del = [];
 
+            // Begin select individual checkboxes code
+            let cb = document.querySelector("#Gallery section").querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < cb.length; i++) {
+                cb[i].addEventListener('click', function (e) {
+                    e.checked = true;
+                    var isInDb = $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("AjaxDbCheck", "Gallery")",
+                        data: { 'name': e.target.value },
+                        async: false
+                    }).responseText;
+                    if (isInDb) {
+                        var id = $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("GetId", "Gallery")",
+                            data: { 'name': e.target.value },
+                            async: false
+                        });
+                        del.push({ 'Id': id });
+                    } else {
+                        add.push({ 'name': e.target.value });
+                    }
+                });
+                
+            }
+        
+            
+            // End select individual checkboxes code
+
+            // Begin select all checkboxes code
             document.querySelector("#selectAll").addEventListener('click', function (e) {
                 e.preventDefault();
                 cb = document.querySelector("#Gallery section").querySelectorAll('input[type="checkbox"]');
@@ -132,12 +162,13 @@
                         var id = $.ajax({
                             type: "POST", url: "@Url.Action("GetId", "Gallery")", data: { 'name': e.value }, async: false
                         }).responseText;
+                        del.push({ 'albumId': id });
                     } else {
-                        add.push({ 'name': e.value })
+                        //add.push({ 'name': e.value })
                     }
                 });
             });
-            
+            // End select all checkboxes code
 
             document.querySelector("#AddToDb").addEventListener('click', function (e) {
                 e.preventDefault();
@@ -146,7 +177,23 @@
 
             document.querySelector("#DelFromDb").addEventListener('click', function (e) {
                 e.preventDefault();
-                console.log(del.length);
+                console.log(del);
+               @* $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("RemoveMultipleFromDb", "Gallery")",
+                    data: del,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });*@
                 
             });
         });
