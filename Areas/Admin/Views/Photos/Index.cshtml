@@ -112,8 +112,26 @@ else
             for (var i = 0; i < cb.length; i++) {
                 // Seems that you need to add an event listener to checkboxes to make them work in spite of what Google says.
                 cb[i].addEventListener('click', function (e) {
-                    e.preventDefault();
-                    console.log(e.target.value);
+                    //e.preventDefault();
+                    e.checked = true;
+                    var isInDb = $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("AjaxDbCheck", "Photos")",
+                        data: { 'name': e.target.value },
+                        async: false
+                    }).responseText;
+                    if (isInDb) {
+                        var id = $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("GetId", "Photos")",
+                            data: { 'name': e.target.value },
+                            async: false
+                        }).responseText;
+                        del.push({ 'Id': id, 'name': e.target.value });
+                    }
+                    else {
+                        add.push({ 'name': e.target.value });
+                    }
                 });
                 
             }
@@ -148,10 +166,36 @@ else
 
             $("#addToDb").on('click', function (e) {
                 e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("AddMultipleToDb", "Photos")",
+                    data: JSON.stringify(add),
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
 
             $("#delFromDb").on('click', function (e) {
                 e.preventDefault();
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
+                    data: JSON.stringify(del),
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        window.location.reload();
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
             });
 
 
