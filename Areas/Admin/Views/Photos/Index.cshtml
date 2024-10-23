@@ -21,25 +21,34 @@
 
     <section>
         <ul>
-        <li><a href="#" id="toggleAll">Select All</a></li>
-        <li><a href="#" id="addToDb">Add to Database</a></li>
-        <li><a href="#" id="delFromDb">Delete from Database</a></li>
-        <li><a href="#" id="manageAlbum">Manage Album</a></li>
+            <li><a href="#" id="toggleAll">Select All</a></li>
+            <li><a href="#" id="addToDb">Add to Database</a></li>
+            <li><a href="#" id="delFromDb">Delete from Database</a></li>
         </ul>
     </section>
 
     <section>
-    
+
         @{
             foreach (FileInfo file in ViewBag.OnePageOfFiles)
             {
 
 
                 <figure>
-                            <div></div>
-                    <a class="gallery" href="#" data-name="@file.Name" data-src="Gallery/@ViewBag.AlbumName/@file.Name"><img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name"></a>
-                    
-                    <figcaption>@file.Name</figcaption>
+                    <div></div>
+                    <a href="#" class="gallery" data-name="@file.Name"><img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name"></a>
+
+                    <figcaption>
+                        @file.Name
+                        <input type="checkbox" name="cbDb" value="@file.Name">
+                        <ul>
+                            <li><a href="#">View</a></li>
+                            <li><a href="#">Update</a></li>
+                            <li><a href="#">Details</a></li>
+                            <li><a href="#">Delete</a></li>
+                        </ul>
+
+                    </figcaption>
                 </figure>
 
             }
@@ -78,6 +87,9 @@ else
 
         $(function () {
             $("a.gallery").featherlightGallery({
+                beforeOpen: function () {
+                    return true;
+                },
                 afterContent: function () {
                     lastCurrent = this.$currentTarget[0];
                     let name = $(lastCurrent).data('name');
@@ -91,44 +103,61 @@ else
                 }
             });
 
-            
 
-            document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll("img").forEach((element) => { 
-                    let name = $(element).find('a').data('name');
-                    let src = $(element).find('a').data('src');
-                    let div = $(element).parent().parent().find('div');
+            let add = [];
+            let del = [];
+
+            // Begin select individual checkboxes code
+            let cb = document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll('input[type="checkbox"]');
+            for (var i = 0; i < cb.length; i++) {
+                // Seems that you need to add an event listener to checkboxes to make them work in spite of what Google says.
+                cb[i].addEventListener('click', function (e) {
+                    e.preventDefault();
+                    console.log(e.target.value);
+                });
                 
-                    
-                    let isInDb = $.ajax({
-                        method: "POST", 
-                        url: "@Url.Action("AjaxDbCheck", "Photos")",
-                        data: { 'name': name },
-                        async: false,
-                        cache: false,
-                        success: function(message) { 
-                            return message;
-                        }, 
-                        error: function(err) { 
-                            return err;
-                        }
-                    });
+            }
 
-                 
+            // End select individual checkboxes code
 
-                    $(element).on('mouseenter', function(e) { 
-                        e.preventDefault();
-                        $(div).addClass('overlay');
-                        $(div).html('Hello World!');
-                    });
+            // Begin select all checkboxes code
+            document.querySelector("#toggleAll").addEventListener('click', function (e) {
+                e.preventDefault();
+                cb = document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll('input[type="checkbox"]');
+                cb.forEach(function (e) {
+                    e.checked = true;
 
-                    $(element).on('mouseleave', function(e) { 
-                        e.preventDefault();
-                        $(div).removeClass('overlay');
-                        $(div).html('');
-                     });
+                    //https://stackoverflow.com/questions/7598821/return-responsetext-from-jquery-get
+                    // Seems that you can do this in ajax with async: false and responseText at the end which makes sense
+                    var isInDb = $.ajax({ type: "POST", url: "@Url.Action("AjaxDbCheck", "Photos")", data: { 'name': e.value }, async: false }).responseText;
+
+
+                    if (isInDb) {
+
+                        var id = $.ajax({
+                            type: "POST",
+                            url: "@Url.Action("GetId", "Photos")", data: { 'name': e.value }, async: false
+                        }).responseText;
+                        // This now works!!  The time spent studying the ajax documentation was worth it.  Hoorah!  
+                        del.push({ 'Id': id });
+                    }
+                });
+                console.log(del.length);
+            });
+            // End select all checkboxes code
+
+            $("#addToDb").on('click', function (e) {
+                e.preventDefault();
             });
 
+            $("#delFromDb").on('click', function (e) {
+                e.preventDefault();
+            });
+
+
         });
+
+
 
     </script>
 
