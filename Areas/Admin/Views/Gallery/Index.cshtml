@@ -144,7 +144,6 @@
                 
             }
         
-            
             // End select individual checkboxes code
 
             // Begin select all checkboxes code
@@ -177,11 +176,17 @@
 
             document.querySelector("#DelFromDb").addEventListener('click', function (e) {
                 e.preventDefault();
-                console.log(del);
-               @* $.ajax({
+                //console.log(del);
+                var arr = [];
+                for (var i = 0; i < del.length; i++) {
+                    //console.log(del[i].Id.responseText);
+                    arr.push({ 'Id': del[i].Id.responseText });
+                }
+                
+                $.ajax({
                     method: "POST",
                     url: "@Url.Action("RemoveMultipleFromDb", "Gallery")",
-                    data: del,
+                    data: JSON.stringify(arr),
                     headers: {
                         'Content-Type': 'application/json'
                     },
@@ -193,7 +198,7 @@
                     error: function (err) {
                         console.log(err);
                     }
-                });*@
+                });
                 
             });
         });
