@@ -137,13 +137,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/Gallery/Update.cshtml", album);
         }
 
-        [HttpPost, HttpGet]
-        public async Task<IActionResult> HgoApi(string id, string command, string parameters, IFormFile file)
-        {
-            return await _processor.ProcessCommandAsync(id, command, parameters, file);
-        }
-
-
 
         public bool DirectoryIsEmpty(string path)
         {
@@ -180,6 +173,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddMultipleToDb([FromBody]List<Album> data)
         {
+           
             _db.Albums.AddRange(data);
             _db.SaveChanges();
             return Ok(data);
@@ -189,9 +183,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult RemoveMultipleFromDb([FromBody] List<Album> data)
         {
+
             _db.Albums.RemoveRange(data);
             _db.SaveChanges();
-            return Ok();
+            return Ok(data);
         }
 
         [HttpPost]
@@ -213,6 +208,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddToDb(Album album, List<PersonalWebsiteMVC.Models.Photos> photos)
         {
+            
             return Ok();
         }
 

@@ -7,7 +7,7 @@
 @using X.PagedList.Extensions
 @using X.Web.PagedList
 @using HGO.ASPNetCore.FileManager.ViewComponentsModel
-@using PersonalWebsiteMVC.Models 
+@using PersonalWebsiteMVC.Models
 @inject IWebHostEnvironment _env
 @inject ApplicationDbContext _db
 
@@ -18,7 +18,7 @@
 @TempData["Message"]
 
 <div id="Gallery">
-    
+
     <section>
         @foreach (DirectoryInfo di in ViewBag.OnePageOfFiles)
         {
@@ -29,35 +29,31 @@
                 }
                 else
                 {
-                    <svg width="30" height="30" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                        <path d="M3 19H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
+                    <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28"></path></svg>
                 }
 
-                    <figcaption>
-                        @di.Name
-                        @if (IsInDb(di.Name))
-                        {
-                            <input type="checkbox" name="delAlbum" value="@di.Name">
-                            <ul>
-                                <li><a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a></li>
-                                <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
-                                <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
-                                <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
-                            </ul>
+                <figcaption>
+                    @di.Name
+                    @if (IsInDb(di.Name))
+                    {
+                        <input type="checkbox" name="delAlbum" value="@di.Name">
+                        <ul>
+                            <li><a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-id="@GetId(di.Name)">View</a></li>
+                            <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
+                            <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Details</a></li>
+                            <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Delete</a></li>
+                        </ul>
 
-                        }
-                        else
-                        {
-                            
-                            <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-album="@di.Name">View</a>
-                        }
-                       
+                    }
+                    else
+                    {
+                        <input type="checkbox" name="addAlbum" value="@di.Name">
+                        <a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-album="@di.Name">View</a>
+                    }
 
-                    </figcaption>
-                </figure>
+
+                </figcaption>
+            </figure>
 
         }
     </section>
@@ -123,27 +119,31 @@
             for (var i = 0; i < cb.length; i++) {
                 cb[i].addEventListener('click', function (e) {
                     e.checked = true;
+
                     var isInDb = $.ajax({
                         type: "POST",
                         url: "@Url.Action("AjaxDbCheck", "Gallery")",
-                        data: { 'name': e.target.value },
+                        data: { 'Name': e.target.value },
                         async: false
                     }).responseText;
-                    if (isInDb) {
+
+                    // Object reference not set error was because of the way the boolean function was called.
+                    if (!isInDb) {
                         var id = $.ajax({
                             type: "POST",
                             url: "@Url.Action("GetId", "Gallery")",
                             data: { 'name': e.target.value },
                             async: false
-                        });
+                        }).responseText;
                         del.push({ 'Id': id });
                     } else {
-                        add.push({ 'name': e.target.value });
+                        add.push({
+                            'Name': e.target.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': @DateTime.Now
+                        });
                     }
                 });
-                
             }
-        
+
             // End select individual checkboxes code
 
             // Begin select all checkboxes code
@@ -161,9 +161,12 @@
                         var id = $.ajax({
                             type: "POST", url: "@Url.Action("GetId", "Gallery")", data: { 'name': e.value }, async: false
                         }).responseText;
-                        del.push({ 'albumId': id });
+
+                        del.push({ 'Id': id });
                     } else {
-                        //add.push({ 'name': e.value })
+                        add.push({
+                            'Name': e.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': '@DateTime.Now' 
+                        });
                     }
                 });
             });
@@ -171,7 +174,26 @@
 
             document.querySelector("#AddToDb").addEventListener('click', function (e) {
                 e.preventDefault();
-               
+                console.log(add);
+                
+
+               @* $.ajax({
+                    method: "POST",
+                    url: "@Url.Action("AddMultipleToDb", "Gallery")",
+                    data: JSON.stringify(add),
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        //window.location.reload();
+                        console.log(message);
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });*@
             });
 
             document.querySelector("#DelFromDb").addEventListener('click', function (e) {
@@ -182,7 +204,7 @@
                     //console.log(del[i].Id.responseText);
                     arr.push({ 'Id': del[i].Id.responseText });
                 }
-                
+
                 $.ajax({
                     method: "POST",
                     url: "@Url.Action("RemoveMultipleFromDb", "Gallery")",
@@ -199,9 +221,9 @@
                         console.log(err);
                     }
                 });
-                
+
             });
         });
-        
+
     </script>
 }
