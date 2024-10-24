@@ -138,8 +138,7 @@
                         del.push({ 'Id': id });
                     } else {
                         add.push({
-                            'Name': e.target.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': @DateTime.Now
-                        });
+                            'Name': e.target.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': '@DateTime.Now' })
                     }
                 });
             }
@@ -177,7 +176,7 @@
                 console.log(add);
                 
 
-               @* $.ajax({
+                $.ajax({
                     method: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Gallery")",
                     data: JSON.stringify(add),
@@ -193,7 +192,7 @@
                     error: function (err) {
                         console.log(err);
                     }
-                });*@
+                });
             });
 
             document.querySelector("#DelFromDb").addEventListener('click', function (e) {

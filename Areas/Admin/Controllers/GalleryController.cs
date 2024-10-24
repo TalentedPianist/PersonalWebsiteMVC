@@ -176,7 +176,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
            
             _db.Albums.AddRange(data);
             _db.SaveChanges();
-            return Ok(data);
+            return Ok();
 
         }
 
