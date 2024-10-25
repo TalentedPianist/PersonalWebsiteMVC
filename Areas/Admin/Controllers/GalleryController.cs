@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Text;
@@ -171,21 +172,31 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddMultipleToDb([FromBody]List<Album> data)
+        [Microsoft.AspNetCore.Mvc.Route("Gallery/AddMultipleToDb")]
+        public JsonResult AddMultipleToDb([FromBody] List<Album> data)
+
         {
-           
-            _db.Albums.AddRange(data);
+
+            /*_db.Albums.AddRange(data);
             _db.SaveChanges();
-            return Ok();
+        */
+            return new JsonResult(data);
 
         }
 
         [HttpPost]
         public IActionResult RemoveMultipleFromDb([FromBody] List<Album> data)
         {
+            
+            if (data != null)
+            {
 
-            _db.Albums.RemoveRange(data);
-            _db.SaveChanges();
+            }
+            else
+            {
+                _db.Albums.RemoveRange(data!);
+                _db.SaveChanges();
+            }
             return Ok(data);
         }
 

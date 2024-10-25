@@ -164,7 +164,7 @@
                         del.push({ 'Id': id });
                     } else {
                         add.push({
-                            'Name': e.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': '@DateTime.Now' 
+                            'Name': e.value 
                         });
                     }
                 });
@@ -173,21 +173,20 @@
 
             document.querySelector("#AddToDb").addEventListener('click', function (e) {
                 e.preventDefault();
-                console.log(add);
-                
-
+                var arrData = JSON.stringify(add);
+                console.log(arrData);
                 $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("AddMultipleToDb", "Gallery")",
-                    data: JSON.stringify(add),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    async: false,
                     cache: false,
-                    success: function (message) {
-                        //window.location.reload();
-                        console.log(message);
+                    method: 'POST',
+                    url: 'Gallery/AddMultipleToDb',
+                    contentType: "application/json; charset=utf-8",
+                    processData: false,
+                    data: { data: add },
+                    headers: {
+                        'Content-type': 'application/json'
+                    },
+                    success: function (result) {
+                        console.log(result);
                     },
                     error: function (err) {
                         console.log(err);

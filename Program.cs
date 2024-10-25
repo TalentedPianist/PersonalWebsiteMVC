@@ -50,7 +50,7 @@ try
         options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
     /*var connectionString = builder.Configuration.GetConnectionString("SQLite") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");*/
-    builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));
+    /*builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(connectionString));*/
     builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
     //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -225,7 +225,6 @@ try
     app.UseAuthentication();
     app.UseAuthorization();
 
-    app.UseCors();
 
 
     app.UseAntiforgery();
