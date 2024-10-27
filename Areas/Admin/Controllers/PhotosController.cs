@@ -264,7 +264,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
             var album = _db.Albums.Where(a => a.AlbumID == data.AlbumID).FirstOrDefault();
             album!.CoverPhoto = data.CoverPhoto;
-            album!.DateCreated = DateTime.Now;
+            //album!.DateCreated = DateTime.Now;
             _db.Albums.Update(album);
             _db.SaveChanges();
 

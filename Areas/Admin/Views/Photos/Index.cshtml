@@ -95,8 +95,16 @@ else
                     let name = $(lastCurrent).data('name');
                     let src = $(lastCurrent).find('img').attr('src');
                     this.$instance.find('.featherlight-content').html(`
-                        <h1>${name}</h1> <span><a href="#">Edit</a></span>
-                        <img src="${src}" alt="${name}">
+                        <header>
+                            <h1>${name}</h1> 
+                            <a href="#">Edit</a>
+                            <a href="#" id="coverPhoto" data-name="${name}">Make Cover Photo</a>
+                        </header>
+                        <section>
+                            <img src="${src}" alt="${name}">
+                        </section>
+                        <footer>
+                        </footer>
                     `);
 
 
@@ -201,6 +209,24 @@ else
                 });
             });
 
+            
+            $("#coverPhoto").on('click', function (e) {
+                e.preventDefault();
+                let name = $("#coverPhoto").data('name');
+                $.ajax({
+                    type: "POST",
+                    url: "@Url.Action("CoverPhoto", "Photos")",
+                    data: JSON.stringify({ 'Name': name }),
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        window.location.replace('/Gallery');
+                    },
+                    error: function (err) {
+                        console.log(err);
+                    }
+                });
+            });
 
         });
 

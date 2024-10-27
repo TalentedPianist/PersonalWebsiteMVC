@@ -5,7 +5,7 @@
 }
 
 
-body { 
+body {
     position: relative;
 }
 
@@ -37,8 +37,6 @@ figure {
                 gap: 3em;
                 list-style-type: none;
             }
-
-            
         }
 
         &:nth-of-type(2) {
@@ -48,13 +46,12 @@ figure {
             position: relative;
             width: 100%;
 
-            figure { 
+            figure {
                 position: relative;
-              
             }
 
-            div { 
-                position: absolute; 
+            div {
+                position: absolute;
                 width: 100%;
                 display: flex;
                 background-color: rgba(0,0,0,0.6);
@@ -64,33 +61,29 @@ figure {
                 flex: 1;
                 align-items: center;
                 gap: 3em;
-
- 
-
             }
 
-            img { 
+            img {
                 position: relative;
                 cursor: initial;
             }
 
-            figcaption { 
-                display: flex; 
+            figcaption {
+                display: flex;
                 flex-direction: column;
                 flex: 1;
                 align-items: center;
                 gap: 5px;
             }
 
-            ul { 
-                display: flex; 
-                flex-direction: row; 
+            ul {
+                display: flex;
+                flex-direction: row;
                 flex: 1;
                 list-style-type: none;
                 justify-content: space-between;
                 gap: 2em;
             }
-
         }
     }
 }
@@ -99,7 +92,7 @@ figure {
 
 .overlay {
     background-color: rgba(0,0,0,0.6);
-    display: flex; 
+    display: flex;
     z-index: 3000;
     position: absolute;
     pointer-events: none;
@@ -116,7 +109,7 @@ figure {
 
 
 #Gallery {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     flex: 1;
     position: relative;
@@ -130,15 +123,15 @@ figure {
             figure {
                 position: relative;
 
-                div { 
+                div {
                     display: none;
                     background-color: rgba(0,0,0,0.6);
                     flex-direction: column;
-                    flex: 1; 
+                    flex: 1;
                     align-items: center;
                     justify-content: center;
                     text-align: center;
-                    position: absolute; 
+                    position: absolute;
                     top: 50%;
                 }
 
@@ -146,14 +139,14 @@ figure {
                     width: 100%;
                 }
 
-                svg { 
+                svg {
                     width: 100%;
                 }
             }
         }
     }
 
-  
+
 
 
     figcaption {
@@ -217,11 +210,11 @@ figure {
     }
 }
 
-#photoModal { 
+#photoModal {
     /* This needs display to be set to none other wise it messes up functionality of mouseenter on some elements */
     position: absolute;
-    top: 0; 
-    left: 0; 
+    top: 0;
+    left: 0;
     right: 0;
     height: 300px;
     width: 800px;
@@ -230,9 +223,31 @@ figure {
     z-index: 10000;
     display: none;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     align-items: center;
     justify-content: center;
     margin: 0 auto;
+
+    h1 {
+        display: block;
+    }
 }
 
+.featherlight-content {
+    header {
+        display: flex; 
+        flex-direction: column;
+        flex: 1;
+        align-items: center;
+     
+        gap: 2em;
+
+        h1 {
+            display: block !important;
+        }
+
+        @media only screen and (min-width: 1200px) { 
+            flex-direction: row;
+        }
+    }
+}

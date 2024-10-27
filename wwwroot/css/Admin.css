@@ -190,3 +190,22 @@ figure {
   justify-content: center;
   margin: 0 auto;
 }
+#photoModal h1 {
+  display: block;
+}
+
+.featherlight-content header {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  gap: 2em;
+}
+.featherlight-content header h1 {
+  display: block !important;
+}
+@media only screen and (min-width: 1200px) {
+  .featherlight-content header {
+    flex-direction: row;
+  }
+}
