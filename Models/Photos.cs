@@ -6,8 +6,8 @@ namespace PersonalWebsiteMVC.Models
     public class Photos
     {
         [Key]
-        public int Id { get; set; }
-        [ForeignKey("AlbumID")]
+        public int PhotoID { get; set; }
+        [ForeignKey("AlbumID")]// Build was throwing an error because this column didn't exist!!!
         public int AlbumID { get; set; }
         public string? Name { get; set; }
         public string? Description { get; set; }

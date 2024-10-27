@@ -13,7 +13,7 @@
 
 <form method="post" asp-action="DeletePhoto">
     <p>Are you sure you want to delete photo <b>@Model.Name</b> from the database?</p>
-    <input type="hidden" asp-for="Id" value="@Model.Id">
+    <input type="hidden" asp-for="AlbumID" value="@Model.AlbumID">
     <button type="submit" class="btn btn-primary">Yes</button>
 </form>
 

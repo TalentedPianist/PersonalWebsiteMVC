@@ -11,7 +11,7 @@
 
 <dl>
     <dt>Id:</dt>
-    <dd>@Model.Id</dd>
+    <dd>@Model.AlbumID</dd>
     <dt>Name:</dt>
     <dd>@Model.Name</dd>
     <dt>Description:</dt>
@@ -24,6 +24,6 @@
     <dd>@Model.DateCreated</dd>
 </dl>
 
-<a asp-action="Update" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="Gallery" class="btn btn-link">Update</a> 
+<a asp-action="Update" asp-route-id="@Model.AlbumID" asp-area="Admin" asp-controller="Gallery" class="btn btn-link">Update</a> 
 |
-<a asp-action="Delete" asp-route-id="@Model.Id" asp-area="Admin" asp-controller="Gallery" class="btn btn-link">Delete</a>
+<a asp-action="Delete" asp-route-id="@Model.AlbumID" asp-area="Admin" asp-controller="Gallery" class="btn btn-link">Delete</a>

@@ -28,7 +28,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
             
 
-            var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+            var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
             ViewBag.AlbumName = album!.Name;
             return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }
@@ -37,7 +37,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         [Microsoft.AspNetCore.Mvc.Route("Photos/Album/GetPhotos")]
         public IActionResult GetPhotos(int id)
         {
-            var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            var photo = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
             var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).ToList();
             ViewBag.Comments = comments;
            
@@ -49,7 +49,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         public IActionResult SinglePhoto()
         {
             var id = Request.Form["id"];
-            var photo = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            var photo = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
             return Ok(photo);
         }
     }

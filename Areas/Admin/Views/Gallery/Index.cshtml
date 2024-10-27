@@ -91,7 +91,7 @@
         try
         {
             var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-            return album!.Id;
+            return album!.AlbumID;
         }
         catch (NullReferenceException)
         {
@@ -137,8 +137,14 @@
                         }).responseText;
                         del.push({ 'Id': id });
                     } else {
+                        // Looks like it wasn't working because I was editing the wrong bit of code.  This is something I do a lot.  What an eejit.
+                        // ---------------------------------//
+                        // Another interesting discovery is that using DateTime.Now in C# for AJAX returns undefined.  The solution is to create a javascript method.
+                        let now = new Date();
+                        let dateString = moment(now).format('YYYY-MM-DD HH:mm:ss');
                         add.push({
-                            'Name': e.target.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': '@DateTime.Now' })
+                            'Name': e.target.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': dateString
+                        })
                     }
                 });
             }
@@ -163,9 +169,8 @@
 
                         del.push({ 'Id': id });
                     } else {
-                        add.push({
-                            'Name': e.value 
-                        });
+						let today = moment().format('yyyy-MM-dd HH:mm:ss');
+                        add.push({ 'Name': e.value, 'DateCreated': today });
                     }
                 });
             });
@@ -174,14 +179,14 @@
             document.querySelector("#AddToDb").addEventListener('click', function (e) {
                 e.preventDefault();
                 var arrData = JSON.stringify(add);
-                console.log(arrData);
+                
+
+                //console.log(arrData);
                 $.ajax({
                     cache: false,
                     method: 'POST',
-                    url: 'Gallery/AddMultipleToDb',
-                    contentType: "application/json; charset=utf-8",
-                    processData: false,
-                    data: { data: add },
+                    url: '@Url.Action("AddMultipleToDb", "Gallery")',
+                    data: arrData,
                     headers: {
                         'Content-type': 'application/json'
                     },

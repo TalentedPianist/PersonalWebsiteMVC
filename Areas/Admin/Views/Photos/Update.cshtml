@@ -17,7 +17,7 @@
     <div asp-validation-summary="All"></div>
     <div class="form-group">
         <label>Id:</label>
-        <input asp-for="Id" class="form-control" disabled">
+        <input asp-for="AlbumID" class="form-control" disabled">
     </div>
     <div class="form-group">
         <label>Name:</label>
@@ -49,11 +49,11 @@
         <select asp-for="AlbumID" class="form-control">
             @foreach (var item in _db.Albums)
             {
-                <option value="@item.Id">@item.Name</option>
+                <option value="@item.AlbumID">@item.Name</option>
             }
         </select>
     </div>
-    <input type="hidden" asp-for="Id" value="@Model.Id">
+    <input type="hidden" asp-for="AlbumID" value="@Model.AlbumID">
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 

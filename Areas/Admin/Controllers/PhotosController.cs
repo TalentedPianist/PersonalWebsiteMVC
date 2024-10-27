@@ -42,10 +42,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 int id = Convert.ToInt32(Context.HttpContext!.Request.Query["id"]);
 
 
-                var album = _db.Albums.Where(a => a.Id == id).FirstOrDefault();
+                var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
                 var photos = _db.Photos.Where(p => p.AlbumID == id);
                 ViewBag.AlbumName = album!.Name;
-                ViewBag.AlbumID = album.Id;
+                ViewBag.AlbumID = album.AlbumID;
 
 
                 // Here we need to combine three paths in the param[] array since it is the photos view and not the album view.  
@@ -90,7 +90,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public async Task<IActionResult> AddFiles([FromForm(Name = "AddFiles")] List<IFormFile> files, [FromForm(Name = "AlbumID")] int AlbumID)
         {
             TempData["Message"] = AlbumID;
-            var album = _db.Albums.Where(a => a.Id == AlbumID).FirstOrDefault();
+            var album = _db.Albums.Where(a => a.AlbumID == AlbumID).FirstOrDefault();
             long size = files.Sum(f => f.Length);
             StringBuilder sb = new StringBuilder();
             var filePath = Path.Combine(Host.ContentRootPath, "Gallery");
@@ -139,7 +139,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         {
 
             var pic = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
-            return pic!.Id;
+            return pic!.AlbumID;
         }
 
 
@@ -150,7 +150,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var pic = Request.Form["name"];
             var albumRecord = _db.Albums.Where(a => a.Name == album).FirstOrDefault();
             PersonalWebsiteMVC.Models.Photos photos = new PersonalWebsiteMVC.Models.Photos();
-            photos.AlbumID = albumRecord!.Id;
+            photos.AlbumID = albumRecord!.AlbumID;
             photos.Name = pic;
             photos.ImageUrl = $"/Gallery/{album}/{pic}";
             _db.Photos.Add(photos);
@@ -206,7 +206,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public int GetId([FromForm(Name = "name")] string name)
         {
 
-            var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.Id;
+            var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.AlbumID;
             return id;
         }
 
@@ -214,7 +214,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         // Resuming normal functions for update, details and delete.
         public IActionResult Update(int id)
         {
-            var model = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            var model = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
             return View(model);
         }
 
@@ -239,20 +239,20 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         public IActionResult Details(int id)
         {
-            var model = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            var model = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
             return View(model);
         }
 
         public IActionResult Delete(int id)
         {
-            var model = _db.Photos.Where(p => p.Id == id).FirstOrDefault();
+            var model = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
             return View(model);
         }
 
         [HttpPost]
         public IActionResult DeletePhoto(PersonalWebsiteMVC.Models.Photos model)
         {
-            TempData["Message"] = model.Id;
+            TempData["Message"] = model.AlbumID;
             return View("~/Areas/Admin/Views/Photos/Delete.cshtml", model);
         }
 
@@ -262,7 +262,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("Photos/SetCoverPic")]
         public IActionResult SetCoverPic([FromBody] Album data)
         {
-            var album = _db.Albums.Where(a => a.Id == data.Id).FirstOrDefault();
+            var album = _db.Albums.Where(a => a.AlbumID == data.AlbumID).FirstOrDefault();
             album!.CoverPhoto = data.CoverPhoto;
             album!.DateCreated = DateTime.Now;
             _db.Albums.Update(album);
