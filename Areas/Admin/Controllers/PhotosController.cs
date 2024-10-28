@@ -205,9 +205,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public int GetId([FromForm(Name = "name")] string name)
         {
-
-            var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.AlbumID;
-            return id;
+            if (name != null)
+            {
+                var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.AlbumID;
+                return id;
+            }
+            else
+            {
+                return new NotFoundResult();
+            }
         }
 
 
@@ -260,14 +266,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("Photos/SetCoverPic")]
-        public IActionResult SetCoverPic([FromBody] Album data)
+        public IActionResult SetCoverPic([FromBody] int id, string CoverPhoto)
         {
-            var album = _db.Albums.Where(a => a.AlbumID == data.AlbumID).FirstOrDefault();
+            /*var album = _db.Albums.Where(a => a.AlbumID == data.AlbumID).FirstOrDefault();
             album!.CoverPhoto = data.CoverPhoto;
-            //album!.DateCreated = DateTime.Now;
+            album!.DateCreated = DateTime.Now;
             _db.Albums.Update(album);
             _db.SaveChanges();
-
+*/
             return Ok(data);
         }
 

@@ -163,9 +163,6 @@ namespace PersonalWebsiteMVC.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("AlbumID"));
 
-                    b.Property<int?>("AlbumID1")
-                        .HasColumnType("int");
-
                     b.Property<string>("CoverPhoto")
                         .HasColumnType("nvarchar(max)");
 
@@ -182,8 +179,6 @@ namespace PersonalWebsiteMVC.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("AlbumID");
-
-                    b.HasIndex("AlbumID1");
 
                     b.ToTable("Albums");
                 });
@@ -486,18 +481,6 @@ namespace PersonalWebsiteMVC.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-                });
-
-            modelBuilder.Entity("PersonalWebsiteMVC.Models.Album", b =>
-                {
-                    b.HasOne("PersonalWebsiteMVC.Models.Album", null)
-                        .WithMany("AlbumData")
-                        .HasForeignKey("AlbumID1");
-                });
-
-            modelBuilder.Entity("PersonalWebsiteMVC.Models.Album", b =>
-                {
-                    b.Navigation("AlbumData");
                 });
 #pragma warning restore 612, 618
         }

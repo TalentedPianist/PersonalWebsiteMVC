@@ -204,7 +204,7 @@ figure {
 .featherlight-content header h1 {
   display: block !important;
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 600px) {
   .featherlight-content header {
     flex-direction: row;
   }

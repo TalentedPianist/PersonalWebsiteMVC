@@ -4,7 +4,6 @@ namespace PersonalWebsiteMVC.Models
 {
     public class Album
     {
-        public List<Album> AlbumData { get; set; } = new List<Album>();
         [Key]
         public int AlbumID { get; set; }
         public string? Name { get; set; } 

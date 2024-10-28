@@ -21,17 +21,11 @@ namespace PersonalWebsiteMVC.Migrations
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Location = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CoverPhoto = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    AlbumID1 = table.Column<int>(type: "int", nullable: true)
+                    DateCreated = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Albums", x => x.AlbumID);
-                    table.ForeignKey(
-                        name: "FK_Albums_Albums_AlbumID1",
-                        column: x => x.AlbumID1,
-                        principalTable: "Albums",
-                        principalColumn: "AlbumID");
                 });
 
             migrationBuilder.CreateTable(
@@ -277,11 +271,6 @@ namespace PersonalWebsiteMVC.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Albums_AlbumID1",
-                table: "Albums",
-                column: "AlbumID1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
