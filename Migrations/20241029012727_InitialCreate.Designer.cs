@@ -12,7 +12,7 @@ using PersonalWebsiteMVC.Data;
 namespace PersonalWebsiteMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241028210056_InitialCreate")]
+    [Migration("20241029012727_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -368,6 +368,9 @@ namespace PersonalWebsiteMVC.Migrations
 
                     b.Property<string>("Author")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("DateCreated")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");

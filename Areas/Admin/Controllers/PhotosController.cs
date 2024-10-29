@@ -181,13 +181,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("/Photos/AddMultipleToDb")]
         [HttpPost]
-        public IActionResult AddMultipleToDb([FromBody] List<PersonalWebsiteMVC.Models.Photos> data)
+        public IActionResult AddMultipleToDb([FromBody] List<Models.Photos> data)
         {
             // Here we are just deleting the photos from the database and ajax success function handles response on client side to refresh page.
 
             _db.Photos.AddRange(data);
             _db.SaveChanges();
-            return Ok();
+            return Ok(data);
 
         }
 
@@ -203,16 +203,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public int GetId([FromForm(Name = "name")] string name)
+        public IActionResult GetId([FromBody] string name)
         {
             if (name != null)
             {
                 var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.AlbumID;
-                return id;
+                return Ok(id);
             }
             else
             {
-                return new NotFoundResult();
+                return Ok();
             }
         }
 
@@ -274,7 +274,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             _db.Albums.Update(album);
             _db.SaveChanges();
 */
-            return Ok(data);
+            return Ok();
         }
 
         [HttpPost]

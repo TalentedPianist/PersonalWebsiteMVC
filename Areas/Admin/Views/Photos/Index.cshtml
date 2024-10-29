@@ -135,6 +135,7 @@ else
 
             let add = [];
             let del = [];
+            let tempArray = [];
 
             // Begin select individual checkboxes code
             let cb = document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll('input[type="checkbox"]');
@@ -143,25 +144,10 @@ else
                 cb[i].addEventListener('click', function (e) {
                     //e.preventDefault();
                     e.checked = true;
-                    var isInDb = $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("AjaxDbCheck", "Photos")",
-                        data: { 'name': e.target.value },
-                        async: false
-                    }).responseText;
-                    if (isInDb) {
-                        var id = $.ajax({
-                            type: "POST",
-                            url: "@Url.Action("GetId", "Photos")",
-                            data: { 'name': e.target.value },
-                            async: false
-                        }).responseText;
-                        del.push({ 'Id': id, 'name': e.target.value });
-                    }
-                    else {
-                        add.push({ 'name': e.target.value });
-                    }
+                    tempArray.push(e);
+                    // Here we just check all the checkboxes, no need to do anything complicated.
                 });
+
                 
             }
 
@@ -173,39 +159,35 @@ else
                 cb = document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll('input[type="checkbox"]');
                 cb.forEach(function (e) {
                     e.checked = true;
-
-                    //https://stackoverflow.com/questions/7598821/return-responsetext-from-jquery-get
-                    // Seems that you can do this in ajax with async: false and responseText at the end which makes sense
-                    var isInDb = $.ajax({ type: "POST", url: "@Url.Action("AjaxDbCheck", "Photos")", data: { 'name': e.value }, async: false }).responseText;
-
-
-                    if (isInDb) {
-
-                        var id = $.ajax({
-                            type: "POST",
-                            url: "@Url.Action("GetId", "Photos")", data: { 'name': e.value }, async: false
-                        }).responseText;
-                        // This now works!!  The time spent studying the ajax documentation was worth it.  Hoorah!  
-                        del.push({ 'Id': id });
-                    }
+                    let name = e.value;
+                    let src = $(e).parent().parent().find('img').attr('src');
+                    //console.log(src);
+                    tempArray.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': e.value, 'Description': '', 'Location': '', 'Author': '', 'ImageUrl': `${src}`, 'DateCreated': '@DateTime.Now'});
+              
+     
                 });
-                console.log(del.length);
+           
             });
+
+                   
+           
             // End select all checkboxes code
 
             $("#addToDb").on('click', function (e) {
                 e.preventDefault();
+        
+                
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Photos")",
-                    data: JSON.stringify(add),
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    data: JSON.stringify(tempArray),
                     async: false,
                     cache: false,
                     success: function (message) {
-                        window.location.reload();
+                        console.log(message);
                     },
                     error: function (err) {
                         console.log(err);
