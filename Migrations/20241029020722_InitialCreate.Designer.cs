@@ -12,7 +12,7 @@ using PersonalWebsiteMVC.Data;
 namespace PersonalWebsiteMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241029012727_InitialCreate")]
+    [Migration("20241029020722_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />

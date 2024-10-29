@@ -110,19 +110,18 @@ else
                     this.$instance.find('.featherlight-content').find('#coverPhoto').on('click', function (e) {
                         e.preventDefault();
                         let name = $(this).data('name');
-                        
+                        let src = $(this).parent().parent().find('img').attr('src');
+                   
+                 
 
                         $.ajax({
                             method: "POST",
                             url: "@Url.Action("SetCoverPic", "Photos")",
-                            data: JSON.stringify({ 'id': '@ViewBag.AlbumID', 'CoverPhoto': name }),
+                            data: { 'id': '@ViewBag.AlbumID', 'CoverPhoto': `${src}` },
                             async: false,
                             cache: false,
-                            headers: {
-                                'Content-Type': 'application/json'
-                            },
                             success: function (message) {
-                                console.log(message);
+                                window.location.href = '/Admin/Gallery';
                             },
                             error: function (error) {
                                 console.log(error);
@@ -161,9 +160,33 @@ else
                     e.checked = true;
                     let name = e.value;
                     let src = $(e).parent().parent().find('img').attr('src');
-                    //console.log(src);
-                    tempArray.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': e.value, 'Description': '', 'Location': '', 'Author': '', 'ImageUrl': `${src}`, 'DateCreated': '@DateTime.Now'});
-              
+                    let myDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
+                    
+                    let isInDb = $.ajax({
+                        method: "POST", url: "@Url.Action("AjaxDbCheck", "Photos")", data: { 'name': e.value }, async: false
+                    }).responseText;
+                    //console.log(isInDb);
+
+                    if (!isInDb) {
+                        //console.log(e.value);
+
+                        $.ajax({
+                            method: "POST",
+                            url: "@Url.Action("GetId", "Photos")",
+                            data: { 'name': e.value },
+                            async: false,
+                            cache: false,
+                            success: function (message) {
+                                console.log(message);
+                                del.push({ 'PhotoID': message });
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
+                    } else {
+                        add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': e.value, 'ImageUrl': `${src}`, 'DateCreated': `${myDate}` });
+                    }
      
                 });
            
@@ -183,7 +206,7 @@ else
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    data: JSON.stringify(tempArray),
+                    data: JSON.stringify(add),
                     async: false,
                     cache: false,
                     success: function (message) {
@@ -197,12 +220,16 @@ else
 
             $("#delFromDb").on('click', function (e) {
                 e.preventDefault();
+                console.log(del);
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
                     data: JSON.stringify(del),
                     async: false,
                     cache: false,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
                     success: function (message) {
                         window.location.reload();
                     },

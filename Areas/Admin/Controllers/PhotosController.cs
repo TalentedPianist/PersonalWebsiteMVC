@@ -112,16 +112,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index", "Photos", AlbumID);
         }
 
-        [Route("/IsInDb")]
-        [HttpPost]
-        public bool IsInDb(string name)
-        {
-            List<PersonalWebsiteMVC.Models.Photos> photos = _db.Photos.Where(p => p.Name == name).ToList();
-            bool hasPic = photos.Any();
-            if (hasPic)
-                return true;
-            return false;
-        }
+       
 
         [HttpPost]
         [Route("/Photos/AjaxDbCheck")]
@@ -131,15 +122,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 return true;
             else
                 return false;
-        }
-
-        [HttpPost]
-        [Route("/Photos/GetPicId")]
-        public int GetPicId(string name)
-        {
-
-            var pic = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
-            return pic!.AlbumID;
         }
 
 
@@ -192,28 +174,29 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [Route("/Photos/RemoveMultipleFromDb")]
-        [HttpPost("/Photos/RemoveMultipleFromDb")]
-        public IActionResult RemoveMultipleFromDb([FromBody] List<PersonalWebsiteMVC.Models.Photos> data)
+        [HttpPost]
+        public IActionResult RemoveMultipleFromDb([FromBody] List<Models.Photos> data)
         {
             // Here we are just deleting the photos from the database and ajax success function handles response on client side to refresh page.
-            _db.Photos.RemoveRange((IEnumerable<Models.Photos>)data);
+            _db.Photos.RemoveRange(data);
             _db.SaveChanges();
-            return Ok();
+            return Ok(data);
 
         }
 
         [HttpPost]
-        public IActionResult GetId([FromBody] string name)
+        public IActionResult GetId([FromForm] string name)
         {
             if (name != null)
             {
-                var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.AlbumID;
+                var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.PhotoID;
                 return Ok(id);
             }
             else
             {
-                return Ok();
+                return Ok(name);
             }
+
         }
 
 
@@ -266,14 +249,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("Photos/SetCoverPic")]
-        public IActionResult SetCoverPic([FromBody] int id, string CoverPhoto)
+        public IActionResult SetCoverPic([FromForm] int id, string CoverPhoto)
         {
-            /*var album = _db.Albums.Where(a => a.AlbumID == data.AlbumID).FirstOrDefault();
-            album!.CoverPhoto = data.CoverPhoto;
+            var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
+            album!.CoverPhoto = CoverPhoto;
             album!.DateCreated = DateTime.Now;
             _db.Albums.Update(album);
             _db.SaveChanges();
-*/
+
             return Ok();
         }
 
