@@ -8,6 +8,8 @@ using PersonalWebsiteMVC.Models;
 using PersonalWebsiteMVC.Services;
 using MailKit.Net.Smtp;
 using System.Linq.Expressions;
+using System.Text;
+using ServiceStack;
 
 namespace PersonalWebsiteMVC.Controllers
 {
@@ -29,22 +31,19 @@ namespace PersonalWebsiteMVC.Controllers
 
         }
 
+        [Microsoft.AspNetCore.Mvc.Route("/Contact")]
         public IActionResult Index()
         {
-            return View();
+            return View("~/Views/Home/Contact.cshtml");
         }
 
         [HttpPost]
-        [Route("ContactForm")]
+        [Microsoft.AspNetCore.Mvc.Route("ContactForm")]
         public IActionResult ContactForm(ContactFormModel model)
         {
             if (ModelState.IsValid)
             {
-                if (ReCaptchaPassed(
-                    Request.Form["g-recaptcha-response"]!,
-                    _configuration.GetSection("reCaptcha:secret").Value!,
-                    _Logger))
-                {
+                
                     // Begin send email code
                     var message = new MimeMessage();
                     message.From.Add(new MailboxAddress(model.Name, model.Email));
@@ -59,32 +58,15 @@ namespace PersonalWebsiteMVC.Controllers
                         mailClient.Send(message);
                         mailClient.Disconnect(true);
                     }
+
                 }
-            }
-            // End send email code
+                // End send email code 
+        
 
-            return View("~/Views/Partial/Contact.cshtml");
+            return View("~/Views/Home/Contact.cshtml");
 
         }
 
 
-        public static bool ReCaptchaPassed(string gRecaptchaResponse, string secret, ILogger _Logger)
-        {
-            HttpClient httpClient = new HttpClient();
-            var res = httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={gRecaptchaResponse}").Result;
-            if (res.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                _Logger.LogError("Erorr while sending request to ReCaptcha");
-                return false;
-            }
-
-            string JSONres = res.Content.ReadAsStringAsync().Result;
-            dynamic JSONdata = JObject.Parse(JSONres);
-            if (JSONdata.success != "true")
-            {
-                return false;
-            }
-            return true;
-        }
     }
 }

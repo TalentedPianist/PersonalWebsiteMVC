@@ -99,6 +99,7 @@ else
                             <h1>${name}</h1> 
                             <a href="#">Edit</a>
                             <a href="#" id="coverPhoto" data-name="${name}">Make Cover Photo</a>
+                            <a href="#" id="renamePhoto" data-name="${name}">Rename Photo</a>
                         </header>
                         <section>
                             <img src="${src}" alt="${name}">
@@ -106,6 +107,11 @@ else
                         <footer>
                         </footer>
                     `);
+
+                    this.$instance.find('featherlight-content').find('#renamePhoto').on('click', function (e) {
+                        e.preventDefault();
+                        console.log("Link was clicked");
+                    });
 
                     this.$instance.find('.featherlight-content').find('#coverPhoto').on('click', function (e) {
                         e.preventDefault();

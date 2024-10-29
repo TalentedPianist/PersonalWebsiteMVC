@@ -15,8 +15,6 @@ using PersonalWebsiteMVC.Components;
 using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
-using KITT.Web.ReCaptcha.Http.v2;
-using KITT.Web.ReCaptcha.Http.Internals;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Services;
@@ -25,7 +23,6 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.AspNetCore.Mvc.Razor;
-using HGO.ASPNetCore.FileManager;
 using Wangkanai.Responsive;
 using Serilog;
 
@@ -142,15 +139,12 @@ try
 
     });
 
-    builder.Services.AddReCaptchaV2HttpClient(options =>
-    {
-        options.SecretKey = "6LdB-1kpAAAAAPEBR2GuCm8rTEucGiU89cQPMaC0";
-    });
+
 
 
     builder.Services.AddSession();
 
-    builder.Services.AddScoped<IReCaptchaFormClient, ReCaptchaFormClient>();
+
 
     builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
@@ -177,8 +171,10 @@ try
         options.AppendTrailingSlash = true;
     });
 
-    builder.Services.AddHgoFileManager();
     builder.Services.AddResponsive();
+
+    builder.Services.AddRecaptcha(builder.Configuration.GetSection("ReCaptcha"));
+
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -207,7 +203,6 @@ try
     };
     app.UseFileServer(options);
 
-    app.UseHgoFileManager();
 
     app.UseSession();
 
@@ -246,17 +241,6 @@ try
     app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{id?}");
-
-
-    app.MapPost("api/send", async (ReCaptchaService reCaptcha, [FromBody] ReCaptchaModel model) =>
-    {
-        var result = await reCaptcha.VerifyAsync(model.CaptchaResponse);
-        if (!result.Success)
-        {
-            return Results.BadRequest(result.ErrorCodes);
-        }
-        return Results.Ok();
-    });
 
 
     app.Run();

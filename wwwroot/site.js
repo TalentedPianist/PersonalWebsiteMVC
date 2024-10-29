@@ -1,4 +1,14 @@
-﻿$(function () {
+﻿ClassicEditor
+    .create(document.querySelector('#ckeditor1'), {
+
+        toolbar: []
+    })
+    .catch(error => {
+        console.error(error);
+    });
+
+
+$(function () {
 
 
     $("#menu a").on('click', function (e) {

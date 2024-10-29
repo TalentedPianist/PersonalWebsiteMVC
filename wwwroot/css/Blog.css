@@ -38,40 +38,39 @@ ul {
 form {
   display: flex;
   flex-direction: column;
-  flex: 0;
-  gap: 1em;
-  width: 100%;
-  position: relative;
+  flex: 1;
+  gap: 0.5em;
 }
 form div {
-  width: 100%;
-  position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
 }
-@media only screen and (max-width: 400px) {
-  form div label {
-    display: none;
+@media only screen and (min-width: 600px) {
+  form div #ckeditor1 {
+    flex-direction: row;
   }
 }
+form label {
+  display: none;
+}
 @media only screen and (min-width: 600px) {
-  form div label {
+  form label {
     display: flex;
+    width: 9em;
   }
 }
 form input {
   border: 1px solid black;
   padding: 5px 5px 5px 5px;
-  width: 100%;
 }
-form textarea {
-  border: 2px solid black;
+form button {
+  border: 1px solid black;
   padding: 5px 5px 5px 5px;
   align-self: flex-start;
 }
-form button {
-  align-self: flex-start;
+form .ck .ck-sticky-panel__content {
+  display: none;
 }
 
 .sticky {
@@ -574,8 +573,6 @@ footer {
   flex-direction: column;
   flex: 0;
   position: relative;
-  height: 100vh;
-  min-height: 100vh;
 }
 #Contact section {
   display: flex;
@@ -583,13 +580,19 @@ footer {
   flex: 0;
   background-color: cyan;
   height: 100vh;
-  padding-top: 5em;
+  min-height: 80vh;
+}
+#Contact section article {
+  width: 50%;
 }
 
 .ck-editor__editable_inline {
   min-height: 200px !important;
   width: 100% !important;
   min-width: 100% !important;
+  color: black !important;
+  position: relative !important;
+  z-index: 50000 !important;
 }
 
 #Albums {
