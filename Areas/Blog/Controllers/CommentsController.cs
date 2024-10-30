@@ -23,14 +23,14 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             _Logger = logger;
         }
 
-
+        
         public IActionResult Index(int id)
         {
             var model = _db.Comments.Where(c => c.PostID == id).ToList();
             return View(model);
         }
 
-        [Route("Comments/AddComment")]
+        [Route("Blog/Comments/AddComment")]
         [HttpPost]
         public IActionResult AddComment(BlogCommentViewModel model)
         {
@@ -62,9 +62,8 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             {
                 ModelState.AddModelError("", "Please check the recaptcha to prove that you're not a bot.");
                 TempData["Message"] = Request.Form["g-recaptcha-response"];
+                return RedirectToAction("Index", new { id = model.Post!.PostID, area = "Blog" });
             }
-    
-                return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml");
            
         }
 

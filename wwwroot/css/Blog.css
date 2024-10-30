@@ -172,6 +172,16 @@ header nav a {
   font-size: large;
   color: white;
 }
+@media only screen and (min-width: 800px) {
+  header nav a {
+    font-size: x-large;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  header nav a {
+    font-size: xx-large;
+  }
+}
 @media (orientation: landscape) {
   header nav {
     background-color: transparent !important;
@@ -409,8 +419,7 @@ footer {
   gap: 1em;
   background-color: #9FF739;
   position: relative;
-  height: 100vh;
-  min-height: 100vh;
+  height: 100%;
   width: 100%;
   min-width: 100%;
   padding-left: 1em;
@@ -548,7 +557,6 @@ footer {
   flex-direction: column;
   flex: 0;
   position: relative;
-  height: 100% !important;
 }
 #Comments img {
   width: 15%;
@@ -556,16 +564,6 @@ footer {
 }
 #Comments button {
   align-self: flex-start;
-}
-#Comments form {
-  width: 100%;
-  margin-top: 1em;
-}
-#Comments form label {
-  display: none;
-}
-#Comments form input {
-  width: 100%;
 }
 
 #Contact {

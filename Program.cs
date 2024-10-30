@@ -25,7 +25,7 @@ using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Wangkanai.Responsive;
 using Serilog;
-using KITT.Web.ReCaptcha.Http.v2;
+
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -174,10 +174,6 @@ try
 
     builder.Services.AddResponsive();
 
-    builder.Services.AddReCaptchaV2HttpClient(options =>
-    {
-        options.SecretKey = "6Lcu4zIqAAAAAMq0LGPmI1rvyjWmIo5SfzyxMwt2";
-    });
 
     builder.Services.AddCors(options => 
     {
@@ -223,13 +219,13 @@ try
 
     app.UseSession();
 
-/*
+
     app.UseMvc(routes =>
     {
         routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
         routes.MapAreaRoute("Blog", "Blog", "Blog/{controller}/{action}/{id?}");
         routes.MapAreaRoute("Photos", "Photos", "Photos/{action}/{id?}");
-    });*/
+    });
 
     app.MapRazorPages();
 
@@ -241,8 +237,7 @@ try
 
     //app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
-
-    app.MapAreaControllerRoute(
+/* app.MapAreaControllerRoute(
         name: "Admin",
         areaName: "Admin",
         pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -255,7 +250,8 @@ try
 
     app.MapControllerRoute(
         name: "default",
-        pattern: "{controller=Home}/{id?}");
+        pattern: "{controller=Home}/{id?}");*/
+   
 
 
     app.Run();

@@ -15,6 +15,7 @@
             @TempData["Message"]
 
             <form method="post" asp-action="ContactForm" asp-controller="Contact">
+                <div class="text-danger" asp-validation-summary="All"></div>
                 <div>
                     <label>Name:</label>
                     <input asp-for="Name" placeholder="John Smith">
@@ -49,7 +50,7 @@
                     url: "@Url.Action("Captcha", "Contact")",
                     data: { userResponse: reCaptchaResponse },
                     success: function (data) {
-                        console.log(data);
+                        $("form").submit();
                     },
                     error: function (error) {
                         console.log(error);
