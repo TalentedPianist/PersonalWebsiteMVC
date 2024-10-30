@@ -14,13 +14,15 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         public IHttpContextAccessor _http { get; set; }
         private IConfiguration _configuration { get; set; }
         public ILogger<CommentsController> _Logger { get; set; }
+        private readonly HttpClient _httpClient;
 
-        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<CommentsController> logger)
+        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<CommentsController> logger, HttpClient httpClient)
         {
             _db = db;
             _http = http;
             _configuration = config;
             _Logger = logger;
+            _httpClient = httpClient;
         }
 
 
@@ -68,25 +70,27 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
            
         }
 
-        public static bool ReCaptchaPassed(string gRecaptchaResponse, string secret, ILogger _Logger)
+
+        public async Task<bool> GetreCaptchaResponse(string userResponse)
         {
-            HttpClient httpClient = new HttpClient();
-            var res = httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={gRecaptchaResponse}").Result;
-            if (res.StatusCode != System.Net.HttpStatusCode.OK)
-            {
-                _Logger.LogError("Error while sending request to ReCaptcha");
-                return false;
-            }
+            var reCaptchaSecretKey = _configuration["reCaptcha:SecretKey"];
 
-            string JSONres = res.Content.ReadAsStringAsync().Result;
-            dynamic JSONdata = JObject.Parse(JSONres);
-            Console.WriteLine(JSONdata);
-            if (JSONdata.success != "true")
+            if (reCaptchaSecretKey != null && userResponse != null)
             {
-                return false;
+                var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    { "secret", reCaptchaSecretKey" },
+                    { "response", userResponse }
+                });
+                var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
+                    return result!.Success;
+                }
             }
-
-            return true;
+            return false;
         }
+        
     }
 }

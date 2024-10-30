@@ -182,6 +182,10 @@ header {
             text-decoration: none;
             font-size: large;
             color: white;
+
+            @media only screen and (min-width: 800px)  {
+                font-size: xx-large;
+            }
         }
 
 
@@ -602,7 +606,6 @@ footer {
     flex-direction: column;
     flex: 0;
     position: relative;
-    height: 100% !important;
 
     img {
         width: 15%;

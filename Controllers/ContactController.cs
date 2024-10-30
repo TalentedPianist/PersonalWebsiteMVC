@@ -10,7 +10,7 @@ using MailKit.Net.Smtp;
 using System.Linq.Expressions;
 using System.Text;
 using ServiceStack;
-using KITT.Web.ReCaptcha.Blazor.v3;
+
 
 
 namespace PersonalWebsiteMVC.Controllers
@@ -22,17 +22,16 @@ namespace PersonalWebsiteMVC.Controllers
         public IConfiguration _configuration { get; set; }
         public ILogger<ContactController> _Logger { get; set; }
         private readonly MailSettings _mailSettings;
-        public ReCaptchaService _reCaptchaService { get; set; }
+  
         private readonly HttpClient _httpClient;
 
-        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<ContactController> logger, IOptions<MailSettings> mailSettingsOptions, ReCaptchaService reCaptchaService, HttpClient httpClient)
+        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<ContactController> logger, IOptions<MailSettings> mailSettingsOptions, HttpClient httpClient)
         {
             _db = db;
             _http = http;
             _configuration = config;
             _Logger = logger;
             _mailSettings = mailSettingsOptions.Value;
-            _reCaptchaService = reCaptchaService;
             _httpClient = httpClient;
         }
 

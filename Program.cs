@@ -223,13 +223,13 @@ try
 
     app.UseSession();
 
-/*
+
     app.UseMvc(routes =>
     {
         routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
         routes.MapAreaRoute("Blog", "Blog", "Blog/{controller}/{action}/{id?}");
         routes.MapAreaRoute("Photos", "Photos", "Photos/{action}/{id?}");
-    });*/
+    });
 
     app.MapRazorPages();
 
@@ -242,7 +242,7 @@ try
     //app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
 
-    app.MapAreaControllerRoute(
+/*    app.MapAreaControllerRoute(
         name: "Admin",
         areaName: "Admin",
         pattern: "{controller=Home}/{action=Index}/{id?}");
@@ -256,7 +256,7 @@ try
     app.MapControllerRoute(
         name: "default",
         pattern: "{controller=Home}/{id?}");
-
+*/
 
     app.Run();
 

@@ -9,11 +9,14 @@ namespace PersonalWebsiteMVC.Models
      public class ContactFormModel
      {
         [Display(Name = "Name:")]
-        public string? Name { get; set; } 
+        [Required]
+        public string? Name { get; set; }
         [Display(Name = "Email:")]
+        [Required]
         public string? Email { get; set; } 
         public string? Website { get; set; }
         [Display(Name = "Message:")]
+        [Required]
         public string? Message { get; set; } 
      }
 }
