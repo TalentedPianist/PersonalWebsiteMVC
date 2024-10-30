@@ -4,7 +4,7 @@
 @{
 }
 @model ContactFormModel
-@using AspNetCore.ReCaptcha 
+
 
 <div id="Contact">
 
@@ -31,11 +31,35 @@
                     <label>Message:</label>
                     <textarea asp-for="Message" id="ckeditor1"></textarea>
                 </div>
-     
+                <div class="g-recaptcha" data-sitekey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"></div>
                 <button type="submit">Submit</button>
             </form>
         </article>
     </section>
 </div>
+
+@section Scripts {
+    <script>
+        $("button").on('click', function (e) {
+            e.preventDefault();
+            let reCaptchaResponse = grecaptcha.getResponse();
+            if (reCaptchaResponse) {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("Captcha", "Contact")",
+                    data: { userResponse: reCaptchaResponse },
+                    success: function (data) {
+                        console.log(data);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                $("form").prepend("<p>You must click the reCaptcha to prove that you're not a robot.</p>");
+            }
+        });
+    </script>
+}
 
 

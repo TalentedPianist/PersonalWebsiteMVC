@@ -10,6 +10,8 @@ using MailKit.Net.Smtp;
 using System.Linq.Expressions;
 using System.Text;
 using ServiceStack;
+using KITT.Web.ReCaptcha.Blazor.v3;
+
 
 namespace PersonalWebsiteMVC.Controllers
 {
@@ -20,15 +22,18 @@ namespace PersonalWebsiteMVC.Controllers
         public IConfiguration _configuration { get; set; }
         public ILogger<ContactController> _Logger { get; set; }
         private readonly MailSettings _mailSettings;
+        public ReCaptchaService _reCaptchaService { get; set; }
+        private readonly HttpClient _httpClient;
 
-        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<ContactController> logger, IOptions<MailSettings> mailSettingsOptions)
+        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<ContactController> logger, IOptions<MailSettings> mailSettingsOptions, ReCaptchaService reCaptchaService, HttpClient httpClient)
         {
             _db = db;
             _http = http;
             _configuration = config;
             _Logger = logger;
             _mailSettings = mailSettingsOptions.Value;
-
+            _reCaptchaService = reCaptchaService;
+            _httpClient = httpClient;
         }
 
         [Microsoft.AspNetCore.Mvc.Route("/Contact")]
@@ -43,6 +48,7 @@ namespace PersonalWebsiteMVC.Controllers
         {
             if (ModelState.IsValid)
             {
+                
                 
                     // Begin send email code
                     var message = new MimeMessage();
@@ -67,6 +73,31 @@ namespace PersonalWebsiteMVC.Controllers
 
         }
 
+        [HttpGet("Captcha")]
+        public async Task<bool> GetreCaptchaResponse(string userResponse)
+        {
+            var reCaptchaSecretKey = _configuration["reCaptchaSecretKey"];
+
+            if (reCaptchaSecretKey != null && userResponse != null)
+            {
+                if (reCaptchaSecretKey != null && userResponse != null)
+                {
+                    var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                    {
+                        {"secret", reCaptchaSecretKey },
+                        {"response", userResponse }
+                    });
+                    var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
+                        return false;
+                    }
+                }
+                return false;
+            }
+            return false;
+        }
 
     }
 }

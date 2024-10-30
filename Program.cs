@@ -25,6 +25,7 @@ using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Wangkanai.Responsive;
 using Serilog;
+using KITT.Web.ReCaptcha.Http.v2;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -173,7 +174,23 @@ try
 
     builder.Services.AddResponsive();
 
-    builder.Services.AddRecaptcha(builder.Configuration.GetSection("ReCaptcha"));
+    builder.Services.AddReCaptchaV2HttpClient(options =>
+    {
+        options.SecretKey = "6Lcu4zIqAAAAAMq0LGPmI1rvyjWmIo5SfzyxMwt2";
+    });
+
+    builder.Services.AddCors(options => 
+    {
+        options.AddDefaultPolicy(
+            policy =>
+            {
+                policy.AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+            });
+    });
+
+    builder.Services.AddHttpClient();
 
 
     var emailConfig = builder.Configuration
@@ -219,10 +236,8 @@ try
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
-
-
-
     app.UseAntiforgery();
+
 
     //app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
