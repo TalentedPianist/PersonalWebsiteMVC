@@ -1,5 +1,5 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
@@ -11,56 +11,66 @@
 @using X.PagedList.Extensions
 @using X.PagedList
 @using X.Web.PagedList
+@using Microsoft.AspNetCore.Routing
 @model String
 
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
 @TempData["Message"]
 
+@GetId()
+
 <div id="Photos">
 
-    <section>
-        <ul>
-            <li><a href="#" id="toggleAll">Select All</a></li>
-            <li><a href="#" id="addToDb">Add to Database</a></li>
-            <li><a href="#" id="delFromDb">Delete from Database</a></li>
-        </ul>
-    </section>
+	<section>
+		<ul>
+			<li><a href="#" id="toggleAll">Select All</a></li>
+			<li><a href="#" id="addToDb">Add to Database</a></li>
+			<li><a href="#" id="delFromDb">Delete from Database</a></li>
+		</ul>
+	</section>
 
-    <section>
+	<section>
 
-        @{
-            foreach (FileInfo file in ViewBag.OnePageOfFiles)
+		@{
+            try
             {
+                foreach (FileInfo file in ViewBag.OnePageOfFiles)
+                {
 
 
-                <figure>
-                    <div></div>
-                    <a href="#" class="gallery" data-name="@file.Name"><img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name"></a>
+					<figure>
+						<div></div>
+						<a href="#" class="gallery" data-name="@file.Name"><img src="/Gallery/@ViewBag.AlbumName/@file.Name" alt="@file.Name" data-name="@file.Name"></a>
 
-                    <figcaption>
-                        @file.Name
-                        <input type="checkbox" name="cbDb" value="@file.Name">
-                        <ul>
-                            <li><a href="#">View</a></li>
-                            <li><a href="#">Update</a></li>
-                            <li><a href="#">Details</a></li>
-                            <li><a href="#">Delete</a></li>
-                        </ul>
+						<figcaption>
+							@file.Name
+							<input type="checkbox" name="cbDb" value="@file.Name">
+							<ul>
+								<li><a href="#">View</a></li>
+								<li><a href="#">Update</a></li>
+								<li><a href="#">Details</a></li>
+								<li><a href="#">Delete</a></li>
+							</ul>
 
-                    </figcaption>
-                </figure>
+						</figcaption>
+					</figure>
 
+                }
             }
-        }
-    </section>
+            catch (NullReferenceException ex)
+            {
+				@ex.Message
+            }
+		}
+	</section>
 
 
 </div>
 
 @if (string.IsNullOrEmpty(Context.Request.Query["album"]))
 {
-    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
+	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", id = Context.Request.Query["id"] }),
                 new PagedListRenderOptions
                 {
                     DisplayItemSliceAndTotal = true,
@@ -70,7 +80,7 @@
 }
 else
 {
-    @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", album = Context.Request.Query["album"] }),
+	@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", album = Context.Request.Query["album"] }),
         new PagedListRenderOptions
         {
             DisplayItemSliceAndTotal = true,
@@ -80,10 +90,17 @@ else
 }
 
 
+@functions {
+    int GetId()
+    {
+        var routeData = Context.GetRouteData();
+        return Convert.ToInt32(routeData?.Values["id"]);
+    }
+}
 
 
-@section Scripts {
-    <script>
+		@section Scripts {
+			<script>
 
         $(function () {
             $("a.gallery").featherlightGallery({
@@ -96,7 +113,7 @@ else
                     let src = $(lastCurrent).find('img').attr('src');
                     this.$instance.find('.featherlight-content').html(`
                         <header>
-                            <h1>${name}</h1> 
+                            <h1>${name}</h1>
                             <a href="#">Edit</a>
                             <a href="#" id="coverPhoto" data-name="${name}">Make Cover Photo</a>
                             <a href="#" id="renamePhoto" data-name="${name}">Rename Photo</a>
@@ -117,8 +134,8 @@ else
                         e.preventDefault();
                         let name = $(this).data('name');
                         let src = $(this).parent().parent().find('img').attr('src');
-                   
-                 
+
+
 
                         $.ajax({
                             method: "POST",
@@ -153,7 +170,7 @@ else
                     // Here we just check all the checkboxes, no need to do anything complicated.
                 });
 
-                
+
             }
 
             // End select individual checkboxes code
@@ -167,7 +184,7 @@ else
                     let name = e.value;
                     let src = $(e).parent().parent().find('img').attr('src');
                     let myDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
-                    
+
                     let isInDb = $.ajax({
                         method: "POST", url: "@Url.Action("AjaxDbCheck", "Photos")", data: { 'name': e.value }, async: false
                     }).responseText;
@@ -193,19 +210,19 @@ else
                     } else {
                         add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': e.value, 'ImageUrl': `${src}`, 'DateCreated': `${myDate}` });
                     }
-     
+
                 });
-           
+
             });
 
-                   
-           
+
+
             // End select all checkboxes code
 
             $("#addToDb").on('click', function (e) {
                 e.preventDefault();
-        
-                
+
+
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Photos")",
@@ -245,13 +262,13 @@ else
                 });
             });
 
-            
-      
+
+
 
         });
 
 
 
-    </script>
+			</script>
 
-}
+		}

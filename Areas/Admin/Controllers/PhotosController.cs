@@ -20,66 +20,25 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
     {
         private ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
-        public IHttpContextAccessor Context { get; set; }
-        private readonly IFileManagerCommandsProcessor _processor;
+        public IHttpContextAccessor _http { get; set; }
 
-        public PhotosController(ApplicationDbContext db, IWebHostEnvironment host, IHttpContextAccessor context, IFileManagerCommandsProcessor processor)
+
+        public PhotosController(ApplicationDbContext db, IWebHostEnvironment host, IHttpContextAccessor context)
         {
             _db = db;
             Host = host;
-            Context = context;
-            _processor = processor;
+            _http = context;
         }
 
+   
         [Route("Photos/Index")]
-        [Route("Photos/Index/{id}")]
-        [Route("Areas/Admin/Photos/Index")]
-
-        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
+        [Route("Photos/Index/{id}")] // To get a route working properly without the querystring, you need to have the id parameter in the route as above.
+        public IActionResult Index()
         { // X.PagedList is now working after adding the FromQuery attribute forcing it to use the pageNumber querystring.
-            try
-            {
-                int id = Convert.ToInt32(Context.HttpContext!.Request.Query["id"]);
-
-
-                var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
-                var photos = _db.Photos.Where(p => p.AlbumID == id);
-                ViewBag.AlbumName = album!.Name;
-                ViewBag.AlbumID = album.AlbumID;
-
-
-                // Here we need to combine three paths in the param[] array since it is the photos view and not the album view.  
-                DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery", album.Name!));
-
-                ViewBag.Files = di.GetFiles();
-
-                var pageNumber = page ?? 1; // If no page was specified in the querystring, default to the first page (1)
-                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 16);
-                ViewBag.OnePageOfFiles = onePageOfFiles;
-
-                if (di.GetFiles().Count() == 0)
-                {
-                    TempData["Message"] = "No files found at this time.";
-                }
-
-                return View();
-
-            }
-            catch (NullReferenceException)
-            {
-                // Here is where any file operations should go when the album is not in the database.
-                ViewBag.AlbumName = HttpContext.Request.Query["album"];
-                DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery", HttpContext.Request.Query["album"]!));
-                ViewBag.AllFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG"));
-
-                var pageNumber = page ?? 1;
-                var onePageOfFiles = di.GetFiles().Where(f => f.Name.Contains("JPEG")).ToPagedList(pageNumber, 12);
-                ViewBag.OnePageOfFiles = onePageOfFiles;
-
-                return View();
-            }
-
-
+            int id = Convert.ToInt32(RouteData.Values["id"]);
+            
+     
+            return View();
         }
 
 
@@ -112,7 +71,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return RedirectToAction("Index", "Photos", AlbumID);
         }
 
-       
+
 
         [HttpPost]
         [Route("/Photos/AjaxDbCheck")]
@@ -245,7 +204,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View("~/Areas/Admin/Views/Photos/Delete.cshtml", model);
         }
 
-       
+
 
         [HttpPost]
         [Route("Photos/SetCoverPic")]

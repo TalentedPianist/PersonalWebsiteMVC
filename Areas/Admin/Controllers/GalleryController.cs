@@ -19,13 +19,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
-        private readonly IFileManagerCommandsProcessor _processor;
+    
 
-        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env, IFileManagerCommandsProcessor processor)
+        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env)
         {
             _db = db;
             Host = env;
-            _processor = processor;
+           
         }
 
 

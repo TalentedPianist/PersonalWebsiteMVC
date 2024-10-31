@@ -19,26 +19,28 @@ namespace PersonalWebsiteMVC.Controllers
         {
             return View();
         }
-    }
 
-    [HttpGet("Captcha")]
-    // Thankfully I only have to do this once for the user forms and that's reCaptcha fully integrated!!
-    public async Task<bool> GetreCaptchaResponse(string userResponse)
-    {
-        var reCaptchaSecretKey = _configuration["reCaptchaSecretKey"];
-        if (reCaptchaSecretKey != null && userResponse != null)
+        [HttpGet("Captcha")]
+        public async Task<bool> GetreCaptchaResponse(string userResponse)
         {
-            var content = new FormUrlEncodedContent(new Dictionary<string, string>
+            var reCaptchaSecretKey = _configuration["reCaptcha:SecretKey"];
+
+            if (reCaptchaSecretKey != null && userResponse != null)
             {
-                {"secret", reCaptchaSecretKey },
-                {"response", userResponse }
-            });
-            var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
-                return result.Success;
+                var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    {"secret", reCaptchaSecretKey },
+                    {"response", userResponse }
+                });
+                var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
+                    return result!.Success;
+                }
             }
+            return false;
         }
+
     }
 }
