@@ -1,29 +1,64 @@
 ﻿@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
+@inject IHttpContextAccessor _http
+@inject ApplicationDbContext _db
 @{
-    ViewData["id"] = Context.Request.Query["id"];
+    ViewData["id"] = Context.GetRouteValue("id");
 }
 @model PersonalWebsiteMVC.Areas.Blog.Models.BlogCommentViewModel
 
 <div id="Post">
+
     <section>
         <article>
             @try
             {
-                <h1>@Model.Post!.PostTitle</h1>
+                if (Model.Post is not null)
+                {
+                    <h1>@Model.Post.PostTitle</h1>
+                    @Html.Raw(Model.Post.PostContent)
+                    <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
+                }
+                else
+                {
+                    // You've just got to try things.  This is how I got it working in the end.
+                    var post = _db.Posts.Where(p => p.PostID == Convert.ToInt32(ViewData["id"])).FirstOrDefault();
 
-                @Html.Raw(Model.Post!.PostContent)
+                    <h1>@post!.PostTitle</h1>
+                    @Html.Raw(post.PostContent)
+                    <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
+                }
             }
             catch (NullReferenceException ex)
             {
-                @ex.Message
             }
-
-
-            <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" model="@Model" view-data="ViewData" />
-        </article>
-        <article>
         </article>
     </section>
 </div>
+
+@section Scripts {
+    <script>
+        // For future reference, the scripts section doesn't work in partial views.  Wasted a lot of time on this once.
+        $("form").on('submit', function (e) {
+            e.preventDefault();
+            let reCaptchaResponse = grecaptcha.getResponse();
+            if (reCaptchaResponse) {
+                $.ajax({
+                    type: "GET",
+                    url: "@Url.Action("Captcha", "Comments")",
+                    data: { userResponse: reCaptchaResponse },
+                    success: function (data) {
+                        $("form").submit();
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            } else {
+                $("form").prepend("<p>Please do the captcha.  It will prove you're not a robot.</p>");
+            }
+        });
+
+    </script>
+}

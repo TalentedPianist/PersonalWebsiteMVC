@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Areas.Blog.Models;
 using PersonalWebsiteMVC.Data;
@@ -14,35 +16,33 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         public IHttpContextAccessor _http { get; set; }
         private IConfiguration _configuration { get; set; }
         public ILogger<CommentsController> _Logger { get; set; }
+        private readonly HttpClient _httpClient;
 
-        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<CommentsController> logger)
+        public CommentsController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<CommentsController> logger, HttpClient httpClient)
         {
             _db = db;
             _http = http;
             _configuration = config;
             _Logger = logger;
+            _httpClient = httpClient;
+         
         }
 
-        
+        [Route("Blog/Comments/AddComment/{id}")]
         public IActionResult Index(int id)
         {
-            var model = _db.Comments.Where(c => c.PostID == id).ToList();
-            return View(model);
+            var model = new BlogCommentViewModel();
+            model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
+            return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }
 
-        [Route("Blog/Comments/AddComment")]
+        [Route("Blog/Comments/AddComment/{id}")]
         [HttpPost]
         public IActionResult AddComment(BlogCommentViewModel model)
         {
             if (ModelState.IsValid)
             {
-                if (ReCaptchaPassed(
-                    Request.Form["g-recaptcha-response"]!,
-                    _configuration.GetSection("reCaptcha:secret").Value!,
-                    _Logger
-                    
-                    ))
-                {
+               
                     Comments comment = new Comments();
                     comment.CommentAuthor = model.Comment.CommentAuthor;
                     comment.CommentAuthorEmail = model.Comment.CommentAuthorEmail;
@@ -55,37 +55,31 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                     _db.Comments.Add(comment);
                     _db.SaveChanges();
                     return RedirectToAction("SinglePost", new { controller = "Home", area = "Blog", id = model.Comment.PostID });
-                }
-                return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
+                
             }
-            else
-            {
-                ModelState.AddModelError("", "Please check the recaptcha to prove that you're not a bot.");
-                TempData["Message"] = Request.Form["g-recaptcha-response"];
-                return RedirectToAction("Index", new { id = model.Post!.PostID, area = "Blog" });
-            }
-           
+            return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }
 
-        public static bool ReCaptchaPassed(string gRecaptchaResponse, string secret, ILogger _Logger)
+
+        public async Task<bool> GetreCaptchaResponse(string userResponse)
         {
-            HttpClient httpClient = new HttpClient();
-            var res = httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={gRecaptchaResponse}").Result;
-            if (res.StatusCode != System.Net.HttpStatusCode.OK)
+            var reCaptchaSecretKey = _configuration["reCaptcha:SecretKey"];
+            if (reCaptchaSecretKey != null && userResponse != null)
             {
-                _Logger.LogError("Error while sending request to ReCaptcha");
-                return false;
-            }
+                var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    {"secret", reCaptchaSecretKey },
+                    {"response", userResponse }
 
-            string JSONres = res.Content.ReadAsStringAsync().Result;
-            dynamic JSONdata = JObject.Parse(JSONres);
-            Console.WriteLine(JSONdata);
-            if (JSONdata.success != "true")
-            {
-                return false;
+                });
+                var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
+                    return result!.Success;
+                }
             }
-
-            return true;
+            return false;
         }
     }
 }

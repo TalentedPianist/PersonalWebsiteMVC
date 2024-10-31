@@ -71,16 +71,6 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         }
 
       
-        public IActionResult Comments()
-        {
-            ViewBag.strId = PostID;
-            var comments = _db.Comments.Where(c => c.PostID == PostID).ToList();
-            ViewBag.CommentCount = comments.Count();
-            BlogCommentViewModel model = new BlogCommentViewModel();
-            model.Comments = comments;
-            ViewData["ReCaptchaKey"] = _configuration.GetSection("GoogleReCaptcha:key").Value;
-
-            return PartialView("~/Areas/Blog/Views/Home/Comments.cshtml");
-        }
+      
     }
 }
