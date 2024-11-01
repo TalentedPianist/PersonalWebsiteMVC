@@ -33,19 +33,21 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("Photos/Index")]
         [Route("Photos/Index/{id}")] // To get a route working properly without the querystring, you need to have the id parameter in the route as above.
-        public IActionResult Index()
+        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         { // X.PagedList is now working after adding the FromQuery attribute forcing it to use the pageNumber querystring.
             int id = Convert.ToInt32(RouteData.Values["id"]);
             string name = _http.HttpContext!.Request.Query["name"]!;
             string path = Path.Combine(Host.ContentRootPath, "Gallery", name);
             DirectoryInfo di = new DirectoryInfo(path);
-            var ext = new List<string> { "jpeg" };
-            List<string> files = Directory.GetFiles(path, "*.*", SearchOption.AllDirectories).Where(file => new string[] { ".jpg" }.Contains(Path.GetExtension(file))).ToList();
+
             StringBuilder sb = new StringBuilder();
-            foreach (var item in files)
-            {
-                sb.Append(item);
-            }
+            ViewBag.Photos = di.GetFiles("*.jpeg");
+            ViewBag.AlbumName = name;
+
+            var pageNumber = page ?? 1;
+            var onePageOfFiles = di.GetFiles("*.jpeg").ToPagedList(pageNumber, 10);
+            ViewBag.OnePageOfFiles = onePageOfFiles;
+
             TempData["Message"] = sb.ToString();
             return View();
         }
@@ -217,15 +219,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("Photos/SetCoverPic")]
-        public IActionResult SetCoverPic([FromForm] int id, string CoverPhoto)
+        public IActionResult SetCoverPic([FromBody] Album data, string strAlbum)
         {
-            var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
-            album!.CoverPhoto = CoverPhoto;
-            album!.DateCreated = DateTime.Now;
-            _db.Albums.Update(album);
-            _db.SaveChanges();
-
-            return Ok();
+            
+            return Ok(strAlbum);
         }
 
         [HttpPost]

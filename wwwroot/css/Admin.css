@@ -21,6 +21,7 @@ figure {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 1em;
 }
 #Photos section {
   display: flex;
@@ -37,7 +38,7 @@ figure {
 #Photos section:nth-of-type(2) {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0;
+  gap: 1em;
   position: relative;
   width: 100%;
 }
