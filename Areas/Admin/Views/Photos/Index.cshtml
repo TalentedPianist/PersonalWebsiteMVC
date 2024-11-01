@@ -16,9 +16,9 @@
 
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
-@TempData["Message"]
+@Html.Raw(TempData["Message"])
 
-@GetId()
+
 
 <div id="Photos">
 
