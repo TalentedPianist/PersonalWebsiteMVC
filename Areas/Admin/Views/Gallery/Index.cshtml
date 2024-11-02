@@ -18,14 +18,14 @@
 @TempData["Message"]
 
 <div id="Gallery">
-
+    @ViewBag.AlbumName
     <section>
         @foreach (DirectoryInfo di in ViewBag.OnePageOfFiles)
         {
             <figure>
                 @if (IsInDb(di.Name))
                 {
-                    <img src="@GetImage(di.Name).CoverPhoto">
+                    <img src="/Gallery/@di.Name/@GetCoverPhoto(di.Name)">
                 }
                 else
                 {
@@ -99,10 +99,10 @@
         }
     }
 
-    Album GetImage(string name)
+    string GetCoverPhoto(string name)
     {
-        var img = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-        return img!;
+        var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+        return album!.CoverPhoto!;
     }
 }
 

@@ -108,7 +108,7 @@
                         e.preventDefault();
                         let name = $(this).data('name');
                         let src = $(this).parent().parent().find('img').attr('src');
-                        var arrData = JSON.stringify({ 'Name': name, 'Album': '@ViewBag.AlbumName' });
+                        var arrData = JSON.stringify({ 'CoverPhoto': name, 'Album': '@ViewBag.AlbumName' });
 
 
                         $.ajax({
@@ -121,8 +121,8 @@
                             async: false,
                             cache: false,
                             success: function (message) {
-                                //window.location.href = '/Admin/Gallery';
-                                console.log(message);
+                                window.location.href = '/Admin/Gallery';
+                               
                             },
                             error: function (error) {
                                 console.log(error);

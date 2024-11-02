@@ -1,12 +1,14 @@
-﻿ClassicEditor
-    .create(document.querySelector('#ckeditor1'), {
+﻿if (document.querySelector('#ckeditor1')) {
 
-        toolbar: []
-    })
-    .catch(error => {
-        console.error(error);
-    });
+    ClassicEditor
+        .create(document.querySelector('#ckeditor1'), {
 
+            toolbar: []
+        })
+        .catch(error => {
+            console.error(error);
+        });
+}
 
 $(function () {
 

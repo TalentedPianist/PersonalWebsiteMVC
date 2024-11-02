@@ -237,23 +237,48 @@ try
 
     //app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
-/* app.MapAreaControllerRoute(
-        name: "Admin",
-        areaName: "Admin",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
+    /* app.MapAreaControllerRoute(
+            name: "Admin",
+            areaName: "Admin",
+            pattern: "{controller=Home}/{action=Index}/{id?}");
 
-    app.MapAreaControllerRoute(
-        name: "Photos",
-        areaName: "Photos",
-        pattern: "Photos/{controller=Photos}/{action=Index}/{id?}");
-
-
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{id?}");*/
-   
+        app.MapAreaControllerRoute(
+            name: "Photos",
+            areaName: "Photos",
+            pattern: "Photos/{controller=Photos}/{action=Index}/{id?}");
 
 
+        app.MapControllerRoute(
+            name: "default",
+            pattern: "{controller=Home}/{id?}");*/
+
+
+    app.MapGet("/hello", () => "Hello World");
+
+    app.MapGet("/Captcha", GetreCaptchaResponse);
+
+   async Task<bool> GetreCaptchaResponse(string userResponse)
+    {
+        var client = new HttpClient();
+
+        var reCaptchaSecretKey = builder.Configuration["reCaptcha:SecretKey"];
+        if (reCaptchaSecretKey != null && userResponse != null)
+        {
+            var content = new FormUrlEncodedContent(new Dictionary<string, string>
+            {
+                {"secret", reCaptchaSecretKey },
+                {"response", userResponse }
+            });
+            var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+            if (response.IsSuccessStatusCode)
+            {
+                var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
+                return result!.Success;
+            }
+        }
+        return false;
+
+    }
     app.Run();
 
 } // https://stackoverflow.com/questions/70247187/microsoft-extensions-hosting-hostfactoryresolverhostinglistenerstopthehostexce

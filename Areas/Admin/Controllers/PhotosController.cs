@@ -221,8 +221,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("Photos/SetCoverPic")]
         public IActionResult SetCoverPic([FromBody] Album data, string strAlbum)
         {
-            
-            return Ok(strAlbum);
+            var album = _db.Albums.Where(a => a.Name == strAlbum).FirstOrDefault();
+            album!.CoverPhoto = data.CoverPhoto;
+            _db.Albums.Update(album);
+            _db.SaveChanges();
+            // RedirectToAction won't work because it needs to be redirected on the client side since this is an Ajax call.
+            return Ok(data);
         }
 
         [HttpPost]

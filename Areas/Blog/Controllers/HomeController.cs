@@ -14,11 +14,13 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         public int PostID { get; set; } = 0;
-        private IConfiguration _configuration;
-        public HomeController(ApplicationDbContext db, IConfiguration config)
+        private readonly IConfiguration _configuration;
+        private readonly HttpClient _httpClient;
+        public HomeController(ApplicationDbContext db, IConfiguration config, HttpClient httpClient)
         {
             _db = db;
             _configuration = config;
+            _httpClient = httpClient;
         }
 
         [Route("Areas/Blog/Views/Index")]
@@ -70,7 +72,28 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             return View(model);
         }
 
-      
-      
+        public async Task<bool> GetreCaptchaResponse(string userResponse)
+        {
+            var reCaptchaSecretKey = _configuration["reCaptcha:SecretKey"];
+
+            if (reCaptchaSecretKey != null && userResponse != null)
+            {
+                var content = new FormUrlEncodedContent(new Dictionary<string, string>
+                {
+                    {"secret", reCaptchaSecretKey },
+                    {"response", userResponse }
+                });
+                var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
+                    return result!.Success;
+                }
+                return false;
+            }
+            return false;  
+        }
+
+
     }
 }
