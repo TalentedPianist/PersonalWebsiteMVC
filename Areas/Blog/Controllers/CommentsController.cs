@@ -59,9 +59,9 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             }
             return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }
-
+/*
         [Route("Blog/Comments/Captcha")]
-        [HttpGet("Captcha")]
+       
         public async Task<bool> GetreCaptchaResponse(string userResponse)
         {
             var reCaptchaSecretKey = _configuration["reCaptcha:SecretKey"];
@@ -81,6 +81,6 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                 }
             }
             return false;
-        }
+        }*/
     }
 }

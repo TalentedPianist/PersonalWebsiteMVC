@@ -42,21 +42,17 @@
         // For future reference, the scripts section doesn't work in partial views.  Wasted a lot of time on this once.
         $("form").on('submit', function (e) {
             e.preventDefault();
+            e.stopImmediatePropagation();
+
             let reCaptchaResponse = grecaptcha.getResponse();
             if (reCaptchaResponse) {
                 $.ajax({
                     type: "GET",
-                    url: "@Url.Action("Captcha", "Comments")",
+                    url: "/Captcha",
                     data: { userResponse: reCaptchaResponse },
                     success: function (data) {
                         $("#Comments form").submit();
-                        var $inputs = $("#Comments form :input");
-                        var values = {};
-                        $inputs.each(function () {
-                            values[this.name] = $(this).val();
-                        });
-                        console.log(values);
-
+                       
                     },
                     error: function (error) {
                         console.log(error);

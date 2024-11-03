@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.ReCaptcha" Version="1.8.2" />
-    <PackageReference Include="Avalonia.Xaml.Interactions.Responsive" Version="11.1.0.5" />
+    <PackageReference Include="Avalonia.Xaml.Interactions.Responsive" Version="11.2.0" />
     <PackageReference Include="Blazor.Pagination" Version="2.0.2" />
     <PackageReference Include="BlazorPagination" Version="0.2.16" />
     <PackageReference Include="DeviceDetector.NET" Version="6.3.3" />
@@ -44,6 +44,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Microsoft.OpenApi" Version="1.6.22" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration" Version="8.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Core" Version="8.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="8.0.6" />
@@ -59,6 +60,9 @@
     <PackageReference Include="SolrNet" Version="1.1.2" />
     <PackageReference Include="SolrNet.Core" Version="1.1.2" />
     <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.1.2" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.9.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.9.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.9.0" />
     <PackageReference Include="Wangkanai.Responsive" Version="7.8.0" />
     <PackageReference Include="X.PagedList" Version="10.5.7" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.7" />

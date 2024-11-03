@@ -27,6 +27,7 @@ using Wangkanai.Responsive;
 using Serilog;
 
 
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
@@ -188,6 +189,9 @@ try
 
     builder.Services.AddHttpClient();
 
+    builder.Services.AddEndpointsApiExplorer();
+    builder.Services.AddSwaggerGen();
+
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -255,30 +259,18 @@ try
 
     app.MapGet("/hello", () => "Hello World");
 
-    app.MapGet("/Captcha", GetreCaptchaResponse);
-
-   async Task<bool> GetreCaptchaResponse(string userResponse)
+    app.MapGet("/Captcha", (string userResponse) =>
     {
-        var client = new HttpClient();
+        return userResponse;
+      
+    });
 
-        var reCaptchaSecretKey = builder.Configuration["reCaptcha:SecretKey"];
-        if (reCaptchaSecretKey != null && userResponse != null)
-        {
-            var content = new FormUrlEncodedContent(new Dictionary<string, string>
-            {
-                {"secret", reCaptchaSecretKey },
-                {"response", userResponse }
-            });
-            var response = await client.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
-            if (response.IsSuccessStatusCode)
-            {
-                var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
-                return result!.Success;
-            }
-        }
-        return false;
+    app.UseSwagger();
+    app.UseSwaggerUI(c =>
+    {
+        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
+    });
 
-    }
     app.Run();
 
 } // https://stackoverflow.com/questions/70247187/microsoft-extensions-hosting-hostfactoryresolverhostinglistenerstopthehostexce
