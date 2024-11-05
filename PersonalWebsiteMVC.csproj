@@ -9,6 +9,11 @@
 	  <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Content Remove="C:\Users\DouglasMcGregor\.nuget\packages\sitko.blazor.ckeditor.bundle\4.2.1\contentFiles\any\net8.0\Web\package-lock.json" />
+    <Content Remove="C:\Users\DouglasMcGregor\.nuget\packages\sitko.blazor.ckeditor.bundle\4.2.1\contentFiles\any\net8.0\Web\package.json" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.ReCaptcha" Version="1.8.2" />

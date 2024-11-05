@@ -614,7 +614,14 @@ footer {
         display: flex;
         flex-direction: column;
         flex: 1;
+        gap: 2em;
+        border-bottom: 1px solid black;
 
+        span { 
+            display: flex;
+            gap: 3em;
+            float: left; 
+        }
       
     }
 

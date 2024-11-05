@@ -15,10 +15,11 @@
         <section>
         @foreach (Comments comment in Model.PagedComments!)
         {
-
+            <span>
                 <img src="https://www.gravatar.com/avatar/?d=mp">
                 <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p> 
-                @comment.CommentAuthorEmail
+            </span>
+            @Html.Raw(comment.CommentContent)
         }
         </section>
     
