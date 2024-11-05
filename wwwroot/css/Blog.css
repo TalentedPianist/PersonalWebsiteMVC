@@ -558,7 +558,13 @@ footer {
   flex: 0;
   position: relative;
 }
+#Comments section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 #Comments img {
+  display: flex;
   width: 15%;
   vertical-align: top !important;
 }

@@ -25,62 +25,42 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             _configuration = config;
             _Logger = logger;
             _httpClient = httpClient;
-         
+
         }
 
         [Route("Blog/Comments/AddComment/{id}")]
-        public IActionResult Index(int id)
+        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         {
             var model = new BlogCommentViewModel();
-            model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
+            TempData["Message"] = ViewData["id"];     
+            //model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
             return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }
 
-        [Route("Blog/Comments/AddComment/{id}")]
+     
         [HttpPost]
+        [Route("Blog/Comments/AddComment/{id}")]
         public IActionResult AddComment(BlogCommentViewModel model)
         {
+            TempData["Message"] = model.Comment.CommentAuthor;
             if (ModelState.IsValid)
             {
                
-                    Comments comment = new Comments();
-                    comment.CommentAuthor = model.Comment.CommentAuthor;
-                    comment.CommentAuthorEmail = model.Comment.CommentAuthorEmail;
-                    comment.CommentAuthorUrl = model.Comment.CommentAuthorUrl;
-                    comment.CommentContent = model.Comment.CommentContent;
-                    comment.CommentDate = DateTime.Now;
-                    comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-                    comment.PostID = model.Comment.PostID;
-                    comment.CommentType = "Post";
-                    _db.Comments.Add(comment);
-                    _db.SaveChanges();
-                    return RedirectToAction("SinglePost", new { controller = "Home", area = "Blog", id = model.Comment.PostID });
-                
+                Comments comment = new Comments();
+                comment.CommentAuthor = model.Comment.CommentAuthor;
+                comment.CommentAuthorEmail = model.Comment.CommentAuthorEmail;
+                comment.CommentAuthorUrl = model.Comment.CommentAuthorUrl;
+                comment.CommentContent = model.Comment.CommentContent;
+                comment.CommentDate = DateTime.Now;
+                comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
+                comment.PostID = model.Comment.PostID;
+                comment.CommentType = "Post";
+                _db.Comments.Add(comment);
+                _db.SaveChanges();
+                return RedirectToAction("SinglePost", new { area = "Blog", controller="Home", id = model.Comment.PostID });
+
             }
             return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }
-/*
-        [Route("Blog/Comments/Captcha")]
-       
-        public async Task<bool> GetreCaptchaResponse(string userResponse)
-        {
-            var reCaptchaSecretKey = _configuration["reCaptcha:SecretKey"];
-            if (reCaptchaSecretKey != null && userResponse != null)
-            {
-                var content = new FormUrlEncodedContent(new Dictionary<string, string>
-                {
-                    {"secret", reCaptchaSecretKey },
-                    {"response", userResponse }
-
-                });
-                var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
-                    return result!.Success;
-                }
-            }
-            return false;
-        }*/
     }
 }

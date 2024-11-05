@@ -24,6 +24,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
         }
 
         [Route("Areas/Blog/Views/Index")]
+        [Route("Blog")]
         public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         {
             // Begin code for device detector
@@ -59,41 +60,16 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 
         [Route("Blog/SinglePost/{id}")]
         public IActionResult SinglePost(int? id, [FromQuery(Name="pageNumber")]int? page)
-        { // https://www.codeproject.com/Articles/1108855/10-Ways-to-Bind-Multiple-Models-on-a-View-in-MVC
+        {
             BlogCommentViewModel model = new BlogCommentViewModel();
             model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
-            model.Comments = _db.Comments.Where(c => c.PostID == id).ToList();
-            // Just spent hours editing the wrong function.  No wonder it's always null.  What an eejit.
-      
-            //var pageNumber = page ?? 1;
-            ViewBag.OnePageOfPosts = _db.Posts.ToPagedList(1, 1);
-            // The problem was in the model.  It needs to be IPagedList instead of PagedList.  This is the sort of thing you could waste so much time on.
-            model.PagedPosts = _db.Posts.ToPagedList<Posts>(1, 1);
-            return View(model);
+            var pageNumber = page ?? 1;
+            var strId = Convert.ToInt32(id);
+            model.PagedComments = (PagedList<Comments>?)_db.Comments.Where(c => c.CommentID == strId).ToPagedList<Comments>(pageNumber, 3);
+            return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }
 
-        public async Task<bool> GetreCaptchaResponse(string userResponse)
-        {
-            var reCaptchaSecretKey = _configuration["reCaptcha:SecretKey"];
-
-            if (reCaptchaSecretKey != null && userResponse != null)
-            {
-                var content = new FormUrlEncodedContent(new Dictionary<string, string>
-                {
-                    {"secret", reCaptchaSecretKey },
-                    {"response", userResponse }
-                });
-                var response = await _httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadFromJsonAsync<reCaptchaResponse>();
-                    return result!.Success;
-                }
-                return false;
-            }
-            return false;  
-        }
-
+     
 
     }
 }

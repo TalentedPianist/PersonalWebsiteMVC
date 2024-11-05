@@ -10,7 +10,25 @@
 
 
 <div id="Comments">
+    <h2>Comments</h2>
    
+        <section>
+        @foreach (Comments comment in Model.PagedComments!)
+        {
+
+                <img src="https://www.gravatar.com/avatar/?d=mp">
+                <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p> 
+                @comment.CommentAuthorEmail
+        }
+        </section>
+    
+        @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber = page, area = "Blog" }),
+            new PagedListRenderOptions
+            {
+                DisplayItemSliceAndTotal = true,
+                LiElementClasses = new string[] { "page-item" },
+                PageClasses = new String[] { "page-link" }
+            })
     <hr>
     <form method="post" asp-action="AddComment" asp-area="Blog" asp-controller="Comments" asp-route-id="@ViewData["id"]">
         <div asp-validation-summary="All" class="text-danger"></div>

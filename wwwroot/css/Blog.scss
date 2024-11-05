@@ -610,7 +610,16 @@ footer {
     flex: 0;
     position: relative;
 
+    section { 
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+
+      
+    }
+
     img {
+        display: flex;
         width: 15%;
         vertical-align: top !important;
     }
@@ -618,6 +627,8 @@ footer {
     button {
         align-self: flex-start;
     }
+
+ 
 }
 
 #Contact {

@@ -27,11 +27,15 @@
 
                     <h1>@post!.PostTitle</h1>
                     @Html.Raw(post.PostContent)
-                    <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
+
+                    @TempData["Message"]
+
+                    <partial name="Comments.cshtml" view-data="ViewData" model="@Model" />
                 }
             }
             catch (NullReferenceException ex)
             {
+                @ex.Message
             }
         </article>
     </section>
@@ -42,7 +46,6 @@
         // For future reference, the scripts section doesn't work in partial views.  Wasted a lot of time on this once.
         $("form").on('submit', function (e) {
             e.preventDefault();
-            e.stopImmediatePropagation();
 
             let reCaptchaResponse = grecaptcha.getResponse();
             if (reCaptchaResponse) {
@@ -51,8 +54,14 @@
                     url: "/Captcha",
                     data: { userResponse: reCaptchaResponse },
                     success: function (data) {
-                        $("#Comments form").submit();
-                       
+                      
+                        if (data) {
+               
+                            // https://coderanch.com/t/772379/languages/jQuery-submit-work-DOM-submit
+                            $("form")[0].submit();
+                        } else {
+                            $("form").prepend("<p>Please verify captcha again");
+                        }
                     },
                     error: function (error) {
                         console.log(error);
