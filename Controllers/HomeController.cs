@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using System.Diagnostics;
-using PersonalWebsiteMVC.Components;
 using DeviceDetectorNET;
 using DeviceDetectorNET.Parser;
 using Microsoft.AspNetCore.Components;
@@ -93,7 +92,10 @@ namespace PersonalWebsiteMVC.Controllers
             return Ok();
         }
 
-
+        public IActionResult Blazor()
+        {
+            return View("_Host");
+        }
         
     }
 }

@@ -11,8 +11,6 @@ using System;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using MudBlazor.Services;
-using PersonalWebsiteMVC.Components;
-using PersonalWebsiteMVC.Components.Layout;
 using SolrNet;
 using Sitko.Blazor.CKEditor;
 using Microsoft.Extensions.FileProviders;
@@ -25,6 +23,7 @@ using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Wangkanai.Responsive;
 using Serilog;
+using PersonalWebsiteMVC.Components;
 
 
 
@@ -208,7 +207,7 @@ try
     {
         app.UseExceptionHandler("/Home/Error");
     }
-    app.UseStaticFiles();
+    app.MapStaticAssets();
 
     var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Gallery"));
     var options = new FileServerOptions
@@ -224,22 +223,20 @@ try
     app.UseSession();
 
 
-    app.UseMvc(routes =>
-    {
-        routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
-        routes.MapAreaRoute("Blog", "Blog", "Blog/{controller}/{action}/{id?}");
-        routes.MapAreaRoute("Photos", "Photos", "Photos/{action}/{id?}");
-    });
 
-    app.MapRazorPages();
+
+    //app.UseMvc(routes =>
+    //{
+    //    routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
+    //    routes.MapAreaRoute("Blog", "Blog", "Blog/{controller}/{action}/{id?}");
+    //    routes.MapAreaRoute("Photos", "Photos", "Photos/{action}/{id?}");
+    //});
 
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseAntiforgery();
 
-
-    //app.MapRazorComponents<App>().AddInteractiveServerRenderMode();
 
     /* app.MapAreaControllerRoute(
             name: "Admin",
@@ -264,13 +261,11 @@ try
         return userResponse;
       
     });
+    
+    app.MapControllers();
 
-    app.UseSwagger();
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "API v1");
-        c.RoutePrefix = string.Empty;
-    });
+    app.MapRazorComponents<App>()
+        .AddInteractiveServerRenderMode();
 
     app.Run();
 

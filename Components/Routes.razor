@@ -1,12 +1,16 @@
-
-<Router AppAssembly="@typeof(Program).Assembly">
-    <Found Context="routeData">
-        <AuthorizeRouteView RouteData="@routeData" DefaultLayout="@typeof(Layout.BlogLayout)">
-            <NotAuthorized>
-
-            </NotAuthorized>
-        </AuthorizeRouteView>
-        <FocusOnNavigate RouteData="@routeData" Selector="h1" />
-    </Found>
-
+﻿
+<Router AppAssembly="@typeof(App).Assembly">
+	<Found Context="routeData">
+		<RouteView RouteData="@routeData" DefaultLayout="@typeof(PersonalWebsiteMVC.Components.Layout.BlogLayout)">
+			<LayoutView>
+				<p>Welcome to my website!</p>
+			</LayoutView>
+		</RouteView>
+			<FocusOnNavigate RouteData="@routeData" />
+	</Found>
+	<NotFound>
+	
+			<p>There's nothing on this page!</p>
+		
+	</NotFound>
 </Router>

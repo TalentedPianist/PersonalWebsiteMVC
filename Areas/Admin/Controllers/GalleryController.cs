@@ -125,9 +125,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         public IActionResult Delete(int id)
         {
             var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
-            _db.Remove(album);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
+            if (album == null)
+            {
+                return Ok();
+            }
+            else
+            {
+                _db.Remove(album);
+                _db.SaveChanges();
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]

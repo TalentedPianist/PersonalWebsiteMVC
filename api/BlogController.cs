@@ -8,8 +8,8 @@ using System.Collections.Generic;
 
 namespace PersonalWebsiteMVC.api
 {
-    [Route("api/[controller]")]
     [ApiController]
+    [Route("api/[controller]")]
     public class BlogController : ControllerBase
     {
         private ApplicationDbContext _db { get; set; }
