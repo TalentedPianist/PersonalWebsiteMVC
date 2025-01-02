@@ -24,6 +24,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Wangkanai.Responsive;
 using Serilog;
 using PersonalWebsiteMVC.Components;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 
 
 
@@ -175,7 +176,7 @@ try
     builder.Services.AddResponsive();
 
 
-    builder.Services.AddCors(options => 
+    builder.Services.AddCors(options =>
     {
         options.AddDefaultPolicy(
             policy =>
@@ -191,6 +192,10 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
+    builder.Services.Configure<RazorPagesOptions>(options =>
+        options.RootDirectory = "/Components"
+    );
+
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -198,10 +203,16 @@ try
 
     var app = builder.Build();
 
+    app.UseSpa((builder) =>
+    {
+        builder.Options.DefaultPage = "/frontend/index.html";
+    });
+
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseMigrationsEndPoint();
+
     }
     else
     {
@@ -262,10 +273,12 @@ try
       
     });
     
-    app.MapControllers();
+    //app.MapControllers();
 
+    app.MapBlazorHub();
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();
+    //app.MapFallbackToPage("/");
 
     app.Run();
 

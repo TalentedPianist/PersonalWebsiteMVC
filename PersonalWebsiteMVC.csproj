@@ -12,13 +12,13 @@
 
   <ItemGroup>
     <PackageReference Include="AspNetCore.ReCaptcha" Version="1.8.2" />
-    <PackageReference Include="Avalonia.Xaml.Interactions.Responsive" Version="11.2.0.1" />
+    <PackageReference Include="Avalonia.Xaml.Interactions.Responsive" Version="11.2.0.2" />
     <PackageReference Include="Blazor.Pagination" Version="2.0.2" />
     <PackageReference Include="BlazorPagination" Version="0.2.16" />
     <PackageReference Include="DeviceDetector.NET" Version="6.4.2" />
-    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.16.3" />
+    <PackageReference Include="Elastic.Clients.Elasticsearch" Version="8.17.0" />
     <PackageReference Include="HGO.ASPNetCore.FileManager" Version="1.0.7" />
-    <PackageReference Include="HtmlAgilityPack" Version="1.11.71" />
+    <PackageReference Include="HtmlAgilityPack" Version="1.11.72" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.3" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.1" />
     <PackageReference Include="MailKit" Version="4.9.0" />

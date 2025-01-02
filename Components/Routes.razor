@@ -1,12 +1,7 @@
 ﻿
 <Router AppAssembly="@typeof(App).Assembly">
 	<Found Context="routeData">
-		<RouteView RouteData="@routeData" DefaultLayout="@typeof(PersonalWebsiteMVC.Components.Layout.BlogLayout)">
-			<LayoutView>
-				<p>Welcome to my website!</p>
-			</LayoutView>
-		</RouteView>
-			<FocusOnNavigate RouteData="@routeData" />
+		<RouteView RouteData="@routeData" DefaultLayout="@typeof(BlogLayout)" />
 	</Found>
 	<NotFound>
 	
