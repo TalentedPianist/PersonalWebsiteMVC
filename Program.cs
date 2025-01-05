@@ -25,6 +25,10 @@ using Wangkanai.Responsive;
 using Serilog;
 using PersonalWebsiteMVC.Components;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.Extensions.Options;
+using ServiceStack.Text;
+using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using BlazorPro.BlazorSize;
 
 
 
@@ -129,7 +133,9 @@ try
     });
 
     builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
-    builder.Services.AddMudServices();
+
+ 
+
     builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
     builder.Services.AddCKEditor(builder.Configuration, options =>
@@ -192,33 +198,30 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-    builder.Services.Configure<RazorPagesOptions>(options =>
-        options.RootDirectory = "/Components"
-    );
 
-
+    builder.Services.AddResizeListener();
+    builder.Services.AddMediaQueryService();
+ 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
         .Get<MailSettings>();
 
     var app = builder.Build();
 
-    app.UseSpa((builder) =>
-    {
-        builder.Options.DefaultPage = "/frontend/index.html";
-    });
+ 
+   app.UseStaticFiles();
+
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseMigrationsEndPoint();
-
+        
     }
     else
     {
         app.UseExceptionHandler("/Home/Error");
     }
-    app.MapStaticAssets();
 
     var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Gallery"));
     var options = new FileServerOptions
@@ -270,12 +273,12 @@ try
     app.MapGet("/Captcha", (string userResponse) =>
     {
         return userResponse;
-      
+
     });
-    
+
     //app.MapControllers();
 
-    app.MapBlazorHub();
+
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
