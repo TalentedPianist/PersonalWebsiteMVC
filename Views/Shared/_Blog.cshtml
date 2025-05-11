@@ -1,5 +1,4 @@
-@using DeviceDetectorNET
-@addTagHelper *, PersonalWebsiteMVC
+@using PersonalWebsiteMVC.Components
 
 <!DOCTYPE html>
 <html>
@@ -7,15 +6,17 @@
 	<base href="/">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-	<link rel="stylesheet" href="/css/Blog.min.css">
+	<link rel="stylesheet" href="/css/input.css">
+	<link rel="stylesheet" href="/css/output.css">
 </head>
 <body>
+	
 
 	@RenderBody()
 
+	@(await Html.RenderComponentAsync<Counter>(RenderMode.Server))
 
-
+	<script src="_framework/blazor.server.js"></script>
 	<script src="/lib/jquery/jquery.min.js"></script>
 	<script src="/lib/ckeditor5/ckeditor.min.js"></script>
 	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>

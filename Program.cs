@@ -134,8 +134,6 @@ try
 
     builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 
- 
-
     builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
     builder.Services.AddCKEditor(builder.Configuration, options =>
@@ -147,12 +145,7 @@ try
 
     });
 
-
-
-
     builder.Services.AddSession();
-
-
 
     builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
@@ -201,6 +194,8 @@ try
 
     builder.Services.AddResizeListener();
     builder.Services.AddMediaQueryService();
+
+    builder.Services.AddRazorPages();
  
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -252,20 +247,22 @@ try
     app.UseAntiforgery();
 
 
-    /* app.MapAreaControllerRoute(
+    app.MapAreaControllerRoute(
             name: "Admin",
             areaName: "Admin",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
+            pattern: "{controller=Admin}/{action=Index}/{id?}");
 
-        app.MapAreaControllerRoute(
-            name: "Photos",
-            areaName: "Photos",
-            pattern: "Photos/{controller=Photos}/{action=Index}/{id?}");
+    app.MapAreaControllerRoute(
+        name: "Photos",
+        areaName: "Photos",
+        pattern: "Photos/{controller=Photos}/{action=Index}/{id?}");
 
 
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{id?}");*/
+    // app.MapControllerRoute(
+    //     name: "default",
+    //     pattern: "{controller=Home}/{id?}");
+
+    
 
 
     app.MapGet("/hello", () => "Hello World");
