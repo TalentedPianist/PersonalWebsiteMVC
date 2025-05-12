@@ -218,7 +218,12 @@ try
         app.UseExceptionHandler("/Home/Error");
     }
 
-    var fileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), "Gallery"));
+    var galleryPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Gallery");
+    if (!Directory.Exists(galleryPath))
+    {
+        Directory.CreateDirectory(galleryPath);
+    }
+    var fileProvider = new PhysicalFileProvider(galleryPath);
     var options = new FileServerOptions
     {
         FileProvider = fileProvider,
