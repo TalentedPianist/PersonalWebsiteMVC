@@ -31,7 +31,6 @@ using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using BlazorPro.BlazorSize;
 
 
-
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
@@ -201,6 +200,8 @@ try
 
     builder.Services.AddResizeListener();
     builder.Services.AddMediaQueryService();
+
+    builder.Services.AddMudServices();
  
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -244,32 +245,30 @@ try
 
 
 
-    //app.UseMvc(routes =>
-    //{
-    //    routes.MapAreaRoute("Admin", "Admin", "Admin/{controller}/{action}/{id?}");
-    //    routes.MapAreaRoute("Blog", "Blog", "Blog/{controller}/{action}/{id?}");
-    //    routes.MapAreaRoute("Photos", "Photos", "Photos/{action}/{id?}");
-    //});
+    app.UseRouting();
+
+    app.MapAreaControllerRoute(
+        name: "Admin",
+        areaName: "Admin",
+        pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+
+    app.MapAreaControllerRoute(
+        name: "Blog",
+        areaName: "Blog",
+        pattern: "Blog/{controller=Home}/{action=Index}/{id?}");
+
+    app.MapAreaControllerRoute(
+        name: "Photos",
+        areaName: "Photos",
+        pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
+
+    app.MapControllers();
+    app.MapRazorPages();
 
     app.UseRouting();
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseAntiforgery();
-
-
-    /* app.MapAreaControllerRoute(
-            name: "Admin",
-            areaName: "Admin",
-            pattern: "{controller=Home}/{action=Index}/{id?}");
-
-            name: "Photos",
-            areaName: "Photos",
-            pattern: "Photos/{controller=Photos}/{action=Index}/{id?}");
-
-
-        app.MapControllerRoute(
-            name: "default",
-            pattern: "{controller=Home}/{id?}");*/
 
 
     app.MapGet("/hello", () => "Hello World");
@@ -280,7 +279,7 @@ try
 
     });
 
-    //app.MapControllers();
+    app.MapControllers();
 
 
     app.MapRazorComponents<App>()

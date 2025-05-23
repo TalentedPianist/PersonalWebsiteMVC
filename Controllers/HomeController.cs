@@ -23,41 +23,6 @@ namespace PersonalWebsiteMVC.Controllers
 
         }
 
-        [Microsoft.AspNetCore.Mvc.Route("/")]
-        [Microsoft.AspNetCore.Mvc.Route("/{Id:int}")]
-        [HttpGet]
-        public IActionResult Index([FromQuery(Name="id")]int? id)
-        {
-            // Begin DeviceDetector.NET code
-            DeviceDetector.SetVersionTruncation(VersionTruncation.VERSION_TRUNCATION_NONE);
-
-            var userAgent = Request.Headers["User-Agent"];
-            var headers = Request.Headers.ToDictionary(a => a.Key, a => a.Value.ToArray().FirstOrDefault());
-            var clientHints = ClientHints.Factory(headers);
-
-            var dd = new DeviceDetector(userAgent, clientHints);
-            dd.Parse();
-
-            if (dd.IsBot())
-            {
-                return Content("Go away bot!");
-            }
-            else
-            {
-                var clientInfo = dd.GetClient();
-                var osInfo = dd.GetOs();
-                var device = dd.GetDeviceName();
-                var brand = dd.GetBrandName();
-                var model = dd.GetModel();
-
-                // https://stackoverflow.com/questions/39870298/how-do-i-specify-different-layouts-in-the-asp-net-core-mvc
-                
-            }
-
-            // End DeviceDetector.NET code
-            return View();
-        }
-
       
 
         public IActionResult Privacy()

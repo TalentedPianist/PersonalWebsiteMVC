@@ -12,7 +12,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
 	[Area("Admin")]
 	[Route("Admin")]
-	
 	public class AdminController : Controller
 	{
 
