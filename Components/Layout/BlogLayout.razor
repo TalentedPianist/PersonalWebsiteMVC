@@ -4,3 +4,19 @@
 <MudDialogProvider />
 <MudSnackbarProvider />
 
+
+
+<!-- Only for large screens -->
+<MudHidden Breakpoint="Breakpoint.SmAndDown">
+    <p>I am a desktop device.</p>
+</MudHidden>
+
+<!-- Breakpoint for mobile devices. -->
+<MudHidden Breakpoint="Breakpoint.SmAndUp">
+    <p>I am a mobile device.</p>
+</MudHidden>
+
+<!-- Breakpoint for tablet devices -->
+<MudHidden Breakpoint="Breakpoint.Xs">
+    <p>I am a tablet device.</p>
+</MudHidden>

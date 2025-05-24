@@ -28,7 +28,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using ServiceStack.Text;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using BlazorPro.BlazorSize;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -190,11 +189,9 @@ try
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
 
-
-    builder.Services.AddResizeListener();
-    builder.Services.AddMediaQueryService();
-
     builder.Services.AddRazorPages();
+
+    builder.Services.AddMudServices();
  
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -255,7 +252,7 @@ try
         areaName: "Photos",
         pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapControllers();
+    //app.MapControllers();
     app.MapRazorPages();
 
     app.UseRouting();
@@ -271,9 +268,6 @@ try
         return userResponse;
 
     });
-
-    app.MapControllers();
-
 
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();

@@ -57,10 +57,7 @@ namespace PersonalWebsiteMVC.Controllers
             return Ok();
         }
 
-        public IActionResult Blazor()
-        {
-            return View("_Host");
-        }
+       
         
     }
 }
