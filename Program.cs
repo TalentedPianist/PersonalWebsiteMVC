@@ -133,8 +133,6 @@ try
 
     builder.Services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 
- 
-
     builder.Services.AddRazorComponents().AddInteractiveServerComponents();
 
     builder.Services.AddCKEditor(builder.Configuration, options =>
@@ -146,12 +144,7 @@ try
 
     });
 
-
-
-
     builder.Services.AddSession();
-
-
 
     builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 
@@ -201,7 +194,7 @@ try
     builder.Services.AddResizeListener();
     builder.Services.AddMediaQueryService();
 
-    builder.Services.AddMudServices();
+    builder.Services.AddRazorPages();
  
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
