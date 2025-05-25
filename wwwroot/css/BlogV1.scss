@@ -1,0 +1,38 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#Home { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    background-image: url('/images/sunset-bg.svg');
+    background-size: 100%;
+    background-position: center;
+    text-align: center;
+    gap: 5em;
+
+    img { 
+        width: 50%;
+        border-radius: 50%;
+        align-self: center;
+        display: flex; 
+        margin: 0 auto;
+    }
+}
+
+h1, h2 { 
+    font-size: revert !important;
+    font-weight: revert !important;
+}
+
+.overlay { 
+    background-color: rgba(0,0,0,0.6);
+    height: 90vh;
+    width: 100%;
+    justify-content: space-evenly;
+    gap: 5em;
+}

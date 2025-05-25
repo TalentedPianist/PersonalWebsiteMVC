@@ -2,7 +2,7 @@
 module.exports = {
   content: [
     './Views/**/*.cshtml',
-
+    './Components/**/*.razor'
   ],
   theme: {
     extend: {},

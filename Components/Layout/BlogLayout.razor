@@ -1,4 +1,5 @@
 ﻿@inherits LayoutComponentBase
+@using PersonalWebsiteMVC.Components.Mobile  
 
 <MudThemeProvider />
 <MudDialogProvider />
@@ -13,7 +14,7 @@
 
 <!-- Breakpoint for mobile devices. -->
 <MudHidden Breakpoint="Breakpoint.SmAndUp">
-    <p>I am a mobile device.</p>
+    <Mobile />
 </MudHidden>
 
 <!-- Breakpoint for tablet devices -->
