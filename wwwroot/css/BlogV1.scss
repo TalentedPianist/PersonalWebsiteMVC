@@ -7,13 +7,14 @@
     flex-direction: column;
     flex: 1;
     align-items: center;
+    justify-content: space-evenly;
     height: 100vh;
     width: 100vw;
     background-image: url('/images/sunset-bg.svg');
     background-size: 100%;
     background-position: center;
     text-align: center;
-    gap: 5em;
+    gap: 5em !important;
 
     img { 
         width: 50%;
@@ -29,10 +30,26 @@ h1, h2 {
     font-weight: revert !important;
 }
 
+section { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+    justify-content: space-evenly;
+    gap: 5em;
+    min-height: 90vh;
+}
+
 .overlay { 
     background-color: rgba(0,0,0,0.6);
     height: 90vh;
     width: 100%;
-    justify-content: space-evenly;
-    gap: 5em;
+    gap: 5em !important;
+    display: flex;
+
+    section { 
+        display: flex;
+        flex-direction: column;
+        flex: 1; 
+        gap: 5em !important;
+    }
 }
