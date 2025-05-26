@@ -4,6 +4,7 @@
     "ckeditor5": "^41.4.2",
     "flowbite": "^3.1.2",
     "jquery-breakpoints": "^1.8.1",
-    "tailwindcss": "^3.4.17"
+    "tailwindcss": "^3.4.17",
+    "tw-elements": "^2.0.0"
   }
 }
