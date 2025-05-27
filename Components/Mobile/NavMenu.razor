@@ -1,0 +1,49 @@
+@using Majorsoft.Blazor.Components.Modal
+
+<button @onclick="OpenNav" @ref="_menuRef">
+    <svg preserveAspectRatio="none" class="menuIcon" stroke-width="1.5" viewBox="0 0 24 24" fill="none"
+        xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 19H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+</button>
+
+<div class="navModal">
+    <ModalDialog @ref="_simpledialog1" OverlayBackgroundColor="@_overlayColor" OverlayOpacity="@(_overlayOpacity / 1000)"
+        Height="@_modalHeight" Width="@_modalWidth" MinHeight="@_modalMinHeight" MinWidth="@_modalMinWidth"
+        ShowCloseButton="false">
+        <Content>
+            <MudIcon Icon="@Icons.Material.Filled.Close" Class="closeIcon" Style="font-size: 60pt;" @onclick="CloseNav" />
+            <ul class="mobileNav">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Me</a></li>
+                <li><a href="#">Blog</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+        </Content>
+    </ModalDialog>
+</div>
+
+@code {
+    ElementReference _menuRef;
+    private ModalDialog? _simpledialog1;
+
+    // Fully customized dialog
+    private string _overlayColor = "128,128,128"; // gray
+    private double _overlayOpacity = 0.5;
+    private double _modalHeight = 270;
+    private double _modalWidth = 500;
+    private double _modalMinHeight = 100;
+    private double _modalMinWidth = 100;
+
+    pubilc async Task OpenNav()
+    {
+        _simpledialog1?.Open();
+    }
+
+    public async Task CloseNav()
+    {
+        _simpledialog1?.Close();
+    }
+}

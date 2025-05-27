@@ -28,6 +28,9 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using ServiceStack.Text;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
+using MudBlazor;
+using Majorsoft.Blazor.Components.CssEvents;
+using Majorsoft.Blazor.Components.Common.JsInterop;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -192,6 +195,11 @@ try
     builder.Services.AddRazorPages();
 
     builder.Services.AddMudServices();
+
+    builder.Services.AddScoped<IDialogService, DialogService>();
+
+    builder.Services.AddCssEvents();
+    builder.Services.AddJsInteropExtensions();
  
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")

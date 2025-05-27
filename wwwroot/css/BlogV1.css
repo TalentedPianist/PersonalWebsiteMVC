@@ -12,11 +12,38 @@
   background-size: 100%;
   background-position: center;
   text-align: center;
+  position: relative;
 }
 #Home img {
   width: 50%;
   border-radius: 50%;
   align-self: center;
+  display: flex;
+  margin: 0 auto;
+}
+
+.navModal {
+  color: white !important;
+  position: absolute;
+  top: 0;
+  z-index: 50000;
+  background-color: rgba(0, 0, 0, 0.6);
+  font-size: large;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100%;
+}
+
+.bmodal-body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.closeIcon {
+  color: white;
+  font-size: 80pt;
   display: flex;
   margin: 0 auto;
 }
@@ -29,4 +56,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+header {
+  position: absolute;
+  top: 5em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.menuIcon {
+  color: yellow;
+  width: 80px;
+  height: 80px;
+}
+
+.mobileNav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 5em;
+}
+.mobileNav a {
+  font-size: xx-large;
 }/*# sourceMappingURL=BlogV1.css.map */
