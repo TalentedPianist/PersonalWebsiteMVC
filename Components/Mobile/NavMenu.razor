@@ -37,13 +37,15 @@
     private double _modalMinHeight = 100;
     private double _modalMinWidth = 100;
 
-    pubilc async Task OpenNav()
+    public async Task OpenNav()
     {
-        _simpledialog1?.Open();
+        await _simpledialog1?.Open();
+        menuRef.style.display = "none";
     }
 
     public async Task CloseNav()
     {
-        _simpledialog1?.Close();
+        await _simpledialog1?.Close();
+       
     }
 }
