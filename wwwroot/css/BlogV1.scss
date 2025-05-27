@@ -23,6 +23,29 @@
         display: flex; 
         margin: 0 auto;
     }
+
+    &:after { 
+        display: flex; 
+        flex-direction: column;
+        background-color: #f29f05;
+        padding-top: 20em;
+        position: absolute; 
+        bottom: 0;
+        content: ".";
+        width: 100vw;
+        z-index: -1;
+    }
+}
+
+#About {
+    display: flex; 
+    flex-direction: column;
+    flex: 1;
+    background-color: #F29F05;
+    height: 100vh; 
+    position: relative;
+
+    
 }
 
 
