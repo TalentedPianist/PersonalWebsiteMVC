@@ -1,39 +1,30 @@
 @using PersonalWebsiteMVC.Components.Mobile
+@using PersonalWebsiteMVC.Components
 @inject IDialogService DialogService
 
 
-<header>
-
-
-</header>
 
 <div id="Home">
     <div class="overlay">
-        <NavMenu IsNavVisible="OnNavVisible" />
-        @if (!IsShow) {
-        
-            <h1 class="text-4xl text-white">Hi, I'm Douglas</h1>
-            <img src="/images/me.jpg">
-            <h2 class="text-3xl text-white">Thanks for visiting!</h2>
-            <button type="button"
-                class=" text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow--800/80 font-medium rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2">
-                About Me
+        <header>
+            <NavMenu />
 
-            </button>
-        }
+        </header>
+
+
+
+        <h1 class="text-4xl text-white">Hi, I'm Douglas</h1>
+        <img src="/images/me.jpg">
+        <h2 class="text-3xl text-white">Thanks for visiting!</h2>
+        <button type="button"
+            class=" text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow--800/80 font-medium rounded-lg text-xl px-5 py-2.5 text-center me-2 mb-2">
+            About Me
+
+        </button>
+
     </div>
 </div>
 
 <div id="About">
-    <h1 class="text-white text-4xl">About Me</h1>
+    <h1 class="text-4xl text-black">About Me</h1>
 </div>
-
-@code {
-    public bool IsShow { get; set; } = false;
-    private Task OnNavVisible(bool show) 
-    {
-        IsShow = show;
-        StateHasChanged(); // Seems to be the missing link.
-        return Task.CompletedTask;
-    }
-}
