@@ -1,4 +1,5 @@
 @inject IDialogService DialogService
+@inject IJSRuntime JS
 
 <a href="#" @onclick="Open">
 <svg preserveAspectRatio="none" class="menuIcon" stroke-width="1.5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -13,10 +14,10 @@
         <MudIcon Icon="@Icons.Material.Filled.Close" Class="closeIcon" @onclick="Close" />
         <ul>
             
-            <li><NavLink href="#Home" id="home">Home</NavLink></li>
-            <li><NavLink href="#About" id="about" @onclick="Close">About Me</NavLink></li>
-            <li><NavLink href="#Blog" id="blog">Blog</NavLink></li>
-            <li><NavLink href="#Contact" id="contact">Contact</NavLink></li>
+            <li><NavLink href="#Home" id="home" @onclick="@(async () => await ScrollToView("Home"))">Home</NavLink></li>
+            <li><NavLink href="#About" id="about" @onclick="@(async() => await ScrollToView("About"))">About Me</NavLink></li>
+            <li><NavLink href="#Blog" id="blog" @onclick="@(async () => await ScrollToView("Blog"))">Blog</NavLink></li>
+            <li><NavLink href="#Contact" id="contact" @onclick="@(async () => await ScrollToView("Contact"))">Contact</NavLink></li>
         </ul>
     </DialogContent>
 
@@ -26,6 +27,20 @@
     private bool _visible;
     private void Open() => _visible = true;
     private void Close() => _visible = false;
+
+    public async Task ScrollToView(string name)
+    {
+        Close();
+        await JS.InvokeVoidAsync("ScrollToView", name);
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) 
+    {
+        if (firstRender) 
+        {
+            await JS.InvokeVoidAsync("scrollToHash");
+        }
+    }
 
 }
 

@@ -1,16 +1,19 @@
 @using PersonalWebsiteMVC.Components.Mobile
 @using PersonalWebsiteMVC.Components
+@using Majorsoft.Blazor.Components.Common.JsInterop
 @inject IDialogService DialogService
+@inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
 
 
-<div id="Home">
+<div id="Home" @ref="homeRef">
     <div class="overlay">
+
         <header>
             <NavMenu />
 
         </header>
-
 
 
         <h1 class="text-4xl text-white">Hi, I'm Douglas</h1>
@@ -25,6 +28,30 @@
     </div>
 </div>
 
-<div id="About">
-    <h1 class="text-4xl text-black">About Me</h1>
+<div id="About" @ref="aboutRef">
+    <section>
+        <h1 class="text-4xl text-black">About Me</h1>
+    </section>
+
+
 </div>
+
+<div id="Blog" @ref="blogRef">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#F29f05" fill-opacity="1"
+            d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,229.3C672,224,768,192,864,160C960,128,1056,96,1152,122.7C1248,149,1344,235,1392,277.3L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+        </path>
+    </svg>
+
+    <h1 class="text-4xl text-black">Blog</h1>
+</div>
+
+@code {
+    ElementReference homeRef;
+    ElementReference aboutRef;
+    ElementReference blogRef;
+    ElementReference contactRef;
+
+
+
+}

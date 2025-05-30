@@ -50,11 +50,31 @@ img {
     display: flex; 
     flex-direction: column;
     flex: 1;
-    background-color: #F29F05;
     height: 100vh; 
     position: relative;
 
-    
+    section { 
+        display: flex;
+        flex-direction: column;
+        flex: 1; 
+        height: 100vh;
+        background-color: #F29F05;
+    }
+
+    svg { 
+        position: absolute; 
+        bottom: 0; 
+    }
+}
+
+#Blog { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+    height: 100vh;
+    background-color: #F27405;
+
+
 }
 
 
@@ -130,4 +150,8 @@ header {
     top: 0; 
     right: 0; 
     left: 0;
+    bottom: 0;
+    display: flex; 
+    background-color: rgba(0,0,0,0.6);
+    align-items: center;
 }
