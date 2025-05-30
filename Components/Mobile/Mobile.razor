@@ -1,5 +1,6 @@
 @using PersonalWebsiteMVC.Components.Mobile
 @using PersonalWebsiteMVC.Components
+@using PersonalWebsiteMVC.Components.Mobile.Blog
 @using Majorsoft.Blazor.Components.Common.JsInterop
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
@@ -43,7 +44,7 @@
         </path>
     </svg>
 
-    <h1 class="text-4xl text-black">Blog</h1>
+    <Posts />
 </div>
 
 @code {
