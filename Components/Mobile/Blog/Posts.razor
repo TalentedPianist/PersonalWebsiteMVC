@@ -2,7 +2,22 @@
 @using PersonalWebsiteMVC.Data
 @inject ApplicationDbContext _db
 @inject NavigationManager nav
+@model Posts
 
-@if (_db.Posts.Count() == 0) { 
-    <p>No posts have been found just now.  Please check back later.</p>
+@if (_db.Posts.Count() == 0)
+{
+    <div id="Blog">
+        <h1 class="text-4xl text-black">Blog</h1>
+
+        <p>No posts have been found just now. Please check back later.</p>
+    </div>
+} else {
+    foreach (Posts post in _db.Posts)
+    {
+    } 
+}
+
+@code {
+    public IList<Posts> Posts { get; set; } 
+     
 }
