@@ -2,7 +2,10 @@
 @using PersonalWebsiteMVC.Data
 @inject ApplicationDbContext _db
 @inject NavigationManager nav
-@model Posts
+@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.WebUtilities
+@using PersonalWebsiteMVC.Components.Mobile.Blog
+@using MudBlazor
 
 @if (_db.Posts.Count() == 0)
 {
@@ -11,13 +14,94 @@
 
         <p>No posts have been found just now. Please check back later.</p>
     </div>
-} else {
-    foreach (Posts post in _db.Posts)
+}
+else
+{
+    if (Id > 0)
     {
-    } 
+        var uri = nav.ToAbsoluteUri(nav.Uri);
+        if (uri.Fragment.Contains("Comments"))
+        {
+            <BlogComments PostID="Id" />
+        }
+        else
+        {
+            var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
+            <div id="SinglePost">
+                <h1>@post!.PostTitle</h1>
+                @((MarkupString)post.PostContent!)
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewComments(post!.PostID))">Comments
+                </MudButton>
+            </div>
+        }
+    }
+    else
+    {
+        <div id="Blog">
+            <MudText Typo="Typo.h2">Blog</MudText>
+
+            <section>
+                @foreach (var item in Model)
+                {
+                    var result = Truncate(item.PostContent!, 150);
+
+                    <MudCard>
+                        @if (item.FeaturedImage != null)
+                        {
+                            <MudCardMedia Image=@($"Uploads/{item.FeaturedImage}") Height="200" />
+                        }
+                        <MudCardContent>
+                            <MudText Typo="Typo.h5">@item.PostTitle</MudText>
+                            <MudText Typo="Typo.body1">@RemoveHTMLTags(result)</MudText>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewPost(item.PostID))">Read
+                                More</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                }
+            </section>
+        </div>
+    }
+}
+
+@functions {
+    public static string Truncate(string value, int maxChars)
+    {
+        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "....";
+    }
+
+    public static string RemoveHTMLTags(string html)
+    {
+        return Regex.Replace(html, "<.*?>", string.Empty);
+    }
 }
 
 @code {
-    public IList<Posts> Posts { get; set; } 
-     
+    public string? Message { get; set; }
+
+    public IEnumerable<PersonalWebsiteMVC.Models.Posts> Model { get; set; } = new List<PersonalWebsiteMVC.Models.Posts>();
+
+    protected override void OnParametersSet()
+    {
+        Model = _db.Posts.ToList();
+    }
+
+    [SupplyParameterFromQuery(Name = "id")]
+    public int Id { get; set; }
+
+    public async Task ViewPost(int id)
+    {
+        var query = new Dictionary<string, string>
+{
+{"id", id.ToString() },
+};
+        nav.NavigateTo(QueryHelpers.AddQueryString("#Blog", query!));
+        await Task.CompletedTask;
+    }
+
+    public async Task ViewComments(int PostID)
+    {
+        await Task.CompletedTask;
+    }
 }

@@ -19,4 +19,6 @@ namespace PersonalWebsiteMVC.Data
         public DbSet<Album> Albums { get; set; } = default!;
         public DbSet<Photos> Photos { get; set; } = default!;
     }
+
+    
 }

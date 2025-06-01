@@ -207,6 +207,13 @@ try
 
     var app = builder.Build();
 
+    // Code to seed data as seen in https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/movie-database-app/part-4?view=aspnetcore-9.0&pivots=vs#seed-the-database
+    using (var scope = app.Services.CreateScope())
+    {
+        var services = scope.ServiceProvider;
+        SeedData.Initialize(services);
+    }
+
  
    app.UseStaticFiles();
 
