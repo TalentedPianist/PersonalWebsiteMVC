@@ -38,27 +38,30 @@ else
     else
     {
         <div id="Blog">
-            <MudText Typo="Typo.h2">Blog</MudText>
+            <h1>Blog</h1>
 
             <section>
                 @foreach (var item in Model)
                 {
                     var result = Truncate(item.PostContent!, 150);
 
-                    <MudCard>
+                    <section>
+
                         @if (item.FeaturedImage != null)
                         {
                             <MudCardMedia Image=@($"Uploads/{item.FeaturedImage}") Height="200" />
                         }
-                        <MudCardContent>
-                            <MudText Typo="Typo.h5">@item.PostTitle</MudText>
-                            <MudText Typo="Typo.body1">@RemoveHTMLTags(result)</MudText>
-                        </MudCardContent>
-                        <MudCardActions>
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewPost(item.PostID))">Read
+
+                        <div id="PostContent">
+                            <h2>@item.PostTitle</h2>
+                            @RemoveHTMLTags(result)
+                            <br>
+                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewPost(item.PostID))">
+                                Read
                                 More</MudButton>
-                        </MudCardActions>
-                    </MudCard>
+                        </div>
+                        <hr>
+                    </section>
                 }
             </section>
         </div>

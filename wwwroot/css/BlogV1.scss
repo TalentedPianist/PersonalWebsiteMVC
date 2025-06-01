@@ -12,6 +12,10 @@ img {
     width: 100%;
 }
 
+h1, h2, h3, h4, h5, h6 { 
+    font-size: revert !important;
+    font-weight: revert !important;
+}
 
 
 #Home { 
@@ -74,9 +78,57 @@ img {
     flex-direction: column;
     flex: 1; 
     height: 100vh;
-    background-color: #F27405;
+    color: black !important;
+    position: relative;
 
+    h1 { 
+        padding-left: 16px;
+    }
 
+    &:before { 
+            position: absolute; 
+            display: flex; 
+            height: 100px;
+            background-color: #f2740f;
+            content: "";
+            width: 100vw;
+            z-index: -1;
+        }
+
+    section { 
+        display: flex; 
+        flex-direction: column;
+        flex: 0; 
+        background-color: #f2740f;
+        position: relative;
+    
+        hr { 
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
+        #PostContent { 
+            padding: 16px;
+            gap: 5em;
+        }
+       
+    }
+
+    button { 
+        align-self: flex-start;
+    }
+}
+
+#SinglePost { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+    padding-left: 1em;
+    padding-right: 1em;
+    font-size: large;
+    background-color: #f2740f;
+    line-height: 2;
+ 
 }
 
 
