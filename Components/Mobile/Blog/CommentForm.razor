@@ -1,0 +1,57 @@
+@using PersonalWebsiteMVC.Models
+
+<EditForm EditContext="@Context"
+    event-form="forEvent-form"
+    OnValidSubmit="@Save">
+    <div>
+        <label>Name:</label> 
+        <InputText @bind-Value="@Model.CommentAuthor" />
+    </div>
+    <div>
+        <label>Email:</label>
+        <InputText @bind-Value="@Model.CommentAuthorEmail" />
+    </div>
+    <div>
+        <label>Comment:</label>
+        <InputText @bind-Value="@Model.CommentContent" />
+    </div>
+    <button type="submit">Add</Button>
+</EditForm>
+
+@code { 
+    public Comments Model { get; set; }
+
+    protected EditContext Context;
+    protected ValidationMessageStore Store;
+
+    protected override void OnInitialized()
+    {
+        Model ??= new();
+        Context = new(Model);
+        Context.OnValidationRequested += ValidateForm;
+        Store = new(Context);
+    }
+
+    private void ValidateForm(object sender, ValidationRequestedEventArgs args)
+    {
+        Store.Clear();
+        if (string.IsNullOrWhiteSpace(Model.CommentAuthor))
+            Store.Add(() => Model.CommentAuthor!,
+                "You must provide a name.");
+        if (string.IsNullOrWhiteSpace(Model.CommentAuthorEmail))
+            Store.Add(() => Model.CommentAuthorEmail!,
+                "You must provide an email address.");
+    }
+
+    private void Save()
+    {
+
+    }
+
+    public void Dispose()
+    {
+        if (Context is not null)
+            Context.OnValidationRequested -= ValidateForm;
+        }
+    }
+}
