@@ -30,8 +30,7 @@ else
             <div id="SinglePost">
                 <h1>@post!.PostTitle</h1>
                 @((MarkupString)post.PostContent!)
-                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewComments(post!.PostID))">Comments
-                </MudButton>
+                <BlogComments />
             </div>
         }
     }
@@ -60,7 +59,7 @@ else
                                 Read
                                 More</MudButton>
                         </div>
-                        <hr>
+                        
                     </section>
                 }
             </section>

@@ -98,25 +98,35 @@ h1, h2, h3, h4, h5, h6 {
     section { 
         display: flex; 
         flex-direction: column;
-        flex: 0; 
+        flex: 0;
         background-color: #f2740f;
         position: relative;
+
     
         hr { 
             margin-top: 1em;
             margin-bottom: 1em;
         }
 
-        #PostContent { 
-            padding: 16px;
-            gap: 5em;
-        }
-       
+        
     }
 
     button { 
         align-self: flex-start;
     }
+}
+
+#PostContent { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1;
+    gap: 10px;
+    padding-left: 1em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    margin-bottom: 1em;
+    border-bottom: 1px solid black;
 }
 
 #SinglePost { 
