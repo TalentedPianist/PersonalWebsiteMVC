@@ -1,57 +1,58 @@
 @using PersonalWebsiteMVC.Models
+@using System.ComponentModel.DataAnnotations
 
 <EditForm EditContext="@Context"
-    event-form="forEvent-form"
-    OnValidSubmit="@Save">
-    <div>
-        <label>Name:</label> 
-        <InputText @bind-Value="@Model.CommentAuthor" />
-    </div>
-    <div>
-        <label>Email:</label>
-        <InputText @bind-Value="@Model.CommentAuthorEmail" />
-    </div>
-    <div>
-        <label>Comment:</label>
-        <InputText @bind-Value="@Model.CommentContent" />
-    </div>
-    <button type="submit">Add</Button>
+    OnValidSubmit="Save"
+    OnInvalidSubmit="HandleInvalidSubmit"
+    >
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    @LastSubmitResult
+    <label>Name:</label>
+    <InputText @bind-Value="@Model.CommentAuthor" placeholder="John Doe" />
+    <ValidationMessage For="@(() => Model.CommentAuthor)" />
+    <label>Email:</label>
+    <InputText @bind-Value="@Model.CommentAuthorEmail" placeholder="john@johndoe.com" />
+    <ValidationMessage For="() => Model.CommentAuthorEmail" />
+    <label>Website:</label>
+    <InputText @bind-Value="@Model.CommentAuthorUrl" placeholder="john@johndoe.com" />
+    <label>Comment:</label>
+    <InputTextArea @bind-Value="@Model.CommentContent" placeholder="This is a great website...." />
+    <ValidationMessage For="@(() => Model.CommentContent)" />
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Comment</MudButton>
 </EditForm>
 
-@code { 
+@code {
     public Comments Model { get; set; }
-
     protected EditContext Context;
     protected ValidationMessageStore Store;
 
-    protected override void OnInitialized()
+    protected override void OnInitialized() 
     {
         Model ??= new();
-        Context = new(Model);
+        Context = new (Model);
         Context.OnValidationRequested += ValidateForm;
         Store = new(Context);
     }
 
+    string LastSubmitResult;
+    private void Save(EditContext editContext)
+    {
+        bool formIsValid = editContext.Validate();
+        LastSubmitResult = formIsValid
+            ? "Success - form was valid"
+            : "Failure - form was invalid";
+    }
+
+    private void HandleInvalidSubmit()
+    {
+    }
     private void ValidateForm(object sender, ValidationRequestedEventArgs args)
     {
         Store.Clear();
         if (string.IsNullOrWhiteSpace(Model.CommentAuthor))
-            Store.Add(() => Model.CommentAuthor!,
-                "You must provide a name.");
-        if (string.IsNullOrWhiteSpace(Model.CommentAuthorEmail))
-            Store.Add(() => Model.CommentAuthorEmail!,
-                "You must provide an email address.");
-    }
-
-    private void Save()
-    {
-
-    }
-
-    public void Dispose()
-    {
-        if (Context is not null)
-            Context.OnValidationRequested -= ValidateForm;
+        {
+            Store.Add(() => Model.CommentAuthor, "You must provide a name.");
         }
-    }
+    } 
 }

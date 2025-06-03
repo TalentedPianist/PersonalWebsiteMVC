@@ -70,6 +70,7 @@ h1, h2, h3, h4, h5, h6 {
     svg { 
         position: absolute; 
         bottom: 0; 
+        margin-bottom: 0 !important;
     }
 }
 
@@ -88,11 +89,12 @@ h1, h2, h3, h4, h5, h6 {
     &:before { 
             position: absolute; 
             display: flex; 
-            height: 100px;
+            height: 500px;
             background-color: #f2740f;
             content: "";
             width: 100vw;
             z-index: -1;
+            margin-bottom: 0 !important;
         }
 
     section { 
@@ -104,7 +106,7 @@ h1, h2, h3, h4, h5, h6 {
 
     
         hr { 
-            margin-top: 1em;
+            
             margin-bottom: 1em;
         }
 
@@ -138,9 +140,38 @@ h1, h2, h3, h4, h5, h6 {
     font-size: large;
     background-color: #f2740f;
     line-height: 2;
- 
+    border-bottom: 1px solid black;
 }
 
+
+#Comments { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+
+    form { 
+        display: flex; 
+        flex-direction: column;
+        flex: 1;
+        gap: 10px;
+        border-top: 1px solid black;
+        margin-top: 1em;
+        margin-bottom: 1em;
+        padding-bottom: 1em;
+    }
+
+    hr { 
+        color: black; 
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
+
+    p {
+        &:nth-of-type(1) { 
+            margin-bottom: 1em;
+        } 
+    }
+}
 
 .navModal { 
     color: white !important;

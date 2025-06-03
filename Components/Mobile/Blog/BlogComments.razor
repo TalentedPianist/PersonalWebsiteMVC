@@ -12,6 +12,7 @@
     {
         <h2>Comments</h2>
         <p>No comments have been found at this time.  Be the first to add a comment using the form below.</p>
+        <CommentForm />
     }
     else 
     {
@@ -58,7 +59,7 @@
         await Task.CompletedTask;
     }
 
-    public async Task HandleValidSubmit()
+    public void HandleValidSubmit()
     {
         Comments comment = new Comments();
         comment.CommentAuthor = Model!.CommentAuthor;
