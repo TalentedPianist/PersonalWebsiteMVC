@@ -4,25 +4,31 @@
 @using Sitko.Blazor.CKEditor.Bundle
 @using System.ComponentModel
 @inject IJSRuntime JS
+@inject ApplicationDbContext db
+@inject IHttpContextAccessor http
 
 @Message
 
-
-<EditForm Model="Model" OnSubmit="Save">
-    
+<!-- It seems for form validation to work, OnValidSubmit must be used instead of just OnSubmit  -->
+<EditForm EditContext="Context" OnValidSubmit="Save">
+    <DataAnnotationsValidator />
+    <AntiforgeryToken />
 
     <label>Name:</label>
     <InputText @bind-Value="@Model.CommentAuthor" placeholder="John Doe" />
-    
+    <p class="error"><ValidationMessage For="() => Model.CommentAuthor" /></p>
 
     <label>Email:</label>
     <InputText @bind-Value="Model.CommentAuthorEmail" placeholder="john@johndoe.com" />
+    <p class="error"><ValidationMessage For="() => Model.CommentAuthorEmail" /></p>
 
     <label>Website:</label>
     <InputText @bind-Value="Model.CommentAuthorUrl" placeholder="https://www.johndoe.com" />
+    <p class="error"><ValidationMessage For="() => Model.CommentAuthorUrl" /></p>
 
     <label>Comment:</label>
     <InputTextArea @bind-Value="Model.CommentContent" placeholder="This is a great website..." />
+    <p class="error"><ValidationMessage For="() => Model.CommentContent" /></p>
 
     <div id="google_recaptcha"></div>
   
@@ -33,30 +39,18 @@
     public string Message = string.Empty;
    
 
-    public Comments Model { get; set; } = new Comments();
+    public Comments Model { get; set; }
 
     protected EditContext? Context;
     protected ValidationMessageStore? Store;
 
-    private void ValidateForm(object sender, ValidationRequestedEventArgs args)
-    {
-        Store!.Clear();
-        if (string.IsNullOrWhiteSpace(Model.CommentAuthor))
-            Store.Add(() => Model.CommentAuthor!, "You must provide a name.");
-    }
+
 
     protected override void OnInitialized()
     {
         Model ??= new();
         Context = new(Model);
-        Context.OnValidationRequested += ValidateForm!;
         Store = new(Context);
-    }
-
-    public void Dispose()
-    {
-        if (Context is not null)
-            Context.OnValidationRequested -= ValidateForm!;
     }
 
     public async Task Save()
@@ -64,7 +58,16 @@
         // Captcha can be checked here with captchaResponse variable
         if (captchaResponse is not null)
         {
-            Message = Model.CommentAuthor!;
+            db.Comments.Add(
+                new Comments
+                {
+                    CommentAuthor = Model.CommentAuthor,CommentAuthorEmail = Model.CommentAuthorEmail,
+                    CommentAuthorUrl = Model.CommentAuthorUrl,
+                    CommentContent = Model.CommentContent,CommentAuthorIP = http.HttpContext.Connection?.RemoteIpAddress.ToString(),
+                    CommentDate = DateTime.Now,
+                    Comment
+                }
+            );
         }
         await Task.CompletedTask;
     }

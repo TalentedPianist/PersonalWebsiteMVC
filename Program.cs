@@ -209,6 +209,8 @@ try
         options.SecretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
     });
 
+    builder.Services.AddHttpContextAccessor();
+
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
         .Get<MailSettings>();
