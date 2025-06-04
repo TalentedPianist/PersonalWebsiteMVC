@@ -29,8 +29,7 @@ using Microsoft.Extensions.Options;
 using ServiceStack.Text;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using MudBlazor;
-using Majorsoft.Blazor.Components.CssEvents;
-using Majorsoft.Blazor.Components.Common.JsInterop;
+using KITT.Web.ReCaptcha.Http.v2;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -198,9 +197,18 @@ try
 
     builder.Services.AddScoped<IDialogService, DialogService>();
 
-    builder.Services.AddCssEvents();
-    builder.Services.AddJsInteropExtensions();
- 
+    builder.Services.AddCKEditor(builder.Configuration, options =>
+    {
+        options.EditorClassName = "ClassicEditor";
+        options.ScriptPath = "/lib/ckeditor5";
+        options.StylePath = "/lib/ckeditor5/sample/css";
+    });
+
+    builder.Services.AddReCaptchaV2HttpClient(options =>
+    {
+        options.SecretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
+    });
+
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
         .Get<MailSettings>();
@@ -283,6 +291,8 @@ try
         return userResponse;
 
     });
+
+
 
     app.MapRazorComponents<App>()
         .AddInteractiveServerRenderMode();

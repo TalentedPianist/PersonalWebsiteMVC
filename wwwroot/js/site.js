@@ -1,7 +1,7 @@
 
 // Sticky header
 $(window).scroll(function () {
-    console.log($(this).scrollTop());
+
     if ($(this).scrollTop() > 100) {
         $('header').addClass('sticky');
         $("header").prependTo("body");

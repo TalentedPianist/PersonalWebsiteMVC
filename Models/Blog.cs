@@ -41,10 +41,10 @@ namespace PersonalWebsiteMVC.Models
         
         public string? PhotoID { get; set; } 
         [Display(Name = "Name")]
-       
+        [Required(ErrorMessage="You must enter your email address.")]
         public string? CommentAuthor { get; set; } 
         [Display(Name = "Email")]
-   
+        [Required(ErrorMessage="You must enter your email address.")]
         public string? CommentAuthorEmail { get; set; } 
         [Display(Name = "Website")]
         public string? CommentAuthorUrl { get; set; } 

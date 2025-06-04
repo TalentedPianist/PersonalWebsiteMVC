@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PersonalWebsiteBlazor.Models
+namespace PersonalWebsiteMVC.Models
 {
     public class ViewModel
     {

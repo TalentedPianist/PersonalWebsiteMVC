@@ -1,58 +1,100 @@
 @using PersonalWebsiteMVC.Models
-@using System.ComponentModel.DataAnnotations
+@using PersonalWebsiteMVC.Components
+@using Sitko.Blazor.CKEditor
+@using Sitko.Blazor.CKEditor.Bundle
+@using System.ComponentModel
+@inject IJSRuntime JS
 
-<EditForm EditContext="@Context"
-    OnValidSubmit="Save"
-    OnInvalidSubmit="HandleInvalidSubmit"
-    >
-    <DataAnnotationsValidator />
-    <ValidationSummary />
-    @LastSubmitResult
+@Message
+
+
+<EditForm Model="Model" OnSubmit="Save">
+    
+
     <label>Name:</label>
     <InputText @bind-Value="@Model.CommentAuthor" placeholder="John Doe" />
-    <ValidationMessage For="@(() => Model.CommentAuthor)" />
+    
+
     <label>Email:</label>
-    <InputText @bind-Value="@Model.CommentAuthorEmail" placeholder="john@johndoe.com" />
-    <ValidationMessage For="() => Model.CommentAuthorEmail" />
+    <InputText @bind-Value="Model.CommentAuthorEmail" placeholder="john@johndoe.com" />
+
     <label>Website:</label>
-    <InputText @bind-Value="@Model.CommentAuthorUrl" placeholder="john@johndoe.com" />
+    <InputText @bind-Value="Model.CommentAuthorUrl" placeholder="https://www.johndoe.com" />
+
     <label>Comment:</label>
-    <InputTextArea @bind-Value="@Model.CommentContent" placeholder="This is a great website...." />
-    <ValidationMessage For="@(() => Model.CommentContent)" />
-    <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Comment</MudButton>
+    <InputTextArea @bind-Value="Model.CommentContent" placeholder="This is a great website..." />
+
+    <div id="google_recaptcha"></div>
+  
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Add Comment</MudButton>
 </EditForm>
 
 @code {
-    public Comments Model { get; set; }
-    protected EditContext Context;
-    protected ValidationMessageStore Store;
+    public string Message = string.Empty;
+   
 
-    protected override void OnInitialized() 
+    public Comments Model { get; set; } = new Comments();
+
+    protected EditContext? Context;
+    protected ValidationMessageStore? Store;
+
+    private void ValidateForm(object sender, ValidationRequestedEventArgs args)
+    {
+        Store!.Clear();
+        if (string.IsNullOrWhiteSpace(Model.CommentAuthor))
+            Store.Add(() => Model.CommentAuthor!, "You must provide a name.");
+    }
+
+    protected override void OnInitialized()
     {
         Model ??= new();
-        Context = new (Model);
-        Context.OnValidationRequested += ValidateForm;
+        Context = new(Model);
+        Context.OnValidationRequested += ValidateForm!;
         Store = new(Context);
     }
 
-    string LastSubmitResult;
-    private void Save(EditContext editContext)
+    public void Dispose()
     {
-        bool formIsValid = editContext.Validate();
-        LastSubmitResult = formIsValid
-            ? "Success - form was valid"
-            : "Failure - form was invalid";
+        if (Context is not null)
+            Context.OnValidationRequested -= ValidateForm!;
     }
 
-    private void HandleInvalidSubmit()
+    public async Task Save()
     {
-    }
-    private void ValidateForm(object sender, ValidationRequestedEventArgs args)
-    {
-        Store.Clear();
-        if (string.IsNullOrWhiteSpace(Model.CommentAuthor))
+        // Captcha can be checked here with captchaResponse variable
+        if (captchaResponse is not null)
         {
-            Store.Add(() => Model.CommentAuthor, "You must provide a name.");
+            Message = Model.CommentAuthor!;
         }
-    } 
+        await Task.CompletedTask;
+    }
+
+    private string captchaResponse = string.Empty;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender) 
+    {
+        if (firstRender)
+        {
+            await JS.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha", "6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
+    public void CallbackOnSuccess(string response)
+    {
+        captchaResponse = response;
+       
+    }
+
+    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
+    public void CallbackOnExpired(string response)
+    {
+        captchaResponse = "Captcha has expired";
+    }
+
+    private void ShowResponse() 
+    {
+        captchaResponse = $"The response for the Google reCaptcha widget: {captchaResponse}";
+    }
 }
