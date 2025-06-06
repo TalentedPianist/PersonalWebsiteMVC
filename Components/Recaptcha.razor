@@ -1,36 +1,63 @@
-@using System.ComponentModel
-@inject IJSRuntime JS
+@using Microsoft.Extensions.Options
+@using System.Text.Json
+@inject IHttpClientFactory HttpClientFactory 
 
-  <div id="google_recaptcha   "></div>
+
+<Captcha @ref="@captcha" Solved="@Solved" Validate="@Validate" Expired="Expired" />
 
 @code { 
-        private string captchaResponse = string.Empty;
+    private Captcha captcha;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    [Parameter]
+    public RenderFragment? ChildContent { get; set; }
+    [Parameter]
+    public string? Value { get; set; }
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+
+
+    private void Solved(CaptchaState state)
     {
-        if (firstRender)
+        Console.WriteLine($"Captcha Success: {state.Valid}");
+    }
+
+    private void Expired()
+    {
+        Console.WriteLine("Captcha Expired");
+    }
+
+    private async Task<bool> Validate(CaptchaState state)
+    {
+        Console.WriteLine("Captcha Expired");
+
+        // Perform server side validation
+        var content = new FormUrlEncodedContent(new[]
         {
-            await JS.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha",
-            "6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz");
-        }
-        await base.OnAfterRenderAsync(firstRender);
+            new KeyValuePair<string, string>("secret", "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"),
+            new KeyValuePair<string, string>("response", state.Response),
+        });
+
+        var httpClient = HttpClientFactory.CreateClient();
+        var response = await httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+
+        var result = await response.Content.ReadAsStringAsync();
+        var googleResponse = JsonSerializer.Deserialize<GoogleResponse>(result, new JsonSerializerOptions()   
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
+        });
+        return googleResponse.Success;
     }
+   
 
-    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
-    public void CallbackOnSuccess(string response)
+    public class GoogleResponse
     {
-        captchaResponse = response;
-
-    }
-
-    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
-    public void CallbackOnExpired(string response)
-    {
-        captchaResponse = "Captcha has expired";
-    }
-
-    private void ShowResponse()
-    {
-        captchaResponse = $"The response for the Google reCaptcha widget: {captchaResponse}";
+        public bool Success { get; set; }
+        public double Score { get; set; }
+        public string Action { get; set; }
+        public string Challenge_ts { get; set ;}
+        public string Hostname { get; set; }
+        public string ErrorCodes { get; set; }
     }
 }
+

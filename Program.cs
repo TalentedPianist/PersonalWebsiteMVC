@@ -29,7 +29,8 @@ using Microsoft.Extensions.Options;
 using ServiceStack.Text;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
 using MudBlazor;
-using KITT.Web.ReCaptcha.Http.v2;
+using Blazorise.Captcha.ReCaptcha;
+using Blazorise;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -199,14 +200,19 @@ try
 
     builder.Services.AddCKEditor(builder.Configuration, options =>
     {
-        
-   
+
+
     });
 
-    builder.Services.AddReCaptchaV2HttpClient(options =>
-    {
-        options.SecretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
-    });
+    builder.Services
+        .AddBlazorise(options =>
+        {
+            options.Immediate = true;
+        })
+        .AddBlazoriseGoogleReCaptcha(reCaptchaOptions =>
+        {
+            reCaptchaOptions.SiteKey = "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB";
+        });
 
     builder.Services.AddHttpContextAccessor();
 
@@ -223,15 +229,15 @@ try
         SeedData.Initialize(services);
     }
 
- 
-   app.UseStaticFiles();
+
+    app.UseStaticFiles();
 
 
     // Configure the HTTP request pipeline.
     if (app.Environment.IsDevelopment())
     {
         app.UseMigrationsEndPoint();
-        
+
     }
     else
     {
@@ -299,7 +305,7 @@ try
         .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
-    app.Run();
+    // app.UseBlazorise(); // Not required in ASP.NET Core 7+ with Blazorise
 
 } // https://stackoverflow.com/questions/70247187/microsoft-extensions-hosting-hostfactoryresolverhostinglistenerstopthehostexce
 catch (Exception ex) when (ex is not HostAbortedException)

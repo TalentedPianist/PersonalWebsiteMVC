@@ -39,11 +39,13 @@
         <ValidationMessage For="() => Model.CommentContent" />
     </p>
 
+    <Recaptcha @bind-Value="recaptchaValue" />
 
     <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Add Comment</MudButton>
 </EditForm>
 
 @code {
+    public string recaptchaValue { get; set; }
    public string receivedValue { get; set; }
 
    private void HandleValue(string value)
@@ -76,8 +78,8 @@
     {
         // Captcha can be checked here with captchaResponse variable
         
-        Message = Model.CommentContent;
-        Console.WriteLine(receivedValue);
+        Message = recaptchaValue;
+    
         db.Comments.Add(
         new Comments
         {
