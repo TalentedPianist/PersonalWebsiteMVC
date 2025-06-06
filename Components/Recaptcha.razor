@@ -1,0 +1,36 @@
+@using System.ComponentModel
+@inject IJSRuntime JS
+
+  <div id="google_recaptcha   "></div>
+
+@code { 
+        private string captchaResponse = string.Empty;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha",
+            "6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz");
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
+    public void CallbackOnSuccess(string response)
+    {
+        captchaResponse = response;
+
+    }
+
+    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
+    public void CallbackOnExpired(string response)
+    {
+        captchaResponse = "Captcha has expired";
+    }
+
+    private void ShowResponse()
+    {
+        captchaResponse = $"The response for the Google reCaptcha widget: {captchaResponse}";
+    }
+}

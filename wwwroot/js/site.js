@@ -25,3 +25,12 @@ window.scrollToHash = () => {
         }, 900, 'swing');
     }
 }
+
+window.scrollIntoView = (elementId) => {
+    var elem = document.getElementById(elementId);
+    if (elem) { 
+        window.location.reload();
+        elem.scrollIntoView();
+        window.location.hash = elementId;
+    } 
+}

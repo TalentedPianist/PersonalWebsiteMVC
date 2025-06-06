@@ -199,9 +199,8 @@ try
 
     builder.Services.AddCKEditor(builder.Configuration, options =>
     {
-        options.EditorClassName = "ClassicEditor";
-        options.ScriptPath = "/lib/ckeditor5";
-        options.StylePath = "/lib/ckeditor5/sample/css";
+        
+   
     });
 
     builder.Services.AddReCaptchaV2HttpClient(options =>

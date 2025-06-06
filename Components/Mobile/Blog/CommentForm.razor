@@ -1,45 +1,63 @@
 @using PersonalWebsiteMVC.Models
 @using PersonalWebsiteMVC.Components
-@using Sitko.Blazor.CKEditor
-@using Sitko.Blazor.CKEditor.Bundle
 @using System.ComponentModel
-@inject IJSRuntime JS
+
 @inject ApplicationDbContext db
 @inject IHttpContextAccessor http
+@inject NavigationManager NavigationManager
 
 @Message
 
-<!-- It seems for form validation to work, OnValidSubmit must be used instead of just OnSubmit  -->
-<EditForm EditContext="Context" OnValidSubmit="Save">
+@receivedValue
+
+<EditForm Model="Model" OnValidSubmit="Save">
     <DataAnnotationsValidator />
     <AntiforgeryToken />
 
     <label>Name:</label>
-    <InputText @bind-Value="@Model.CommentAuthor" placeholder="John Doe" />
-    <p class="error"><ValidationMessage For="() => Model.CommentAuthor" /></p>
+    <InputText @bind-Value="@Model!.CommentAuthor" placeholder="John Doe" />
+    <p class="error">
+        <ValidationMessage For="() => Model.CommentAuthor" />
+    </p>
 
     <label>Email:</label>
     <InputText @bind-Value="Model.CommentAuthorEmail" placeholder="john@johndoe.com" />
-    <p class="error"><ValidationMessage For="() => Model.CommentAuthorEmail" /></p>
+    <p class="error">
+        <ValidationMessage For="() => Model.CommentAuthorEmail" />
+    </p>
 
     <label>Website:</label>
     <InputText @bind-Value="Model.CommentAuthorUrl" placeholder="https://www.johndoe.com" />
-    <p class="error"><ValidationMessage For="() => Model.CommentAuthorUrl" /></p>
+    <p class="error">
+        <ValidationMessage For="() => Model.CommentAuthorUrl" />
+    </p>
 
     <label>Comment:</label>
-    <InputTextArea @bind-Value="Model.CommentContent" placeholder="This is a great website..." />
-    <p class="error"><ValidationMessage For="() => Model.CommentContent" /></p>
+    <CKEditorComponent @bind-Value="Model.CommentContent" />
+    
+    <p class="error">
+        <ValidationMessage For="() => Model.CommentContent" />
+    </p>
 
-    <div id="google_recaptcha"></div>
-  
+
     <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Add Comment</MudButton>
 </EditForm>
 
 @code {
-    public string Message = string.Empty;
-   
+   public string receivedValue { get; set; }
 
-    public Comments Model { get; set; }
+   private void HandleValue(string value)
+   {
+        receivedValue = value;
+        Message = value;
+        Console.WriteLine(receivedValue);
+    }
+
+    public string? Message;
+    [SupplyParameterFromQuery(Name = "id")]
+    public int PostID { get; set; }
+
+    public Comments? Model { get; set; }
 
     protected EditContext? Context;
     protected ValidationMessageStore? Store;
@@ -51,53 +69,33 @@
         Model ??= new();
         Context = new(Model);
         Store = new(Context);
+
     }
 
     public async Task Save()
     {
         // Captcha can be checked here with captchaResponse variable
-        if (captchaResponse is not null)
+        
+        Message = Model.CommentContent;
+        Console.WriteLine(receivedValue);
+        db.Comments.Add(
+        new Comments
         {
-            db.Comments.Add(
-                new Comments
-                {
-                    CommentAuthor = Model.CommentAuthor,CommentAuthorEmail = Model.CommentAuthorEmail,
-                    CommentAuthorUrl = Model.CommentAuthorUrl,
-                    CommentContent = Model.CommentContent,CommentAuthorIP = http.HttpContext.Connection?.RemoteIpAddress.ToString(),
-                    CommentDate = DateTime.Now,
-                    Comment
-                }
-            );
+            CommentAuthor = Model!.CommentAuthor,
+            CommentAuthorEmail = Model.CommentAuthorEmail,
+            CommentAuthorUrl = Model.CommentAuthorUrl,
+            CommentContent = Model.CommentContent,
+            CommentAuthorIP = http.HttpContext!.Connection?.RemoteIpAddress!.ToString(),
+            CommentDate = DateTime.Now,
+            PostID = PostID
+
         }
-        await Task.CompletedTask;
+        );
+        //await db.SaveChangesAsync();
+
+        //await JS.InvokeVoidAsync("scrollIntoView", "Comments");
+
     }
 
-    private string captchaResponse = string.Empty;
 
-    protected override async Task OnAfterRenderAsync(bool firstRender) 
-    {
-        if (firstRender)
-        {
-            await JS.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha", "6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz");
-        }
-        await base.OnAfterRenderAsync(firstRender);
-    }
-
-    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
-    public void CallbackOnSuccess(string response)
-    {
-        captchaResponse = response;
-       
-    }
-
-    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
-    public void CallbackOnExpired(string response)
-    {
-        captchaResponse = "Captcha has expired";
-    }
-
-    private void ShowResponse() 
-    {
-        captchaResponse = $"The response for the Google reCaptcha widget: {captchaResponse}";
-    }
 }

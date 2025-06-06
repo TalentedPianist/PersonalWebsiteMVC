@@ -22,7 +22,7 @@ else
         var uri = nav.ToAbsoluteUri(nav.Uri);
         if (uri.Fragment.Contains("Comments"))
         {
-            <BlogComments PostID="Id" />
+            
         }
         else
         {
@@ -30,7 +30,8 @@ else
             <div id="SinglePost">
                 <h1>@post!.PostTitle</h1>
                 @((MarkupString)post.PostContent!)
-                <BlogComments />
+            
+                <BlogComments PostID="@post.PostID" />
             </div>
         }
     }
