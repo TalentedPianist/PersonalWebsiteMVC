@@ -78,7 +78,7 @@ h1, h2, h3, h4, h5, h6 {
     display: flex; 
     flex-direction: column;
     flex: 1; 
-    height: 100vh;
+    height: 100%;
     color: black !important;
     position: relative;
 
@@ -96,6 +96,17 @@ h1, h2, h3, h4, h5, h6 {
             z-index: -1;
             margin-bottom: 0 !important;
         }
+
+    &:after {
+  
+        content: ".";
+        position: absolute; 
+        bottom: 0; 
+        height: 100px;
+        width: 100vw;
+        background-color: lightgreen;
+        z-index: -1;
+    }
 
     section { 
         display: flex; 
@@ -175,6 +186,15 @@ h1, h2, h3, h4, h5, h6 {
             margin-bottom: 1em;
         } 
     }
+}
+
+#Contact { 
+    display: flex;
+    flex-direction: column;
+    flex: 1; 
+    background-color: lightgreen;
+
+    
 }
 
 .navModal { 

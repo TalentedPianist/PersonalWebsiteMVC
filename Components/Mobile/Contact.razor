@@ -1,0 +1,45 @@
+@using PersonalWebsiteMVC.Models
+
+<div id="Contact">
+    <h1 class="text-4xl pl-5">Contact Me</h1>
+
+    <p class="text-xl mt-5 pl-5">Please fill out the form and I will get back to you as soon as possible.</p>
+
+    <EditForm Model="Model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+        <div>
+            <label for="Your Name">Your Name:</label>
+            <InputText @bind-Value="Model.Name" placeholder="John Smith" />
+        </div>
+        <div>
+            <label for="Your Email">Your Email:</label>
+            <InputText @bind-Value="Model.Email" type="email" placeholder="john@johnsmith.com" />
+        </div>
+        <div>
+            <label for="Your Website">Your Website:</label>
+            <InputText @bind-Value="Model.Website" placeholder="https://www.johnsmith.com" />
+        </div>
+        <div>
+            <label for="Your Message">Your Message:</label>
+            <CKEditorComponent @bind-Value="Model.Message" />
+        </div>
+    </EditForm>
+</div>
+
+@code {
+    public ContactFormModel? Model { get; set; }
+
+    protected override void OnInitialized()
+    {
+        Model ??= new();
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        // Handle form submission logic here
+        await Task.CompletedTask;
+    }
+
+    public void HandleInvalidSubmit()
+    {
+    }
+}

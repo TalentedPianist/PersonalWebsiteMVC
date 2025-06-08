@@ -307,6 +307,8 @@ try
 
     // app.UseBlazorise(); // Not required in ASP.NET Core 7+ with Blazorise
 
+    app.Run();
+
 } // https://stackoverflow.com/questions/70247187/microsoft-extensions-hosting-hostfactoryresolverhostinglistenerstopthehostexce
 catch (Exception ex) when (ex is not HostAbortedException)
 {

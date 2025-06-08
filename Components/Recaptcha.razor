@@ -1,12 +1,12 @@
-@using Microsoft.Extensions.Options
-@using System.Text.Json
-@inject IHttpClientFactory HttpClientFactory 
+@inject IJSRuntime JSRuntime
+@using System.ComponentModel
+
+<div id="google_recaptcha"></div>
 
 
-<Captcha @ref="@captcha" Solved="@Solved" Validate="@Validate" Expired="Expired" />
 
-@code { 
-    private Captcha captcha;
+@code {
+    private string? captchaResponse;
 
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
@@ -15,49 +15,35 @@
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 
-
-
-    private void Solved(CaptchaState state)
+    private async Task OnCaptchaValueChanged(string newValue)
     {
-        Console.WriteLine($"Captcha Success: {state.Valid}");
+        Value = newValue;
+        await ValueChanged.InvokeAsync(captchaResponse);
     }
 
-    private void Expired()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        Console.WriteLine("Captcha Expired");
-    }
-
-    private async Task<bool> Validate(CaptchaState state)
-    {
-        Console.WriteLine("Captcha Expired");
-
-        // Perform server side validation
-        var content = new FormUrlEncodedContent(new[]
+        if (firstRender)
         {
-            new KeyValuePair<string, string>("secret", "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"),
-            new KeyValuePair<string, string>("response", state.Response),
-        });
 
-        var httpClient = HttpClientFactory.CreateClient();
-        var response = await httpClient.PostAsync("https://www.google.com/recaptcha/api/siteverify", content);
+            await JSRuntime.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha",
+            "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB");
 
-        var result = await response.Content.ReadAsStringAsync();
-        var googleResponse = JsonSerializer.Deserialize<GoogleResponse>(result, new JsonSerializerOptions()   
-        {
-            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
-        });
-        return googleResponse.Success;
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
-   
 
-    public class GoogleResponse
+    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
+    public async Task CallbackOnSuccess(string response)
     {
-        public bool Success { get; set; }
-        public double Score { get; set; }
-        public string Action { get; set; }
-        public string Challenge_ts { get; set ;}
-        public string Hostname { get; set; }
-        public string ErrorCodes { get; set; }
+        captchaResponse = response;
+        Console.WriteLine(captchaResponse);
+        await OnCaptchaValueChanged(response);
+    }
+
+    [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
+    public void CallbackOnExpired(string response)
+    {
+
     }
 }
-
