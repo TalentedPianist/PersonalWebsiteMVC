@@ -16,6 +16,32 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: revert !important;
 }
 
+form {
+  margin-top: 2em;
+  margin-bottom: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+}
+form div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+form input {
+  padding: 5px 5px 5px 5px;
+  border: 1px solid black;
+}
+form button {
+  align-self: flex-start;
+}
+form label {
+  font-size: large;
+}
+
 #Home {
   display: flex;
   flex-direction: column;
