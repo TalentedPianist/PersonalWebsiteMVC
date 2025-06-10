@@ -1,8 +1,9 @@
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JS
 @using System.ComponentModel
+@using Microsoft.Extensions.Options
+@using System.Text.Json
 
 <div id="google_recaptcha"></div>
-
 
 
 @code {
@@ -15,35 +16,24 @@
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
 
-    private async Task OnCaptchaValueChanged(string newValue)
-    {
-        Value = newValue;
-        await ValueChanged.InvokeAsync(captchaResponse);
-    }
-
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         if (firstRender)
         {
-
-            await JSRuntime.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha",
-            "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB");
-
+            await JS.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha", "");
         }
         await base.OnAfterRenderAsync(firstRender);
     }
 
     [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
-    public async Task CallbackOnSuccess(string response)
+    public void CallbackOnSuccess(string response)
     {
         captchaResponse = response;
-        Console.WriteLine(captchaResponse);
-        await OnCaptchaValueChanged(response);
+        ValueChanged.InvokeAsync(captchaResponse);
     }
 
     [JSInvokable, EditorBrowsable(EditorBrowsableState.Never)]
     public void CallbackOnExpired(string response)
     {
-
     }
 }

@@ -214,6 +214,8 @@ try
             reCaptchaOptions.SiteKey = "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB";
         });
 
+   
+
     builder.Services.AddHttpContextAccessor();
 
     var emailConfig = builder.Configuration
@@ -305,7 +307,7 @@ try
         .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
-    // app.UseBlazorise(); // Not required in ASP.NET Core 7+ with Blazorise
+    //app.UseBlazorise(); 
 
     app.Run();
 

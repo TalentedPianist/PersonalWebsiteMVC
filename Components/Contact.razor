@@ -52,10 +52,11 @@
     {
         if (captchaValue is not null) // Perform reCaptcha validation for added security
         {
+            Message = captchaValue;
             try
             {
                 await _emailService.SendEmailAsync(Model.Email, "Contact Form", Model.Message);
-                Message = "Message sent successfully!";
+                Message = captchaValue;
             }
             catch (ArgumentNullException ex)
             {

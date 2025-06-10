@@ -82,15 +82,16 @@ form label {
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100vh;
   position: relative;
+  min-height: 100vh;
+  min-height: 100dvh;
+  overflow: scroll;
 }
 #About section {
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 1em;
-  height: 100vh;
   background-color: #F29F05;
 }
 #About svg {
@@ -106,7 +107,7 @@ form label {
 }
 #About p {
   color: black !important;
-  font-size: 18pt;
+  font-size: 15pt;
   padding-left: 1em;
   padding-right: 1em;
 }
@@ -166,6 +167,7 @@ form label {
   padding-right: 1em;
   margin-bottom: 1em;
   border-bottom: 1px solid black;
+  font-size: large;
 }
 
 #SinglePost {
