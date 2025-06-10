@@ -20,7 +20,12 @@
     {
         if (firstRender)
         {
+            try  {
             await JS.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha", "");
+            } catch (JSDisconnectedException ex) 
+            {
+                Console.WriteLine(ex.Message);
+            }
         }
         await base.OnAfterRenderAsync(firstRender);
     }

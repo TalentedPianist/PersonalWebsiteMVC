@@ -194,25 +194,28 @@ try
 
     builder.Services.AddRazorPages();
 
-    builder.Services.AddMudServices();
+    builder.Services.AddMudServices(options =>
+    {
+        options.ResizeOptions = new()
+        {
+            BreakpointDefinitions = new Dictionary<MudBlazor.Breakpoint, int>
+            {
+                { MudBlazor.Breakpoint.Xs, 0 },
+                { MudBlazor.Breakpoint.Sm, 600 },
+                { MudBlazor.Breakpoint.Md, 768 },
+                { MudBlazor.Breakpoint.Lg, 992 },
+                { MudBlazor.Breakpoint.Xl, 1200 },
+                { MudBlazor.Breakpoint.Xxl, 1400 },
+            }
+        };
+    });
 
     builder.Services.AddScoped<IDialogService, DialogService>();
 
     builder.Services.AddCKEditor(builder.Configuration, options =>
     {
-
-
     });
 
-    builder.Services
-        .AddBlazorise(options =>
-        {
-            options.Immediate = true;
-        })
-        .AddBlazoriseGoogleReCaptcha(reCaptchaOptions =>
-        {
-            reCaptchaOptions.SiteKey = "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB";
-        });
 
    
 
@@ -307,7 +310,7 @@ try
         .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
-    //app.UseBlazorise(); 
+
 
     app.Run();
 

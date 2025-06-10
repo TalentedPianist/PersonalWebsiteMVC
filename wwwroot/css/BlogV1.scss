@@ -318,6 +318,18 @@ form {
 
 header {
     position: relative;
+
+    @media only screen and (max-width: 768px) {
+        display: flex; 
+        background-image: url('../images/beach.jpg'); 
+        background-position: center;
+        background-repeat: no-repeat; 
+        background-size: 100%;
+        content: "";
+        height: 300px;
+        position: relative;
+
+    }
 }
 
 .menuIcon {
