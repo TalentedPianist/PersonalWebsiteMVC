@@ -33,6 +33,7 @@ using Blazorise.Captcha.ReCaptcha;
 using Blazorise;
 
 
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
@@ -165,8 +166,7 @@ try
     builder.Services.AddHttpContextAccessor();
 
     builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
-    builder.Services.AddTransient<IMailService, MailService>();
-    builder.Services.AddTransient<IEmailSender, EmailSender>();
+    builder.Services.AddSingleton<EmailService>();
 
     builder.Services.Configure<RouteOptions>(options =>
     {

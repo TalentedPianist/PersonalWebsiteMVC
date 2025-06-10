@@ -1,0 +1,70 @@
+@using MailKit.Security
+@using MimeKit
+@using PersonalWebsiteMVC.Models
+@using Microsoft.AspNetCore.Components.Forms
+@using PersonalWebsiteMVC.Services
+@inject EmailService _emailService
+
+@Message
+
+<div id="Contact">
+    <section>
+        <h1 class="text-4xl pl-5">Contact Me</h1>
+
+        <p class="text-xl mt-5 pl-5">Please fill out the form and I will get back to you as soon as possible.</p>
+
+        <EditForm Model="Model" OnValidSubmit="HandleValidSubmit" OnInvalidSubmit="HandleInvalidSubmit">
+            <DataAnnotationsValidator />
+            <div>
+                <label for="Your Name">Your Name:</label>
+                <InputText @bind-Value="Model!.Name" placeholder="John Smith" />
+                <ValidationMessage For="() => Model.Name" />
+            </div>
+            <div>
+                <label for="Your Email">Your Email:</label>
+                <InputText @bind-Value="Model.Email" type="email" placeholder="john@johnsmith.com" />
+                <ValidationMessage For="() => Model.Email" />
+            </div>
+            <div>
+                <label for="Your Website">Your Website:</label>
+                <InputText @bind-Value="Model.Website" placeholder="https://www.johnsmith.com" />
+            </div>
+            <div>
+                <label for="Your Message">Your Message:</label>
+                <CKEditorComponent @bind-Value="Model.Message" />
+                <ValidationMessage For="() => Model.Message" />
+            </div>
+
+            <Recaptcha @bind-Value="captchaValue" />
+            <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary">Contact</MudButton>
+        </EditForm>
+    </section>
+</div>
+
+@code {
+    public string Message { get; set; } = string.Empty;
+
+    public ContactFormModel Model { get; set; } = new ContactFormModel();
+
+    public string captchaValue { get; set; } = string.Empty;
+
+    private async Task HandleValidSubmit()
+    {
+        if (captchaValue is not null) // Perform reCaptcha validation for added security
+        {
+            try
+            {
+                await _emailService.SendEmailAsync(Model.Email, "Contact Form", Model.Message);
+                Message = "Message sent successfully!";
+            }
+            catch (ArgumentNullException ex)
+            {
+                Message = ex.Message;
+            }
+        }
+    }
+
+    public void HandleInvalidSubmit()
+    {
+    }
+}

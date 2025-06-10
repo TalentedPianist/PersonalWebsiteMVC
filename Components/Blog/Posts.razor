@@ -4,7 +4,7 @@
 @inject NavigationManager nav
 @using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.WebUtilities
-@using PersonalWebsiteMVC.Components.Mobile.Blog
+@using PersonalWebsiteMVC.Components.Mobile
 @using MudBlazor
 
 @if (_db.Posts.Count() == 0)
@@ -29,7 +29,7 @@ else
             var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
             <div id="SinglePost">
                 <h1>@post!.PostTitle</h1>
-                @((MarkupString)post.PostContent!)
+                <p>@((MarkupString)post.PostContent!)</p>
             
                 <BlogComments PostID="@post.PostID" />
             </div>

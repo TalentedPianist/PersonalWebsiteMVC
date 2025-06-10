@@ -1,45 +1,33 @@
-using PersonalWebsiteMVC.Services;
-using MailKit.Net.Smtp;
-using MailKit.Security;
-using Microsoft.Extensions.Configuration;
 using MimeKit;
+using MailKit.Net.Smtp;
+using Microsoft.Extensions.Configuration;
+using System.Threading.Tasks;
 
-namespace PersonalWebsiteMVC.Services;
-
-public class EmailService : IEmailService
+namespace PersonalWebsiteMVC.Services
 {
-    private readonly IConfiguration _configuration;
-
-    public EmailService(IConfiguration configuration)
+    public class EmailService
     {
-        _configuration = configuration;
-    }
+        private readonly IConfiguration _configuration;
 
-    public async Task<string> SendEmail(string toEmail, string mailSubject, string mailBody)
-    {
-        try
+        public EmailService(IConfiguration configuration)
         {
-            var smtpServer = _configuration["EmailSettings:SmtpServer"];
-            var port = int.Parse(_configuration["EmailSettings:Port"]!);
-            var fromMail = _configuration["EmailSettings:Username"];
-            var password = _configuration["EmailSettings:Password"];
-
-            var email = new MimeMessage();
-            email.From.Add(new MailboxAddress("Your Name", fromMail));
-            email.To.Add(new MailboxAddress("To Name", toEmail));
-            email.Subject = mailSubject;
-            email.Body = new TextPart("html") { Text = mailBody };
-
-            using var smtp = new SmtpClient();
-            await smtp.ConnectAsync(smtpServer, port, SecureSocketOptions.StartTls);
-            await smtp.AuthenticateAsync(fromMail, password);
-            await smtp.SendAsync(email);
-            await smtp.DisconnectAsync(true);
-            return "Email sent successfully.";
+            _configuration = configuration;
         }
-        catch (Exception ex)
+
+        public async Task SendEmailAsync(string toEmail, string subject, string message)
         {
-            Console.WriteLine($"Email sending failed.  Error: {ex.Message}");
+            var emailMessage = new MimeMessage();
+            emailMessage.From.Add(new MailboxAddress(_configuration["MailSettings:SenderName"], _configuration["MailSettings:SenderEmail"]));
+            emailMessage.To.Add(new MailboxAddress("", toEmail));
+            emailMessage.Subject = subject;
+            emailMessage.Body = new TextPart("html") { Text = message };
+            using (var client = new SmtpClient())
+            {
+                await client.ConnectAsync(_configuration["MailSettings:Server"], int.Parse(_configuration["MailSettings:Port"]!), MailKit.Security.SecureSocketOptions.StartTls);
+                await client.AuthenticateAsync(_configuration["MailSettings:Username"], _configuration["MailSettings:Password"]);
+                await client.SendAsync(emailMessage);
+                await client.DisconnectAsync(true);
+            }
         }
     }
 }

@@ -11,7 +11,12 @@ img {
   width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
   font-size: revert !important;
   font-weight: revert !important;
 }
@@ -29,7 +34,6 @@ form {
 form div {
   display: flex;
   flex-direction: column;
-  flex: 1;
 }
 form input {
   padding: 5px 5px 5px 5px;
@@ -85,6 +89,7 @@ form label {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 1em;
   height: 100vh;
   background-color: #F29F05;
 }
@@ -92,6 +97,18 @@ form label {
   position: absolute;
   bottom: 0;
   margin-bottom: 0 !important;
+}
+#About h1 {
+  font-size: 40pt !important;
+  color: black !important;
+  display: flex;
+  margin: 0 auto;
+}
+#About p {
+  color: black !important;
+  font-size: 18pt;
+  padding-left: 1em;
+  padding-right: 1em;
 }
 
 #Blog {
@@ -162,6 +179,9 @@ form label {
   line-height: 2;
   border-bottom: 1px solid black;
 }
+#SinglePost p {
+  font-size: 20pt !important;
+}
 
 #Comments {
   display: flex;
@@ -194,7 +214,20 @@ form label {
   display: flex;
   flex-direction: column;
   flex: 1;
+  background-color: yellow;
+}
+#Contact section {
+  display: flex;
+  flex-direction: column;
   background-color: lightgreen;
+}
+#Contact svg:after {
+  position: absolute;
+  bottom: 0;
+  background-color: yellow;
+  content: ".";
+  width: 100vw;
+  z-index: 1000;
 }
 
 .navModal {
@@ -276,4 +309,12 @@ header {
   font-weight: bold;
   padding-bottom: 0 !important;
   margin-bottom: 0 !important;
+}
+
+footer {
+  background-color: yellow;
+  text-align: center;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: x-large;
 }/*# sourceMappingURL=BlogV1.css.map */

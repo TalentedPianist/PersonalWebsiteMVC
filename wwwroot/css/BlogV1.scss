@@ -2,55 +2,59 @@
 @tailwind components;
 @tailwind utilities;
 
-html { 
+html {
     margin: 0;
-    padding: 0; 
+    padding: 0;
     scroll-behavior: smooth;
 }
 
-img { 
+img {
     width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 { 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-size: revert !important;
     font-weight: revert !important;
 }
 
-form { 
+form {
     margin-top: 2em;
     margin-bottom: 2em;
     padding-left: 2em;
     padding-right: 2em;
-    display: flex; 
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     gap: 1em;
 
-    div { 
+    div {
         display: flex;
         flex-direction: column;
-        flex: 1; 
     }
 
-    input { 
-        padding: 5px 5px 5px 5px; 
+    input {
+        padding: 5px 5px 5px 5px;
         border: 1px solid black;
-      
+
     }
 
-    button { 
+    button {
         align-self: flex-start;
     }
 
-    label { 
+    label {
         font-size: large;
     }
 }
 
 
-#Home { 
-    display: flex; 
+#Home {
+    display: flex;
     flex-direction: column;
     flex: 1;
     align-items: center;
@@ -62,20 +66,20 @@ form {
     text-align: center;
     position: relative;
 
-    img { 
+    img {
         width: 50%;
         border-radius: 50%;
         align-self: center;
-        display: flex; 
+        display: flex;
         margin: 0 auto;
     }
 
-    &:after { 
-        display: flex; 
+    &:after {
+        display: flex;
         flex-direction: column;
         background-color: #f29f05;
         padding-top: 20em;
-        position: absolute; 
+        position: absolute;
         bottom: 0;
         content: ".";
         width: 100vw;
@@ -84,84 +88,99 @@ form {
 }
 
 #About {
-    display: flex; 
+    display: flex;
     flex-direction: column;
     flex: 1;
-    height: 100vh; 
+    height: 100vh;
     position: relative;
 
-    section { 
+    section {
         display: flex;
         flex-direction: column;
-        flex: 1; 
+        flex: 1;
+        gap: 1em;
         height: 100vh;
         background-color: #F29F05;
     }
 
-    svg { 
-        position: absolute; 
-        bottom: 0; 
+    svg {
+        position: absolute;
+        bottom: 0;
         margin-bottom: 0 !important;
+    }
+
+    h1 { 
+        font-size: 40pt !important;
+        color: black !important;
+        display: flex; 
+        margin: 0 auto;
+    }
+
+    p {
+        color: black !important;
+        font-size: 18pt;
+        padding-left: 1em;
+        padding-right: 1em;
     }
 }
 
-#Blog { 
-    display: flex; 
+#Blog {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     height: 100%;
     color: black !important;
     position: relative;
 
-    h1 { 
+    h1 {
         padding-left: 16px;
     }
 
-    &:before { 
-            position: absolute; 
-            display: flex; 
-            height: 500px;
-            background-color: #f2740f;
-            content: "";
-            width: 100vw;
-            z-index: -1;
-            margin-bottom: 0 !important;
-        }
+    &:before {
+        position: absolute;
+        display: flex;
+        height: 500px;
+        background-color: #f2740f;
+        content: "";
+        width: 100vw;
+        z-index: -1;
+        margin-bottom: 0 !important;
+    }
 
     &:after {
-  
+
         content: ".";
-        position: absolute; 
-        bottom: 0; 
+        position: absolute;
+        bottom: 0;
         height: 100px;
         width: 100vw;
         background-color: lightgreen;
         z-index: -1;
     }
 
-    section { 
-        display: flex; 
+    section {
+        display: flex;
         flex-direction: column;
         flex: 0;
         background-color: #f2740f;
         position: relative;
 
-    
-        hr { 
-            
+
+        hr {
+
             margin-bottom: 1em;
         }
 
-        
+
     }
 
-    button { 
+    button {
         align-self: flex-start;
     }
 }
 
-#PostContent { 
-    display: flex; 
+#PostContent {
+    display: flex;
     flex-direction: column;
     flex: 1;
     gap: 10px;
@@ -173,30 +192,34 @@ form {
     border-bottom: 1px solid black;
 }
 
-#SinglePost { 
-    display: flex; 
+#SinglePost {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     padding-left: 1em;
     padding-right: 1em;
     font-size: large;
     background-color: #f2740f;
     line-height: 2;
     border-bottom: 1px solid black;
+    
+    p { 
+        font-size: 20pt !important;
+    }
 }
 
 
-#Comments { 
-    display: flex; 
+#Comments {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
 
-    img { 
+    img {
         width: 20% !important;
     }
 
-    form { 
-        display: flex; 
+    form {
+        display: flex;
         flex-direction: column;
         flex: 1;
         gap: 1em;
@@ -206,65 +229,82 @@ form {
         padding-bottom: 1em;
     }
 
-    hr { 
-        color: black; 
+    hr {
+        color: black;
         margin-top: 1em;
         margin-bottom: 1em;
     }
 
     p {
-        &:nth-of-type(1) { 
+        &:nth-of-type(1) {
             margin-bottom: 1em;
-        } 
+        }
     }
 }
 
-#Contact { 
+#Contact {
     display: flex;
     flex-direction: column;
-    flex: 1; 
-    background-color: lightgreen;
+    flex: 1;
+    background-color: yellow;
 
-    
+    section {
+        display: flex;
+        flex-direction: column;
+        background-color: lightgreen;
+    }
+
+    svg {
+
+        &:after {
+            position: absolute;
+            bottom: 0;
+            background-color: yellow;
+            content: ".";
+            width: 100vw;
+            z-index: 1000;
+        }
+    }
+
 }
 
-.navModal { 
+.navModal {
     color: white !important;
-    position: absolute; 
-    top: 0; 
+    position: absolute;
+    top: 0;
     z-index: 50000;
-    background-color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
     font-size: large;
-    display: flex; 
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     height: 100%;
     width: 100vw;
     min-width: 100vw !important;
 
     ul {
-        display: flex; 
+        display: flex;
         flex-direction: column;
         flex: 1;
         align-items: center;
         gap: 3em;
     }
 
-    a { 
+    a {
         font-size: 26pt;
     }
 }
 
 
-.closeIcon { 
+.closeIcon {
     color: white;
     font-size: 80pt;
-    display: flex; 
+    display: flex;
     margin: 0 auto;
 }
 
-.overlay { 
-    background-color: rgba(0,0,0,0.6);
+.overlay {
+    background-color: rgba(0, 0, 0, 0.6);
     height: 90vh;
     width: 100%;
     gap: 5em !important;
@@ -273,43 +313,51 @@ form {
     align-items: center;
 }
 
-header { 
-      position: relative;
+header {
+    position: relative;
 }
 
-.menuIcon { 
+.menuIcon {
     color: yellow;
     width: 80px;
     height: 80px;
 }
 
-.mobileNav { 
-    display: flex; 
+.mobileNav {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     gap: 5em;
 
-    a { 
+    a {
         font-size: xx-large;
     }
 }
 
-.sticky { 
-    position: absolute; 
+.sticky {
+    position: absolute;
     z-index: 9999;
-    top: 0; 
-    right: 0; 
+    top: 0;
+    right: 0;
     left: 0;
     bottom: 0;
-    display: flex; 
-    background-color: rgba(0,0,0,0.6);
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.6);
     align-items: center;
 }
 
-.error { 
+.error {
     color: red;
     font-weight: bold;
 
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
+}
+
+footer { 
+    background-color: yellow; 
+    text-align: center;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    font-size: x-large;
 }
