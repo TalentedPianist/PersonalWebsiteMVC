@@ -265,8 +265,7 @@ form label {
 }
 
 .overlay {
-  background-color: rgba(0, 0, 0, 0.6);
-  height: 90vh;
+  background-color: rgba(0, 0, 0, 0.4);
   width: 100%;
   gap: 5em !important;
   display: flex;
@@ -277,17 +276,64 @@ form label {
 header {
   position: relative;
 }
-@media only screen and (max-width: 768px) {
+@media only screen and (min-width: 600px) {
   header {
     display: flex;
-    background-image: url("../images/beach.jpg");
-    background-position: center;
+    background-image: url("../images/sunset-ocean.jpg");
+    background-position: bottom;
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: cover;
     content: "";
     height: 300px;
     position: relative;
   }
+  header h1,
+  header h2,
+  header h3,
+  header h4,
+  header h5,
+  header h6 {
+    z-index: 10000;
+    color: white;
+    letter-spacing: 20 !important;
+  }
+  header h1 {
+    font-size: 38pt !important;
+    text-shadow: 1px 1px 2px black;
+  }
+}
+
+nav ul {
+  background-color: #F27405;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+nav a {
+  color: black;
+}
+@media only screen and (min-width: 600px) {
+  nav ul {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    width: 100vw;
+    justify-content: space-evenly;
+  }
+  nav a {
+    font-size: large;
+  }
+}
+
+main {
+  background-color: #F2B66D;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 50vh;
+  justify-content: space-between;
 }
 
 .menuIcon {

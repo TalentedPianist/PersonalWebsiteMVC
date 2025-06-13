@@ -85,6 +85,7 @@ form {
         width: 100vw;
         z-index: -1;
     }
+
 }
 
 #About {
@@ -111,10 +112,10 @@ form {
         margin-bottom: 0 !important;
     }
 
-    h1 { 
+    h1 {
         font-size: 40pt !important;
         color: black !important;
-        display: flex; 
+        display: flex;
         margin: 0 auto;
     }
 
@@ -205,8 +206,8 @@ form {
     background-color: #f2740f;
     line-height: 2;
     border-bottom: 1px solid black;
-    
-    p { 
+
+    p {
         font-size: 20pt !important;
     }
 }
@@ -307,8 +308,7 @@ form {
 }
 
 .overlay {
-    background-color: rgba(0, 0, 0, 0.6);
-    height: 90vh;
+    background-color: rgba(0, 0, 0, 0.4);
     width: 100%;
     gap: 5em !important;
     display: flex;
@@ -319,18 +319,75 @@ form {
 header {
     position: relative;
 
-    @media only screen and (max-width: 768px) {
-        display: flex; 
-        background-image: url('../images/beach.jpg'); 
-        background-position: center;
-        background-repeat: no-repeat; 
-        background-size: 100%;
+
+    @media only screen and (min-width: 600px) {
+        display: flex;
+        background-image: url('../images/sunset-ocean.jpg');
+        background-position: bottom;
+        background-repeat: no-repeat;
+        background-size: cover;
         content: "";
         height: 300px;
         position: relative;
 
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            z-index: 10000;
+            color: white;
+            letter-spacing: 20 !important;
+        }
+
+        h1 {
+            font-size: 38pt !important;
+            text-shadow: 1px 1px 2px black;
+        }
+
     }
 }
+
+nav {
+    ul {
+        background-color: #F27405;
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    a {
+        color: black;
+    }
+
+    @media only screen and (min-width: 600px) {
+        ul {
+            display: flex;
+            flex-direction: row;
+            flex: 1;
+            padding-top: 1em;
+            padding-bottom: 1em;
+            width: 100vw;
+            justify-content: space-evenly;
+        }
+
+        a { 
+            font-size: large;
+        }
+    }
+}
+
+main { 
+    background-color: #F2B66D;
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+    height: 50vh;
+    justify-content: space-between;
+}
+
+
 
 .menuIcon {
     color: yellow;
@@ -369,8 +426,8 @@ header {
     margin-bottom: 0 !important;
 }
 
-footer { 
-    background-color: yellow; 
+footer {
+    background-color: yellow;
     text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;

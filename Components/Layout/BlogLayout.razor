@@ -14,7 +14,7 @@
 
 <!-- Only for large screens -->
 <MudHidden Breakpoint="Breakpoint.SmAndDown">
-    <p>I am a desktop device.</p>
+    @Body
 </MudHidden>
 
 <!-- Breakpoint for mobile devices. -->
@@ -26,11 +26,23 @@
 <!-- Breakpoint for tablet devices -->
 @if (_width >= 600 && _width < 768)
 {
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Photos</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </nav>
     <header>
-
-        <h1>Welcome</h1>
-
+        <div class="overlay">
+            <h1>Welcome</h1>
+        </div>
     </header>
+    <main>
+    @Body
+    </main>
 }
 
 @code {
