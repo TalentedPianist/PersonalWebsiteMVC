@@ -77,6 +77,17 @@ form label {
   width: 100vw;
   z-index: -1;
 }
+@media only screen and (min-width: 600px) {
+  #Home {
+    align-items: center;
+    justify-content: space-evenly;
+  }
+}
+@media only screen and (min-width: 767px) {
+  #Home {
+    background-color: white;
+  }
+}
 
 #About {
   display: flex;
@@ -110,6 +121,11 @@ form label {
   font-size: 15pt;
   padding-left: 1em;
   padding-right: 1em;
+}
+@media only screen and (max-width: 600px) {
+  #About {
+    align-items: center;
+  }
 }
 
 #Blog {
@@ -302,6 +318,13 @@ header {
     text-shadow: 1px 1px 2px black;
   }
 }
+@media only screen and (min-width: 767px) {
+  header {
+    background-position: bottom;
+    background-size: cover;
+    background-attachment: fixed;
+  }
+}
 
 nav ul {
   background-color: #F27405;
@@ -334,6 +357,16 @@ main {
   flex: 1;
   height: 50vh;
   justify-content: space-between;
+  align-items: center;
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+section article {
+  width: 50%;
 }
 
 .menuIcon {
@@ -372,9 +405,34 @@ main {
 }
 
 footer {
-  background-color: yellow;
+  background-color: #0388A6;
+  color: white;
   text-align: center;
   padding-top: 1em;
   padding-bottom: 1em;
   font-size: x-large;
+}
+
+.socialMedia {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  justify-content: flex-start;
+  background-color: #F2B950;
+  padding-top: 2em;
+  padding-bottom: 2em;
+  gap: 2em;
+}
+.socialMedia div {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  justify-content: space-evenly;
+}
+.socialMedia svg {
+  width: 10%;
+}
+.socialMedia p {
+  font-size: large;
 }/*# sourceMappingURL=BlogV1.css.map */

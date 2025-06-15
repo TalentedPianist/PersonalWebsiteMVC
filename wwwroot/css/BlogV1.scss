@@ -86,6 +86,16 @@ form {
         z-index: -1;
     }
 
+    @media only screen and (min-width: 600px) 
+    {
+        align-items: center;
+        justify-content: space-evenly;
+    }
+
+    @media only screen and (min-width: 767px) 
+    {
+        background-color: white;
+    }
 }
 
 #About {
@@ -124,6 +134,10 @@ form {
         font-size: 15pt;
         padding-left: 1em;
         padding-right: 1em;
+    }
+
+    @media only screen and (max-width: 600px) { 
+        align-items: center;
     }
 }
 
@@ -347,6 +361,13 @@ header {
         }
 
     }
+
+    @media only screen and (min-width: 767px) 
+    {
+        background-position: bottom;
+        background-size: cover;
+        background-attachment: fixed;
+    }
 }
 
 nav {
@@ -385,8 +406,18 @@ main {
     flex: 1; 
     height: 50vh;
     justify-content: space-between;
+    align-items: center;
 }
 
+section { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1;
+    
+    article { 
+        width: 50%; 
+    }
+}
 
 
 .menuIcon {
@@ -427,9 +458,38 @@ main {
 }
 
 footer {
-    background-color: yellow;
+    background-color: #0388A6;
+    color: white;
     text-align: center;
     padding-top: 1em;
     padding-bottom: 1em;
     font-size: x-large;
+}
+
+.socialMedia { 
+    display: flex; 
+    flex-direction: column; 
+    flex: 1;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: #F2B950;
+    padding-top: 2em;
+    padding-bottom: 2em;
+    gap: 2em;
+
+    div { 
+        display: flex; 
+        flex-direction: row;
+        flex: 1; 
+        justify-content: space-evenly;
+    }
+
+    svg { 
+        width: 10%;
+    
+    }
+
+    p {
+        font-size: large;
+    }
 }
