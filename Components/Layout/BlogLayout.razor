@@ -14,13 +14,26 @@
 
 <!-- Only for large screens -->
 <MudHidden Breakpoint="Breakpoint.SmAndDown">
-    <header>
-    </header>
-    <section>
-        <article>
-    @Body
-    </article>
-    </section>
+        <nav>
+            <ul>
+                <li><NavLink href="/">Home</NavLink></li>
+                <li><NavLink href="/about">About</NavLink></li>
+                <li><NavLink href="/blog">Blog</NavLink></li>
+                <li><NavLink href="/photos">Photos</NavLink></li>
+                <li><NavLink href="/contact">Contact</NavLink></li>
+            </ul>
+        </nav>
+        <header>
+            <div id="overlay">
+                <h1>Welcome</h1>
+            </div>
+        </header>
+        <main>
+            @Body
+        </main>
+        <footer>
+            Copyright &copy; douglasmcgregor.co.uk 2025
+        </footer>
 </MudHidden>
 
 <!-- Breakpoint for mobile devices. -->
