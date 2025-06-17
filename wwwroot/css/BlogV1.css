@@ -55,13 +55,13 @@ form label {
   flex-direction: column;
   flex: 1;
   align-items: center;
-  height: 100vh;
+  background-image: url("/images/mobile-home-background.svg");
+  background-repeat: no-repeat;
   width: 100vw;
-  background-image: url("/images/sunset-bg.svg");
-  background-size: 100%;
-  background-position: center;
+  height: 100vh;
   text-align: center;
   position: relative;
+  background-color: #F29F05;
 }
 #Home img {
   width: 50%;
@@ -70,31 +70,24 @@ form label {
   display: flex;
   margin: 0 auto;
 }
-#Home:after {
-  display: flex;
-  flex-direction: column;
-  background-color: #F28729;
-  padding-top: 20em;
-  position: absolute;
-  bottom: 0;
-  content: ".";
-  width: 100vw;
-  z-index: -1;
-}
 @media only screen and (min-width: 600px) {
   #Home {
     align-items: flex-start;
     align-self: flex-start;
     text-align: left;
     font-size: large;
-    height: 100%;
+    height: 90vh;
+    min-height: 90vh;
     background-color: revert;
+    background-image: none;
     width: revert;
   }
 }
 @media only screen and (min-width: 767px) {
   #Home {
     background-color: revert;
+    background-size: 100%;
+    background-position: center;
     width: revert;
     padding-right: 5em;
   }
@@ -118,6 +111,12 @@ form label {
   flex: 1;
   gap: 2em;
   background-color: #F29F05;
+}
+@media only screen and (min-width: 768px) {
+  #About section {
+    padding-left: 1em;
+    padding-right: 1em;
+  }
 }
 #About svg {
   position: absolute;
@@ -294,15 +293,20 @@ form label {
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.6);
-  width: inherit;
-  gap: 5em !important;
+  height: 90vh;
+  width: 100vw;
+  align-items: center;
+  justify-content: space-evenly;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  padding-left: 0.5em;
-  padding-right: 0.5em;
-  padding-top: 0.5em;
-  padding-bottom: 0.5em;
+}
+@media only screen and (min-width: 768px) {
+  .overlay {
+    padding-left: 0.5em;
+    padding-right: 0.5em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+  }
 }
 
 header {
@@ -312,10 +316,6 @@ header {
 @media only screen and (min-width: 600px) {
   header {
     display: flex;
-    background-image: url("../images/beach.jpg");
-    background-position: top;
-    background-repeat: no-repeat;
-    background-size: cover;
     content: "";
     height: 30vh;
     position: relative;
@@ -344,7 +344,7 @@ header {
 }
 
 nav ul {
-  background-color: #BF5E3B;
+  background-color: #473959;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -372,7 +372,8 @@ nav a {
   }
 }
 main {
-  background-color: yellow;
+  background-color: #F2CB05;
+  color: black;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -444,8 +445,8 @@ main {
 }
 
 footer {
-  background-color: #473959;
-  color: white;
+  background-color: yellow;
+  color: black;
   text-align: center;
   padding-top: 1em;
   padding-bottom: 1em;
@@ -455,6 +456,7 @@ footer {
 @media only screen and (min-width: 768px) {
   footer {
     font-size: medium;
+    background-color: #f28729;
   }
 }
 

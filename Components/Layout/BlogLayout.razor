@@ -58,36 +58,10 @@
 
 </MudHidden>
 
-<!-- Breakpoint for tablet devices -->
-@if (_width >= 600 && _width < 768)
-{
-    <nav>
-        <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Blog</a></li>
-            <li><a href="#">Photos</a></li>
-            <li><a href="#">Contact</a></li>
-        </ul>
-    </nav>
-    <header>
-        <div class="overlay">
-            <h1>Welcome</h1>
-        </div>
-    </header>
-    <main>
-        @Body
-    </main>
-    <section class="socialMedia">
-        <p>Connect with me on social media:</p>
-        <div>
-            <SocialMedia />
-        </div>
-    </section>
-    <footer>
-        Copyright &copy; douglasmcgregor.co.uk 2025
-    </footer>
-}
+<MudHidden Breakpoint="Breakpoint.MdAndUp">
+    <p>I am a tablet device.</p>
+</MudHidden>
+
 
 @code {
     [Inject]
