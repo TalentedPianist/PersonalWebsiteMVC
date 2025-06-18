@@ -28,10 +28,10 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Options;
 using ServiceStack.Text;
 using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using MudBlazor;
 using Blazorise.Captcha.ReCaptcha;
 using Blazorise;
-
+using Blazorise.Tailwind;
+using Blazorise.Icons.FontAwesome;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -194,20 +194,19 @@ try
 
     builder.Services.AddRazorPages();
 
-    builder.Services.AddMudServices(options =>
-    {
-    });
-
-    builder.Services.AddScoped<IDialogService, DialogService>();
 
     builder.Services.AddCKEditor(builder.Configuration, options =>
     {
     });
 
-
-   
-
     builder.Services.AddHttpContextAccessor();
+
+    builder.Services.AddBlazorise(options =>
+    {
+        options.Immediate = true;
+    })
+    .AddTailwindProviders()
+    .AddFontAwesomeIcons();
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")

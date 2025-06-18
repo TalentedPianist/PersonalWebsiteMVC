@@ -28,14 +28,11 @@
                 @foreach (Comments comment in Model)
                 {
 
-                    <MudText>
-                        <div class="flex flex-row flex-1 mb-5">
-                            <img src="http://www.gravatar.com/avatar/?d=mp" class="mr-10">
-                            Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd dd MMMM yyyy")
-                        </div>
-                        <p class="text-xl">@((MarkupString)comment.CommentContent!)</p>
-
-                    </MudText>
+                    <div class="flex flex-row flex-1 mb-5">
+                        <img src="http://www.gravatar.com/avatar/?d=mp" class="mr-10">
+                        Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd dd MMMM yyyy")
+                    </div>
+                    <p class="text-xl">@((MarkupString)comment.CommentContent!)</p>
                 }
             </div>
             <CommentForm />

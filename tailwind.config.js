@@ -6,6 +6,11 @@ module.exports = {
   ],
   theme: {
     extend: {},
+    screens: { 
+      'tablet': '600px',
+      'laptop': '768px',
+      'desktop': '900px',
+    },
   },
   plugins: [
     require('flowbite/plugin')

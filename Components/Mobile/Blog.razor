@@ -47,7 +47,7 @@ else
 
                         @if (item.FeaturedImage != null)
                         {
-                            <MudCardMedia Image=@($"Uploads/{item.FeaturedImage}") Height="200" />
+                            // Media card header image here
                         }
 
                         <div id="PostContent">
@@ -55,7 +55,7 @@ else
                             <h2>@item.PostTitle</h2>
                             @RemoveHTMLTags(result)
                             <br>
-                            <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => ViewPost(item.PostID))">Read More</MudButton>
+                            
                         </div>
                     </section>
                 }
