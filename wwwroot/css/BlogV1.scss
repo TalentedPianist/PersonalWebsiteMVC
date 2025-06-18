@@ -69,7 +69,7 @@ form {
     height: 100vh;
     text-align: center;
     position: relative;
-     background-color: #F29F05;
+    background-color: #F29F05;
 
     img {
         width: 50%;
@@ -79,18 +79,61 @@ form {
         margin: 0 auto;
     }
 
-    
+
+
 
     @media only screen and (min-width: 600px) {
         align-items: flex-start;
         align-self: flex-start;
         text-align: left;
         font-size: large;
-        height: 90vh;
-        min-height: 90vh;
         background-color: revert;
         background-image: none;
         width: revert;
+
+        section {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+
+            p {
+                padding-left: 2em;
+                padding-right: 2em;
+            }
+
+            &:nth-of-type(1) {
+                background-color: lightgoldenrodyellow;
+                width: 100%;
+                height: 100%;
+                flex-grow: 1;
+                flex: 0;
+                gap: 2em;
+                align-items: center;
+                padding-top: 2em;
+                padding-bottom: 2em;
+
+                p {
+                    font-size: x-large;
+                }
+
+                h1 {
+                    font-size: 42pt !important;
+                }
+            }
+
+            &:nth-of-type(2) {
+                background-color: lightgreen;
+                flex: 0;
+                width: 100%;
+                height: 100%;
+                padding-top: 2em;
+                padding-bottom: 2em;
+            }
+        }
+    }
+
+    @media only screen and (min-width: 600px) {
+        height: revert;
     }
 
     @media only screen and (min-width: 767px) {
@@ -102,6 +145,10 @@ form {
 
         h1 {
             font-size: 38pt !important;
+        }
+
+        section {
+            background-color: revert !important;
         }
     }
 }
@@ -165,6 +212,7 @@ form {
 
     h1 {
         padding-left: 16px;
+        font-size: 42pt !important;
     }
 
     &:before {
@@ -176,6 +224,15 @@ form {
         width: 100vw;
         z-index: -1;
         margin-bottom: 0 !important;
+
+        @media only screen and (min-width: 600px) {
+            background-color: revert;
+            position: relative;
+            height: 100%;
+            width: 100%;
+            background-color: revert;
+            z-index: revert;
+        }
     }
 
     &:after {
@@ -187,6 +244,10 @@ form {
         width: 100vw;
         background-color: lightgreen;
         z-index: -1;
+
+        @media only screen and (min-width: 600px) {
+            background-color: revert;
+        }
     }
 
     section {
@@ -196,6 +257,14 @@ form {
         background-color: #f2740f;
         position: relative;
 
+        @media only screen and (min-width: 600px) {
+            background-color: revert;
+            width: 100%;
+            padding-left: 1em;
+            padding-right: 1em;
+            gap: 0;
+
+        }
 
         hr {
 
@@ -222,6 +291,19 @@ form {
     margin-bottom: 1em;
     border-bottom: 1px solid black;
     font-size: large;
+
+    @media only screen and (min-width: 600px) { 
+        padding-top: 0; 
+        padding-bottom: 1em; 
+        padding-left: 0; 
+        padding-right: 0;
+        gap: 1em;
+    }
+
+   
+    @media only screen and (min-width: 767px) {
+        width: 80%;
+    }
 }
 
 #SinglePost {
@@ -237,6 +319,10 @@ form {
 
     p {
         font-size: 20pt !important;
+    }
+
+    @media only screen and (min-width: 600px) {
+        background-color: revert;
     }
 }
 
@@ -341,14 +427,15 @@ form {
     width: 100vw;
     align-items: center;
     justify-content: space-evenly;
-    display: flex; 
+    display: flex;
     flex-direction: column;
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 600px) {
         padding-left: 0.5em;
         padding-right: 0.5em;
         padding-top: 0.5em;
         padding-bottom: 0.5em;
+        
     }
 }
 
@@ -363,6 +450,10 @@ header {
         position: relative;
         align-items: center;
         justify-content: center;
+        background-image: url('/images/sunset-beach-large.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
 
         h1,
         h2,
@@ -394,6 +485,10 @@ nav {
         display: flex;
         flex-direction: column;
         flex: 1;
+
+        @media only screen and (max-width: 600px) { 
+            display: none;
+        }
     }
 
     a {
@@ -524,39 +619,40 @@ footer {
 .socialMedia {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    justify-content: center;
     gap: 2em;
     width: 100%;
-
-    div {
-        display: flex;
-        flex-direction: row;
-        flex: 1;
-        justify-content: space-evenly;
-
-        @media only screen and (min-width: 767px) {
-            flex-direction: row;
-        }
-    }
-
-    svg {
-        width: 10%;
-
-    }
 
     p {
         font-size: large;
     }
 
-    @media only screen and (min-width: 767px) {
+    @media only screen and (min-width: 600px) {
         flex-direction: row;
+        flex: 0;
+        align-items: flex-start;
+        background-color: revert;
+        justify-content: space-between;
 
-        svg {
-            width: 5%;
-        }
     }
+
+    
 }
 
 #Sidebar {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 2em;
+
+
+    img {
+        width: 50%;
+        border-radius: 50%;
+        align-self: center;
+    }
+
     section {
         width: revert;
         min-width: revert !important;

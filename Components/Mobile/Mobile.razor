@@ -1,4 +1,4 @@
-@using PersonalWebsiteMVC.Components.Blog
+
 @inject IDialogService DialogService
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
@@ -30,30 +30,51 @@
     <section>
         <h1>About Me</h1>
 
-        <p>Just about to graduate from university with a first class honours degree in Web and Mobile Development from the University of the West of Scotland (UWS).  After this I hope to get a good job in the industry.</p>
+        <p>Just about to graduate from university with a first class honours degree in Web and Mobile Development from
+            the University of the West of Scotland (UWS). After this I hope to get a good job in the industry.</p>
 
-        <p>The programming language I am passionate about is ASP.NET Core and C#.  I taught myself the different versions of ASP.NET over the years, from WebForms to MVC and now Core.  Something I am very proud of is getting 95% for that module at UWS.  This website is made in ASP.NET Core.  The ideal job would be to make websites using ASP.NET Core (or Blazor, which is a UI framework that's part of it).  I am open to various jobs within the industry though.</p>
+        <p>The programming language I am passionate about is ASP.NET Core and C#. I taught myself the different versions
+            of ASP.NET over the years, from WebForms to MVC and now Core. Something I am very proud of is getting 95%
+            for that module at UWS. This website is made in ASP.NET Core. The ideal job would be to make websites using
+            ASP.NET Core (or Blazor, which is a UI framework that's part of it). I am open to various jobs within the
+            industry though.</p>
 
-        <p>Having studied music at the University of Hull previously, I graduated from there with a BMus.  It was after that I started teaching myself ASP.NET and programming became my passion.  Another of my passions is classical music - I try to play the piano every day, it's very theraputic.</p>
+        <p>Having studied music at the University of Hull previously, I graduated from there with a BMus. It was after
+            that I started teaching myself ASP.NET and programming became my passion. Another of my passions is
+            classical music - I try to play the piano every day, it's very theraputic.</p>
 
 
     </section>
-
+    
 
 </div>
 
-<div id="Blog" @ref="blogRef">
-    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">         <path fill="#F29f05" fill-opacity="1" d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,229.3C672,224,768,192,864,160C960,128,1056,96,1152,122.7C1248,149,1344,235,1392,277.3L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">         </path>     </svg>
+<MudHidden>
+    <div id="Blog">
+        <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#F29f05" fill-opacity="1"
+                d="M0,96L48,112C96,128,192,160,288,186.7C384,213,480,235,576,229.3C672,224,768,192,864,160C960,128,1056,96,1152,122.7C1248,149,1344,235,1392,277.3L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+            </path>
+        </svg>
 
-    <Posts />
+       <Posts />
 
-    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#f27405" fill-opacity="1" d="M0,256L48,261.3C96,267,192,277,288,266.7C384,256,480,224,576,229.3C672,235,768,277,864,250.7C960,224,1056,128,1152,128C1248,128,1344,224,1392,272L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
-</div>
+        <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path fill="#f27405" fill-opacity="1"
+                d="M0,256L48,261.3C96,267,192,277,288,266.7C384,256,480,224,576,229.3C672,235,768,277,864,250.7C960,224,1056,128,1152,128C1248,128,1344,224,1392,272L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+            </path>
+        </svg>
+    </div>
+</MudHidden>
 
 <div id="Contact">
     <Contact />
 
-    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="#90EE90" fill-opacity="1" d="M0,192L48,170.7C96,149,192,107,288,85.3C384,64,480,64,576,74.7C672,85,768,107,864,96C960,85,1056,43,1152,64C1248,85,1344,171,1392,213.3L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"></path></svg>
+    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#90EE90" fill-opacity="1"
+            d="M0,192L48,170.7C96,149,192,107,288,85.3C384,64,480,64,576,74.7C672,85,768,107,864,96C960,85,1056,43,1152,64C1248,85,1344,171,1392,213.3L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+        </path>
+    </svg>
 </div>
 
 <footer>

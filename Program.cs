@@ -196,18 +196,6 @@ try
 
     builder.Services.AddMudServices(options =>
     {
-        options.ResizeOptions = new()
-        {
-            BreakpointDefinitions = new Dictionary<MudBlazor.Breakpoint, int>
-            {
-                { MudBlazor.Breakpoint.Xs, 0 },
-                { MudBlazor.Breakpoint.Sm, 600 },
-                { MudBlazor.Breakpoint.Md, 768 },
-                { MudBlazor.Breakpoint.Lg, 992 },
-                { MudBlazor.Breakpoint.Xl, 1200 },
-                { MudBlazor.Breakpoint.Xxl, 1400 },
-            }
-        };
     });
 
     builder.Services.AddScoped<IDialogService, DialogService>();
@@ -279,8 +267,8 @@ try
 
     app.MapAreaControllerRoute(
         name: "Blog",
-        areaName: "Blog",
-        pattern: "Blog/{controller=Home}/{action=Index}/{id?}");
+        areaName: "Posts",
+        pattern: "Posts/{controller=Home}/{action=Index}/{id?}");
 
     app.MapAreaControllerRoute(
         name: "Photos",

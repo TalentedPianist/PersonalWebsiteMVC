@@ -6,6 +6,7 @@
 @using Microsoft.AspNetCore.WebUtilities
 @using PersonalWebsiteMVC.Components.Mobile
 @using MudBlazor
+@using PersonalWebsiteMVC.Models
 
 @if (_db.Posts.Count() == 0)
 {
@@ -60,7 +61,9 @@ else
                                 Read
                                 More</MudButton>
                         </div>
-                        
+                        <MudHidden Breakpoint="Breakpoint.SmAndDown">
+                            <Paging PI="pagingInfo" PageClassesEnabled="true" PageClass="Paging" PageClassesSelected="Active" />
+                        </MudHidden>
                     </section>
                 }
             </section>
@@ -107,4 +110,23 @@ else
     {
         await Task.CompletedTask;
     }
+
+    // Begin code for paging
+    [Parameter]
+    public int page { get; set; }
+    PagingInfo pagingInfo = new PagingInfo();
+    public void CreatePagingInfo() 
+    {
+        var AllPosts = Model;
+        int PageSize = 3;
+        pagingInfo = new PagingInfo();
+        page = page == 0 ? 1 : page;
+        pagingInfo.CurrentPage = page;
+        pagingInfo.TotalItems = AllPosts.Count();
+        pagingInfo.ItemsPerPage = PageSize;
+
+        var skip = PageSize * (Convert.ToInt32(page) - 1);
+    }
+
+
 }

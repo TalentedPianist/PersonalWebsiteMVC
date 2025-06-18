@@ -13,7 +13,7 @@
 
 
 <!-- Only for large screens -->
-<MudHidden Breakpoint="Breakpoint.SmAndDown">
+<div class="sm:hidden lg:flex">
     <nav>
         <ul>
             <li>
@@ -39,9 +39,7 @@
         </div>
     </header>
     <main>
-        <section>
-            @Body
-        </section>
+        @Body
         <section>
             <Sidebar />
         </section>
@@ -50,18 +48,39 @@
     <footer>
         Copyright &copy; douglasmcgregor.co.uk 2025
     </footer>
-</MudHidden>
+</div>
 
 <!-- Breakpoint for mobile devices. -->
-<MudHidden Breakpoint="Breakpoint.SmAndUp">
+<MudHidden Breakpoint="Breakpoint.SmAndDown">
     <Mobile />
 
 </MudHidden>
 
-<MudHidden Breakpoint="Breakpoint.MdAndUp">
-    <p>I am a tablet device.</p>
-</MudHidden>
-
+<!-- Breakpoint for tablet devices -->
+<div class="sm:hidden md:flex lg:hidden">
+    <nav>
+        <ul>
+            <li><NavLink href="/">Home</NavLink></li>
+            <li><NavLink href="/about">About</NavLink></li>
+            <li><NavLink href="/blog">Blog</NavLink></li>
+            <li><NavLink href="/photos">Photos</NavLink></li>
+            <li><NavLink href="/contact">Contact</NavLink></li>
+        </ul>
+    </nav>
+    <header>
+        <div class="overlay">
+            <h1>Welcome</h1>
+           
+        </div>
+    </header>
+    @Body
+    <section class="socialMedia">
+        <SocialMedia />
+    </section>
+    <footer>
+        Copyright &copy; douglasmcgregor.co.uk
+    </footer>
+</div>
 
 @code {
     [Inject]
