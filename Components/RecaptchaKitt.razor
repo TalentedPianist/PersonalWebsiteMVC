@@ -9,12 +9,19 @@
     @bind-Value="Value"
     Size="Size.Normal"
     Theme="Theme.Light"
-    TabIndex="1" />
+    TabIndex="1" 
+    
+    />
 
-@Value
 
 @code {
-    private string Value = string.Empty;
+    public string Message { get; set; } = string.Empty;
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+    [Parameter]
+    public string Value { get; set; } = string.Empty;
+
     private EditContext? context;
     private ReCaptchaModel model = new();
     private bool disabled = true;
@@ -31,6 +38,7 @@
     private void OnFieldChangedHandler(object? sender, FieldChangedEventArgs e)
     {
         disabled = !(context!.Validate());
+        
         StateHasChanged();
     }
 

@@ -178,7 +178,6 @@ try
 
     builder.Services.AddHttpContextAccessor();
 
-    builder.Services.AddBlazorBootstrap();
 
     builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
         client.BaseAddress = new Uri("http://localhost:5051"));

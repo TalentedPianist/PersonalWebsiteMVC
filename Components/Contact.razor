@@ -36,7 +36,9 @@
                 <ValidationMessage For="() => Model.Message" />
             </div>
 
-            <RecaptchaKitt />
+            <RecaptchaKitt @bind-Value="captchaValue"/>
+
+           
             
         </EditForm>
     </section>

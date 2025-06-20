@@ -1,7 +1,7 @@
-@using BlazorBootstrap
 @inject IJSRuntime JS
+@using SuperSimpleBlazorModal
 
-<a href="#" @onclick="OnShowModalClick">
+<a href="#" @onclick="ShowModal">
     <svg class="menuIcon" stroke-width="1.5" viewBox="0 0 24 24" fill="#FFFF00" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
@@ -9,37 +9,34 @@
     </svg>
 </a>
 
-<Modal @ref="modal" ShowCloseButton="false" BodyCssClass="mobileNav">
-    <BodyTemplate>
-       
+<SimpleModal
+    @ref="ModalRef"
+    Id="MySimpleModal"
+    ExtraCssClass="mobileNav"
+    OnModalStateChange="ModalStateChanged"
+    OpenOnFirstRender="false"
+    >
 
-       <ul>
-            <li><button @onclick="OnHideModalClick"><div class="closeIcon">&times;</div></button></li>
-            <li><NavLink href="#Home" @onclick="@(e => HandleNavigation("Home"))">Home</NavLink></li>
-            <li><NavLink href="#About" @onclick="@(e => HandleNavigation("About"))">About</NavLink></li>
-            <li><NavLink href="#Blog" @onclick="@(e => HandleNavigation("Blog"))">Blog</NavLink></li>
-            <li><NavLink href="#Contact" @onclick="@(e => HandleNavigation("Contact"))">Contact</NavLink></li>
-        </ul>
-    </BodyTemplate>
+    <h1>My Modal</h1>
     
-</Modal>
+</SimpleModal>
+
 
 @code {
-    private Modal modal;
+    private SimpleModal? ModalRef;
 
-    private async Task OnShowModalClick()
+    async Task ShowModal()
     {
-        await modal?.ShowAsync();
+        await ModalRef.ShowModal();
     }
 
-    private async Task OnHideModalClick()
+    async Task CloseModal()
     {
-        await modal?.HideAsync();
-    } 
+        await ModalRef.CloseModal();
+    }
 
-    public async Task HandleNavigation(string name) 
+    void ModalStateChanged(bool isOpen)
     {
-        OnHideModalClick();
-        await JS.InvokeVoidAsync("ScrollToView", name);
+        // do stuff when modal state changes
     }
 }

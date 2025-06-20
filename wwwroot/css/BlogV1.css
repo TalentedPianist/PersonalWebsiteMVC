@@ -512,29 +512,19 @@ main {
 }
 
 .mobileNav {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 2em;
-  width: 100%;
-  min-width: 100% !important;
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  z-index: 1000 !important;
+  justify-content: center;
+  color: white;
+  position: fixed;
+  top: 0;
+  left: 0;
 }
 .mobileNav ul {
   display: flex;
   flex-direction: column;
   flex: 1;
-  list-style-type: none;
-  gap: 5em;
-  align-items: center;
-  justify-content: center;
-}
-.mobileNav button {
-  background-color: transparent;
-  border: none;
-  text-align: center;
-}
-.mobileNav a {
-  font-size: xx-large;
+  gap: 5em !important;
 }
 
 .sticky {
