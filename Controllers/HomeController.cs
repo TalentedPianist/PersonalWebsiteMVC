@@ -5,7 +5,7 @@ using PersonalWebsiteMVC.Models;
 using System.Diagnostics;
 using DeviceDetectorNET;
 using DeviceDetectorNET.Parser;
-using Microsoft.AspNetCore.Components;
+//using Microsoft.AspNetCore.Components;
 
 namespace PersonalWebsiteMVC.Controllers
 {
@@ -23,7 +23,12 @@ namespace PersonalWebsiteMVC.Controllers
 
         }
 
-      
+        [Route("/")]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
 
         public IActionResult Privacy()
         {

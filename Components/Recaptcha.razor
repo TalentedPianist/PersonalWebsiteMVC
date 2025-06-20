@@ -22,7 +22,7 @@
         {
             try  {
             await JS.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha", "");
-            } catch (JSDisconnectedException ex) 
+            } catch (JSException ex) 
             {
                 Console.WriteLine(ex.Message);
             }

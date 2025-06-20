@@ -3,6 +3,7 @@
 @using PersonalWebsiteMVC.Models
 @using Microsoft.AspNetCore.Components.Forms
 @using PersonalWebsiteMVC.Services
+@using PersonalWebsiteMVC.Components
 @inject EmailService _emailService
 
 @Message
@@ -35,7 +36,7 @@
                 <ValidationMessage For="() => Model.Message" />
             </div>
 
-            <Recaptcha @bind-Value="captchaValue" />
+            <RecaptchaKitt />
             
         </EditForm>
     </section>

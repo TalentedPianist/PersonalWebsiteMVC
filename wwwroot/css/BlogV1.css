@@ -2,13 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 html {
-  margin: 0;
-  padding: 0;
+  margin: 0 !important;
+  padding: 0 !important;
   scroll-behavior: smooth;
 }
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+}
+
+html, body {
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
 }
 
 img {
@@ -62,6 +68,7 @@ form label {
   text-align: center;
   position: relative;
   background-color: #F29F05;
+  color: white;
 }
 #Home img {
   width: 50%;
@@ -69,6 +76,12 @@ form label {
   align-self: center;
   display: flex;
   margin: 0 auto;
+}
+#Home h1 {
+  font-size: 38pt !important;
+}
+#Home h2 {
+  font-size: 30pt !important;
 }
 @media only screen and (min-width: 600px) {
   #Home {
@@ -343,36 +356,26 @@ form label {
   z-index: 1000;
 }
 
-.navModal {
-  color: white !important;
-  position: absolute;
-  top: 0;
-  z-index: 50000;
-  background-color: rgba(0, 0, 0, 0.6);
-  font-size: large;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  height: 100%;
-  width: 100vw;
-  min-width: 100vw !important;
+.modal-content {
+  background-color: rgba(0, 0, 0, 0.6) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
-.navModal ul {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-  gap: 3em;
-}
-.navModal a {
-  font-size: 26pt;
+
+.modal-header {
+  border-bottom: none !important;
 }
 
 .closeIcon {
   color: white;
   font-size: 80pt;
   display: flex;
-  margin: 0 auto;
+  width: 100%;
+  min-width: 100%;
+  align-items: center;
+  justify-content: center;
 }
 
 .overlay {
@@ -512,7 +515,23 @@ main {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 2em;
+  width: 100%;
+  min-width: 100% !important;
+}
+.mobileNav ul {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  list-style-type: none;
   gap: 5em;
+  align-items: center;
+  justify-content: center;
+}
+.mobileNav button {
+  background-color: transparent;
+  border: none;
+  text-align: center;
 }
 .mobileNav a {
   font-size: xx-large;

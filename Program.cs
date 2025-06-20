@@ -1,38 +1,15 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using PersonalWebsiteMVC;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
-using Microsoft.AspNetCore.Mvc.NewtonsoftJson;
 using Newtonsoft.Json.Serialization;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Configuration;
-using System;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using MudBlazor.Services;
-using SolrNet;
 using Sitko.Blazor.CKEditor;
 using Microsoft.Extensions.FileProviders;
-using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Services;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Elastic.Clients.Elasticsearch.IndexManagement;
-using Microsoft.AspNetCore.Mvc.Razor;
-using Wangkanai.Responsive;
 using Serilog;
-using PersonalWebsiteMVC.Components;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.Extensions.Options;
 using ServiceStack.Text;
-using Microsoft.AspNetCore.SpaServices.ReactDevelopmentServer;
-using Blazorise.Captcha.ReCaptcha;
-using Blazorise;
-using Blazorise.Tailwind;
-using Blazorise.Icons.FontAwesome;
-
+using BlazorBootstrap;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -201,12 +178,10 @@ try
 
     builder.Services.AddHttpContextAccessor();
 
-    builder.Services.AddBlazorise(options =>
-    {
-        options.Immediate = true;
-    })
-    .AddTailwindProviders()
-    .AddFontAwesomeIcons();
+    builder.Services.AddBlazorBootstrap();
+
+    builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
+        client.BaseAddress = new Uri("http://localhost:5051"));
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -274,8 +249,9 @@ try
         areaName: "Photos",
         pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
-    //app.MapControllers();
+    app.MapControllers();
     app.MapRazorPages();
+    app.MapBlazorHub();
 
     app.UseRouting();
     app.UseAuthentication();
@@ -293,8 +269,8 @@ try
 
 
 
-    app.MapRazorComponents<App>()
-        .AddInteractiveServerRenderMode();
+    // app.MapRazorComponents<App>()
+    //     .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
 

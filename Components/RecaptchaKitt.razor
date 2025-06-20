@@ -1,0 +1,43 @@
+@using PersonalWebsiteMVC.Models
+@using PersonalWebsiteMVC.Services
+@implements IDisposable
+@inject IReCaptchaFormClient client
+@using KITT.Web.ReCaptcha
+
+<ReCaptcha
+    SiteKey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"
+    @bind-Value="Value"
+    Size="Size.Normal"
+    Theme="Theme.Light"
+    TabIndex="1" />
+
+@Value
+
+@code {
+    private string Value = string.Empty;
+    private EditContext? context;
+    private ReCaptchaModel model = new();
+    private bool disabled = true;
+    private string? message;
+    private bool isSuccessMessage;
+    private string[] errorCodes = [];
+    
+    protected override void OnInitialized()
+    {
+        context = new EditContext(model);
+        context.OnFieldChanged += OnFieldChangedHandler;
+    }
+
+    private void OnFieldChangedHandler(object? sender, FieldChangedEventArgs e)
+    {
+        disabled = !(context!.Validate());
+        StateHasChanged();
+    }
+
+    void IDisposable.Dispose()
+    {
+        context!.OnFieldChanged -= OnFieldChangedHandler;
+    }
+
+   
+}

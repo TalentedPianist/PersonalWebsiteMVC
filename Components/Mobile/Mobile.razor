@@ -1,16 +1,13 @@
 @inject NavigationManager NavigationManager
 @inject IJSRuntime JS
-
-
+@using BlazorBootstrap
 
 <div id="Home" @ref="homeRef">
     <div class="overlay">
 
         <header>
-           
-
+           <Nav />
         </header>
-
 
         <h1 class="text-4xl text-white">Hi, I'm Douglas</h1>
         <img src="/images/me.jpg">

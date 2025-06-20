@@ -1,0 +1,45 @@
+@using BlazorBootstrap
+@inject IJSRuntime JS
+
+<a href="#" @onclick="OnShowModalClick">
+    <svg class="menuIcon" stroke-width="1.5" viewBox="0 0 24 24" fill="#FFFF00" xmlns="http://www.w3.org/2000/svg">
+        <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+        <path d="M3 19H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
+    </svg>
+</a>
+
+<Modal @ref="modal" ShowCloseButton="false" BodyCssClass="mobileNav">
+    <BodyTemplate>
+       
+
+       <ul>
+            <li><button @onclick="OnHideModalClick"><div class="closeIcon">&times;</div></button></li>
+            <li><NavLink href="#Home" @onclick="@(e => HandleNavigation("Home"))">Home</NavLink></li>
+            <li><NavLink href="#About" @onclick="@(e => HandleNavigation("About"))">About</NavLink></li>
+            <li><NavLink href="#Blog" @onclick="@(e => HandleNavigation("Blog"))">Blog</NavLink></li>
+            <li><NavLink href="#Contact" @onclick="@(e => HandleNavigation("Contact"))">Contact</NavLink></li>
+        </ul>
+    </BodyTemplate>
+    
+</Modal>
+
+@code {
+    private Modal modal;
+
+    private async Task OnShowModalClick()
+    {
+        await modal?.ShowAsync();
+    }
+
+    private async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
+    } 
+
+    public async Task HandleNavigation(string name) 
+    {
+        OnHideModalClick();
+        await JS.InvokeVoidAsync("ScrollToView", name);
+    }
+}
