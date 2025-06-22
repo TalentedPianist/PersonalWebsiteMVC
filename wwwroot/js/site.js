@@ -1,7 +1,13 @@
 
 //Sticky header
-$("body").scroll(function() {
-    console.log('User is scrolling'); 
+
+$(window).on('scroll', function () {
+    if ($(this).scrollTop() > 100) { 
+        $('header').addClass('sticky');
+        $('header').appendTo('body');
+    } else {
+        
+    }    
 });
 
 window.ScrollToView = (name) => {

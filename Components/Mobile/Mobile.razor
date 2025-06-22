@@ -1,4 +1,5 @@
 @inject NavigationManager NavigationManager
+@inject IJSRuntime JS
 
 <MudThemeProvider />
 <MudPopoverProvider />
@@ -6,7 +7,7 @@
 <MudSnackbarProvider />
 
 
-<div id="Home" @ref="homeRef">
+<div id="Home">
     <div class="overlay">
 
         <header>
@@ -25,7 +26,7 @@
     </div>
 </div>
 
-<div id="About" @ref="aboutRef">
+<div id="About">
     <section>
         <h1>About Me</h1>
 
@@ -81,12 +82,4 @@
 </footer>
 
 
-@code {
-    ElementReference homeRef;
-    ElementReference aboutRef;
-    ElementReference blogRef;
-    //ElementReference contactRef;
 
-
-
-}

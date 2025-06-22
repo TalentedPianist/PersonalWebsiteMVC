@@ -541,14 +541,15 @@ main {
 }
 
 .sticky {
-  position: absolute;
-  z-index: 9999;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
+  position: fixed !important;
+  z-index: 9999 !important;
+  top: 0 !important;
+  right: 0 !important;
+  left: 0 !important;
   display: flex;
-  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4);
   align-items: center;
 }
 

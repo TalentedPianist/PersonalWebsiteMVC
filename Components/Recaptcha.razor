@@ -1,0 +1,35 @@
+@using GoogleCaptchaComponent.Models
+
+<GoogleRecaptcha
+    SuccessCallback="SuccessCallback"
+    TimeOutCallback="TimeOutCallBack"
+    ServerValidationErrorCallBack="ServerSideValidationError"
+    ServerSideValidationHandler="ServerSideValidationHandler">
+</GoogleRecaptcha>
+
+@code {
+    private string errorMessage;
+    private string captchaResponse;
+    private bool Disabled = true;
+
+    void SuccessCallback(CaptchaSuccessEventArgs e)
+    {
+        Disabled = false;
+        captchaResponse = e.CaptchaResponse;
+        base.StateHasChanged();
+    }
+
+    void TimeOutCallBack(CaptchaTimeOutEventArgs e)
+    {
+    }
+
+    private void ServerSideValidationError(CaptchaServerSideValidationErrorEventArgs e)
+    {
+    }
+
+    private async Task<ServerSideCaptchaValidationResultModel> ServerSideValidationHandler(ServerSideCaptchaValidationRequestModel requestModel)
+    {
+        using var httpClient = new HttpClient();
+        return new ServerSideCaptchaValidationResultModel(true, "Success");
+    }
+}

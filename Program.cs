@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 using ServiceStack.Text;
 using MudBlazor.Services;
+using GoogleCaptchaComponent;
+using GoogleCaptchaComponent.Configuration;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -180,8 +182,15 @@ try
     builder.Services.AddHttpContextAccessor();
 
 
-    builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
-        client.BaseAddress = new Uri("http://localhost:5051"));
+    // builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
+    //     client.BaseAddress = new Uri("http://localhost:5051"));
+
+    builder.Services.AddGoogleCaptcha(configuration =>
+    {
+        configuration.ServerSideValidationRequired = true;
+        configuration.SiteKey = "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB";
+        configuration.CaptchaVersion = CaptchaConfiguration.Version.V2;
+    });
 
     builder.Services.AddMudServices();
     
