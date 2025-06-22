@@ -513,18 +513,31 @@ main {
 
 .mobileNav {
   background-color: rgba(0, 0, 0, 0.6) !important;
-  z-index: 1000 !important;
+  z-index: 2000 !important;
   justify-content: center;
   color: white;
   position: fixed;
   top: 0;
   left: 0;
+  right: 0;
+  display: flex;
 }
 .mobileNav ul {
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 5em !important;
+  position: relative;
+  z-index: 2000 !important;
+  list-style-type: none;
+  justify-content: center;
+  align-items: center;
+}
+.mobileNav a {
+  position: relative;
+  z-index: 10000 !important;
+  color: white;
+  font-size: xx-large;
 }
 
 .sticky {

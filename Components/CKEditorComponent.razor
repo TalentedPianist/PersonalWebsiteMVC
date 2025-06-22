@@ -31,8 +31,13 @@
 
     private async Task OnEditorValueChanged(string newValue)
     {
+        try { 
         Value = newValue;
         await ValueChanged.InvokeAsync(newValue);
+        } catch (JSDisconnectedException ex) 
+        {
+            Console.WriteLine(ex.Message);
+        }
     }
 
     [Parameter]

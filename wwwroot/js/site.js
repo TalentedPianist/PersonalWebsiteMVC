@@ -1,15 +1,7 @@
 
 //Sticky header
-$(window).scroll(function () {
-    if (screen.width < 600) {
-        if ($(this).scrollTop() > 100) {
-            $('header').addClass('sticky');
-            $("header").prependTo("body");
-        } else {
-            $('header').removeClass('sticky');
-            $("header").prependTo(".overlay");
-        }
-    }
+$("body").scroll(function() {
+    console.log('User is scrolling'); 
 });
 
 window.ScrollToView = (name) => {

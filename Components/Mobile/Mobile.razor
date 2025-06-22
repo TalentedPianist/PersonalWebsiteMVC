@@ -1,6 +1,10 @@
 @inject NavigationManager NavigationManager
-@inject IJSRuntime JS
-@using BlazorBootstrap
+
+<MudThemeProvider />
+<MudPopoverProvider />
+<MudDialogProvider />
+<MudSnackbarProvider />
+
 
 <div id="Home" @ref="homeRef">
     <div class="overlay">

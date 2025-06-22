@@ -1,7 +1,7 @@
 @inject IJSRuntime JS
-@using SuperSimpleBlazorModal
+@inject IDialogService DialogService
 
-<a href="#" @onclick="ShowModal">
+<a href="#" @onclick="Open">
     <svg class="menuIcon" stroke-width="1.5" viewBox="0 0 24 24" fill="#FFFF00" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
@@ -9,34 +9,23 @@
     </svg>
 </a>
 
-<SimpleModal
-    @ref="ModalRef"
-    Id="MySimpleModal"
-    ExtraCssClass="mobileNav"
-    OnModalStateChange="ModalStateChanged"
-    OpenOnFirstRender="false"
-    >
-
-    <h1>My Modal</h1>
-    
-</SimpleModal>
-
+<MudDialog @bind-Visible="_visible" Class="mobileNav">
+    <DialogContent>
+        <a href="#" @onclick="Close"><span class="closeIcon">&times;</span></a>
+        <ul>
+            <li><NavLink href="#Home">Home</NavLink></li>
+            <li><NavLink href="#About">About</NavLink></li>
+            <li><NavLink href="#Blog">Blog</NavLink></li>
+            <li><NavLink href="#Contact">Contact</NavLink></li>
+        </ul>
+    </DialogContent>
+</MudDialog>
 
 @code {
-    private SimpleModal? ModalRef;
+    private bool _visible;
 
-    async Task ShowModal()
-    {
-        await ModalRef.ShowModal();
-    }
+    private void Open() => _visible = true;
+    private void Close() => _visible = false;
 
-    async Task CloseModal()
-    {
-        await ModalRef.CloseModal();
-    }
 
-    void ModalStateChanged(bool isOpen)
-    {
-        // do stuff when modal state changes
-    }
 }

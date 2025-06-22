@@ -9,7 +9,8 @@ using PersonalWebsiteMVC.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 using ServiceStack.Text;
-using BlazorBootstrap;
+using MudBlazor.Services;
+
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -181,6 +182,10 @@ try
 
     builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
         client.BaseAddress = new Uri("http://localhost:5051"));
+
+    builder.Services.AddMudServices();
+    
+
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
