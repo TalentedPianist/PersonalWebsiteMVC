@@ -1,21 +1,29 @@
 @using GoogleCaptchaComponent.Models
 
+@Message
+
 <GoogleRecaptcha
-    SuccessCallback="SuccessCallback"
-    TimeOutCallback="TimeOutCallBack"
+    SuccessCallBack="SuccessCallback"
+    TimeOutCallBack="TimeOutCallBack"
     ServerValidationErrorCallBack="ServerSideValidationError"
     ServerSideValidationHandler="ServerSideValidationHandler">
 </GoogleRecaptcha>
 
 @code {
+    public string Message { get; set; }
     private string errorMessage;
+    [Parameter]
+    public EventCallback<string> CaptchaValue { get; set; }
     private string captchaResponse;
     private bool Disabled = true;
+
+    
 
     void SuccessCallback(CaptchaSuccessEventArgs e)
     {
         Disabled = false;
         captchaResponse = e.CaptchaResponse;
+        Message = captchaResponse;
         base.StateHasChanged();
     }
 
