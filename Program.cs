@@ -12,6 +12,10 @@ using ServiceStack.Text;
 using MudBlazor.Services;
 using GoogleCaptchaComponent;
 using GoogleCaptchaComponent.Configuration;
+using Blazorise;
+using Blazorise.Captcha.ReCaptcha;
+using Blazorise.Bootstrap5;
+using Blazorise.Icons.FontAwesome;
 
 
 
@@ -186,12 +190,17 @@ try
     // builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
     //     client.BaseAddress = new Uri("http://localhost:5051"));
 
-    builder.Services.AddGoogleCaptcha(configuration =>
-    {
-        configuration.ServerSideValidationRequired = true;
-        configuration.SiteKey = "6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB";
-        configuration.CaptchaVersion = CaptchaConfiguration.Version.V2;
-    });
+    builder.Services
+        .AddBlazorise(options =>
+        {
+            options.Immediate = true;
+        })
+        .AddBootstrap5Providers()
+        .AddFontAwesomeIcons()
+        .AddBlazoriseGoogleReCaptcha(reCaptchaOptions =>
+        {
+            reCaptchaOptions.SiteKey = "6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz";
+        });
 
     builder.Services.AddMudServices();
 
