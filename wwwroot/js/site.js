@@ -1,6 +1,18 @@
 
-//Sticky header
+window.blazorHelpers = { 
+    scrollToFragment: (elementId) => { 
+        var element = document.getElementById(elementId);
 
+        if (element) { 
+            element.scrollIntoView({ 
+                behavior: 'smooth'
+            });
+        }
+    }
+};
+
+
+//Sticky header
 $(window).on('scroll', function () {
     if ($(this).scrollTop() > 100) { 
         $('header').addClass('sticky');

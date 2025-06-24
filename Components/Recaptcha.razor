@@ -1,6 +1,6 @@
 @using GoogleCaptchaComponent.Models
 
-@Message
+
 
 <GoogleRecaptcha
     SuccessCallBack="SuccessCallback"
@@ -13,17 +13,19 @@
     public string Message { get; set; }
     private string errorMessage;
     [Parameter]
-    public EventCallback<string> CaptchaValue { get; set; }
+    public EventCallback<string> ValueChanged { get; set; }
+ 
+  
     private string captchaResponse;
     private bool Disabled = true;
 
     
 
-    void SuccessCallback(CaptchaSuccessEventArgs e)
+    async Task SuccessCallback(CaptchaSuccessEventArgs e)
     {
         Disabled = false;
         captchaResponse = e.CaptchaResponse;
-        Message = captchaResponse;
+        await ValueChanged.InvokeAsync(captchaResponse);
         base.StateHasChanged();
     }
 

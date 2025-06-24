@@ -35,8 +35,9 @@
                 <CKEditorComponent @bind-Value="Model.Message" />
                 <ValidationMessage For="() => Model.Message" />
             </div>
-            <Recaptcha />
-            <button type="submit">Contact</button>
+            <Recaptcha ValueChanged="HandleMessage" />
+
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" ButtonType="ButtonType.Submit">Contact</MudButton>
            
             
         </EditForm>
@@ -48,13 +49,18 @@
 
     public ContactFormModel Model { get; set; } = new ContactFormModel();
 
-    public string captchaValue { get; set; } = string.Empty;
+    public string captchaValue { get; set; } 
+
+    private void HandleMessage(string msg)
+    {
+        captchaValue = msg;
+    }
 
     private async Task HandleValidSubmit()
     {
         if (captchaValue is not null) // Perform reCaptcha validation for added security
         {
-            Message = captchaValue;
+       
             try
             {
                 await _emailService.SendEmailAsync(Model.Email, "Contact Form", Model.Message);

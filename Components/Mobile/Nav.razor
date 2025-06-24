@@ -27,5 +27,14 @@
     private void Open() => _visible = true;
     private void Close() => _visible = false;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("scrollToHash");
+        }
 
+    }
+
+    
 }
