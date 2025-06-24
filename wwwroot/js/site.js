@@ -1,4 +1,6 @@
 
+
+
 window.blazorHelpers = { 
     scrollToFragment: (elementId) => { 
         var element = document.getElementById(elementId);

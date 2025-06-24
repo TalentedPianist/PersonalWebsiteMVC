@@ -53,9 +53,7 @@ form {
 
     }
 
-    button {
-        align-self: flex-start;
-    }
+    
 
     label {
         font-size: large;
@@ -175,15 +173,20 @@ form {
     min-height: 100dvh;
     overflow: scroll;
 
-
     section {
         display: flex;
         flex-direction: column;
         flex: 1;
         gap: 2em;
         background-color: #F29F05;
+        padding-top: 6em;
 
         @media only screen and (min-width: 768px) {
+            padding-left: 1em;
+            padding-right: 1em;
+        }
+
+        p {
             padding-left: 1em;
             padding-right: 1em;
         }
@@ -331,7 +334,7 @@ form {
     border-bottom: 1px solid black;
 
     p {
-        font-size: 20pt !important;
+        font-size: 18pt !important;
     }
 
     @media only screen and (min-width: 600px) {
@@ -383,6 +386,25 @@ form {
         display: flex;
         flex-direction: column;
         background-color: lightgreen;
+        padding-top: 6em;
+
+        button { 
+            align-self: flex-start;
+        }
+
+        h1 { 
+            font-size: 40pt !important;
+        }
+
+        p {
+            font-size: large !important;
+            padding-right: 2em;
+        }
+
+        br { 
+            /* Hack for getting rid of the strange br element that appeared above the button */
+            display: none !important;
+        }
     }
 
     svg {
@@ -397,6 +419,10 @@ form {
         }
     }
 
+}
+
+.ck-editor__editable { 
+    min-height: 100px;
 }
 
 .modal-content { 

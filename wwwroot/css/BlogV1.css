@@ -49,9 +49,6 @@ form input {
   padding: 5px 5px 5px 5px;
   border: 1px solid black;
 }
-form button {
-  align-self: flex-start;
-}
 form label {
   font-size: large;
 }
@@ -164,12 +161,17 @@ form label {
   flex: 1;
   gap: 2em;
   background-color: #F29F05;
+  padding-top: 6em;
 }
 @media only screen and (min-width: 768px) {
   #About section {
     padding-left: 1em;
     padding-right: 1em;
   }
+}
+#About section p {
+  padding-left: 1em;
+  padding-right: 1em;
 }
 #About svg {
   position: absolute;
@@ -301,7 +303,7 @@ form label {
   border-bottom: 1px solid black;
 }
 #SinglePost p {
-  font-size: 20pt !important;
+  font-size: 18pt !important;
 }
 @media only screen and (min-width: 600px) {
   #SinglePost {
@@ -346,6 +348,21 @@ form label {
   display: flex;
   flex-direction: column;
   background-color: lightgreen;
+  padding-top: 6em;
+}
+#Contact section button {
+  align-self: flex-start;
+}
+#Contact section h1 {
+  font-size: 40pt !important;
+}
+#Contact section p {
+  font-size: large !important;
+  padding-right: 2em;
+}
+#Contact section br {
+  /* Hack for getting rid of the strange br element that appeared above the button */
+  display: none !important;
 }
 #Contact svg:after {
   position: absolute;
@@ -354,6 +371,10 @@ form label {
   content: ".";
   width: 100vw;
   z-index: 1000;
+}
+
+.ck-editor__editable {
+  min-height: 100px;
 }
 
 .modal-content {

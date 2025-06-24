@@ -4,16 +4,17 @@
 
 
 
-<CKEditor Value="@Value" ValueChanged="@OnEditorValueChanged" Placeholder="Your thoughts on this post" Config="config" Style="color: black" ValueExpression="ValueExpression" />
+<CKEditor Value="@Value" ValueChanged="@OnEditorValueChanged" Placeholder="Your thoughts on this post" Config="config"
+    Style="color: black" ValueExpression="ValueExpression" />
 
-@code { 
+@code {
     [Parameter]
     public RenderFragment? ChildContent { get; set; }
     [Parameter]
     public string? Value { get; set; }
     [Parameter]
     public EventCallback<string> ValueChanged { get; set; }
-    
+
 
     private CKEditorConfig? config;
     protected override void OnInitialized()
@@ -21,20 +22,23 @@
         config = CKEditorBundleOptions.DefaultConfig.WithHtmlEditing();
         config.Toolbar = new CKEditorToolbar
         {
-            Items = 
-            [
-                "bold"
-            ]
+            Items =
+        [
+        "bold"
+        ]
         };
-        
+
+
     }
 
     private async Task OnEditorValueChanged(string newValue)
     {
-        try { 
-        Value = newValue;
-        await ValueChanged.InvokeAsync(newValue);
-        } catch (JSDisconnectedException ex) 
+        try
+        {
+            Value = newValue;
+            await ValueChanged.InvokeAsync(newValue);
+        }
+        catch (JSDisconnectedException ex)
         {
             Console.WriteLine(ex.Message);
         }

@@ -1,0 +1,28 @@
+@page "/post"
+@inject ApplicationDbContext _db
+@inject NavigationManager nav
+
+
+@if (Id > 0)
+{
+    var uri = nav.ToAbsoluteUri(nav.Uri);
+    if (uri.Fragment.Contains("Comments"))
+    {
+
+    }
+    else
+    {
+        var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
+        <div id="SinglePost">
+            <h1>@post!.PostTitle</h1>
+            <p>@((MarkupString)post.PostContent!)</p>
+
+            <BlogComments PostID="@post.PostID" />
+        </div>
+    }
+}
+
+@code {
+    [SupplyParameterFromQuery]
+    public int Id { get; set; } 
+}

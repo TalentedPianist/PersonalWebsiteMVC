@@ -14,6 +14,7 @@ using GoogleCaptchaComponent;
 using GoogleCaptchaComponent.Configuration;
 
 
+
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
     .CreateLogger();
@@ -193,8 +194,8 @@ try
     });
 
     builder.Services.AddMudServices();
-    
 
+  
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
