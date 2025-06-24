@@ -41,8 +41,10 @@
         <ValidationMessage For="() => Model.CommentContent" />
     </p>
     </div>
-   
+    
+    <Recaptcha CaptchaValue="HandleValue" />
 
+    <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Comment</MudButton>
 </EditForm>
 
 @code {

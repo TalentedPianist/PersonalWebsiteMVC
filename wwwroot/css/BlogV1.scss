@@ -33,10 +33,6 @@ h6 {
 }
 
 form {
-    margin-top: 2em;
-    margin-bottom: 2em;
-    padding-left: 2em;
-    padding-right: 2em;
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -53,10 +49,12 @@ form {
 
     }
 
-    
-
     label {
         font-size: large;
+    }
+
+    br { 
+        display: none;
     }
 }
 
@@ -331,7 +329,7 @@ form {
     font-size: large;
     background-color: #f2740f;
     line-height: 2;
-    border-bottom: 1px solid black;
+    
 
     p {
         font-size: 18pt !important;
@@ -347,21 +345,13 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
+    border-top: 1px solid black;
 
     img {
         width: 20% !important;
     }
 
-    form {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 1em;
-        border-top: 1px solid black;
-        margin-top: 1em;
-        margin-bottom: 1em;
-        padding-bottom: 1em;
-    }
+    
 
     hr {
         color: black;
@@ -386,7 +376,10 @@ form {
         display: flex;
         flex-direction: column;
         background-color: lightgreen;
-        padding-top: 6em;
+        padding-top: 4em;
+        padding-left: 1em;
+        padding-right: 1em;
+        height: 100vh;
 
         button { 
             align-self: flex-start;

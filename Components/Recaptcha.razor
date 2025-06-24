@@ -1,45 +1,30 @@
-@using GoogleCaptchaComponent.Models
+@inject IJSRuntime JSRuntime
+@using System.ComponentModel
 
+<div id="google_recaptcha"></div>
 
-
-<GoogleRecaptcha
-    SuccessCallBack="SuccessCallback"
-    TimeOutCallBack="TimeOutCallBack"
-    ServerValidationErrorCallBack="ServerSideValidationError"
-    ServerSideValidationHandler="ServerSideValidationHandler">
-</GoogleRecaptcha>
 
 @code {
-    public string Message { get; set; }
-    private string errorMessage;
-    [Parameter]
-    public EventCallback<string> ValueChanged { get; set; }
- 
-  
-    private string captchaResponse;
-    private bool Disabled = true;
+    // https://akifmt.github.io/dotnet/2023-08-11-blazor-implementing-google-recaptcha-v3/
+     private string captchaResponse;
+     [Parameter]
+     public EventCallback<string> CaptchaValue { get; set; }
 
-    
-
-    async Task SuccessCallback(CaptchaSuccessEventArgs e)
-    {
-        Disabled = false;
-        captchaResponse = e.CaptchaResponse;
-        await ValueChanged.InvokeAsync(captchaResponse);
-        base.StateHasChanged();
+     protected override async Task OnAfterRenderAsync(bool firstRender)
+     {
+        if (firstRender)
+        {
+          await JSRuntime.InvokeAsync<int>("googleRecaptcha", DotNetObjectReference.Create(this), "google_recaptcha", "6Lcu4zIqAAAAAGwRGrbhwICreateT_VWW4NVA5tbnSKgDB");
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
 
-    void TimeOutCallBack(CaptchaTimeOutEventArgs e)
+    public void CallbackOnSuccess(string response)
     {
+        captchaResponse = response;
     }
 
-    private void ServerSideValidationError(CaptchaServerSideValidationErrorEventArgs e)
+    public void CallbackOnExpired(string response)
     {
-    }
-
-    private async Task<ServerSideCaptchaValidationResultModel> ServerSideValidationHandler(ServerSideCaptchaValidationRequestModel requestModel)
-    {
-        using var httpClient = new HttpClient();
-        return new ServerSideCaptchaValidationResultModel(true, "Success");
     }
 }

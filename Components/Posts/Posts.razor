@@ -29,6 +29,7 @@ else
         {
             var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
             <div id="SinglePost">
+                <a href="#Blog" @onclick="GoBack" class="text-underline">Back</a>
                 <h1>@post!.PostTitle</h1>
                 <p>@((MarkupString)post.PostContent!)</p>
             
@@ -56,7 +57,7 @@ else
                         <div id="PostContent">
                             <h2>@item.PostTitle</h2>
                             @RemoveHTMLTags(result)
-                            <MudButton ButtonType="ButtonType.Button" Color="Color.Primary" Variant="Variant.Filled" OnClick="@(() => ViewPost(item.PostID))">Read More</MudButton>
+                            <MudButton ButtonType="ButtonType.Button" Color="Color.Primary" Variant="Variant.Filled"  Href="#SinglePost" OnClick="@(() => ViewPost(item.PostID))">Read More</MudButton>
                            
                         </div>
                        
@@ -124,5 +125,10 @@ else
         var skip = PageSize * (Convert.ToInt32(page) - 1);
     }
 
+    void GoBack() 
+    {
+        nav.NavigateTo("#Blog");
+        StateHasChanged();
+    }
 
 }
