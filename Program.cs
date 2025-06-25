@@ -9,14 +9,9 @@ using PersonalWebsiteMVC.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Serilog;
 using ServiceStack.Text;
-using MudBlazor.Services;
-using GoogleCaptchaComponent;
 using GoogleCaptchaComponent.Configuration;
-using Blazorise;
-using Blazorise.Captcha.ReCaptcha;
-using Blazorise.Bootstrap5;
-using Blazorise.Icons.FontAwesome;
 using PersonalWebsiteMVC.Components;
+using GoogleCaptchaComponent;
 
 
 
@@ -193,9 +188,8 @@ try
 
     builder.Services.AddGoogleCaptcha(configuration =>
     {
-        configuration.ServerSideValidationRequired = true;
-        configuration.SiteKey = "6LcR-VQrAAAAAFS2_Qz1L4NSod9AB4yVh2P0b47V";
-        configuration.CaptchaVersion = CaptchaConfiguration.Version.V2;
+        configuration.V2SiteKey = "6LcR-VQrAAAAAFS2_Qz1L4NSod9AB4yVh2P0b47V";
+        
     });
 
   

@@ -1,5 +1,5 @@
 @inject IJSRuntime JS
-@inject IDialogService DialogService
+
 
 <a href="#" @onclick="Open">
     <svg class="menuIcon" stroke-width="1.5" viewBox="0 0 24 24" fill="#FFFF00" xmlns="http://www.w3.org/2000/svg">
@@ -9,17 +9,7 @@
     </svg>
 </a>
 
-<MudDialog @bind-Visible="_visible" Class="mobileNav">
-    <DialogContent>
-        <a href="#" @onclick="Close"><span class="closeIcon">&times;</span></a>
-        <ul>
-            <li><NavLink href="#Home">Home</NavLink></li>
-            <li><NavLink href="#About">About</NavLink></li>
-            <li><NavLink href="#Blog">Blog</NavLink></li>
-            <li><NavLink href="#Contact">Contact</NavLink></li>
-        </ul>
-    </DialogContent>
-</MudDialog>
+
 
 @code {
     private bool _visible;
