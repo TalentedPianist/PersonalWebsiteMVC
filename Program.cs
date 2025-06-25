@@ -190,17 +190,14 @@ try
     // builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
     //     client.BaseAddress = new Uri("http://localhost:5051"));
 
-    builder.Services
-        .AddBlazorise(options =>
-        {
-            options.Immediate = true;
-        })
-        .AddBootstrap5Providers()
-        .AddFontAwesomeIcons()
-        .AddBlazoriseGoogleReCaptcha(reCaptchaOptions =>
-        {
-            reCaptchaOptions.SiteKey = "6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz";
-        });
+    builder.Services.AddGoogleCaptcha(configuration =>
+    {
+        configuration.ServerSideValidationRequired = true;
+        configuration.SiteKey = "6LcR-VQrAAAAAFS2_Qz1L4NSod9AB4yVh2P0b47V";
+        configuration.CaptchaVersion = CaptchaConfiguration.Version.V2;
+    });
+
+  
 
     builder.Services.AddMudServices();
 

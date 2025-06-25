@@ -8,6 +8,7 @@
 @using MudBlazor
 @using PersonalWebsiteMVC.Models
 
+
 @if (_db.Posts.Count() == 0)
 {
     <div id="Blog">
@@ -100,6 +101,7 @@ else
 {"id", id.ToString() },
 };
         nav.NavigateTo(QueryHelpers.AddQueryString("#Blog", query!));
+        StateHasChanged();
         await Task.CompletedTask;
     }
 

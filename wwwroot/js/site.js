@@ -13,6 +13,10 @@ window.blazorHelpers = {
     }
 };
 
+window.goBack = () => { 
+    return history.back();
+}
+
 
 //Sticky header
 $(window).on('scroll', function () {

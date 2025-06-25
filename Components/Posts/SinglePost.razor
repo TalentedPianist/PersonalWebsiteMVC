@@ -1,7 +1,7 @@
 @page "/post"
 @inject ApplicationDbContext _db
 @inject NavigationManager nav
-
+@inject IJSRuntime JS
 
 @if (Id > 0)
 {
@@ -14,6 +14,7 @@
     {
         var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
         <div id="SinglePost">
+            <NavLink href="/">Back</NavLink>
             <h1>@post!.PostTitle</h1>
             <p>@((MarkupString)post.PostContent!)</p>
 
@@ -25,4 +26,10 @@
 @code {
     [SupplyParameterFromQuery]
     public int Id { get; set; } 
+
+    public async Task HandleBack()
+    {
+        await JS.InvokeVoidAsync("goBack");
+        StateHasChanged();
+    }
 }

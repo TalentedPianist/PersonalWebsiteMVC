@@ -36,7 +36,7 @@
                 <ValidationMessage For="() => Model.Message" />
             </div>
 
-            <Recaptcha />
+            <Recaptcha @bind-Value="captchaValue" />
             <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Contact</MudButton>
            
 
@@ -50,11 +50,6 @@
     public ContactFormModel Model { get; set; } = new ContactFormModel();
 
     public string captchaValue { get; set; }
-
-    private void HandleMessage(string msg)
-    {
-        captchaValue = msg;
-    }
 
     private async Task HandleValidSubmit()
     {
