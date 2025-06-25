@@ -42,7 +42,7 @@
     </p>
     </div>
     
-    <Recaptcha />
+    <Recaptcha @bind-Value="recaptchaValue" />
 
     <MudButton ButtonType="ButtonType.Submit" Color="Color.Primary" Variant="Variant.Filled">Comment</MudButton>
 </EditForm>
@@ -50,13 +50,6 @@
 @code {
     public string? recaptchaValue { get; set; }
     public string? receivedValue { get; set; }
-
-    private void HandleValue(string value)
-    {
-        receivedValue = value;
-        Message = value;
-        Console.WriteLine(receivedValue);
-    }
 
     public string? Message;
     [SupplyParameterFromQuery(Name = "id")]

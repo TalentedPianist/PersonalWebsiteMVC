@@ -16,6 +16,7 @@ using Blazorise;
 using Blazorise.Captcha.ReCaptcha;
 using Blazorise.Bootstrap5;
 using Blazorise.Icons.FontAwesome;
+using PersonalWebsiteMVC.Components;
 
 
 
@@ -199,10 +200,6 @@ try
 
   
 
-    builder.Services.AddMudServices();
-
-  
-
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
         .Get<MailSettings>();
@@ -250,10 +247,6 @@ try
     app.UseSession();
 
 
-
-
-    app.UseRouting();
-
     app.MapAreaControllerRoute(
         name: "Admin",
         areaName: "Admin",
@@ -269,9 +262,8 @@ try
         areaName: "Photos",
         pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapControllers();
-    app.MapRazorPages();
-    app.MapBlazorHub();
+    //app.MapControllers();
+
 
     app.UseRouting();
     app.UseAuthentication();
@@ -289,8 +281,8 @@ try
 
 
 
-    // app.MapRazorComponents<App>()
-    //     .AddInteractiveServerRenderMode();
+    app.MapRazorComponents<App>()
+        .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
 

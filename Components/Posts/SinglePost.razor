@@ -14,7 +14,7 @@
     {
         var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
         <div id="SinglePost">
-            <NavLink href="/">Back</NavLink>
+            <NavLink href="#Blog">Back</NavLink>
             <h1>@post!.PostTitle</h1>
             <p>@((MarkupString)post.PostContent!)</p>
 

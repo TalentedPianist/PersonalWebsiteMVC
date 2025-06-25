@@ -289,7 +289,7 @@ form {
     }
 
     button {
-        align-self: flex-start;
+        align-self: flex-start !important;
     }
 }
 
@@ -305,6 +305,10 @@ form {
     margin-bottom: 1em;
     border-bottom: 1px solid black;
     font-size: large;
+
+    button { 
+        align-self: flex-start !important;
+    }
 
     @media only screen and (min-width: 600px) { 
         padding-top: 0; 

@@ -259,7 +259,7 @@ form br {
   margin-bottom: 1em;
 }
 #Blog button {
-  align-self: flex-start;
+  align-self: flex-start !important;
 }
 
 #PostContent {
@@ -274,6 +274,9 @@ form br {
   margin-bottom: 1em;
   border-bottom: 1px solid black;
   font-size: large;
+}
+#PostContent button {
+  align-self: flex-start !important;
 }
 @media only screen and (min-width: 600px) {
   #PostContent {
