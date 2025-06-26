@@ -12,6 +12,7 @@ using ServiceStack.Text;
 using GoogleCaptchaComponent.Configuration;
 using PersonalWebsiteMVC.Components;
 using GoogleCaptchaComponent;
+using MudBlazor.Services;
 
 
 
@@ -192,7 +193,7 @@ try
         
     });
 
-  
+    builder.Services.AddMudServices();
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
