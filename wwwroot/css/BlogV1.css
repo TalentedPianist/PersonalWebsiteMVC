@@ -542,18 +542,21 @@ main {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 5em !important;
+  gap: 3em !important;
   position: relative;
   z-index: 2000 !important;
   list-style-type: none;
   justify-content: center;
   align-items: center;
+  padding-left: 0 !important;
+  height: 100vh !important;
 }
 .mobileNav a {
   position: relative;
   z-index: 10000 !important;
   color: white;
   font-size: xx-large;
+  text-decoration: none !important;
 }
 
 .sticky {
@@ -627,4 +630,8 @@ footer {
 #Sidebar section {
   width: revert;
   min-width: revert !important;
+}
+
+.modal-header i {
+  display: none !important;
 }/*# sourceMappingURL=BlogV1.css.map */

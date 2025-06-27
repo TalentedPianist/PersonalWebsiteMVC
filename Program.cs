@@ -13,6 +13,8 @@ using GoogleCaptchaComponent.Configuration;
 using PersonalWebsiteMVC.Components;
 using GoogleCaptchaComponent;
 using MudBlazor.Services;
+using CurrentDevice;
+using Blazored.Modal;
 
 
 
@@ -193,7 +195,8 @@ try
         
     });
 
-    builder.Services.AddMudServices();
+    builder.Services.AddCurrentDeviceService();
+    builder.Services.AddBlazorBootstrap();
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")

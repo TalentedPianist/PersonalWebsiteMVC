@@ -1,7 +1,7 @@
 @inject IJSRuntime JS
 
 
-<a href="#" @onclick="Open">
+<a href="#" @onclick="OnShowModalClick">
     <svg class="menuIcon" stroke-width="1.5" viewBox="0 0 24 24" fill="#FFFF00" xmlns="http://www.w3.org/2000/svg">
         <path d="M3 5H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
         <path d="M3 12H21" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" />
@@ -9,22 +9,32 @@
     </svg>
 </a>
 
+<Modal @ref="modal" UseStaticBackdrop="true" CloseOnEscape="true">
+     <BodyTemplate>
+        <div class="mobileNav">
+        <ul>
+            <li><NavLink href="" @onclick="OnHideModalClick"><span class="closeIcon">&times;</span></NavLink></li>
+            <li><NavLink href="#Home">Home</NavLink></li>
+            <li><NavLink href="#About">About</NavLink></li>
+            <li><NavLink href="#Blog">Blog</NavLink></li>
+            <li><NavLink href="#Contact">Contact</NavLink></li>
+        </ul>
+        </div>
+    </BodyTemplate>
+</Modal>
 
 
 @code {
-    private bool _visible;
+    private Modal modal;
 
-    private void Open() => _visible = true;
-    private void Close() => _visible = false;
-
-    protected override async Task OnAfterRenderAsync(bool firstRender)
+    public async Task OnShowModalClick()
     {
-        if (firstRender)
-        {
-            await JS.InvokeVoidAsync("scrollToHash");
-        }
-
+        await modal?.ShowAsync();
     }
 
-    
+    public async Task OnHideModalClick()
+    {
+        await modal?.HideAsync();
+    } 
 }
+
