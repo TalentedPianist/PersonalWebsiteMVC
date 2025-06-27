@@ -9,16 +9,26 @@
     </svg>
 </a>
 
-<Modal @ref="modal" UseStaticBackdrop="true" CloseOnEscape="true">
-     <BodyTemplate>
+<Modal @ref="modal" UseStaticBackdrop="true" CloseOnEscape="true" Id="myModal">
+    <BodyTemplate>
         <div class="mobileNav">
-        <ul>
-            <li><NavLink href="" @onclick="OnHideModalClick"><span class="closeIcon">&times;</span></NavLink></li>
-            <li><NavLink href="#Home">Home</NavLink></li>
-            <li><NavLink href="#About">About</NavLink></li>
-            <li><NavLink href="#Blog">Blog</NavLink></li>
-            <li><NavLink href="#Contact">Contact</NavLink></li>
-        </ul>
+            <ul>
+                <li>
+                    <NavLink href="" @onclick="OnHideModalClick"><span class="closeIcon">&times;</span></NavLink>
+                </li>
+                <li>
+                    <NavLink href="#Home" @onclick="(() => HandleNav(Home))">Home</NavLink>
+                </li>
+                <li>
+                    <NavLink href="#About" @onclick="(() => HandleNav(About))">About</NavLink>
+                </li>
+                <li>
+                    <NavLink href="#Blog" @onclick="(() => HandleNav(Blog))">Blog</NavLink>
+                </li>
+                <li>
+                    <NavLink href="#Contact" @onclick="(() => HandleNav(Contact))">Contact</NavLink>
+                </li>
+            </ul>
         </div>
     </BodyTemplate>
 </Modal>
@@ -26,6 +36,11 @@
 
 @code {
     private Modal modal;
+
+    public string Home { get; set; } = "Home";
+    public string About { get; set; } = "About";
+    public string Blog { get; set; } = "Blog";
+    public string Contact { get; set; } = "Contact";
 
     public async Task OnShowModalClick()
     {
@@ -35,6 +50,18 @@
     public async Task OnHideModalClick()
     {
         await modal?.HideAsync();
-    } 
-}
+    }
 
+    public async Task HandleNav(string name)
+    {
+        await OnHideModalClick();
+        try
+        {
+            await JS.InvokeAsync<string>("ScrollIntoView", name);
+        }
+        catch (JSException ex)
+        {
+            Console.WriteLine(ex.Message);
+        }
+    }
+}
