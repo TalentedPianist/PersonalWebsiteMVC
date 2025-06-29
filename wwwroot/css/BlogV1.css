@@ -373,11 +373,7 @@ form br {
 }
 
 .modal-content {
-  background-color: rgba(0, 0, 0, 0.6) !important;
-  align-items: center !important;
-  justify-content: center !important;
-  margin: 0 !important;
-  padding: 0 !important;
+  background-color: transparent !important;
 }
 
 .modal-header {

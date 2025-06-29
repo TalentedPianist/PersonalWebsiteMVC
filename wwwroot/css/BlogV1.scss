@@ -422,14 +422,10 @@ form {
     min-height: 100px;
 }
 
-.modal-content { 
-    background-color: rgba(0,0,0,0.6) !important;
-    align-items: center !important;
-    justify-content: center !important;
-    margin: 0 !important;
-    padding: 0 !important;
-}
 
+.modal-content { 
+    background-color: transparent !important;
+}
 
 
 .modal-header { 
