@@ -75,6 +75,7 @@ form br {
 }
 #Home h1 {
   font-size: 38pt !important;
+  margin-bottom: 0 !important;
 }
 #Home h2 {
   font-size: 30pt !important;
@@ -228,7 +229,7 @@ form br {
 #Blog:after {
   content: ".";
   position: absolute;
-  bottom: 0;
+  bottom: -1px;
   height: 100px;
   width: 100vw;
   background-color: lightgreen;
@@ -260,6 +261,9 @@ form br {
 }
 #Blog button {
   align-self: flex-start !important;
+}
+#Blog svg {
+  margin-bottom: -1px;
 }
 
 #PostContent {

@@ -84,6 +84,7 @@ form {
 
     h1 { 
         font-size: 38pt !important; 
+        margin-bottom: 0 !important;
     }
 
     h2 { 
@@ -253,7 +254,7 @@ form {
 
         content: ".";
         position: absolute;
-        bottom: 0;
+        bottom: -1px;
         height: 100px;
         width: 100vw;
         background-color: lightgreen;
@@ -290,6 +291,10 @@ form {
 
     button {
         align-self: flex-start !important;
+    }
+
+    svg { 
+        margin-bottom: -1px;
     }
 }
 
