@@ -201,6 +201,7 @@ form br {
   height: 100%;
   color: black !important;
   position: relative;
+  overflow: hidden;
 }
 #Blog h1 {
   padding-left: 16px;
@@ -227,7 +228,7 @@ form br {
   }
 }
 #Blog:after {
-  content: ".";
+  content: "";
   position: absolute;
   bottom: -1px;
   height: 100px;
@@ -263,7 +264,7 @@ form br {
   align-self: flex-start !important;
 }
 #Blog svg {
-  margin-bottom: -1px;
+  display: block;
 }
 
 #PostContent {
@@ -344,7 +345,6 @@ form br {
   display: flex;
   flex-direction: column;
   background-color: lightgreen;
-  padding-top: 4em;
   padding-left: 1em;
   padding-right: 1em;
   height: 100vh;
@@ -358,18 +358,6 @@ form br {
 #Contact section p {
   font-size: large !important;
   padding-right: 2em;
-}
-#Contact section br {
-  /* Hack for getting rid of the strange br element that appeared above the button */
-  display: none !important;
-}
-#Contact svg:after {
-  position: absolute;
-  bottom: 0;
-  background-color: yellow;
-  content: ".";
-  width: 100vw;
-  z-index: 1000;
 }
 
 .ck-editor__editable {

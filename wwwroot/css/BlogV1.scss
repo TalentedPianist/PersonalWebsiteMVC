@@ -224,6 +224,7 @@ form {
     height: 100%;
     color: black !important;
     position: relative;
+    overflow: hidden;
 
     h1 {
         padding-left: 16px;
@@ -252,7 +253,7 @@ form {
 
     &:after {
 
-        content: ".";
+        content: "";
         position: absolute;
         bottom: -1px;
         height: 100px;
@@ -294,7 +295,7 @@ form {
     }
 
     svg { 
-        margin-bottom: -1px;
+        display: block;
     }
 }
 
@@ -385,7 +386,7 @@ form {
         display: flex;
         flex-direction: column;
         background-color: lightgreen;
-        padding-top: 4em;
+    
         padding-left: 1em;
         padding-right: 1em;
         height: 100vh;
@@ -403,23 +404,10 @@ form {
             padding-right: 2em;
         }
 
-        br { 
-            /* Hack for getting rid of the strange br element that appeared above the button */
-            display: none !important;
-        }
+       
     }
 
-    svg {
-
-        &:after {
-            position: absolute;
-            bottom: 0;
-            background-color: yellow;
-            content: ".";
-            width: 100vw;
-            z-index: 1000;
-        }
-    }
+   
 
 }
 
