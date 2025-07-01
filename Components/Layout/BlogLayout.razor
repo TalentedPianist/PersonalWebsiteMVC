@@ -4,19 +4,33 @@
 @inject ICurrentDeviceService CurrentDeviceService
 
 
-@if (Mobile) 
+@if (Mobile)
 {
     <Mobile />
 }
 
-@if (Tablet) 
+@if (Tablet)
 {
-    <p>I am a tablet device.</p> 
+    <p>I am a tablet device.</p>
 }
 
-@if (Desktop) 
-{ 
-    <p>I am a desktop device.</p>
+@if (Desktop)
+{
+    <header>
+    </header>
+    
+        <section>
+            <article>
+                @Body
+            </article>
+            <article>
+                <Sidebar />
+            </article>
+        </section>
+    
+    <footer>
+        Copyright &copy; douglasmcgregor.co.uk 2025
+    </footer>
 }
 
 
@@ -31,7 +45,7 @@
     bool Desktop { get; set; }
     bool FireFoxOs { get; set; }
     bool FireFoxOsPhone { get; set; }
-    bool FireFoxOsTablet { get; set ;}
+    bool FireFoxOsTablet { get; set; }
     bool iOS { get; set; }
     bool iPad { get; set; }
     bool iPhone { get; set; }
@@ -53,9 +67,9 @@
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
-        if (firstRender)  
+        if (firstRender)
         {
-    
+
             UserAgent = await CurrentDeviceService.GetUserAgent();
             AndroidPhone = await CurrentDeviceService.AndroidPhone();
             AndroidTablet = await CurrentDeviceService.AndroidTablet();
@@ -83,6 +97,5 @@
             WindowsTablet = await CurrentDeviceService.WindowsTablet();
             StateHasChanged();
         }
-    } 
+    }
 }
-

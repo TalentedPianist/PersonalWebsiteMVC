@@ -132,17 +132,21 @@ form br {
 }
 @media only screen and (min-width: 767px) {
   #Home {
-    background-color: revert;
+    background-color: yellow;
     background-size: 100%;
     background-position: center;
-    width: revert;
-    padding-right: 5em;
+    width: 100vw;
+    padding-left: 0 !important;
+    color: black;
   }
   #Home h1 {
     font-size: 38pt !important;
   }
   #Home section {
     background-color: revert !important;
+  }
+  #Home p {
+    font-size: x-large;
   }
 }
 
@@ -471,6 +475,10 @@ nav a {
     font-size: large;
   }
 }
+.top-row, article {
+  padding-left: 0 !important;
+}
+
 main {
   background-color: #F2CB05;
   color: black;
@@ -492,10 +500,13 @@ main {
     flex: 1;
     gap: 1em;
     align-items: flex-start;
+    padding-left: 0 !important;
+  }
+  main section article {
+    width: 50%;
   }
   main section:first-child {
     width: 50%;
-    padding-left: 2em;
   }
   main section:first-child p {
     font-size: x-large;

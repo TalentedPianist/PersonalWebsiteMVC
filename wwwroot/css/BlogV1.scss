@@ -147,11 +147,12 @@ form {
     }
 
     @media only screen and (min-width: 767px) {
-        background-color: revert;
+        background-color: yellow;
         background-size: 100%;
         background-position: center;
-        width: revert;
-        padding-right: 5em;
+        width: 100vw;
+        padding-left: 0 !important;
+        color: black;
 
         h1 {
             font-size: 38pt !important;
@@ -159,6 +160,11 @@ form {
 
         section {
             background-color: revert !important;
+        }
+
+
+        p { 
+            font-size: x-large;
         }
     }
 }
@@ -536,6 +542,10 @@ nav {
     @media only screen and (min-width: 767px) {}
 }
 
+.top-row, article { 
+    padding-left: 0 !important;
+}
+
 main {
     background-color: #F2CB05;
     color: black;
@@ -550,16 +560,23 @@ main {
         padding-top: 2em;
         padding-bottom: 2em;
 
+        
+
         section {
             display: flex;
             flex-direction: column;
             flex: 1;
             gap: 1em;
             align-items: flex-start;
+            padding-left: 0 !important;
+
+            article { 
+                width: 50%;
+            }
 
             &:first-child {
                 width: 50%;
-                padding-left: 2em;
+               
 
                 p {
                     font-size: x-large;
@@ -575,6 +592,8 @@ main {
                 width: revert !important;
             }
         }
+
+       
     }
 }
 
