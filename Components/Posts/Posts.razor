@@ -41,12 +41,21 @@ else
     }
     else
     {
-        <div id="Blog">
-        
-                <Virtualize Items="Model" Context="item">
+        <div id="Blog" style="overflow-y: scroll">
+                <h1>Blog</h1>
+                <Virtualize ItemsProvider="LoadPosts" Context="item" ItemSize="1" OverscanCount="1">
+                    <ItemContent>
                     <section>
-                    @item.PostTitle
+                    <div id="PostContent">
+                    <h2>@item.PostTitle</h2>
+                    @{
+                        var post = Truncate (item.PostContent!, 150);
+                        @RemoveHTMLTags(post)
+                    }
+                    <Button Color="ButtonColor.Primary" @onclick="(() => ViewPost(item.PostID))">Read</Button>
+                    </div>
                     </section>
+                    </ItemContent>
                 </Virtualize>
             </div>
         
@@ -57,6 +66,7 @@ else
     public static string Truncate(string value, int maxChars)
     {
         return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "....";
+     
     }
 
     public static string RemoveHTMLTags(string html)
@@ -70,10 +80,15 @@ else
 
     public ICollection<PersonalWebsiteMVC.Models.Posts> Model { get; set; } = new List<PersonalWebsiteMVC.Models.Posts>();
 
-    protected override void OnParametersSet()
+    private async ValueTask<ItemsProviderResult<PersonalWebsiteMVC.Models.Posts>> LoadPosts(ItemsProviderRequest request)
     {
-        Model = _db.Posts.ToList();
+        await Task.Yield();
+        var numPosts = _db.Posts.Count();
+        var posts = _db.Posts.Skip(request.StartIndex).Take(numPosts);
+        return new ItemsProviderResult<PersonalWebsiteMVC.Models.Posts>(posts, _db.Posts.Count());
     }
+
+
 
     [SupplyParameterFromQuery(Name = "id")]
     public int Id { get; set; }
@@ -93,22 +108,6 @@ else
         await Task.CompletedTask;
     }
 
-    // Begin code for paging
-    [Parameter]
-    public int page { get; set; }
-    PagingInfo pagingInfo = new PagingInfo();
-    public void CreatePagingInfo() 
-    {
-        var AllPosts = Model;
-        int PageSize = 3;
-        pagingInfo = new PagingInfo();
-        page = page == 0 ? 1 : page;
-        pagingInfo.CurrentPage = page;
-        pagingInfo.TotalItems = AllPosts.Count();
-        pagingInfo.ItemsPerPage = PageSize;
-
-        var skip = PageSize * (Convert.ToInt32(page) - 1);
-    }
 
     void GoBack() 
     {

@@ -198,7 +198,7 @@ form br {
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100%;
+  height: 100vh;
   color: black !important;
   position: relative;
   overflow: hidden;
@@ -244,7 +244,7 @@ form br {
 #Blog section {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   background-color: #f2740f;
   position: relative;
 }
