@@ -27,6 +27,7 @@ figure {
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
 }
 #Photos section:nth-of-type(1) ul {
   display: flex;
@@ -34,6 +35,7 @@ figure {
   flex: 1;
   gap: 3em;
   list-style-type: none;
+  position: relative;
 }
 #Photos section:nth-of-type(2) {
   display: grid;
@@ -47,15 +49,15 @@ figure {
 }
 #Photos section:nth-of-type(2) div {
   position: absolute;
-  width: 100%;
   display: flex;
   background-color: rgba(0, 0, 0, 0.6);
-  color: white;
-  z-index: 100000 !important;
+  color: white !important;
+  z-index: 300000 !important;
   flex-direction: column;
   flex: 1;
   align-items: center;
   gap: 3em;
+  cursor: default;
 }
 #Photos section:nth-of-type(2) img {
   position: relative;

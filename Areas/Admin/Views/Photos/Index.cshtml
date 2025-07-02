@@ -33,7 +33,7 @@
 	<section data-featherlight-gallery data-featherlight-filter="a">
         @foreach (FileInfo file in ViewBag.OnePageOfFiles)
         {
-            <a class="gallery" href="/Gallery/@ViewBag.Album/@file.Name" data-name="@file.Name"><img src="/Gallery/@ViewBag.AlbumName/@file.Name"></a>
+            <a class="gallery" href="/Gallery/@ViewBag.Album/@file.Name" data-name="@file.Name"><img data-name="@file.Name" src="/Gallery/@ViewBag.AlbumName/@file.Name"></a>
         }
         
     </section>
@@ -77,6 +77,25 @@
 			<script>
 
         $(function () {
+            // Begin code to show checkboxes on hover
+            $("#Photos img").each(function(index, img) {
+                let name = $(img).data('name');
+                let details = $(`
+                <div>
+                    <ul>
+                        <li>${name}</li>
+                    </ul>
+                </div>
+                `);
+                $(img).on('mouseenter', function(e) {
+                    $(details).insertBefore(img);
+                });
+                $(img).on('mouseleave', function(e) { 
+                    $(details).remove();
+                });
+            });
+            // End code to show checkboxes on hover
+
             $("a.gallery").featherlightGallery({
                 beforeOpen: function () {
                     return true;
@@ -156,6 +175,7 @@
             // Begin select all checkboxes code
             document.querySelector("#toggleAll").addEventListener('click', function (e) {
                 e.preventDefault();
+            
                 cb = document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll('input[type="checkbox"]');
                 cb.forEach(function (e) {
                     e.checked = true;
