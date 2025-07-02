@@ -1,35 +1,39 @@
 
 
 
-window.blazorHelpers = { 
-    scrollToFragment: (elementId) => { 
+window.blazorHelpers = {
+    scrollToFragment: (elementId) => {
         var element = document.getElementById(elementId);
 
-        if (element) { 
-            element.scrollIntoView({ 
+        if (element) {
+            element.scrollIntoView({
                 behavior: 'smooth'
             });
         }
     }
 };
 
-window.goBack = () => { 
+window.goBack = () => {
     return history.back();
 }
 
 
-//Sticky header
-$(window).on('scroll', function () {
-    if ($(this).scrollTop() > 100) { 
-        $('header').addClass('sticky');
-        $('header').appendTo('body');
-    } else {
-        
-    }    
-});
+//Sticky header - needs a media query in JS else it will mess up the desktop view!!
+const mediaQuery = window.matchMedia('(max-width: 600px)');
+if (mediaQuery.matches) {
+    $(window).on('scroll', function () {
+
+        if ($(this).scrollTop() > 100) {
+            $('header').addClass('sticky');
+            $('header').appendTo('body');
+        } else {
+
+        }
+    });
+}
 
 window.ScrollToView = (name) => {
-  
+
     $('html, body').animate({
         scrollTop: $("#" + name).offset().top
     }, 200);

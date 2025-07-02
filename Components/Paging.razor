@@ -1,6 +1,8 @@
 @using Microsoft.AspNetCore.Mvc.Rendering
 @using PersonalWebsiteMVC.Models
 
+<p class="text-xl">You are on page @PI.CurrentPage of @PI.TotalPages.</p>
+
 <div class="pagingDiv">@((MarkupString)CreatePaging())</div>
 
 @code {
@@ -26,9 +28,9 @@
             if (anchorInnerHtml == "...")
                 tag.Attributes["href"] = "#";
             else if (i == 1)
-                tag.Attributes["href"] = "/posts";
+                tag.Attributes["href"] = "/blog";
             else 
-                tag.Attributes["href"] = "/posts/" + i;
+                tag.Attributes["href"] = "/blog/" + i;
 
             if (PageClassesEnabled)
             { 

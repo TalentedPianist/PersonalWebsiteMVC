@@ -255,10 +255,10 @@ try
         areaName: "Posts",
         pattern: "Posts/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapAreaControllerRoute(
-        name: "Photos",
-        areaName: "Photos",
-        pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
+    // app.MapAreaControllerRoute(
+    //     name: "Photos",
+    //     areaName: "Photos",
+    //     pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
     //app.MapControllers();
 

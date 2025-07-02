@@ -35,21 +35,26 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [Route("Photos/Index/{id}")] // To get a route working properly without the querystring, you need to have the id parameter in the route as above.
         public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         { // X.PagedList is now working after adding the FromQuery attribute forcing it to use the pageNumber querystring.
-            int id = Convert.ToInt32(RouteData.Values["id"]);
-            string name = _http.HttpContext!.Request.Query["name"]!;
-            string path = Path.Combine(Host.ContentRootPath, "Gallery", name);
-            DirectoryInfo di = new DirectoryInfo(path);
+            
+                int id = Convert.ToInt32(RouteData.Values["id"]);
+                
+                string path = Path.Combine(Host.ContentRootPath, "Gallery", HttpContext.Request.Query["album"]!);
+            
+                DirectoryInfo di = new DirectoryInfo(path);
 
-            StringBuilder sb = new StringBuilder();
-            ViewBag.Photos = di.GetFiles("*.jpeg");
-            ViewBag.AlbumName = name;
+                StringBuilder sb = new StringBuilder();
+                ViewBag.Photos = di.GetFiles("*.jpeg");
+            ViewBag.AlbumName = HttpContext.Request.Query["album"];
+            
 
-            var pageNumber = page ?? 1;
-            var onePageOfFiles = di.GetFiles("*.jpeg").ToPagedList(pageNumber, 10);
-            ViewBag.OnePageOfFiles = onePageOfFiles;
+                var pageNumber = page ?? 1;
+                var onePageOfFiles = di.GetFiles("*.jpeg").ToPagedList(pageNumber, 10);
+                ViewBag.OnePageOfFiles = onePageOfFiles;
 
-            TempData["Message"] = sb.ToString();
-            return View();
+                TempData["Message"] = sb.ToString();
+                return View();
+            
+            
         }
 
 

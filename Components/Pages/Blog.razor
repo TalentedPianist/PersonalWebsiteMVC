@@ -1,32 +1,28 @@
-
+@page "/blog"
+@page "/blog/{Page:int}"
 @using Microsoft.AspNetCore.WebUtilities
-@using PersonalWebsiteMVC.Models
 @using System.Text.RegularExpressions
+@using PersonalWebsiteMVC.Models
 @inject ApplicationDbContext _db
 @inject NavigationManager nav
 
-
-@if (Model.Count() == 0) 
+@if (Model.Count() == 0)
 {
-    
-        <h1 class="text-4xl text-black">Blog</h1>
-        <p>No posts have been found just now.  Please check back later.</p>
-
 }
 else 
 {
-    if (Id > 0) 
+    if (Id > 0)
     {
         var uri = nav.ToAbsoluteUri(nav.Uri);
-        if (uri.Fragment.Contains("Comments"))
-        {
+        if (uri.Fragment.Contains("Comments")){
         }
         else
         {
             var post = _db.Posts.Where(p => p.PostID == Id).FirstOrDefault();
             <div id="SinglePost">
+                <button onclick="history.back()">Go Back</button>
                 <h1>@post!.PostTitle</h1>
-                <p>@((MarkupString)post.PostContent!)</p>
+                @((MarkupString)post.PostContent!)
 
                 <BlogComments PostID="@post.PostID" />
             </div>
@@ -34,32 +30,27 @@ else
     }
     else 
     {
-    
-            <h1>Blog</h1>
+        <h1>Blog</h1>
 
-            <section>
-                @foreach (var item in Model)
-                {
-                    var result = Truncate(item.PostContent!, 150);
+        <section>
+            @foreach (var item in Model)
+            {
+                var result = Truncate(item.PostContent!, 150);
 
-                    <section>
+                <section>
+                    @if (item.FeaturedImage != null)
+                    {
+                    }
 
-                        @if (item.FeaturedImage != null)
-                        {
-                            // Media card header image here
-                        }
-
-                        <div id="PostContent">
-                        
-                            <h2>@item.PostTitle</h2>
-                            @RemoveHTMLTags(result)
-                            
-                            
-                        </div>
-                    </section>
-                }
-            </section>
-        
+                    <div id="PostContent">
+                        <h2>@item.PostTitle</h2>
+                        @RemoveHTMLTags(result)
+                        <button type="button" class="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" @onclick="(() => ViewPost(item.PostID))">Read</button>
+                    </div>
+                </section>
+            }
+            <Paging PI="pagingInfo" PageClassesEnabled="true" PageClass="Paging" PageClassSelected="active" />
+        </section>
     }
 }
 
@@ -69,21 +60,23 @@ else
         return value.Length <= maxChars ? value : value.Substring(0, maxChars) + "....";
     }
 
-    public static string RemoveHTMLTags(string html) 
+    public static string RemoveHTMLTags(string html)
     {
         return Regex.Replace(html, "<.*?>", string.Empty);
-    } 
+    }
+
+
 }
 
 
 @code {
-    [SupplyParameterFromQuery(Name="id")]
+    [SupplyParameterFromQuery(Name = "id")]
     public int Id { get; set; } = 0;
-
-    public IEnumerable<PersonalWebsiteMVC.Models.Posts> Model { get; set; } = Enumerable.Empty<PersonalWebsiteMVC.Models.Posts>();
-
     [Parameter]
     public int page { get; set; }
+
+    public IEnumerable<PersonalWebsiteMVC.Models.Posts> Model { get; set; } =
+    Enumerable.Empty<PersonalWebsiteMVC.Models.Posts>();
 
     PagingInfo pagingInfo = new PagingInfo();
 
@@ -96,7 +89,7 @@ else
     {
         var AllPosts = _db.Posts;
 
-        int PageSize = 3; 
+        int PageSize = 1;
         page = page == 0 ? 1 : page;
         pagingInfo.CurrentPage = page;
         pagingInfo.TotalItems = AllPosts.Count();

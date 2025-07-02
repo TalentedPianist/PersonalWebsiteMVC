@@ -9,7 +9,7 @@ html {
 }
 
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
 html, body { 
@@ -147,12 +147,12 @@ form {
     }
 
     @media only screen and (min-width: 767px) {
-        background-color: yellow;
+
         background-size: 100%;
         background-position: center;
-        width: 100vw;
         padding-left: 0 !important;
         color: black;
+        gap: 1em;
 
         h1 {
             font-size: 38pt !important;
@@ -311,6 +311,9 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
+    align-items: stretch;
+    width: 100%;
+    min-width: 100%;
     gap: 10px;
     padding-left: 1em;
     padding-top: 1em;
@@ -319,6 +322,7 @@ form {
     margin-bottom: 1em;
     border-bottom: 1px solid black;
     font-size: large;
+
 
     button { 
         align-self: flex-start !important;
@@ -334,7 +338,7 @@ form {
 
    
     @media only screen and (min-width: 767px) {
-        width: 80%;
+        
     }
 }
 
@@ -344,10 +348,15 @@ form {
     flex: 1;
     padding-left: 1em;
     padding-right: 1em;
+    padding-bottom: 2em;
     font-size: large;
     background-color: #f2740f;
     line-height: 2;
     
+    button { 
+        align-self: flex-start;
+        margin-bottom: 1em;
+    }
 
     p {
         font-size: 18pt !important;
@@ -412,10 +421,19 @@ form {
             padding-right: 2em;
         }
 
-       
+        @media only screen and (min-width: 600px) { 
+            background-color: revert;
+            height: 100%;
+            align-items: stretch;
+            overflow: visible;
+        }
     }
 
-   
+    @media only screen and (min-width: 767px) {
+        background-color: revert;
+        height: 100%;
+        width: 100%;
+    }
 
 }
 
@@ -470,11 +488,11 @@ header {
     @media only screen and (min-width: 600px) {
         display: flex;
         content: "";
-        height: 30vh;
+        height: 40vh;
         position: relative;
         align-items: center;
         justify-content: center;
-        background-image: url('/images/sunset-beach-large.jpg');
+        background-image: url('/images/nature-colourful.jpg');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -505,7 +523,7 @@ header {
 
 nav {
     ul {
-        background-color: #473959;
+        background-color: lightgreen;
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -516,7 +534,7 @@ nav {
     }
 
     a {
-        color: white;
+        color: black;
 
         @media only screen and (min-width: 767px) {
             font-size: xx-large !important;
@@ -547,20 +565,27 @@ nav {
 }
 
 main {
-    background-color: #F2CB05;
     color: black;
     display: flex;
     flex-direction: column;
     flex: 1;
-    flex-grow: 1;
     height: 100%;
+    background-color: #D99C2B;
+    clear: both !important;
+    padding-left: 2em;
+    padding-right: 2em;
 
-    @media only screen and (min-width: 768px) {
-        flex-direction: row;
+    @media only screen and (min-width: 767px) {
         padding-top: 2em;
         padding-bottom: 2em;
-
         
+        h1 { 
+            font-size: 48pt !important;
+        }
+
+        h2 { 
+            font-size: 38pt !important;
+        }
 
         section {
             display: flex;
@@ -568,29 +593,13 @@ main {
             flex: 1;
             gap: 1em;
             align-items: flex-start;
-            padding-left: 0 !important;
+            width: 100%;
 
             article { 
                 width: 50%;
             }
 
-            &:first-child {
-                width: 50%;
-               
 
-                p {
-                    font-size: x-large;
-                }
-
-                h1 {
-                    color: black;
-                    font-size: 38pt !important;
-                }
-            }
-
-            &:last-child {
-                width: revert !important;
-            }
         }
 
        
@@ -672,8 +681,11 @@ footer {
     clear: both;
 
     @media only screen and (min-width: 768px) {
-        font-size: medium;
-        background-color: #f28729;
+        font-size: x-large;
+        background-color: #403E2A;
+        color: white;
+        padding-top: 1em;
+        padding-bottom: 1em;
     }
 }
 
@@ -681,20 +693,25 @@ footer {
     display: flex;
     flex-direction: column;
     flex: 1;
-    justify-content: center;
-    gap: 2em;
+    gap: 1em;
+
     width: 100%;
 
     p {
         font-size: large;
     }
 
+    svg { 
+        width: 10%;
+    }
+
     @media only screen and (min-width: 600px) {
         flex-direction: row;
         flex: 0;
         align-items: flex-start;
+        align-self: flex-start;
         background-color: revert;
-        justify-content: space-between;
+        
 
     }
 
@@ -724,4 +741,18 @@ footer {
     i { 
         display: none !important;
     }
+}
+
+.pagingDiv { 
+    display: flex; 
+    flex-direction: row; 
+    flex: 1; 
+    gap: 2em;
+}
+
+.Paging { 
+    background-color: yellow; 
+    padding: 10px 10px 10px 10px;
+    font-size: x-large;
+    border: 1px solid black;
 }

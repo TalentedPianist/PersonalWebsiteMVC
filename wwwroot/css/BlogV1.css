@@ -8,7 +8,7 @@ html {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
 html, body {
@@ -132,12 +132,11 @@ form br {
 }
 @media only screen and (min-width: 767px) {
   #Home {
-    background-color: yellow;
     background-size: 100%;
     background-position: center;
-    width: 100vw;
     padding-left: 0 !important;
     color: black;
+    gap: 1em;
   }
   #Home h1 {
     font-size: 38pt !important;
@@ -275,6 +274,9 @@ form br {
   display: flex;
   flex-direction: column;
   flex: 1;
+  align-items: stretch;
+  width: 100%;
+  min-width: 100%;
   gap: 10px;
   padding-left: 1em;
   padding-top: 1em;
@@ -296,21 +298,20 @@ form br {
     gap: 1em;
   }
 }
-@media only screen and (min-width: 767px) {
-  #PostContent {
-    width: 80%;
-  }
-}
-
 #SinglePost {
   display: flex;
   flex-direction: column;
   flex: 1;
   padding-left: 1em;
   padding-right: 1em;
+  padding-bottom: 2em;
   font-size: large;
   background-color: #f2740f;
   line-height: 2;
+}
+#SinglePost button {
+  align-self: flex-start;
+  margin-bottom: 1em;
 }
 #SinglePost p {
   font-size: 18pt !important;
@@ -363,6 +364,21 @@ form br {
   font-size: large !important;
   padding-right: 2em;
 }
+@media only screen and (min-width: 600px) {
+  #Contact section {
+    background-color: revert;
+    height: 100%;
+    align-items: stretch;
+    overflow: visible;
+  }
+}
+@media only screen and (min-width: 767px) {
+  #Contact {
+    background-color: revert;
+    height: 100%;
+    width: 100%;
+  }
+}
 
 .ck-editor__editable {
   min-height: 100px;
@@ -412,11 +428,11 @@ header {
   header {
     display: flex;
     content: "";
-    height: 30vh;
+    height: 40vh;
     position: relative;
     align-items: center;
     justify-content: center;
-    background-image: url("/images/sunset-beach-large.jpg");
+    background-image: url("/images/nature-colourful.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -443,7 +459,7 @@ header {
 }
 
 nav ul {
-  background-color: #473959;
+  background-color: lightgreen;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -454,7 +470,7 @@ nav ul {
   }
 }
 nav a {
-  color: white;
+  color: black;
 }
 @media only screen and (min-width: 767px) {
   nav a {
@@ -480,19 +496,26 @@ nav a {
 }
 
 main {
-  background-color: #F2CB05;
   color: black;
   display: flex;
   flex-direction: column;
   flex: 1;
-  flex-grow: 1;
   height: 100%;
+  background-color: #D99C2B;
+  clear: both !important;
+  padding-left: 2em;
+  padding-right: 2em;
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 767px) {
   main {
-    flex-direction: row;
     padding-top: 2em;
     padding-bottom: 2em;
+  }
+  main h1 {
+    font-size: 48pt !important;
+  }
+  main h2 {
+    font-size: 38pt !important;
   }
   main section {
     display: flex;
@@ -500,23 +523,10 @@ main {
     flex: 1;
     gap: 1em;
     align-items: flex-start;
-    padding-left: 0 !important;
+    width: 100%;
   }
   main section article {
     width: 50%;
-  }
-  main section:first-child {
-    width: 50%;
-  }
-  main section:first-child p {
-    font-size: x-large;
-  }
-  main section:first-child h1 {
-    color: black;
-    font-size: 38pt !important;
-  }
-  main section:last-child {
-    width: revert !important;
   }
 }
 
@@ -589,8 +599,11 @@ footer {
 }
 @media only screen and (min-width: 768px) {
   footer {
-    font-size: medium;
-    background-color: #f28729;
+    font-size: x-large;
+    background-color: #403E2A;
+    color: white;
+    padding-top: 1em;
+    padding-bottom: 1em;
   }
 }
 
@@ -598,20 +611,22 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 1;
-  justify-content: center;
-  gap: 2em;
+  gap: 1em;
   width: 100%;
 }
 .socialMedia p {
   font-size: large;
+}
+.socialMedia svg {
+  width: 10%;
 }
 @media only screen and (min-width: 600px) {
   .socialMedia {
     flex-direction: row;
     flex: 0;
     align-items: flex-start;
+    align-self: flex-start;
     background-color: revert;
-    justify-content: space-between;
   }
 }
 
@@ -633,4 +648,18 @@ footer {
 
 .modal-header i {
   display: none !important;
+}
+
+.pagingDiv {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  gap: 2em;
+}
+
+.Paging {
+  background-color: yellow;
+  padding: 10px 10px 10px 10px;
+  font-size: x-large;
+  border: 1px solid black;
 }/*# sourceMappingURL=BlogV1.css.map */
