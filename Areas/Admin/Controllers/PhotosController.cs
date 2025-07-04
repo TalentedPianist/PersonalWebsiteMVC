@@ -33,28 +33,37 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [Route("Photos/Index")]
         [Route("Photos/Index/{id}")] // To get a route working properly without the querystring, you need to have the id parameter in the route as above.
-        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
+        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
         { // X.PagedList is now working after adding the FromQuery attribute forcing it to use the pageNumber querystring.
-            
-                int id = Convert.ToInt32(RouteData.Values["id"]);
-                
-                string path = Path.Combine(Host.ContentRootPath, "Gallery", HttpContext.Request.Query["album"]!);
-            
-                DirectoryInfo di = new DirectoryInfo(path);
 
-                StringBuilder sb = new StringBuilder();
-                ViewBag.Photos = di.GetFiles("*.jpeg");
-            ViewBag.AlbumName = HttpContext.Request.Query["album"];
-            
+            int id = Convert.ToInt32(RouteData.Values["id"]);
 
-                var pageNumber = page ?? 1;
-                var onePageOfFiles = di.GetFiles("*.jpeg").ToPagedList(pageNumber, 10);
-                ViewBag.OnePageOfFiles = onePageOfFiles;
+            string path = Path.Combine(Host.ContentRootPath, "Gallery", HttpContext.Request.Query["name"]!);
 
-                TempData["Message"] = sb.ToString();
-                return View();
-            
-            
+            DirectoryInfo di = new DirectoryInfo(path);
+
+            StringBuilder sb = new StringBuilder();
+            ViewBag.Photos = di.GetFiles("*.jpeg");
+            ViewBag.AlbumName = HttpContext.Request.Query["name"];
+
+
+            var pageNumber = page ?? 1;
+            var onePageOfFiles = di.GetFiles("*.jpeg").ToPagedList(pageNumber, 10);
+            ViewBag.OnePageOfFiles = onePageOfFiles;
+
+            var albumName = _http.HttpContext!.Request.Query["name"];
+            var albumId = _db.Albums.Where(a => a.Name!.Contains(albumName!)).FirstOrDefault();
+            if (albumId is not null)
+            {
+                ViewBag.AlbumID = albumId.AlbumID;
+            }
+            else
+            {
+                ViewBag.AlbumID = 0;
+            }
+            return View();
+
+
         }
 
 
@@ -140,12 +149,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         [HttpPost]
         public IActionResult AddMultipleToDb([FromBody] List<Models.Photos> data)
         {
-            // Here we are just deleting the photos from the database and ajax success function handles response on client side to refresh page.
-
             _db.Photos.AddRange(data);
             _db.SaveChanges();
             return Ok(data);
-
         }
 
         [Route("/Photos/RemoveMultipleFromDb")]
@@ -159,21 +165,26 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         }
 
+
         [HttpPost]
-        public IActionResult GetId([FromForm] string name)
+        [Route("/Photos/GetId")]
+        public IActionResult GetId(List<string> name)
         {
-            if (name != null)
+            try
             {
-                var id = _db.Photos.Where(p => p.Name == name).FirstOrDefault()!.PhotoID;
-                return Ok(id);
-            }
-            else
-            {
-                return Ok(name);
-            }
 
+                foreach (var item in name)
+                {
+                    var exists = _db.Photos.Where(p => p.Name == item).FirstOrDefault();
+                    return Ok(exists!.PhotoID);
+                }
+                return Ok(0);
+            }
+            catch (NullReferenceException)
+            {
+                return Ok(0);
+            }
         }
-
 
         // Resuming normal functions for update, details and delete.
         public IActionResult Update(int id)

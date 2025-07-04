@@ -12,53 +12,66 @@
 @using X.PagedList
 @using X.Web.PagedList
 @using Microsoft.AspNetCore.Routing
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor http
 @model String
+
 
 <h1 class="bg bg-info p-1 text-white">Photos for @ViewBag.AlbumName</h1>
 
-@Html.Raw(TempData["Message"])
+@TempData["Message"]
+@ViewBag.AlbumID
 
 
 
 <div id="Photos">
 
-	<section>
-		<ul>
-			<li><a href="#" id="toggleAll">Select All</a></li>
-			<li><a href="#" id="addToDb">Add to Database</a></li>
-			<li><a href="#" id="delFromDb">Delete from Database</a></li>
-		</ul>
-	</section>
+    <section>
+        <ul>
+            <li><a href="#" id="toggleAll">Select All</a></li>
+            <li><a href="#" id="addToDb">Add to Database</a></li>
+            <li><a href="#" id="delFromDb">Delete from Database</a></li>
+        </ul>
+    </section>
 
-	<section data-featherlight-gallery data-featherlight-filter="a">
+    <section data-featherlight-gallery data-featherlight-filter="a">
         @foreach (FileInfo file in ViewBag.OnePageOfFiles)
         {
-            <a class="gallery" href="/Gallery/@ViewBag.Album/@file.Name" data-name="@file.Name"><img data-name="@file.Name" src="/Gallery/@ViewBag.AlbumName/@file.Name"></a>
+            <figure>
+                <a class="gallery" href="/Gallery/@ViewBag.Album/@file.Name" data-name="@file.Name"><img
+                        data-name="@file.Name" src="/Gallery/@ViewBag.AlbumName/@file.Name"></a>
+                <figcaption>
+                    @file.Name
+                    <input type="checkbox" value="@file.Name">
+                </figcaption>
+            </figure>
         }
-        
+
     </section>
-	<section>
-		@if (string.IsNullOrEmpty(Context.Request.Query["album"]))
-		{
-			@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", name = Context.Request.Query["name"] }),
-						new PagedListRenderOptions
-						{
-							DisplayItemSliceAndTotal = true,
-							LiElementClasses = new string[] { "page-item" },
-							PageClasses = new String[] { "page-link" }
-						})
-		}
-		else
-		{
-			@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Admin", name = Context.Request.Query["name"] }),
-				new PagedListRenderOptions
-				{
-					DisplayItemSliceAndTotal = true,
-					LiElementClasses = new string[] { "page-item" },
-					PageClasses = new String[] { "page-link" }
-				})
-		}
-	</section>
+    <section>
+        @if (string.IsNullOrEmpty(Context.Request.Query["album"]))
+        {
+        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber
+                = page, area = "Admin", name = Context.Request.Query["name"] }),
+                new PagedListRenderOptions
+                {
+                    DisplayItemSliceAndTotal = true,
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new String[] { "page-link" }
+                })
+                }
+                else
+        {
+        @Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Photos", new { pageNumber
+                = page, area = "Admin", name = Context.Request.Query["name"] }),
+                new PagedListRenderOptions
+                {
+                    DisplayItemSliceAndTotal = true,
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new String[] { "page-link" }
+                })
+                }
+    </section>
 </div>
 
 
@@ -73,28 +86,11 @@
 }
 
 
-		@section Scripts {
-			<script>
+@section Scripts {
+    <script>
 
         $(function () {
-            // Begin code to show checkboxes on hover
-            $("#Photos img").each(function(index, img) {
-                let name = $(img).data('name');
-                let details = $(`
-                <div>
-                    <ul>
-                        <li>${name}</li>
-                    </ul>
-                </div>
-                `);
-                $(img).on('mouseenter', function(e) {
-                    $(details).insertBefore(img);
-                });
-                $(img).on('mouseleave', function(e) { 
-                    $(details).remove();
-                });
-            });
-            // End code to show checkboxes on hover
+            
 
             $("a.gallery").featherlightGallery({
                 beforeOpen: function () {
@@ -105,18 +101,18 @@
                     let name = $(lastCurrent).data('name');
                     let src = $(lastCurrent).find('img').attr('src');
                     this.$instance.find('.featherlight-content').html(`
-                        <header>
-                            <h1>${name}</h1>
-                            <a href="#">Edit</a>
-                            <a href="#" id="coverPhoto" data-name="${name}">Make Cover Photo</a>
-                            <a href="#" id="renamePhoto" data-name="${name}">Rename Photo</a>
-                        </header>
-                        <section>
-                            <img src="${src}" alt="${name}">
-                        </section>
-                        <footer>
-                        </footer>
-                    `);
+                            <header>
+                                <h1>${name}</h1>
+                                <a href="#">Edit</a>
+                                <a href="#" id="coverPhoto" data-name="${name}">Make Cover Photo</a>
+                                <a href="#" id="renamePhoto" data-name="${name}">Rename Photo</a>
+                            </header>
+                            <section>
+                                <img src="${src}" alt="${name}">
+                            </section>
+                            <footer>
+                            </footer>
+                        `);
 
                     this.$instance.find('featherlight-content').find('#renamePhoto').on('click', function (e) {
                         e.preventDefault();
@@ -141,7 +137,7 @@
                             cache: false,
                             success: function (message) {
                                 window.location.href = '/Admin/Gallery';
-                               
+
                             },
                             error: function (error) {
                                 console.log(error);
@@ -172,10 +168,27 @@
 
             // End select individual checkboxes code
 
+            function GetId(name) 
+            {
+                $.ajax({ 
+                    method: "POST", 
+                    url: "@Url.Action("GetId", "Photos")",
+                    data: { 'name': name },
+                    async: false, 
+                    cache: false,
+                    success: function(message) {
+                        console.log(message); 
+                    },
+                    error: function(error) { 
+                        console.log(error);
+                    }
+                });
+            }
+
             // Begin select all checkboxes code
             document.querySelector("#toggleAll").addEventListener('click', function (e) {
                 e.preventDefault();
-            
+
                 cb = document.querySelector("#Photos section:nth-of-type(2)").querySelectorAll('input[type="checkbox"]');
                 cb.forEach(function (e) {
                     e.checked = true;
@@ -183,34 +196,43 @@
                     let src = $(e).parent().parent().find('img').attr('src');
                     let myDate = moment(new Date()).format("YYYY-MM-DD HH:mm:ss");
 
-                    let isInDb = $.ajax({
-                        method: "POST", url: "@Url.Action("AjaxDbCheck", "Photos")", data: { 'name': e.value }, async: false
-                    }).responseText;
-                    //console.log(isInDb);
+                    $.ajax({
+                        type: "POST",
+                        url: "@Url.Action("AjaxDbCheck", "Photos")",
+                        data: { 'name': name },
+                        dataType: 'text',
+                        async: false,
+                        cache: false,
+                        success: function(message) { 
+                            if (message) {
+                                add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': name, 'ImageUrl': src, 'DateCreated': myDate }); 
+                            } 
+                        },
+                        error: function(error) { 
+                            console.log(error);
+                        }
+                    });
 
-                    if (!isInDb) {
-                        //console.log(e.value);
-
-                        $.ajax({
-                            method: "POST",
-                            url: "@Url.Action("GetId", "Photos")",
-                            data: { 'name': e.value },
-                            async: false,
-                            cache: false,
-                            success: function (message) {
-                                console.log(message);
-                                del.push({ 'PhotoID': message });
-                            },
-                            error: function (error) {
-                                console.log(error);
+                    
+                    $.ajax({ 
+                        type: 'POST', 
+                        url: "@Url.Action("GetId", "Photos")",
+                        data: { 'name': name },
+                        dataType: 'text', // This worked for passing simple text values.
+                        async: false,
+                        cache: false,
+                        success: function(message) {
+                            if (message === 0) {
+                                add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': name, 'ImageUrl': src, 'DateCreated': myDate }); 
+                            } else {
+                                del.push({ 'PhotoID': message }); 
                             }
-                        });
-                    } else {
-                        add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': e.value, 'ImageUrl': `${src}`, 'DateCreated': `${myDate}` });
-                    }
-
+                        },
+                        error: function(error) { 
+                            console.log(error);
+                        }
+                    });
                 });
-
             });
 
 
@@ -219,19 +241,16 @@
 
             $("#addToDb").on('click', function (e) {
                 e.preventDefault();
-
-
+                console.log(add);
                 $.ajax({
-                    type: "POST",
+                    method: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Photos")",
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-type": "application/json", 
                     },
                     data: JSON.stringify(add),
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        console.log(message);
+                    success: function (response) {
+                        console.log(response);
                     },
                     error: function (err) {
                         console.log(err);
@@ -241,16 +260,16 @@
 
             $("#delFromDb").on('click', function (e) {
                 e.preventDefault();
-                console.log(del);
+                //console.log(del);
                 $.ajax({
                     type: "POST",
                     url: "@Url.Action("RemoveMultipleFromDb", "Photos")",
-                    data: JSON.stringify(del),
-                    async: false,
-                    cache: false,
                     headers: {
                         'Content-Type': 'application/json'
                     },
+                    data: JSON.stringify(del),
+                    async: false,
+                    cache: false,
                     success: function (message) {
                         window.location.reload();
                     },
@@ -259,14 +278,7 @@
                     }
                 });
             });
-
-
-
-
         });
+    </script>
 
-
-
-			</script>
-
-		}
+}
