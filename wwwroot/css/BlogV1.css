@@ -11,7 +11,8 @@ body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
 
-html, body {
+html,
+body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
@@ -380,6 +381,26 @@ form br {
   }
 }
 
+#Albums {
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
+  position: relative;
+  width: 100%;
+}
+#Albums h1 {
+  font-size: 32pt !important;
+}
+
+#Photos {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: repeat(4, 1fr);
+  gap: 5em;
+  margin-top: 1em;
+}
+
 .ck-editor__editable {
   min-height: 100px;
 }
@@ -491,7 +512,8 @@ nav a {
     font-size: large;
   }
 }
-.top-row, article {
+.top-row,
+article {
   padding-left: 0 !important;
 }
 
@@ -512,10 +534,10 @@ main {
     padding-bottom: 2em;
   }
   main h1 {
-    font-size: 48pt !important;
+    font-size: 38pt !important;
   }
   main h2 {
-    font-size: 38pt !important;
+    font-size: 32pt !important;
   }
   main section {
     display: flex;

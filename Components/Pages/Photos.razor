@@ -1,5 +1,91 @@
 @page "/photos"
+@page "/photos/{Page:int}"
+@using Microsoft.AspNetCore.WebUtilities
+@using PersonalWebsiteMVC.Models
+@inject ApplicationDbContext _db
+@inject NavigationManager nav
 
 
-<h1>Gallery</h1>
 
+
+@if (Id > 0)
+{
+    var album = _db.Albums.Where(a => a.AlbumID == Id).FirstOrDefault();
+    <h1>@album!.Name</h1>
+
+    @if (Model is not null)
+    {
+        <div id="Photos">
+
+            @foreach (PersonalWebsiteMVC.Models.Photos photo in Model)
+            {
+                <img src="@photo.ImageUrl">
+            }
+
+        </div>
+    }
+}
+else
+{
+    if ((_db.Albums.Count() == 0) && (_db.Photos.Count() == 0))
+    {
+        <p>No albums have been found just now, please check back later.</p>
+    }
+    else
+    {
+        <div id="Albums">
+            @foreach (var item in _db.Albums)
+            {
+                if (item.CoverPhoto is not null)
+                {
+                    <figure>
+                        <img src="/Gallery/@item.Name/@item.CoverPhoto">
+                        <figcaption>
+                            <button @onclick="(() => ViewAlbum(item.AlbumID))">@item.Name</button>
+                        </figcaption>
+                    </figure>
+                }
+            }
+           
+        </div>
+         <Paging PI="pagingInfo" PageClassesEnabled="true" PageClass="Paging" PageClassSelected="active" />
+    }
+
+}
+
+@code {
+    [SupplyParameterFromQuery(Name = "id")]
+    public int Id { get; set; } = 0;
+
+    [Parameter]
+    public int page { get; set; }
+    public void ViewAlbum(int id)
+    {
+        var query = new Dictionary<string, string> { { "id", id.ToString() } };
+        nav.NavigateTo(QueryHelpers.AddQueryString(nav.Uri, query!));
+    }
+
+    public List<Models.Photos> Model { get; set; } = new();
+
+    PagingInfo pagingInfo = new PagingInfo();
+
+    protected override void OnParametersSet()
+    {
+        CreatePagingInfo();
+    }
+
+    public void CreatePagingInfo() 
+    {
+        var allPhotos = _db.Photos.Where(p => p.AlbumID == Id);
+
+        int PageSize = 1; 
+        page = page == 0 ? 1 : page;
+        pagingInfo.CurrentPage = page;
+        pagingInfo.TotalItems = allPhotos.Count();
+        pagingInfo.ItemsPerPage = PageSize;
+
+        var skip = PageSize * (Convert.ToInt32(page) - 1);
+        Model = allPhotos.Skip(skip).Take(PageSize).ToList();
+    }
+
+}

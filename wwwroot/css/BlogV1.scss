@@ -12,10 +12,11 @@ body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 
-html, body { 
+html,
+body {
     overflow-x: hidden;
-    margin: 0; 
-    padding: 0; 
+    margin: 0;
+    padding: 0;
 }
 
 img {
@@ -53,7 +54,7 @@ form {
         font-size: large;
     }
 
-    br { 
+    br {
         display: none;
     }
 }
@@ -82,12 +83,12 @@ form {
         margin: 0 auto;
     }
 
-    h1 { 
-        font-size: 38pt !important; 
+    h1 {
+        font-size: 38pt !important;
         margin-bottom: 0 !important;
     }
 
-    h2 { 
+    h2 {
         font-size: 30pt !important;
     }
 
@@ -163,7 +164,7 @@ form {
         }
 
 
-        p { 
+        p {
             font-size: x-large;
         }
     }
@@ -231,7 +232,7 @@ form {
     color: black !important;
     position: relative;
     overflow: hidden;
-  
+
 
     h1 {
         padding-left: 16px;
@@ -279,7 +280,7 @@ form {
         flex: 1;
         background-color: #f2740f;
         position: relative;
-        
+
 
         @media only screen and (min-width: 600px) {
             background-color: revert;
@@ -302,7 +303,7 @@ form {
         align-self: flex-start !important;
     }
 
-    svg { 
+    svg {
         display: block;
     }
 }
@@ -324,22 +325,20 @@ form {
     font-size: large;
 
 
-    button { 
+    button {
         align-self: flex-start !important;
     }
 
-    @media only screen and (min-width: 600px) { 
-        padding-top: 0; 
-        padding-bottom: 1em; 
-        padding-left: 0; 
+    @media only screen and (min-width: 600px) {
+        padding-top: 0;
+        padding-bottom: 1em;
+        padding-left: 0;
         padding-right: 0;
         gap: 1em;
     }
 
-   
-    @media only screen and (min-width: 767px) {
-        
-    }
+
+    @media only screen and (min-width: 767px) {}
 }
 
 #SinglePost {
@@ -352,8 +351,8 @@ form {
     font-size: large;
     background-color: #f2740f;
     line-height: 2;
-    
-    button { 
+
+    button {
         align-self: flex-start;
         margin-bottom: 1em;
     }
@@ -378,7 +377,7 @@ form {
         width: 20% !important;
     }
 
-    
+
 
     hr {
         color: black;
@@ -403,16 +402,16 @@ form {
         display: flex;
         flex-direction: column;
         background-color: lightgreen;
-    
+
         padding-left: 1em;
         padding-right: 1em;
         height: 100vh;
 
-        button { 
+        button {
             align-self: flex-start;
         }
 
-        h1 { 
+        h1 {
             font-size: 40pt !important;
         }
 
@@ -421,7 +420,7 @@ form {
             padding-right: 2em;
         }
 
-        @media only screen and (min-width: 600px) { 
+        @media only screen and (min-width: 600px) {
             background-color: revert;
             height: 100%;
             align-items: stretch;
@@ -437,17 +436,40 @@ form {
 
 }
 
-.ck-editor__editable { 
+#Albums {
+    display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
+    position: relative;
+    width: 100%;
+
+    h1 {
+        font-size: 32pt !important;
+    }
+}
+
+#Photos {
+    
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: 5em;
+        margin-top: 1em;
+    
+}
+
+.ck-editor__editable {
     min-height: 100px;
 }
 
 
-.modal-content { 
+.modal-content {
     background-color: transparent !important;
 }
 
 
-.modal-header { 
+.modal-header {
     border-bottom: none !important;
 }
 
@@ -477,7 +499,7 @@ form {
         padding-right: 0.5em;
         padding-top: 0.5em;
         padding-bottom: 0.5em;
-        
+
     }
 }
 
@@ -528,7 +550,7 @@ nav {
         flex-direction: column;
         flex: 1;
 
-        @media only screen and (max-width: 600px) { 
+        @media only screen and (max-width: 600px) {
             display: none;
         }
     }
@@ -560,7 +582,8 @@ nav {
     @media only screen and (min-width: 767px) {}
 }
 
-.top-row, article { 
+.top-row,
+article {
     padding-left: 0 !important;
 }
 
@@ -578,13 +601,13 @@ main {
     @media only screen and (min-width: 767px) {
         padding-top: 2em;
         padding-bottom: 2em;
-        
-        h1 { 
-            font-size: 48pt !important;
+
+        h1 {
+            font-size: 38pt !important;
         }
 
-        h2 { 
-            font-size: 38pt !important;
+        h2 {
+            font-size: 32pt !important;
         }
 
         section {
@@ -595,14 +618,14 @@ main {
             align-items: flex-start;
             width: 100%;
 
-            article { 
+            article {
                 width: 50%;
             }
 
 
         }
 
-       
+
     }
 }
 
@@ -616,21 +639,21 @@ main {
     height: 80px;
 }
 
-.mobileNav { 
-    background-color: rgba(0,0,0,0.6) !important;
+.mobileNav {
+    background-color: rgba(0, 0, 0, 0.6) !important;
     z-index: 2000 !important;
     justify-content: center;
     color: white;
-    position: fixed; 
-    top: 0; 
-    left: 0; 
+    position: fixed;
+    top: 0;
+    left: 0;
     right: 0;
     display: flex;
 
-    ul { 
-        display: flex; 
+    ul {
+        display: flex;
         flex-direction: column;
-        flex: 1; 
+        flex: 1;
         gap: 3em !important;
         position: relative;
         z-index: 2000 !important;
@@ -641,8 +664,8 @@ main {
         height: 100vh !important;
     }
 
-    a { 
-        position: relative; 
+    a {
+        position: relative;
         z-index: 10000 !important;
         color: white;
         font-size: xx-large;
@@ -701,7 +724,7 @@ footer {
         font-size: large;
     }
 
-    svg { 
+    svg {
         width: 10%;
     }
 
@@ -711,11 +734,11 @@ footer {
         align-items: flex-start;
         align-self: flex-start;
         background-color: revert;
-        
+
 
     }
 
-    
+
 }
 
 #Sidebar {
@@ -738,20 +761,20 @@ footer {
 }
 
 .modal-header {
-    i { 
+    i {
         display: none !important;
     }
 }
 
-.pagingDiv { 
-    display: flex; 
-    flex-direction: row; 
-    flex: 1; 
+.pagingDiv {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
     gap: 2em;
 }
 
-.Paging { 
-    background-color: yellow; 
+.Paging {
+    background-color: yellow;
     padding: 10px 10px 10px 10px;
     font-size: x-large;
     border: 1px solid black;

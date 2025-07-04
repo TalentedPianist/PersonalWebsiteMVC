@@ -251,6 +251,7 @@
                     data: JSON.stringify(add),
                     success: function (response) {
                         console.log(response);
+                        window.location.reload();
                     },
                     error: function (err) {
                         console.log(err);
