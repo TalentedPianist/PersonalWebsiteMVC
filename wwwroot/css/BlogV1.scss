@@ -456,18 +456,6 @@ form {
             }
         }
 
-        &:nth-of-type(2) {
-            ul {
-                background-color: transparent !important;
-                justify-content: flex-start !important;
-            }
-
-            p {
-                font-size: large;
-            }
-        }
-
-
     }
 
     h1 {
@@ -797,16 +785,7 @@ footer {
     }
 }
 
-.pagingDiv {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    gap: 2em;
-}
-
-.Paging {
-    background-color: yellow;
-    padding: 10px 10px 10px 10px;
-    font-size: x-large;
-    border: 1px solid black;
+.pagination { 
+    background-color: transparent !important;
+    justify-content: flex-start !important;
 }

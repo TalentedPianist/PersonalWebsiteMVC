@@ -1,12 +1,12 @@
 @page "/blog"
-@page "/blog/{Page:int}"
+@using BlazorPagination
 @using Microsoft.AspNetCore.WebUtilities
 @using System.Text.RegularExpressions
 @using PersonalWebsiteMVC.Models
 @inject ApplicationDbContext _db
 @inject NavigationManager nav
 
-@if (Model.Count() == 0)
+@if (_data!.Results.Count() == 0)
 {
 }
 else 
@@ -24,7 +24,7 @@ else
                 <h1>@post!.PostTitle</h1>
                 @((MarkupString)post.PostContent!)
 
-                <BlogComments PostID="@post.PostID" />
+           
             </div>
         }
     }
@@ -33,7 +33,7 @@ else
         <h1>Blog</h1>
 
         <section>
-            @foreach (var item in Model)
+            @foreach (var item in _data!.Results)
             {
                 var result = Truncate(item.PostContent!, 150);
 
@@ -49,9 +49,7 @@ else
                     </div>
                 </section>
             }
-            <Paging PI="pagingInfo" PageClassesEnabled="true" PageClass="Paging" PageClassSelected="active" 
-            PageName="blog"
-            />
+            <BlazorPager CurrentPage="@_data.CurrentPage" PageCount="@_data.PageCount" VisiblePages="3" ShowFirstLast="true" ShowPageNumbers="true" FirstText="&laquo;" LastText="&raquo;" NextText="&rsaquo;" PreviousText="&lsaquo;" OnPageChanged="(async e => { _page = e; GetData();})" />
         </section>
     }
 }
@@ -74,32 +72,21 @@ else
 @code {
     [SupplyParameterFromQuery(Name = "id")]
     public int Id { get; set; } = 0;
-    [Parameter]
-    public int page { get; set; }
+  
+    private PagedResult<Models.Posts>? _data;
+    private int _page = 1; 
 
-    public IEnumerable<PersonalWebsiteMVC.Models.Posts> Model { get; set; } =
-    Enumerable.Empty<PersonalWebsiteMVC.Models.Posts>();
-
-    PagingInfo pagingInfo = new PagingInfo();
-
-    protected override void OnParametersSet()
+    private void GetData() 
     {
-        CreatePagingInfo();
+        _data = _db.Posts.ToPagedResult(_page, 1);
+        StateHasChanged();
+    }
+    
+    protected override void OnInitialized()
+    {
+        GetData();
     }
 
-    public void CreatePagingInfo()
-    {
-        var AllPosts = _db.Posts;
-
-        int PageSize = 1;
-        page = page == 0 ? 1 : page;
-        pagingInfo.CurrentPage = page;
-        pagingInfo.TotalItems = AllPosts.Count();
-        pagingInfo.ItemsPerPage = PageSize;
-
-        var skip = PageSize * (Convert.ToInt32(page) - 1);
-        Model = AllPosts.Skip(skip).Take(PageSize).ToList();
-    }
 
     public async Task ViewPost(int id)
     {
