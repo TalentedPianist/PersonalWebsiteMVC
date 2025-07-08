@@ -21,7 +21,7 @@
         var web = new HtmlWeb();
         var doc = web.Load(url);
         var node = doc.DocumentNode.SelectSingleNode("//head/title");
-        return node.OuterHtml;
+        return node!.OuterHtml;
     }
 }
 

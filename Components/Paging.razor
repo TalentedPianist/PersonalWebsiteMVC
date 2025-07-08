@@ -14,6 +14,10 @@
     public string PageClass { get; set; } = default!;
     [Parameter]
     public string PageClassSelected { get; set; } = default!;
+    [Parameter]
+    public string PageName { get; set; } = string.Empty;
+    [SupplyParameterFromQuery(Name="id")]
+    public int Id { get; set; } = 0;
 
     public string CreatePaging()
     {
@@ -28,9 +32,16 @@
             if (anchorInnerHtml == "...")
                 tag.Attributes["href"] = "#";
             else if (i == 1)
-                tag.Attributes["href"] = "/blog";
+                if (PageName == "photos") 
+                {
+                tag.Attributes["href"] = "/" + PageName;
+                } 
+                else
+                {
+                    tag.Attributes["href"] = "/" + PageName; 
+                }
             else 
-                tag.Attributes["href"] = "/blog/" + i;
+                tag.Attributes["href"] = "/" + PageName + "/" + i;
 
             if (PageClassesEnabled)
             { 

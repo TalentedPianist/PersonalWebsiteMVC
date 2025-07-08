@@ -36,7 +36,7 @@
 
 
 @code {
-    private Modal modal;
+    private Modal? modal;
 
     public string Home { get; set; } = "Home";
     public string About { get; set; } = "About";
@@ -45,12 +45,12 @@
 
     public async Task OnShowModalClick()
     {
-        await modal?.ShowAsync();
+        await modal?.ShowAsync()!;
     }
 
     public async Task OnHideModalClick()
     {
-        await modal?.HideAsync();
+        await modal?.HideAsync()!;
     }
 
     public async Task HandleNav(string name)

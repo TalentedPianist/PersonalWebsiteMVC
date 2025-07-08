@@ -382,21 +382,41 @@ form br {
 }
 
 #Albums {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#Albums section:nth-of-type(1) {
   display: grid;
-  grid-template-rows: repeat(4, 1fr);
   grid-template-columns: repeat(4, 1fr);
   gap: 1em;
   position: relative;
   width: 100%;
+  margin-top: 1em;
+  margin-bottom: 2em;
+}
+#Albums section:nth-of-type(1) figcaption {
+  margin-top: 1em;
+}
+#Albums section:nth-of-type(2) ul {
+  background-color: transparent !important;
+  justify-content: flex-start !important;
+}
+#Albums section:nth-of-type(2) p {
+  font-size: large;
 }
 #Albums h1 {
   font-size: 32pt !important;
 }
 
 #Photos {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#Photos section:nth-of-type(1) {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: repeat(4, 1fr);
   gap: 5em;
   margin-top: 1em;
 }

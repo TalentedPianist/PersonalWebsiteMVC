@@ -49,7 +49,7 @@
 
     public ContactFormModel Model { get; set; } = new ContactFormModel();
 
-    public string captchaValue { get; set; }
+    public string captchaValue { get; set; } = string.Empty;
 
     private async Task HandleValidSubmit()
     {
