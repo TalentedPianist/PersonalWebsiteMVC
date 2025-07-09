@@ -24,6 +24,7 @@ else
                 <h1>@post!.PostTitle</h1>
                 @((MarkupString)post.PostContent!)
 
+                <BlogComments PostID="@post.PostID" />
            
             </div>
         }
@@ -49,6 +50,7 @@ else
                     </div>
                 </section>
             }
+            <p>You are currently on page @_data.CurrentPage of @_data.PageCount.</p>
             <BlazorPager CurrentPage="@_data.CurrentPage" PageCount="@_data.PageCount" VisiblePages="3" ShowFirstLast="true" ShowPageNumbers="true" FirstText="&laquo;" LastText="&raquo;" NextText="&rsaquo;" PreviousText="&lsaquo;" OnPageChanged="(async e => { _page = e; GetData();})" />
         </section>
     }

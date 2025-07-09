@@ -1,6 +1,7 @@
 @page "/photos"
 @using BlazorPagination
 @inject ApplicationDbContext _db
+@inject NavigationManager _nav
 @layout BlogLayout
 
 @if (_data != null)
@@ -15,7 +16,7 @@
                     <figure>
                         <img src="/Gallery/@item.Name/@item.CoverPhoto">
                         <figcaption>
-                            <h3>@item.Name</h3>
+                            <a href="/album?name=@item.Name&id=@item.AlbumID">@item.Name</a>
                         </figcaption>
                     </figure>
                 }
@@ -45,6 +46,11 @@
     protected override async Task OnInitializedAsync()
     {
         await GetData();
+    }
+
+    public void GoToAlbum(string name, int id)
+    {
+        
     }
 
 

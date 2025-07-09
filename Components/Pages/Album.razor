@@ -1,0 +1,45 @@
+@page "/album"
+@using BlazorPagination
+@using Microsoft.EntityFrameworkCore
+@inject ApplicationDbContext _db
+
+
+
+<div id="Photos">
+
+    @if (_data is not null)
+    {
+        <h1>@AlbumName</h1>
+        <section>
+
+            @foreach (Models.Photos photo in _data.Results)
+            {
+                <img src="@photo.ImageUrl">
+            }
+           
+        </section>
+         <BlazorPager CurrentPage="@_data.CurrentPage" PageCount="@_data.PageCount" VisiblePages="10" ShowFirstLast="true" ShowPageNumbers="true" FirstText="&laquo;" LastText="&raquo;" NextText="&rsaquo;" PreviousText="&lsaquo;" OnPageChanged="(async e => { _page = e; await GetData(); })" />
+    }
+</div>
+
+@code {
+    public string Message { get; set; } = string.Empty;
+    [SupplyParameterFromQuery(Name = "name")]
+    public string AlbumName { get; set; } = string.Empty;
+    [SupplyParameterFromQuery(Name = "id")]
+    public int AlbumID { get; set; } = 0;
+    private PagedResult<Models.Photos>? _data;
+    private int _page = 1;
+
+    private async Task GetData()
+    {
+        _data = await _db.Photos.Where(p => p.AlbumID == AlbumID).ToPagedResultAsync(_page, 10);
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+        StateHasChanged();
+    }
+}
