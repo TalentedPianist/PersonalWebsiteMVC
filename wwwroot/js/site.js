@@ -19,8 +19,7 @@ window.goBack = () => {
 
 
 //Sticky header - needs a media query in JS else it will mess up the desktop view!!
-const mediaQuery = window.matchMedia('(max-width: 600px)');
-if (mediaQuery.matches) {
+if (window.matchMedia('(max-width: 600px)')) {
     $(window).on('scroll', function () {
 
         if ($(this).scrollTop() > 100) {
@@ -57,4 +56,6 @@ window.scrollIntoView = (elementId) => {
     }
 }
 
+// Lightbox functionality for image gallery
+$(".photo").featherlight();
 

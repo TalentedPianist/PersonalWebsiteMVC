@@ -22,13 +22,13 @@
                 }
             }
         </section>
-        <section>
+        
             <p>You are on page @_data.CurrentPage of @_data.PageCount.</p>
             <BlazorPager CurrentPage="@_data.CurrentPage" PageCount="@_data.PageCount" VisiblePages="3" ShowFirstLast="true"
                 ShowPageNumbers="true" FirstText="&laquo;" LastText="&raquo;" NextText="&rsaquo;" PreviousText="&lsaquo;"
                 OnPageChanged="(async e => { _page = e; await GetData();})" />
 
-            </section>
+        
     </div>
 }
 
