@@ -19,7 +19,7 @@ window.goBack = () => {
 
 
 //Sticky header - needs a media query in JS else it will mess up the desktop view!!
-if (window.matchMedia('(max-width: 600px)')) {
+if (window.matchMedia('(max-width: 600px)').matches) {
     $(window).on('scroll', function () {
 
         if ($(this).scrollTop() > 100) {
@@ -56,6 +56,38 @@ window.scrollIntoView = (elementId) => {
     }
 }
 
-// Lightbox functionality for image gallery
-$(".photo").featherlight();
+// jQuery functionality
+window.initializeJQuery = () => {
+    $("form").on("submit", function (e) {
+        e.preventDefault();
+        console.log("Form was submitted!");
+    });
+
+    $(".gallery").featherlightGallery({
+        afterOpen: async function (event) {
+            var commentForm = "";
+            $.ajax({
+                method: "GET",
+                url: "/PhotoCommentForm",
+                async: false,
+                cache: false,
+                success: function (message) {
+                    console.log(message);
+                    
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+            
+            $(this.$content).after(`
+           
+            `);
+
+        }
+    });
+}
+
+window.openFeatherlight = () => {
+};
 

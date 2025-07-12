@@ -5,6 +5,7 @@ using PersonalWebsiteMVC.Models;
 using System.Diagnostics;
 using DeviceDetectorNET;
 using DeviceDetectorNET.Parser;
+using Microsoft.AspNetCore.Antiforgery;
 //using Microsoft.AspNetCore.Components;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -62,7 +63,20 @@ namespace PersonalWebsiteMVC.Controllers
             return Ok();
         }
 
-       
-        
+        [Route("PhotoCommentForm")]
+        public IActionResult GetCommentForm(AntiforgeryTokenSet token, bool UseToken = true)
+        {
+            return Ok(token);
+        }
+
+
+        [Route("/photos/AddComment")]
+        [HttpPost]
+        public IActionResult AddComment([FromForm] List<Models.Comments> data)
+        {
+            return Ok(data);
+        }
+
+
     }
 }

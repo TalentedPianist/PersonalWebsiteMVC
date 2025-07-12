@@ -2,7 +2,7 @@
 @using BlazorPagination
 @using Microsoft.EntityFrameworkCore
 @inject ApplicationDbContext _db
-
+@inject IJSRuntime JS
 
 
 <div id="Photos">
@@ -14,13 +14,16 @@
 
             @foreach (Models.Photos photo in _data.Results)
             {
-                <a href="#" class="photo"><img src="@photo.ImageUrl"></a>
+                <a href="@photo.ImageUrl" class="gallery" data-caption="@photo.Name"><img src="@photo.ImageUrl"></a>
             }
            
         </section>
          <BlazorPager CurrentPage="@_data.CurrentPage" PageCount="@_data.PageCount" VisiblePages="10" ShowFirstLast="true" ShowPageNumbers="true" FirstText="&laquo;" LastText="&raquo;" NextText="&rsaquo;" PreviousText="&lsaquo;" OnPageChanged="(async e => { _page = e; await GetData(); })" />
     }
 </div>
+
+<div id="lightbox-content">Hello!</div>
+
 
 @code {
     public string Message { get; set; } = string.Empty;
@@ -41,5 +44,18 @@
     {
         await GetData();
         StateHasChanged();
+    }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("initializeJQuery");
+        }
+    }
+
+    public async Task Open()
+    {
+        await JS.InvokeVoidAsync("openFeatherlight");
     }
 }

@@ -692,4 +692,13 @@ footer {
 .pagination {
   background-color: transparent !important;
   justify-content: flex-start !important;
+}
+
+.commentForm {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  button-align-self: flex-start;
+  button-background-color: orange;
 }/*# sourceMappingURL=BlogV1.css.map */

@@ -15,6 +15,7 @@ using GoogleCaptchaComponent;
 using MudBlazor.Services;
 using CurrentDevice;
 using Blazored.Modal;
+using Microsoft.AspNetCore.Antiforgery;
 
 
 
@@ -197,6 +198,7 @@ try
 
     builder.Services.AddCurrentDeviceService();
     builder.Services.AddBlazorBootstrap();
+    builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -277,6 +279,14 @@ try
 
     });
 
+    app.MapGet("antiforgery/token", (IAntiforgery forgeryService, HttpContext context) =>
+    {
+        var tokens = forgeryService.GetAndStoreTokens(context);
+        context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken!,
+            new CookieOptions { HttpOnly = false });
+
+        return tokens;
+    });
 
 
     app.MapRazorComponents<App>()
