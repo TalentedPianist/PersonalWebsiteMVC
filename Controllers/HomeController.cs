@@ -6,6 +6,7 @@ using System.Diagnostics;
 using DeviceDetectorNET;
 using DeviceDetectorNET.Parser;
 using Microsoft.AspNetCore.Antiforgery;
+using Microsoft.AspNetCore.Html;
 //using Microsoft.AspNetCore.Components;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -16,12 +17,14 @@ namespace PersonalWebsiteMVC.Controllers
         private readonly ApplicationDbContext _db;
         private readonly IHttpContextAccessor _http;
 
-        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IHttpContextAccessor http)
+        private readonly IAntiforgery _antiforgery;
+
+        public HomeController(ILogger<HomeController> logger, ApplicationDbContext db, IHttpContextAccessor http, IAntiforgery antiforgery)
         {
             _logger = logger;
             _db = db;
             _http = http;
-
+            _antiforgery = antiforgery;
         }
 
         [Route("/")]
@@ -63,10 +66,17 @@ namespace PersonalWebsiteMVC.Controllers
             return Ok();
         }
 
-        [Route("PhotoCommentForm")]
-        public IActionResult GetCommentForm(AntiforgeryTokenSet token, bool UseToken = true)
+        public HtmlContentBuilder GenerateCommentForm()
         {
-            return Ok(token);
+            var builder = new HtmlContentBuilder();
+            return builder;
+        }
+
+        [Route("PhotoCommentForm")]
+        public IActionResult GetCommentForm()
+        {
+            var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+            return Ok(tokens);
         }
 
 
