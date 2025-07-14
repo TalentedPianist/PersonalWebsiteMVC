@@ -1,5 +1,6 @@
 @page "/album"
 @using BlazorPagination
+@using Microsoft.AspNetCore.Html
 @using Microsoft.EntityFrameworkCore
 @inject ApplicationDbContext _db
 @inject IJSRuntime JS
@@ -14,7 +15,7 @@
 
             @foreach (Models.Photos photo in _data.Results)
             {
-                <a href="@photo.ImageUrl" class="gallery" data-caption="@photo.Name"><img src="@photo.ImageUrl"></a>
+                <a href="/Gallery/@AlbumName/@photo.Name" class="gallery" data-caption="@photo.Name"><img src="@photo.ImageUrl"></a>
             }
            
         </section>
@@ -22,6 +23,18 @@
     }
 </div>
 
+
+
+
+@functions {
+    public IHtmlContentBuilder RenderBold( IHtmlContentBuilder builder)
+    {
+        builder.AppendHtml("<b>");
+        builder.Append("Hello World!");
+        builder.AppendHtml("</b>");
+        return builder;
+    }
+}
 
 
 @code {
@@ -51,10 +64,8 @@
         {
             await JS.InvokeVoidAsync("initializeJQuery");
         }
+        await JS.InvokeVoidAsync("initializeJQuery");
     }
 
-    public async Task Open()
-    {
-        await JS.InvokeVoidAsync("openFeatherlight");
-    }
+
 }

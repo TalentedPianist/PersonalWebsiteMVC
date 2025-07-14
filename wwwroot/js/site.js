@@ -56,67 +56,45 @@ window.scrollIntoView = (elementId) => {
     }
 }
 
+
+
 // jQuery functionality
 window.initializeJQuery = () => {
-
-    $(".gallery").featherlightGallery({
-        persist: true,
-        afterOpen: async function (event) {
-            var token = "";
-            var formFieldName = "";
-            var headerName = "";
+    $("a.gallery").featherlightGallery({
+        afterContent: function (e) {
+            console.log(this.$content);
+            let form = undefined;
             $.ajax({
                 method: "GET",
                 url: "/PhotoCommentForm",
                 async: false,
                 cache: false,
                 success: function (message) {
-                    token = message.RequestToken;
-                    formFieldName = message.FormFieldName;
-                    headerName = message.headerName;
+                    form = message.Value;
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
 
-            $(document).on("submit", "form[formname='CommentForm']", function (e) {
-                e.preventDefault();
-                console.log("Form was submitted!"); 
-            });
-
-            var onloadCallback = function() {
-                console.log("grecaptcha is ready!");
-            };
-
             $(this.$content).after(`
-                <div id="Comments">
-                <form method="post" formname="CommentForm">
-                    <div>
-                        <label for="CommentAuthor">Name:</label>
-                        <input type="text" name="txtName">
-                    </div>
-                    <div>
-                        <label for="CommentAuthorEmail">Email:</label>
-                        <input type="email" name="txtEmail">
-                    </div>
-                    <div>
-                        <label for="CommentAuthorUrl">Website:</label>
-                        <input type="text" name="txtWebsite">
-                    </div>
-                    <div>
-                        <label for="CommentContent>Comment:</label>
-                        <textarea name="txtComment" rows="10" cols="30"></textarea>
-                    </div>
-                    <input type="hidden" value="${token}" name="${formFieldName}">
-                    <button type="submit">Comment</button>
-                </div>
+                 <div id="g-recaptcha"></div>
+                <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback"></script>
+	<script>
+		var onloadCallback = function() {
+			grecaptcha.render('g-recaptcha', { 
+                'sitekey': '6LcR-VQrAAAAAFS2_Qz1L4NSod9AB4yVh2P0b47V',
+			});
+		};
+	</script>
+               
             `);
-
         }
     });
 }
 
 window.openFeatherlight = () => {
-};
+
+}
+
 

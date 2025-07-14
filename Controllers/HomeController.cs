@@ -7,6 +7,7 @@ using DeviceDetectorNET;
 using DeviceDetectorNET.Parser;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Html;
+using System.Text.Encodings.Web;
 //using Microsoft.AspNetCore.Components;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -66,16 +67,30 @@ namespace PersonalWebsiteMVC.Controllers
             return Ok();
         }
 
-        public HtmlContentBuilder GenerateCommentForm()
+        public static IHtmlContent BuildForm()
         {
             var builder = new HtmlContentBuilder();
-            return builder;
+            builder.AppendHtml("<div class='commentForm'>");
+            builder.AppendHtml("<form method='post'>");
+            builder.AppendHtml("<div>");
+            builder.AppendHtml("<label for='name'>Name:</label>");
+            builder.AppendHtml("<input type='text' name='txtName'>");
+            builder.AppendHtml("</div>");
+            builder.AppendHtml("<div class='g-recaptcha' data-callback='></div>");
+            builder.AppendHtml("<button type='submit'>Submit</button>");
+            builder.AppendHtml("</form>");
+            builder.AppendHtml("</div>");
+
+            using var writer = new StringWriter();
+            builder.WriteTo(writer, HtmlEncoder.Default);
+            return new HtmlString(writer.ToString());
         }
 
         [Route("PhotoCommentForm")]
         public IActionResult GetCommentForm()
         {
             var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
+            HtmlString html = new HtmlString("<p>Hello World!</p>");
             return Ok(tokens);
         }
 
