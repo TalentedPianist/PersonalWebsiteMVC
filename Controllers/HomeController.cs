@@ -8,6 +8,7 @@ using DeviceDetectorNET.Parser;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Html;
 using System.Text.Encodings.Web;
+using System.Net;
 //using Microsoft.AspNetCore.Components;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -86,14 +87,30 @@ namespace PersonalWebsiteMVC.Controllers
             return new HtmlString(writer.ToString());
         }
 
-        [Route("PhotoCommentForm")]
-        public IActionResult GetCommentForm()
+        [Route("GetTokens")]
+        public IActionResult GetTokens()
         {
             var tokens = _antiforgery.GetAndStoreTokens(HttpContext);
-            HtmlString html = new HtmlString("<p>Hello World!</p>");
+           
             return Ok(tokens);
         }
 
+        [HttpPost]
+        [Route("ValidateRecaptcha")]
+        public async Task<IActionResult> ValidateRecaptcha(string secret, string response)
+        {
+
+            string url = $"https://www.google.com/recaptcha/api/siteverify?secret={secret}&response={response}";
+            var httpClient = new HttpClient();
+            var strResponse = await httpClient.GetAsync(url);
+            if (strResponse.IsSuccessStatusCode)
+            {
+                var jsonResponse = await strResponse.Content.ReadAsStringAsync();
+
+                return Ok(jsonResponse);
+            }
+            return Ok();
+        }
 
         [Route("/photos/AddComment")]
         [HttpPost]
@@ -102,6 +119,10 @@ namespace PersonalWebsiteMVC.Controllers
             return Ok(data);
         }
 
+        public class CaptchaResponse
+        {
+            public bool Success { get; set; }
+        }
 
     }
 }

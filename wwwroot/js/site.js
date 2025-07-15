@@ -62,35 +62,92 @@ window.scrollIntoView = (elementId) => {
 window.initializeJQuery = () => {
     $("a.gallery").featherlightGallery({
         afterContent: function (e) {
-            console.log(this.$content);
-            let form = undefined;
-            $.ajax({
-                method: "GET",
-                url: "/PhotoCommentForm",
-                async: false,
-                cache: false,
-                success: function (message) {
-                    form = message.Value;
-                },
-                error: function (error) {
-                    console.log(error);
+            $(document).on('submit', function (e) {
+                e.preventDefault();
+                let captchaSecret = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
+                console.log("Form was submitted!");
+                console.log(grecaptcha.getResponse());
+                $.ajax({
+                    type: "POST",
+                    url: "/ValidateRecaptcha",
+                    data: { secret: captchaSecret, response: grecaptcha.getResponse() },
+                    dataType: "text",
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                       let result = $.parseJSON(message);
+                       if (result.success === true) 
+                       {
+                            doStuff();
+                       }
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+                function doStuff()
+                {
+                    console.log("Doing stuff...");
+                    let name = $("input[name=txtName]").val();
+                    let email = $("input[name=txtEmail]").val();
+                    let website = $("input[name=txtWebsite]").val();
+                    let comment = $("input[name=txtComment]").val();
+                    console.log(name, email, website, comment);
                 }
             });
 
+            let response = undefined;
+
+            console.log(this.$content);
+
             $(this.$content).after(`
-                 <div id="g-recaptcha"></div>
+                <div class="commentForm">
+                    <form method="post" id="commentForm" name="CommentForm">
+                        <div>
+                            <label for="CommentAuthor">Name:</label>
+                            <input type="text" name="txtName">
+                        </div>
+                        <div>
+                            <label for="CommentAuthorEmail">Email:</label>
+                            <input type="email" name="txtEmail">
+                        </div>
+                        <div>
+                            <label for="CommentAuthorUrl">Website:</label>
+                            <input type="text" name="txtWebsite">
+                        </div>
+                        <div>
+                            <label for="CommentContent">Comment:</label>
+                            <textarea rows="10" cols="30" name="txtComment"></textarea>
+                        </div>
+                        
+                        <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz" data-callback="onHuman"></div>
+                        <button type="submit">Submit</button>
+                    </form>
+                </div>
                 <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback"></script>
 	<script>
+    function onHuman(response) {
+                document.getElementById('g-recaptcha').value = response;
+                doOtherStuff(response);
+            }
+
 		var onloadCallback = function() {
 			grecaptcha.render('g-recaptcha', { 
-                'sitekey': '6LcR-VQrAAAAAFS2_Qz1L4NSod9AB4yVh2P0b47V',
+                'sitekey': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz',
 			});
+            
 		};
+
+
+        
 	</script>
                
             `);
+       
         }
     });
+
+    
 }
 
 window.openFeatherlight = () => {

@@ -798,9 +798,16 @@ footer {
     flex-direction: column;
     flex: 1; 
     align-items: center;
+    background-color: lightgreen;
+    padding-top: 2em;
+    padding-bottom: 2em;
     
     button: { 
         align-self: flex-start; 
         background-color: orange;
     }
+}
+
+.featherlight { 
+    z-index: revert !important;
 }
