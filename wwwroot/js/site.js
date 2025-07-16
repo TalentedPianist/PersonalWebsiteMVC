@@ -91,8 +91,24 @@ window.initializeJQuery = () => {
                     let name = $("input[name=txtName]").val();
                     let email = $("input[name=txtEmail]").val();
                     let website = $("input[name=txtWebsite]").val();
-                    let comment = $("input[name=txtComment]").val();
-                    console.log(name, email, website, comment);
+                    let comment = $("textarea[name=txtComment]").val();
+                    
+                    $.ajax({
+                        method: "POST",
+                        url: "/photos/AddComment", 
+                        headers: {
+                            "Content-type": "application/data", 
+                        },
+                        data: JSON.stringify({ CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment }),
+                        async: false,
+                        cache: false,
+                        success: function(message) { 
+                            console.log(message);
+                        },
+                        error: function(error) { 
+                            console.log(error);
+                        }
+                    });
                 }
             });
 
