@@ -97,11 +97,10 @@ window.initializeJQuery = () => {
                         method: "POST",
                         url: "/photos/AddComment", 
                         headers: {
-                            "Content-type": "application/data", 
+                            "Content-type": "application/json", 
                         },
-                        data: JSON.stringify({ CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment }),
-                        async: false,
-                        cache: false,
+                        data: JSON.stringify({ 'CommentAuthor': name, 'CommentAuthorEmail': email, 'CommentAuthorUrl': website, 'CommentContent': comment }),
+                        dataType: "json",
                         success: function(message) { 
                             console.log(message);
                         },

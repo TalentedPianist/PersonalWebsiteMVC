@@ -114,9 +114,11 @@ namespace PersonalWebsiteMVC.Controllers
 
         [Route("/photos/AddComment")]
         [HttpPost]
-        public IActionResult AddComment([FromForm] List<Models.Comments> data)
+        public IActionResult AddComment([FromBody] Models.Comments data)
         {
-            return Ok(data);
+            data.PhotoID = Guid.NewGuid();
+            _db.Comments.Add(data);
+            _db.SaveChanges();
         }
 
         public class CaptchaResponse

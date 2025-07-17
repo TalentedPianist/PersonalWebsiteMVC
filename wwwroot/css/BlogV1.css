@@ -708,4 +708,12 @@ footer {
 
 .featherlight {
   z-index: revert !important;
+}
+
+.featherlight-next {
+  height: 83% !important;
+}
+
+.featherlight-previous {
+  height: 83% !important;
 }/*# sourceMappingURL=BlogV1.css.map */
