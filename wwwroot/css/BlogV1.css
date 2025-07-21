@@ -699,7 +699,7 @@ footer {
   flex-direction: column;
   flex: 1;
   align-items: center;
-  background-color: lightgreen;
+  background-color: orange;
   padding-top: 2em;
   padding-bottom: 2em;
   button-align-self: flex-start;

@@ -116,9 +116,10 @@ namespace PersonalWebsiteMVC.Controllers
         [HttpPost]
         public IActionResult AddComment([FromBody] Models.Comments data)
         {
-            data.PhotoID = Guid.NewGuid();
+            data.PhotoID = Guid.NewGuid().ToString();
             _db.Comments.Add(data);
             _db.SaveChanges();
+            return Ok(data);
         }
 
         public class CaptchaResponse

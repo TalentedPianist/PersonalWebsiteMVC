@@ -15,7 +15,7 @@
 
             @foreach (Models.Photos photo in _data.Results)
             {
-                <a href="/Gallery/@AlbumName/@photo.Name" class="gallery" data-caption="@photo.Name"><img src="@photo.ImageUrl"></a>
+                <a href="/Gallery/@AlbumName/@photo.Name" class="gallery" data-name="@photo.Name"><img src="@photo.ImageUrl" data-name="@photo.Name"></a>
             }
            
         </section>
@@ -24,17 +24,6 @@
 </div>
 
 
-
-
-@functions {
-    public IHtmlContentBuilder RenderBold( IHtmlContentBuilder builder)
-    {
-        builder.AppendHtml("<b>");
-        builder.Append("Hello World!");
-        builder.AppendHtml("</b>");
-        return builder;
-    }
-}
 
 
 @code {

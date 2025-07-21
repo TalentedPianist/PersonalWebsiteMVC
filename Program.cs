@@ -262,7 +262,7 @@ try
     //     areaName: "Photos",
     //     pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
-    //app.MapControllers();
+    app.MapControllers();
 
 
     app.UseRouting();
@@ -289,8 +289,8 @@ try
     });
 
 
-    app.MapRazorComponents<App>()
-        .AddInteractiveServerRenderMode();
+    // app.MapRazorComponents<App>()
+    //     .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
 

@@ -17,5 +17,11 @@ namespace PersonalWebsiteMVC.Controllers
             TempData["Message"] = DateTime.Now;
             return View("~/Views/Shared/Components/Mobile/Comments.cshtml");
         }
+
+        [HttpGet]
+        [Route("/Comments/GetComments")]
+        public IActionResult GetComments() { 
+            return Ok(DateTime.Now);
+        }
     }
 }
