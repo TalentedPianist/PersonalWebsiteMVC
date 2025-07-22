@@ -585,6 +585,7 @@ main {
   left: 0;
   right: 0;
   display: flex;
+  width: 100%;
 }
 .mobileNav ul {
   display: flex;
@@ -594,7 +595,6 @@ main {
   position: relative;
   z-index: 2000 !important;
   list-style-type: none;
-  justify-content: center;
   align-items: center;
   padding-left: 0 !important;
   height: 100vh !important;
@@ -716,4 +716,9 @@ footer {
 
 .featherlight-previous {
   height: 83% !important;
+}
+
+.modal {
+  width: 100% !important;
+  min-width: 100% !important;
 }/*# sourceMappingURL=BlogV1.css.map */
