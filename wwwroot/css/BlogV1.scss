@@ -685,15 +685,17 @@ main {
         align-items: center;
         padding-left: 0 !important;
         height: 100vh !important;
+
+        a {
+            position: relative;
+            z-index: 10000 !important;
+            color: white;
+            font-size: xx-large;
+            text-decoration: none !important;
+        }
     }
 
-    a {
-        position: relative;
-        z-index: 10000 !important;
-        color: white;
-        font-size: xx-large;
-        text-decoration: none !important;
-    }
+
 }
 
 .sticky {
@@ -794,34 +796,34 @@ footer {
     justify-content: flex-start !important;
 }
 
-.commentForm { 
-    display: flex; 
+.commentForm {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     align-items: center;
     background-color: orange;
     padding-top: 2em;
     padding-bottom: 2em;
-    
-    button: { 
-        align-self: flex-start; 
+
+    button: {
+        align-self: flex-start;
         background-color: orange;
     }
 }
 
-.featherlight { 
+.featherlight {
     z-index: revert !important;
 }
 
-.featherlight-next { 
+.featherlight-next {
     height: 83% !important;
 }
 
-.featherlight-previous { 
+.featherlight-previous {
     height: 83% !important;
 }
 
-.modal { 
+.modal {
     width: 100% !important;
     min-width: 100% !important;
 }

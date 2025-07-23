@@ -599,7 +599,7 @@ main {
   padding-left: 0 !important;
   height: 100vh !important;
 }
-.mobileNav a {
+.mobileNav ul a {
   position: relative;
   z-index: 10000 !important;
   color: white;

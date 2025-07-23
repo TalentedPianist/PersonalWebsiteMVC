@@ -214,10 +214,7 @@ try
     }
 
 
-    app.UseStaticFiles(new StaticFileOptions
-    {
-        FileProvider = new PhysicalFileProvider(Path.Combine(
-});
+    app.UseStaticFiles();
 
 
     // Configure the HTTP request pipeline.
