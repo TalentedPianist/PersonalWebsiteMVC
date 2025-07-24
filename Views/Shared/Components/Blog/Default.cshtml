@@ -1,5 +1,10 @@
 @using System.Text.RegularExpressions
+@using Microsoft.AspNetCore.Mvc.Routing
+@using Microsoft.AspNetCore.Routing
 @inject ApplicationDbContext _db
+@inject LinkGenerator linkGenerator
+
+@TempData["Message"]
 
 @if (_db.Posts.Count() == 0)
 {
@@ -32,7 +37,10 @@ else
                     <div id="PostContent">
                         <h2>@item.PostTitle</h2>
                         @RemoveHTMLTags(result)
-                        <button type="button">Read More</button>
+                        @{
+                            var link = linkGenerator.GetPathByAction("ReadMore", "Mobile", new { id = item.PostID });
+                        }
+                        <a href="@link">Read</a>
                     </div>
                 </section>
             }

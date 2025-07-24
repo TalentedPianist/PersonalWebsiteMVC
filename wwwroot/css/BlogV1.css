@@ -202,7 +202,7 @@ form br {
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100vh;
+  height: 100%;
   color: black !important;
   position: relative;
   overflow: hidden;
@@ -210,6 +210,7 @@ form br {
 #Blog h1 {
   padding-left: 16px;
   font-size: 42pt !important;
+  margin: 0 !important;
 }
 #Blog:before {
   position: absolute;
@@ -248,7 +249,7 @@ form br {
 #Blog section {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  flex: 0;
   background-color: #f2740f;
   position: relative;
 }
@@ -278,14 +279,17 @@ form br {
   align-items: stretch;
   width: 100%;
   min-width: 100%;
-  gap: 10px;
-  padding-left: 1em;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  padding-right: 1em;
-  margin-bottom: 1em;
+  gap: 0.5em;
   border-bottom: 1px solid black;
   font-size: large;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-bottom: 1em;
+  padding-top: 1em;
+}
+#PostContent h2 {
+  padding: 0 !important;
+  margin: 0 !important;
 }
 #PostContent button {
   align-self: flex-start !important;
@@ -299,6 +303,7 @@ form br {
     gap: 1em;
   }
 }
+
 #SinglePost {
   display: flex;
   flex-direction: column;

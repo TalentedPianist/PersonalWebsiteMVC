@@ -3,10 +3,10 @@ using PersonalWebsiteMVC.Data;
 
 namespace PersonalWebsiteMVC.Views.Shared.Components;
 
-[ViewComponentAttribute]
+[ViewComponent]
 public class Blog : ViewComponent
 {
-    private ApplicationDbContext _db { get; set; };
+    private ApplicationDbContext _db { get; set; }
 
     public Blog(ApplicationDbContext db)
     {
@@ -15,6 +15,8 @@ public class Blog : ViewComponent
 
     public IViewComponentResult Invoke()
     {
-        return View("Default.cshtml");
+        return View();
     }
+
+   
 }

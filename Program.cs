@@ -16,7 +16,8 @@ using MudBlazor.Services;
 using CurrentDevice;
 using Blazored.Modal;
 using Microsoft.AspNetCore.Antiforgery;
-
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -199,6 +200,7 @@ try
     builder.Services.AddCurrentDeviceService();
     builder.Services.AddBlazorBootstrap();
     builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
+
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
