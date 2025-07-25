@@ -1,0 +1,19 @@
+
+@model MixModel
+
+
+
+@if (Model is not null) 
+{
+    <div id="SinglePost">
+        <a href="javascript:history.go(-1)">Back</a>
+
+        <h1>@Model.Posts!.PostTitle</h1>
+        
+        @Model.Posts.PostContent
+
+
+
+        <partial name="~/Views/Mobile/Comments.cshtml" model="Model" />
+    </div>
+}

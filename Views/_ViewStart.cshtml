@@ -1,35 +1,3 @@
-﻿@using DeviceDetectorNET
-@using DeviceDetectorNET.Parser
-@using DeviceDetectorNET.Cache
-@{
-    DeviceDetector.SetVersionTruncation(VersionTruncation.VERSION_TRUNCATION_NONE);
-
-    var userAgent = Context.Request.Headers["User-Agent"];
-    var headers = Context.Request.Headers.ToDictionary(a => a.Key, a => a.Value.ToArray().FirstOrDefault());
-    var clientHints = ClientHints.Factory(headers); 
-
-    var dd = new DeviceDetector(userAgent, clientHints);
-
-    dd.SetCache(new DictionaryCache());
-    dd.DiscardBotInformation();
-    dd.SkipBotDetection();
-    dd.Parse();
-
-    if (dd.IsBot()) { 
-    } else {
-        var clientInfo = dd.GetClient();
-        var osInfo = dd.GetOs();
-        var device = dd.GetDeviceName();
-        var brand = dd.GetBrandName();
-        var model = dd.GetModel();
-        
-        if (device.Contains("smartphone")) 
-        {
-            Layout = "~/Views/Shared/_BlogMobile.cshtml";
-        }
-        else 
-        {
-            Layout = "~/Views/Shared/_BlogDesktop.cshtml";
-        }
-    }
+﻿@{
+    Layout = "~/Views/Shared/_BlogLayout.cshtml";
 }

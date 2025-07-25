@@ -1,0 +1,60 @@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<div id="Home">
+    <div class="overlay">
+        <header>
+            <partial name="~/Views/Partial/_MobileNav.cshtml" />
+        </header>
+        <h1>Hi, I'm Douglas!</h1>
+        <img src="/images/me.jpg">
+        <h2>Thanks for visiting!</h2>
+
+    </div>
+</div>
+
+<div id="About">
+    <section>
+        <p>Dolor laboris proident deserunt sit nulla non exercitation nisi laborum proident. Mollit officia eiusmod
+            aliqua duis ut reprehenderit occaecat exercitation adipisicing consectetur proident aute. Ex minim
+            aliqua velit labore labore qui consequat laborum veniam cupidatat aute pariatur sint commodo. Amet
+            excepteur cupidatat Lorem pariatur ullamco quis.</p>
+
+        <p>Ea aute ut quis tempor pariatur cillum. Dolore et aliqua Lorem incididunt irure sit ad consectetur dolor
+            Lorem Lorem est occaecat. Qui dolor sint nulla magna. Culpa nisi fugiat ut nostrud sint nulla.</p>
+
+        <p>Exercitation culpa duis id culpa et. Incididunt nulla tempor laboris pariatur est incididunt anim dolore.
+            Sint deserunt occaecat irure veniam et ut ut labore velit sint. Aliquip ut laboris irure eiusmod.</p>
+
+        <p>Est nulla proident eu et exercitation occaecat anim dolor commodo eiusmod eiusmod ex id ipsum. Consequat
+            culpa excepteur ad et ullamco fugiat pariatur id quis mollit qui. Et consequat nisi culpa et aliquip
+            duis irure pariatur excepteur. Labore ea laborum nulla laboris adipisicing. Reprehenderit ea ea in quis
+            laboris velit aliqua cillum Lorem consequat. Ex eiusmod ad ex mollit excepteur. Mollit laborum nulla ad
+            ullamco magna esse culpa.</p>
+    </section>
+</div>
+
+<div id="Blog">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#f29f05" fill-opacity="1"
+            d="M0,32L48,32C96,32,192,32,288,74.7C384,117,480,203,576,240C672,277,768,267,864,240C960,213,1056,171,1152,160C1248,149,1344,171,1392,181.3L1440,192L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+        </path>
+    </svg>
+
+
+    @await Component.InvokeAsync("Blog")
+
+    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#f27405" fill-opacity="1"
+            d="M0,256L48,261.3C96,267,192,277,288,266.7C384,256,480,224,576,229.3C672,235,768,277,864,250.7C960,224,1056,128,1152,128C1248,128,1344,224,1392,272L1440,320L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+        </path>
+    </svg>
+
+</div>
+
+<div id="Contact">
+    <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+        <path fill="#90EE90" fill-opacity="1"
+            d="M0,192L48,170.7C96,149,192,107,288,85.3C384,64,480,64,576,74.7C672,85,768,107,864,96C960,85,1056,43,1152,64C1248,85,1344,171,1392,213.3L1440,256L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z">
+        </path>
+    </svg>
+</div>

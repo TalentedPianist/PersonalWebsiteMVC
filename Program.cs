@@ -18,6 +18,7 @@ using Blazored.Modal;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
+using Wangkanai.Detection.Services;
 
 
 Log.Logger = new LoggerConfiguration()
@@ -176,7 +177,6 @@ try
     builder.Services.AddHttpClient();
 
     builder.Services.AddEndpointsApiExplorer();
-    builder.Services.AddSwaggerGen();
 
     builder.Services.AddRazorPages();
 
@@ -197,10 +197,10 @@ try
         
     });
 
-    builder.Services.AddCurrentDeviceService();
     builder.Services.AddBlazorBootstrap();
     builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
 
+    builder.Services.AddDetection();
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -216,7 +216,7 @@ try
     }
 
 
-    app.UseStaticFiles();
+    app.MapStaticAssets();
 
 
     // Configure the HTTP request pipeline.
@@ -264,10 +264,19 @@ try
     //     areaName: "Photos",
     //     pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
+    app.MapControllerRoute(name: "blog",
+        pattern: "blog/{*article}",
+        defaults: new { controller = "Blog", action = "Article " });
+
+
     app.MapControllers();
-
-
+    app.MapRazorPages();
+    app.MapDefaultControllerRoute(); // Adding this line caused the links to render properly!! 
+    app.UseDetection();
     app.UseRouting();
+
+    
+
     app.UseAuthentication();
     app.UseAuthorization();
     app.UseAntiforgery();
@@ -295,7 +304,7 @@ try
     //     .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
-
+ 
 
     app.Run();
 

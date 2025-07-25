@@ -9,7 +9,7 @@ public class MobileController : Controller
     public IActionResult ReadMore()
     {
         TempData["Message"] = DateTime.Now;
-        return Ok(DateTime.Now);
+        return View();
     }
 
 }

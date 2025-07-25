@@ -1,0 +1,22 @@
+@model MixModel
+
+
+<form method="post" asp-action="AddComment" asp-controller="Blog">
+    <div>
+        <label asp-for="Comments.CommentAuthor">Name:</label>
+        <input asp-for="Comments.CommentAuthor" type="text">
+    </div>
+    <div>
+        <label asp-for="Comments.CommentAuthorEmail">Email:</label>
+        <input asp-for="Comments.CommentAuthorEmail" type="email">
+    </div>
+    <div>
+        <label asp-for="Comments.CommentAuthorUrl">Website:</label>
+        <input asp-for="Comments.CommentAuthorUrl">
+    </div>
+    <div>
+        <label asp-for="Comments.CommentContent">Comment:</label>
+        <textarea rows="10" cols="30" asp-for="Comments.CommentContent"></textarea>
+    </div>
+    <button type="submit">Comment</button>
+</form>

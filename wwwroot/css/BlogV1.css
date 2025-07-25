@@ -66,6 +66,7 @@ form br {
   position: relative;
   background-color: #F29F05;
   color: white;
+  z-index: -1;
 }
 #Home img {
   width: 50%;
@@ -73,6 +74,7 @@ form br {
   align-self: center;
   display: flex;
   margin: 0 auto;
+  z-index: -1;
 }
 #Home h1 {
   font-size: 38pt !important;
@@ -614,7 +616,7 @@ main {
 
 .sticky {
   position: fixed !important;
-  z-index: 9999 !important;
+  z-index: 99999999 !important;
   top: 0 !important;
   right: 0 !important;
   left: 0 !important;

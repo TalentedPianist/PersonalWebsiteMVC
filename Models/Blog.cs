@@ -9,8 +9,8 @@ namespace PersonalWebsiteMVC.Models
 {
   public class MixModel
   {
-    public Posts Posts { get; set; } = default!;
-    public Comments Comments { get; set; } = default!;
+    public Posts? Posts { get; set; }
+    public Comments Comments { get; set; } = new Comments();
     public List<Posts> AllPosts { get; set; } = default!;
     public List<Comments> AllComments { get; set; } = default!;
   }

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using PersonalWebsiteMVC.Areas.Blog.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Controllers
 {
+    [Route("Blog")]
     public class BlogController : Controller
     {
         public ApplicationDbContext _db { get; set; }
@@ -32,12 +34,13 @@ namespace PersonalWebsiteMVC.Controllers
         // https://dotnettutorials.net/lesson/partial-view-result-in-asp-net-core-mvc/?utm_content=cmp-true
         // Also in dotnet 8, asp-action won't seem to work without the Route attribute. 
 
-        [HttpGet]
-        [Route("/SinglePost/{id:int}")]
-        public IActionResult SinglePost(int id)
+        [Route("{title}")]
+        public IActionResult SinglePost(string title)
         {
-            var model = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
-            return View("~/Views/Shared/Blog/SinglePost.cshtml", model);
+            MixModel model = new MixModel();
+            model.Posts = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
+            model.AllComments = _db.Comments.Where(p => p.PostID == model.Posts!.PostID).ToList();
+            return View("~/Views/Mobile/SinglePost.cshtml", model);
         }
 
         public IActionResult Comments(int id)
