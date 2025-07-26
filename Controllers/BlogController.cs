@@ -33,7 +33,7 @@ namespace PersonalWebsiteMVC.Controllers
 
         // https://dotnettutorials.net/lesson/partial-view-result-in-asp-net-core-mvc/?utm_content=cmp-true
         // Also in dotnet 8, asp-action won't seem to work without the Route attribute. 
-
+        [HttpGet]
         [Route("{title}")]
         public IActionResult SinglePost(string title)
         {
