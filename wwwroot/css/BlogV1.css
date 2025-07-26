@@ -36,14 +36,14 @@ form {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1em;
+  gap: 0.5em;
 }
 form div {
   display: flex;
   flex-direction: column;
 }
 form input {
-  padding: 5px 5px 5px 5px;
+  padding: 10px 10px 10px 10px;
   border: 1px solid black;
 }
 form label {
@@ -51,6 +51,12 @@ form label {
 }
 form br {
   display: none;
+}
+form button {
+  border: 1px solid black;
+  padding: 10px 10px 10px 10px;
+  background-color: orange;
+  font-size: large;
 }
 
 #Home {
