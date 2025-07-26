@@ -1,6 +1,7 @@
 @model MixModel
 
 
+
 <form method="post" asp-action="AddComment" asp-controller="Blog">
     <div>
         <label asp-for="Comments.CommentAuthor">Name:</label>
@@ -18,7 +19,9 @@
         <label asp-for="Comments.CommentContent">Comment:</label>
         <textarea rows="10" cols="30" asp-for="Comments.CommentContent" placeholder="This is a great website...."></textarea>
     </div>
-    
-    <div class="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
+    <input type="hidden" name="PostID" value="@Model.Posts!.PostID">
+    <input type="hidden" name="PostTitle" value="@Model.Posts.PostTitle">
+
+    <div id="recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
     <button type="submit">Comment</button>
 </form>

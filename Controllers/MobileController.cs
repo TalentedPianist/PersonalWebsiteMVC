@@ -2,21 +2,35 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PersonalWebsiteMVC.Models;
+using PersonalWebsiteMVC.Data;
 
 namespace PersonalWebsiteMVC.Controllers;
+
 
 [Controller]
 public class MobileController : Controller
 {
-    [HttpPost]
-    [Route("/Blog/AddComment")]
-    public async Task<PartialViewResult> AddComment(Comments comment, string captchaResponse)
+    public ApplicationDbContext _db { get; set; }
+
+    public MobileController(ApplicationDbContext db)
     {
-        TempData["Message"] = await VerifyCaptcha(captchaResponse);
-        return PartialView("~/Views/Mobile/CommentForm.cshtml");
+        _db = db;
     }
 
-    private async Task<bool> VerifyCaptcha(string captchaResponse)
+    [HttpPost("/Blog/AddComment")]
+    public async Task<IActionResult> AddComment(Comments comment, [FromForm(Name="g-recaptcha-response")]string captchaResponse, [FromForm(Name="PostTitle")] string title, [FromForm(Name="PostID")]int id)
+    {
+        TempData["Message"] = await VerifyCaptcha(captchaResponse);
+
+        MixModel model = new MixModel();
+        model.Posts = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
+        model.AllComments = _db.Comments.Where(p => p.PostID == id).ToList();
+
+        await Task.CompletedTask;
+        return View("~/Views/Mobile/SinglePost.cshtml", model);
+    }
+
+    private async Task<string> VerifyCaptcha(string captchaResponse)
     {
         var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
         var httpClient = new HttpClient();
@@ -25,9 +39,9 @@ public class MobileController : Controller
         {
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
-            return true;
+            return jsonResponse;
         }
-        return false;
+        return string.Empty;
     }
 
 }

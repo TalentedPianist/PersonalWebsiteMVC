@@ -6,6 +6,10 @@
 @if (Model is not null) 
 {
     <div id="SinglePost">
+        @TempData["Message"]
+
+        
+        
         <a href="javascript:history.go(-1)">Back</a>
 
         <h1>@Model.Posts!.PostTitle</h1>
