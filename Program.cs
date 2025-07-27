@@ -264,9 +264,9 @@ try
     //     areaName: "Photos",
     //     pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapControllerRoute(name: "blog",
-        pattern: "blog/{*article}",
-        defaults: new { controller = "Blog", action = "Article " });
+    app.MapControllerRoute(name: "Blog",
+        pattern: "Blog/{title}",
+        defaults: new { Controller = "Blog", action = "SinglePost" });
 
 
     app.MapControllers();

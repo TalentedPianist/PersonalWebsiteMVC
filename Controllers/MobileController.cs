@@ -11,10 +11,12 @@ namespace PersonalWebsiteMVC.Controllers;
 public class MobileController : Controller
 {
     public ApplicationDbContext _db { get; set; }
+    public IHttpContextAccessor _http { get; set; }
 
-    public MobileController(ApplicationDbContext db)
+    public MobileController(ApplicationDbContext db, IHttpContextAccessor http)
     {
         _db = db;
+        _http = http;
     }
 
 
@@ -35,35 +37,33 @@ public class MobileController : Controller
 
 
         model.Posts = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
-        model.Comments = new Comments();
         model.AllComments = _db.Comments.Where(p => p.PostID == id).ToList();
 
-        // if (!await VerifyCaptcha(captchaResponse))
-        // {
-        //     return View("~/Views/Mobile/SinglePost.cshtml", model);
-        // }
-        // else
-        // {
-        //     ModelState.AddModelError("", "Error validating reCaptcha.  Please try again.");
-        //     return View("~/Views/Mobile/SinglePost.cshtml", model);
-        // }
-        await Task.CompletedTask;
-        return View("~/Views/Mobile/SinglePost.cshtml", model);
+        model.Comments.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
+        model.Comments.CommentDate = DateTime.Now;
+        _db.Comments.Add(model.Comments);
+        _db.SaveChanges();
+        return RedirectToAction(title, "Blog");
+
+        // ModelState.AddModelError("", "Error validating reCaptcha.  Please try again.");
+        // return View("~/Views/Mobile/SinglePost.cshtml", model);
+
+
     }
 
-    // private async Task<bool> VerifyCaptcha(string captchaResponse)
-    // {
-    //     var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
-    //     var httpClient = new HttpClient();
-    //     var response = await httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}");
-    //     if (response.IsSuccessStatusCode)
-    //     {
-    //         var jsonResponse = await response.Content.ReadAsStringAsync();
-    //         var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
-    //         return captchaResult!.Success;
+    private async Task<bool> VerifyCaptcha(string captchaResponse)
+    {
+        var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
+        var httpClient = new HttpClient();
+        var response = await httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}");
+        if (response.IsSuccessStatusCode)
+        {
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
+            return captchaResult!.Success;
 
-    //     }
-    //     return false;
-    // }
+        }
+        return false;
+    }
 
 }

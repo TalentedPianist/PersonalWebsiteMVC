@@ -344,9 +344,10 @@ form button {
   flex-direction: column;
   flex: 1;
   margin-bottom: 1em;
+  gap: 2em;
 }
 #Comments img {
-  width: 10% !important;
+  width: 25% !important;
   margin-right: 2em;
 }
 #Comments hr {
