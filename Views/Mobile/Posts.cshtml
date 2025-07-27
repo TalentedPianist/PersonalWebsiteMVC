@@ -1,2 +1,32 @@
+@inject ApplicationDbContext _db
+
+@if (_db.Posts.Count() == 0)
+{
+}
+else
+{
+    <section>
+        @foreach (Posts post in _db.Posts)
+        {
+            var result = Truncate(post.PostContent!, 200);
+            <div id="PostContent">
+                <h2>@post.PostTitle</h2>
+                @RemoveHTMLTags(result)
+                <a href="/Blog/@post.PostTitle">Read</a>
+            </div>
+        }
+    </section>
+}
 
 
+@functions {
+    public static string Truncate(string value, int maxChars)
+    {
+        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + ".....";
+    }
+
+    public static string RemoveHTMLTags(string html)
+    {
+        return System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", string.Empty);
+    }
+}
