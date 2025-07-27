@@ -1,0 +1,25 @@
+@model ContactFormModel
+
+<h2>Contact</h2>
+
+@TempData["Message"]
+
+<form method="post" asp-action="SubmitContactForm" asp-controller="Mobile">
+    <div>
+        <label asp-for="Name">Name:</label>
+        <input asp-for="Name" placeholder="John Smith">
+    </div>
+    <div>
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" placeholder="john@johnsmith.com">
+    </div>
+    <div>
+        <label asp-for="Website">Website:</label>
+        <input asp-for="Website" placeholder="https://www.johnsmith.com">
+    </div>
+    <div>
+        <label asp-for="Message">Message:</label>
+        <textarea asp-for="Message" placeholder="This is a great website...." rows="10" cols="30"></textarea>
+    </div>
+    <button type="submit">Contact</button>
+</form>
