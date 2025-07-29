@@ -1,8 +1,10 @@
-import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph } from 'ckeditor5';
 
 ClassicEditor
-    .create(document.querySelector('#ckeditor1'), { 
-        toolbar: []
-    }
-})
-.
+    .create(document.querySelector("#ckeditor1"),  {
+        plugins: [ Essentials ],
+        toolbar: [],
+    })
+    .then()
+    .catch();
+
