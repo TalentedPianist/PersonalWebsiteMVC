@@ -1,11 +1,33 @@
 {
+  "scripts": {
+    "build": "esbuild wwwroot/js/main.js --bundle --outfile=wwwroot/js/bundle.js"
+  },
   "dependencies": {
     "aspnet-webpack": "^3.0.0",
     "ckeditor5": "^41.4.2",
     "flowbite": "^3.1.2",
     "jquery-breakpoints": "^1.8.1",
+    "lodash": "^4.17.21",
     "preline": "^3.1.0",
     "tailwindcss": "^3.4.17",
     "tw-elements": "^2.0.0"
-  }
+  },
+  "name": "personalwebsitemvc",
+  "version": "1.0.0",
+  "main": "tailwind.config.js",
+  "devDependencies": {
+    "esbuild": "^0.25.8"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TalentedPianist/PersonalWebsiteMVC.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TalentedPianist/PersonalWebsiteMVC/issues"
+  },
+  "homepage": "https://github.com/TalentedPianist/PersonalWebsiteMVC#readme",
+  "description": ""
 }

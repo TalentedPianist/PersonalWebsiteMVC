@@ -1,4 +1,3 @@
-
 const dialog = document.getElementById("myNav");
 
 function showDialog() {
@@ -45,3 +44,4 @@ var onloadCallback = function() {
    });
 
 };
+

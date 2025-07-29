@@ -18,7 +18,7 @@
     </div>
     <div>
         <label asp-for="Comments.CommentContent">Comment:</label>
-        <textarea rows="10" cols="30" asp-for="Comments.CommentContent" placeholder="This is a great website...."></textarea>
+        <textarea id="ckeditor1" asp-for="Comments.CommentContent" placeholder="This is a great website...."></textarea>
     </div>
     <input type="hidden" name="PostTitle" value="@Model.Posts!.PostTitle">
     <input type="hidden" asp-for="Comments.PostID" value="@Model.Posts!.PostID">
