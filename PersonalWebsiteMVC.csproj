@@ -24,6 +24,7 @@
     <PackageReference Include="Elastic.Clients.Elasticsearch" Version="9.0.7" />
     <PackageReference Include="GoogleCaptchaComponent" Version="5.0.0" />
     <PackageReference Include="HGO.ASPNetCore.FileManager" Version="1.0.7" />
+    <PackageReference Include="HotChocolate.AspNetCore" Version="15.1.8" />
     <PackageReference Include="HtmlAgilityPack" Version="1.12.2" />
     <PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.3" />
     <PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.1" />
@@ -39,6 +40,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="9.0.7" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.3.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="9.0.7">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -55,6 +57,7 @@
     <PackageReference Include="MudBlazor" Version="8.10.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
+    <PackageReference Include="Scalar.AspNetCore" Version="2.6.5" />
     <PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
     <PackageReference Include="ServiceStack.Extensions" Version="8.8.0" />
     <PackageReference Include="Sitko.Blazor.CKEditor" Version="4.2.1" />
@@ -62,6 +65,7 @@
     <PackageReference Include="SolrNet" Version="1.2.1" />
     <PackageReference Include="SolrNet.Core" Version="1.2.1" />
     <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
     <PackageReference Include="Wangkanai.Responsive" Version="7.14.0" />
     <PackageReference Include="X.PagedList" Version="10.5.7" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.7" />

@@ -1,10 +1,14 @@
-import { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph } from 'ckeditor5';
+import { ClassicEditor }  from '@ckeditor/ckeditor5-editor-classic';
+import { Essentials } from '@ckeditor/ckeditor5-essentials';
 
 ClassicEditor
-    .create(document.querySelector("#ckeditor1"),  {
+    .create(document.querySelector('#ckeditor1'), { 
         plugins: [ Essentials ],
-        toolbar: [],
+        toolbar: []
     })
-    .then()
-    .catch();
-
+    .then (editor => { 
+        console.log(editor);
+    })
+    .catch(error => { 
+        console.error(error.stack);
+    });

@@ -19,7 +19,8 @@ using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Wangkanai.Detection.Services;
-
+using HotChocolate.AspNetCore;
+using Scalar.AspNetCore;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -202,6 +203,8 @@ try
 
     builder.Services.AddDetection();
 
+    builder.Services.AddSwaggerGen();
+
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
         .Get<MailSettings>();
@@ -304,7 +307,10 @@ try
     //     .AddInteractiveServerRenderMode();
     //app.MapFallbackToPage("/");
 
- 
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+
+    app.MapPostsEndpoints();
 
     app.Run();
 

@@ -17,6 +17,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
 
 		// GET: /<controller>/
+		[NonAction]
 		public IActionResult Index()
 		{
 			return View();

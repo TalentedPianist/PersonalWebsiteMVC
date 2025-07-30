@@ -30,7 +30,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             _http = context;
         }
 
-
+        [NonAction]
         [Route("Photos/Index")]
         [Route("Photos/Index/{id}")] // To get a route working properly without the querystring, you need to have the id parameter in the route as above.
         public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
@@ -38,7 +38,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
             int id = Convert.ToInt32(RouteData.Values["id"]);
 
-            string path = Path.Combine(Host.ContentRootPath, "Gallery", HttpContext.Request.Query["name"]!);
+            string path = System.IO.Path.Combine(Host.ContentRootPath, "Gallery", HttpContext.Request.Query["name"]!);
 
             DirectoryInfo di = new DirectoryInfo(path);
 
@@ -77,12 +77,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             var album = _db.Albums.Where(a => a.AlbumID == AlbumID).FirstOrDefault();
             long size = files.Sum(f => f.Length);
             StringBuilder sb = new StringBuilder();
-            var filePath = Path.Combine(Host.ContentRootPath, "Gallery");
+            var filePath = System.IO.Path.Combine(Host.ContentRootPath, "Gallery");
             try
             {
                 foreach (IFormFile file in files)
                 {
-                    using (var stream = new FileStream(Path.Combine(filePath, file.FileName), FileMode.Create))
+                    using (var stream = new FileStream(System.IO.Path.Combine(filePath, file.FileName), FileMode.Create))
                     {
                         await file.CopyToAsync(stream);
                     }

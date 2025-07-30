@@ -25,6 +25,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         }
 
+        [NonAction]
         [Microsoft.AspNetCore.Mvc.Route("Admin/Blog")]
         public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
         {

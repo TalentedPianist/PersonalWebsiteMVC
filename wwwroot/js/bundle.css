@@ -1,0 +1,860 @@
+/* node_modules/@ckeditor/ckeditor5-ui/theme/globals/_hidden.css */
+.ck-hidden {
+  display: none !important;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/globals/_zindex.css */
+:root {
+  --ck-z-default: 1;
+  --ck-z-panel: calc( var(--ck-z-default) + 999 );
+  --ck-z-dialog: 9999;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/globals/_transition.css */
+.ck-transitions-disabled,
+.ck-transitions-disabled * {
+  transition: none !important;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/globals/_poweredby.css */
+:root {
+  --ck-powered-by-line-height: 10px;
+  --ck-powered-by-padding-vertical: 2px;
+  --ck-powered-by-padding-horizontal: 4px;
+  --ck-powered-by-text-color: hsl(0, 0%, 31%);
+  --ck-powered-by-border-radius: var(--ck-border-radius);
+  --ck-powered-by-background: hsl(0, 0%, 100%);
+  --ck-powered-by-border-color: var(--ck-color-focus-border);
+}
+.ck.ck-balloon-panel.ck-powered-by-balloon {
+  --ck-border-radius: var(--ck-powered-by-border-radius);
+  box-shadow: none;
+  background: var(--ck-powered-by-background);
+  min-height: unset;
+  z-index: calc(var(--ck-z-panel) - 1);
+  & .ck.ck-powered-by {
+    line-height: var(--ck-powered-by-line-height);
+    & a {
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      opacity: .66;
+      filter: grayscale(80%);
+      line-height: var(--ck-powered-by-line-height);
+      padding: var(--ck-powered-by-padding-vertical) var(--ck-powered-by-padding-horizontal);
+    }
+    & .ck-powered-by__label {
+      font-size: 7.5px;
+      letter-spacing: -.2px;
+      padding-left: 2px;
+      text-transform: uppercase;
+      font-weight: bold;
+      margin-right: 4px;
+      cursor: pointer;
+      line-height: normal;
+      color: var(--ck-powered-by-text-color);
+    }
+    & .ck-icon {
+      display: block;
+      cursor: pointer;
+    }
+    &:hover {
+      & a {
+        filter: grayscale(0%);
+        opacity: 1;
+      }
+    }
+  }
+  &[class*=position_inside] {
+    border-color: transparent;
+  }
+  &[class*=position_border] {
+    border: var(--ck-focus-ring);
+    border-color: var(--ck-powered-by-border-color);
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/globals/globals.css */
+
+/* node_modules/@ckeditor/ckeditor5-engine/theme/placeholder.css */
+.ck.ck-placeholder,
+.ck .ck-placeholder {
+  position: relative;
+  &::before {
+    position: absolute;
+    left: 0;
+    right: 0;
+    content: attr(data-placeholder);
+    pointer-events: none;
+  }
+}
+.ck.ck-read-only .ck-placeholder {
+  &::before {
+    display: none;
+  }
+}
+.ck.ck-reset_all .ck-placeholder {
+  position: relative;
+}
+
+/* node_modules/@ckeditor/ckeditor5-engine/theme/renderer.css */
+.ck.ck-editor__editable span[data-ck-unsafe-element] {
+  display: none;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/label/label.css */
+.ck.ck-label {
+  display: block;
+}
+.ck.ck-voice-label {
+  display: none;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/editorui/accessibilityhelp.css */
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/icon/icon.css */
+.ck.ck-icon {
+  vertical-align: middle;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/button/button.css */
+.ck.ck-button,
+a.ck.ck-button {
+  @mixin ck-unselectable;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  @mixin ck-dir ltr { justify-content: left; }
+  @mixin ck-dir rtl { justify-content: right; }
+  & .ck-button__label {
+    display: none;
+  }
+  &.ck-button_with-text {
+    & .ck-button__label {
+      display: inline-block;
+    }
+  }
+  &:not(.ck-button_with-text) {
+    justify-content: center;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/button/switchbutton.css */
+.ck.ck-button.ck-switchbutton {
+  & .ck-button__toggle {
+    display: block;
+    & .ck-button__toggle__inner {
+      display: block;
+    }
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/collapsible/collapsible.css */
+.ck.ck-collapsible.ck-collapsible_collapsed {
+  & > .ck-collapsible__children {
+    display: none;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/colorgrid/colorgrid.css */
+.ck.ck-color-grid {
+  display: grid;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/labeledfield/labeledfieldview.css */
+.ck.ck-labeled-field-view {
+  & > .ck.ck-labeled-field-view__input-wrapper {
+    display: flex;
+    position: relative;
+  }
+  & .ck.ck-label {
+    display: block;
+    position: absolute;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/input/input.css */
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/textarea/textarea.css */
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/dropdown/dropdown.css */
+:root {
+  --ck-dropdown-max-width: 75vw;
+}
+.ck.ck-dropdown {
+  display: inline-block;
+  position: relative;
+  & .ck-dropdown__arrow {
+    pointer-events: none;
+    z-index: var(--ck-z-default);
+  }
+  & .ck-button.ck-dropdown__button {
+    width: 100%;
+  }
+  & .ck-dropdown__panel {
+    display: none;
+    z-index: var(--ck-z-panel);
+    max-width: var(--ck-dropdown-max-width);
+    position: absolute;
+    &.ck-dropdown__panel-visible {
+      display: inline-block;
+    }
+    &.ck-dropdown__panel_ne,
+    &.ck-dropdown__panel_nw,
+    &.ck-dropdown__panel_n,
+    &.ck-dropdown__panel_nmw,
+    &.ck-dropdown__panel_nme {
+      bottom: 100%;
+    }
+    &.ck-dropdown__panel_se,
+    &.ck-dropdown__panel_sw,
+    &.ck-dropdown__panel_smw,
+    &.ck-dropdown__panel_sme,
+    &.ck-dropdown__panel_s {
+      top: 100%;
+      bottom: auto;
+    }
+    &.ck-dropdown__panel_ne,
+    &.ck-dropdown__panel_se {
+      left: 0px;
+    }
+    &.ck-dropdown__panel_nw,
+    &.ck-dropdown__panel_sw {
+      right: 0px;
+    }
+    &.ck-dropdown__panel_s,
+    &.ck-dropdown__panel_n {
+      left: 50%;
+      transform: translateX(-50%);
+    }
+    &.ck-dropdown__panel_nmw,
+    &.ck-dropdown__panel_smw {
+      left: 75%;
+      transform: translateX(-75%);
+    }
+    &.ck-dropdown__panel_nme,
+    &.ck-dropdown__panel_sme {
+      left: 25%;
+      transform: translateX(-25%);
+    }
+  }
+}
+.ck.ck-toolbar .ck-dropdown__panel {
+  z-index: calc(var(--ck-z-panel) + 1);
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/toolbar/toolbar.css */
+.ck.ck-toolbar {
+  @mixin ck-unselectable;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  & > .ck-toolbar__items {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: center;
+    flex-grow: 1;
+  }
+  & .ck.ck-toolbar__separator {
+    display: inline-block;
+    &:first-child,
+    &:last-child {
+      display: none;
+    }
+  }
+  & .ck-toolbar__line-break {
+    flex-basis: 100%;
+  }
+  &.ck-toolbar_grouping > .ck-toolbar__items {
+    flex-wrap: nowrap;
+  }
+  &.ck-toolbar_vertical > .ck-toolbar__items {
+    flex-direction: column;
+  }
+  &.ck-toolbar_floating > .ck-toolbar__items {
+    flex-wrap: nowrap;
+  }
+  & > .ck.ck-toolbar__grouped-dropdown {
+    & > .ck-dropdown__button .ck-dropdown__arrow {
+      display: none;
+    }
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/list/list.css */
+.ck.ck-list {
+  @mixin ck-unselectable;
+  display: flex;
+  flex-direction: column;
+  & .ck-list__item,
+  & .ck-list__separator {
+    display: block;
+  }
+  & .ck-list__item > *:focus {
+    position: relative;
+    z-index: var(--ck-z-default);
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/dropdown/splitbutton.css */
+.ck.ck-splitbutton {
+  font-size: inherit;
+  & .ck-splitbutton__action:focus {
+    z-index: calc(var(--ck-z-default) + 1);
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/dropdown/toolbardropdown.css */
+:root {
+  --ck-toolbar-dropdown-max-width: 60vw;
+}
+.ck.ck-toolbar-dropdown > .ck-dropdown__panel {
+  width: max-content;
+  max-width: var(--ck-toolbar-dropdown-max-width);
+  & .ck-button {
+    &:focus {
+      z-index: calc(var(--ck-z-default) + 1);
+    }
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/dropdown/listdropdown.css */
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/colorpicker/colorpicker.css */
+.color-picker-hex-input {
+  width: max-content;
+  & .ck.ck-input {
+    min-width: unset;
+  }
+}
+.ck.ck-color-picker__row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+  margin: var(--ck-spacing-large) 0 0;
+  width: unset;
+  & .ck.ck-labeled-field-view {
+    padding-top: unset;
+  }
+  & .ck.ck-input-text {
+    width: unset;
+  }
+  & .ck-color-picker__hash-view {
+    padding-top: var(--ck-spacing-tiny);
+    padding-right: var(--ck-spacing-medium);
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/colorselector/colorselector.css */
+.ck.ck-color-selector {
+  & .ck-color-grids-fragment {
+    & .ck-button.ck-color-selector__remove-color,
+    & .ck-button.ck-color-selector__color-picker {
+      display: flex;
+      align-items: center;
+      @mixin ck-dir rtl { justify-content: flex-start; }
+    }
+  }
+  & .ck-color-picker-fragment {
+    & .ck.ck-color-selector_action-bar {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      & .ck-button-save,
+      & .ck-button-cancel {
+        flex: 1;
+      }
+    }
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/formheader/formheader.css */
+.ck.ck-form__header {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: space-between;
+  & h2.ck-form__header__label {
+    flex-grow: 1;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/dialog/dialogactions.css */
+.ck.ck-dialog {
+  & .ck.ck-dialog__actions {
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/dialog/dialog.css */
+.ck.ck-dialog-overlay {
+  user-select: none;
+  overscroll-behavior: none;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  &.ck-dialog-overlay__transparent {
+    pointer-events: none;
+    animation: none;
+    background: none;
+  }
+}
+.ck.ck-dialog {
+  overscroll-behavior: none;
+  width: fit-content;
+  position: absolute;
+  & .ck.ck-form__header {
+    flex-shrink: 0;
+    & .ck-form__header__label {
+      cursor: grab;
+    }
+  }
+  @nest .ck.ck-dialog-overlay.ck-dialog-overlay__transparent & { pointer-events: all; }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/panel/balloonpanel.css */
+:root {
+  --ck-balloon-panel-arrow-z-index: calc(var(--ck-z-default) - 3);
+}
+.ck.ck-balloon-panel {
+  display: none;
+  position: absolute;
+  z-index: var(--ck-z-panel);
+  &.ck-balloon-panel_with-arrow {
+    &::before,
+    &::after {
+      content: "";
+      position: absolute;
+    }
+    &::before {
+      z-index: var(--ck-balloon-panel-arrow-z-index);
+    }
+    &::after {
+      z-index: calc(var(--ck-balloon-panel-arrow-z-index) + 1);
+    }
+  }
+  &[class*=arrow_n] {
+    &::before {
+      z-index: var(--ck-balloon-panel-arrow-z-index);
+    }
+    &::after {
+      z-index: calc(var(--ck-balloon-panel-arrow-z-index) + 1);
+    }
+  }
+  &[class*=arrow_s] {
+    &::before {
+      z-index: var(--ck-balloon-panel-arrow-z-index);
+    }
+    &::after {
+      z-index: calc(var(--ck-balloon-panel-arrow-z-index) + 1);
+    }
+  }
+  &.ck-balloon-panel_visible {
+    display: block;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/mixins/_unselectable.css */
+@define-mixin ck-unselectable { -moz-user-select: none; -webkit-user-select: none; -ms-user-select: none; user-select: none }
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/tooltip/tooltip.css */
+.ck.ck-balloon-panel.ck-tooltip {
+  @mixin ck-unselectable;
+  z-index: calc(var(--ck-z-dialog) + 100);
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/arialiveannouncer/arialiveannouncer.css */
+.ck.ck-aria-live-announcer {
+  position: absolute;
+  left: -10000px;
+  top: -10000px;
+}
+.ck.ck-aria-live-region-list {
+  list-style-type: none;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/editorui/editorui.css */
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/panel/balloonrotator.css */
+.ck .ck-balloon-rotator__navigation {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.ck .ck-balloon-rotator__content .ck-toolbar {
+  justify-content: center;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/panel/fakepanel.css */
+.ck .ck-fake-panel {
+  position: absolute;
+  z-index: calc(var(--ck-z-panel) - 1);
+}
+.ck .ck-fake-panel div {
+  position: absolute;
+}
+.ck .ck-fake-panel div:nth-child(1) {
+  z-index: 2;
+}
+.ck .ck-fake-panel div:nth-child(2) {
+  z-index: 1;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/panel/stickypanel.css */
+.ck.ck-sticky-panel {
+  & .ck-sticky-panel__content_sticky {
+    z-index: var(--ck-z-panel);
+    position: fixed;
+    top: 0;
+  }
+  & .ck-sticky-panel__content_sticky_bottom-limit {
+    top: auto;
+    position: absolute;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/mixins/_dir.css */
+@define-mixin ck-dir $direction { @nest [dir="$(direction)"] & { @mixin-content; } }
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/search/search.css */
+.ck.ck-search {
+  & > .ck-labeled-field-view {
+    & > .ck-labeled-field-view__input-wrapper > .ck-icon {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      @mixin ck-dir ltr { left: var(--ck-spacing-medium); }
+      @mixin ck-dir rtl { right: var(--ck-spacing-medium); }
+    }
+    & .ck-search__reset {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+  & > .ck-search__results {
+    & > .ck-search__info {
+      & > span:first-child {
+        display: block;
+      }
+      &:not(.ck-hidden) ~ * {
+        display: none;
+      }
+    }
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/autocomplete/autocomplete.css */
+.ck.ck-autocomplete {
+  position: relative;
+  & > .ck-search__results {
+    position: absolute;
+    z-index: var(--ck-z-panel);
+    &.ck-search__results_n {
+      bottom: 100%;
+    }
+    &.ck-search__results_s {
+      top: 100%;
+      bottom: auto;
+    }
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/highlightedtext/highlightedtext.css */
+.ck.ck-highlighted-text mark {
+  background: var(--ck-color-highlight-background);
+  vertical-align: initial;
+  font-weight: inherit;
+  line-height: inherit;
+  font-size: inherit;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/spinner/spinner.css */
+:root {
+  --ck-toolbar-spinner-size: 18px;
+}
+.ck.ck-spinner-container {
+  display: block;
+  position: relative;
+}
+.ck.ck-spinner {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/toolbar/blocktoolbar.css */
+.ck.ck-block-toolbar-button {
+  position: absolute;
+  z-index: var(--ck-z-default);
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/menubar/menubarmenubutton.css */
+.ck.ck-menu-bar__menu {
+  & > .ck-menu-bar__menu__button > .ck-menu-bar__menu__button__arrow {
+    pointer-events: none;
+    z-index: var(--ck-z-default);
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/menubar/menubarmenulistitem.css */
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/menubar/menubarmenupanel.css */
+:root {
+  --ck-menu-bar-menu-max-width: 75vw;
+  --ck-menu-bar-nested-menu-horizontal-offset: 5px;
+}
+.ck.ck-menu-bar__menu > .ck.ck-menu-bar__menu__panel {
+  z-index: var(--ck-z-panel);
+  max-width: var(--ck-menu-bar-menu-max-width);
+  position: absolute;
+  &.ck-menu-bar__menu__panel_position_ne,
+  &.ck-menu-bar__menu__panel_position_nw {
+    bottom: 100%;
+  }
+  &.ck-menu-bar__menu__panel_position_se,
+  &.ck-menu-bar__menu__panel_position_sw {
+    top: 100%;
+    bottom: auto;
+  }
+  &.ck-menu-bar__menu__panel_position_ne,
+  &.ck-menu-bar__menu__panel_position_se {
+    left: 0px;
+  }
+  &.ck-menu-bar__menu__panel_position_nw,
+  &.ck-menu-bar__menu__panel_position_sw {
+    right: 0px;
+  }
+  &.ck-menu-bar__menu__panel_position_es,
+  &.ck-menu-bar__menu__panel_position_en {
+    left: calc(100% - var(--ck-menu-bar-nested-menu-horizontal-offset));
+  }
+  &.ck-menu-bar__menu__panel_position_es {
+    top: 0px;
+  }
+  &.ck-menu-bar__menu__panel_position_en {
+    bottom: 0px;
+  }
+  &.ck-menu-bar__menu__panel_position_ws,
+  &.ck-menu-bar__menu__panel_position_wn {
+    right: calc(100% - var(--ck-menu-bar-nested-menu-horizontal-offset));
+  }
+  &.ck-menu-bar__menu__panel_position_ws {
+    top: 0px;
+  }
+  &.ck-menu-bar__menu__panel_position_wn {
+    bottom: 0px;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/menubar/menubarmenu.css */
+.ck.ck-menu-bar__menu {
+  display: block;
+  position: relative;
+}
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/menubar/menubarmenulistitembutton.css */
+
+/* node_modules/@ckeditor/ckeditor5-ui/theme/components/menubar/menubar.css */
+
+/* node_modules/@ckeditor/ckeditor5-editor-classic/theme/classiceditor.css */
+.ck.ck-editor {
+  position: relative;
+  & .ck-editor__top .ck-sticky-panel .ck-toolbar {
+    z-index: var(--ck-z-panel);
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-widget/theme/widgettypearound.css */
+.ck .ck-widget {
+  & .ck-widget__type-around__button {
+    display: block;
+    position: absolute;
+    overflow: hidden;
+    z-index: var(--ck-z-default);
+    & svg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: calc(var(--ck-z-default) + 2);
+    }
+    &.ck-widget__type-around__button_before {
+      top: calc(-0.5 * var(--ck-widget-outline-thickness));
+      left: min(10%, 30px);
+      transform: translateY(-50%);
+    }
+    &.ck-widget__type-around__button_after {
+      bottom: calc(-0.5 * var(--ck-widget-outline-thickness));
+      right: min(10%, 30px);
+      transform: translateY(50%);
+    }
+  }
+  &.ck-widget_selected > .ck-widget__type-around > .ck-widget__type-around__button,
+  & > .ck-widget__type-around > .ck-widget__type-around__button:hover {
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      z-index: calc(var(--ck-z-default) + 1);
+    }
+  }
+  & > .ck-widget__type-around > .ck-widget__type-around__fake-caret {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+  }
+  &:hover > .ck-widget__type-around > .ck-widget__type-around__fake-caret {
+    left: calc(-1 * var(--ck-widget-outline-thickness));
+    right: calc(-1 * var(--ck-widget-outline-thickness));
+  }
+  &.ck-widget_type-around_show-fake-caret_before > .ck-widget__type-around > .ck-widget__type-around__fake-caret {
+    top: calc(-1 * var(--ck-widget-outline-thickness) - 1px);
+    display: block;
+  }
+  &.ck-widget_type-around_show-fake-caret_after > .ck-widget__type-around > .ck-widget__type-around__fake-caret {
+    bottom: calc(-1 * var(--ck-widget-outline-thickness) - 1px);
+    display: block;
+  }
+}
+.ck.ck-editor__editable.ck-read-only .ck-widget__type-around {
+  display: none;
+}
+.ck.ck-editor__editable.ck-restricted-editing_mode_restricted .ck-widget__type-around {
+  display: none;
+}
+.ck.ck-editor__editable.ck-widget__type-around_disabled .ck-widget__type-around {
+  display: none;
+}
+
+/* node_modules/@ckeditor/ckeditor5-widget/theme/widget.css */
+:root {
+  --ck-color-resizer: var(--ck-color-focus-border);
+  --ck-color-resizer-tooltip-background: hsl(0, 0%, 15%);
+  --ck-color-resizer-tooltip-text: hsl(0, 0%, 95%);
+  --ck-resizer-border-radius: var(--ck-border-radius);
+  --ck-resizer-tooltip-offset: 10px;
+  --ck-resizer-tooltip-height: calc(var(--ck-spacing-small) * 2 + 10px);
+}
+.ck .ck-widget {
+  position: relative;
+}
+.ck .ck-widget.ck-widget_with-selection-handle {
+  position: relative;
+  & .ck-widget__selection-handle {
+    position: absolute;
+    & .ck-icon {
+      display: block;
+    }
+  }
+  &:hover > .ck-widget__selection-handle {
+    visibility: visible;
+  }
+  &.ck-widget_selected > .ck-widget__selection-handle {
+    visibility: visible;
+  }
+}
+.ck .ck-size-view {
+  background: var(--ck-color-resizer-tooltip-background);
+  color: var(--ck-color-resizer-tooltip-text);
+  border: 1px solid var(--ck-color-resizer-tooltip-text);
+  border-radius: var(--ck-resizer-border-radius);
+  font-size: var(--ck-font-size-tiny);
+  display: block;
+  padding: 0 var(--ck-spacing-small);
+  height: var(--ck-resizer-tooltip-height);
+  line-height: var(--ck-resizer-tooltip-height);
+  &.ck-orientation-top-left,
+  &.ck-orientation-top-right,
+  &.ck-orientation-bottom-right,
+  &.ck-orientation-bottom-left,
+  &.ck-orientation-above-center {
+    position: absolute;
+  }
+  &.ck-orientation-top-left {
+    top: var(--ck-resizer-tooltip-offset);
+    left: var(--ck-resizer-tooltip-offset);
+  }
+  &.ck-orientation-top-right {
+    top: var(--ck-resizer-tooltip-offset);
+    right: var(--ck-resizer-tooltip-offset);
+  }
+  &.ck-orientation-bottom-right {
+    bottom: var(--ck-resizer-tooltip-offset);
+    right: var(--ck-resizer-tooltip-offset);
+  }
+  &.ck-orientation-bottom-left {
+    bottom: var(--ck-resizer-tooltip-offset);
+    left: var(--ck-resizer-tooltip-offset);
+  }
+  &.ck-orientation-above-center {
+    top: calc(var(--ck-resizer-tooltip-height) * -1);
+    left: 50%;
+    transform: translate(-50%);
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-widget/theme/widgetresize.css */
+.ck .ck-widget_with-resizer {
+  position: relative;
+}
+.ck .ck-widget__resizer {
+  display: none;
+  position: absolute;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+}
+.ck-focused .ck-widget_with-resizer.ck-widget_selected {
+  & > .ck-widget__resizer {
+    display: block;
+  }
+}
+.ck .ck-widget__resizer__handle {
+  position: absolute;
+  pointer-events: all;
+  &.ck-widget__resizer__handle-top-left,
+  &.ck-widget__resizer__handle-bottom-right {
+    cursor: nwse-resize;
+  }
+  &.ck-widget__resizer__handle-top-right,
+  &.ck-widget__resizer__handle-bottom-left {
+    cursor: nesw-resize;
+  }
+}
+
+/* node_modules/@ckeditor/ckeditor5-clipboard/theme/clipboard.css */
+.ck.ck-editor__editable {
+  & .ck.ck-clipboard-drop-target-position {
+    display: inline;
+    position: relative;
+    pointer-events: none;
+    & span {
+      position: absolute;
+      width: 0;
+    }
+  }
+  & .ck-widget:-webkit-drag {
+    & > .ck-widget__selection-handle {
+      display: none;
+    }
+    & > .ck-widget__type-around {
+      display: none;
+    }
+  }
+}
+.ck.ck-clipboard-drop-target-line {
+  position: absolute;
+  pointer-events: none;
+}

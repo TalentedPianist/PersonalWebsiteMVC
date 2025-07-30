@@ -18,7 +18,8 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             _http = http;
         }
 
-       [Microsoft.AspNetCore.Mvc.Route("Photos/Album")]
+        [NonAction]
+        [Microsoft.AspNetCore.Mvc.Route("Photos/Album")]
         public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
         {
             int id = Convert.ToInt32(_http.HttpContext!.Request.Query["id"]);

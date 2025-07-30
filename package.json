@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "build": "esbuild wwwroot/js/main.js --bundle --outfile=wwwroot/js/bundle.js"
+    "build": "esbuild wwwroot/js/main.js --bundle --outfile=wwwroot/js/bundle.js --loader:.svg=dataurl"
   },
   "dependencies": {
+    "@ckeditor/ckeditor5-build-classic": "^41.4.2",
     "aspnet-webpack": "^3.0.0",
     "ckeditor5": "^41.4.2",
     "flowbite": "^3.1.2",
