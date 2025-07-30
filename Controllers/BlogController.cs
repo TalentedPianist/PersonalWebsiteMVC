@@ -23,6 +23,14 @@ namespace PersonalWebsiteMVC.Controllers
 
             if (HttpContext.Request.Query["id"].ToString() != null)
             {
+                int pageSize = 3;
+                int currentPage = 1;
+                List<Posts> pagedPosts = _db.Posts
+                    .Skip((currentPage - 1) * pageSize)
+                    .Take(pageSize)
+                    .ToList();
+                ViewBag.MyPosts = pagedPosts;
+
                 return View("~/Views/Shared/Blog/SinglePost.cshtml");
             }
             else
@@ -51,6 +59,14 @@ namespace PersonalWebsiteMVC.Controllers
             return View("~/Views/Blog/Comments.cshtml");
         }
 
-      
+
+        [Route("/Blog/LoadMore")]
+        public IActionResult LoadMore(int skip)
+        {
+            var posts = _db.Posts.Skip(skip).Take(1).ToList();
+            ViewBag.MyPosts = posts;
+
+            return View("~/Views/Mobile/Posts.cshtml");
+        }
     }
 }

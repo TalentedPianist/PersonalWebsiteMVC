@@ -72,7 +72,6 @@ form button {
   position: relative;
   background-color: #F29F05;
   color: white;
-  z-index: -1;
 }
 #Home img {
   width: 50%;
@@ -80,7 +79,6 @@ form button {
   align-self: center;
   display: flex;
   margin: 0 auto;
-  z-index: -1;
 }
 #Home h1 {
   font-size: 38pt !important;
@@ -273,6 +271,21 @@ form button {
 #Blog section hr {
   margin-bottom: 1em;
 }
+#Blog section:nth-of-type(2) {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  vertical-align: center;
+  width: 100%;
+}
+#Blog section:nth-of-type(2) button {
+  align-self: center;
+}
+#Blog section:nth-of-type(2) button:nth-of-type(1) {
+  background-color: green;
+  align-self: center;
+}
 #Blog button {
   align-self: flex-start !important;
 }
@@ -298,9 +311,6 @@ form button {
 #PostContent h2 {
   padding: 0 !important;
   margin: 0 !important;
-}
-#PostContent button {
-  align-self: flex-start !important;
 }
 @media only screen and (min-width: 600px) {
   #PostContent {

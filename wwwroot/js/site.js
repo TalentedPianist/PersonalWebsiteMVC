@@ -63,9 +63,27 @@ var onloadCallback = function () {
 //     });
 
 
-if (/Mobi|Android|iPhone/i.test(navigator.userAgent)) {
+// Load more stuff....
+let skip = 1; 
+const pageSize = 1; 
+$('#loadMoreBtn').on('click', function(e) { 
+    e.preventDefault();
 
-    // Infinate scroll stuff
-    let elem = document.querySelector('#PostContent');
-    $(elem).not(':eq(0)').hide();
-}
+    $.get('/Blog/LoadMore', { skip: skip }, function(data) { 
+        console.log(data);
+        $('#Blog section:nth-of-type(1)').append(data);
+        skip = skip + 1; 
+
+    });
+});
+
+// Show less button...
+$('#showLessBtn').on('click', function(e) { 
+    e.preventDefault();
+
+    const lastBatch = $('#blogPosts').last();
+    lastBatch.slideUp('fast', function() { 
+        lastBatch.remove();
+        skip -= pageSize;
+    });
+});

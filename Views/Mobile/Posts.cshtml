@@ -6,16 +6,19 @@
 else
 {
     <div id="Blog">
-        <section>
-            @foreach (Posts post in _db.Posts)
+        @TempData["Message"]
+        <section id="blogPosts">
+            @foreach (Posts post in ViewBag.MyPosts)
             {
                 var result = Truncate(post.PostContent!, 200);
                 <div id="PostContent">
-                    <h2>@post.PostTitle</h2>
-                    @RemoveHTMLTags(result)
-                    <a href="/Blog/@post.PostTitle">Read</a>
+                   <PostCard model="@post" />
                 </div>
             }
+        </section>
+        <section>
+            <button id="loadMoreBtn">Load More</button>
+            <button id="showLessBtn">Show Less</button>
         </section>
     </div>
 }
