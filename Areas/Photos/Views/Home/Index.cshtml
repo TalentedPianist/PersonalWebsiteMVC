@@ -27,9 +27,12 @@
                 }
                 else
                 {
+                    
                     <figure>
-                        <img src="@album.CoverPhoto">
-                        <figcaption><a asp-action="Index" asp-controller="Album" asp-route-name="@album.Name" asp-route-id="@album.AlbumID">@album.Name</a></figcaption>
+                        <img src="/Gallery/@album.Name/@album.CoverPhoto">
+                        <figcaption><a asp-action="Index" 
+                        asp-controller="Album"
+                        asp-route-name="@album.Name" asp-route-id="@album.AlbumID">@album.Name</a></figcaption>
                     </figure>
                 }
             }

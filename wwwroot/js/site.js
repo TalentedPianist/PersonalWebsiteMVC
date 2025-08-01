@@ -42,28 +42,28 @@ $(function () {
 
 });
 
-var onloadCallback = function () {
-    grecaptcha.render('recaptcha', {
-        'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz '
+// var onloadCallback = function () {
+//     grecaptcha.render('recaptcha', {
+//         'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz '
 
-    });
+//     });
 
-};
+// };
 
-const { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph } = CKEDITOR;
+// const { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph } = CKEDITOR;
 
-ClassicEditor
-    .create(document.querySelector('#ckeditor1'), {
-        licenseKey: 'GPL',
-        plugins: [Essentials, Bold, Italic, Font, Paragraph],
-        toolbar: []
-    })
-    .then(editor => {
-        console.log(editor);
-    })
-    .catch(error => {
-        console.log(error);
-    });
+// ClassicEditor
+//     .create(document.querySelector('#ckeditor1'), {
+//         licenseKey: 'GPL',
+//         plugins: [Essentials, Bold, Italic, Font, Paragraph],
+//         toolbar: []
+//     })
+//     .then(editor => {
+//         console.log(editor);
+//     })
+//     .catch(error => {
+//         console.log(error);
+//     });
 
 
 // Load more stuff....
@@ -92,11 +92,53 @@ $('#showLessBtn').on('click', function (e) {
 
 });
 
-// When the user scrolls the page, execute the scrollPage function
-window.onscroll = function () { scrollPage() };
-function scrollPage() {
-    var winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-    var height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-    var scrolled = (winScroll / height) * 100;
-    document.getElementById("myBar").style.width = scrolled + "%";
-}
+
+// Photo gallery comments
+// Initialize Featherlight instance
+$("a.gallery").featherlightGallery({ 
+    galleryFadeIn: 100, 
+    galleryFadeOut: 300,
+    afterContent: function() { 
+        let image = $(this.$currentTarget);
+        let name = $(image).data('name');
+        let comments = $(this.$content);
+        console.log(this);
+        console.log(comments);
+        // Get comments for photo using Ajax
+        $.ajax({
+            method: "GET",
+            url: "/Album/GetComments",
+            data: { name: name },
+            async: false,
+            cache: false,
+            success: function(message) { 
+                $(comments).after(`
+                    <form method="post">
+                        <div>
+                            <label>Name:</label>
+                            <input type="text" placeholder="John Smith" name="txtName">
+                        </div>
+                        <div>
+                            <label>Email:</label>
+                            <input type="text" placeholder="john@johnsmith.com">
+                        </div>
+                        <div>
+                            <label>Website:</label>
+                            <input type="text" placeholder="https://www.johnsmith.com">
+                        </div>
+                        <div>
+                            <label>Comment:</label>
+                            <textarea rows="10" cols="30" placeholder="This is a great photo...."></textarea>
+                        </div>
+                        <button type="submit">Comment</button>
+                    </form>
+
+                `);
+            },
+            error: function(error) { 
+                console.log(error);
+            }
+        });
+       
+    },
+});
