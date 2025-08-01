@@ -237,6 +237,7 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: 2em;
     height: 100%;
     color: black !important;
     position: relative;
@@ -261,6 +262,11 @@ form {
         z-index: -1;
         margin-bottom: 0 !important;
 
+        @media only screen and (min-width: 768px) { 
+            position: relative;
+            height: revert;
+        }
+
         @media only screen and (min-width: 600px) {
             background-color: revert;
             position: relative;
@@ -268,6 +274,8 @@ form {
             width: 100%;
             background-color: revert;
             z-index: revert;
+            flex-direction: row;
+    
         }
     }
 
@@ -292,6 +300,10 @@ form {
         flex: 0;
         background-color: #f2740f;
         position: relative;
+
+        @media only screen and (min-width: 767px) { 
+            flex-direction: row;
+        }
         
 
         @media only screen and (min-width: 600px) {
@@ -299,8 +311,8 @@ form {
             width: 100%;
             padding-left: 1em;
             padding-right: 1em;
-            gap: 0;
-
+            gap: 3em;
+            flex-direction: row;
         }
 
         hr {
@@ -310,12 +322,7 @@ form {
 
 
         &:nth-of-type(2) { 
-            display: flex; 
-            flex-direction: row; 
-            flex: 1; 
-            align-items: center;
-            vertical-align: center;
-            width: 100%;
+    
 
             button { 
                 align-self: center; 
@@ -325,6 +332,10 @@ form {
                     align-self: center;
                 }
             }
+        }
+
+        &:nth-of-type(3) { 
+            flex-direction: column;
         }
 
     }
@@ -571,7 +582,7 @@ header {
         position: relative;
         align-items: center;
         justify-content: center;
-        background-image: url('/images/nature-colourful.jpg');
+        background-image: url('/images/bronte-falls.jpg');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -602,10 +613,15 @@ header {
 
 nav {
     ul {
-        background-color: lightgreen;
+        background-color: #A69F7C;
         display: flex;
         flex-direction: column;
         flex: 1;
+        list-style-type: none;
+
+        @media only screen and (min-width: 768px)  {
+            width: revert !important;
+        }
 
         @media only screen and (max-width: 600px) {
             display: none;
@@ -614,6 +630,7 @@ nav {
 
     a {
         color: black;
+        text-decoration: none;
 
         @media only screen and (min-width: 767px) {
             font-size: xx-large !important;
@@ -650,7 +667,7 @@ main {
     flex-direction: column;
     flex: 1;
     height: 100%;
-    background-color: #D99C2B;
+    background-color: #D9C7B8;
     clear: both !important;
     padding-left: 2em;
     padding-right: 2em;
@@ -768,6 +785,7 @@ footer {
         color: white;
         padding-top: 1em;
         padding-bottom: 1em;
+        clear: both !important;
     }
 }
 

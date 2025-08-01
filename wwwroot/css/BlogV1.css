@@ -208,6 +208,7 @@ form button {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 2em;
   height: 100%;
   color: black !important;
   position: relative;
@@ -228,6 +229,12 @@ form button {
   z-index: -1;
   margin-bottom: 0 !important;
 }
+@media only screen and (min-width: 768px) {
+  #Blog:before {
+    position: relative;
+    height: revert;
+  }
+}
 @media only screen and (min-width: 600px) {
   #Blog:before {
     background-color: revert;
@@ -236,6 +243,7 @@ form button {
     width: 100%;
     background-color: revert;
     z-index: revert;
+    flex-direction: row;
   }
 }
 #Blog:after {
@@ -259,25 +267,23 @@ form button {
   background-color: #f2740f;
   position: relative;
 }
+@media only screen and (min-width: 767px) {
+  #Blog section {
+    flex-direction: row;
+  }
+}
 @media only screen and (min-width: 600px) {
   #Blog section {
     background-color: revert;
     width: 100%;
     padding-left: 1em;
     padding-right: 1em;
-    gap: 0;
+    gap: 3em;
+    flex-direction: row;
   }
 }
 #Blog section hr {
   margin-bottom: 1em;
-}
-#Blog section:nth-of-type(2) {
-  display: flex;
-  flex-direction: row;
-  flex: 1;
-  align-items: center;
-  vertical-align: center;
-  width: 100%;
 }
 #Blog section:nth-of-type(2) button {
   align-self: center;
@@ -285,6 +291,9 @@ form button {
 #Blog section:nth-of-type(2) button:nth-of-type(1) {
   background-color: green;
   align-self: center;
+}
+#Blog section:nth-of-type(3) {
+  flex-direction: column;
 }
 #Blog button {
   align-self: flex-start !important;
@@ -494,7 +503,7 @@ header {
     position: relative;
     align-items: center;
     justify-content: center;
-    background-image: url("/images/nature-colourful.jpg");
+    background-image: url("/images/bronte-falls.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -521,10 +530,16 @@ header {
 }
 
 nav ul {
-  background-color: lightgreen;
+  background-color: #A69F7C;
   display: flex;
   flex-direction: column;
   flex: 1;
+  list-style-type: none;
+}
+@media only screen and (min-width: 768px) {
+  nav ul {
+    width: revert !important;
+  }
 }
 @media only screen and (max-width: 600px) {
   nav ul {
@@ -533,6 +548,7 @@ nav ul {
 }
 nav a {
   color: black;
+  text-decoration: none;
 }
 @media only screen and (min-width: 767px) {
   nav a {
@@ -564,7 +580,7 @@ main {
   flex-direction: column;
   flex: 1;
   height: 100%;
-  background-color: #D99C2B;
+  background-color: #D9C7B8;
   clear: both !important;
   padding-left: 2em;
   padding-right: 2em;
@@ -667,6 +683,7 @@ footer {
     color: white;
     padding-top: 1em;
     padding-bottom: 1em;
+    clear: both !important;
   }
 }
 

@@ -1,3 +1,14 @@
-﻿@{
-    Layout = "~/Views/Shared/_BlogLayout.cshtml";
+﻿@using Wangkanai.Detection.Services
+@inject IDetectionService _detectionService
+
+@{
+    var device = _detectionService.Device.Type;
+    if (device.ToString().Contains("Mobile"))
+    {
+        Layout = "~/Views/Shared/_BlogLayout.cshtml";
+    }
+    else
+    {
+        Layout = "~/Views/Shared/_BlogDesktop.cshtml";
+    }
 }

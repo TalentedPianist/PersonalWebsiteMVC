@@ -63,10 +63,23 @@ namespace PersonalWebsiteMVC.Controllers
         [Route("/Blog/LoadMore")]
         public IActionResult LoadMore(int skip)
         {
-            var posts = _db.Posts.Skip(skip).Take(1).ToList();
+            var posts = _db.Posts.Skip(skip).Take(1).OrderByDescending(p => p.PostTitle);
             ViewBag.MyPosts = posts;
 
-            return View("~/Views/Mobile/Posts.cshtml");
+            return PartialView("~/Views/Mobile/PostCard.cshtml");
+        }
+
+        [Route("Blog/LoadLess")]
+        public IActionResult LoadLess(int skip)
+        {
+            var post = _db.Posts
+                .OrderByDescending(p => p.PostID)
+                .Skip(skip)
+                .Take(1)
+                .ToList();
+
+            
+            return PartialView("~/Views/Mobile/PostCard.cshtml");
         }
     }
 }

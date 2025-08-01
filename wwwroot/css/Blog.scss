@@ -273,8 +273,7 @@ footer {
     section {
         display: flex;
         flex-direction: column;
-        flex: 0 1;
-        gap: 4em;
+        flex: 1;
         background-color: #ffa500;
         position: relative;
 
@@ -460,7 +459,7 @@ footer {
         display: flex;
         flex-direction: column;
         flex: 1;
-        align-items: flex-start;
+      
         gap: 1em;
         background-color: #9FF739;
         position: relative;
@@ -475,11 +474,9 @@ footer {
             padding-bottom: 1em;
         }
 
-        &:nth-of-type(3) {
-            padding-top: 1em;
-            padding-bottom: 1em;
+        &:nth-of-type(2) {
+            margin-top: 2em;
         }
-
 
         @media only screen and (min-width: 600px) {
             background-color: #ffa500;
@@ -487,12 +484,12 @@ footer {
             min-height: revert;
 
             &:nth-of-type(1) {
-                flex: 0;
+                flex: 1;
             }
 
             &:nth-of-type(2) {
-                flex-direction: row;
-                align-items: unset;
+                padding-top: 2em;
+                margin-top: 2em !important;
             }
         }
     }
@@ -548,6 +545,7 @@ footer {
 
         &:nth-of-type(2) {
             flex-direction: row;
+            margin-top: 2em;
         }
     }
 
@@ -656,7 +654,8 @@ footer {
         background-color: cyan;
         height: 100vh;
         min-height: 80vh;
-
+        padding-top: 5em;
+        
         article { 
             width: 50%;
         }

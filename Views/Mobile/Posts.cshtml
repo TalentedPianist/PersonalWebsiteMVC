@@ -6,18 +6,12 @@
 else
 {
     <div id="Blog">
-        @TempData["Message"]
-        <section id="blogPosts">
-            @foreach (Posts post in ViewBag.MyPosts)
-            {
-                var result = Truncate(post.PostContent!, 200);
-                <div id="PostContent">
-                   <PostCard model="@post" />
-                </div>
-            }
+
+        <section>
+           <Partial name="~/Views/Mobile/PostCard.cshtml" />
         </section>
         <section>
-            <button id="loadMoreBtn">Load More</button>
+             <button id="loadMoreBtn">Load More</button>
             <button id="showLessBtn">Show Less</button>
         </section>
     </div>

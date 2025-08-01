@@ -50,9 +50,12 @@ namespace PersonalWebsiteMVC.Controllers
                     .ToList();
                 ViewBag.MyPosts = pagedPosts;
 
+
+
                 return View("~/Views/Mobile/Mobile.cshtml");
             }
             return View();
+        
         }
 
 
