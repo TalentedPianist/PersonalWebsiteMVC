@@ -370,9 +370,7 @@ form {
         margin: 0 !important;
     }
 
-    a {
-        
-    }
+   
 
     @media only screen and (min-width: 600px) {
         padding-top: 0;
@@ -878,5 +876,9 @@ footer {
 .modal {
     width: 100% !important;
     min-width: 100% !important;
+}
+
+.photoPopup { 
+    display: none;
 }
 

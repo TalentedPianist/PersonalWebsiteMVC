@@ -45,14 +45,14 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         }
 
         [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Photos/Album/SinglePhoto")]
-        public IActionResult SinglePhoto()
+        [Route("/Album/GetPhoto")]
+        public IActionResult GetPhoto(string name)
         {
-            var id = Request.Form["id"];
-            var photo = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
+            var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
             return Ok(photo);
         }
 
+        
         [Route("/Album/GetComments")]
         public IActionResult GetComments(string name)
         {

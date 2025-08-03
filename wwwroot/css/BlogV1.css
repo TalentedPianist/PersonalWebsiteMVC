@@ -762,4 +762,8 @@ footer {
 .modal {
   width: 100% !important;
   min-width: 100% !important;
+}
+
+.photoPopup {
+  display: none;
 }/*# sourceMappingURL=BlogV1.css.map */
