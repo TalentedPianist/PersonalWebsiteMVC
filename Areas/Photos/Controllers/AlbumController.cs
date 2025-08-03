@@ -54,11 +54,11 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 
         
         [Route("/Album/GetComments")]
-        public IActionResult GetComments(string name)
+        public IActionResult GetComments(int id)
         {
-            var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
+            var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).ToList();
             
-            return Ok(photo!.Name);
+            return Ok(comments);
         }
     }
 }

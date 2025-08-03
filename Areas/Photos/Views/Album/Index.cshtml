@@ -17,31 +17,34 @@
         @foreach (var photo in Model.PagedPhotos!)
         {
 
-                <figure>
-                    <!-- Note to self: the href content is key to getting thifs working!!! -->
-                    <a class="gallery" href="/Gallery/@ViewBag.AlbumName/@photo.Name" data-name="@photo.Name" data-id="@photo.AlbumID"><img src="@photo.ImageUrl" data-id="@photo.AlbumID" data-name="@photo.Name"></a>
-                
-                    <figcaption>@photo.Name</figcaption>
-                    
-                </figure>
+            <figure>
+                <!-- Note to self: the href content is key to getting thifs working!!! -->
+                <a class="gallery" href="/Gallery/@ViewBag.AlbumName/@photo.Name" data-name="@photo.Name"
+                    data-id="@photo.AlbumID"><img src="@photo.ImageUrl" data-id="@photo.AlbumID"
+                        data-name="@photo.Name"></a>
+
+                <figcaption>@photo.Name</figcaption>
+
+            </figure>
 
         }
 
     </section>
     <section>
-        @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new { pageNumber = page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
-new PagedListRenderOptions
-{
-    DisplayItemSliceAndTotal = true,
-    LiElementClasses = new string[] { "page-item" },
-    PageClasses = new String[] { "page-link" }
-})
+        @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new { pageNumber =
+        page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
+                new PagedListRenderOptions
+                {
+                    DisplayItemSliceAndTotal = true,
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new String[] { "page-link" }
+                })
     </section>
 </div>
 
 
 <div id="photoModal" class="photoPopup">
-    
+
 </div>
 
 @section Scripts {
@@ -49,10 +52,10 @@ new PagedListRenderOptions
     <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
     <script>
-        $(function () {   
+        $(function () {
             $("a.gallery").featherlightGallery({
                 // https://github.com/noelboss/featherlight/blob/master/test/featherlight_gallery_test.js
-               
+
                 afterContent: function () {
                     lastCurrent = this.$currentTarget[0];
                     let name = $(lastCurrent).data('name');
@@ -74,18 +77,39 @@ new PagedListRenderOptions
                     console.log(photo);
                     //console.log(photo.responseJSON[0]);
 
-                    this.$instance.find('.featherlight-content').html(`
-                       <h1>${name}</h1>
-                       <img src="${src}">
-                       ${id}
-                 `);
+                    // Get comments from database
+                    $.ajax({
+                        method: "POST",
+                        url: "/Album/GetComments",
+                        data: { id: id },
+                        async: false,
+                        cache: false,
+                        success: function (message) {
+                            
+                            if (message.length == 0) {
+                                console.log(message); 
+                                $("#Comments").append(`
+                                    <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
+                                `);
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
 
-                 
+                    this.$instance.find('.featherlight-content').html(`
+                           <h1>${name}</h1>
+                           <img src="${src}">
+                           ${id}
+                           <div id="Comments"></div>
+                           
+                     `);
                 }
-               
+
             });
         });
-        
+
     </script>
 
 
