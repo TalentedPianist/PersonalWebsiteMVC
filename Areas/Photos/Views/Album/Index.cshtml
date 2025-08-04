@@ -43,13 +43,15 @@
 </div>
 
 
-<div id="photoModal" class="photoPopup">
+@functions {
+    string TestRender()
+    {
+        return DateTime.Now.ToString();
+    } 
+}
 
-</div>
 
 @section Scripts {
-
-    <script src="/lib/ckeditor5/ckeditor.min.js"></script>
 
     <script>
         $(function () {
@@ -76,6 +78,13 @@
                     });
                     console.log(photo);
                     //console.log(photo.responseJSON[0]);
+                    this.$instance.find('.featherlight-content').html(`
+                                   <h1>${name}</h1>
+                                   <img src="${src}">
+                                   ${id}
+                                    @TestRender()
+                         
+                             `);
 
                     // Get comments from database
                     $.ajax({
@@ -85,12 +94,14 @@
                         async: false,
                         cache: false,
                         success: function (message) {
-                            
+                            // For some reason jQuery rendered HTML is always null, which is causing the ckeditor5 error.  
                             if (message.length == 0) {
-                                console.log(message); 
-                                $("#Comments").append(`
-                                    <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
-                                `);
+                                console.log(message);
+                                $("#Comments").html(`
+                                            <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
+                                            <textarea id="ckeditor1"></textarea>
+                                        `);
+                                    document.getElementById('CommentForm').innerHTML = CommentForm(id);
                             }
                         },
                         error: function (error) {
@@ -98,13 +109,39 @@
                         }
                     });
 
-                    this.$instance.find('.featherlight-content').html(`
-                           <h1>${name}</h1>
-                           <img src="${src}">
-                           ${id}
-                           <div id="Comments"></div>
-                           
-                     `);
+                    $(document).on('submit', function (e) {
+                        e.preventDefault();
+                        console.log('Form was submitted!');
+                    });
+
+                    
+
+                    function CommentForm(id) {
+
+            
+                        let html = `
+                                
+                                    <div>
+                                        <label>Name:</label>
+                                        <input type="text" name="txtName" placeholder="John Smith">
+                                    </div>
+                                    <div>
+                                        <label>Email:</label>
+                                        <input type="text" name="txtEmail" placeholder="john@@johnsmith.com">
+                                    </div>
+                                    <div>
+                                        <label>Website:</label>
+                                        <input type="text" name="txtWebsite">
+                                    </div>
+                                    <div>
+                                        <label>Comment:</label>
+                                        <textarea name="txtComment" rows="10" cols="30" id="ckeditor1" placeholder="Great photo...."></textarea>
+                                    </div>
+                                    <button type="submit">Comment</button>
+                            
+                            `;
+                        return html;
+                    }
                 }
 
             });
