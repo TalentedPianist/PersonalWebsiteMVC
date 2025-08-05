@@ -47,7 +47,7 @@
     string TestRender()
     {
         return DateTime.Now.ToString();
-    } 
+    }
 }
 
 
@@ -57,7 +57,29 @@
         $(function () {
             $("a.gallery").featherlightGallery({
                 // https://github.com/noelboss/featherlight/blob/master/test/featherlight_gallery_test.js
+                afterOpen: function () {
+                    $(".pagination-container").css("z-index", "-1");
 
+                        let ckeditor1 = this.$content.find('#ckeditor1');
+
+                    const { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph } = CKEDITOR;
+                    if (ckeditor1) {
+                        ClassicEditor
+                            .create(document.querySelector('#ckeditor1'), {
+                                licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3ODU4ODc5OTksImp0aSI6IjRlZGQ4MmUyLWQ3NDUtNGZmYy05OWEzLTIxZDNlNmVlYjljNiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJ2YyI6IjU5MzNkZjc4In0.PEFMmWv6lxvLvj6ffUNAvmmRU7MDcEVTufm1vp4G7-EesRXE0WO4I39xdnNWN_cvzBp9W1MnwZLElrHS6vkYJQ',
+                                plugins: [Essentials, Bold, Italic, Font, Paragraph],
+                                toolbar: []
+                            })
+                            .then(editor => {
+                                const el = editor.ui.view.toolbar.element;
+                                el.style.display = 'none';
+                            })
+                            .catch(error => {
+                                console.error(error);
+                            });
+                    }
+
+                },
                 afterContent: function () {
                     lastCurrent = this.$currentTarget[0];
                     let name = $(lastCurrent).data('name');
@@ -79,12 +101,14 @@
                     console.log(photo);
                     //console.log(photo.responseJSON[0]);
                     this.$instance.find('.featherlight-content').html(`
-                                   <h1>${name}</h1>
-                                   <img src="${src}">
-                                   ${id}
-                                    @TestRender()
-                         
-                             `);
+                                                                           <h1>${name}</h1>
+                                                                           <img src="${src}">
+                                                                           ${id}
+                                                                           <div id="Comments"></div>
+                <div class="commentForm">                                                         ${CommentForm(id)}     
+                </div>
+                                                                     `);
+
 
                     // Get comments from database
                     $.ajax({
@@ -98,10 +122,9 @@
                             if (message.length == 0) {
                                 console.log(message);
                                 $("#Comments").html(`
-                                            <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
-                                            <textarea id="ckeditor1"></textarea>
-                                        `);
-                                    document.getElementById('CommentForm').innerHTML = CommentForm(id);
+                                                                                    <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
+                                                                                `);
+
                             }
                         },
                         error: function (error) {
@@ -114,32 +137,29 @@
                         console.log('Form was submitted!');
                     });
 
-                    
+
 
                     function CommentForm(id) {
-
-            
                         let html = `
-                                
-                                    <div>
-                                        <label>Name:</label>
-                                        <input type="text" name="txtName" placeholder="John Smith">
-                                    </div>
-                                    <div>
-                                        <label>Email:</label>
-                                        <input type="text" name="txtEmail" placeholder="john@@johnsmith.com">
-                                    </div>
-                                    <div>
-                                        <label>Website:</label>
-                                        <input type="text" name="txtWebsite">
-                                    </div>
-                                    <div>
-                                        <label>Comment:</label>
-                                        <textarea name="txtComment" rows="10" cols="30" id="ckeditor1" placeholder="Great photo...."></textarea>
-                                    </div>
-                                    <button type="submit">Comment</button>
-                            
-                            `;
+                     <form method="post">                                                    <div>
+                                                                                <label>Name:</label>
+                                                                                <input type="text" name="txtName" placeholder="John Smith">
+                                                                            </div>
+                                                                            <div>
+                                                                                <label>Email:</label>
+                                                                                <input type="text" name="txtEmail" placeholder="john@@johnsmith.com">
+                                                                            </div>
+                                                                            <div>
+                                                                                <label>Website:</label>
+                                                                                <input type="text" name="txtWebsite">
+                                                                            </div>
+                                                                            <div>
+                                                                                <label>Comment:</label>
+                                                                                <textarea name="txtComment" id="ckeditor1" placeholder="Great photo...."></textarea>
+                                                                            </div>
+                                                                            <button type="submit">Comment</button>
+                </form>            
+                                                                    `;
                         return html;
                     }
                 }

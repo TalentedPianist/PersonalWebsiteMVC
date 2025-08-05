@@ -36,18 +36,23 @@ form {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.5em;
+  gap: 2em;
 }
 form div {
   display: flex;
   flex-direction: column;
+}
+@media only screen and (min-width: 600px) {
+  form div:not(.ck) {
+    flex-direction: row;
+  }
 }
 form input {
   padding: 10px 10px 10px 10px;
   border: 1px solid black;
 }
 form label {
-  font-size: large;
+  width: 8em;
 }
 form br {
   display: none;
@@ -57,6 +62,9 @@ form button {
   padding: 10px 10px 10px 10px;
   background-color: orange;
   font-size: large;
+}
+form .ck {
+  border: none !important;
 }
 
 #Home {
@@ -739,12 +747,41 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 1;
-  align-items: center;
-  background-color: orange;
   padding-top: 2em;
   padding-bottom: 2em;
-  button-align-self: flex-start;
-  button-background-color: orange;
+  padding-left: 2em;
+  padding-right: 2em;
+  gap: 2em;
+  background: linear-gradient(to bottom right, #f4f7fa, #eaeff5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+.commentForm button {
+  align-self: flex-start;
+  background-color: orange;
+}
+.commentForm .ck.ck-toolbar {
+  display: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+.commentForm .ck.ck-editor__main {
+  width: 300px !important;
+}
+.commentForm input,
+.commentForm textarea {
+  border: none;
+  border-bottom: 2px solid #ccc;
+  background-color: transparent;
+  padding: 0.75rem;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+.commentForm input:focus,
+.commentForm textarea:focus {
+  outline: none;
+  border-bottom-color: #7f9cf5;
 }
 
 .featherlight {

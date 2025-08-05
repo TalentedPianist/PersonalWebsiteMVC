@@ -38,32 +38,44 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 0.5em;
+    gap: 2em;
 
     div {
         display: flex;
         flex-direction: column;
+
+        @media only screen and (min-width: 600px) {
+            // &:not selector prevents ckeditor from having flex-direction row applied.
+            &:not(.ck) {
+                flex-direction: row;
+            }
+
+        }
+
     }
 
     input {
         padding: 10px 10px 10px 10px;
         border: 1px solid black;
-
     }
 
     label {
-        font-size: large;
+        width: 8em;
     }
 
     br {
         display: none;
     }
 
-    button { 
+    button {
         border: 1px solid black;
         padding: 10px 10px 10px 10px;
         background-color: orange;
         font-size: large;
+    }
+
+    .ck { 
+        border: none !important;
     }
 }
 
@@ -250,7 +262,7 @@ form {
         margin: 0 !important;
     }
 
-    
+
 
     &:before {
         position: absolute;
@@ -262,7 +274,7 @@ form {
         z-index: -1;
         margin-bottom: 0 !important;
 
-        @media only screen and (min-width: 768px) { 
+        @media only screen and (min-width: 768px) {
             position: relative;
             height: revert;
         }
@@ -275,7 +287,7 @@ form {
             background-color: revert;
             z-index: revert;
             flex-direction: row;
-    
+
         }
     }
 
@@ -301,10 +313,10 @@ form {
         background-color: #f2740f;
         position: relative;
 
-        @media only screen and (min-width: 767px) { 
+        @media only screen and (min-width: 767px) {
             flex-direction: row;
         }
-        
+
 
         @media only screen and (min-width: 600px) {
             background-color: revert;
@@ -321,20 +333,20 @@ form {
         }
 
 
-        &:nth-of-type(2) { 
-    
+        &:nth-of-type(2) {
 
-            button { 
-                align-self: center; 
 
-                &:nth-of-type(1) { 
+            button {
+                align-self: center;
+
+                &:nth-of-type(1) {
                     background-color: green;
                     align-self: center;
                 }
             }
         }
 
-        &:nth-of-type(3) { 
+        &:nth-of-type(3) {
             flex-direction: column;
         }
 
@@ -365,12 +377,12 @@ form {
     padding-top: 1em;
 
 
-    h2 { 
-        padding: 0 !important; 
+    h2 {
+        padding: 0 !important;
         margin: 0 !important;
     }
 
-   
+
 
     @media only screen and (min-width: 600px) {
         padding-top: 0;
@@ -381,7 +393,7 @@ form {
     }
 
 
- 
+
 }
 
 #SinglePost {
@@ -617,7 +629,7 @@ nav {
         flex: 1;
         list-style-type: none;
 
-        @media only screen and (min-width: 768px)  {
+        @media only screen and (min-width: 768px) {
             width: revert !important;
         }
 
@@ -850,15 +862,50 @@ footer {
     display: flex;
     flex-direction: column;
     flex: 1;
-    align-items: center;
-    background-color: orange;
     padding-top: 2em;
     padding-bottom: 2em;
+    padding-left: 2em;
+    padding-right: 2em;
+    gap: 2em;
+    background: linear-gradient(to bottom right, #f4f7fa, #eaeff5);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.20);
 
-    button: {
+    button {
         align-self: flex-start;
         background-color: orange;
     }
+
+    .ck.ck-toolbar {
+        display: none !important;
+        border: none !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    .ck.ck-editor__main {
+
+        width: 300px !important;
+    }
+
+
+
+    input,
+    textarea {
+        border: none;
+        border-bottom: 2px solid #ccc;
+        background-color: transparent;
+        padding: 0.75rem;
+        font-size: 1rem;
+        transition: border-color 0.3s ease;
+    }
+
+    input:focus,
+    textarea:focus {
+        outline: none;
+        border-bottom-color: #7f9cf5;
+    }
+
 }
 
 .featherlight {
@@ -878,7 +925,6 @@ footer {
     min-width: 100% !important;
 }
 
-.photoPopup { 
+.photoPopup {
     display: none;
 }
-
