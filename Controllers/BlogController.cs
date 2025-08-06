@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http.Extensions;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using PersonalWebsiteMVC.Areas.Blog.Models;
@@ -46,10 +47,25 @@ namespace PersonalWebsiteMVC.Controllers
         [Route("/Blog/{title}")]
         public IActionResult SinglePost(string title)
         {
+            
+
             MixModel model = new MixModel();
             model.Posts = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
             model.Comments = new Comments();
             model.AllComments = _db.Comments.Where(p => p.PostID == model.Posts!.PostID).ToList();
+
+            // Paged comments
+            int pageSize = 1;
+            int currentPage = 1;
+            List<Comments> pagedComments = _db.Comments
+                .Where(c => c.PostID == model.Posts!.PostID)
+                .Skip((currentPage - 1) * pageSize)
+                .Take(pageSize)
+                .ToList();
+            ViewBag.MyComments = pagedComments;
+            TempData["PostID"] = model.Posts!.PostID;
+            TempData["PostTitle"] = title;
+            
             return View("~/Views/Mobile/SinglePost.cshtml", model);
         }
 
@@ -63,10 +79,13 @@ namespace PersonalWebsiteMVC.Controllers
         [Route("/Blog/LoadMore")]
         public IActionResult LoadMore(int skip)
         {
+            Console.WriteLine(TempData["PostTitle"]);
+
             var posts = _db.Posts.Skip(skip).Take(1).OrderByDescending(p => p.PostTitle);
             ViewBag.MyPosts = posts;
 
             return PartialView("~/Views/Mobile/PostCard.cshtml");
+            
         }
 
         [Route("Blog/LoadLess")]

@@ -6,7 +6,6 @@
 @if (Model is not null) 
 {
     <div id="SinglePost">
-        @TempData["Message"]
 
         
         
@@ -15,8 +14,6 @@
         <h1>@Model.Posts!.PostTitle</h1>
         
         @Model.Posts.PostContent
-
-
 
         <partial name="~/Views/Mobile/Comments.cshtml" model="Model" />
     </div>

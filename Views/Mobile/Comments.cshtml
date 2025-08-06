@@ -7,18 +7,18 @@
 }
 else
 {
-    <div id="Comments">
-        @foreach (Comments comment in Model.AllComments)
-        {
-            <div class="flex flex-row flex-1">
-                <img
-                    src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?d=mp&f=y">
 
-                @comment.CommentAuthor
-            </div>
-        }
-
-    </div>
+    <partial name="~/Views/Mobile/CommentCard.cshtml" />
+    <button id="loadMoreComments">Load More</button>
+    <button id="showLessComments">Show Less</button>
 }
 
+
 <partial name="~/Views/Mobile/CommentForm.cshtml" model="Model" />
+
+
+@section Scripts {
+    <script>
+       
+    </script>
+}

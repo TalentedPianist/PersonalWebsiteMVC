@@ -80,26 +80,46 @@ $('#showLessBtn').on('click', function (e) {
 });
 
 
-// const {
-//     ClassicEditor,
-//     Essentials,
-//     Bold,
-//     Italic,
-//     Font,
-//     Paragraph
-// } = CKEDITOR;
+const {
+    ClassicEditor,
+    Essentials,
+    Bold,
+    Italic,
+    Font,
+    Paragraph
+} = CKEDITOR;
 
 
-//     ClassicEditor
-//         .create(document.querySelector('#ckeditor1'), {
-//             licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3ODU4ODc5OTksImp0aSI6IjRlZGQ4MmUyLWQ3NDUtNGZmYy05OWEzLTIxZDNlNmVlYjljNiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJ2YyI6IjU5MzNkZjc4In0.PEFMmWv6lxvLvj6ffUNAvmmRU7MDcEVTufm1vp4G7-EesRXE0WO4I39xdnNWN_cvzBp9W1MnwZLElrHS6vkYJQ',
-//             plugins: [Essentials, Bold, Italic, Font, Paragraph],
-//             toolbar: [Bold],
-//         })
-//         .then(editor => {
-//             window.editor = editor;
-//         })
-//         .catch(error => {
-//             console.error(error);
-//         });
+    ClassicEditor
+        .create(document.querySelector('#ckeditor1'), {
+            licenseKey: 'eyJhbGciOiJFUzI1NiJ9.eyJleHAiOjE3ODU4ODc5OTksImp0aSI6IjRlZGQ4MmUyLWQ3NDUtNGZmYy05OWEzLTIxZDNlNmVlYjljNiIsInVzYWdlRW5kcG9pbnQiOiJodHRwczovL3Byb3h5LWV2ZW50LmNrZWRpdG9yLmNvbSIsImRpc3RyaWJ1dGlvbkNoYW5uZWwiOlsiY2xvdWQiLCJkcnVwYWwiXSwiZmVhdHVyZXMiOlsiRFJVUCIsIkUyUCIsIkUyVyJdLCJ2YyI6IjU5MzNkZjc4In0.PEFMmWv6lxvLvj6ffUNAvmmRU7MDcEVTufm1vp4G7-EesRXE0WO4I39xdnNWN_cvzBp9W1MnwZLElrHS6vkYJQ',
+            plugins: [Essentials, Bold, Italic, Font, Paragraph],
+            toolbar: [Bold],
+        })
+        .then(editor => {
+            window.editor = editor;
+        })
+        .catch(error => {
+           //console.error(error);
+        });
 
+
+ $("#loadMoreComments").on('click', function (e) {
+            e.preventDefault();
+
+            $.get('/Comments/LoadMore', { skip: skip, title: @ViewBag.Title }, function (data) {
+                const batch = $('<div class="postBatch"></div>').hide().append(data);
+                $("#Comments").append(batch);
+                batch.slideDown('fast');
+                skip = skip + 1;
+            });
+        });
+
+        $('#showLessComments').on('click', function (e) {
+            e.preventDefault();
+            const lastBatch = $('.postBatch').last();
+            lastBatch.slideUp('fast', function () {
+                lastBatch.remove();
+                skip -= pageSize;
+            });
+        });

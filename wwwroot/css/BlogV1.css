@@ -36,7 +36,7 @@ form {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 2em;
+  gap: 0.5em;
 }
 form div {
   display: flex;
@@ -374,7 +374,7 @@ form .ck {
   gap: 2em;
 }
 #Comments img {
-  width: 25% !important;
+  width: 10% !important;
   margin-right: 2em;
 }
 #Comments hr {
@@ -384,6 +384,33 @@ form .ck {
 }
 #Comments p:nth-of-type(1) {
   margin-bottom: 1em;
+}
+#Comments #comment {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: crystalFadeIn 1.4s ease-out forwards;
+  position: relative;
+}
+#Comments #comment:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at top left, rgba(182, 149, 192, 0.2), transparent 70%);
+  filter: blur(6px);
+  z-index: -1;
+}
+@keyframes crystalFadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 #Contact {
@@ -452,7 +479,7 @@ form .ck {
   flex-direction: column;
   flex: 1;
 }
-#Photos section {
+#Photos section:nth-of-type(2) {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2em;
@@ -803,4 +830,18 @@ footer {
 
 .photoPopup {
   display: none;
+}
+
+#loadMoreComments {
+  background-color: lightgreen;
+  padding-left: 1em;
+  padding-right: 1em;
+  border: 1px solid #000000;
+}
+
+#showLessComments {
+  background-color: #ffbf00;
+  padding-left: 1em;
+  padding-right: 1em;
+  border: 1px solid #000000;
 }/*# sourceMappingURL=BlogV1.css.map */

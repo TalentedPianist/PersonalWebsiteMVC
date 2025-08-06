@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
+using PersonalWebsiteMVC.Models;
 using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Photos.Controllers
@@ -52,13 +53,24 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             return Ok(photo);
         }
 
-        
+
         [Route("/Album/GetComments")]
         public IActionResult GetComments(int id)
         {
             var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).ToList();
-            
+
             return Ok(comments);
+        }
+
+        [HttpPost]
+        [Route("/Photo/AddComment")]
+        public IActionResult AddComment([FromBody]Comments comment)
+        {
+            comment.CommentDate = DateTime.Now;
+            comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
+            _db.Comments.Add(comment);
+            _db.SaveChanges();
+            return Ok(comment);
         }
     }
 }

@@ -54,13 +54,16 @@
 @section Scripts {
 
     <script>
+
         $(function () {
+            $.featherlight.defaults.closeOnClick = false;
             $("a.gallery").featherlightGallery({
+                closeOnClick: false,
                 // https://github.com/noelboss/featherlight/blob/master/test/featherlight_gallery_test.js
                 afterOpen: function () {
                     $(".pagination-container").css("z-index", "-1");
 
-                        let ckeditor1 = this.$content.find('#ckeditor1');
+                    let ckeditor1 = this.$content.find('#ckeditor1');
 
                     const { ClassicEditor, Essentials, Bold, Italic, Font, Paragraph } = CKEDITOR;
                     if (ckeditor1) {
@@ -101,13 +104,12 @@
                     console.log(photo);
                     //console.log(photo.responseJSON[0]);
                     this.$instance.find('.featherlight-content').html(`
-                                                                           <h1>${name}</h1>
-                                                                           <img src="${src}">
-                                                                           ${id}
-                                                                           <div id="Comments"></div>
-                <div class="commentForm">                                                         ${CommentForm(id)}     
-                </div>
-                                                                     `);
+                                                                               <h1>${name}</h1>
+                                                                               <img src="${src}">
+                                                                               <div id="Comments"></div>
+                    <div class="commentForm">                                                         ${CommentForm(id)}     
+                    </div>
+                                                                         `);
 
 
                     // Get comments from database
@@ -120,12 +122,55 @@
                         success: function (message) {
                             // For some reason jQuery rendered HTML is always null, which is causing the ckeditor5 error.  
                             if (message.length == 0) {
+                                // If no comments have been found, display friendly message
                                 console.log(message);
                                 $("#Comments").html(`
-                                                                                    <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
-                                                                                `);
+                                                                                        <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>                                                                            `);
 
-                            }
+                            } else if (message.length == 1) {
+                                // 1 comment has been found, display friendly message
+
+                            } else {
+                                // More than one comment has been found, display friendly message
+                                $("#Comments").html(`
+                                        <p>${message.length} comments have been found for this photo.</p>
+                                    `);
+
+
+                                $.each(message, function (index, value) {
+                                    $("#Comments").append(`
+                                        <div id="comment">
+                                        <div class="flex flex-row flex-1">
+                                        <img
+                        src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?d=mp&f=y">
+                                            Posted by ${value.CommentAuthor} on ${value.CommentDate}
+                                            </div>
+                                            <div class="p-2">
+                                                ${value.CommentContent}
+                                            </div>
+                                        </div>
+                                        `);
+                                });
+
+                                $("#Comments").append(`
+                                      <div id="pagination" data-featherlight-close="false"></div>
+                                `);
+
+
+                                // Pagination stuff for comments
+                                $("#Comments #comment").slice(1).hide();
+
+                                $("#pagination").pagination({
+                                    items: 2,
+                                    itemsOnPage: 1,
+                                    onPageClick: function (pageNumber, event) {
+                                        if (event) event.preventDefault();
+                                        $("#Comments #comment").hide()
+                                            .slice(1 * (pageNumber - 1), 1 * pageNumber).show();
+                                    }
+                                });
+                            } // end if 
+
                         },
                         error: function (error) {
                             console.log(error);
@@ -134,32 +179,55 @@
 
                     $(document).on('submit', function (e) {
                         e.preventDefault();
-                        console.log('Form was submitted!');
+
+                        $.ajax({
+                            url: '/Photo/AddComment',
+                            type: "POST",
+                            contentType: "application/json",
+                            headers: {
+                            },
+                            async: false,
+                            cache: false,
+                            data: JSON.stringify({
+                                PhotoID: id,
+                                CommentAuthor: $("#name").val(),
+                                CommentAuthorEmail: $("#email").val(),
+                                CommentAuthorUrl: $("#website").val(),
+                                CommentContent: $("#ckeditor1").val()
+                            }),
+                            success: function (message) {
+                                console.log(message);
+                            },
+                            error: function (error) {
+                                console.log(error);
+                            }
+                        });
                     });
 
 
 
                     function CommentForm(id) {
                         let html = `
-                     <form method="post">                                                    <div>
-                                                                                <label>Name:</label>
-                                                                                <input type="text" name="txtName" placeholder="John Smith">
-                                                                            </div>
-                                                                            <div>
-                                                                                <label>Email:</label>
-                                                                                <input type="text" name="txtEmail" placeholder="john@@johnsmith.com">
-                                                                            </div>
-                                                                            <div>
-                                                                                <label>Website:</label>
-                                                                                <input type="text" name="txtWebsite">
-                                                                            </div>
-                                                                            <div>
-                                                                                <label>Comment:</label>
-                                                                                <textarea name="txtComment" id="ckeditor1" placeholder="Great photo...."></textarea>
-                                                                            </div>
-                                                                            <button type="submit">Comment</button>
-                </form>            
-                                                                    `;
+                         <form method="post">                                                    <div>
+                                                                                    <label>Name:</label>
+                                                                                    <input type="text" name="txtName" placeholder="John Smith" id="name">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <label>Email:</label>
+                                                                                    <input type="text" name="txtEmail" placeholder="john@@johnsmith.com" id="email">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <label>Website:</label>
+                                                                                    <input type="text" name="txtWebsite" placeholder="https://www.johnsmith.com" id="website">
+                                                                                </div>
+                                                                                <div>
+                                                                                    <label>Comment:</label>
+                                                                                    <textarea name="txtComment" id="ckeditor1" placeholder="Great photo...."></textarea>
+                                                                                </div>
+                        <input type="hidden" name="txtId" value="${id}">
+                                                                               <button type="submit">Comment</button>
+                    </form>            
+                                                                        `;
                         return html;
                     }
                 }
