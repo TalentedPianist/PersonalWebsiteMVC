@@ -35,11 +35,11 @@ namespace PersonalWebsiteMVC.Controllers
 
         [HttpGet]
         [Route("/Comments/LoadMore")]
-        public IActionResult LoadMore(int skip)
+        public IActionResult LoadMore(int skip, int id)
         {
-            Console.WriteLine(TempData["PostID"]);
+           
             var comments = _db.Comments
-                .Where(c => c.PostID == Convert.ToInt32(TempData["PostID"]))       
+                .Where(c => c.PostID == id)
                 .Skip(skip)
                 .Take(1)
                 .OrderByDescending(c => c.CommentDate)

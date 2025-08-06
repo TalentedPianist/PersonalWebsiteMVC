@@ -7,18 +7,14 @@
 }
 else
 {
-
+    <hr>
+    <p>@Model.AllComments.Count comments have been found for this post.</p>
     <partial name="~/Views/Mobile/CommentCard.cshtml" />
-    <button id="loadMoreComments">Load More</button>
-    <button id="showLessComments">Show Less</button>
+    <div class="flex flex-row flex-1 gap-2 w-full space-x-8">
+        <button id="loadMoreComments">Load More</button>
+        <button id="showLessComments">Show Less</button>
+    </div>
 }
 
 
 <partial name="~/Views/Mobile/CommentForm.cshtml" model="Model" />
-
-
-@section Scripts {
-    <script>
-       
-    </script>
-}

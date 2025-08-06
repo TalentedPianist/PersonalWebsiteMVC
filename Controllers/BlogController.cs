@@ -55,7 +55,7 @@ namespace PersonalWebsiteMVC.Controllers
             model.AllComments = _db.Comments.Where(p => p.PostID == model.Posts!.PostID).ToList();
 
             // Paged comments
-            int pageSize = 1;
+            int pageSize = 4;
             int currentPage = 1;
             List<Comments> pagedComments = _db.Comments
                 .Where(c => c.PostID == model.Posts!.PostID)
@@ -65,6 +65,7 @@ namespace PersonalWebsiteMVC.Controllers
             ViewBag.MyComments = pagedComments;
             TempData["PostID"] = model.Posts!.PostID;
             TempData["PostTitle"] = title;
+            ViewData["PostID"] = model.Posts!.PostID;
             
             return View("~/Views/Mobile/SinglePost.cshtml", model);
         }
