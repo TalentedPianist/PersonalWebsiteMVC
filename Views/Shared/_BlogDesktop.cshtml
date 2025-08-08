@@ -1,57 +1,98 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Components
 
+@{
+    var data = new ImportMapDefinition(
+        new Dictionary<string, string>
+        {
+            { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
+            { "ckeditor5/", "/lib/ckeditor5/" },
+        }, null, null);
+}
+
+<!DOCTYPE html>
 <html>
-
 <head>
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, viewport-fit=cover">
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+
     <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
     <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
-    <link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.3.0/ckeditor5.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.min.css">
+    <link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
+    <link 
+        href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.min.css">
     <link rel="stylesheet" href="/css/output.css">
     <link rel="stylesheet" href="/css/BlogV1.css">
     <title>@ViewBag.Title</title>
 </head>
 
 <body>
+
+    <nav>
+        <ul>
+            <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
+            <li><a asp-action="About" asp-controller="Home">About</a></li>
+            <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
+            <li><a asp-controller="Photos" asp-action="Index" asp-area="Photos">Photos</a></li>
+            <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
+        </ul>
+    </nav>
+    <header>
+
+    </header>
+
     <main>
-        <nav>
-            <ul>
-                <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
-                <li><a asp-action="About" asp-controller="Home">About</a></li>
-                <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
-                <li><a asp-controller="Photos" asp-action="Index" asp-area="Photos">Photos</a></li>
-                <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
-            </ul>
-        </nav>
-        <header>
-
-        </header>
-
-        @RenderBody()
-
-
+        <section>
+            <article>
+                @RenderBody()
+            </article>
+            <article>
+                <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
+            </article>
+        </section>
     </main>
+
     <footer>
         Copyright &copy; douglasmcgregor.co.uk 2024
     </footer>
 
     <script src="/lib/jquery/jquery.min.js"></script>
 
-    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+
     <script src="/lib/featherlight/featherlight.min.js"></script>
     <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
     <script src="/lib/moment.js/moment.min.js"></script>
-        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
-   <script src="https://cdn.ckeditor.com/ckeditor5/46.0.0/ckeditor5.umd.js"></script>
-    <script src="/js/site.js"></script>
+    <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
+    
+        <script type="importmap" asp-importmap="@data"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+    <script type="module">
+        import { 
+            ClassicEditor, 
+            Essentials, 
+            Paragraph, 
+            Bold, 
+            Italic, 
+            Font 
+        } from 'ckeditor5';
+
+        ClassicEditor
+            .create(document.querySelector('#ckeditor1'), { 
+                licenseKey: 'GPL', 
+                plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
+                toolbar: ['bold']
+            })
+            .then(editor => { 
+                window.editor = editor;
+            })
+            .catch(error => { 
+                console.error(error);
+            });
+    </script>
     @RenderSection("Scripts", false)
 </body>
 

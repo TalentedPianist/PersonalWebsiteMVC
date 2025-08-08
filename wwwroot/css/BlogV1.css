@@ -13,7 +13,6 @@ body {
 
 html,
 body {
-  overflow-x: hidden;
   margin: 0;
   padding: 0;
 }
@@ -36,26 +35,15 @@ form {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.5em;
-}
-form div {
-  display: flex;
-  flex-direction: column;
-}
-@media only screen and (min-width: 600px) {
-  form div:not(.ck) {
-    flex-direction: row;
-  }
 }
 form input {
   padding: 10px 10px 10px 10px;
   border: 1px solid black;
+  width: 80%;
 }
 form label {
   width: 8em;
-}
-form br {
-  display: none;
+  display: block;
 }
 form button {
   border: 1px solid black;
@@ -63,8 +51,26 @@ form button {
   background-color: orange;
   font-size: large;
 }
-form .ck {
-  border: none !important;
+form div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+}
+@media only screen and (min-width: 600px) {
+  form div:last-child .editor-container {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    height: auto;
+  }
+  form div:last-child .ck-editor__editable {
+    min-height: 200px;
+    min-width: 20em !important;
+    flex: 1 1 auto;
+    min-height: 150px;
+    overflow-y: auto;
+  }
 }
 
 #Home {
@@ -452,16 +458,11 @@ form .ck {
 @media only screen and (min-width: 600px) {
   #Contact section {
     background-color: revert;
-    height: 100%;
-    align-items: stretch;
-    overflow: visible;
   }
 }
 @media only screen and (min-width: 767px) {
   #Contact {
     background-color: revert;
-    height: 100%;
-    width: 100%;
   }
 }
 
@@ -496,10 +497,6 @@ form .ck {
   grid-template-columns: repeat(4, 1fr);
   gap: 2em;
   margin-top: 1em;
-}
-
-.ck-editor__editable {
-  min-height: 100px;
 }
 
 .modal-content {
@@ -577,7 +574,7 @@ header {
 }
 
 nav ul {
-  background-color: #A69F7C;
+  background-color: #5E3E78;
   display: flex;
   flex-direction: column;
   flex: 1;
@@ -594,7 +591,7 @@ nav ul {
   }
 }
 nav a {
-  color: black;
+  color: white;
   text-decoration: none;
 }
 @media only screen and (min-width: 767px) {
@@ -627,12 +624,12 @@ main {
   flex-direction: column;
   flex: 1;
   height: 100%;
-  background-color: #f4f1ed;
+  background-color: #DAADE3;
   clear: both !important;
   padding-left: 2em;
   padding-right: 2em;
 }
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 768px) {
   main {
     padding-top: 2em;
     padding-bottom: 2em;
@@ -645,7 +642,7 @@ main {
   }
   main section {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     flex: 1;
     gap: 1em;
     align-items: flex-start;
@@ -726,7 +723,7 @@ footer {
 @media only screen and (min-width: 768px) {
   footer {
     font-size: x-large;
-    background-color: #403E2A;
+    background-color: #B89583;
     color: white;
     padding-top: 1em;
     padding-bottom: 1em;
@@ -761,16 +758,24 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 2em;
+  gap: 0.5em;
+  font-size: large;
 }
 #Sidebar img {
   width: 50%;
   border-radius: 50%;
   align-self: center;
 }
+#Sidebar a {
+  color: revert !important;
+  -webkit-text-decoration: revert !important;
+          text-decoration: revert !important;
+}
 #Sidebar section {
-  width: revert;
-  min-width: revert !important;
+  display: flex;
+  flex-direction: column !important;
+  border-bottom: 1px solid #d9d9d9;
+  padding-bottom: 1em;
 }
 
 .modal-header i {
@@ -797,16 +802,6 @@ footer {
 .commentForm button {
   align-self: flex-start;
   background-color: orange;
-}
-.commentForm .ck.ck-toolbar {
-  display: none !important;
-  border: none !important;
-  box-shadow: none !important;
-  margin: 0 !important;
-  padding: 0 !important;
-}
-.commentForm .ck.ck-editor__main {
-  width: 300px !important;
 }
 .commentForm input,
 .commentForm textarea {

@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Html;
 using PersonalWebsiteMVC.Models;
 using ServiceStack;
 using Elastic.Clients.Elasticsearch.QueryDsl;
+using Microsoft.AspNetCore.Authorization;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class SearchController : Controller
     {

@@ -1,4 +1,5 @@
 ﻿using HGO.ASPNetCore.FileManager.CommandsProcessor;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
@@ -14,6 +15,7 @@ using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class GalleryController : Controller
     {

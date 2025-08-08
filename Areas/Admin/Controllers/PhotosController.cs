@@ -1,4 +1,5 @@
 ﻿using HGO.ASPNetCore.FileManager.CommandsProcessor;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OutputCaching;
 using Microsoft.Extensions.Primitives;
@@ -15,6 +16,7 @@ using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class PhotosController : Controller
     {

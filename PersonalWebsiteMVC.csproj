@@ -66,6 +66,7 @@
     <PackageReference Include="SolrNet.Core" Version="1.2.1" />
     <PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="9.0.3" />
+    <PackageReference Include="TinyMCE" Version="8.0.1" />
     <PackageReference Include="Wangkanai.Responsive" Version="7.14.0" />
     <PackageReference Include="X.PagedList" Version="10.5.7" />
     <PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.7" />

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
+	[Authorize(Roles = "Admin")]
 	[Area("Admin")]
 	[Route("Admin")]
 	public class AdminController : Controller

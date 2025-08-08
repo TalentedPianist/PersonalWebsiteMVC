@@ -28,11 +28,13 @@
                     <label>Website:</label>
                     <input asp-for="Website" placeholder="https://www.johnsmith.com">
                 </div>
-                <div>
-                    <label>Message:</label>
+
+                <label>Message:</label>
+                <div class="editor-container">
                     <textarea asp-for="Message" id="ckeditor1"></textarea>
                 </div>
-                <div class="g-recaptcha" data-sitekey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"></div>
+
+                <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
                 <button type="submit">Submit</button>
             </form>
         </article>
@@ -62,5 +64,3 @@
         });
     </script>
 }
-
-

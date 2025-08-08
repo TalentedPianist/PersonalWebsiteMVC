@@ -10,7 +10,7 @@ using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-#nullable enable
+     [Authorize(Roles = "Admin")]
     [Area("Admin")]
      public class GuestbookController : Controller
      {
