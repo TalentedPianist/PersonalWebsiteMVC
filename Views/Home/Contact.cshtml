@@ -29,12 +29,17 @@
                     <input asp-for="Website" placeholder="https://www.johnsmith.com">
                 </div>
 
-                <label>Message:</label>
-                <div class="editor-container">
-                    <textarea asp-for="Message" id="ckeditor1"></textarea>
+                <div>
+                    <label>Message:</label>
+
+                        <textarea asp-for="Message" id="ckeditor1"></textarea>
+                    
                 </div>
 
-                <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
+                <div>
+                    <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz" class="recaptcha">
+                    </div>
+                </div>
                 <button type="submit">Submit</button>
             </form>
         </article>

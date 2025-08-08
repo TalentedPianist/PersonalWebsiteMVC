@@ -38,58 +38,72 @@ form {
     flex-direction: column;
     flex: 1;
 
+    @media only screen and (min-width: 767px) {
+        display: grid;
+        gap: 1em;
+        align-items: center;
+    }
 
     input {
         padding: 10px 10px 10px 10px;
         border: 1px solid black;
-        width: 80%;
+        align-items: center;
     }
 
-    label {
-        width: 8em;
-        display: block;
-    }
 
-    br {
-    
-    }
 
     button {
         border: 1px solid black;
         padding: 10px 10px 10px 10px;
         background-color: orange;
         font-size: large;
+
+        @media only screen and (min-width: 768px) {
+            width: 5em;
+        }
     }
 
     div {
         display: flex;
         flex-direction: column;
         flex: 1;
-        gap: 1em;
 
         @media only screen and (min-width: 600px) {
-        
+            width: 100%;
+            flex-direction: row;
 
-            &:last-child {
+            label {
+                width: 8em;
+                display: flex;
+                align-self: center;
 
-                .editor-container { 
-                    display: flex; 
-                    flex-direction: column;
-                    align-items: stretch;
-                    height: auto;
-                }
-
-                .ck-editor__editable {
-                    min-height: 200px;
-                    min-width: 20em !important;
-                    flex: 1 1 auto;
-                    min-height: 150px;
-                    overflow-y: auto;
+                &:nth-of-type(4) { 
+                    align-self: flex-start !important;
                 }
             }
+
+            .ck-editor__editable {
+                min-height: 200px;
+                min-width: 20em !important;
+                min-height: 150px;
+                overflow-y: auto;
+                flex-direction: column !important;
+            }
+
+            .ck .ck-sticky-panel__content {
+                border: 0 !important;
+                display: none !important;
+            }
+
+            .recaptcha {
+                margin-top: 1em !important;
+            }
+
+
         }
     }
 }
+
 
 
 
@@ -200,7 +214,7 @@ form {
 
 
         p {
-            font-size: x-large;
+            font-size: 16pt;
         }
     }
 }
@@ -541,7 +555,7 @@ form {
 
         @media only screen and (min-width: 600px) {
             background-color: revert;
-        
+
 
         }
     }

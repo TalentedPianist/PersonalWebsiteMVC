@@ -36,14 +36,17 @@ form {
   flex-direction: column;
   flex: 1;
 }
+@media only screen and (min-width: 767px) {
+  form {
+    display: grid;
+    gap: 1em;
+    align-items: center;
+  }
+}
 form input {
   padding: 10px 10px 10px 10px;
   border: 1px solid black;
-  width: 80%;
-}
-form label {
-  width: 8em;
-  display: block;
+  align-items: center;
 }
 form button {
   border: 1px solid black;
@@ -51,25 +54,42 @@ form button {
   background-color: orange;
   font-size: large;
 }
+@media only screen and (min-width: 768px) {
+  form button {
+    width: 5em;
+  }
+}
 form div {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1em;
 }
 @media only screen and (min-width: 600px) {
-  form div:last-child .editor-container {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    height: auto;
+  form div {
+    width: 100%;
+    flex-direction: row;
   }
-  form div:last-child .ck-editor__editable {
+  form div label {
+    width: 8em;
+    display: flex;
+    align-self: center;
+  }
+  form div label:nth-of-type(4) {
+    align-self: flex-start !important;
+  }
+  form div .ck-editor__editable {
     min-height: 200px;
     min-width: 20em !important;
-    flex: 1 1 auto;
     min-height: 150px;
     overflow-y: auto;
+    flex-direction: column !important;
+  }
+  form div .ck .ck-sticky-panel__content {
+    border: 0 !important;
+    display: none !important;
+  }
+  form div .recaptcha {
+    margin-top: 1em !important;
   }
 }
 
@@ -167,7 +187,7 @@ form div {
     background-color: revert !important;
   }
   #Home p {
-    font-size: x-large;
+    font-size: 16pt;
   }
 }
 
