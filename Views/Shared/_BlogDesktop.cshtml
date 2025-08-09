@@ -2,15 +2,16 @@
 
 @{
     var data = new ImportMapDefinition(
-        new Dictionary<string, string>
-        {
-            { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
-            { "ckeditor5/", "/lib/ckeditor5/" },
-        }, null, null);
+    new Dictionary<string, string>
+    {
+{ "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
+{ "ckeditor5/", "/lib/ckeditor5/" },
+    }, null, null);
 }
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <base href="/">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,8 +21,7 @@
     <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
     <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
     <link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
-    <link 
-        href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/simplePagination.min.css">
     <link rel="stylesheet" href="/css/output.css">
     <link rel="stylesheet" href="/css/BlogV1.css">
     <title>@ViewBag.Title</title>
@@ -67,31 +67,33 @@
 
     <script
         src="https://cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
-    
-        <script type="importmap" asp-importmap="@data"></script>
+
+    <script type="importmap" asp-importmap="@data"></script>
     <script src="/js/site.js" asp-append-version="true"></script>
     <script type="module">
-        import { 
-            ClassicEditor, 
-            Essentials, 
-            Paragraph, 
-            Bold, 
-            Italic, 
-            Font 
+        import {
+            ClassicEditor,
+            Essentials,
+            Paragraph,
+            Bold,
+            Italic,
+            Font
         } from 'ckeditor5';
 
-        ClassicEditor
-            .create(document.querySelector('#ckeditor1'), { 
-                licenseKey: 'GPL', 
-                plugins: [ Essentials, Paragraph, Bold, Italic, Font ],
-                toolbar: []
-            })
-            .then(editor => { 
-                window.editor = editor;
-            })
-            .catch(error => { 
-                console.error(error);
-            });
+        if (document.querySelector('#ckeditor1')) {
+            ClassicEditor
+                .create(document.querySelector('#ckeditor1'), {
+                    licenseKey: 'GPL',
+                    plugins: [Essentials, Paragraph, Bold, Italic, Font],
+                    toolbar: []
+                })
+                .then(editor => {
+                    window.editor = editor;
+                })
+                .catch(error => {
+                    console.error(error);
+                });
+        }
     </script>
     @RenderSection("Scripts", false)
 </body>
