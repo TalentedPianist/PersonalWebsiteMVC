@@ -196,7 +196,7 @@ form {
         height: revert;
     }
 
-    @media only screen and (min-width: 767px) {
+    @media only screen and (min-width: 768px) {
 
         background-size: 100%;
         background-position: center;
@@ -215,6 +215,7 @@ form {
 
         p {
             font-size: 16pt;
+            line-height: 2;
         }
     }
 }
@@ -225,7 +226,6 @@ form {
     flex: 1;
     position: relative;
     min-height: 100vh;
-    min-height: 100dvh;
 
     section {
         display: flex;
@@ -257,19 +257,29 @@ form {
         color: black !important;
         display: flex;
         margin: 0 auto;
+
+        @media only screen and (min-width: 768px) { 
+            margin: 0;
+            padding: 0; 
+        }
     }
 
     p {
         color: black !important;
         font-size: 15pt;
 
+        @media only screen and (min-width: 768px) { 
+            line-height: 2;
+        }
     }
 
     @media only screen and (max-width: 600px) {
         align-items: center;
     }
 
-
+    @media only screen and (min-width: 768px)  {
+        gap: 1em;
+    }
 }
 
 #Blog {
@@ -753,7 +763,7 @@ main {
 
     @media only screen and (min-width: 768px) {
 
-        padding-top: 2em;
+        padding-top: 0.5em;
         padding-bottom: 2em;
 
         h1 {

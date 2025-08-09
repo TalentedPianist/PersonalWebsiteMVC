@@ -1,4 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components
+@using Microsoft.AspNetCore.Http.Extensions
+@inject IHttpContextAccessor _http
+
 
 @{
     var data = new ImportMapDefinition(
@@ -43,14 +46,31 @@
     </header>
 
     <main>
-        <section>
-            <article>
-                @RenderBody()
-            </article>
-            <article>
-                <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
-            </article>
-        </section>
+        @{
+            string url = _http.HttpContext.Request.GetEncodedUrl();
+
+        }
+        @if (url.Contains("Blog"))
+        {
+            @RenderBody()
+        }
+        else if (url.Contains("Photos"))
+        {
+            @RenderBody()
+        }
+        else
+        {
+            <section>
+                <article>
+                    @RenderBody()
+                </article>
+                <article>
+                    <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
+                </article>
+            </section>
+        }
+
+      
     </main>
 
     <footer>

@@ -172,7 +172,7 @@ form div {
     height: revert;
   }
 }
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 768px) {
   #Home {
     background-size: 100%;
     background-position: center;
@@ -188,6 +188,7 @@ form div {
   }
   #Home p {
     font-size: 16pt;
+    line-height: 2;
   }
 }
 
@@ -197,7 +198,6 @@ form div {
   flex: 1;
   position: relative;
   min-height: 100vh;
-  min-height: 100dvh;
 }
 #About section {
   display: flex;
@@ -228,13 +228,29 @@ form div {
   display: flex;
   margin: 0 auto;
 }
+@media only screen and (min-width: 768px) {
+  #About h1 {
+    margin: 0;
+    padding: 0;
+  }
+}
 #About p {
   color: black !important;
   font-size: 15pt;
 }
+@media only screen and (min-width: 768px) {
+  #About p {
+    line-height: 2;
+  }
+}
 @media only screen and (max-width: 600px) {
   #About {
     align-items: center;
+  }
+}
+@media only screen and (min-width: 768px) {
+  #About {
+    gap: 1em;
   }
 }
 
@@ -650,7 +666,7 @@ main {
 }
 @media only screen and (min-width: 768px) {
   main {
-    padding-top: 2em;
+    padding-top: 0.5em;
     padding-bottom: 2em;
   }
   main h1 {
