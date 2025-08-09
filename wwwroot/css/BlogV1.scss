@@ -350,7 +350,7 @@ form {
         position: relative;
 
         @media only screen and (min-width: 767px) {
-            flex-direction: row;
+            
         }
 
 
@@ -359,8 +359,10 @@ form {
             width: 100%;
             padding-left: 1em;
             padding-right: 1em;
-            gap: 3em;
-            flex-direction: row;
+
+            p { 
+                line-height: 2;
+            }
         }
 
         hr {
@@ -371,7 +373,15 @@ form {
 
         &:nth-of-type(2) {
 
-            padding-top: 2em;
+            padding-top: 0.5em;
+
+            a { 
+                background-color: lightgreen;
+                padding-top: 1em;
+                padding-left: 1em;
+                padding-right: 1em;
+                padding-bottom: 1em;
+            }
 
             button {
                 align-self: center;
@@ -382,20 +392,11 @@ form {
                 padding-bottom: 0.5em;
                 border: 1px solid black;
 
-                &:nth-of-type(1) {
-                    background-color: lightgreen;
-                    margin-right: 2em;
-
-                }
-
-                &:nth-of-type(2) {
-                    background-color: lightyellow;
-                }
             }
         }
 
         &:nth-of-type(3) {
-            flex-direction: column;
+          
         }
 
     }
@@ -758,7 +759,7 @@ main {
     height: 100%;
     background-color: #DAADE3;
     clear: both !important;
-    padding-left: 2em;
+    padding-left: 0.5em;
     padding-right: 2em;
 
     @media only screen and (min-width: 768px) {
@@ -778,7 +779,6 @@ main {
             display: flex;
             flex-direction: row;
             flex: 1;
-            gap: 1em;
             align-items: flex-start;
             width: 100%;
 
@@ -941,8 +941,37 @@ footer {
 }
 
 .pagination {
-    background-color: transparent !important;
-    justify-content: flex-start !important;
+    .list-item { 
+        display: flex; 
+        flex-direction: row; 
+    }
+    
+    .page-item { 
+            display: flex; 
+            flex-direction: row !important; 
+        }
+
+    .page-link { 
+        display: flex; 
+        flex-direction: row !important;
+    }
+
+   li {
+        display: flex; 
+        flex-direction: row !important; 
+        flex: 1; 
+        gap: 1em;
+
+        
+
+        &:first-child { 
+            margin-top: 1em;
+            a { 
+                font-size: large;
+            }
+        }
+
+   }
 }
 
 .commentForm {

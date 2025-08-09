@@ -47,14 +47,11 @@
 
     <main>
         @{
-            string url = _http.HttpContext.Request.GetEncodedUrl();
+            string url = _http.HttpContext!.Request.GetEncodedUrl();
 
         }
-        @if (url.Contains("Blog"))
-        {
-            @RenderBody()
-        }
-        else if (url.Contains("Photos"))
+       
+        @if (url.Contains("Photos"))
         {
             @RenderBody()
         }

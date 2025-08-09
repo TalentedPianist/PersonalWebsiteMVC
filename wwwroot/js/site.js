@@ -43,11 +43,12 @@ $(function () {
 });
 
 var onloadCallback = function () {
-    grecaptcha.render('g-recaptcha', {
-        'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz '
+    if (document.querySelector('#g-recaptcha')) {
+        grecaptcha.render('g-recaptcha', {
+            'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz '
 
-    });
-
+        });
+    }
 };
 
 

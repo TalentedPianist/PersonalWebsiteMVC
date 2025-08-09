@@ -18,11 +18,11 @@
 
 
 <div id="Blog">
-    
+
 
     @if (_db.Posts.Count() == 0)
     {
-        <p>No posts have been found just now.  Please check back later.</p>
+        <p>No posts have been found just now. Please check back later.</p>
     }
     else
     {
@@ -32,48 +32,47 @@
         </section>
         <section>
 
-        @try
-        {
-            @foreach (Posts post in Model.PagedPosts!)
+            @try
             {
-                var result = Truncate(post.PostContent!, 200);
+                @foreach (Posts post in Model.PagedPosts!)
+                {
+                    var result = Truncate(post.PostContent!, 200);
 
-                <div class="card">
-                    @if (post.FeaturedImage is not null) 
+
+                    @if (post.FeaturedImage is not null)
                     {
-                    <img src="/Uploads/@post.FeaturedImage">
+                        <img src="/Uploads/@post.FeaturedImage">
                     }
-                    <div class="card-body">
-                        <h2>@post.PostTitle</h2>
-                        @RemoveHTMLTags(result)
-                    </div>
-                    <div class="card-footer">
-                        <a asp-action="SinglePost" asp-area="Blog" asp-route-id="@post.PostID" class="btn btn-primary">Read More</a>
-                    </div>
-                </div>
+
+                    <h2>@post.PostTitle</h2>
+                    @RemoveHTMLTags(result)
+
+
+                    <a asp-action="SinglePost" asp-area="Blog" asp-route-id="@post.PostID" class="btn btn-primary">Read More</a>
+
+                }
             }
-        }
-        catch (NullReferenceException ex)
-        {
-            @ex.Message
-        }
-           
+            catch (NullReferenceException ex)
+            {
+                @ex.Message
+            }
+
         </section>
 
-            <section>
-                @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page, area = "Blog" }),
+        <section>
+            @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page,
+            area = "Blog" }),
                 new PagedListRenderOptions
                 {
                     DisplayItemSliceAndTotal = true,
                     LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new String[] { "page-link" }
+                    PageClasses = new String[] { "page-link" },
+                    UlElementClasses = new String[] { 
+                        "list-item" },
                 })
-            </section>
-    
-
-    }
-
-   
+        
+    </section>
+        }
 </div>
 
 
