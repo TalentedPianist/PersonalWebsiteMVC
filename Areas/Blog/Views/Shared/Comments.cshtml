@@ -12,7 +12,7 @@
 <div id="Comments">
     <h2>Comments</h2>
    
-        <section>
+        
         @foreach (Comments comment in Model.PagedComments!)
         {
             <span>
@@ -21,7 +21,7 @@
             </span>
             @Html.Raw(comment.CommentContent)
         }
-        </section>
+        
     
         @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber = page, area = "Blog" }),
             new PagedListRenderOptions

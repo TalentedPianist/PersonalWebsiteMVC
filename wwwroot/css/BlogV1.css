@@ -258,7 +258,6 @@ form div {
   display: flex;
   flex-direction: column;
   flex: 1;
-  height: 100%;
   color: black !important;
   position: relative;
   overflow: hidden;
@@ -400,9 +399,6 @@ form div {
   align-self: flex-start;
   margin-bottom: 2em;
 }
-#SinglePost p {
-  font-size: 14pt !important;
-}
 #SinglePost h3 {
   margin-bottom: 1em;
 }
@@ -416,8 +412,6 @@ form div {
   display: flex;
   flex-direction: column;
   flex: 1;
-  margin-bottom: 1em;
-  gap: 2em;
 }
 #Comments img {
   width: 10% !important;
@@ -809,29 +803,26 @@ footer {
   display: none !important;
 }
 
-.pagination .list-item {
+.list-item {
   display: flex;
   flex-direction: row;
+  margin-top: 2em;
 }
-.pagination .page-item {
-  display: flex;
-  flex-direction: row !important;
+
+.page-item {
+  /* My syntax for the not selector was all wrong, that's why it wouldn't work. */
 }
-.pagination .page-link {
-  display: flex;
-  flex-direction: row !important;
+.page-item .PagedList-pageCountAndLocation {
+  margin-bottom: 2em;
 }
-.pagination li {
-  display: flex;
-  flex-direction: row !important;
-  flex: 1;
-  gap: 1em;
-}
-.pagination li:first-child {
-  margin-top: 1em;
-}
-.pagination li:first-child a {
-  font-size: large;
+.page-item:not(.PagedList-pageCountAndLocation) {
+  display: inline;
+  margin-right: 2em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  background-color: pink;
 }
 
 .commentForm {

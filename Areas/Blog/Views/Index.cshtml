@@ -59,7 +59,7 @@
 
         </section>
 
-        <section>
+        
             @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page,
             area = "Blog" }),
                 new PagedListRenderOptions
@@ -71,7 +71,7 @@
                         "list-item" },
                 })
         
-    </section>
+    
         }
 </div>
 

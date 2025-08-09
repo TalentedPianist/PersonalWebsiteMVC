@@ -65,7 +65,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
             var pageNumber = page ?? 1;
             var strId = Convert.ToInt32(id);
-            model.PagedComments = (PagedList<Comments>?)_db.Comments.Where(c => c.PostID == strId).ToPagedList<Comments>(pageNumber, 10);
+            model.PagedComments = (PagedList<Comments>?)_db.Comments.Where(c => c.PostID == strId).OrderBy(c => c.CommentDate).ToPagedList<Comments>(pageNumber, 10);
             
             return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }

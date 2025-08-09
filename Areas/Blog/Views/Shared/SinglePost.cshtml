@@ -10,35 +10,32 @@
 
 <div id="SinglePost">
 
-    <section>
-        <article>
-            @try
-            {
-                if (Model.Post is not null)
-                {
-                    <h1>@Model.Post.PostTitle</h1>
-                    @Html.Raw(Model.Post.PostContent)
-                    <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
-                }
-                else
-                {
-                    // You've just got to try things.  This is how I got it working in the end.
-                    var post = _db.Posts.Where(p => p.PostID == Convert.ToInt32(ViewData["id"])).FirstOrDefault();
+    @try
+    {
+        if (Model.Post is not null)
+        {
+            <h1>@Model.Post.PostTitle</h1>
+            @Html.Raw(Model.Post.PostContent)
+            <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
+        }
+        else
+        {
+            // You've just got to try things. This is how I got it working in the end.
+            var post = _db.Posts.Where(p => p.PostID == Convert.ToInt32(ViewData["id"])).FirstOrDefault();
 
-                    <h1>@post!.PostTitle</h1>
-                    @Html.Raw(post.PostContent)
+            <h1>@post!.PostTitle</h1>
+            @Html.Raw(post.PostContent)
 
-                    @TempData["Message"]
+            @TempData["Message"]
 
-                    <partial name="Comments.cshtml" view-data="ViewData" model="@Model" />
-                }
-            }
-            catch (NullReferenceException ex)
-            {
-                @ex.Message
-            }
-        </article>
-    </section>
+            <partial name="Comments.cshtml" view-data="ViewData" model="@Model" />
+        }
+    }
+    catch (NullReferenceException ex)
+    {
+        @ex.Message
+    }
+
 </div>
 
 @section Scripts {
@@ -54,9 +51,9 @@
                     url: "/Captcha",
                     data: { userResponse: reCaptchaResponse },
                     success: function (data) {
-                      
+
                         if (data) {
-               
+
                             // https://coderanch.com/t/772379/languages/jQuery-submit-work-DOM-submit
                             $("form")[0].submit();
                         } else {
