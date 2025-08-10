@@ -23,7 +23,7 @@
             }
         }
     </section>
-    <section>
+    
         @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
             new PagedListRenderOptions
             {
@@ -31,15 +31,6 @@
                 LiElementClasses = new string[] { "page-item" },
                 PageClasses = new String[] { "page-link" }
             })
-    </section>
+    
 </div>
 
-@section scripts {
-    <script>
-        $("#Photos section").find("figure").each(function (index, element) {
-            console.log($(element).find('img').attr('src'));
-            
-        });
-    </script>
-
-}

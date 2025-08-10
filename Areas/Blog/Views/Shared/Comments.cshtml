@@ -22,7 +22,7 @@
             @Html.Raw(comment.CommentContent)
         }
         
-    
+        <hr>
         @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber = page, area = "Blog" }),
             new PagedListRenderOptions
             {
@@ -47,7 +47,7 @@
         </div>
         <div>
             <label asp-for="Comment.CommentContent">Comment:</label>
-            <textarea id="ckeditor1" asp-for="Comment.CommentContent"></textarea>
+            <textarea id="ckeditor1" asp-for="Comment.CommentContent" placeholder="What a great post..."></textarea>
         </div>
         <input type="hidden" asp-for="Comment.PostID" value="@ViewData["id"]">
         <div class="g-recaptcha" data-sitekey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"></div>

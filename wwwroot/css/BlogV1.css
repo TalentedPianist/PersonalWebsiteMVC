@@ -66,16 +66,8 @@ form div {
 }
 @media only screen and (min-width: 600px) {
   form div {
-    width: 100%;
-    flex-direction: row;
-  }
-  form div label {
-    width: 8em;
-    display: flex;
-    align-self: center;
-  }
-  form div label:nth-of-type(4) {
-    align-self: flex-start !important;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
   }
   form div .ck-editor__editable {
     min-height: 200px;
@@ -131,6 +123,7 @@ form div {
     background-color: revert;
     background-image: none;
     width: revert;
+    padding-left: 1em;
   }
   #Home section {
     display: flex;
@@ -176,7 +169,7 @@ form div {
   #Home {
     background-size: 100%;
     background-position: center;
-    padding-left: 0 !important;
+    padding-left: 1em;
     color: black;
     gap: 1em;
   }
@@ -189,6 +182,7 @@ form div {
   #Home p {
     font-size: 16pt;
     line-height: 2;
+    padding-right: 2em;
   }
 }
 
@@ -251,6 +245,8 @@ form div {
 @media only screen and (min-width: 768px) {
   #About {
     gap: 1em;
+    padding-left: 1em;
+    padding-right: 2em;
   }
 }
 
@@ -347,6 +343,9 @@ form div {
   padding-top: 0.5em;
   padding-bottom: 0.5em;
   border: 1px solid black;
+}
+#Blog section:nth-of-type(3) {
+  border-top: 1px solid #d9d9d9;
 }
 #Blog button {
   align-self: flex-start !important;
@@ -493,7 +492,7 @@ form div {
   flex-direction: column;
   flex: 1;
 }
-#Albums section {
+#Albums section:nth-of-type(2) {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1em;
@@ -502,8 +501,22 @@ form div {
   margin-top: 1em;
   margin-bottom: 2em;
 }
-#Albums section figcaption {
+#Albums section:nth-of-type(2) figcaption {
   margin-top: 1em;
+}
+#Albums section:nth-of-type(3) {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid #d9d9d9;
+  padding-top: 1em;
+}
+#Albums section:nth-of-type(3) .pagination {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1em;
+  width: 100%;
+  font-size: large;
 }
 #Albums h1 {
   font-size: 32pt !important;
@@ -803,19 +816,18 @@ footer {
   display: none !important;
 }
 
-.list-item {
+.pagination .list-item {
   display: flex;
   flex-direction: row;
   margin-top: 2em;
 }
-
-.page-item {
+.pagination .page-item {
   /* My syntax for the not selector was all wrong, that's why it wouldn't work. */
 }
-.page-item .PagedList-pageCountAndLocation {
+.pagination .page-item .PagedList-pageCountAndLocation {
   margin-bottom: 2em;
 }
-.page-item:not(.PagedList-pageCountAndLocation) {
+.pagination .page-item:not(.PagedList-pageCountAndLocation) {
   display: inline;
   margin-right: 2em;
   padding-left: 1em;
