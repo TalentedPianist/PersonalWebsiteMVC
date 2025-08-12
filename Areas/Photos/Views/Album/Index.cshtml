@@ -19,7 +19,9 @@
 
             <figure>
                 <!-- Note to self: the href content is key to getting thifs working!!! -->
-                <a class="gallery" href="/Gallery/@ViewBag.AlbumName/@photo.Name" data-name="@photo.Name"
+                <a class="gallery" href="#" data-featherlight="#mylightbox" 
+                data-featherlight-gallery
+                data-name="@photo.Name"
                     data-id="@photo.AlbumID"><img src="@photo.ImageUrl" data-id="@photo.AlbumID"
                         data-name="@photo.Name"></a>
 
@@ -45,16 +47,23 @@
         </section>
 </div>
 
-
-@functions {
-    string TestRender()
-    {
-        return DateTime.Now.ToString();
-    }
-}
+<div id="mylightbox">
+    <div id="lightbox-content">
+        <img class="lightbox-image" src="" alt="">
+    </div>
+    @DateTime.Now
+</div>
 
 
 @section Scripts {
+    <script>
+        $('[data-featherlight="#mylightbox"]').featherlight({
+            beforeOpen: function(event)  {
+                let $trigger = this.$currentTarget;
+                $('.lightbox-image').attr('src', $trigger.find('img').attr('src'));
+            }
+        });
+    </script>
 
     <script>
 
@@ -109,8 +118,7 @@
                     this.$instance.find('.featherlight-content').html(`
                                                                                <h1>${name}</h1>
                                                                                <img src="${src}">
-                                                                               <div id="Comments"></div>
-                    <div class="commentForm">                                                         ${CommentForm(id)}     
+                                                                                                                     
                     </div>
                                                                          `);
 
