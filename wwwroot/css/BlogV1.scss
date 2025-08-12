@@ -616,14 +616,49 @@ form {
     flex: 1;
 
     section {
-        &:nth-of-type(2) {
+        &:nth-of-type(1) {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 2em;
             margin-top: 1em;
         }
-        
+
+        &:nth-of-type(2) {
+            display: flex;
+            flex-direction: column;
+            margin-top: 2em;
+
+            .pagination-container {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                align-items: flex-start;
+
+                .pagination {
+                    display: flex;
+                    flex-direction: column;
+
+                    .PagedList-pageCountAndLocation { 
+                        font-size: large;
+                        width: 100%;
+                        min-width: 100%;
+                        display: flex;
+                    }
+
+                    &:not(.PagedList-pageCountAndLocation) {
+                        flex-direction: row;
+                 
+                    }
+
+                }
+
+            
+            }
+        }
+
     }
+
+
 
 }
 
@@ -948,31 +983,9 @@ footer {
     }
 }
 
-.pagination { 
-.list-item {
-    display: flex;
-    flex-direction: row;
-    margin-top: 2em;
-}
 
-.page-item {
 
-    .PagedList-pageCountAndLocation {
-        margin-bottom: 2em;
-    }
 
-    /* My syntax for the not selector was all wrong, that's why it wouldn't work. */
-    &:not(.PagedList-pageCountAndLocation) {
-        display: inline;
-        margin-right: 2em;
-        padding-left: 1em;
-        padding-right: 1em;
-        padding-top: 1em;
-        padding-bottom: 1em;
-        background-color: pink;
-    }
-}
-}
 
 
 

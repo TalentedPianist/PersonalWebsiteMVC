@@ -8,10 +8,10 @@
 @TempData["Message"]
 
 <div id="Photos">
-    <section>
+    
         <h1>@ViewBag.AlbumName</h1>
 
-    </section>
+    
     <section>
 
         @foreach (var photo in Model.PagedPhotos!)
@@ -31,15 +31,17 @@
 
     </section>
     <section>
+        <p>@ViewBag.PageCount</p>
         @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new { pageNumber =
         page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
                 new PagedListRenderOptions
                 {
-                    DisplayItemSliceAndTotal = true,
+                    DisplayItemSliceAndTotal = false,
                     LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new String[] { "page-link" }
+                    PageClasses = new String[] { "page-link" },
+                    UlElementClasses = new[] { "pagination", "justify-content-center", "mt-3" },
                 })
-    </section>
+        </section>
 </div>
 
 

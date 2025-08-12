@@ -527,11 +527,35 @@ form div {
   flex-direction: column;
   flex: 1;
 }
-#Photos section:nth-of-type(2) {
+#Photos section:nth-of-type(1) {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 2em;
   margin-top: 1em;
+}
+#Photos section:nth-of-type(2) {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2em;
+}
+#Photos section:nth-of-type(2) .pagination-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: flex-start;
+}
+#Photos section:nth-of-type(2) .pagination-container .pagination {
+  display: flex;
+  flex-direction: column;
+}
+#Photos section:nth-of-type(2) .pagination-container .pagination .PagedList-pageCountAndLocation {
+  font-size: large;
+  width: 100%;
+  min-width: 100%;
+  display: flex;
+}
+#Photos section:nth-of-type(2) .pagination-container .pagination:not(.PagedList-pageCountAndLocation) {
+  flex-direction: row;
 }
 
 .modal-content {
@@ -814,27 +838,6 @@ footer {
 
 .modal-header i {
   display: none !important;
-}
-
-.pagination .list-item {
-  display: flex;
-  flex-direction: row;
-  margin-top: 2em;
-}
-.pagination .page-item {
-  /* My syntax for the not selector was all wrong, that's why it wouldn't work. */
-}
-.pagination .page-item .PagedList-pageCountAndLocation {
-  margin-bottom: 2em;
-}
-.pagination .page-item:not(.PagedList-pageCountAndLocation) {
-  display: inline;
-  margin-right: 2em;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  background-color: pink;
 }
 
 .commentForm {

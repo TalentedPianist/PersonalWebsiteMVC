@@ -31,6 +31,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 
             var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
             ViewBag.AlbumName = album!.Name;
+            ViewBag.PageCount = $"You are on page {model.PagedPhotos.PageNumber} of {model.PagedPhotos.PageCount}";
             return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }
 
@@ -41,7 +42,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             var photo = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
             var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).ToList();
             ViewBag.Comments = comments;
-
+            
             return Ok(photo);
         }
 
