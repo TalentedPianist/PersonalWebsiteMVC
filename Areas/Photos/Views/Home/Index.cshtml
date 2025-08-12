@@ -39,13 +39,15 @@
         }
     </section>
     <section>
+        <p>You are on page @Model.PagedAlbums!.PageNumber of @Model.PagedAlbums.PageCount.</p>
+
         @Html.PagedListPager((IPagedList)Model.PagedAlbums!, page => Url.Action("Index", "Home", new { pageNumber = page, area = "Photos" }),
          new PagedListRenderOptions
          {
-             DisplayItemSliceAndTotal = true,
+             DisplayItemSliceAndTotal = false,
              LiElementClasses = new string[] { "page-item" },
              PageClasses = new String[] { "page-link" }
-         });
+         })
     </section>
     
 </div>

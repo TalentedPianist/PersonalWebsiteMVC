@@ -42,6 +42,10 @@ form {
         display: grid;
         gap: 1em;
         align-items: center;
+
+        .commentForm { 
+            align-items: flex-start !important;
+        }
     }
 
     input {
@@ -291,6 +295,10 @@ form {
         padding-left: 16px;
         font-size: 42pt !important;
         margin: 0 !important;
+
+        @media only screen and (min-width: 768px) { 
+            padding-left: 0; 
+        }
     }
 
 
@@ -363,33 +371,42 @@ form {
             margin-bottom: 1em;
         }
 
+        &:nth-of-type(1) { 
+           
+            padding-bottom: 1em;
+            margin-bottom: 1em;
+            padding-right: 2em;
+        }
+
 
         &:nth-of-type(2) {
-
+            gap: 1em;
             padding-top: 0.5em;
+            margin-bottom: 1em;
 
             a {
                 background-color: lightgreen;
+                color: black;
                 padding-top: 1em;
                 padding-left: 1em;
                 padding-right: 1em;
                 padding-bottom: 1em;
             }
 
-            button {
-                align-self: center;
-                font-size: large;
-                padding-left: 0.5em;
-                padding-right: 0.5em;
-                padding-top: 0.5em;
-                padding-bottom: 0.5em;
-                border: 1px solid black;
-
-            }
+           
         }
 
         &:nth-of-type(3) {
             border-top: 1px solid #d9d9d9;
+            display: flex; 
+            flex-direction: column;
+            flex: 1; 
+            gap: 1em;
+
+            p { 
+                font-size: large;
+                margin-top: 1em;
+            }
         }
 
     }
@@ -592,13 +609,9 @@ form {
             flex-direction: column;
             border-top: 1px solid #d9d9d9;
             padding-top: 1em;
-
-            .pagination {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 1em;
-                width: 100%;
+            gap: 1em;
+            
+            p { 
                 font-size: large;
             }
         }
@@ -627,32 +640,11 @@ form {
             display: flex;
             flex-direction: column;
             margin-top: 2em;
+            padding-top: 1em;
+            border-top: 1px solid #d9d9d9;
 
-            .pagination-container {
-                display: flex;
-                flex-direction: column;
-                flex: 1;
-                align-items: flex-start;
-
-                .pagination {
-                    display: flex;
-                    flex-direction: column;
-
-                    .PagedList-pageCountAndLocation { 
-                        font-size: large;
-                        width: 100%;
-                        min-width: 100%;
-                        display: flex;
-                    }
-
-                    &:not(.PagedList-pageCountAndLocation) {
-                        flex-direction: row;
-                 
-                    }
-
-                }
-
-            
+            p { 
+                font-size: large;
             }
         }
 

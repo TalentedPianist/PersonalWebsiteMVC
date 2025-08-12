@@ -31,7 +31,8 @@
 
     </section>
     <section>
-        <p>@ViewBag.PageCount</p>
+        <p>You are on page @Model.PagedPhotos.PageNumber of @Model.PagedPhotos.PageCount.</p>
+        
         @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new { pageNumber =
         page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
                 new PagedListRenderOptions

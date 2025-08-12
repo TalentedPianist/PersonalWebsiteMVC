@@ -59,19 +59,20 @@
 
         </section>
 
-        
+        <section>
+            <p>You are on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageCount.</p>
+
             @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page,
             area = "Blog" }),
                 new PagedListRenderOptions
                 {
-                    DisplayItemSliceAndTotal = true,
+                    DisplayItemSliceAndTotal = false,
                     LiElementClasses = new string[] { "page-item" },
                     PageClasses = new String[] { "page-link" },
-                    UlElementClasses = new String[] { 
-                        "list-item" },
+                    
                 })
         
-    
+            </section>
         }
 </div>
 
