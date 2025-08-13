@@ -38,14 +38,8 @@ form {
     flex-direction: column;
     flex: 1;
 
-    @media only screen and (min-width: 767px) {
-        display: grid;
-        gap: 1em;
-        align-items: center;
-
-        .commentForm { 
-            align-items: flex-start !important;
-        }
+    @media only screen and (min-width: 768px) {
+       gap: 2em;
     }
 
     input {
@@ -54,7 +48,9 @@ form {
         align-items: center;
     }
 
-
+    textarea { 
+        border: 1px solid black;
+    }
 
     button {
         border: 1px solid black;
@@ -71,12 +67,18 @@ form {
         display: flex;
         flex-direction: column;
         flex: 1;
+        
+
+        label { 
+            float: left; 
+            width: 8em;
+        }
 
         @media only screen and (min-width: 600px) {
             // https://www.scale.at/blog/responsive-form-layout-css-grid
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-
+           display: flex; 
+           flex-direction: row; 
+           align-self: flex-start;
 
             .ck-editor__editable {
                 min-height: 200px;
@@ -1026,11 +1028,11 @@ footer {
 }
 
 .featherlight-next {
-    height: 83% !important;
+    height: 60% !important;
 }
 
 .featherlight-previous {
-    height: 83% !important;
+    height: 60% !important;
 }
 
 .modal {
@@ -1054,4 +1056,22 @@ footer {
     padding-left: 1em;
     padding-right: 1em;
     border: 1px solid #000000;
+}
+
+#lightbox-content { 
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+    gap: 1em;
+
+    .comments-container { 
+        display: flex; 
+        flex-direction: column;
+        flex: 1; 
+        gap: 2em;
+
+        img { 
+            width: 10%;
+        }
+    }
 }

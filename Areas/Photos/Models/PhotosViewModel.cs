@@ -8,6 +8,6 @@ namespace PersonalWebsiteMVC.Areas.Photos.Models
         public List<PersonalWebsiteMVC.Models.Photos>? Photos { get; set; } 
         public IPagedList<PersonalWebsiteMVC.Models.Photos>? PagedPhotos { get; set; }
         public IPagedList<PersonalWebsiteMVC.Models.Album>? PagedAlbums { get; set; }
-        public List<Comments>? Comments { get; set; }
+        public PersonalWebsiteMVC.Models.Comments? Comments { get; set; }
     }
 }

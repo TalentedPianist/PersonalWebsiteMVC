@@ -51,14 +51,19 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         public IActionResult GetPhoto(string name)
         {
             var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
+            ViewBag.PhotoID = photo!.PhotoID;
             return Ok(photo);
         }
 
 
         [Route("/Album/GetComments")]
-        public IActionResult GetComments(int id)
+        [HttpPost]
+        public IActionResult GetComments(int id, int page = 1)
         {
-            var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).ToList();
+            int pageSize = 1;
+            var comments = _db.Comments
+                .Where(c => Convert.ToInt32(id) == Convert.ToInt32(c.PhotoID))
+                .ToList();
 
             return Ok(comments);
         }
