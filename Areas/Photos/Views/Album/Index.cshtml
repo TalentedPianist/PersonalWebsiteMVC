@@ -139,7 +139,7 @@
 
 
                             var current = $.featherlight.current();
-                            console.log(current);
+                          
                             var comments = $(current).find('.comments-container');
                             var pagination = $(current).find('.pagination-container');
                             console.log(pagination);
@@ -153,28 +153,27 @@
                                                             </div>
                                                             ${message[index].CommentContent}
                                                             
-                                                     `);
-                                                    
-                            
-                                                  
+                                                     `);        
+                                var pageParts = $(comments);
+                                var numPages = message.length;
+                                var perPage = 1; 
+
+                                comments.slice(perPage).hide();
+                                pagination.pagination({ 
+                                    items: numPages, 
+                                    itemsOnPage: perPage,
+                                    cssStyle: "light-theme",
+                                    onPageClick: function(pageNumb) { 
+                                        var start = perPage * (pageNum - 1);
+                                        var end = start + perPage;
+
+                                        // First hide all page parts
+                                        pageParts.hide().slice(start, end).show();
+                                    });
+                                });
                             });
 
-                            
-                            var numItems = message.length;
-                            var perPage = 1; 
-                            $(".comments-container").slice(perPage).hide();
 
-                            $('.pagination-container').pagination({ 
-                                items: message.length,
-                                itemsOnPage: 1,
-                                onPageClick: function(pageNumber) {
-                                    var showFrom = perPage * (pageNumber - 1);
-                                    var showTo = showFrom + perPage;
-                                    items.hide().slice(showFrom, showTo).show();
-
-                                }
-                            });
-                        
                         },
                         error: function (error) {
                             console.log(error);

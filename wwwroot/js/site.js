@@ -81,4 +81,7 @@ $('#showLessBtn').on('click', function (e) {
 });
 
 
-
+$(document).on('click', '.comment-pagination a', function(e) { 
+    e.preventPropagation();
+    e.preventDefault();
+});
