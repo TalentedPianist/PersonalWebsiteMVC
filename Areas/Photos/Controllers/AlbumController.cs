@@ -70,7 +70,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 
         [HttpPost]
         [Route("/Photo/AddComment")]
-        public IActionResult AddComment([FromBody]Comments comment)
+        public IActionResult AddComment(Comments comment)
         {
             comment.CommentDate = DateTime.Now;
             comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();

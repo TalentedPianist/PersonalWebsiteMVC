@@ -41,14 +41,17 @@ namespace PersonalWebsiteMVC.Models
 
     public string? PhotoID { get; set; }
     [Display(Name = "Name")]
+    [Required]
     public string? CommentAuthor { get; set; }
     [Display(Name = "Email")]
+    [Required]
     public string? CommentAuthorEmail { get; set; }
     [Display(Name = "Website")]
     public string? CommentAuthorUrl { get; set; }
     public string? CommentAuthorIP { get; set; }
     public DateTime CommentDate { get; set; }
     [Display(Name = "Comment")]
+    [Required]
     public string? CommentContent { get; set; }
     public string? CommentType { get; set; }
 

@@ -82,10 +82,6 @@ form div label {
     overflow-y: auto;
     flex-direction: column !important;
   }
-  form div .ck .ck-sticky-panel__content {
-    border: 0 !important;
-    display: none !important;
-  }
   form div .recaptcha {
     margin-top: 1em !important;
   }

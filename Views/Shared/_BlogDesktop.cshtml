@@ -79,13 +79,11 @@
 
     <script src="/lib/featherlight/featherlight.min.js"></script>
     <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
-    <script src="/lib/moment.js/moment.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
-
     <script src="/js/simplePagination.js"></script>
-
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script type="importmap" asp-importmap="@data"></script>
-    <script src="/js/site.js" asp-append-version="true"></script>
+   
     <script type="module">
         import {
             ClassicEditor,
@@ -96,7 +94,14 @@
             Font
         } from 'ckeditor5';
 
-        if (document.querySelector('#ckeditor1')) {
+        window.ClassicEditor = ClassicEditor;
+        window.CKEditorEssentials = Essentials;
+        window.CKEditorParagraph = Paragraph;
+        window.CKEditorBold = Bold;
+        window.CKEditorItalic = Italic;
+        window.CKEditorFont = Font;
+
+        @* if (document.querySelector('#ckeditor1')) {
             ClassicEditor
                 .create(document.querySelector('#ckeditor1'), {
                     licenseKey: 'GPL',
@@ -105,12 +110,14 @@
                 })
                 .then(editor => {
                     window.editor = editor;
+              
                 })
                 .catch(error => {
                     console.error(error);
                 });
-        }
+        } *@
     </script>
+     <script src="/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)
 </body>
 

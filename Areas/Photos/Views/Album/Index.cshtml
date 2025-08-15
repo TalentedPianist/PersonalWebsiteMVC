@@ -1,4 +1,5 @@
-﻿@*
+﻿@using Microsoft.AspNetCore.Components
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
@@ -6,6 +7,16 @@
 @model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
 
 @TempData["Message"]
+
+@{
+    ViewData["Title"] = "Home Page";
+    var data = new ImportMapDefinition(
+    new Dictionary<string, string>
+    {
+{ "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
+{ "ckeditor5/", "/lib/ckeditor5/" },
+    }, null, null);
+}
 
 <div id="Photos">
 
@@ -57,23 +68,23 @@
 
         <div class="pagination-container"></div>
 
-        <form asp-action="AddComment" asp-controller="Album">
-            <div asp-validation-summary="All"></div>
+        <form method="post">
+
             <div>
-                <label asp-for="Comments.CommentAuthor">Name:</label>
-                <input asp-for="Comments.CommentAuthor" placeholder="John Smith">
+                <label>Name:</label>
+                <input name="txtName" id="name" placeholder="John Smith">
             </div>
             <div>
-                <label asp-for="Comments.CommentAuthorEmail">Email:</label>
-                <input asp-for="Comments.CommentAuthorEmail" placeholder="john@johnsmith.com">
+                <label>Email:</label>
+                <input type="email" name="txtEmail" placeholder="john@johnsmith.com">
             </div>
             <div>
-                <label asp-for="Comments.CommentAuthorUrl">Website:</label>
-                <input asp-for="Comments.CommentAuthorUrl" placeholder="https://www.johnsmith.com">
+                <label>Website:</label>
+                <input name="txtWebsite" placeholder="https://www.johnsmith.com">
             </div>
             <div>
-                <label asp-for="Comments.CommentContent">Comment:</label>
-                <textarea asp-for="Comments.CommentContent" id="ckeditor1" placeholder="Beautiful photo...."></textarea>
+                <label>Comment:</label>
+                <textarea id="ckeditor1"></textarea>
             </div>
             <button type="submit">Comment</button>
         </form>
@@ -83,18 +94,34 @@
 
 
 @section Scripts {
+
     <script>
-
-
         $('[data-featherlight-gallery').featherlightGallery({
-            closeOnClick: false,
-            beforeContent: function () {
-                $(this.$currentTarget).find('.Comments').empty();
-
-            },
             afterContent: function () {
-                // Clear existing comments so previous slide's text doesn't leak in
+                let current = $.featherlight.current().$content;
+                let ckElement = current.find('#ckeditor1')[0];
+                let modalEditor;
 
+
+                window.ClassicEditor.create(ckElement, { 
+                    licenseKey: 'GPL',
+                    plugins: [
+                        window.CKEditorEssentials, 
+                        window.CKEditorParagraph, 
+                        window.CKEditorBold, 
+                        window.CKEditorItalic, 
+                        window.CKEditorFont
+                    ],
+                    toolbar: []
+                }).then(editorInstance => { 
+                    currentEditor = editorInstance;
+
+                    $(document).on('submit', function(e) { 
+                        e.preventDefault();
+                        let comment = currentEditor.getData();
+                        console.log(comment);
+                    });
+                }).catch(console.error);
 
                 let $trigger = this.$currentTarget;
                 let $inst = this.$instance;
@@ -102,6 +129,7 @@
                 $('.lightbox-image').attr('src', $trigger.find('img').attr('src'));
                 let name = $trigger.data('name');
                 let photoId = $trigger.data('photo-id');
+
 
 
                 $.ajax({
@@ -122,6 +150,8 @@
 
 
                 function GetComments(id, page = 1) {
+
+
                     $.ajax({
                         method: "POST",
                         url: "/Album/GetComments",
@@ -137,41 +167,44 @@
                                 $(".comment-status").text('No comments have been found for this photo.  Be the first to add a comment using the form below.')
                             }
 
-
-                            var current = $.featherlight.current();
-                          
-                            var comments = $(current).find('.comments-container');
-                            var pagination = $(current).find('.pagination-container');
-                            console.log(pagination);
-
+                            var current = $.featherlight.current().$content;
+                            let commentsContainer = $(current).find('.comments-container');
+                            console.log(commentsContainer);
 
                             $.each(message, function (index) {
-                                $(".comments-container").append(`
-                                                            <div class="flex flex-row flex-1">
-                                                                <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y" class="mr-5">
-                                                                <p class="ml-5">Posted by ${message[index].CommentAuthor} on ${message[index].CommentDate}</p>
-                                                            </div>
-                                                            ${message[index].CommentContent}
-                                                            
-                                                     `);        
-                                var pageParts = $(comments);
-                                var numPages = message.length;
-                                var perPage = 1; 
+                                commentsContainer.append(`
+                                                                <div class="comment-item">
+                                                                        <div class="flex flex-row flex-1">
+                                                                                <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y" class="mr-5" alt="">
+                                                                                <p class="ml-5">
+                                                                                    Posted by ${message[index].CommentAuthor} on
+                                                                                        ${dayjs(message[index].CommentDate).format('dddd YY MMMM YYYY')} at
+                                                                                        ${dayjs(message[index].CommentDate).format('hh:mm A')}.
+                                                                                </p>
+                                                                        </div>
+                                                                        ${message[index].CommentContent}
+                                                               </div>        
+                                                         `)
+                            })
 
-                                comments.slice(perPage).hide();
-                                pagination.pagination({ 
-                                    items: numPages, 
-                                    itemsOnPage: perPage,
-                                    cssStyle: "light-theme",
-                                    onPageClick: function(pageNumb) { 
-                                        var start = perPage * (pageNum - 1);
-                                        var end = start + perPage;
+                            var commentItems = commentsContainer.find('.comment-item');
+                            var perPage = 1;
 
-                                        // First hide all page parts
-                                        pageParts.hide().slice(start, end).show();
-                                    });
-                                });
+                            commentItems.hide().slice(0, perPage).show();
+
+                            var paginationContainer = $(current).find('.pagination-container');
+                            paginationContainer.pagination({
+                                items: commentItems.length,
+                                itemsOnPage: perPage,
+                                onPageClick: function (pageNumber, e) {
+                                    e.preventDefault(); // Stop featherlight from closing
+                                    var showFrom = perPage * (pageNumber - 1);
+                                    var showTo = showFrom + perPage;
+                                    commentItems.hide().slice(showFrom, showTo).show();
+                                }
                             });
+
+
 
 
                         },
