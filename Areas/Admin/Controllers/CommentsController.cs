@@ -12,7 +12,6 @@ using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-     [Authorize(Roles = "Admin")]
     [Area("Admin")]
     public class CommentsController : Controller
     {

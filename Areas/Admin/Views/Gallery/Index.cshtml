@@ -1,5 +1,4 @@
-﻿
-@{
+﻿@{
     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 
@@ -29,7 +28,11 @@
                 }
                 else
                 {
-                    <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28"></path></svg>
+                    <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
+                        <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>
+                        <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z"
+                            fill="#ffca28"></path>
+                    </svg>
                 }
 
                 <figcaption>
@@ -38,10 +41,14 @@
                     {
                         <input type="checkbox" name="delAlbum" value="@di.Name">
                         <ul>
-                            <li><a asp-action="Index" asp-controller="Photos" asp-area="Admin" asp-route-name="@di.Name">View</a></li>
-                            <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin" asp-route-id="@GetId(di.Name)">Update</a></li>
-                            <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin" asp-route-name="@di.Name">Details</a></li>
-                            <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin" asp-route-name="@di.Name">Delete</a></li>
+                            <li><a asp-action="Index" asp-controller="Photos" asp-area="Admin"
+                                    asp-route-name="@di.Name">View</a></li>
+                            <li><a asp-action="Update" asp-controller="Gallery" asp-area="Admin"
+                                    asp-route-id="@GetId(di.Name)">Update</a></li>
+                            <li><a asp-action="Details" asp-controller="Gallery" asp-area="Admin"
+                                    asp-route-name="@di.Name">Details</a></li>
+                            <li><a asp-action="Delete" asp-controller="Gallery" asp-area="Admin"
+                                    asp-route-name="@di.Name">Delete</a></li>
                         </ul>
 
                     }
@@ -63,15 +70,15 @@
 <a href="#" id="AddToDb">Add to Database</a> |
 <a href="#" id="DelFromDb">Delete from Database</a>
 
-<!-- X.PagedList component for pagination -->
-<!-- Wasn't working because Url.Action was pointing to the wrong controller.  Eejit. -->
-@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Gallery", new { pageNumber = page, area = "Admin" }),
-        new PagedListRenderOptions
-        {
-            DisplayItemSliceAndTotal = true,
-            LiElementClasses = new string[] { "page-item" },
-            PageClasses = new String[] { "page-link" }
-        })
+
+@Html.PagedListPager((IPagedList)ViewBag.OnePageOfFiles, page => Url.Action("Index", "Gallery", new { pageNumber = page,
+area = "Admin" }),
+new PagedListRenderOptions
+{
+    DisplayItemSliceAndTotal = true,
+    LiElementClasses = new string[] { "page-item" },
+    PageClasses = new String[] { "page-link" }
+})
 
 
 
@@ -110,122 +117,22 @@
 @section Scripts {
 
     <script>
-        $(function () {
-            let add = [];
-            let del = [];
+        let add = [];
+        let del = [];
 
-            // Begin select individual checkboxes code
-            let cb = document.querySelector("#Gallery section").querySelectorAll('input[type="checkbox"]');
-            for (var i = 0; i < cb.length; i++) {
-                cb[i].addEventListener('click', function (e) {
-                    e.checked = true;
+        $("#selectAll").on('click', function(e) { 
+            e.preventDefault();
+            $("#Gallery section").each(function(index, element) { 
+                let figcaption = $(element).find('figcaption');
+                let cb = $(figcaption).find('input[type="checkbox"]');
+                $(cb).prop('checked', true);
 
-                    var isInDb = $.ajax({
-                        type: "POST",
-                        url: "@Url.Action("AjaxDbCheck", "Gallery")",
-                        data: { 'Name': e.target.value },
-                        async: false
-                    }).responseText;
-
-                    // Object reference not set error was because of the way the boolean function was called.
-                    if (!isInDb) {
-                        var id = $.ajax({
-                            type: "POST",
-                            url: "@Url.Action("GetId", "Gallery")",
-                            data: { 'name': e.target.value },
-                            async: false
-                        }).responseText;
-                        del.push({ 'Id': id });
-                    } else {
-                        // Looks like it wasn't working because I was editing the wrong bit of code.  This is something I do a lot.  What an eejit.
-                        // ---------------------------------//
-                        // Another interesting discovery is that using DateTime.Now in C# for AJAX returns undefined.  The solution is to create a javascript method.
-                        let now = new Date();
-                        let dateString = moment(now).format('YYYY-MM-DD HH:mm:ss');
-                        add.push({
-                            'Name': e.target.value, 'Description': '', 'Location': '', 'CoverPhoto': '', 'DateCreated': dateString
-                        })
-                    }
-                });
-            }
-
-            // End select individual checkboxes code
-
-            // Begin select all checkboxes code
-            document.querySelector("#selectAll").addEventListener('click', function (e) {
-                e.preventDefault();
-                cb = document.querySelector("#Gallery section").querySelectorAll('input[type="checkbox"]');
-                cb.forEach(function (e) {
-                    e.checked = true;
-
-                    var isInDb = $.ajax({
-                        type: "POST", url: "@Url.Action("AjaxDbCheck", "Gallery")", data: { 'name': e.value }, async: false
-                    }).responseText;
-
-                    if (isInDb) {
-                        var id = $.ajax({
-                            type: "POST", url: "@Url.Action("GetId", "Gallery")", data: { 'name': e.value }, async: false
-                        }).responseText;
-
-                        del.push({ 'Id': id });
-                    } else {
-						let today = moment().format('yyyy-MM-dd HH:mm:ss');
-                        add.push({ 'Name': e.value, 'DateCreated': today });
-                    }
-                });
+              
             });
-            // End select all checkboxes code
+        });    
 
-            document.querySelector("#AddToDb").addEventListener('click', function (e) {
-                e.preventDefault();
-                var arrData = JSON.stringify(add);
-                
-
-                //console.log(arrData);
-                $.ajax({
-                    cache: false,
-                    method: 'POST',
-                    url: '@Url.Action("AddMultipleToDb", "Gallery")',
-                    data: arrData,
-                    headers: {
-                        'Content-type': 'application/json'
-                    },
-                    success: function (result) {
-                        window.location.reload();
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-            });
-
-            document.querySelector("#DelFromDb").addEventListener('click', function (e) {
-                e.preventDefault();
-                //console.log(del);
-                var arr = [];
-                for (var i = 0; i < del.length; i++) {
-                    //console.log(del[i].Id.responseText);
-                    arr.push({ 'Id': del[i].Id.responseText });
-                }
-
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("RemoveMultipleFromDb", "Gallery")",
-                    data: JSON.stringify(arr),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        window.location.reload();
-                    },
-                    error: function (err) {
-                        console.log(err);
-                    }
-                });
-
-            });
+        $("#AddToDb").on('click', function(e) {
+            e.preventDefault(); 
         });
 
     </script>

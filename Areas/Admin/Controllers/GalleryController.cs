@@ -15,7 +15,7 @@ using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-    [Authorize(Roles = "Admin")]
+
     [Area("Admin")]
     public class GalleryController : Controller
     {
@@ -207,10 +207,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public int GetId([FromForm(Name = "name")]string name)
+        public int GetId([FromForm(Name = "name")] string name)
         {
-             var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-            return album!.AlbumID;
+            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+            if (album is not null)
+            {
+                return album!.AlbumID;
+            }
+            else
+            {
+                return 0;
+            }
            
         }
 
