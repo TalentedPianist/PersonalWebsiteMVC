@@ -1,6 +1,5 @@
 ﻿using HGO.ASPNetCore.FileManager.CommandsProcessor;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -31,7 +30,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
 
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery")]
+        [Route("Admin/Gallery")]
         public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
         {
             DirectoryInfo di = new DirectoryInfo(System.IO.Path.Combine(Host.ContentRootPath, "Gallery"));
@@ -52,14 +51,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View();
         }
 
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Create")]
+        [Route("Admin/Gallery/Create")]
         public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Create")]
+        [Route("Admin/Gallery/Create")]
         public IActionResult CreateAlbum(Album model, [FromForm(Name = "coverPhoto")] IFormFile file)
         {
             if (ModelState.IsValid)
@@ -99,7 +98,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
 
         [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Update")]
+        [Route("Admin/Gallery/Update")]
         public IActionResult UpdateAlbum(Album model, [FromForm(Name = "AlbumID")] int AlbumID, [FromForm(Name = "coverPhoto")] IFormFile file)
         {
             var album = _db.Albums.Where(a => a.AlbumID == AlbumID).FirstOrDefault();
@@ -123,7 +122,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
             return View(model);
         }
 
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Gallery/Delete/{id?}")]
+        [Route("Admin/Gallery/Delete/{id?}")]
         public IActionResult Delete(int id)
         {
             var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
@@ -169,6 +168,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
+        [Route("/Gallery/CheckDb")]
         public bool CheckDb([FromForm(Name = "name")] string name)
         {
             var photo = _db.Albums.Where(a => a.Name == name).Any();
@@ -181,19 +181,20 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Gallery/AddMultipleToDb")]
+        [Route("Gallery/AddMultipleToDb")]
         public IActionResult AddMultipleToDb([FromBody] List<Album> data)
 
         {
-            _db.Albums.AddRange(data);
-            _db.SaveChanges();
+            // _db.Albums.AddRange(data);
+            // _db.SaveChanges();
             return Ok(data);
         }
 
         [HttpPost]
+        [Route("/Gallery/DelMultipleFromDb")]
         public IActionResult RemoveMultipleFromDb([FromBody] List<Album> data)
         {
-            
+
             if (data != null)
             {
 
@@ -222,7 +223,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Photos/GetAlbum")]
+        [Route("Photos/GetAlbum")]
         public IActionResult GetAlbum(int id)
         {
             var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
@@ -230,14 +231,14 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public IActionResult AddToDb(Album album, List<PersonalWebsiteMVC.Models.Photos> photos)
+        public IActionResult AddToDb(Album album, List<Models.Photos> photos)
         {
             
             return Ok();
         }
 
         [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("/Gallery/AjaxDbCheck")]
+        [Route("/Gallery/AjaxDbCheck")]
         public bool AjaxDbCheck([FromForm(Name = "name")] string name)
         {
             if (_db.Albums.Where(a => a.Name == name).Any())

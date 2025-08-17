@@ -122,18 +122,73 @@ new PagedListRenderOptions
 
         $("#selectAll").on('click', function(e) { 
             e.preventDefault();
-            $("#Gallery section").each(function(index, element) { 
-                let figcaption = $(element).find('figcaption');
-                let cb = $(figcaption).find('input[type="checkbox"]');
-                $(cb).prop('checked', true);
-
-              
-            });
+            $('input[type="checkbox"]').prop('checked', true);
         });    
 
         $("#AddToDb").on('click', function(e) {
-            e.preventDefault(); 
+            e.preventDefault();
+            let name = undefined; 
+            $('input[type="checkbox"]:checked').map(function() {
+                name = $(this).val();
+                $.ajax({ 
+                    type: "POST", 
+                    url: "/Gallery/CheckDb",
+                    data: { name: name },
+                    async: false, 
+                    cache: false,
+                    success: function(message) { 
+                        if (message === true) { 
+                            console.log('Album already exists in database.');
+                        }
+                    },
+                    error: function(error) { 
+                        console.log(error);
+                    }
+                });
+            }).get();
+
+            //console.log(checkedValues.join(", "));
         });
+
+        $("#DelFromDb").on('click', function(e) { 
+            e.preventDefault();
+            let name = undefined;
+            $("input[type='checkbox']:checked").each(function() {
+                name = $(this).val();
+                $.ajax({
+                    method: "POST", 
+                    url: "/Gallery/CheckDb", 
+                    data: { name: name },
+                    async: false,
+                    cache: false,
+                    success: function(message) { 
+                        if (message === true) { 
+                        } else { 
+                            console.log('Albums do not exist in database.');
+                        }
+                    },
+                    error: function(error) { 
+                        console.log(error);
+                    }
+                });
+            });
+        });
+
+        function DelMultipleFromDb(name) {
+            $.ajax({ 
+                method: "POST",
+                url: "/Gallery/DelMultipleFromDb",
+                data: { name: name },
+                async: false,
+                cache: false,
+                success: function(message) { 
+                    console.log(message);
+                }, 
+                error: function(error) { 
+                    console.log(error);
+                }
+            }); 
+        }
 
     </script>
 }
