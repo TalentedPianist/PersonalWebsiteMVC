@@ -139,6 +139,8 @@ new PagedListRenderOptions
                     success: function(message) { 
                         if (message === true) { 
                             console.log('Album already exists in database.');
+                        } else {
+                            AddMultipleToDb(name); 
                         }
                     },
                     error: function(error) { 
@@ -163,6 +165,7 @@ new PagedListRenderOptions
                     cache: false,
                     success: function(message) { 
                         if (message === true) { 
+                            DelMultipleFromDb(name);
                         } else { 
                             console.log('Albums do not exist in database.');
                         }
@@ -173,6 +176,22 @@ new PagedListRenderOptions
                 });
             });
         });
+
+        function AddMultipleToDb(name) {
+            $.ajax({
+                method: "POST",
+                url: "/Gallery/AddMultipleToDb",
+                data: { name: name },
+                async: false,
+                cache: false,
+                success: function(message) { 
+                    console.log(message);
+                },
+                error: function(error) { 
+                    console.log(error);
+                } 
+            }); 
+        }
 
         function DelMultipleFromDb(name) {
             $.ajax({ 

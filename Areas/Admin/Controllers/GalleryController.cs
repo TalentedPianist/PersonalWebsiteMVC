@@ -20,13 +20,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         private IWebHostEnvironment Host { get; set; }
-    
+        private IHttpContextAccessor _http { get; set; }
 
-        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env)
+        public GalleryController(ApplicationDbContext db, IWebHostEnvironment env, IHttpContextAccessor http)
         {
             _db = db;
             Host = env;
-           
+            _http = http;
         }
 
 
@@ -182,29 +182,25 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("Gallery/AddMultipleToDb")]
-        public IActionResult AddMultipleToDb([FromBody] List<Album> data)
+        public IActionResult AddMultipleToDb(string name)
 
         {
-            // _db.Albums.AddRange(data);
-            // _db.SaveChanges();
-            return Ok(data);
+            Album album = new Album();
+            album.Name = name;
+            album.DateCreated = DateTime.Now;
+            _db.Albums.Add(album);
+            _db.SaveChanges();
+            return Ok(album);
         }
 
         [HttpPost]
         [Route("/Gallery/DelMultipleFromDb")]
-        public IActionResult RemoveMultipleFromDb([FromBody] List<Album> data)
+        public IActionResult RemoveMultipleFromDb(string name)
         {
-
-            if (data != null)
-            {
-
-            }
-            else
-            {
-                _db.Albums.RemoveRange(data!);
-                _db.SaveChanges();
-            }
-            return Ok(data);
+            var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+            _db.Albums.Remove(album!);
+            _db.SaveChanges();
+            return Ok(album);
         }
 
         [HttpPost]
