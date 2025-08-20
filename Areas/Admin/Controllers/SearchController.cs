@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
+    [Authorize(Roles="Admin")]
     [Area("Admin")]
     public class SearchController : Controller
     {

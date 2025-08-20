@@ -21,9 +21,9 @@
 
 <!DOCTYPE html>
 <html manifest="cache.manifest">
-
+<base href="/Admin">
 <head>
-    <base href="~/Admin"> <!-- This is needed for external packages to work properly!! -->
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="expires" content="0">
@@ -31,6 +31,7 @@
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
     <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
+    <link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
     <link rel="stylesheet" href="/css/Admin.css?v=@n">
     <title>@ViewBag.Title</title>
 
@@ -103,9 +104,14 @@
     <script src="/lib/moment.js/moment.min.js"></script>
     <script src="/lib/featherlight/featherlight.min.js"></script>
     <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
-    <script type="importmap" asp-importmap="@data"></script>
-    <script src="/js/Admin.js?v=@n"></script>
-
+    <script type="importmap">
+    {
+        "imports":  {
+            "ckeditor5": "/lib/ckeditor5/ckeditor5.js",
+            "ckeditor5/": "/lib/ckeditor5"
+        }
+    }
+    </script>
     <script type="module">
         import {
             ClassicEditor,

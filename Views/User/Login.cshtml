@@ -1,0 +1,16 @@
+@model Login
+
+<h1>Login</h1>
+
+<form method="post" asp-action="LoginUser" asp-controller="User">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="Email">Email:</label>
+        <input asp-for="Email" placeholder="john@johnsmith.com">
+    </div>
+    <div>
+        <label asp-for="Password">Password:</label>
+        <input asp-for="Password" type="password" placeholder="********">
+    </div>
+    <button type="submit">Login</button>
+</form>

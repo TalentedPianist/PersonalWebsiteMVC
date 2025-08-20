@@ -11,7 +11,7 @@ using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-
+     [Authorize(Roles="Admin")]
      [Area("Admin")]
     public class UsersController : Controller
     {
