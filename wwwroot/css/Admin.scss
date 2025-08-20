@@ -13,17 +13,13 @@ img {
     width: 100%;
 }
 
-figure {
-    margin: revert !important;
-}
-
 
 #Photos {
     position: relative;
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 1em;
+
 
     section {
         display: flex;
@@ -36,7 +32,7 @@ figure {
                 display: flex;
                 flex-direction: row;
                 flex: 1;
-                gap: 3em;
+                gap: 1em;
                 list-style-type: none;
                 position: relative;
             }
@@ -44,13 +40,25 @@ figure {
 
         &:nth-of-type(2) {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1em;
+            grid-template-columns: repeat(4, 0.5fr);
             position: relative;
             width: 100%;
+            gap: 1em;
 
             figure {
                 position: relative;
+                display: flex;
+                flex-direction: column;
+                flex: 1; 
+                gap: 1em;
+
+                 figcaption {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+                align-items: center;
+                gap: 1em;
+            }
             }
 
             div {
@@ -63,7 +71,7 @@ figure {
                 flex-direction: column;
                 flex: 1;
                 align-items: center;
-                gap: 3em;
+                
                 cursor: default;
             }
 
@@ -72,13 +80,7 @@ figure {
                 cursor: initial;
             }
 
-            figcaption {
-                display: flex;
-                flex-direction: column;
-                flex: 1;
-                align-items: center;
-                gap: 5px;
-            }
+           
 
             ul {
                 display: flex;
@@ -86,7 +88,7 @@ figure {
                 flex: 1;
                 list-style-type: none;
                 justify-content: space-between;
-                gap: 2em;
+            
             }
         }
     }
@@ -122,7 +124,7 @@ figure {
         &:nth-of-type(1) {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-
+            gap: 1em;
 
             figure {
                 position: relative;

@@ -99,7 +99,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
         [HttpPost]
         [Route("Admin/Gallery/Update")]
-        public IActionResult UpdateAlbum(Album model, [FromForm(Name = "AlbumID")] int AlbumID, [FromForm(Name = "coverPhoto")] IFormFile file)
+        public IActionResult UpdateAlbum(Album model, [FromForm(Name = "AlbumID")] int AlbumID)
         {
             var album = _db.Albums.Where(a => a.AlbumID == AlbumID).FirstOrDefault();
             if (ModelState.IsValid)
@@ -107,18 +107,17 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                 album!.Name = model.Name;
                 album.Location = model.Location;
                 album.Description = model.Description;
-                album.CoverPhoto = file.FileName;
                 _db.Update(album);
                 _db.SaveChanges();
                 return RedirectToAction("Index");
             }
-
+            TempData["Message"] = model.Description;
             return View("~/Areas/Admin/Views/Gallery/Update.cshtml", model);
         }
 
-        public IActionResult Details(int id)
+        public IActionResult Details(string name)
         {
-            var model = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
+            var model = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
             return View(model);
         }
 

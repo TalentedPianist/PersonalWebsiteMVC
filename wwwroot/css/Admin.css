@@ -12,16 +12,11 @@ img {
   width: 100%;
 }
 
-figure {
-  margin: revert !important;
-}
-
 #Photos {
   position: relative;
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1em;
 }
 #Photos section {
   display: flex;
@@ -33,19 +28,30 @@ figure {
   display: flex;
   flex-direction: row;
   flex: 1;
-  gap: 3em;
+  gap: 1em;
   list-style-type: none;
   position: relative;
 }
 #Photos section:nth-of-type(2) {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1em;
+  grid-template-columns: repeat(4, 0.5fr);
   position: relative;
   width: 100%;
+  gap: 1em;
 }
 #Photos section:nth-of-type(2) figure {
   position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+}
+#Photos section:nth-of-type(2) figure figcaption {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  align-items: center;
+  gap: 1em;
 }
 #Photos section:nth-of-type(2) div {
   position: absolute;
@@ -56,19 +62,11 @@ figure {
   flex-direction: column;
   flex: 1;
   align-items: center;
-  gap: 3em;
   cursor: default;
 }
 #Photos section:nth-of-type(2) img {
   position: relative;
   cursor: initial;
-}
-#Photos section:nth-of-type(2) figcaption {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  align-items: center;
-  gap: 5px;
 }
 #Photos section:nth-of-type(2) ul {
   display: flex;
@@ -76,7 +74,6 @@ figure {
   flex: 1;
   list-style-type: none;
   justify-content: space-between;
-  gap: 2em;
 }
 
 .overlay {
@@ -103,6 +100,7 @@ figure {
 #Gallery section:nth-of-type(1) {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  gap: 1em;
 }
 #Gallery section:nth-of-type(1) figure {
   position: relative;

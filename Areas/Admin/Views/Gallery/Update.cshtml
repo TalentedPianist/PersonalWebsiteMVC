@@ -9,15 +9,16 @@
 @using Microsoft.AspNetCore.Http
 @inject IWebHostEnvironment env
 @inject IHttpContextAccessor http
-@using HGO.ASPNetCore.FileManager.ViewComponentsModel 
+
 
 
 <h1 class="bg bg-info p-1">Update Album</h1>
 <a asp-action="Index" asp-area="Admin" asp-controller="Gallery" class="btn btn-secondary">Back</a>
 
-@Html.Raw(TempData["Message"])
+@TempData["Message"]
 
 <form method="post" asp-action="UpdateAlbum" asp-area="Admin" asp-controller="Gallery" name="UpdateForm" enctype="multipart/form-data">
+    <div asp-validation-summary="All"></div>
     <div class="form-group">
         <label>Name:</label>
         <input type="text" asp-for="Name" class="form-control">

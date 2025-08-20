@@ -43,6 +43,8 @@
                 <figcaption>
                     @file.Name
                     <input type="checkbox" value="@file.Name">
+
+                  
                 </figcaption>
             </figure>
         }
@@ -90,7 +92,7 @@
     <script>
 
         $(function () {
-            
+
 
             $("a.gallery").featherlightGallery({
                 beforeOpen: function () {
@@ -101,18 +103,12 @@
                     let name = $(lastCurrent).data('name');
                     let src = $(lastCurrent).find('img').attr('src');
                     this.$instance.find('.featherlight-content').html(`
-                            <header>
-                                <h1>${name}</h1>
-                                <a href="#">Edit</a>
-                                <a href="#" id="coverPhoto" data-name="${name}">Make Cover Photo</a>
-                                <a href="#" id="renamePhoto" data-name="${name}">Rename Photo</a>
-                            </header>
-                            <section>
-                                <img src="${src}" alt="${name}">
-                            </section>
-                            <footer>
-                            </footer>
-                        `);
+                            
+                                    <h1>${name}</h1>
+                                                           
+                                    <img src="${src}" alt="${name}">
+                           
+                            `);
 
                     this.$instance.find('featherlight-content').find('#renamePhoto').on('click', function (e) {
                         e.preventDefault();
@@ -168,18 +164,17 @@
 
             // End select individual checkboxes code
 
-            function GetId(name) 
-            {
-                $.ajax({ 
-                    method: "POST", 
+            function GetId(name) {
+                $.ajax({
+                    method: "POST",
                     url: "@Url.Action("GetId", "Photos")",
                     data: { 'name': name },
-                    async: false, 
+                    async: false,
                     cache: false,
-                    success: function(message) {
-                        console.log(message); 
+                    success: function (message) {
+                        console.log(message);
                     },
-                    error: function(error) { 
+                    error: function (error) {
                         console.log(error);
                     }
                 });
@@ -203,32 +198,32 @@
                         dataType: 'text',
                         async: false,
                         cache: false,
-                        success: function(message) { 
+                        success: function (message) {
                             if (message) {
-                                add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': name, 'ImageUrl': src, 'DateCreated': myDate }); 
-                            } 
+                                add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': name, 'ImageUrl': src, 'DateCreated': myDate });
+                            }
                         },
-                        error: function(error) { 
+                        error: function (error) {
                             console.log(error);
                         }
                     });
 
-                    
-                    $.ajax({ 
-                        type: 'POST', 
+
+                    $.ajax({
+                        type: 'POST',
                         url: "@Url.Action("GetId", "Photos")",
                         data: { 'name': name },
                         dataType: 'text', // This worked for passing simple text values.
                         async: false,
                         cache: false,
-                        success: function(message) {
+                        success: function (message) {
                             if (message === 0) {
-                                add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': name, 'ImageUrl': src, 'DateCreated': myDate }); 
+                                add.push({ 'AlbumID': '@ViewBag.AlbumID', 'Name': name, 'ImageUrl': src, 'DateCreated': myDate });
                             } else {
-                                del.push({ 'PhotoID': message }); 
+                                del.push({ 'PhotoID': message });
                             }
                         },
-                        error: function(error) { 
+                        error: function (error) {
                             console.log(error);
                         }
                     });
@@ -246,7 +241,7 @@
                     method: "POST",
                     url: "@Url.Action("AddMultipleToDb", "Photos")",
                     headers: {
-                        "Content-type": "application/json", 
+                        "Content-type": "application/json",
                     },
                     data: JSON.stringify(add),
                     success: function (response) {
