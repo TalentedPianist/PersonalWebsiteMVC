@@ -1,0 +1,28 @@
+@{
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+@model ApplicationUser
+
+<h1 class="bg bg-info">User @Model.FirstName</h1>
+<a class="btn btn-secondary" asp-action="Index" asp-controller="Users">Back</a>
+
+<dl>
+    <dt>First Name:</dt>
+    <dd>@Model.FirstName</dd>
+    <dt>Last Name:</dt>
+    <dd>@Model.LastName</dd>
+    <dt>Email:</dt>
+    <dd>@Model.Email</dd>
+    <dt>Password:</dt>
+    <dd>@Model.PasswordHash</dd>
+    <dt>Security Stamp:</dt>
+    <dd>@Model.SecurityStamp</dd>
+    <dt>Phone Number:</dt>
+    <dd>@Model.PhoneNumber</dd>
+    <dt>Two Factor Enabled:</dt>
+    <dd>@Model.TwoFactorEnabled</dd>
+    <dt>Access Failed Count:</dt>
+    <dd>@Model.AccessFailedCount</dd>
+</dl>
+

@@ -102,6 +102,16 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View(user);
           }
 
+          public async Task<IActionResult> Details(string id)
+          {
+               ApplicationUser? user = await userManager.FindByIdAsync(id);
+               if (user is not null)
+               {
+                    return View(user);
+               }
+               return View();
+          }
+
           public async Task<IActionResult> Delete(string id)
           {
                ApplicationUser? user = await userManager.FindByIdAsync(id);

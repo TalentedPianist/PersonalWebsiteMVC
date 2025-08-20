@@ -7,12 +7,21 @@
 /*
  * Sidebar
  */
+.sidebar {
+    background-color: #16213e; 
+}
+
+
+.d-md-block { 
+    background-color: midnightblue !important; 
+}
 
 @media (min-width: 768px) {
     .sidebar .offcanvas-lg {
         position: -webkit-sticky;
         position: sticky;
         top: 48px;
+        background-color: #16213e;
     }
 
     .navbar-search {
@@ -38,10 +47,11 @@
  */
 
 .navbar-brand {
-    padding-top: .75rem;
+    /* padding-top: .75rem;
     padding-bottom: .75rem;
     background-color: rgba(0, 0, 0, .25);
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25); */
+    background-color: #1a1a2e;
 }
 
 .navbar .form-control {

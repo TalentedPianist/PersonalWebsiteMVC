@@ -54,6 +54,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View(name);
           }
 
+          public async Task<IActionResult> Details(string id)
+          {
+               IdentityRole? role = await roleManager.FindByIdAsync(id);
+               return View(role);
+          }
+
           public async Task<IActionResult> Delete(string id)
           {
                IdentityRole? role = await roleManager.FindByIdAsync(id);

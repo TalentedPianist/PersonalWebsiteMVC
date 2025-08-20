@@ -1,0 +1,19 @@
+@{
+    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+
+@model IdentityRole
+
+<h1 class="bg bg-info">Role @Model.Name Details</h1>
+<a asp-action="Index" asp-controller="Roles" asp-area="Admin" class="btn btn-secondary">Back</a>
+
+<dl>
+    <dt>Id:</dt>
+    <dd>@Model.Id</dd>
+    <dt>Name:</dt>
+    <dd>@Model.Name</dd>
+    <dt>Normalized Name:</dt>
+    <dd>@Model.NormalizedName</dd>
+    <dt>Concurrency Stamp:</dt>
+    <dd>@Model.ConcurrencyStamp</dd>
+</dl>

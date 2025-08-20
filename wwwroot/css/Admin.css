@@ -12,6 +12,23 @@ img {
   width: 100%;
 }
 
+.navbar {
+  background-color: #f8f9fa !important;
+}
+
+.d-md-block {
+  background-color: #e3eaf0 !important;
+}
+.d-md-block a {
+  color: #2c3e50 !important;
+  font-size: large !important;
+}
+
+main {
+  background-color: #fdfdfd !important;
+  color: #2c3e50;
+}
+
 #Photos {
   position: relative;
   display: flex;
