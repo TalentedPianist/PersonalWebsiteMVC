@@ -87,7 +87,7 @@ $("#Contact form").on('submit', function(e) {
     let email = $("#email").val();
     let website = $("#website").val();
     let message = $("#ckeditor1").val();
-    let captcha = $("#g-recaptcha-response").val();
+    let captcha = $(".g-recaptcha-response").val();
     
 
     $.ajax({ 
@@ -103,4 +103,28 @@ $("#Contact form").on('submit', function(e) {
             console.log(error);
         }
     });
+});
+
+$("#Comments form").on('submit', function(e) { 
+    e.preventDefault();
+    let name = $("#name").val();
+    let email = $("#email").val();
+    let website = $("#website").val();
+    let message = window.editor.getData();
+    let captcha = $("#g-recaptcha-response").val();
+    
+    $.ajax({ 
+        method: "POST", 
+        url: "/Blog/AddComment", 
+        data: { name: name, email: email, website: website, message: message, captchaResponse: captcha },
+        async: false,
+        cache: false,
+        success: function(message) { 
+            console.log(message);
+        }, 
+        error: function(error) { 
+            console.log(error);
+        }
+    });
+    
 });

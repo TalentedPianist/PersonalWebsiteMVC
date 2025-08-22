@@ -430,6 +430,9 @@ form div .ck-editor__editable {
   gap: 0.5em;
 }
 #Comments img {
+  display: block;
+  width: auto;
+  height: auto;
   margin-right: 2em;
 }
 #Comments hr {

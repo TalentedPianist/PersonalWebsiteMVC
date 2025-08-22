@@ -26,24 +26,10 @@ public class MobileController : Controller
     // https://www.c-sharpcorner.com/blogs/implementing-captcha-in-asp-net-core-web-application
     [HttpPost]
     [Route("/Blog/AddComment")]
-    public async Task<IActionResult> AddComment(MixModel model, [FromForm(Name = "PostTitle")] string title, [FromForm(Name = "PostID")] int id)
+    public IActionResult AddComment(string name, string email, string website, string message, string captchaResponse)
     {
-        TempData["Message"] = model.Comments.CommentAuthor;
 
-
-        model.Posts = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
-        model.AllComments = _db.Comments.Where(p => p.PostID == id).ToList();
-
-        model.Comments.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-        model.Comments.CommentDate = DateTime.Now;
-        _db.Comments.Add(model.Comments);
-        _db.SaveChanges();
-        return RedirectToAction(title, "Blog");
-
-        // ModelState.AddModelError("", "Error validating reCaptcha.  Please try again.");
-        // return View("~/Views/Mobile/SinglePost.cshtml", model);
-
-
+        return Ok(name);
     }
 
     private async Task<bool> VerifyCaptcha(string captchaResponse)
