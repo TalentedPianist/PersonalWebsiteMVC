@@ -3,15 +3,15 @@
 @if (ViewBag.MyPosts is not null)
 {
         <div id="blogPosts">
-        @foreach (Posts post in ViewBag.MyPosts)
-        {
-                var result = Truncate(post.PostContent!, 200);
-                <div id="PostContent">
-                        <h2>@post.PostTitle</h2>
-                        @RemoveHTMLTags(result)
-                        <a href="/Blog/@post.PostTitle">Read</a>
-                </div>
-        }
+                @foreach (Posts post in ViewBag.MyPosts)
+                {
+                        var result = Truncate(post.PostContent!, 200);
+                        <div id="PostContent">
+                                <h2>@post.PostTitle</h2>
+                                @RemoveHTMLTags(result)
+                                <a href="/Blog/@post.PostTitle">Read</a>
+                        </div>
+                }
         </div>
 
 }

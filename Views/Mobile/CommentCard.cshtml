@@ -3,7 +3,6 @@
 
 @if (ViewBag.MyComments is not null)
 {
-    <br>
     <div id="Comments">
         @foreach (Comments comment in ViewBag.MyComments)
         {
@@ -11,10 +10,39 @@
                 <img
                     src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?d=mp&f=y">
 
-                @comment.CommentAuthor
+                <p>Posted by @comment.CommentAuthor on @HumanisedDate(comment.CommentDate) at @comment.CommentDate.ToString("HH:mm").</p> 
             </div>
             @comment.CommentContent
         }
 
     </div>
+}
+
+@functions {
+     public string HumanisedDate(DateTime date)
+     {
+        string ordinal;
+
+        switch (date.Day) 
+        {
+            case 1: 
+            case 21: 
+            case 31: 
+                ordinal = "st";
+                break;
+            case 2: 
+            case 22: 
+                ordinal = "nd";
+                break;
+            case 3: 
+            case 23: 
+                ordinal = "rd";
+                break;
+            default: 
+                ordinal = "th";
+                break; 
+        }
+
+        return string.Format("{0:dddd dd}{1} {0:MMMM yyyy}", date, ordinal);
+     }
 }

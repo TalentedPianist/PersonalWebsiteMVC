@@ -35,6 +35,7 @@ form {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 1em;
 }
 @media only screen and (min-width: 768px) {
   form {
@@ -69,18 +70,25 @@ form div label {
   float: left;
   width: 8em;
 }
+form div input {
+  margin-top: 1em;
+  font-size: revert !important;
+}
+form div textarea {
+  margin-top: 1em;
+}
+form div .ck-editor__editable {
+  min-height: 200px;
+  min-width: 20em !important;
+  min-height: 150px;
+  overflow-y: auto;
+  flex-direction: column !important;
+}
 @media only screen and (min-width: 600px) {
   form div {
     display: flex;
     flex-direction: row;
     align-self: flex-start;
-  }
-  form div .ck-editor__editable {
-    min-height: 200px;
-    min-width: 20em !important;
-    min-height: 150px;
-    overflow-y: auto;
-    flex-direction: column !important;
   }
   form div .recaptcha {
     margin-top: 1em !important;
@@ -314,9 +322,12 @@ form div label {
 #Blog section {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
+  gap: 1em;
   background-color: #f2740f;
   position: relative;
+  overflow: hidden;
+  width: 100vw;
 }
 @media only screen and (min-width: 600px) {
   #Blog section {
@@ -334,35 +345,23 @@ form div label {
 }
 #Blog section:nth-of-type(1) {
   padding-bottom: 1em;
-  margin-bottom: 1em;
-  padding-right: 2em;
 }
 #Blog section:nth-of-type(2) {
-  gap: 1em;
-  padding-top: 0.5em;
-  margin-bottom: 1em;
-}
-#Blog section:nth-of-type(2) a {
-  background-color: lightgreen;
-  color: black;
-  padding-top: 1em;
-  padding-left: 1em;
-  padding-right: 1em;
-  padding-bottom: 1em;
-}
-#Blog section:nth-of-type(3) {
-  border-top: 1px solid #d9d9d9;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
-  gap: 1em;
+  align-items: center;
+  justify-content: center;
 }
-#Blog section:nth-of-type(3) p {
-  font-size: large;
-  margin-top: 1em;
+#Blog section:nth-of-type(2) button {
+  padding: 5px 5px 5px 5px;
+  border: 1px solid black;
 }
-#Blog button {
-  align-self: flex-start !important;
+#Blog section:nth-of-type(2) button:nth-of-type(1) {
+  background-color: lightgreen;
+}
+#Blog section:nth-of-type(2) button:nth-of-type(2) {
+  background-color: lightyellow;
 }
 #Blog svg {
   display: block;
@@ -379,13 +378,17 @@ form div label {
   border-bottom: 1px solid black;
   font-size: large;
   padding-left: 1em;
-  padding-right: 1em;
   padding-bottom: 1em;
   padding-top: 1em;
 }
 #PostContent h2 {
   padding: 0 !important;
   margin: 0 !important;
+}
+#PostContent a {
+  background-color: lightblue;
+  align-self: flex-start;
+  padding: 10px 10px 10px 10px;
 }
 @media only screen and (min-width: 600px) {
   #PostContent {
@@ -410,7 +413,6 @@ form div label {
 }
 #SinglePost button {
   align-self: flex-start;
-  margin-bottom: 2em;
 }
 #SinglePost h3 {
   margin-bottom: 1em;
@@ -425,9 +427,9 @@ form div label {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 0.5em;
 }
 #Comments img {
-  width: 10% !important;
   margin-right: 2em;
 }
 #Comments hr {
@@ -435,8 +437,30 @@ form div label {
   margin-top: 1em;
   margin-bottom: 1em;
 }
-#Comments p:nth-of-type(1) {
-  margin-bottom: 1em;
+#Comments section {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#Comments section:nth-of-type(1) div:first-child {
+  margin-top: 1em;
+}
+#Comments section:nth-of-type(2) {
+  flex-direction: row;
+  gap: 2em;
+  justify-content: center;
+  border-bottom: 1px solid #d9d9d9;
+  padding-bottom: 1em;
+}
+#Comments section:nth-of-type(2) button {
+  padding: 5px 5px 5px 5px;
+  border: 1px solid black;
+}
+#Comments section:nth-of-type(2) button:nth-of-type(1) {
+  background-color: lightgreen;
+}
+#Comments section:nth-of-type(2) button:nth-of-type(2) {
+  background-color: lightyellow;
 }
 #Comments #comment {
   opacity: 0;
@@ -475,10 +499,11 @@ form div label {
 #Contact section {
   display: flex;
   flex-direction: column;
+  flex: 1;
+  gap: 2em;
   background-color: lightgreen;
   padding-left: 1em;
   padding-right: 1em;
-  height: 100vh;
 }
 #Contact section button {
   align-self: flex-start;
@@ -886,20 +911,6 @@ footer {
 
 .photoPopup {
   display: none;
-}
-
-#loadMoreComments {
-  background-color: lightgreen;
-  padding-left: 1em;
-  padding-right: 1em;
-  border: 1px solid #000000;
-}
-
-#showLessComments {
-  background-color: #ffbf00;
-  padding-left: 1em;
-  padding-right: 1em;
-  border: 1px solid #000000;
 }
 
 #lightbox-content {

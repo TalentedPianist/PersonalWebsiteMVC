@@ -27,7 +27,7 @@ namespace PersonalWebsiteMVC.Controllers
                 int pageSize = 3;
                 int currentPage = 1;
                 List<Posts> pagedPosts = _db.Posts
-                    .Skip((currentPage - 1) * pageSize)
+                    .Skip((currentPage - pageSize) * pageSize)
                     .Take(pageSize)
                     .ToList();
                 ViewBag.MyPosts = pagedPosts;
@@ -82,7 +82,7 @@ namespace PersonalWebsiteMVC.Controllers
         {
             Console.WriteLine(TempData["PostTitle"]);
 
-            var posts = _db.Posts.Skip(skip).Take(1).OrderByDescending(p => p.PostTitle);
+            var posts = _db.Posts.Skip(skip).Take(3).OrderByDescending(p => p.PostTitle);
             ViewBag.MyPosts = posts;
 
             return PartialView("~/Views/Mobile/PostCard.cshtml");

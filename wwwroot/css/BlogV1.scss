@@ -37,6 +37,7 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: 1em;
 
     @media only screen and (min-width: 768px) {
        gap: 2em;
@@ -72,15 +73,21 @@ form {
         label { 
             float: left; 
             width: 8em;
+          
         }
 
-        @media only screen and (min-width: 600px) {
-            // https://www.scale.at/blog/responsive-form-layout-css-grid
-           display: flex; 
-           flex-direction: row; 
-           align-self: flex-start;
+        input { 
+            margin-top: 1em;
+            font-size: revert !important;
 
-            .ck-editor__editable {
+            
+        }
+
+        textarea { 
+            margin-top: 1em;
+        }
+
+         .ck-editor__editable {
                 min-height: 200px;
                 min-width: 20em !important;
                 min-height: 150px;
@@ -88,6 +95,14 @@ form {
                 flex-direction: column !important;
             }
 
+
+        @media only screen and (min-width: 600px) {
+            // https://www.scale.at/blog/responsive-form-layout-css-grid
+           display: flex; 
+           flex-direction: row; 
+           align-self: flex-start;
+
+           
             .ck .ck-sticky-panel__content {
                 //border: 0 !important;
                 //display: none !important;
@@ -350,9 +365,12 @@ form {
     section {
         display: flex;
         flex-direction: column;
-        flex: 0;
+        flex: 1;
+        gap: 1em;
         background-color: #f2740f;
         position: relative;
+        overflow: hidden;
+        width: 100vw;
 
         @media only screen and (min-width: 767px) {}
 
@@ -376,46 +394,37 @@ form {
         &:nth-of-type(1) { 
            
             padding-bottom: 1em;
-            margin-bottom: 1em;
-            padding-right: 2em;
+            
         }
 
 
         &:nth-of-type(2) {
-            gap: 1em;
-            padding-top: 0.5em;
-            margin-bottom: 1em;
+            display: flex; 
+            flex-direction: row; 
+            flex: 1; 
+            align-items: center;
+            justify-content: center;
 
-            a {
-                background-color: lightgreen;
-                color: black;
-                padding-top: 1em;
-                padding-left: 1em;
-                padding-right: 1em;
-                padding-bottom: 1em;
+            button {
+                padding: 5px 5px 5px 5px; 
+                border: 1px solid black;
+
+                &:nth-of-type(1) { 
+                    background-color: lightgreen;
+                } 
+
+                &:nth-of-type(2) { 
+                    background-color: lightyellow;
+                }
             }
-
            
         }
 
-        &:nth-of-type(3) {
-            border-top: 1px solid #d9d9d9;
-            display: flex; 
-            flex-direction: column;
-            flex: 1; 
-            gap: 1em;
-
-            p { 
-                font-size: large;
-                margin-top: 1em;
-            }
-        }
+        
 
     }
 
-    button {
-        align-self: flex-start !important;
-    }
+
 
     svg {
         display: block;
@@ -433,7 +442,7 @@ form {
     border-bottom: 1px solid black;
     font-size: large;
     padding-left: 1em;
-    padding-right: 1em;
+    
     padding-bottom: 1em;
     padding-top: 1em;
 
@@ -443,6 +452,11 @@ form {
         margin: 0 !important;
     }
 
+    a { 
+        background-color: lightblue;
+        align-self: flex-start;
+        padding: 10px 10px 10px 10px;
+    }
 
 
     @media only screen and (min-width: 600px) {
@@ -470,10 +484,9 @@ form {
 
     button {
         align-self: flex-start;
-        margin-bottom: 2em;
+    
     }
 
-    p {}
 
     h3 {
         margin-bottom: 1em;
@@ -489,10 +502,11 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
+    gap: 0.5em;
 
 
     img {
-        width: 10% !important;
+        
         margin-right: 2em;
     }
 
@@ -506,7 +520,46 @@ form {
 
     p {
         &:nth-of-type(1) {
-            margin-bottom: 1em;
+            
+        }
+    }
+
+    section { 
+        display: flex; 
+        flex-direction: column;
+        flex: 1; 
+
+        &:nth-of-type(1) { 
+            p { 
+                
+            }
+
+           div { 
+                &:first-child { 
+                    margin-top: 1em;
+                }
+           }
+        } 
+
+        &:nth-of-type(2) {
+            flex-direction: row; 
+            gap: 2em;
+            justify-content: center; 
+            border-bottom: 1px solid #d9d9d9;
+            padding-bottom: 1em;
+
+            button { 
+                padding: 5px 5px 5px 5px; 
+                border: 1px solid black;
+
+                &:nth-of-type(1) { 
+                    background-color: lightgreen;
+                }
+
+                &:nth-of-type(2) { 
+                    background-color: lightyellow;
+                }
+            }
         }
     }
 
@@ -551,11 +604,13 @@ form {
     section {
         display: flex;
         flex-direction: column;
+        flex: 1; 
+        gap: 2em;
         background-color: lightgreen;
 
         padding-left: 1em;
         padding-right: 1em;
-        height: 100vh;
+        
 
         button {
             align-self: flex-start;
@@ -1044,19 +1099,7 @@ footer {
     display: none;
 }
 
-#loadMoreComments {
-    background-color: lightgreen;
-    padding-left: 1em;
-    padding-right: 1em;
-    border: 1px solid #000000;
-}
 
-#showLessComments {
-    background-color: #ffbf00;
-    padding-left: 1em;
-    padding-right: 1em;
-    border: 1px solid #000000;
-}
 
 #lightbox-content { 
     display: flex; 

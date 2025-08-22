@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PersonalWebsiteMVC.Models;
 using PersonalWebsiteMVC.Data;
+using PersonalWebsiteMVC.Services;
 
 namespace PersonalWebsiteMVC.Controllers;
 
@@ -12,21 +13,15 @@ public class MobileController : Controller
 {
     public ApplicationDbContext _db { get; set; }
     public IHttpContextAccessor _http { get; set; }
+    public EmailService _emailService { get; set; }
 
-    public MobileController(ApplicationDbContext db, IHttpContextAccessor http)
+    public MobileController(ApplicationDbContext db, IHttpContextAccessor http, EmailService emailService)
     {
         _db = db;
         _http = http;
+        _emailService = emailService;
     }
 
-
-
-    public async Task<IActionResult> SubmitContactForm(ContactFormModel model)
-    {
-        TempData["Message"] = model.Name;
-        await Task.CompletedTask;
-        return View("~/Views/Mobile/Mobile.cshtml");
-    }
 
     // https://www.c-sharpcorner.com/blogs/implementing-captcha-in-asp-net-core-web-application
     [HttpPost]
@@ -64,6 +59,22 @@ public class MobileController : Controller
 
         }
         return false;
+    }
+
+    [HttpPost]
+    [Route("/Mobile/SubmitContactForm")]
+    public async Task<IActionResult> SubmitContactForm(string name, string email, string website, string message, string captchaResponse)
+    {
+        if (await VerifyCaptcha(captchaResponse))
+        {
+            // Captcha verification successful, send email
+            await _emailService.SendEmailAsync(email, "Contact Form", message);
+            return Ok(captchaResponse);
+        }
+        else
+        {
+            return Json("Captcha verification failed, please try again.");
+        }
     }
 
 }

@@ -1,23 +1,24 @@
 @model MixModel
 
+<p>Share your thoughts on this post using the form below.</p>
 
-<form method="post" asp-action="AddComment" asp-controller="Blog">
+<form method="post">
     <div asp-validation-summary="All"></div>
     <div>
-        <label asp-for="Comments.CommentAuthor">Name:</label>
-        <input asp-for="Comments.CommentAuthor" placeholder="John Smith">
+        <label>Name:</label>
+        <input id="name" placeholder="John Smith">
     </div>
     <div>
-        <label asp-for="Comments.CommentAuthorEmail">Email:</label>
-        <input asp-for="Comments.CommentAuthorEmail" type="email" placeholder="john@johnsmith.com">
+        <label>Email:</label>
+        <input id="email" type="email" placeholder="john@johnsmith.com">
     </div>
     <div>
-        <label asp-for="Comments.CommentAuthorUrl">Website:</label>
-        <input asp-for="Comments.CommentAuthorUrl" placeholder="https://www.johnsmith.com">
+        <label>Website:</label>
+        <input id="website" placeholder="https://www.johnsmith.com">
     </div>
     <div>
         <label asp-for="Comments.CommentContent">Comment:</label>
-        <textarea id="ckeditor1" asp-for="Comments.CommentContent" placeholder="This is a great website...."></textarea>
+        <textarea rows="10" cols="30" id="ckeditor1" placeholder="This is a great website...."></textarea>
     </div>
     <input type="hidden" name="PostTitle" value="@Model.Posts!.PostTitle">
     <input type="hidden" asp-for="Comments.PostID" value="@Model.Posts!.PostID">

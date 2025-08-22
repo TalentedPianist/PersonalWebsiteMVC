@@ -41,7 +41,7 @@ namespace PersonalWebsiteMVC.Controllers
             var device = _detectionService.Device.Type;
             if (device.ToString().Contains("Mobile"))
             {
-                int pageSize = 1;
+                int pageSize = 3;
                 int currentPage = 1;
 
                 List<Posts> pagedPosts = _db.Posts

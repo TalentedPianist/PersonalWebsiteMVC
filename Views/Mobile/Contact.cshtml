@@ -4,22 +4,25 @@
 
 @TempData["Message"]
 
-<form method="post" asp-action="SubmitContactForm" asp-controller="Mobile">
+<form method="post">
     <div>
         <label asp-for="Name">Name:</label>
-        <input asp-for="Name" placeholder="John Smith">
+        <input id="name" placeholder="John Smith">
     </div>
     <div>
         <label asp-for="Email">Email:</label>
-        <input asp-for="Email" placeholder="john@johnsmith.com">
+        <input id="email" placeholder="john@johnsmith.com">
     </div>
     <div>
         <label asp-for="Website">Website:</label>
-        <input asp-for="Website" placeholder="https://www.johnsmith.com">
+        <input id="website" placeholder="https://www.johnsmith.com">
     </div>
     <div>
         <label asp-for="Message">Message:</label>
-        <textarea asp-for="Message" placeholder="This is a great website...." rows="10" cols="30"></textarea>
+        <textarea id="ckeditor1" placeholder="This is a great website...." rows="10" cols="30"></textarea>
+    </div>
+    <div>
+        <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
     </div>
     <button type="submit">Contact</button>
 </form>

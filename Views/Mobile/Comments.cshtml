@@ -1,20 +1,28 @@
-@if (Model.AllComments.Count == 0)
-{
-    <hr>
-    <p>No comments have been found just now. Be the first to add a comment using the form below.</p>
+<div id="Comments">
+
+    @if (Model.AllComments.Count == 0)
+    {
+        <hr>
+        <p>No comments have been found just now. Be the first to add a comment using the form below.</p>
 
 
-}
-else
-{
-    <hr>
-    <p>@Model.AllComments.Count comments have been found for this post.</p>
-    <partial name="~/Views/Mobile/CommentCard.cshtml" />
-    <div class="flex flex-row flex-1 gap-2 w-full space-x-8">
-        <button id="loadMoreComments">Load More</button>
-        <button id="showLessComments">Show Less</button>
-    </div>
-}
+    }
+    else
+    {
+        <hr>
+
+        <section>
+            <p>@Model.AllComments.Count comments have been found for this post.</p>
+            <partial name="~/Views/Mobile/CommentCard.cshtml" />
+        </section>
+        <section>
+            <button id="loadMoreComments">Load More</button>
+            <button id="showLessComments">Show Less</button>
+        </section>
+
+    }
 
 
-<partial name="~/Views/Mobile/CommentForm.cshtml" model="Model" />
+    <partial name="~/Views/Mobile/CommentForm.cshtml" model="Model" />
+
+</div>

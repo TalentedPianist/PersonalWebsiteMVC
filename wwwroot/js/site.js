@@ -45,7 +45,7 @@ $(function () {
 var onloadCallback = function () {
     if (document.querySelector('#g-recaptcha')) {
         grecaptcha.render('g-recaptcha', {
-            'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz '
+            'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz'
 
         });
     }
@@ -55,7 +55,7 @@ var onloadCallback = function () {
 
 
 // Load more stuff....
-let skip = 1;
+let skip = 3;
 const pageSize = 1;
 $('#loadMoreBtn').on('click', function (e) {
     e.preventDefault();
@@ -80,3 +80,27 @@ $('#showLessBtn').on('click', function (e) {
 
 });
 
+
+$("#Contact form").on('submit', function(e) { 
+    e.preventDefault();
+    let name = $("#name").val();
+    let email = $("#email").val();
+    let website = $("#website").val();
+    let message = $("#ckeditor1").val();
+    let captcha = $("#g-recaptcha-response").val();
+    
+
+    $.ajax({ 
+        method: "POST", 
+        url: "/Mobile/SubmitContactForm", 
+        data: { name: name, email: email, website: website, message: message, captchaResponse: captcha },
+        async: false,
+        cache: false,
+        success: function(message) { 
+            console.log(message);
+        }, 
+        error: function(error) { 
+            console.log(error);
+        }
+    });
+});
