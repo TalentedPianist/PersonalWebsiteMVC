@@ -22,10 +22,10 @@
     </div>
     <input type="hidden" name="PostTitle" value="@Model.Posts!.PostTitle">
     <input type="hidden" asp-for="Comments.PostID" value="@Model.Posts!.PostID">
-    <div>
+    @* <div>
         <p>Please take a second to do the captcha and prove you're not a robot. This helps me fight spam. Thank you.</p>
         <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
-    </div>
+    </div> *@
 
     <button type="submit">Comment</button>
 </form>

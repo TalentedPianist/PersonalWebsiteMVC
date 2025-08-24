@@ -28,8 +28,13 @@ public class MobileController : Controller
     [Route("/Blog/AddComment")]
     public IActionResult AddComment(string name, string email, string website, string message, string captchaResponse)
     {
-
-        return Ok(name);
+        Comments comment = new Comments();
+        comment.CommentAuthor = name;
+        comment.CommentAuthorEmail = email;
+        comment.CommentAuthorUrl = website;
+        comment.CommentContent = message;
+        comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
+        return Ok(comment);
     }
 
     private async Task<bool> VerifyCaptcha(string captchaResponse)
