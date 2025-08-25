@@ -26,7 +26,7 @@ public class MobileController : Controller
     // https://www.c-sharpcorner.com/blogs/implementing-captcha-in-asp-net-core-web-application
     [HttpPost]
     [Route("/Blog/AddComment")]
-    public IActionResult AddComment(string name, string email, string website, string message, string captchaResponse)
+    public IActionResult AddComment(string name, string email, string website, string message, string captchaResponse, int postId)
     {
         Comments comment = new Comments();
         comment.CommentAuthor = name;
@@ -34,7 +34,8 @@ public class MobileController : Controller
         comment.CommentAuthorUrl = website;
         comment.CommentContent = message;
         comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-        return Ok(comment);
+        comment.PostID = postId;
+        return Ok(postId);
     }
 
     private async Task<bool> VerifyCaptcha(string captchaResponse)

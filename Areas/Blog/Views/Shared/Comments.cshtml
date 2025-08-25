@@ -11,27 +11,30 @@
 
 <div id="Comments">
     <h2>Comments</h2>
-   
-        
+
+    <div class="comments-container">
         @foreach (Comments comment in Model.PagedComments!)
         {
             <span>
                 <img src="https://www.gravatar.com/avatar/?d=mp">
-                <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p> 
+                <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p>
             </span>
             @Html.Raw(comment.CommentContent)
         }
-        
-        <hr>
-        @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber = page, area = "Blog" }),
-            new PagedListRenderOptions
-            {
-                DisplayItemSliceAndTotal = true,
-                LiElementClasses = new string[] { "page-item" },
-                PageClasses = new String[] { "page-link" }
-            })
+    </div>
+
     <hr>
-    <form method="post" asp-action="AddComment" asp-area="Blog" asp-controller="Comments" asp-route-id="@ViewData["id"]">
+    @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber =
+    page, area = "Blog" }),
+        new PagedListRenderOptions
+        {
+            DisplayItemSliceAndTotal = true,
+            LiElementClasses = new string[] { "page-item" },
+            PageClasses = new String[] { "page-link" }
+        })
+    <hr>
+    <form method="post" asp-action="AddComment" asp-area="Blog" asp-controller="Comments"
+        asp-route-id="@ViewData["id"]">
         <div asp-validation-summary="All" class="text-danger"></div>
         <div>
             <label asp-for="Comment.CommentAuthor">Name:</label>
@@ -49,9 +52,8 @@
             <label asp-for="Comment.CommentContent">Comment:</label>
             <textarea id="ckeditor1" asp-for="Comment.CommentContent" placeholder="What a great post..."></textarea>
         </div>
-        <input type="hidden" asp-for="Comment.PostID" value="@ViewData["id"]">
+        <input type="hidden" id="postId" value="@ViewData["id"]">
         <div class="g-recaptcha" data-sitekey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"></div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>
-

@@ -112,15 +112,24 @@ $("#Comments form").on('submit', function(e) {
     let website = $("#website").val();
     let message = window.editor.getData();
     let captcha = $("#g-recaptcha-response").val();
+    let postId = $("#postId").val();
     
     $.ajax({ 
         method: "POST", 
         url: "/Blog/AddComment", 
-        data: { name: name, email: email, website: website, message: message, captchaResponse: captcha },
+        data: { name: name, email: email, website: website, message: message, captchaResponse: captcha, postId: postId },
         async: false,
         cache: false,
         success: function(message) { 
             console.log(message);
+            $(".comments-container").after(
+                `
+                    <div class="flex flex-row flex-1">
+                         <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y" class="mr-5" alt="">
+                         <p class="ml-5">Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd YY MMMM YYYY')} at ${dayjs(message.CommentDate).format('hh:mm A')}.
+                    </div>
+                    ${message.CommentContent}
+                `);
         }, 
         error: function(error) { 
             console.log(error);

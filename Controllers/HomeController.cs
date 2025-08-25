@@ -51,7 +51,6 @@ namespace PersonalWebsiteMVC.Controllers
                 ViewBag.MyPosts = pagedPosts;
 
 
-
                 return View("~/Views/Mobile/Mobile.cshtml");
             }
             return View();
