@@ -1,7 +1,12 @@
 @model MixModel
 
-<p>Share your thoughts on this post using the form below.</p>
-
+<div class="commentCount">
+    @if (Model.AllComments.Count == 0)
+    {
+        <p>No comments have been found for this post. Be the first to share your thoughts on this post using the form below.
+        </p>
+    }
+</div>
 
 <form method="post">
     <div asp-validation-summary="All"></div>
@@ -11,7 +16,7 @@
     </div>
     <div>
         <label>Email:</label>
-        <input id="email" type="email" placeholder="john@johnsmith.com">
+        <input id="email" placeholder="john@johnsmith.com">
     </div>
     <div>
         <label>Website:</label>
