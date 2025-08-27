@@ -81,29 +81,75 @@ $('#showLessBtn').on('click', function (e) {
 });
 
 
-$("#Contact form").on('submit', function (e) {
-    e.preventDefault();
-    let name = $("#name").val();
-    let email = $("#email").val();
-    let website = $("#website").val();
-    let message = $("#ckeditor1").val();
-    let captcha = $(".g-recaptcha-response").val();
+if (document.getElementById('contactForm')) {
+    const form = document.querySelector('form');
+    const button = document.querySelector('button');
+    const name = document.querySelector('#name');
+    const email = document.querySelector('#email');
+    const website = document.querySelector('#website');
+  
+    const captcha = document.querySelector('.g-recaptcha-response');
+    
+    form.addEventListener('submit', function(e) { 
+        e.preventDefault();
+        let message = window.editor.getData();
+        console.log(message);
+        let errors = [];
+        if (name.value === "" && email.value === "" && message.value === "") { 
+            $("button").attr("disabled", false);
+        }
 
+        if (name.value === "") { 
+            errors.push("You must enter your name.");
+            $(name).after('<p class="error">You must enter your name.</p>');
+            $(name).addClass('inputError');
+        }
 
-    $.ajax({
-        method: "POST",
-        url: "/Mobile/SubmitContactForm",
-        data: { name: name, email: email, website: website, message: message, captchaResponse: captcha },
-        async: false,
-        cache: false,
-        success: function (message, status, xhr) {
-            console.log(message);
-        },
-        error: function (error) {
-            console.log(error.responseText);
+        if (email.value === "") { 
+            errors.push("You must enter your email address.");
+            $(email).after('<p class="error">You must enter your email address.</p>');
+            $(email).addClass('inputError');
+        }
+
+        if (message === "") { 
+            errors.push("You must enter a message.");
+            $(".ck .ck-editor__main").after('<p class="error">You must enter a message.');
+            $(".ck .ck-editor__main").addClass('inputError');
+        } 
+
+        if (errors.length === 0) { 
+            // Form validation is successful, post data to server
+            $("button").attr("disabled", false);
+            $.ajax({
+                method: "POST",
+                url: "/Mobile/SubmitContactForm", 
+                data: { name: name, email: email, website: website, message: message, captchaResponse: captcha },
+                async: false,
+                cache: false,
+                success: function(message) { 
+                    console.log(message);
+                },
+                error: function(error) { 
+                    console.log(error);
+                }
+            });
+            return true;
+        } else { 
+            let errorsDiv = document.createElement('div');
+            errorsDiv.setAttribute("id", "errorsSummary");
+            errorsDiv.innerHTML = "<hr>";
+            errorsDiv.innerHTML += "<p>Please correct the following errors:</p>";
+            errorsDiv.innerHTML += "<ul>";
+            errors.forEach(function(value, index) { 
+                errorsDiv.innerHTML += `<li>${value}</li>`;
+            });
+            errorsDiv.innerHTML += "</ul>";
+            $(form).before(errorsDiv);
+            $("button").attr("disabled", true);
+            return false;
         }
     });
-});
+}
 
 
 if (document.getElementById('commentsForm')) {
