@@ -84,8 +84,9 @@ form div .ck-editor__editable {
   overflow-y: auto;
   flex-direction: column !important;
 }
-form div:invalid {
-  border: 1px solid red;
+form div .error {
+  color: brown;
+  font-weight: bold;
 }
 @media only screen and (min-width: 600px) {
   form div {
@@ -96,6 +97,10 @@ form div:invalid {
   form div .recaptcha {
     margin-top: 1em !important;
   }
+}
+
+.inputError {
+  border: 3px solid red;
 }
 
 #Home {

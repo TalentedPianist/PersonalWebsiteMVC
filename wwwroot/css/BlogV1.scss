@@ -96,9 +96,12 @@ form {
             }
 
 
-        &:invalid { 
-            border: 1px solid red;
+        .error { 
+            color: brown;
+            font-weight: bold;
         }
+
+        
 
         @media only screen and (min-width: 600px) {
             // https://www.scale.at/blog/responsive-form-layout-css-grid
@@ -121,7 +124,9 @@ form {
     }
 }
 
-
+.inputError { 
+            border: 3px solid red;
+        }
 
 
 

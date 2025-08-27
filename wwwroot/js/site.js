@@ -127,17 +127,19 @@ if (document.getElementById('commentsForm')) {
 
         if (name.value === "") {
             errors.push("You must enter your name.");
-            $(name).after('<p>You must enter your email address.');
-            
+            $(name).after('<p class="error">You must enter your email address.');
+            $(name).addClass('inputError');
         }
         if (email.value === "") {
             errors.push("You must enter your email address.");
-            $(email).after('<p>You must enter your email address.</p>');
+            $(email).after('<p class="error">You must enter your email address.</p>');
+            $(email).addClass('inputError');
         }
 
         if (message.value === "") { 
             errors.push("You must enter a comment.");
-            $("#ckeditor1").after('<p>You must enter a comment.</p>');
+            $(".ck .ck-editor__main").after('<p class="error">You must enter a comment.</p>');
+            $(".ck .ck-editor__main").addClass('inputError');
         }
     
         if (errors.length === 0) { 
@@ -146,8 +148,10 @@ if (document.getElementById('commentsForm')) {
             // Errors occurred, display summary
            let errorsDiv = document.createElement('div');
            errorsDiv.setAttribute("id", "errorsSummary");
-
-           errorsDiv.innerHTML = "<ul>";
+            
+           errorsDiv.innerHTML = "<hr>";
+           errorsDiv.innerHTML += "<p>Please correct the following errors:</p>";
+           errorsDiv.innerHTML += "<ul>";
             errors.forEach(function(value, index) {
                  errorsDiv.innerHTML += `<li>${value}</li>`;
             });
