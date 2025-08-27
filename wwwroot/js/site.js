@@ -106,70 +106,58 @@ $("#Contact form").on('submit', function (e) {
 });
 
 
+if (document.getElementById('commentsForm')) {
+    const form = document.querySelector("form");
+    const button = document.querySelector("button");
+    const name = document.querySelector("#name");
+    const email = document.querySelector("#email");
+    const website = document.querySelector("#website");
+    const message = document.querySelector("#ckeditor1");
 
-$("#Comments form").on('submit', function (e) {
-    e.preventDefault();
-    let name = document.getElementById('name');
-    let email = document.getElementById('email');
-    let website = document.getElementById('website');
-    let message = window.editor.getData();
-    let captcha = document.getElementsByClassName('g-recaptcha-response');
-    let postId = document.getElementById('PostId');
 
-    let errors = [];
 
-    if (name.value === '') { 
-        errors.push('You must enter your name.');
-    }
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
 
-    if (errors.length === 0) {
-        $.ajax({
-            method: "POST",
-            url: "/Blog/AddComment",
-            data: { name: name, email: email, website: website, message: message, captchaResponse: captcha, postId: postId },
-            async: false,
-            cache: false,
-            success: function (message, status, xhr) {
-                if (message.error) {
-                    $(".commentCount").hide();
+        let errors = [];
+        if (name.value === "" && email.value === "" && message.value === "") {
+            $("button").attr("disabled", false);
+          
+        }
 
-                    $("form").before(`
-                    <b>Please correct the following errors:</b>
-                    <p>${message.error}</p>
-                `);
-                } else {
+        if (name.value === "") {
+            errors.push("You must enter your name.");
+            $(name).after('<p>You must enter your email address.');
+            
+        }
+        if (email.value === "") {
+            errors.push("You must enter your email address.");
+            $(email).after('<p>You must enter your email address.</p>');
+        }
 
-                    // Appending comments on form submit wasn't working because element didn't exist because there were no posts in the database.
-                    let comments = $("#Comments").find(".comments-container");
-                    $(comments).after(
-                        `
-                    <div class="flex flex-row flex-1">
-                         <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=mp" class="mr-5" alt="">
-                         <p class="ml-5">Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd YY MMMM YYYY')} at ${dayjs(message.CommentDate).format('hh:mm A')}.
-                    </div>
-                    ${message.CommentContent}
-                `);
+        if (message.value === "") { 
+            errors.push("You must enter a comment.");
+            $("#ckeditor1").after('<p>You must enter a comment.</p>');
+        }
+    
+        if (errors.length === 0) { 
+            // Form validation is successful, post data to server
+        } else { 
+            // Errors occurred, display summary
+           let errorsDiv = document.createElement('div');
+           errorsDiv.setAttribute("id", "errorsSummary");
 
-                }
-            },
-            error: function (error) {
+           errorsDiv.innerHTML = "<ul>";
+            errors.forEach(function(value, index) {
+                 errorsDiv.innerHTML += `<li>${value}</li>`;
+            });
+            errorsDiv.innerHTML += "</ul>";
+            $(form).before(errorsDiv);
+            $("button").attr("disabled", true);
+            return false;
+        } 
+        
+    });
+}
 
-            }
-        });
-    }
-    else {
-        let errorElement = document.createElement('div');
-        $(errorElement).append('<ul>');
-        $(errors).each(function(index, value) {
-            $(errorElement).append('<ul>').append(`
-                <li>${value}</li>
-                `);
-        });
-        $(errorElement).append('</ul>');
-        console.log($(errorElement).html());
-    }
-
-   
-
-});
 

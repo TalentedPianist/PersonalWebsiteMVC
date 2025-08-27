@@ -43,7 +43,8 @@
             .create(document.querySelector('#ckeditor1'), { 
                 licenseKey: 'GPL', 
                 plugins: [ Essentials, Paragraph, Bold, Italic, Font ], 
-                toolbar: []
+                toolbar: [],
+            
             })
             .then(editor => { 
                 window.editor = editor;
@@ -53,6 +54,7 @@
             });
     </script>
     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="/lib/jquery-validate/jquery.validate.min.js"></script>
     <script src="/js/site.js" asp-append-version="true"></script>
      @RenderSection("Scripts", required: false)
 </body>

@@ -96,6 +96,10 @@ form {
             }
 
 
+        &:invalid { 
+            border: 1px solid red;
+        }
+
         @media only screen and (min-width: 600px) {
             // https://www.scale.at/blog/responsive-form-layout-css-grid
            display: flex; 

@@ -8,23 +8,23 @@
     }
 </div>
 
-<form method="post">
-    <div asp-validation-summary="All"></div>
+<form method="post" id="commentsForm">
+    <div id="error"></div>
     <div>
         <label>Name:</label>
-        <input id="name" placeholder="John Smith">
+        <input id="name" name="name" placeholder="John Smith">
     </div>
     <div>
         <label>Email:</label>
-        <input id="email" placeholder="john@johnsmith.com">
+        <input id="email" name="email" placeholder="john@johnsmith.com">
     </div>
     <div>
         <label>Website:</label>
-        <input id="website" placeholder="https://www.johnsmith.com">
+        <input id="website" name="website" placeholder="https://www.johnsmith.com">
     </div>
     <div>
-        <label asp-for="Comments.CommentContent">Comment:</label>
-        <textarea rows="10" cols="30" id="ckeditor1" placeholder="This is a great website...."></textarea>
+        <label>Comment:</label>
+        <textarea rows="10" cols="30" id="ckeditor1" name="comment" placeholder="This is a great website...."></textarea>
     </div>
     <input type="hidden" name="PostTitle" value="@Model.Posts!.PostTitle">
     <input type="hidden" asp-for="Comments.PostID" value="@Model.Posts!.PostID">
