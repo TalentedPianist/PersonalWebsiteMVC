@@ -62,11 +62,16 @@ public class MobileController : Controller
     [Route("/Mobile/SubmitContactForm")]
     public async Task<IActionResult> SubmitContactForm(string name, string email, string website, string message, string captchaResponse)
     {
-        
+        if (await VerifyCaptcha(captchaResponse))
+        {
             // Captcha verification successful, send email
             await _emailService.SendEmailAsync(email, "Contact Form", message);
-            return Ok(message);
-       
+            return Ok(captchaResponse);
+        }
+        else
+        {
+            return Json(new { error = "You must do the captcha to prove that you are human." });
+        }
     }
 
 }

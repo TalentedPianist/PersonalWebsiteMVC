@@ -94,12 +94,14 @@ if (document.getElementById('contactForm')) {
     });
     $(".ck").on('input', () => button.disabled = false);
 
-    $(form).on('submit', function(e) {
+    $(form).on('submit', function (e) {
         e.preventDefault();
         button.disabled = true; // Prevent the form from being submitted multiple times with empty data
 
-        const rawData = window.editor.getData();
-        const plainText = rawData.replace(/<[^>]*>/g, '').trim();
+       var x = $("form").serializeArray();
+       $.each(x, function(i, field) { 
+        console.log(field.name + " " + field.value);
+       });
 
         let oldSummary = document.getElementById("errorsSummary");
         if (oldSummary) {
@@ -109,7 +111,6 @@ if (document.getElementById('contactForm')) {
         let errors = [];
 
 
-        console.log('Submit triggered');
         if (!name.validity.valid) {
             $("#name").parent().find('.error').text('Please enter your name.');
             $("#name").addClass('inputError');
@@ -118,7 +119,7 @@ if (document.getElementById('contactForm')) {
         } else {
             $("#name").parent().find('.error').text('');
             $("#name").removeClass('inputError');
-         
+
         }
 
         if (!email.validity.valid) {
@@ -129,10 +130,10 @@ if (document.getElementById('contactForm')) {
         } else {
             $("#email").parent().find('.error').text('');
             $("#email").removeClass('inputError');
-        
+
         }
 
-        if (plainText === '') {
+        if (window.editor.getData() === '') {
             $(".ck").parent().find('.error').text('Please enter a message.');
             $(".ck").addClass('inputError');
             errors.push("Please enter a message.");
@@ -146,21 +147,27 @@ if (document.getElementById('contactForm')) {
 
 
         if (errors.length === 0) {
-            console.log('Form is valid!');
+
             // Post data to the server
             $.ajax({
                 method: "POST",
                 url: "/Mobile/SubmitContactForm",
-                data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData() },
+                data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData(), captchaResponse: document.querySelector('.g-recaptcha-response').value },
                 cache: false,
                 success: function (message) {
+                    // .g-captcha-response needs to be set on submit.  It won't return any value if it's set outside submit.  
                     console.log(message);
+                    // if (message.error) {
+                    //     $(form).before('<p>Please take a second to do the captcha to prove that you are not a robot.  This helps me fight spam.  Thank you.</p>');
+                    // } else {
+                    //     $(form).before(`<p>Hi ${name.value}, thanks for your email.  A reply will be sent if necessary.</p>`);
+                    // }
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
-            
+
         } else {
             // let errorsDiv = document.createElement('div');
             // errorsDiv.setAttribute("id", "errorsSummary");
@@ -171,7 +178,7 @@ if (document.getElementById('contactForm')) {
             // });
             // errorsDiv.innerHTML += "</ul>";
             // $(form).before(errorsDiv);
-            
+
         }
     });
 }
