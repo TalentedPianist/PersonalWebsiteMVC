@@ -4,25 +4,28 @@
 
 @TempData["Message"]
 
-<form method="post" id="contactForm">
+<form method="post" id="contactForm" novalidate>
     <div>
         <label asp-for="Name">Name:</label>
-        <input id="name" placeholder="John Smith">
+        <input id="name" name="txtName" placeholder="John Smith" required>
+
     </div>
     <div>
         <label asp-for="Email">Email:</label>
-        <input id="email" placeholder="john@johnsmith.com">
+        <input id="email" required type="email" placeholder="john@johnsmith.com" name="txtEmail">
+ 
     </div>
     <div>
         <label asp-for="Website">Website:</label>
-        <input id="website" placeholder="https://www.johnsmith.com">
+        <input id="website" name="txtWebsite" placeholder="https://www.johnsmith.com">
     </div>
     <div>
         <label asp-for="Message">Message:</label>
-        <textarea id="ckeditor1" placeholder="This is a great website...." rows="10" cols="30"></textarea>
+        <textarea id="ckeditor1" name="txtMessage" placeholder="This is a great website...." rows="10" cols="30" required></textarea>
+
     </div>
-    <div>
+    @* <div>
         <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
-    </div>
-    <button type="submit">Contact</button>
+    </div> *@
+    <button type="submit" id="contactButton">Contact</button>
 </form>

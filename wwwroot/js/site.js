@@ -83,70 +83,95 @@ $('#showLessBtn').on('click', function (e) {
 
 if (document.getElementById('contactForm')) {
     const form = document.querySelector('form');
-    const button = document.querySelector('button');
+    const button = document.querySelector('#contactButton');
     const name = document.querySelector('#name');
     const email = document.querySelector('#email');
     const website = document.querySelector('#website');
-  
     const captcha = document.querySelector('.g-recaptcha-response');
-    
-    form.addEventListener('submit', function(e) { 
+
+    [name, email].forEach(field => {
+        field.addEventListener('input', () => button.disabled = false);
+    });
+    $(".ck").on('input', () => button.disabled = false);
+
+    $(form).on('submit', function(e) {
         e.preventDefault();
-        let message = window.editor.getData();
-        console.log(message);
+        button.disabled = true; // Prevent the form from being submitted multiple times with empty data
+
+        const rawData = window.editor.getData();
+        const plainText = rawData.replace(/<[^>]*>/g, '').trim();
+
+        let oldSummary = document.getElementById("errorsSummary");
+        if (oldSummary) {
+            oldSummary.remove();
+        }
+
         let errors = [];
-        if (name.value === "" && email.value === "" && message.value === "") { 
-            $("button").attr("disabled", false);
+
+
+        console.log('Submit triggered');
+        if (!name.validity.valid) {
+            $("#name").parent().find('.error').text('Please enter your name.');
+            $("#name").addClass('inputError');
+            errors.push("Please enter your name.");
+
+        } else {
+            $("#name").parent().find('.error').text('');
+            $("#name").removeClass('inputError');
+         
         }
 
-        if (name.value === "") { 
-            errors.push("You must enter your name.");
-            $(name).after('<p class="error">You must enter your name.</p>');
-            $(name).addClass('inputError');
+        if (!email.validity.valid) {
+            $("#email").parent().find('.error').text('Please enter your email address.');
+            $("#email").addClass('inputError');
+            errors.push("Please enter your email address.");
+
+        } else {
+            $("#email").parent().find('.error').text('');
+            $("#email").removeClass('inputError');
+        
         }
 
-        if (email.value === "") { 
-            errors.push("You must enter your email address.");
-            $(email).after('<p class="error">You must enter your email address.</p>');
-            $(email).addClass('inputError');
+        if (plainText === '') {
+            $(".ck").parent().find('.error').text('Please enter a message.');
+            $(".ck").addClass('inputError');
+            errors.push("Please enter a message.");
+        } else {
+            $(".ck").parent().find('.error').text('');
+            $(".ck").removeClass('inputError');
+            button.disabled = false;
+
         }
 
-        if (message === "") { 
-            errors.push("You must enter a message.");
-            $(".ck .ck-editor__main").after('<p class="error">You must enter a message.');
-            $(".ck .ck-editor__main").addClass('inputError');
-        } 
 
-        if (errors.length === 0) { 
-            // Form validation is successful, post data to server
-            $("button").attr("disabled", false);
+
+        if (errors.length === 0) {
+            console.log('Form is valid!');
+            // Post data to the server
             $.ajax({
                 method: "POST",
-                url: "/Mobile/SubmitContactForm", 
-                data: { name: name, email: email, website: website, message: message, captchaResponse: captcha },
-                async: false,
+                url: "/Mobile/SubmitContactForm",
+                data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData() },
                 cache: false,
-                success: function(message) { 
+                success: function (message) {
                     console.log(message);
                 },
-                error: function(error) { 
+                error: function (error) {
                     console.log(error);
                 }
             });
-            return true;
-        } else { 
-            let errorsDiv = document.createElement('div');
-            errorsDiv.setAttribute("id", "errorsSummary");
-            errorsDiv.innerHTML = "<hr>";
-            errorsDiv.innerHTML += "<p>Please correct the following errors:</p>";
-            errorsDiv.innerHTML += "<ul>";
-            errors.forEach(function(value, index) { 
-                errorsDiv.innerHTML += `<li>${value}</li>`;
-            });
-            errorsDiv.innerHTML += "</ul>";
-            $(form).before(errorsDiv);
-            $("button").attr("disabled", true);
-            return false;
+            
+        } else {
+            // let errorsDiv = document.createElement('div');
+            // errorsDiv.setAttribute("id", "errorsSummary");
+            // errorsDiv.innerHTML = "<p>Please correct the following errors:</p>";
+            // errorsDiv.innerHTML += "<ul>";
+            // errors.forEach(function (value, index) {
+            //     errorsDiv.innerHTML += `<li>${value}</li>`;
+            // });
+            // errorsDiv.innerHTML += "</ul>";
+            // $(form).before(errorsDiv);
+            
         }
     });
 }
@@ -162,13 +187,13 @@ if (document.getElementById('commentsForm')) {
 
 
 
-    form.addEventListener('submit', function(e) {
+    form.addEventListener('submit', function (e) {
         e.preventDefault();
 
         let errors = [];
         if (name.value === "" && email.value === "" && message.value === "") {
             $("button").attr("disabled", false);
-          
+
         }
 
         if (name.value === "") {
@@ -182,31 +207,29 @@ if (document.getElementById('commentsForm')) {
             $(email).addClass('inputError');
         }
 
-        if (message.value === "") { 
+        if (message.value === "") {
             errors.push("You must enter a comment.");
             $(".ck .ck-editor__main").after('<p class="error">You must enter a comment.</p>');
             $(".ck .ck-editor__main").addClass('inputError');
+
         }
-    
-        if (errors.length === 0) { 
-            // Form validation is successful, post data to server
-        } else { 
-            // Errors occurred, display summary
-           let errorsDiv = document.createElement('div');
-           errorsDiv.setAttribute("id", "errorsSummary");
-            
-           errorsDiv.innerHTML = "<hr>";
-           errorsDiv.innerHTML += "<p>Please correct the following errors:</p>";
-           errorsDiv.innerHTML += "<ul>";
-            errors.forEach(function(value, index) {
-                 errorsDiv.innerHTML += `<li>${value}</li>`;
+
+        if (form.valid) {
+            console.log('form is valid');
+        } else {
+            let errorsDiv = document.createElement('div');
+            errorsDiv.setAttribute("id", "errorsSummary");
+            errorsDiv.innerHTML = "<hr>";
+            errorsDiv.innerHTML += "<p>Please correct the following errors:</p>";
+            errorsDiv.innerHTML += "<ul>";
+            errors.forEach(function (value, index) {
+                errorsDiv.innerHTML += `<li>${value}</li>`;
             });
             errorsDiv.innerHTML += "</ul>";
-            $(form).before(errorsDiv);
-            $("button").attr("disabled", true);
-            return false;
-        } 
-        
+            $(form).before('<p>Hello World!</p>');
+
+        }
+
     });
 }
 
