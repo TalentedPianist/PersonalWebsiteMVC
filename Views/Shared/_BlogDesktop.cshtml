@@ -7,8 +7,8 @@
     var data = new ImportMapDefinition(
     new Dictionary<string, string>
     {
-{ "ckeditor5", "~/lib/ckeditor5/ckeditor5.js" },
-{ "ckeditor5/", "~/lib/ckeditor5/" },
+{ "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
+{ "ckeditor5/", "/lib/ckeditor5/" },
     }, null, null);
 }
 
@@ -101,7 +101,7 @@
         window.CKEditorItalic = Italic;
         window.CKEditorFont = Font;
 
-        @* if (document.querySelector('#ckeditor1')) {
+        if (document.querySelector('#ckeditor1')) {
             ClassicEditor
                 .create(document.querySelector('#ckeditor1'), {
                     licenseKey: 'GPL',
@@ -115,7 +115,7 @@
                 .catch(error => {
                     console.error(error);
                 });
-        } *@
+        }
     </script>
      <script src="/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)

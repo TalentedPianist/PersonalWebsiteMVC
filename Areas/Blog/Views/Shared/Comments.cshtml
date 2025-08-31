@@ -12,13 +12,27 @@
 <div id="Comments">
     <h2>Comments</h2>
 
+    @if (Model.Comments.Count() == 0)
+    {
+        <p>No comments have been found for this post.</p>
+    }
+
+    @if (Model.Comments.Count() == 1)
+    {
+        <p>1 comment has been found for this post.</p>
+    }
+    else
+    {
+        <p>@Model.Comments.Count() comments have been found for this post.</p>
+    }
+
     <div class="comments-container">
         @foreach (Comments comment in Model.PagedComments!)
         {
-            <span>
+            <div class="flex flex-row flex-1">
                 <img src="https://www.gravatar.com/avatar/?d=mp">
                 <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p>
-            </span>
+            </div>
             @Html.Raw(comment.CommentContent)
         }
     </div>
@@ -28,10 +42,11 @@
     page, area = "Blog" }),
         new PagedListRenderOptions
         {
-            DisplayItemSliceAndTotal = true,
+            DisplayItemSliceAndTotal = false,
             LiElementClasses = new string[] { "page-item" },
             PageClasses = new String[] { "page-link" }
         })
+    <p>Currently on page @Model.PagedComments.PageNumber of @Model.PagedComments.PageCount.</p>
     <hr>
     <form method="post" asp-action="AddComment" asp-area="Blog" asp-controller="Comments"
         asp-route-id="@ViewData["id"]">
@@ -53,7 +68,9 @@
             <textarea id="ckeditor1" asp-for="Comment.CommentContent" placeholder="What a great post..."></textarea>
         </div>
         <input type="hidden" id="postId" value="@ViewData["id"]">
-        <div class="g-recaptcha" data-sitekey="6Lcu4zIqAAAAAGwRGrbhwIT_VWW4NVA5tbnSKgDB"></div>
+        <div>
+            <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
+        </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
 </div>

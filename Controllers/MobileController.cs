@@ -30,16 +30,19 @@ public class MobileController : Controller
     [Route("/Blog/AddComment")]
     public async Task<IActionResult> AddComment(string name, string email, string website, string message, string captchaResponse, int postId)
     {
-
-        Comments comment = new Comments();
-        comment.CommentAuthor = name;
-        comment.CommentAuthorEmail = email;
-        comment.CommentAuthorUrl = website;
-        comment.CommentContent = message;
-        comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-        comment.PostID = postId;
-        return Ok(comment);
-
+        if (await VerifyCaptcha(captchaResponse)) {
+            Comments comment = new Comments();
+            comment.CommentAuthor = name;
+            comment.CommentAuthorEmail = email;
+            comment.CommentAuthorUrl = website;
+            comment.CommentContent = message;
+            comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
+            comment.CommentDate = DateTime.Now;
+            comment.PostID = postId;
+            return Ok(comment);
+        } else {
+            return Json(new { error = "You must do the captcha to prove that you are human.  This helps me fight spam.  Thank you." });
+        }
 
     }
 

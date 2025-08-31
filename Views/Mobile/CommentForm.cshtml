@@ -8,14 +8,16 @@
     }
 </div>
 
-<form method="post" id="commentsForm">
+<form method="post" id="commentsForm" novalidate>
     <div>
         <label>Name:</label>
-        <input id="name" name="name" placeholder="John Smith">
+        <input id="name" name="name" placeholder="John Smith" required>
+        <span class="error"></span>
     </div>
     <div>
         <label>Email:</label>
-        <input id="email" name="email" placeholder="john@johnsmith.com">
+        <input id="email" name="email" placeholder="john@johnsmith.com" required>
+        <span class="error"></span>
     </div>
     <div>
         <label>Website:</label>
@@ -24,13 +26,14 @@
     <div>
         <label>Comment:</label>
         <textarea rows="10" cols="30" id="ckeditor1" name="comment" placeholder="This is a great website...."></textarea>
+        <span class="error"></span>
     </div>
     <input type="hidden" name="PostTitle" value="@Model.Posts!.PostTitle">
-    <input type="hidden" asp-for="Comments.PostID" value="@Model.Posts!.PostID">
-    @* <div>
+    <input type="hidden" id="postID" value="@Model.Posts!.PostID">
+    <div>
         <p>Please take a second to do the captcha and prove you're not a robot. This helps me fight spam. Thank you.</p>
         <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
-    </div> *@
+    </div>
 
     <button type="submit">Comment</button>
 </form>

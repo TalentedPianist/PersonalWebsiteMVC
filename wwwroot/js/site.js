@@ -185,44 +185,81 @@ if (document.getElementById('contactForm')) {
 
 
 if (document.getElementById('commentsForm')) {
-    const form = document.querySelector("form");
+    
+const form = document.querySelector("form");
     const button = document.querySelector("button");
     const name = document.querySelector("#name");
     const email = document.querySelector("#email");
     const website = document.querySelector("#website");
     const message = document.querySelector("#ckeditor1");
 
-
-
     form.addEventListener('submit', function (e) {
         e.preventDefault();
+        let postID = document.querySelector("#postID");
+        let captcha = document.querySelector(".g-recaptcha-response");
+
+        // Remove old summary of errors so as not to display them every time submit is clicked!
+        let oldSummary = document.getElementById("errorsSummary");
+        if (oldSummary) { 
+            oldSummary.remove();
+        }
 
         let errors = [];
-        if (name.value === "" && email.value === "" && message.value === "") {
-            $("button").attr("disabled", false);
 
+        if (!name.validity.valid) { 
+            $("#name").parent().find('.error').text('Please enter your name.');
+            $("#name").addClass('inputError');
+            errors.push("Please enter your name.");
+        } else { 
+            $("#name").parent().find('.error').text('');
+            $("#name").removeClass('inputError');
         }
 
-        if (name.value === "") {
-            errors.push("You must enter your name.");
-            $(name).after('<p class="error">You must enter your email address.');
-            $(name).addClass('inputError');
-        }
-        if (email.value === "") {
-            errors.push("You must enter your email address.");
-            $(email).after('<p class="error">You must enter your email address.</p>');
+        if (!email.validity.valid) { 
+            $(email).parent().find('.error').text('Please enter your email address.');
             $(email).addClass('inputError');
+            errors.push("Please enter your email address.");
+        } else { 
+            $("#email").parent().find('.error').text('');
+            $("#email").removeClass('inputError');
         }
 
-        if (message.value === "") {
-            errors.push("You must enter a comment.");
-            $(".ck .ck-editor__main").after('<p class="error">You must enter a comment.</p>');
-            $(".ck .ck-editor__main").addClass('inputError');
-
+        if (window.editor.getData() === '') { 
+            $(".ck").parent().find('.error').text('Please enter a message.');
+            $(".ck").addClass("inputError");
+            errors.push("Please enter a message.");
+        } else { 
+            $(".ck").parent().find('.error').text('');
+            $(".ck").removeClass('inputError');
+       
         }
 
-        if (form.valid) {
-            console.log('form is valid');
+
+        if (errors.length === 0) {
+            $.ajax({
+                method: "POST", 
+                url: "/Blog/AddComment",
+                data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData(), captchaResponse: captcha.value, postID: postID.value },
+                async: false,
+                cache: false,
+                success: function(message) { 
+                    if (message.error) { 
+                        $("form").before(`<hr><p>${message.error}</p>`);
+                    } else { 
+                    $("form").before(`
+                        <hr>
+                        <div class="flex flex-row flex-1">
+                            <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp" />
+                            <p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM D')} at ${ dayjs(message.CommentDate).format('hh:ss A')}.</p>
+                        </div>
+                        ${message.CommentContent}
+                        `);
+                    }
+                }, 
+                error: function(error) { 
+                    console.log(error);
+                }  
+            });
         } else {
             let errorsDiv = document.createElement('div');
             errorsDiv.setAttribute("id", "errorsSummary");
@@ -233,7 +270,7 @@ if (document.getElementById('commentsForm')) {
                 errorsDiv.innerHTML += `<li>${value}</li>`;
             });
             errorsDiv.innerHTML += "</ul>";
-            $(form).before('<p>Hello World!</p>');
+            $(form).before(errorsDiv);
 
         }
 

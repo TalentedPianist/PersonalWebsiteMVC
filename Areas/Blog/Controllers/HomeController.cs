@@ -55,7 +55,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             // Spending ages editing the wrong function and wondering why nothing's happening is something I will need to watch.
             
 
-
+ 
         }
 
         [Route("Blog/SinglePost/{id}")]
@@ -66,6 +66,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             var pageNumber = page ?? 1;
             var strId = Convert.ToInt32(id);
             model.PagedComments = (PagedList<Comments>?)_db.Comments.Where(c => c.PostID == strId).OrderBy(c => c.CommentDate).ToPagedList<Comments>(pageNumber, 10);
+            model.Comments = _db.Comments.Where(c => c.PostID == strId).OrderBy(c => c.CommentDate).ToList();
             
             return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
         }
