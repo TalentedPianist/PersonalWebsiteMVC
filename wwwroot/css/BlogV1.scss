@@ -37,10 +37,10 @@ form {
     display: flex;
     flex-direction: column;
     flex: 1;
-    
 
-    @media only screen and (min-width: 767px) { 
-        gap: 5em;
+
+    @media only screen and (min-width: 768px) {
+        gap: 1em;
     }
 
 
@@ -66,21 +66,18 @@ form {
         }
     }
 
+    label { 
+        @media only screen and (min-width: 768px) { 
+            width: 8em;
+        }
+    }
+
 
 
     div {
         display: flex;
         flex-direction: column;
         flex: 1;
-
-
-        // .ck-editor__editable {
-        //     min-height: 200px;
-        //     min-width: 20em !important;
-        //     min-height: 150px;
-        //     overflow-y: auto;
-        //     flex-direction: column !important;
-        // }
 
 
         .error {
@@ -93,21 +90,21 @@ form {
         @media only screen and (min-width: 768px) {
             // https://www.scale.at/blog/responsive-form-layout-css-grid
 
-            &:not('.ck') {
+            &:not(.ck) {
                 display: flex;
                 flex-direction: row;
                 justify-content: space-between;
-               width: 5em;
-                
+                width: 5em;
+
             }
 
-            label { 
+            label {
                 width: 8em;
             }
         }
     }
 
-    
+
 }
 
 .ck-toolbar {
@@ -654,7 +651,14 @@ form {
 
             figcaption {
                 margin-top: 1em;
+
+                a {
+                    text-decoration: revert !important;
+                    color: revert !important;
+                }
             }
+
+
         }
 
         &:nth-of-type(3) {

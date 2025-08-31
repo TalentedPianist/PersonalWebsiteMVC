@@ -35,7 +35,11 @@ form {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1em;
+}
+@media only screen and (min-width: 768px) {
+  form {
+    gap: 1em;
+  }
 }
 form input {
   padding: 10px 10px 10px 10px;
@@ -52,12 +56,13 @@ form button {
   font-size: large;
 }
 @media only screen and (min-width: 768px) {
-  form { 
-    gap: 2em;
-  }
-
   form button {
     width: 5em;
+  }
+}
+@media only screen and (min-width: 768px) {
+  form label {
+    width: 8em;
   }
 }
 form div {
@@ -65,37 +70,24 @@ form div {
   flex-direction: column;
   flex: 1;
 }
-
-form div textarea {
-  margin-top: 1em;
-}
-form div .ck-editor__editable {
-  min-height: 200px;
-  min-width: 20em !important;
-  min-height: 150px;
-  overflow-y: auto;
-  flex-direction: column !important;
-}
 form div .error {
   color: brown;
   font-weight: bold;
 }
 @media only screen and (min-width: 768px) {
-  form { 
-    gap: 1em;
-  }
-  
-  form div {
+  form div:not(.ck) {
+    display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    width: 5em;
   }
-
-  form input { 
-    width: 20em;
-  }
-
-  form label { 
+  form div label {
     width: 8em;
   }
+}
+
+.ck-toolbar {
+  visibility: hidden !important;
 }
 
 .inputError {
@@ -457,6 +449,7 @@ form div .error {
   gap: 2em;
   justify-content: center;
   border-bottom: 1px solid #d9d9d9;
+  border-top: 1px solid #d9d9d9;
   padding-bottom: 1em;
 }
 #Comments section:nth-of-type(2) button {
@@ -549,6 +542,11 @@ form div .error {
 }
 #Albums section:nth-of-type(2) figcaption {
   margin-top: 1em;
+}
+#Albums section:nth-of-type(2) figcaption a {
+  -webkit-text-decoration: revert !important;
+          text-decoration: revert !important;
+  color: revert !important;
 }
 #Albums section:nth-of-type(3) {
   display: flex;

@@ -12,21 +12,16 @@
 <div id="Comments">
     <h2>Comments</h2>
 
+
+
+  
     @if (Model.Comments.Count() == 0)
     {
-        <p>No comments have been found for this post.</p>
-    }
-
-    @if (Model.Comments.Count() == 1)
-    {
-        <p>1 comment has been found for this post.</p>
+        <p>No comments have been found for this post.  Be the first to add a comment using the form below.</p>
     }
     else
     {
-        <p>@Model.Comments.Count() comments have been found for this post.</p>
-    }
-
-    <div class="comments-container">
+          <div class="comments-container">
         @foreach (Comments comment in Model.PagedComments!)
         {
             <div class="flex flex-row flex-1">
@@ -36,10 +31,9 @@
             @Html.Raw(comment.CommentContent)
         }
     </div>
-
-    <hr>
-    @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber =
-    page, area = "Blog" }),
+        <hr>
+        @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber =
+        page, area = "Blog" }),
         new PagedListRenderOptions
         {
             DisplayItemSliceAndTotal = false,
@@ -47,6 +41,7 @@
             PageClasses = new String[] { "page-link" }
         })
     <p>Currently on page @Model.PagedComments.PageNumber of @Model.PagedComments.PageCount.</p>
+        }
     <hr>
     <form method="post" asp-action="AddComment" asp-area="Blog" asp-controller="Comments"
         asp-route-id="@ViewData["id"]">
