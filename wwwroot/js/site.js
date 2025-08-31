@@ -277,4 +277,5 @@ const form = document.querySelector("form");
     });
 }
 
-
+var current = $.featherlight.current();
+console.log(current);
