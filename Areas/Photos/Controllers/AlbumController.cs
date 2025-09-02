@@ -48,11 +48,18 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 
         [HttpPost]
         [Route("/Album/GetPhoto")]
-        public IActionResult GetPhoto(string name)
+        public IActionResult GetPhoto(string name, int albumID, string imgHref)
         {
             var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
-            ViewBag.PhotoID = photo!.PhotoID;
-            return Ok(photo);
+            var model = new PhotosViewModel();
+            model.SinglePhoto = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
+            model.SingleAlbum = _db.Albums.Where(a => a.AlbumID == albumID).FirstOrDefault();
+            model.Comments = new Comments();
+            model.AllComments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID);
+
+            ViewBag.ImgSrc = imgHref;
+            return PartialView("~/Areas/Photos/Views/Album/Photo.cshtml", model);
+            
         }
 
 
@@ -60,12 +67,12 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         [HttpPost]
         public IActionResult GetComments(int id, int page = 1)
         {
-            int pageSize = 1;
+            //int pageSize = 1;
             var comments = _db.Comments
                 .Where(c => Convert.ToInt32(id) == Convert.ToInt32(c.PhotoID))
                 .ToList();
 
-            return Ok(comments);
+            return PartialView("~/Areas/Photos/Views/Album/Comments.cshtml", comments);
         }
 
         [HttpPost]

@@ -41,8 +41,11 @@ form {
 
     @media only screen and (min-width: 768px) {
         gap: 1em;
-    }
+        margin-top: 1em;
+        align-self: flex-start;
 
+        
+    }
 
     input {
         padding: 10px 10px 10px 10px;
@@ -62,15 +65,10 @@ form {
         font-size: large;
 
         @media only screen and (min-width: 768px) {
-            width: 5em;
+            align-self: flex-start;
         }
     }
 
-    label { 
-        @media only screen and (min-width: 768px) { 
-            width: 8em;
-        }
-    }
 
 
 
@@ -93,14 +91,15 @@ form {
             &:not(.ck) {
                 display: flex;
                 flex-direction: row;
-                justify-content: space-between;
-                width: 5em;
-
+                flex: 1; 
+                align-items: center;
+                
+                label { 
+                    width: 8em; 
+                }
             }
 
-            label {
-                width: 8em;
-            }
+           
         }
     }
 
@@ -1083,31 +1082,14 @@ footer {
     height: 60% !important;
 }
 
-.modal {
-    width: 100% !important;
-    min-width: 100% !important;
-}
-
-.photoPopup {
-    display: none;
+.featherlight-content { 
+    width: 50% !important;
+    height: 100% !important;
 }
 
 
 
-#lightbox-content {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-    gap: 1em;
-
-    .comments-container {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        gap: 2em;
-
-        img {
-            width: 10%;
-        }
-    }
+.featherlight-next, 
+.featherlight-previous { 
+    display: none; 
 }

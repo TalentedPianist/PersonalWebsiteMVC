@@ -29,9 +29,9 @@
         {
 
             <figure>
-                <a class="gallery" href="popup.html .popup" data-featherlight-gallery data-featherlight="ajax" data-name="@photo.Name"
-                    data-id="@photo.AlbumID" data-photo-id="@photo.PhotoID"><img src="@photo.ImageUrl"
-                        data-id="@photo.AlbumID" data-name="@photo.Name"></a>
+                <a class="gallery" href="/Gallery/@ViewBag.AlbumName/@photo.Name" data-featherlight-gallery
+                    data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID"><img
+                        src="@photo.ImageUrl" data-id="@photo.AlbumID" data-name="@photo.Name"></a>
 
                 <figcaption>@photo.Name</figcaption>
 
@@ -85,7 +85,7 @@
                 <label>Comment:</label>
                 <textarea id="ckeditor1"></textarea>
             </div>
-        
+
             <button type="submit">Comment</button>
         </form>
     </div>
@@ -97,8 +97,63 @@
 
     <script>
 
+        $('a.gallery').featherlightGallery({
+            galleryFadeIn: 100,
+            galleryFadeOut: 300,
+            beforeContent: function (e) {
+                let content = this.$content;
+                $(content).empty();
+            },
+            afterContent: function (e) {
 
-           </script>
+                let target = this.$currentTarget[0];
+                let name = $(target).data('name');
+                let albumId = $(target).data('album-id');
+                console.log(albumId);
+                let instance = this.$instance;
+                //$(this.$instance).find('.featherlight-content').html('Hello World!');
+
+
+
+
+
+                $.ajax({
+                    method: "POST",
+                    url: "/Album/GetPhoto",
+                    data: { name: name, albumID: albumId, imgHref: target.href },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        //console.log(message);
+                        $(instance).find('.featherlight-content').html(`
+            
+                                ${message}
+                            `);
+
+                     
+                       
+                    }, 
+                    error: function(error) { 
+                        console.log(error);
+                    }
+                });
+
+                let ckElement = instance.find('#ckeditor1')[0];
+                ClassicEditor.create(ckElement, { 
+                    licenseKey: 'GPL'
+                    // Add plugins here which is probably why it's not working properly just now.
+                })
+                .then(editor => { 
+                })
+                .catch(error => { 
+                    console.log(error);
+                });
+            }
+        });
+
+
+
+    </script>
 
 
 }

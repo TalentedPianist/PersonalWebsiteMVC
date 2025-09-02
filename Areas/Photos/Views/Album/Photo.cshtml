@@ -1,0 +1,32 @@
+@using PersonalWebsiteMVC.Areas.Photos.Models
+@model PhotosViewModel
+
+<h1>@Model.SinglePhoto!.Name</h1>
+<img src="@ViewBag.ImgSrc">
+
+
+@if (Model.AllComments!.Count() == 0) { 
+    <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
+}
+
+<form method="post">
+    <div>
+        <label>Name:</label>
+        <input name="txtName" placeholder="John Doe">
+    </div>
+    <div>
+        <label>Email:</label>
+        <input name="txtEmail" placeholder="john@johndoe.com">
+    </div>
+    <div>
+        <label>Website:</label>
+        <input name="txtWebsite" placeholder="https://www.johndoe.com">
+    </div>
+    <div>
+        <label>Comment:</label>
+        <textarea name="txtComment" id="ckeditor1"></textarea>
+    </div>
+    <button type="submit">Comment</button>
+</form>
+
+

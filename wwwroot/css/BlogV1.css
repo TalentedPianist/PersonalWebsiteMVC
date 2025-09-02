@@ -39,6 +39,8 @@ form {
 @media only screen and (min-width: 768px) {
   form {
     gap: 1em;
+    margin-top: 1em;
+    align-self: flex-start;
   }
 }
 form input {
@@ -57,12 +59,7 @@ form button {
 }
 @media only screen and (min-width: 768px) {
   form button {
-    width: 5em;
-  }
-}
-@media only screen and (min-width: 768px) {
-  form label {
-    width: 8em;
+    align-self: flex-start;
   }
 }
 form div {
@@ -78,10 +75,10 @@ form div .error {
   form div:not(.ck) {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    width: 5em;
+    flex: 1;
+    align-items: center;
   }
-  form div label {
+  form div:not(.ck) label {
     width: 8em;
   }
 }
@@ -909,27 +906,12 @@ footer {
   height: 60% !important;
 }
 
-.modal {
-  width: 100% !important;
-  min-width: 100% !important;
+.featherlight-content {
+  width: 50% !important;
+  height: 100% !important;
 }
 
-.photoPopup {
+.featherlight-next,
+.featherlight-previous {
   display: none;
-}
-
-#lightbox-content {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 1em;
-}
-#lightbox-content .comments-container {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 2em;
-}
-#lightbox-content .comments-container img {
-  width: 10%;
 }/*# sourceMappingURL=BlogV1.css.map */
