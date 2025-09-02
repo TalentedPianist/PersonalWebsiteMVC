@@ -9,22 +9,25 @@
     <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
 }
 
-<form method="post">
+<form method="post" id="commentForm" novalidate>
     <div>
         <label>Name:</label>
-        <input name="txtName" placeholder="John Doe">
+        <input id="name" name="txtName" placeholder="John Doe" required>
+        <span class="error"></span>
     </div>
     <div>
         <label>Email:</label>
-        <input name="txtEmail" placeholder="john@johndoe.com">
+        <input id="email" name="txtEmail" placeholder="john@johndoe.com" required>
+        <span class="error"></span>
     </div>
     <div>
         <label>Website:</label>
-        <input name="txtWebsite" placeholder="https://www.johndoe.com">
+        <input id="website" name="txtWebsite" placeholder="https://www.johndoe.com">
     </div>
     <div>
         <label>Comment:</label>
-        <textarea name="txtComment" id="ckeditor1"></textarea>
+        <textarea name="txtComment" id="ckeditor1" placeholder="Beautiful photo...."></textarea>
+        <span class="error"></span>
     </div>
     <button type="submit">Comment</button>
 </form>
