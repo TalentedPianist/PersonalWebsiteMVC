@@ -14,24 +14,26 @@
 
 
 
-  
+
     @if (Model.Comments.Count() == 0)
     {
-        <p>No comments have been found for this post.  Be the first to add a comment using the form below.</p>
+        <p>No comments have been found for this post. Be the first to add a comment using the form below.</p>
     }
     else
     {
-          <div class="comments-container">
+
         @foreach (Comments comment in Model.PagedComments!)
         {
-            <div class="flex flex-row flex-1">
+            <div class="flex flex-row flex-1 align-top justify-start">
                 <img src="https://www.gravatar.com/avatar/?d=mp">
                 <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p>
             </div>
             @Html.Raw(comment.CommentContent)
         }
-    </div>
+
         <hr>
+        <p>Currently showing @Model.PagedComments.PageNumber out of @Model.PagedComments.PageCount comments.</p>
+
         @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber =
         page, area = "Blog" }),
         new PagedListRenderOptions
@@ -40,32 +42,34 @@
             LiElementClasses = new string[] { "page-item" },
             PageClasses = new String[] { "page-link" }
         })
-    <p>Currently on page @Model.PagedComments.PageNumber of @Model.PagedComments.PageCount.</p>
+
         }
-    <hr>
-    <form method="post" asp-action="AddComment" asp-area="Blog" asp-controller="Comments"
-        asp-route-id="@ViewData["id"]">
-        <div asp-validation-summary="All" class="text-danger"></div>
-        <div>
-            <label asp-for="Comment.CommentAuthor">Name:</label>
-            <input asp-for="Comment.CommentAuthor" placeholder="John Smith">
-        </div>
-        <div>
-            <label asp-for="Comment!.CommentAuthorEmail">Email:</label>
-            <input type="email" asp-for="Comment!.CommentAuthorEmail" placeholder="john@johnsmith.com">
-        </div>
-        <div>
-            <label asp-for="Comment!.CommentAuthorUrl">Url:</label>
-            <input asp-for="Comment!.CommentAuthorUrl" placeholder="https://www.johnsmith.com">
-        </div>
-        <div>
-            <label asp-for="Comment.CommentContent">Comment:</label>
-            <textarea id="ckeditor1" asp-for="Comment.CommentContent" placeholder="What a great post..."></textarea>
-        </div>
-        <input type="hidden" id="postId" value="@ViewData["id"]">
-        <div>
-            <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
 </div>
+
+<p>Share your comments on this post using the form below.</p>s
+
+<form method="post" asp-action="AddComment" asp-area="Blog" asp-controller="Comments" asp-route-id="@ViewData["id"]">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <div>
+        <label asp-for="Comment.CommentAuthor">Name:</label>
+        <input asp-for="Comment.CommentAuthor" placeholder="John Smith">
+    </div>
+    <div>
+        <label asp-for="Comment!.CommentAuthorEmail">Email:</label>
+        <input type="email" asp-for="Comment!.CommentAuthorEmail" placeholder="john@johnsmith.com">
+    </div>
+    <div>
+        <label asp-for="Comment!.CommentAuthorUrl">Url:</label>
+        <input asp-for="Comment!.CommentAuthorUrl" placeholder="https://www.johnsmith.com">
+    </div>
+    <div>
+        <label asp-for="Comment.CommentContent">Comment:</label>
+        <textarea id="ckeditor1" asp-for="Comment.CommentContent" placeholder="What a great post..."></textarea>
+    </div>
+    <input type="hidden" id="postId" value="@ViewData["id"]">
+    <div>
+        <p>Please take a second to do the captcha and prove that you are human.  This helps me fight spam.  Thank you.</p>
+        <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

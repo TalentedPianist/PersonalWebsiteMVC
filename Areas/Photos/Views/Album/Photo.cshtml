@@ -4,16 +4,41 @@
 <h1>@Model.SinglePhoto!.Name</h1>
 <img src="@ViewBag.ImgSrc">
 
-
-@if (Model.AllComments!.Count() == 0) { 
-    <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
+<div id="Comments">
+@if (Model.AllComments!.Count() == 0)
+{
+    <p>No comments have been found for this photo. Be the first to add a comment using the form below.</p>
+} else if (Model.AllComments!.Count() == 1)
+{
+    <p>1 comment has been found for this photo.</p>
+} else { 
+    <p>@Model.AllComments!.Count() comments have been found for this post.</p>
 }
+
+
+
+    @foreach (Comments comment in Model.AllComments!)
+    {
+        <div class="comment">
+        <div class="flex flex-row flex-1">
+            <img class="w-10" src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y
+    " />
+            <p>Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd mm yyyy") at @comment.CommentDate.ToString("HH:mm").</p>
+        </div>
+        @Html.Raw(comment.CommentContent)
+        </div>
+    }
+
+    <div class="pagination-container"></div>
+</div>
 
 <form method="post" id="commentForm" novalidate>
     <div>
         <label>Name:</label>
+
         <input id="name" name="txtName" placeholder="John Doe" required>
-        <span class="error"></span>
+        <div class="error"></div>
+
     </div>
     <div>
         <label>Email:</label>
@@ -29,7 +54,10 @@
         <textarea name="txtComment" id="ckeditor1" placeholder="Beautiful photo...."></textarea>
         <span class="error"></span>
     </div>
+    <div class="captcha">
+        <p>Please take a second to do the captcha and prove you're not a robot. This helps me fight spam. Thank you.</p>
+        <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
+    </div>
+    <input type="hidden" value="@Model.SinglePhoto.PhotoID" id="photoID">
     <button type="submit">Comment</button>
 </form>
-
-

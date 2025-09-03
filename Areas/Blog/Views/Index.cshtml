@@ -60,7 +60,7 @@
         </section>
 
         <section>
-            <p>You are on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageCount.</p>
+            <p>Currently showing @Model.PagedPosts!.PageNumber out of @Model.PagedPosts.PageCount. posts.</p>
 
             @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page,
             area = "Blog" }),

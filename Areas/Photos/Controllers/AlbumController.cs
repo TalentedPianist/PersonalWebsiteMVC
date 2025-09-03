@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
@@ -31,7 +32,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 
             var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
             ViewBag.AlbumName = album!.Name;
-            
+
             return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }
 
@@ -42,7 +43,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             var photo = _db.Photos.Where(p => p.AlbumID == id).FirstOrDefault();
             var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).ToList();
             ViewBag.Comments = comments;
-            
+
             return Ok(photo);
         }
 
@@ -55,11 +56,14 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             model.SinglePhoto = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
             model.SingleAlbum = _db.Albums.Where(a => a.AlbumID == albumID).FirstOrDefault();
             model.Comments = new Comments();
-            model.AllComments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID);
+            model.AllComments = _db.Comments.
+                Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID)
+                .OrderByDescending(c => c.CommentDate)
+                .ToList();
 
             ViewBag.ImgSrc = imgHref;
             return PartialView("~/Areas/Photos/Views/Album/Photo.cshtml", model);
-            
+
         }
 
 
@@ -70,6 +74,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             //int pageSize = 1;
             var comments = _db.Comments
                 .Where(c => Convert.ToInt32(id) == Convert.ToInt32(c.PhotoID))
+                .OrderByDescending(c => c.CommentDate)
                 .ToList();
 
             return PartialView("~/Areas/Photos/Views/Album/Comments.cshtml", comments);
@@ -77,13 +82,41 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 
         [HttpPost]
         [Route("/Photo/AddComment")]
-        public IActionResult AddComment([FromBody]Comments comment)
+        public async Task<IActionResult> AddComment(string name, string email, string website, string message, string photoID, string captchaResponse)
         {
-            comment.CommentDate = DateTime.Now;
-            comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-            _db.Comments.Add(comment);
-            _db.SaveChanges();
-            return Ok(comment);
+            if (await VerifyCaptcha(captchaResponse))
+            {
+                Comments comment = new Comments();
+                comment.CommentAuthor = name;
+                comment.CommentAuthorEmail = email;
+                comment.CommentAuthorUrl = website;
+                comment.CommentContent = message;
+                comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
+                comment.CommentDate = DateTime.Now;
+                comment.PhotoID = photoID;
+                _db.Comments.Add(comment);
+                _db.SaveChanges();
+                return Ok(comment);
+            }
+            else
+            {
+                return Json(new { error = "Please do the captcha to prove that you are human." });
+            }
         }
+
+        public async Task<bool> VerifyCaptcha(string captchaResponse)
+        {
+            var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
+                return captchaResult!.Success;
+            }
+            return false;
+        }
+
     }
 }

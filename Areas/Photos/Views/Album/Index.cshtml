@@ -56,42 +56,6 @@
 </div>
 
 
-<div id="mylightbox" class="hidden">
-    <div id="lightbox-content">
-        <img class="lightbox-image" src="" alt="">
-
-        <p class="comment-status"></p>
-
-
-        <div class="comments-container"></div>
-
-        <div class="pagination-container"></div>
-
-        <form method="post">
-
-            <div>
-                <label>Name:</label>
-                <input name="txtName" id="name" placeholder="John Smith">
-            </div>
-            <div>
-                <label>Email:</label>
-                <input type="email" id="email" placeholder="john@johnsmith.com">
-            </div>
-            <div>
-                <label>Website:</label>
-                <input id="website" name="txtWebsite" placeholder="https://www.johnsmith.com">
-            </div>
-            <div>
-                <label>Comment:</label>
-                <textarea id="ckeditor1"></textarea>
-            </div>
-
-            <button type="submit">Comment</button>
-        </form>
-    </div>
-
-</div>
-
 
 @section Scripts {
 
@@ -109,12 +73,9 @@
                 let target = this.$currentTarget[0];
                 let pName = $(target).data('name');
                 let albumId = $(target).data('album-id');
-                console.log(albumId);
+         
                 let instance = this.$instance;
                 //$(this.$instance).find('.featherlight-content').html('Hello World!');
-
-
-
 
                 $.ajax({
                     method: "POST",
@@ -124,18 +85,47 @@
                     cache: false,
                     success: function (message) {
                         //console.log(message);
+       
                         $(instance).find('.featherlight-content').html(`
             
-                                        ${message}
-                                    `);
-
-
-
+                                                        ${message}
+                                                    `);
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
+
+                let comments = instance.find('#Comments .comment');
+                let pager = instance.find('.pagination-container');
+
+                let numItems = comments.length;
+                let perPage = 4;
+
+                comments.slice(perPage).hide();
+
+                $(pager).pagination({
+                    items: numItems,
+                    itemsOnPage: perPage,
+                    onPageClick: function (pageNumber, e) {
+                        e.preventDefault();
+                        var showFrom = perPage * (pageNumber - 1);
+                        var showTo = showFrom + perPage;
+                        comments.hide().slice(showFrom, showTo).show();
+                    }
+                });
+
+                let captcha = instance.find('#g-recaptcha');
+
+                if (captcha) {
+                    grecaptcha.render('g-recaptcha', {
+                        'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz'
+                    });
+                }
+
+                // Note that [0] needs to be added to the instance to return HTML and without [0] for jQuery function.
+
+
 
                 let ckElement = instance.find('#ckeditor1')[0];
                 ClassicEditor.create(ckElement, {
@@ -146,11 +136,14 @@
                         $("#commentForm").on('submit', function (e) {
                             e.preventDefault();
 
-                            let name = $(instance).find('#name')[0]
-                            let email = $(instance).find('#email')[0];
-                            let website = $(instance).find('#website')[0];
-
+                            let name = instance.find('#name')[0]
+                            let email = instance.find('#email')[0];
+                            let website = instance.find('#website')[0];
                             let message = editor.getData();
+                            let photoId = document.forms[0]['photoID'].value;
+                            let strCaptcha = document.forms[0]['g-recaptcha-response'].value;
+                            
+
 
                             let errors = [];
 
@@ -179,6 +172,32 @@
                             } else {
                                 $(".ck").parent().find('.error').text('');
                                 $(".ck").removeClass('inputError');
+                            }
+
+                            if (errors.length === 0) {
+                                // No errors, add comment to database
+                                $.ajax({
+                                    method: "POST",
+                                    url: "/Photo/AddComment",
+                                    data: { name: name.value, email: email.value, website: website.value, message: editor.getData(), photoID: photoId, captchaResponse: strCaptcha },
+                                    async: false,
+                                    cache: false,
+                                    success: function (message) {
+                                        console.log(message);
+                                        $("#Comments").append(`
+                                            <hr>
+                                            <div class="flex flex-row flex-1">
+                                                <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
+                                                <p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM D')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
+                                            </div>
+                                            ${message.CommentContent}
+                                        `);
+                                    },
+                                    error: function (error) {
+                                        console.log(error);
+                                    }
+                                });
+                            } else {
                             }
                         });
                     })

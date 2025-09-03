@@ -50,24 +50,22 @@
             string url = _http.HttpContext!.Request.GetEncodedUrl();
 
         }
-       
+
         @if (url.Contains("Photos"))
         {
             @RenderBody()
         }
         else
         {
-            <section>
-                <article>
+            <div id="mainContent">
+                <div>
                     @RenderBody()
-                </article>
-                <article>
-                    <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
-                </article>
-            </section>
+                </div>
+                <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
+            </div>
         }
 
-      
+
     </main>
 
     <footer>
@@ -81,9 +79,9 @@
     <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
     <script src="/js/simplePagination.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
     <script type="importmap" asp-importmap="@data"></script>
-   
+
     <script type="module">
         import {
             ClassicEditor,
@@ -110,16 +108,16 @@
                 })
                 .then(editor => {
                     window.editor = editor;
-              
+
                 })
                 .catch(error => {
                     console.error(error);
                 });
         }
     </script>
-     <script src="/js/site.js" asp-append-version="true"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
     @RenderSection("Scripts", false)
-    
+
 </body>
 
 </html>

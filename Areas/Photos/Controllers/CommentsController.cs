@@ -22,7 +22,10 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         [Route("GetComments")]
         public IActionResult GetComments(int id)
         {
-            var comments = _db.Comments.Where(c => c.PostID == id).ToList();
+            var comments = _db.Comments.
+                Where(c => c.PostID == id)
+                .OrderByDescending(c => c.CommentDate)
+                .ToList();
             return Ok(comments);
         }
     }

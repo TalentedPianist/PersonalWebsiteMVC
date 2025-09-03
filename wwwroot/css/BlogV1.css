@@ -41,6 +41,10 @@ form {
     gap: 1em;
     margin-top: 1em;
     align-self: flex-start;
+    width: 100%;
+  }
+  form .ck-editor__editable_inline {
+    min-height: 200px;
   }
 }
 form input {
@@ -70,16 +74,18 @@ form div {
 form div .error {
   color: brown;
   font-weight: bold;
+  clear: both;
 }
 @media only screen and (min-width: 768px) {
   form div:not(.ck) {
-    display: flex;
     flex-direction: row;
-    flex: 1;
-    align-items: center;
+    width: 100%;
   }
   form div:not(.ck) label {
     width: 8em;
+  }
+  form div:not(.ck) input {
+    width: 70%;
   }
 }
 
@@ -422,16 +428,16 @@ form div .error {
   flex-direction: column;
   flex: 1;
 }
+@media only screen and (min-width: 768px) {
+  #Comments {
+    gap: 1em;
+  }
+}
 #Comments img {
   display: block;
-  width: auto;
-  height: auto;
+  width: 100px;
+  height: 100px;
   margin-right: 2em;
-}
-#Comments hr {
-  color: black;
-  margin-top: 1em;
-  margin-bottom: 1em;
 }
 #Comments section {
   display: flex;
@@ -458,33 +464,6 @@ form div .error {
 }
 #Comments section:nth-of-type(2) button:nth-of-type(2) {
   background-color: lightyellow;
-}
-#Comments #comment {
-  opacity: 0;
-  transform: translateY(20px);
-  animation: crystalFadeIn 1.4s ease-out forwards;
-  position: relative;
-}
-#Comments #comment:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at top left, rgba(182, 149, 192, 0.2), transparent 70%);
-  filter: blur(6px);
-  z-index: -1;
-}
-@keyframes crystalFadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 #Contact {
@@ -729,9 +708,6 @@ main {
     align-items: flex-start;
     width: 100%;
   }
-  main section article {
-    width: 50%;
-  }
 }
 
 .menuIcon {
@@ -839,8 +815,12 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 0.5em;
+  gap: 2em;
   font-size: large;
+  align-items: flex-start;
+  justify-content: flex-start;
+  width: 100%;
+  min-width: 30%;
 }
 #Sidebar img {
   width: 50%;
@@ -855,43 +835,23 @@ footer {
 #Sidebar section {
   display: flex;
   flex-direction: column !important;
+  flex: 0;
   border-bottom: 1px solid #d9d9d9;
   padding-bottom: 1em;
+  min-width: 100%;
+  width: 100%;
+}
+
+#mainContent {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  width: 80%;
+  min-width: 100%;
 }
 
 .modal-header i {
   display: none !important;
-}
-
-.commentForm {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding-top: 2em;
-  padding-bottom: 2em;
-  padding-left: 2em;
-  padding-right: 2em;
-  gap: 2em;
-  background: linear-gradient(to bottom right, #f4f7fa, #eaeff5);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-}
-.commentForm button {
-  align-self: flex-start;
-  background-color: orange;
-}
-.commentForm input,
-.commentForm textarea {
-  border: none;
-  border-bottom: 2px solid #ccc;
-  background-color: transparent;
-  padding: 0.75rem;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
-}
-.commentForm input:focus,
-.commentForm textarea:focus {
-  outline: none;
-  border-bottom-color: #7f9cf5;
 }
 
 .featherlight {
@@ -914,4 +874,8 @@ footer {
 .featherlight-next,
 .featherlight-previous {
   display: none;
+}
+
+.pagination {
+  margin-bottom: 1em;
 }/*# sourceMappingURL=BlogV1.css.map */
