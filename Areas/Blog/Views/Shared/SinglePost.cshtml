@@ -40,33 +40,81 @@
 
 @section Scripts {
     <script>
-        // For future reference, the scripts section doesn't work in partial views.  Wasted a lot of time on this once.
-        $("form").on('submit', function (e) {
+        $("#commentForm").on('submit', function(e) { 
             e.preventDefault();
 
-            let reCaptchaResponse = grecaptcha.getResponse();
-            if (reCaptchaResponse) {
-                $.ajax({
-                    type: "GET",
-                    url: "/Captcha",
-                    data: { userResponse: reCaptchaResponse },
-                    success: function (data) {
+            var x = $("form").serializeArray();
+            $.each(x, function(i, field) { 
+                //console.log(field.name + ":" + field.value);
+            });
 
-                        if (data) {
+            let name = document.querySelector("#name");
+            let email = document.querySelector("#email");
+            let website = document.querySelector("#website");
+            let captcha = document.forms[0]["g-recaptcha-response"];
+            let postID = document.querySelector("#postId");
 
-                            // https://coderanch.com/t/772379/languages/jQuery-submit-work-DOM-submit
-                            $("form")[0].submit();
+
+            let oldSummary = document.getElementById("errorsSummary");
+            if (oldSummary)
+                oldSummary.remove();
+
+            let errors = [];
+            if (!name.validity.valid) { 
+                $("#name").parent().find('.error').text('Please enter your name.');
+                $("#name").addClass('inputError');
+                errors.push("Please enter your name.");
+            } else { 
+                $("#name").parent().find('.error').text('');
+                $("#name").removeClass('inputError');
+            } 
+
+            if (!email.validity.valid) { 
+                $("#email").parent().find('.error').text('Please enter your email address.');
+                $("#email").addClass('inputError');
+                errors.push('Please enter your email address.');
+            } else { 
+                $("#email").parent().find('.error').text('');
+                $("#email").removeClass('inputError');
+            } 
+
+            if (window.editor.getData() === '') { 
+                $(".ck").parent().find('.error').text('Please enter a message.');
+                $(".ck").addClass('inputError');
+                errors.push("Please enter a message.");
+            } else { 
+                $(".ck").parent().find('.error').text('');
+                $(".ck").removeClass('inputError');
+            } 
+
+            if (errors.length === 0) { 
+                $.ajax({ 
+                    method: "POST", 
+                    url: "/Desktop/Blog/AddComment", 
+                    data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData(), captchaResponse: captcha.value, postID: postID.value },
+                    cache: false,
+                    async: false,
+                    success: function(message) {
+                        console.log(message); 
+                        if (message.error) { 
+                            $("form").before(`<hr><p>${message.error}</p>`);
                         } else {
-                            $("form").prepend("<p>Please verify captcha again");
+                            $(".comment").before(`
+                                <hr>
+                                <div class="flex flex-row flex-1">
+                                    <img style="width: 100px" src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
+                                    <p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM d')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
+                                </div>
+                                ${message.CommentContent}
+                            `); 
                         }
                     },
-                    error: function (error) {
+                    error: function(error) { 
                         console.log(error);
                     }
                 });
-            } else {
-                $("form").prepend("<p>Please do the captcha.  It will prove you're not a robot.</p>");
             }
+
         });
 
     </script>

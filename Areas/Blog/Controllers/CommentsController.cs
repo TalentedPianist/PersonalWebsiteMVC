@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Routing;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Areas.Blog.Models;
 using PersonalWebsiteMVC.Data;
@@ -28,39 +29,44 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 
         }
 
-        [Route("Blog/Comments/AddComment/{id}")]
-        public IActionResult Index([FromQuery(Name="pageNumber")]int? page)
-        {
-            var model = new BlogCommentViewModel();
-            TempData["Message"] = ViewData["id"];     
-            //model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
-            return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
-        }
+      
 
-     
         [HttpPost]
-        [Route("Blog/Comments/AddComment/{id}")]
-        public IActionResult AddComment(BlogCommentViewModel model)
+        [Route("/Desktop/Blog/AddComment")]
+        public async Task<IActionResult> AddComment(string name, string email, string website, string message, string captchaResponse, int postID)
         {
-            TempData["Message"] = model.Comment.CommentAuthor;
-            if (ModelState.IsValid)
+            if (await VerifyCaptcha(captchaResponse))
             {
-               
                 Comments comment = new Comments();
-                comment.CommentAuthor = model.Comment.CommentAuthor;
-                comment.CommentAuthorEmail = model.Comment.CommentAuthorEmail;
-                comment.CommentAuthorUrl = model.Comment.CommentAuthorUrl;
-                comment.CommentContent = model.Comment.CommentContent;
-                comment.CommentDate = DateTime.Now;
+                comment.CommentAuthor = name;
+                comment.CommentAuthorEmail = email;
+                comment.CommentAuthorUrl = website;
+                comment.CommentContent = message;
                 comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-                comment.PostID = model.Comment.PostID;
-                comment.CommentType = "Post";
+                comment.CommentDate = DateTime.Now;
+                comment.PostID = postID;
                 _db.Comments.Add(comment);
                 _db.SaveChanges();
-                return RedirectToAction("SinglePost", new { area = "Blog", controller="Home", id = model.Comment.PostID });
-
+                return Ok(comment);
             }
-            return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
+            else
+            {
+                return Json(new { error = "Please do the captcha to prove that you are human." });
+            }
+        }
+
+        private async Task<bool> VerifyCaptcha(string captchaResponse)
+        {
+            var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
+                return captchaResult!.Success;
+            }
+            return false;
         }
     }
 }

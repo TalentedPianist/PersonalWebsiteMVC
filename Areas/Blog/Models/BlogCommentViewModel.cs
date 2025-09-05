@@ -6,6 +6,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Models
     public class BlogCommentViewModel
     {
         public Posts? Post { get; set; }
+        public List<Posts> AllPosts { get; set; } = new List<Posts>();
         public IPagedList<Posts>? PagedPosts { get; set; }
         public Comments Comment { get; set; } = new Comments();
         public List<Comments> Comments { get; set; } = new List<Comments>(); 

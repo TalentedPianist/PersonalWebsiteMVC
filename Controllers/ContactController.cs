@@ -10,6 +10,7 @@ using MailKit.Net.Smtp;
 using System.Linq.Expressions;
 using System.Text;
 using ServiceStack;
+using Newtonsoft.Json;
 
 
 namespace PersonalWebsiteMVC.Controllers
@@ -18,20 +19,15 @@ namespace PersonalWebsiteMVC.Controllers
     {
         public ApplicationDbContext _db { get; set; }
         public IHttpContextAccessor _http { get; set; }
-        public IConfiguration _configuration { get; set; }
-        public ILogger<ContactController> _Logger { get; set; }
-        private readonly MailSettings _mailSettings;
-
         private readonly HttpClient _httpClient;
+        private EmailService _EmailService { get; set; }
 
-        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config, ILogger<ContactController> logger, IOptions<MailSettings> mailSettingsOptions, HttpClient httpClient)
+        public ContactController(ApplicationDbContext db, IHttpContextAccessor http, HttpClient httpClient, EmailService emailService)
         {
             _db = db;
             _http = http;
-            _configuration = config;
-            _Logger = logger;
-            _mailSettings = mailSettingsOptions.Value;
             _httpClient = httpClient;
+            _EmailService = emailService;
         }
 
         [Microsoft.AspNetCore.Mvc.Route("/Contact")]
@@ -41,36 +37,33 @@ namespace PersonalWebsiteMVC.Controllers
         }
 
         [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("ContactForm")]
-        public IActionResult ContactForm(ContactFormModel model)
+        [Microsoft.AspNetCore.Mvc.Route("/Contact/SubmitForm")]
+        public async Task<IActionResult> ContactForm(string name, string email, string website, string message, string captchaResponse)
         {
-            if (ModelState.IsValid)
+            if (await VerifyCaptcha(captchaResponse))
             {
-                
-                
-                    // Begin send email code
-                    var message = new MimeMessage();
-                    message.From.Add(new MailboxAddress(model.Name, model.Email));
-                    message.To.Add(new MailboxAddress("Douglas McGregor", "douglas@douglasmcgregor.co.uk"));
-                    message.Subject = "Contact Form";
-                    message.Body = new TextPart("html") { Text = model.Message };
-
-                    using (SmtpClient mailClient = new SmtpClient())
-                    {
-                        mailClient.Connect("smtp.gmail.com", 587, MailKit.Security.SecureSocketOptions.StartTls);
-                        mailClient.Authenticate("douglasmcgregor09@gmail.com", "uvqf uhyz ocya rbcy");
-                        mailClient.Send(message);
-                        mailClient.Disconnect(true);
-                    }
-
-                }
-                // End send email code 
-        
-
-            return View("~/Views/Home/Contact.cshtml");
-
+                await _EmailService.SendEmailAsync(email, "Contact Form", message);
+                return Ok();
+            }
+            else
+            {
+                return Json(new { error = "You must do the captcha to prove that you are human." });
+            }
         }
 
+        private async Task<bool> VerifyCaptcha(string captchaResponse)
+        {
+            var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}");
+            if (response.IsSuccessStatusCode)
+            {
+                var jsonResponse = await response.Content.ReadAsStringAsync();
+                var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
+                return captchaResult!.Success;
+            }
+            return false;
+        }
 
     }
 }

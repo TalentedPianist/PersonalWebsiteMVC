@@ -48,6 +48,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                 BlogCommentViewModel model = new BlogCommentViewModel();
                 var pageNumber = page ?? 1;
                 model.PagedPosts = _db.Posts.ToPagedList(pageNumber, 3);
+                model.AllPosts = _db.Posts.ToList();
                 return View("~/Areas/Blog/Views/Index.cshtml", model);
             }
             // End code for device detector
@@ -65,7 +66,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
             model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
             var pageNumber = page ?? 1;
             var strId = Convert.ToInt32(id);
-            model.PagedComments = (PagedList<Comments>?)_db.Comments.Where(c => c.PostID == strId).OrderBy(c => c.CommentDate).ToPagedList<Comments>(pageNumber, 10);
+            model.PagedComments = (PagedList<Comments>?)_db.Comments.Where(c => c.PostID == strId).OrderByDescending(c => c.CommentDate).ToPagedList<Comments>(pageNumber, 10);
             model.Comments = _db.Comments.Where(c => c.PostID == strId).OrderBy(c => c.CommentDate).ToList();
             
             return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);

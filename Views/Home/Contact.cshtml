@@ -12,28 +12,33 @@
         <article>
             <h1>Contact</h1>
 
+            <p>It would be great to hear from you.  Please send me a message if you're interested in working together or just want to say hello.</p>
+
             @TempData["Message"]
 
-            <form method="post" asp-action="ContactForm" asp-controller="Contact">
-                <div class="text-danger" asp-validation-summary="All"></div>
+            <form method="post" novalidate>
+                
                 <div>
                     <label>Name:</label>
-                    <input asp-for="Name" placeholder="John Smith">
+                    <input id="name" name="txtName" placeholder="John Smith" required>
+                    <span class="error"></span>
                 </div>
                 <div>
                     <label>Email:</label>
-                    <input asp-for="Email" placeholder="john@johnsmith.com">
+                    <input id="email" name="txtEmail" placeholder="john@johnsmith.com" required>
+                    <span class="error"></span>
                 </div>
                 <div>
                     <label>Website:</label>
-                    <input asp-for="Website" placeholder="https://www.johnsmith.com">
+                    <input id="website" name="txtWebsite" placeholder="https://www.johnsmith.com">
+                    <span class="error"></span>
                 </div>
 
                 <div>
                     <label>Message:</label>
 
-                        <textarea asp-for="Message" id="ckeditor1"></textarea>
-                    
+                    <textarea id="ckeditor1" name="txtMessage" placeholder="What a great website..." required></textarea>
+                    <span class="error"></span>
                 </div>
 
                 <div>
@@ -46,25 +51,69 @@
     </section>
 </div>
 
-@section Scripts {
+@section Scripts { 
     <script>
-        $("button").on('click', function (e) {
+        $("form").on('submit', function(e) { 
             e.preventDefault();
-            let reCaptchaResponse = grecaptcha.getResponse();
-            if (reCaptchaResponse) {
+            
+            let name = document.querySelector("#name");
+            let email = document.querySelector("#email");
+            let website = document.querySelector("#website");
+            let captcha = document.querySelector(".g-recaptcha-response");
+
+            let oldSummary = document.getElementById("errorsSummary");
+            if (oldSummary) { 
+                oldSummary.remove();
+            }
+
+            let errors = [];
+
+            if (!name.validity.valid) { 
+                $("#name").parent().find('.error').text('Please enter your name.');
+                $("#name").addClass('inputError');
+                errors.push("Please enter your name.");
+            } else { 
+                $("#name").parent().find('.error').text('');
+                $("#name").removeClass('inputError');
+            } 
+
+            if (!email.validity.valid) { 
+                $("#email").parent().find('.error').text('Please enter your email address');
+                $("#email").addClass('inputError');
+                errors.push("Please enter your email address.");
+            } else { 
+                $("#email").parent().find('.error').text('');
+                $("#email").removeClass('inputError');
+            }
+
+            if (editor.getData() === '') { 
+                $(".ck").parent().find('.error').text('Please enter a message.');
+                $(".ck").addClass('inputError');
+                errors.push("Please enter a message.");
+            } else { 
+                $(".ck").parent().find('.error').text('');
+                $(".ck").removeClass('inputError');
+            }
+
+            if (errors.length === 0) { 
                 $.ajax({
-                    type: "GET",
-                    url: "@Url.Action("Captcha", "Contact")",
-                    data: { userResponse: reCaptchaResponse },
-                    success: function (data) {
-                        $("form").submit();
-                    },
-                    error: function (error) {
+                    method: "POST", 
+                    url: "/Contact/SubmitForm", 
+                    data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData(), captchaResponse: captcha.value },
+                    cache: false,
+                    async: false,
+                    success: function(message) { 
+                        if (message.error) { 
+                            $("form").before(`<p>${message.error}</p>`); 
+                        } else { 
+                            $("form").before().empty();
+                            $("form").before(`<p>Hi ${name.value}, thanks for your email.  A reply will be sent if necessary.</p>`);
+                        }
+                    }, 
+                    error: function(error) { 
                         console.log(error);
-                    }
+                    } 
                 });
-            } else {
-                $("form").prepend("<p>You must click the reCaptcha to prove that you're not a robot.</p>");
             }
         });
     </script>
