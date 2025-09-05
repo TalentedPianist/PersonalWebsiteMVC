@@ -6,6 +6,7 @@
     <TargetFramework>net9.0</TargetFramework>
     <UserSecretsId>aspnet-PersonalWebsiteMVC-c32eb1a4-ffce-43bf-8180-4254c53bd434</UserSecretsId>
 	  <CopyRefAssembliesToPublishDirectory>true</CopyRefAssembliesToPublishDirectory>
+
   </PropertyGroup>
 
 
