@@ -322,6 +322,11 @@ form {
         gap: 1em;
         padding-left: 1em;
         padding-right: 2em;
+        min-height: revert;
+    }
+
+    @media only screen and (min-width: 900px) { 
+        min-height: revert;
     }
 }
 
@@ -1012,25 +1017,39 @@ footer {
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 1em;
-
-    width: 100%;
+    width: 30%;
 
     p {
         font-size: large;
     }
 
     svg {
-        width: 10%;
+        width: 100%;
+
+        @media only screen and (min-width: 900px) { 
+                      
+        }
+
+        @media only screen and (min-width: 768px) { 
+            width: 100%; 
+        }
+    }
+
+    @media only screen and (min-width: 900px) { 
+        justify-content: space-around;
+        flex: 0;
+    }
+
+    @media only screen and (min-width: 768px) { 
+        width: 80%;
     }
 
     @media only screen and (min-width: 600px) {
         flex-direction: row;
-        flex: 0;
-        align-items: flex-start;
-        align-self: flex-start;
+        justify-content: flex-start;
+        align-content: flex-start;
         background-color: revert;
-
+        gap: 2em;
 
     }
 
@@ -1069,12 +1088,21 @@ footer {
 
         &:nth-of-type(1) { 
             gap: 1em;
+           
         }
 
         &:nth-of-type(2) { 
             gap: 1em;
+            border-top: 1px solid #d9d9d9;
+            padding-top: 1em;
         }
     }
+
+    @media only screen and (min-width: 900px) { 
+        min-width: 40%;
+        margin-left: 2em;
+    }
+
 }
 
 #mainContent {

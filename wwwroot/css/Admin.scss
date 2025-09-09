@@ -34,6 +34,23 @@ main {
 }
  
 
+form  {
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+    gap: 1em;
+
+    button  {
+        align-self: flex-start;
+    }
+
+    input { 
+        border: 1px solid black !important;
+        padding: 10px 10px 10px 10px !important;
+        margin-top: 1em;
+    }
+}
+
 
 #Photos {
     position: relative;

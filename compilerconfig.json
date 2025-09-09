@@ -10,5 +10,9 @@
   {
     "outputFile": "wwwroot/css/Admin.css",
     "inputFile": "wwwroot/css/Admin.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/BlogV1.css",
+    "inputFile": "wwwroot/css/BlogV1.scss"
   }
 ]

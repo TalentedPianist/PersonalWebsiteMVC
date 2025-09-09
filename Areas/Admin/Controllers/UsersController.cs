@@ -43,7 +43,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                {
                 ApplicationUser appUser = new ApplicationUser
                 {
-                    UserName = user.Name,
+                   
+
+                    UserName = user.UserName,
                     Email = user.Email,
                 };
                 IdentityResult result = await userManager.CreateAsync(appUser, user.Password!);
@@ -71,34 +73,50 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public async Task<IActionResult> Update(string id, string firstname, string lastname, string email, string password)
+          public async Task<IActionResult> Update(string id, ApplicationUser model, string password)
           {
-               ApplicationUser? user = await userManager.FindByIdAsync(id);
+
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+               ApplicationUser user = await userManager.FindByIdAsync(model.Id);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+
                if (user != null)
                {
-                    
-                    if (!string.IsNullOrEmpty(email))
-                         user.Email = email;
+                    if (!string.IsNullOrEmpty(model.FirstName))
+                         user.FirstName = model.FirstName;
                     else
-                         ModelState.AddModelError("", "Email cannot be empty");
+                         ModelState.AddModelError("", "First name cannot be empty.");
+
+                    if (!string.IsNullOrEmpty(model.LastName))
+                         user.LastName = model.LastName;
+                    else
+                         ModelState.AddModelError("", "Last name cannot be empty.");
+
+                    if (!string.IsNullOrEmpty(model.Email))
+                         user.Email = model.Email;
+                   
 
                     if (!string.IsNullOrEmpty(password))
                          user.PasswordHash = passwordHasher.HashPassword(user, password);
-                    else
-                         ModelState.AddModelError("", "Password cannot be empty");
+                    
 
-                    if (!string.IsNullOrEmpty(email) && !string.IsNullOrEmpty(password))
+                    if (!string.IsNullOrEmpty(model.Email) && !string.IsNullOrEmpty(password))
                     {
                          IdentityResult result = await userManager.UpdateAsync(user);
                          if (result.Succeeded)
+                         {
                               return RedirectToAction("Index");
+                         }
                          else
-                              foreach (var item in result.Errors)
-                                   ModelState.AddModelError("", item.Description);
+                         {
+                              foreach (IdentityError error in result.Errors)
+                              {
+                                   ModelState.AddModelError("", error.Description);
+                              }
+                          
+                         }
                     }
                }
-               else
-                    ModelState.AddModelError("", "User Not Found");
                return View(user);
           }
 

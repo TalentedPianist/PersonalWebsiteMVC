@@ -1,4 +1,4 @@
-@tailwind base;
+﻿@tailwind base;
 @tailwind components;
 @tailwind utilities;
 html {
@@ -283,6 +283,12 @@ form div .error {
     gap: 1em;
     padding-left: 1em;
     padding-right: 2em;
+    min-height: revert;
+  }
+}
+@media only screen and (min-width: 900px) {
+  #About {
+    min-height: revert;
   }
 }
 
@@ -577,8 +583,7 @@ form div .error {
   margin-top: 1em;
 }
 #Albums section:nth-of-type(2) figcaption a {
-  -webkit-text-decoration: revert !important;
-          text-decoration: revert !important;
+  text-decoration: revert !important;
   color: revert !important;
 }
 #Albums section:nth-of-type(3) {
@@ -858,22 +863,37 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1em;
-  width: 100%;
+  width: 30%;
 }
 .socialMedia p {
   font-size: large;
 }
 .socialMedia svg {
-  width: 10%;
+  width: 100%;
+}
+@media only screen and (min-width: 768px) {
+  .socialMedia svg {
+    width: 100%;
+  }
+}
+@media only screen and (min-width: 900px) {
+  .socialMedia {
+    justify-content: space-around;
+    flex: 0;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .socialMedia {
+    width: 80%;
+  }
 }
 @media only screen and (min-width: 600px) {
   .socialMedia {
     flex-direction: row;
-    flex: 0;
-    align-items: flex-start;
-    align-self: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
     background-color: revert;
+    gap: 2em;
   }
 }
 
@@ -895,8 +915,7 @@ footer {
 }
 #Sidebar a {
   color: revert !important;
-  -webkit-text-decoration: revert !important;
-          text-decoration: revert !important;
+  text-decoration: revert !important;
 }
 #Sidebar section {
   display: flex;
@@ -911,6 +930,14 @@ footer {
 }
 #Sidebar section:nth-of-type(2) {
   gap: 1em;
+  border-top: 1px solid #d9d9d9;
+  padding-top: 1em;
+}
+@media only screen and (min-width: 900px) {
+  #Sidebar {
+    min-width: 40%;
+    margin-left: 2em;
+  }
 }
 
 #mainContent {
@@ -951,4 +978,4 @@ footer {
   margin-bottom: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid #d9d9d9;
-}/*# sourceMappingURL=BlogV1.css.map */
+}

@@ -312,7 +312,23 @@ try
 
     app.MapPostsEndpoints();
 
-    app.Run();
+     using (var scope = app.Services.CreateScope())
+     {
+          var services = scope.ServiceProvider;
+          var dbContext = services.GetRequiredService<ApplicationDbContext>();
+          // Apply pending migrations
+          await dbContext.Database.MigrateAsync();
+          // Seed roles and admin user
+          await IdentitySeeder.SeedRolesAndAdminAsync(services);
+
+          
+
+     }
+
+
+          app.Run();
+
+        
 
 } // https://stackoverflow.com/questions/70247187/microsoft-extensions-hosting-hostfactoryresolverhostinglistenerstopthehostexce
 catch (Exception ex) when (ex is not HostAbortedException)
