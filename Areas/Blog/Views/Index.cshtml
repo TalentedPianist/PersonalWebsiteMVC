@@ -27,13 +27,12 @@
     else
     {
 
-        <section>
             <h1>Blog</h1>
-        </section>
-        <section>
+
 
             @try
             {
+                <div class="Posts">
                 @foreach (Posts post in Model.PagedPosts!)
                 {
                     var result = Truncate(post.PostContent!, 200);
@@ -51,15 +50,14 @@
                     <a asp-action="SinglePost" asp-area="Blog" asp-route-id="@post.PostID" class="btn btn-primary">Read More</a>
 
                 }
+                </div>
             }
             catch (NullReferenceException ex)
             {
                 @ex.Message
             }
 
-        </section>
-
-        <section>
+       
             <p>You are currently on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageSize.</p>
 
             @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page,
@@ -72,7 +70,7 @@
                     
                 })
         
-            </section>
+           
         }
 </div>
 

@@ -15,7 +15,7 @@ namespace PersonalWebsiteMVC.Models
         public string? GuestbookContent { get; set; } 
         public string? GuestbookAuthorIP { get; set; } 
         public string? GuestbookApproved { get; set; } 
-        public DateTime DatePosted { get; set; }
+        public DateTime GuestbookDate { get; set; }
 
     }
 }

@@ -46,7 +46,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     g.GuestbookAuthor = model.GuestbookAuthor;
                     g.GuestbookAuthorEmail = model.GuestbookAuthorEmail;
                     g.GuestbookAuthorUrl = model.GuestbookAuthorUrl;
-                    g.DatePosted = DateTime.Now;
+                    g.GuestbookDate = DateTime.Now;
                     g.GuestbookAuthorIP = HttpContext!.Connection.RemoteIpAddress!.ToString();
                     g.GuestbookApproved = "No";
                     _db.Add(g);

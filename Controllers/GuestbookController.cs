@@ -1,8 +1,10 @@
 
+using BlazorPagination;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using X.PagedList.Extensions;
 
 public class GuestbookController : Controller
 {
@@ -16,9 +18,11 @@ public class GuestbookController : Controller
     }
 
     [Route("/Home/Guestbook")]
-    public IActionResult Guestbook()
+    public IActionResult Guestbook([FromQuery(Name="pageNumber")]int? page)
     {
-        return View("~/Views/Home/Guestbook.cshtml", _db.Guestbook);
+          var pageNumber = page ?? 1;
+          var model = _db.Guestbook.ToPagedList(pageNumber, 3);
+        return View("~/Views/Home/Guestbook.cshtml", model);
     }
 
     [HttpPost]
@@ -33,7 +37,7 @@ public class GuestbookController : Controller
             guestbook.GuestbookAuthorUrl = website;
             guestbook.GuestbookContent = message;
             guestbook.GuestbookAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-            guestbook.DatePosted = DateTime.Now;
+            guestbook.GuestbookDate = DateTime.Now;
             _db.Guestbook.Add(guestbook);
             _db.SaveChanges();
             return Ok(guestbook);

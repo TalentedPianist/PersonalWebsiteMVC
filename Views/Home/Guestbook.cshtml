@@ -1,4 +1,8 @@
-@model IEnumerable<Guestbook>
+@using X.PagedList
+@using X.PagedList.Extensions
+@using X.Web.PagedList
+@using PersonalWebsiteMVC.Models
+@model IPagedList<Guestbook>
 
 <div id="Guestbook">
 <h1>Guestbook</h1>
@@ -11,15 +15,24 @@
     {
         <div class="flex flex-row flex-1 pb-2">
             <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp" style="width: 100px; margin-right: 1em;">
-            <p>Posted by @comment.GuestbookAuthor on @comment.DatePosted.ToString("dddd dd MMMM yyyy") at @comment.DatePosted.ToString("HH:mm")
+            <p>Posted by @comment.GuestbookAuthor on @comment.GuestbookDate.ToString("dddd dd MMMM yyyy") at @comment.GuestbookDate.ToString("HH:mm")
             </p>
         </div>
         <div class="mb-5">
         @Html.Raw(comment.GuestbookContent)
         </div>
     } 
-}
-</div>
+    <p>Currently showing page @Model.PageSize of @Model.PageCount.</p>
+
+    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Guestbook", "Guestbook", new { pageNumber = page, area = "" }),
+            new PagedListRenderOptions
+            {
+                DisplayItemSliceAndTotal = false,
+                LiElementClasses = new string[] { "page-item "},
+                PageClasses = new String[] { "page-link" },
+            })
+}    
+
 
 <form method="post" novalidate>
     <div>
@@ -48,8 +61,9 @@
         <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz" class="recaptcha">
         </div>
     </div>
-    <button type="submit">Sign</button>
+    <button type="submit" class="btn btn-primary">Sign</button>
 </form>
+</div>
 
 
 @section Scripts {
