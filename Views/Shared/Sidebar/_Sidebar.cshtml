@@ -1,20 +1,30 @@
 <div id="Sidebar">
-    <section>
-        <h3>Let's Connect</h3>
 
-        <p>Interested in working together or just want to say hello?</p>
+     <section>
+          <div>
+               <img src="/images/me.jpg">
+          </div>
+          <div>
+            
+               <h3>Let's Connect</h3>
 
-        <a asp-action="Contact" asp-controller="Home">Contact Me</a>
-    </section>
+               <p>Interested in working together or just want to say hello?</p>
 
-    <section>
-        <h3>Social Media</h3>
+               <a asp-action="Contact" asp-controller="Home">Contact Me</a>
+              
+          </div>
+     </section>
+     
 
-        <p>Follow me on Social Media:</p>
-        <div class="socialMedia">
-            <partial name="~/Views/Shared/Sidebar/SocialMedia.cshtml" />
-        </div>
-    </section>
 
-    
+     <section>
+          <h3>Social Media</h3>
+
+          <p>Follow me on Social Media:</p>
+          <div class="socialMedia">
+               <partial name="~/Views/Shared/Sidebar/SocialMedia.cshtml" />
+          </div>
+     </section>
+
+
 </div>

@@ -245,7 +245,7 @@ form div .error {
 }
 #About section p {
   padding-left: 1em;
-  padding-right: 1em;
+  padding-right: 5em;
 }
 #About svg {
   position: absolute;
@@ -271,6 +271,8 @@ form div .error {
 @media only screen and (min-width: 768px) {
   #About p {
     line-height: 2;
+    padding-right: 3em;
+    font-size: 15pt;
   }
 }
 @media only screen and (max-width: 600px) {
@@ -756,7 +758,7 @@ main {
   flex-direction: column;
   flex: 1;
   height: 100%;
-  background-color: #DAADE3;
+  background-color: #ffa500;
   clear: both !important;
   padding-left: 0.5em;
   padding-right: 2em;
@@ -851,7 +853,7 @@ footer {
 @media only screen and (min-width: 768px) {
   footer {
     font-size: x-large;
-    background-color: lightcyan;
+    background-color: lightgreen;
     color: black;
     padding-top: 1em;
     padding-bottom: 1em;
@@ -861,39 +863,26 @@ footer {
 
 .socialMedia {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
-  width: 30%;
+  width: 40%;
+  gap: 1.5em;
 }
 .socialMedia p {
   font-size: large;
 }
 .socialMedia svg {
   width: 100%;
+  align-self: flex-start;
+  display: flex;
 }
-@media only screen and (min-width: 768px) {
-  .socialMedia svg {
-    width: 100%;
-  }
+.socialMedia a {
+  display: inline-flex;
 }
 @media only screen and (min-width: 900px) {
   .socialMedia {
-    justify-content: space-around;
-    flex: 0;
-  }
-}
-@media only screen and (min-width: 768px) {
-  .socialMedia {
-    width: 80%;
-  }
-}
-@media only screen and (min-width: 600px) {
-  .socialMedia {
-    flex-direction: row;
-    justify-content: flex-start;
-    align-content: flex-start;
-    background-color: revert;
-    gap: 2em;
+    width: 60%;
+    gap: 1em;
   }
 }
 
@@ -901,12 +890,10 @@ footer {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 2em;
   font-size: large;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 100%;
-  min-width: 40%;
+  width: 50%;
 }
 #Sidebar img {
   width: 50%;
@@ -920,32 +907,45 @@ footer {
 #Sidebar section {
   display: flex;
   flex-direction: column !important;
-  flex: 0;
+  flex: 1;
   padding-bottom: 1em;
-  min-width: 100%;
-  width: 100%;
+  height: 100%;
 }
 #Sidebar section:nth-of-type(1) {
-  gap: 1em;
+  flex-direction: row !important;
+}
+#Sidebar section:nth-of-type(1) div {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#Sidebar section:nth-of-type(1) div:first-child {
+  gap: 2em !important;
+  flex-direction: column;
+}
+#Sidebar section:nth-of-type(1) div:last-child {
+  gap: 2em !important;
+  flex-direction: column;
+}
+#Sidebar section:nth-of-type(1) img {
+  width: 50%;
+  align-self: flex-start;
 }
 #Sidebar section:nth-of-type(2) {
   gap: 1em;
-  border-top: 1px solid #d9d9d9;
   padding-top: 1em;
-}
-@media only screen and (min-width: 900px) {
-  #Sidebar {
-    min-width: 40%;
-    margin-left: 2em;
-  }
 }
 
 #mainContent {
   display: flex;
   flex-direction: row;
   flex: 1;
-  width: 80%;
-  min-width: 100%;
+  width: 100%;
+}
+@media only screen and (min-width: 1200px) {
+  #mainContent {
+    min-width: 80%;
+  }
 }
 
 .modal-header i {
@@ -978,4 +978,8 @@ footer {
   margin-bottom: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid #d9d9d9;
+}
+
+.container {
+  width: 90% !important;
 }

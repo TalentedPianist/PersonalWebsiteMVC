@@ -35,7 +35,7 @@
 </head>
 
 <body>
-
+   <div class="container">
     <nav>
         <ul>
             <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
@@ -49,8 +49,8 @@
     <header>
 
     </header>
-
-    <main>
+        <main>
+  
         @{
             string url = _http.HttpContext!.Request.GetEncodedUrl();
 
@@ -63,20 +63,19 @@
         else
         {
             <div id="mainContent">
-                <div>
+               
                     @RenderBody()
-                </div>
+                
                 <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
             </div>
         }
 
-
-    </main>
-
+        </main>
     <footer>
         Copyright &copy; douglasmcgregor.co.uk 2024
     </footer>
-
+    </div>
+    
     <script src="/lib/jquery/jquery.min.js"></script>
 
 
