@@ -1,29 +1,3 @@
-﻿@using DeviceDetectorNET
-@using DeviceDetectorNET.Parser
-
-@{
-    DeviceDetector.SetVersionTruncation(VersionTruncation.VERSION_TRUNCATION_NONE);
-
-    var userAgent = Context.Request.Headers["User-Agent"];
-    var headers = Context.Request.Headers.ToDictionary(a => a.Key, a => a.Value.ToArray().FirstOrDefault());
-    var clientHints = ClientHints.Factory(headers);
-
-    var dd = new DeviceDetector(userAgent, clientHints);
-    dd.Parse();
-    if (dd.IsBot())
-    {
-        // Do nothing
-    }
-    else
-    {
-        if (dd.GetDeviceName() == "tablet")
-        {
-            Layout = "~/Views/Shared/_BlogTablet.cshtml";
-        }
-
-        if (dd.GetDeviceName() == "desktop")
-        {
-            Layout = "~/Views/Shared/_BlogDesktop.cshtml";
-        }
-    }
+﻿@{
+     Layout = "~/Views/Shared/_BlogDesktop.cshtml";
 }

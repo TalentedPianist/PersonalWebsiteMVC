@@ -23,6 +23,10 @@
     <meta name="description" content="Welcome to my personal website.  Here you will find blog posts on my journey through web development.  You will also find photo galleries of holiday snaps.">
     <meta name="author" content="Douglas McGregor">
     <meta name="robots" content="noindex,nofollow">
+     <meta property="og:title" content="Douglas McGregor">
+     <meta property="og:url" content="http://www.douglasmcgregor.co.uk">
+     <meta property="og:image" content="http://www.douglasmcgregor.co.uk/images/me.jpg">
+     <meta property="og:description" content="Welcome to my personal website.  This is a blog about my journey in web developement along with photographs of holiday snaps and a personal touch.">
     <link rel="canconial" href="http://www.douglasmcgregor.co.uk">
     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
@@ -67,12 +71,12 @@
                     @RenderBody()
                 
                 <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
-           </div>
+         </div>
         }
 
         </main>
     <footer>
-        Copyright &copy; douglasmcgregor.co.uk 2024
+        Copyright &copy; douglasmcgregor.co.uk @DateTime.Now.ToString("yyyy")
     </footer>
     </div>
     

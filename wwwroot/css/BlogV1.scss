@@ -33,6 +33,9 @@ h6 {
     font-weight: revert !important;
 }
 
+
+
+
 form {
     display: flex;
     flex-direction: column;
@@ -45,26 +48,31 @@ form {
         align-self: flex-start;
         width: 80%;
 
+        %placeholder {
+            color: #d9d9d9 !important;
+        }
+
         .ck-editor__editable_inline {
             min-height: 200px !important;
             height: 200px;
         }
-
     }
+
+
 
     input {
         padding: 10px 10px 10px 10px;
         border: 1px solid black;
         align-items: center;
 
-        &:placeholder { 
-            color: revert !important;
-        } 
+        &::placeholder {
+            color: revert;
+            font-size: medium;
+        }
 
         @media only screen and (min-width: 768px) {
             padding: 5px 5px 5px 5px;
         }
-
     }
 
     textarea {
@@ -100,41 +108,39 @@ form {
 
 
         @media only screen and (min-width: 768px) {
-           &:first-child { 
-                flex-direction: row; 
-           }
+            &:first-child {
+                flex-direction: row;
+            }
 
             &:nth-of-type(2) {
                 display: flex;
                 flex-direction: row;
             }
 
-            &:nth-of-type(3) { 
-                display: flex; 
-                flex-direction: row; 
-            }
-            
-            &:nth-of-type(4) { 
-                flex-direction: row; 
+            &:nth-of-type(3) {
+                display: flex;
+                flex-direction: row;
             }
 
-            .ck { 
+            &:nth-of-type(4) {
+                flex-direction: row;
+            }
+
+            .ck {
                 flex-direction: column;
                 border: 1px solid black;
             }
-            
 
-            label { 
+
+            label {
                 width: 8em;
             }
 
-            input { 
+            input {
                 width: 20em;
             }
         }
     }
-
-
 }
 
 .ck-toolbar {
@@ -197,7 +203,6 @@ form {
             flex: 1;
 
             p {
-               
                 margin-bottom: 1em;
                 font-size: 15pt !important;
             }
@@ -237,7 +242,6 @@ form {
     }
 
     @media only screen and (min-width: 768px) {
-
         background-size: 100%;
         background-position: center;
         padding-left: 1em;
@@ -256,7 +260,7 @@ form {
         p {
             font-size: 16pt;
             line-height: 2;
-            padding-right: 2em;
+           
         }
     }
 }
@@ -275,6 +279,13 @@ form {
         gap: 2em;
         background-color: #F29F05;
         padding-top: 6em;
+       
+
+        img {
+            width: 50%;
+            border-radius: 50%;
+            align-self: center;
+        }
 
         @media only screen and (min-width: 768px) {
             padding-left: 1em;
@@ -283,7 +294,6 @@ form {
 
         p {
             padding-left: 1em;
-     
         }
     }
 
@@ -307,7 +317,8 @@ form {
 
     p {
         color: black !important;
-        font-size: 15pt;
+        font-size: 16pt;
+        line-height: 2;
 
         @media only screen and (min-width: 768px) {
             line-height: 2;
@@ -315,9 +326,6 @@ form {
         }
     }
 
-    @media only screen and (max-width: 600px) {
-        align-items: center;
-    }
 
     @media only screen and (min-width: 768px) {
         gap: 1em;
@@ -325,7 +333,7 @@ form {
         min-height: revert;
     }
 
-    @media only screen and (min-width: 900px) { 
+    @media only screen and (min-width: 900px) {
         min-height: revert;
     }
 }
@@ -374,12 +382,10 @@ form {
             background-color: revert;
             z-index: revert;
             flex-direction: row;
-
         }
     }
 
     &:after {
-
         content: "";
         position: absolute;
         bottom: -1px;
@@ -404,7 +410,7 @@ form {
         width: 100vw;
 
         @media only screen and (min-width: 768px) {
-            &:nth-of-type(2) { 
+            &:nth-of-type(2) {
                 font-size: large;
                 padding-right: 2em;
             }
@@ -423,14 +429,11 @@ form {
         }
 
         hr {
-
             margin-bottom: 1em;
         }
 
         &:nth-of-type(1) {
-
             padding-bottom: 1em;
-
         }
 
 
@@ -460,11 +463,7 @@ form {
                 align-self: flex-start;
                 align-items: flex-start;
             }
-
         }
-
-
-
     }
 
 
@@ -485,7 +484,6 @@ form {
     border-bottom: 1px solid black;
     font-size: x-large;
     padding-left: 1em;
-
     padding-bottom: 1em;
     padding-top: 1em;
 
@@ -509,9 +507,6 @@ form {
         padding-right: 0;
         gap: 1em;
     }
-
-
-
 }
 
 #SinglePost {
@@ -527,7 +522,6 @@ form {
 
     button {
         align-self: flex-start;
-
     }
 
 
@@ -539,10 +533,10 @@ form {
         background-color: revert;
     }
 
-    @media only screen and (min-width: 768px) { 
+    @media only screen and (min-width: 768px) {
         padding-right: 1em;
-        
-        p { 
+
+        p {
             padding-right: 1em;
         }
     }
@@ -558,7 +552,6 @@ form {
         gap: 1em;
         margin-top: 2em;
         padding-top: 1em;
-        border-top: 1px solid #d9d9d9;
     }
 
 
@@ -569,7 +562,7 @@ form {
         margin-right: 2em;
     }
 
-    .pageCount { 
+    .pageCount {
         border-top: 1px solid #d9d9d9;
     }
 
@@ -588,12 +581,9 @@ form {
                     margin-top: 1em;
                 }
 
-                &:last-child { 
-                    border-top: 1px solid #d9d9d9;
+                &:last-child {
                 }
             }
-
-            
         }
 
         &:nth-of-type(2) {
@@ -618,8 +608,6 @@ form {
             }
         }
     }
-
-
 }
 
 #Contact {
@@ -634,7 +622,6 @@ form {
         flex: 1;
         gap: 2em;
         background-color: lightgreen;
-
         padding-left: 1em;
         padding-right: 1em;
 
@@ -656,16 +643,12 @@ form {
 
         @media only screen and (min-width: 600px) {
             background-color: revert;
-
-
         }
     }
 
     @media only screen and (min-width: 767px) {
         background-color: revert;
-
     }
-
 }
 
 #Albums {
@@ -691,8 +674,6 @@ form {
                     color: revert !important;
                 }
             }
-
-
         }
 
         &:nth-of-type(3) {
@@ -706,7 +687,6 @@ form {
                 font-size: large;
             }
         }
-
     }
 
     h1 {
@@ -738,20 +718,15 @@ form {
                 font-size: large;
             }
         }
-
     }
-
-
-
 }
 
-#Guestbook { 
-    display: flex; 
+#Guestbook {
+    display: flex;
     flex-direction: column;
     flex: 1;
     margin-bottom: 1em;
     padding-bottom: 1em;
-
 }
 
 
@@ -771,7 +746,6 @@ form {
     color: white;
     font-size: 80pt;
     display: flex;
-
     width: 100%;
     min-width: 100%;
     align-items: center;
@@ -792,7 +766,6 @@ form {
         padding-right: 0.5em;
         padding-top: 0.5em;
         padding-bottom: 0.5em;
-
     }
 }
 
@@ -826,8 +799,6 @@ header {
         h1 {
             font-size: 48pt !important;
             text-shadow: 1px 1px 2px black;
-
-
         }
     }
 
@@ -878,7 +849,8 @@ nav {
         }
     }
 
-    @media only screen and (min-width: 767px) {}
+    @media only screen and (min-width: 767px) {
+    }
 }
 
 .top-row,
@@ -898,7 +870,6 @@ main {
     padding-right: 2em;
 
     @media only screen and (min-width: 768px) {
-
         padding-top: 0.5em;
         padding-bottom: 2em;
 
@@ -917,12 +888,9 @@ main {
             align-items: flex-start;
             width: 100%;
 
-            article {}
-
-
+            article {
+            }
         }
-
-
     }
 }
 
@@ -968,8 +936,6 @@ main {
             text-decoration: none !important;
         }
     }
-
-
 }
 
 .sticky {
@@ -988,7 +954,6 @@ main {
 .error {
     color: red;
     font-weight: bold;
-
     padding-bottom: 0 !important;
     margin-bottom: 0 !important;
 }
@@ -1016,14 +981,14 @@ footer {
     display: flex;
     flex-direction: row;
     flex: 1;
-   width: 40%;
-   gap: 1.5em;
+    width: 40%;
+    gap: 1.5em;
 
     p {
         font-size: large;
     }
 
-    svg { 
+    svg {
         width: 100%;
         align-self: flex-start;
         display: flex;
@@ -1032,12 +997,11 @@ footer {
     a {
         display: inline-flex;
     }
-    
-    @media only screen and (min-width: 900px) { 
+
+    @media only screen and (min-width: 900px) {
         width: 60%;
         gap: 1em;
     }
-
 }
 
 #Sidebar {
@@ -1051,7 +1015,7 @@ footer {
 
 
     img {
-        width: 50%;
+        width: 60%;
         border-radius: 50%;
         align-self: center;
     }
@@ -1059,8 +1023,6 @@ footer {
     a {
         color: revert !important;
         text-decoration: revert !important;
-        
-       
     }
 
     section {
@@ -1069,42 +1031,42 @@ footer {
         flex: 0;
         padding-bottom: 1em;
         height: 100%;
-       
 
-        &:nth-of-type(1) { 
-           
+
+        &:nth-of-type(1) {
             flex-direction: row !important;
+            align-items: center;
+            justify-content: center;
 
-            div { 
-               display: flex; 
-               flex-direction: column;
-               flex: 1;
-               
-                
-                &:first-child { 
+            div {
+                display: flex;
+                flex-direction: column;
+                flex: 1;
+
+
+                &:first-child {
                     gap: 2em !important;
                     flex-direction: column;
                 }
 
-                &:last-child { 
+                &:last-child {
                     gap: 2em !important;
                     flex-direction: column;
                 }
             }
 
-            img { 
+            img {
                 width: 50%;
                 align-self: flex-start;
             }
-           
         }
 
-        &:nth-of-type(2) { 
+        &:nth-of-type(2) {
             gap: 1em;
             padding-top: 1em;
+            padding-left: 2em;
         }
     }
-
 }
 
 #mainContent {
@@ -1112,8 +1074,6 @@ footer {
     flex-direction: row;
     flex: 1;
     width: 100%;
-
-  
 }
 
 .modal-header {
@@ -1147,23 +1107,22 @@ footer {
     display: none;
 }
 
-.pagination {
+.pagination-container {
     margin-bottom: 1em;
     padding-bottom: 1em;
-    
 }
 
 
-.Posts { 
+.Posts {
     display: flex;
-    flex-direction: column; 
-    flex: 1; 
+    flex-direction: column;
+    flex: 1;
     gap: 1em;
     margin-top: 1em;
     margin-bottom: 2em;
     padding-right: 2em;
 
-    a { 
+    a {
         align-self: flex-start !important;
     }
 }

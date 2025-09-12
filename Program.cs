@@ -312,6 +312,8 @@ try
 
     app.MapPostsEndpoints();
 
+     app.UseDeveloperExceptionPage();
+
      using (var scope = app.Services.CreateScope())
      {
           var services = scope.ServiceProvider;
@@ -321,12 +323,12 @@ try
           // Seed roles and admin user
           await IdentitySeeder.SeedRolesAndAdminAsync(services);
 
-          
+
 
      }
 
 
-          app.Run();
+     app.Run();
 
         
 

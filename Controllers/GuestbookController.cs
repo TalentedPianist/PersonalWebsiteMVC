@@ -21,7 +21,7 @@ public class GuestbookController : Controller
     public IActionResult Guestbook([FromQuery(Name="pageNumber")]int? page)
     {
           var pageNumber = page ?? 1;
-          var model = _db.Guestbook.ToPagedList(pageNumber, 3);
+          var model = _db.Guestbook.ToPagedList(pageNumber, 3);       
         return View("~/Views/Home/Guestbook.cshtml", model);
     }
 

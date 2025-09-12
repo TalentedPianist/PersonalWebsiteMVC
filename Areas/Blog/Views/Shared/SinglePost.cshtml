@@ -28,7 +28,7 @@
 
             @TempData["Message"]
 
-            <partial name="Comments.cshtml" view-data="ViewData" model="@Model" />
+            <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
         }
     }
     catch (NullReferenceException ex)

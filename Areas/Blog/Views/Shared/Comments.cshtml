@@ -34,7 +34,7 @@ else
     </div>
 
     
-        <p class="pageCount">Currently showing @Model.PagedComments.PageSize out of @Model.PagedComments.PageCount comments.</p>
+    <p>Currently showing page @Model.PagedComments.PageNumber of @Model.PagedComments.PageCount comments.</p>   
 
                 @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber
                 =
@@ -50,7 +50,7 @@ else
     
 </div>
 
-<p>Share your comments on this post using the form below.</p>
+<p>Share your thoughts on this post using the form below.</p>
 
 
 <form method="post" id="commentForm" novalidate>

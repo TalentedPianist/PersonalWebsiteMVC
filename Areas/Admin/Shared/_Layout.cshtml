@@ -5,140 +5,135 @@
 
 
 @{
-    var r = new Random();
-    var n = r.Next();
+     var r = new Random();
+     var n = r.Next();
 }
 @{
-    var data = new ImportMapDefinition(
-    new Dictionary<string, string>
-    {
+     var data = new ImportMapDefinition(
+     new Dictionary<string, string>
+     {
 { "ckeditor5", "../lib/ckeditor5/ckeditor5.js" },
 { "ckeditor5/", "../lib/ckeditor5/" },
-    }, null, null);
+     }, null, null);
 }
 
 
 
 <!DOCTYPE html>
 <html manifest="cache.manifest">
-<base href="/Admin">
-<head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="pragma" content="no-cache">
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
-    <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
-    <link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
-    <link rel="stylesheet" href="/css/Admin.css?v=@n">
-    <title>@ViewBag.Title</title>
+<head>
+     <base href="/Admin">
+     <meta name="viewport" content="width=device-width, initial-scale=1">
+     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+     <meta http-equiv="expires" content="0">
+     <meta http-equiv="pragma" content="no-cache">
+     <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+     <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
+     <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
+     <link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
+     <link rel="stylesheet" href="/css/Admin.css?v=@n">
+     <title>@ViewBag.Title</title>
 
 
 </head>
 
 <body>
-    <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-        <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Douglas</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
-        <ul class="navbar-nav px-3">
-            <li class="nav-item text-nowrap">
-                <a class="nav-link" href="#">Sign out</a>
-            </li>
-        </ul>
-    </nav>
+     <nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
+          <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Douglas</a>
+          <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+          <ul class="navbar-nav px-3">
+               <li class="nav-item text-nowrap">
+                    <a class="nav-link" href="#">Sign out</a>
+               </li>
+          </ul>
+     </nav>
 
-    <div class="container-fluid">
-        <div class="row">
-            <nav class="col-md-2 d-none d-md-block bg-light sidebar">
-                <div class="sidebar-sticky">
-                    <ul class="nav flex-column">
-                        <li class="nav-item">
-                            <a class="nav-link active" href="~/Admin">
+     <div class="container-fluid">
+          <div class="row">
+               <nav class="col-md-2 d-none d-md-block bg-light sidebar">
+                    <div class="sidebar-sticky">
+                         <ul class="nav flex-column">
+                              <li class="nav-item">
+                                   <a class="nav-link active" href="~/Admin">
 
-                                <span data-feather="home"></span>
-                                Admin <span class="sr-only">(current)</span>
-                            </a>
-                        </li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Users">Users</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Roles">Roles</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Blog">Blog</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Comments">Comments</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Categories">Categories</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Guestbook">Guestbook</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Gallery">Gallery</a></li>
-                        <li class="nav-item"><a class="nav-link" href="~/Admin/Search">Search</a></li>
-                    </ul>
+                                        <span data-feather="home"></span>
+                                        Admin <span class="sr-only">(current)</span>
+                                   </a>
+                              </li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Users">Users</a></li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Roles">Roles</a></li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Blog">Blog</a></li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Comments">Comments</a></li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Categories">Categories</a></li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Guestbook">Guestbook</a></li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Gallery">Gallery</a></li>
+                              <li class="nav-item"><a class="nav-link" href="~/Admin/Search">Search</a></li>
+                         </ul>
 
 
-                </div>
-            </nav>
-
-            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
-                <div
-                    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <h1 class="h2">Dashboard</h1>
-
-                    <div class="btn-toolbar mb-2 mb-md-0">
-                        <div class="btn-group mr-2">
-                            <button class="btn btn-sm btn-outline-secondary">Share</button>
-                            <button class="btn btn-sm btn-outline-secondary">Export</button>
-                        </div>
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle">
-                            <span data-feather="calendar"></span>
-                            This week
-                        </button>
                     </div>
-                </div>
-                @RenderBody()
-            </main>
-        </div>
-    </div>
+               </nav>
 
-    <script src="/lib/jquery/jquery.min.js"></script>
-    <script src="/lib/jquery-validate/jquery.validate.min.js"></script>
-    <!-- For popper we need to use the build from the umd folder.  The cdn folder gives an export not found error. -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
-    <script src="/lib/moment.js/moment.min.js"></script>
-    <script src="/lib/featherlight/featherlight.min.js"></script>
-    <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
-    <script type="importmap">
-    {
-        "imports":  {
-            "ckeditor5": "/lib/ckeditor5/ckeditor5.js",
-            "ckeditor5/": "/lib/ckeditor5"
-        }
-    }
-    </script>
-    <script type="module">
-        import {
-            ClassicEditor,
-            Essentials,
-            Paragraph,
-            Bold,
-            Italic,
-            Font
-        } from 'ckeditor5';
+               <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+                    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                         <h1 class="h2">Dashboard</h1>
 
-        if (document.querySelector('#ckeditor1')) {
-            ClassicEditor
-                .create(document.querySelector('#ckeditor1'), {
-                    licenseKey: 'GPL',
-                    plugins: [Essentials, Paragraph, Bold, Italic, Font],
-                    toolbar: ['bold', 'italic', 'font']
-                })
-                .then(editor => {
-                    window.editor = editor;
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-    </script>
+                         <div class="btn-toolbar mb-2 mb-md-0">
+                              @if (User?.Identity?.IsAuthenticated ?? false)
+                              {
+                                   <a asp-controller="Admin" asp-action="Logout" asp-area="Admin" class="btn btn-danger">Logout</a>
+                              }
+                         </div>
+                    </div>
+                    @RenderBody()
+               </main>
+          </div>
+     </div>
 
-    @RenderSection("Scripts", required: false)
+     <script src="/lib/jquery/jquery.min.js"></script>
+     <script src="/lib/jquery-validate/jquery.validate.min.js"></script>
+     <!-- For popper we need to use the build from the umd folder.  The cdn folder gives an export not found error. -->
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+     <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+     <script src="/lib/moment.js/moment.min.js"></script>
+     <script src="/lib/featherlight/featherlight.min.js"></script>
+     <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
+     <script type="importmap">
+          {
+              "imports":  {
+                  "ckeditor5": "/lib/ckeditor5/ckeditor5.js",
+                  "ckeditor5/": "/lib/ckeditor5"
+              }
+          }
+     </script>
+     <script type="module">
+          import {
+              ClassicEditor,
+              Essentials,
+              Paragraph,
+              Bold,
+              Italic,
+              Font
+          } from 'ckeditor5';
+
+          if (document.querySelector('#ckeditor1')) {
+              ClassicEditor
+                  .create(document.querySelector('#ckeditor1'), {
+                      licenseKey: 'GPL',
+                      plugins: [Essentials, Paragraph, Bold, Italic, Font],
+                      toolbar: ['bold', 'italic', 'font']
+                  })
+                  .then(editor => {
+                      window.editor = editor;
+                  })
+                  .catch(error => {
+                      console.error(error);
+                  });
+          }
+     </script>
+
+     @RenderSection("Scripts", required: false)
 
 
 </body>

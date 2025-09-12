@@ -22,7 +22,7 @@
         @Html.Raw(comment.GuestbookContent)
         </div>
     } 
-    <p>Currently showing page @Model.PageSize of @Model.PageCount.</p>
+    <p>Currently showing page @Model.PageNumber of @Model.PageCount guestbook entries.</p>
 
     @Html.PagedListPager((IPagedList)Model, page => Url.Action("Guestbook", "Guestbook", new { pageNumber = page, area = "" }),
             new PagedListRenderOptions

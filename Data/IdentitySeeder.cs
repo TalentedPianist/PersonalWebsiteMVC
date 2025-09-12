@@ -4,8 +4,8 @@ using ServiceStack;
 
 namespace PersonalWebsiteMVC.Data
 {
-    public static class IdentitySeeder
-    {
+     public static class IdentitySeeder
+     {
           public static async Task SeedRolesAndAdminAsync(IServiceProvider serviceProvider)
           {
                var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
@@ -28,10 +28,11 @@ namespace PersonalWebsiteMVC.Data
                var adminPassword = "Inkyfrog1";
 
                // Check if the admin user already exists
+
                var userExist = await userManager.FindByEmailAsync(adminEmail);
                if (userExist == null)
                {
-                    var adminUser = new ApplicationUser { UserName = "admin", Email = adminEmail, FirstName = "Douglas", LastName = "McGregor", PhoneNumber = "07722957292", EmailConfirmed = true };
+                    var adminUser = new ApplicationUser { UserName = "douglas@douglasmcgregor.co.uk", Email = adminEmail, FirstName = "Douglas", LastName = "McGregor", PhoneNumber = "07722957292", EmailConfirmed = true };
 
 
                     // Create the admin user
@@ -45,8 +46,27 @@ namespace PersonalWebsiteMVC.Data
                     {
                          throw new Exception("Failed to create the admin user:" + string.Join(", ", result.Errors));
                     }
+               }
+               else
+               {
 
-               };
+                    await userManager.DeleteAsync(userExist);
+
+                    var adminUser = new ApplicationUser { UserName = "douglas@douglasmcgregor.co.uk", Email = adminEmail, FirstName = "Douglas", LastName = "McGregor", PhoneNumber = "07722957292", EmailConfirmed = true };
+
+
+                    // Create the admin user
+                    var result = await userManager.CreateAsync(adminUser, adminPassword);
+                    if (result.Succeeded)
+                    {
+                         // Assign the Admin role to the user
+                         await userManager.AddToRoleAsync(adminUser, "Admin");
+                    }
+                    else
+                    {
+                         throw new Exception("Failed to create the admin user:" + string.Join(", ", result.Errors));
+                    }
+               }
           }
-    }
+     }
 }
