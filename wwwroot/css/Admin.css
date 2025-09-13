@@ -242,3 +242,8 @@ form input {
     flex-direction: row;
   }
 }
+
+.server-info table {
+  table-layout: fixed;
+  width: 100%;
+}

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -14,7 +15,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
 	[Authorize(Roles="Admin")]
 	[Area("Admin")]
-	[Route("Admin")]
 	public class AdminController : Controller
 	{
 		private UserManager<ApplicationUser> userManager;
@@ -32,6 +32,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 		{
 			return View();
 		}
+
 
 		public async Task<IActionResult> Logout()
 		{

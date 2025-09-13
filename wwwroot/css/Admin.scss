@@ -7,6 +7,7 @@
 
 body {
     position: relative;
+  
 }
 
 img {
@@ -293,5 +294,12 @@ form  {
         @media only screen and (min-width: 600px) { 
             flex-direction: row;
         }
+    }
+}
+
+.server-info { 
+    table { 
+        table-layout: fixed;
+        width: 100%;
     }
 }

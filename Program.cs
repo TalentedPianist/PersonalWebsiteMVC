@@ -252,27 +252,27 @@ try
     app.UseSession();
 
 
-    app.MapAreaControllerRoute(
-        name: "Admin",
-        areaName: "Admin",
-        pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+     app.MapAreaControllerRoute(
+         name: "Admin",
+         areaName: "Admin",
+         pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapAreaControllerRoute(
-        name: "Blog",
-        areaName: "Posts",
-        pattern: "Posts/{controller=Home}/{action=Index}/{id?}");
+     app.MapAreaControllerRoute(
+         name: "Blog",
+         areaName: "Posts",
+         pattern: "Posts/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapAreaControllerRoute(
-        name: "Photos",
-        areaName: "Photos",
-        pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
+     app.MapAreaControllerRoute(
+         name: "Photos",
+         areaName: "Photos",
+         pattern: "Photos/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapControllerRoute(name: "Blog",
-        pattern: "Blog/{title}",
-        defaults: new { Controller = "Blog", action = "SinglePost" });
+     app.MapControllerRoute(name: "Blog",
+         pattern: "Blog/{title}",
+         defaults: new { Controller = "Blog", action = "SinglePost" });
 
 
-    app.MapControllers();
+     app.MapControllers();
     app.MapRazorPages();
     app.MapDefaultControllerRoute(); // Adding this line caused the links to render properly!! 
     app.UseDetection();

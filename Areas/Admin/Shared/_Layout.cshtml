@@ -2,6 +2,7 @@
 @using Microsoft.AspNetCore.Http
 @using Microsoft.AspNetCore.Http.Extensions
 @inject IHttpContextAccessor http
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 
 @{
@@ -23,7 +24,7 @@
 <html manifest="cache.manifest">
 
 <head>
-     <base href="/Admin">
+    
      <meta name="viewport" content="width=device-width, initial-scale=1">
      <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
      <meta http-equiv="expires" content="0">
@@ -78,12 +79,12 @@
                <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
                     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
                          <h1 class="h2">Dashboard</h1>
-
+                         
                          <div class="btn-toolbar mb-2 mb-md-0">
-                              @if (User?.Identity?.IsAuthenticated ?? false)
-                              {
-                                   <a asp-controller="Admin" asp-action="Logout" asp-area="Admin" class="btn btn-danger">Logout</a>
-                              }
+                          @if (User?.Identity?.IsAuthenticated ?? false)
+                          {
+                              <a asp-area="Admin" asp-controller="Admin" asp-action="Logout" class="btn btn-danger">Logout</a>
+                          }   
                          </div>
                     </div>
                     @RenderBody()
