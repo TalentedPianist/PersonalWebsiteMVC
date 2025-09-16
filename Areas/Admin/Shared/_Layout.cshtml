@@ -9,12 +9,13 @@
      var r = new Random();
      var n = r.Next();
 }
+
 @{
      var data = new ImportMapDefinition(
      new Dictionary<string, string>
      {
-{ "ckeditor5", "../lib/ckeditor5/ckeditor5.js" },
-{ "ckeditor5/", "../lib/ckeditor5/" },
+{ "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
+{ "ckeditor5/", "/lib/ckeditor5/" },
      }, null, null);
 }
 
@@ -100,14 +101,7 @@
      <script src="/lib/moment.js/moment.min.js"></script>
      <script src="/lib/featherlight/featherlight.min.js"></script>
      <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
-     <script type="importmap">
-          {
-              "imports":  {
-                  "ckeditor5": "/lib/ckeditor5/ckeditor5.js",
-                  "ckeditor5/": "/lib/ckeditor5"
-              }
-          }
-     </script>
+     <script type="importmap" asp-importmap="@data"></script>
      <script type="module">
           import {
               ClassicEditor,

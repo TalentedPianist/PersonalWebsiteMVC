@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Wangkanai.Detection.Services;
 using HotChocolate.AspNetCore;
 using Scalar.AspNetCore;
+using SolrNet;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -205,9 +206,13 @@ try
 
     builder.Services.AddSwaggerGen();
 
+     
+
+
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
         .Get<MailSettings>();
+
 
     var app = builder.Build();
 

@@ -4,64 +4,70 @@
 @{
 	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
+@using CommonServiceLocator
 @using Microsoft.AspNetCore.Http
 @using Elastic.Clients.Elasticsearch
 @using Elastic.Clients.Elasticsearch.QueryDsl
 @using HtmlAgilityPack
 @using System.Net
 @using System.Linq
+@using System.Text
+@using SolrNet
+@using SolrNet.Exceptions
 @inject IWebHostEnvironment _env
+@model IEnumerable<SearchModel>
 
 <h1 class="bg bg-info p-1">Search</h1>
 <p><a asp-action="Create" asp-controller="Search" asp-area="Admin">Create</a> new search document.</p>
 
-<p>@TempData["Message"]</p>
-
-
 @{
-	var exclude = new List<string>() { "App.razor" };
-	string path = System.IO.Path.Combine(_env.ContentRootPath, "Components");
-	DirectoryInfo dirs = new DirectoryInfo(path);
-	List<FileInfo> files = new List<FileInfo>();
-	files.AddRange(dirs.GetFiles().ToList());
-	
+     var home = ParseHtml("http://localhost:5051/", "Home");
+     var about = ParseHtml("http://localhost:5051/Home/About", "About");
+    
+
+     var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SearchModel>>();
+
+     try
+     {
+          var pages = solr.Query(new SolrQueryByField("Title", "Home"));
+     } catch (SolrConnectionException ex)
+     {
+          @ex.Message
+     }
+
 }
+
+<table class="table table-responsive">
+    <thead>
+        <tr>ID</tr>
+        <tr>Name</tr>
+        <tr>Body</tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>@Guid.NewGuid()</td>
+            <td>Home</td>
+            <td>@home</td>
+        </tr>
+
+    </tbody>
+</table>
 
 
 
 @functions {
-	string GetHtml(string url)
-	{
-		var html = new HtmlDocument();
-		html.LoadHtml(url);
-		return html.DocumentNode.InnerHtml;
-	}
-}
-
-
-@section Scripts {
-
-	<script>
-		$(function () {
-			$("button").on('click', function (e) {
-				e.preventDefault();
-
-				$.ajax({
-					method: "POST",
-					url: "@Url.Action("CreateIndex", "Search")",
-					data: { 'name': $("#name").val() },
-					async: false,
-					cache: false,
-					success: function (message) {
-						console.log(message);
-						window.location.reload();
-					},
-					error: function (err) {
-						console.log(err);
-					}
-				});
-			});
-		});
-	</script>
+     private string ParseHtml(string url, string name)
+     {
+          var web = new HtmlWeb();
+          var doc = web.Load(url);
+          var nodes = doc.DocumentNode.SelectSingleNode("//body");
+          var result = nodes.SelectNodes("//p");
+          StringBuilder sb = new StringBuilder();
+          foreach (var node in result)
+          {
+               sb.Append(node.InnerText);
+          }
+          return sb.ToString();
+     }
 }
 
