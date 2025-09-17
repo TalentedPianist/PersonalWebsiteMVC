@@ -206,7 +206,7 @@ try
 
     builder.Services.AddSwaggerGen();
 
-     
+     builder.Services.AddSolrNet<SearchModel>($"http://localhost:8983/solr/SearchModel");
 
 
     var emailConfig = builder.Configuration

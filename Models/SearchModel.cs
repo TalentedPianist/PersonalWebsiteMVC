@@ -4,8 +4,9 @@ namespace PersonalWebsiteMVC.Models
 {
     public class SearchModel
     {
-          [SolrUniqueKey("Id")]
-        public int? Id { get; set; } 
+          [SolrUniqueKey("id")]
+          
+        public string? Id { get; set; } 
           [SolrField("Title")]
         public string? Title { get; set; }
           [SolrField("Excerpt")]

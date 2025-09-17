@@ -2,7 +2,7 @@
 	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-	Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 @using CommonServiceLocator
 @using Microsoft.AspNetCore.Http
@@ -20,54 +20,39 @@
 <h1 class="bg bg-info p-1">Search</h1>
 <p><a asp-action="Create" asp-controller="Search" asp-area="Admin">Create</a> new search document.</p>
 
-@{
-     var home = ParseHtml("http://localhost:5051/", "Home");
-     var about = ParseHtml("http://localhost:5051/Home/About", "About");
-    
 
-     var solr = ServiceLocator.Current.GetInstance<ISolrOperations<SearchModel>>();
+@TempData["Message"]
 
-     try
-     {
-          var pages = solr.Query(new SolrQueryByField("Title", "Home"));
-     } catch (SolrConnectionException ex)
-     {
-          @ex.Message
-     }
-
-}
-
-<table class="table table-responsive">
+<table>
     <thead>
-        <tr>ID</tr>
-        <tr>Name</tr>
-        <tr>Body</tr>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Body</th>
+        </tr>
     </thead>
     <tbody>
-        <tr>
-            <td>@Guid.NewGuid()</td>
-            <td>Home</td>
-            <td>@home</td>
-        </tr>
-
-    </tbody>
+        @foreach (var item in Model)
+          {
+               <tr>
+                   <td>@item.Id</td>
+                   <td>@item.Title</td>
+                   <td>@item.Body</td>
+                   <td><a asp-action="Update" asp-area="Admin" asp-controller="Search" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-primary">Update</a></td>
+                   <td><a asp-action="Details" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id" class="btn btn-primary">Details</a></td>
+                   <td><a asp-action="Delete" asp-area="Admin" asp-controller="Search" asp-route-title="@item.Title" class="btn btn-danger">Delete</a></td>
+                </tr>
+          }
+     </tbody>
 </table>
 
 
+@section Scripts {
+    <script>
+        $("#indexLink").on('click', function(e) { 
+            e.preventDefault();
+            console.log("Link was clicked!");
+        });
 
-@functions {
-     private string ParseHtml(string url, string name)
-     {
-          var web = new HtmlWeb();
-          var doc = web.Load(url);
-          var nodes = doc.DocumentNode.SelectSingleNode("//body");
-          var result = nodes.SelectNodes("//p");
-          StringBuilder sb = new StringBuilder();
-          foreach (var node in result)
-          {
-               sb.Append(node.InnerText);
-          }
-          return sb.ToString();
-     }
+    </script>
 }
-

@@ -9,43 +9,20 @@
 @model SearchModel
 
 <h1 class="bg bg-info p-1">Create</h1>
-<a asp-action="Index" asp-controller="Search" asp-area="Admin">Back</a>
+<a asp-action="Index" asp-controller="Search" asp-area="Admin" class="btn btn-secondary">Back</a>
+
+@TempData["Message"]
 
 
 
-@{
-     var home = ParseHtml("http://localhost:5051/", "Home");
-     var about = ParseHtml("http://localhost:5051/Home/About", "About");
-     @about
-}
+
 
 <form method="post" asp-action="CreateIndex" asp-controller="Search" asp-area="Admin">
     <div>
-        <label>Title:</label>
-        <textarea id="ckeditor1" asp-for="Body" value="@about">@about</textarea>
+        <label>URL:</label>
+        <input name="Url" asp-for="Url" class="form-control">
     </div>
-    <button type="submit">Submit</button>
+    <button class="btn btn-primary" type="submit">Submit</button>
 </form>
 
-@functions {
-     private string ParseHtml(string url, string name)
-     {
-          var web = new HtmlWeb();
-          var doc = web.Load(url);
-          var nodes = doc.DocumentNode.SelectSingleNode("//body");
-          var result = nodes.SelectNodes("//p");
-          StringBuilder sb = new StringBuilder();
-          foreach (var node in result)
-          {
-               sb.Append(node.InnerText);
-          }
-          return sb.ToString();
-     }
-}
 
-@section Scripts {
-    <script>
-        window.editor.setData('Hello World!')
-        console.log("Hello World!");
-    </script>
-}

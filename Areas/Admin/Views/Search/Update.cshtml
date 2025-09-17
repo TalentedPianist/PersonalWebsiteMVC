@@ -1,0 +1,32 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+}
+@model SearchModel
+
+<h1 class="bg bg-info">Update</h1>
+<a class="btn btn-secondary" asp-action="Index" asp-controller="Search" asp-area="Admin">Back</a>
+
+@TempData["Message"]
+
+<form method="post" asp-action="UpdateSolr" asp-controller="Search" asp-asp-area="Admin">
+    <div>
+        <label asp-for="Id">Id:</label>
+        <input asp-for="Id" class="form-control" disabled>
+    </div>
+    <div>
+        <label asp-for="Title">Title:</label>
+        <input asp-for="Title" class="form-control">
+    </div>
+    <div>
+        <label asp-for="Url">Url:</label>
+        <input asp-for="Url" class="form-control">
+    </div>
+    <div>
+        <label asp-for="Body">Body:</label>
+        <textarea id="ckeditor1" asp-for="Body"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

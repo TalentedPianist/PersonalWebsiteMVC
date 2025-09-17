@@ -112,15 +112,27 @@
               Font
           } from 'ckeditor5';
 
+          window.ClassicEditor = ClassicEditor;
+          window.Essentials = Essentials;
+          window.Paragraph = Paragraph;
+          window.Bold = Bold;
+          window.Italic = Italic;
+          window.Font = Font;
+          
+          
+          window.editor = undefined;
+          
+
           if (document.querySelector('#ckeditor1')) {
               ClassicEditor
                   .create(document.querySelector('#ckeditor1'), {
                       licenseKey: 'GPL',
                       plugins: [Essentials, Paragraph, Bold, Italic, Font],
-                      toolbar: ['bold', 'italic', 'font']
+                      toolbar: ['bold', 'italic']
                   })
                   .then(editor => {
-                      window.editor = editor;
+                     
+                     window.editor = editor;
                   })
                   .catch(error => {
                       console.error(error);
