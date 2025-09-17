@@ -40,7 +40,7 @@
                    <td>@item.Body</td>
                    <td><a asp-action="Update" asp-area="Admin" asp-controller="Search" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-primary">Update</a></td>
                    <td><a asp-action="Details" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id" class="btn btn-primary">Details</a></td>
-                   <td><a asp-action="Delete" asp-area="Admin" asp-controller="Search" asp-route-title="@item.Title" class="btn btn-danger">Delete</a></td>
+                   <td><a asp-action="Delete" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
                 </tr>
           }
      </tbody>

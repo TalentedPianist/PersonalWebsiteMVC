@@ -77,11 +77,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           
-          public IActionResult Delete(string title)
+          public IActionResult Delete(string id)
           {
-               StringBuilder sb = new StringBuilder();
-               
-               return View();
+               var result = _solr.Query(new SolrQueryByField("id", id));
+               SearchModel model = new SearchModel();
+               model.Id = result[0].Id;
+               model.Title = result[0].Title;
+               model.Url = result[0].Url;
+               model.Body = result[0].Body;
+               return View(model);
           }
 
           public IActionResult DeleteAll()
@@ -117,10 +121,21 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("/Admin/Search/UpdateSolr")]
-          public IActionResult UpdateSolr(SearchModel model)
+          public IActionResult UpdateSolr(SearchModel model, string id)
           {
-               TempData["Message"] = model.Id;
-               return View("Update", model);
+               _solr.Add(model);
+               _solr.Commit();
+               return RedirectToAction("Index");
+          }
+
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/Admin/Search/DeleteSolr")]
+          public IActionResult DeleteSolr(SearchModel model, string id)
+          {
+               var result = _solr.Query(new SolrQueryByField("id", id));
+               _solr.Delete(result);
+               _solr.Commit();
+               return RedirectToAction("Index");
           }
      }
 

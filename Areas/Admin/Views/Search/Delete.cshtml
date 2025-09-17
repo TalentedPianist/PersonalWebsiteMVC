@@ -6,6 +6,14 @@
 }
 @model SearchModel
 
+<h1 class="bg bg-info">Delete</h1>
+<a class="btn btn-secondary" asp-action="Index">Back</a>
+
 
 @TempData["Message"]
+
+<form method="post" asp-action="DeleteSolr" asp-controller="Search" asp-area="Admin" asp-route-id="@Model.Id">
+    <p>Are you sure you want to delete record <b>@Model.Title</b> with ID <b>@Model.Id</b>?</p>
+    <button class="btn btn-danger">Yes</button>
+</form>
 

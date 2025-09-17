@@ -11,7 +11,7 @@
 
 @TempData["Message"]
 
-<form method="post" asp-action="UpdateSolr" asp-controller="Search" asp-asp-area="Admin">
+<form method="post" asp-action="UpdateSolr" asp-controller="Search" asp-asp-area="Admin" asp-route-id="@Model.Id">
     <div>
         <label asp-for="Id">Id:</label>
         <input asp-for="Id" class="form-control" disabled>
