@@ -1,0 +1,19 @@
+﻿namespace PersonalWebsiteMVC.Models
+{
+     public class OneDriveUser
+     {
+          public string? id { get; set; }
+          public string? givenName { get; set; }
+          public string? surname { get; set; }
+          public string? userPrincipalName { get; set; }
+          public string? email { get; set; }
+     }
+
+     public class Users
+     {
+          public int? itemsPerPage { get; set; }
+          public int? startIndex { get; set; }
+          public int? totalResults { get; set; }
+          public List<string>? resources { get; set; }
+     }
+}
