@@ -22,6 +22,10 @@ using Wangkanai.Detection.Services;
 using HotChocolate.AspNetCore;
 using Scalar.AspNetCore;
 using SolrNet;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.Identity.Web;
+using Microsoft.Identity.Web.UI;
+using PersonalWebsiteMVC.Helpers;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -80,7 +84,12 @@ try
             options.JsonSerializerOptions.PropertyNamingPolicy = null;
         });
 
-    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme);
+     builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
+           .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAD"))
+           .EnableTokenAcquisitionToCallDownstreamApi()
+           .AddInMemoryTokenCaches();
+
+          
 
 
     builder.Services.Configure<IdentityOptions>(options =>
@@ -207,6 +216,8 @@ try
     builder.Services.AddSwaggerGen();
 
      builder.Services.AddSolrNet<SearchModel>($"http://localhost:8983/solr/SearchModel");
+
+
 
 
     var emailConfig = builder.Configuration
