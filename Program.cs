@@ -218,7 +218,8 @@ try
      builder.Services.AddSolrNet<SearchModel>($"http://localhost:8983/solr/SearchModel");
 
 
-
+     builder.Services.AddSingleton<OneDriveAuth>();
+     builder.Services.AddSingleton<GraphHelper>();
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
@@ -286,6 +287,12 @@ try
      app.MapControllerRoute(name: "Blog",
          pattern: "Blog/{title}",
          defaults: new { Controller = "Blog", action = "SinglePost" });
+
+
+     app.MapAreaControllerRoute(
+          name: "OneDrive",
+          areaName: "OneDrive",
+          pattern: "OneDrive/{controller=Home}/{action=Index}/{id?}");
 
 
      app.MapControllers();

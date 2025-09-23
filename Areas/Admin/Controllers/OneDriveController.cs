@@ -17,25 +17,11 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           public IActionResult Index(Settings settings)
           {
 
-               var credential = new DeviceCodeCredential();
-               var graphClient = new GraphServiceClient(credential);
-               var drive = graphClient.Me.Drives.GetAsync().Result;
-               StringBuilder sb = new StringBuilder();
-               foreach (var item in drive)
-               {
-                    sb.Append(item);
-               }
-               TempData["Message"] = sb.ToString();
+            
                return View("~/Areas/Admin/Views/OneDrive/Index.cshtml");
           }
 
-          [HttpPost]
-          public async Task<IActionResult> Login()
-          {
-             
-           
-               return View("~/Areas/Admin/Views/OneDrive/Index.cshtml");
-          }
+       
          
      }
 }
