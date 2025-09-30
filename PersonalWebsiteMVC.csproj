@@ -87,6 +87,8 @@
     <Folder Include="Areas\OneDrive\Data\" />
     <Folder Include="Areas\OneDrive\Models\" />
     <Folder Include="Areas\OneDrive\Views\" />
+    <Folder Include="Areas\pCloud\Data\" />
+    <Folder Include="Areas\pCloud\Models\" />
   </ItemGroup>
 
  

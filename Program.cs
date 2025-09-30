@@ -294,6 +294,11 @@ try
           areaName: "OneDrive",
           pattern: "OneDrive/{controller=Home}/{action=Index}/{id?}");
 
+    app.MapAreaControllerRoute(
+        name: "pCloud",
+        areaName: "pCloud",
+        pattern: "pCloud/{controller=Home}/{action=Index}/{id?}");
+
 
      app.MapControllers();
     app.MapRazorPages();
