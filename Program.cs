@@ -140,7 +140,7 @@ try
     {
         options.EditorClassName = "ClassicEditor";
         options.ScriptPath = "https://cdn.ckeditor.com/ckeditor5/28.0.0/classic/ckeditor.js";
-        options.StylePath = "https://cdn.ckeditor.com/ckeditor5/42.0.0/ckeditor5.css";
+        //options.StylePath = "https://cdn.ckeditor.com/ckeditor5/42.0.0/ckeditor5.css";
 
 
     });

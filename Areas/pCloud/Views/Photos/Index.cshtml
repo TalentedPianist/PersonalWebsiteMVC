@@ -1,0 +1,41 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using System.Net.Http
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using PersonalWebsiteMVC.Areas.pCloud.Models
+@using Microsoft.AspNetCore.Http
+@inject IHttpClientFactory _httpClientFactory
+@inject IHttpContextAccessor _http
+
+<h1 class="bg bg-info p-1">Photos</h1>
+@TempData["Name"]
+
+@{
+     string token = _http.HttpContext!.Request.Cookies["AccessToken"]!;
+     string id = "d19425617397";
+     string username = "douglas@douglasmcgregor.co.uk";
+     string password = "Inkyfrog1";
+     string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path=/My Pictures";
+
+     var httpClient = _httpClientFactory.CreateClient();
+     HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
+     HttpResponseMessage response = await httpClient.SendAsync(request);
+     response.EnsureSuccessStatusCode();
+     var result = await response.Content.ReadAsStringAsync();
+     var apiResponse = JsonSerializer.Deserialize<ApiResponse>(result, new JsonSerializerOptions
+               {
+                    PropertyNameCaseInsensitive = true
+               });
+     var photos = apiResponse!.Metadata.Contents;
+     foreach(var item in photos)
+     {
+         if (item.Isfolder == true)
+         {
+          @item.Name<br>
+         }
+     }
+}

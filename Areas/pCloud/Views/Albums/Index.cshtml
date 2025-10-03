@@ -6,28 +6,42 @@
 
 <h1 class="bg bg-info p-1">Albums</h1>
 
-@{
-    string username = "douglas@douglasmcgregor.co.uk";
-    string password = "Inkyfrog1";
-    string albumsPath = "/My Pictures";
-    string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path={albumsPath}";
+@Context.Request.Cookies["AccessToken"]
 
-    var httpClient = _httpClientFactory.CreateClient();
-    HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
-    HttpResponseMessage response = await httpClient.SendAsync(request);
-    response.EnsureSuccessStatusCode();
-    var result = await response.Content.ReadAsStringAsync();
-    var apiResponse = JsonSerializer.Deserialize<ApiResponse>(result, new JsonSerializerOptions
-    {
-        PropertyNameCaseInsensitive = true
-    });
-    var albums = apiResponse!.Metadata.Contents;
-    foreach (var item in albums)
-    {
-        if (item.Isfolder == true)
-        {
-            @item.Name
-            @item.Id
-        }
-    }
+@{
+     string username = "douglas@douglasmcgregor.co.uk";
+     string password = "Inkyfrog1";
+     string albumsPath = "/My Pictures";
+     string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path={albumsPath}";
+
+     var httpClient = _httpClientFactory.CreateClient();
+     HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
+     HttpResponseMessage response = await httpClient.SendAsync(request);
+     response.EnsureSuccessStatusCode();
+     var result = await response.Content.ReadAsStringAsync();
+     var apiResponse = JsonSerializer.Deserialize<ApiResponse>(result, new JsonSerializerOptions
+     {
+          PropertyNameCaseInsensitive = true
+     });
+     var albums = apiResponse!.Metadata.Contents;
+     <div id="Gallery">
+          <section>
+               @foreach (var item in albums)
+               {
+                    if (item.Isfolder == true)
+                    {
+                         <figure>
+                              <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
+                                   <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>
+                                   <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z"
+                                         fill="#ffca28"></path>
+                              </svg>
+                              <figcaption>
+                                <a asp-controller="Photos" asp-action="Index" asp-route-id="@item.Name" asp-area="pCloud">@item.Name</a>
+                                </figcaption>
+                         </figure>
+                    }
+               }
+          </section>
+     </div>
 }

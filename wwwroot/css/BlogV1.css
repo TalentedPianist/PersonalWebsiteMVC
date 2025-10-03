@@ -1,4 +1,4 @@
-﻿@tailwind base;
+@tailwind base;
 @tailwind components;
 @tailwind utilities;
 html {
@@ -53,6 +53,10 @@ form input {
   padding: 10px 10px 10px 10px;
   border: 1px solid black;
   align-items: center;
+}
+form input::-moz-placeholder {
+  color: revert;
+  font-size: medium;
 }
 form input::placeholder {
   color: revert;
@@ -578,7 +582,8 @@ form div .error {
   margin-top: 1em;
 }
 #Albums section:nth-of-type(2) figcaption a {
-  text-decoration: revert !important;
+  -webkit-text-decoration: revert !important;
+          text-decoration: revert !important;
   color: revert !important;
 }
 #Albums section:nth-of-type(3) {
@@ -894,7 +899,8 @@ footer {
 }
 #Sidebar a {
   color: revert !important;
-  text-decoration: revert !important;
+  -webkit-text-decoration: revert !important;
+          text-decoration: revert !important;
 }
 #Sidebar section {
   display: flex;
@@ -980,4 +986,4 @@ footer {
 }
 .Posts a {
   align-self: flex-start !important;
-}
+}/*# sourceMappingURL=BlogV1.css.map */
