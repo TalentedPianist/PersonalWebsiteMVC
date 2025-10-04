@@ -20,13 +20,14 @@ public class AlbumsController : Controller
         string password = "Inkyfrog1";
         string albumsPath = "/My Pictures";
         string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path={albumsPath}";
-        
-        // var httpClient = _httpClientFactory.CreateClient();
-        // HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
-        // HttpResponseMessage response = await httpClient.SendAsync(request);
-        // response.EnsureSuccessStatusCode();
-        // var result = await response.Content.ReadAsStringAsync();
-        // var model = System.Text.Json.JsonSerializer.Deserialize<List<FolderModel>>(result);
+
+          // var httpClient = _httpClientFactory.CreateClient();
+          // HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
+          // HttpResponseMessage response = await httpClient.SendAsync(request);
+          // response.EnsureSuccessStatusCode();
+          // var result = await response.Content.ReadAsStringAsync();
+          // var model = System.Text.Json.JsonSerializer.Deserialize<List<FolderModel>>(result);
+          await Task.CompletedTask;
         return View();
     }
 
