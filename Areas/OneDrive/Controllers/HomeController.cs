@@ -20,10 +20,7 @@ namespace PersonalWebsiteMVC.Areas.OneDrive.Controllers
           [Route("/OneDrive")]
           public async Task<IActionResult> Index()
           {
-               string id = "01P4PVLA2IIBAUUOFVSFB2E2MWMDUIORAI";
-               var result = await _graphHelper.Graph().Me.Drives.GetAsync();
-
-               TempData["Message"] = result;
+               await Task.CompletedTask;
                return View();
           }
      }

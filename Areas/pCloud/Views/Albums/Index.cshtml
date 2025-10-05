@@ -6,42 +6,64 @@
 
 <h1 class="bg bg-info p-1">Albums</h1>
 
-@Context.Request.Cookies["AccessToken"]
+<a href="#" id="login">Login</a>
 
-@{
-     string username = "douglas@douglasmcgregor.co.uk";
-     string password = "Inkyfrog1";
-     string albumsPath = "/My Pictures";
-     string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path={albumsPath}";
+<div id="Albums">
+</div>
 
-     var httpClient = _httpClientFactory.CreateClient();
-     HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
-     HttpResponseMessage response = await httpClient.SendAsync(request);
-     response.EnsureSuccessStatusCode();
-     var result = await response.Content.ReadAsStringAsync();
-     var apiResponse = JsonSerializer.Deserialize<ApiResponse>(result, new JsonSerializerOptions
-     {
-          PropertyNameCaseInsensitive = true
-     });
-     var albums = apiResponse!.Metadata.Contents;
-     <div id="Gallery">
-          <section>
-               @foreach (var item in albums)
-               {
-                    if (item.Isfolder == true)
-                    {
-                         <figure>
-                              <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
-                                   <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>
-                                   <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z"
-                                         fill="#ffca28"></path>
-                              </svg>
-                              <figcaption>
-                                <a asp-controller="Photos" asp-action="Index" asp-route-name="@item.Name" asp-area="pCloud">@item.Name</a>
-                                </figcaption>
-                         </figure>
-                    }
-               }
-          </section>
-     </div>
+<div id="Photos">
+</div>
+
+
+@section Scripts {
+     <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
+
+     <script>
+         var urlParams = new URLSearchParams(window.location.search);
+          if (urlParams.get('name') === null) { 
+          } else {
+              $("#Albums").remove();
+              var url = "https://eapi.pcloud.com/listfolder?path=/My Pictures/" + urlParams.get('name');
+              $.getJSON(url, { 
+                  username: "douglas@douglasmcgregor.co.uk",
+                  password: "Inkyfrog1",
+              }, function(data) { 
+                    var content = data.metadata.contents;
+                    $(content).each(function(index, value) {
+                        if (value.name.includes("JPEG")) { 
+                        //console.log(value);
+                            // Make API call to get thumbnails
+                            $.getJSON("https://api.pcloud.com/getthumblink", { 
+                                username: "douglas@douglasmcgregor.co.uk", 
+                                password: "Inkyfrog1",
+                                fileid: value.fileid,
+                                path: value.path,
+                                size: value.size
+                            }, function(data1) {
+                                console.log(data1);
+                            });
+                        }
+                    });
+              });
+          }
+
+          $.getJSON("https://eapi.pcloud.com/listfolder?path=/My Pictures", {
+              username: "douglas@douglasmcgregor.co.uk",
+              password: "Inkyfrog1"
+          }, function(data) {
+              var content = data.metadata.contents;
+
+              $(content).each(function(index, value) {
+                  if (value.isfolder === true)
+                  {
+                      $("#Albums").append(`
+                          <a href="?name=${value.name}">${value.name}</a><br>
+                      `);
+                     
+                  }
+              });
+          });
+     
+
+     </script>
 }

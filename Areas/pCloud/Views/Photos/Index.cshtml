@@ -14,3 +14,22 @@
 <h1 class="bg bg-info p-1">Photos</h1>
 
 @TempData["Message"]
+
+@{
+     string token = _http.HttpContext!.Request.Cookies["AccessToken"]!;
+     string username = "douglas@douglasmcgregor.co.uk";
+     string password = "Inkyfrog1";
+     string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path=/My Pictures/{ViewBag.Name}";
+
+     var httpClient = _httpClientFactory.CreateClient();
+     HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
+     HttpResponseMessage response = await httpClient.SendAsync(request);
+     response.EnsureSuccessStatusCode();
+     var result = await response.Content.ReadAsStringAsync();
+     var apiResponse = JsonSerializer.Deserialize<ApiResponse>(result, new JsonSerializerOptions
+     {
+          PropertyNameCaseInsensitive = true
+     });
+     //var photos = apiResponse!.Metadata.Contents;
+     @result
+}
