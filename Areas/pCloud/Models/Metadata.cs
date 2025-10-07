@@ -15,6 +15,6 @@ public class Metadata
     public long? Parentfolderid { get; set; }
     public long? Folderid { get; set; }
 
-    public List<FolderModel> Contents { get; set; } 
+    public List<FolderModel>? Contents { get; set; } 
     
 }

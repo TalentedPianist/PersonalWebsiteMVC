@@ -10,4 +10,6 @@
 
 @TempData["Message"]
 
-<button class="btn btn-primary" asp-action="Login">Login</button>
+<form method="post" asp-action="Login" asp-controller="Home" asp-area="OneDrive">
+<button type="submit" class="btn btn-primary" asp-action="Login" asp-controller="Home" asp-area="OneDrive">Login</button>
+</form>

@@ -21,7 +21,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                string username = "douglas@douglasmcgregor.co.uk";
                string password = "Inkyfrog1";
 
-               string myPicturesId = "d12708566907";
+               //string myPicturesId = "d12708566907";
                string myPicturesPath = "/My Pictures";
                string folderId = "12708566907";
                var folders = await httpClient.GetStringAsync($"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&id={folderId}&path={myPicturesPath}");

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebsiteMVC.Helpers
 {
@@ -12,25 +13,25 @@ namespace PersonalWebsiteMVC.Helpers
           public static string ClientSecret = "VhF8Q~YaJrHk39hrm6Xpe03~D3zAiHwHTV1sBbBd";
           public static string TenantID = "6e07ac96-b10b-43e3-b9a4-37d7dfcddfab"; 
           public static string? AccessToken { get; set; }
+          public string RedirectUri = "http://localhost:5051/oneDrive/";
 
+          public IHttpClientFactory _httpClientFactory { get; set; }
+          private IHttpContextAccessor _http { get; } 
 
-          public async Task<string> GetAccessToken()
+          public OneDriveAuth(IHttpClientFactory httpClientFactory, IHttpContextAccessor http)
           {
-
-
-               var app = ConfidentialClientApplicationBuilder.Create(ClientID)
-                    .WithClientSecret(ClientSecret)
-                    .WithRedirectUri("http://localhost:5051/OneDrive/")
-                    .Build();
-
-                    string[] scopes = { "User.Read" };
-
-               var result = app.AcquireTokenByAuthorizationCode(scopes, "");
-                    
-               
-              
+               _httpClientFactory = httpClientFactory;
+               _http = http;
           }
-          
+
+
+          public IActionResult GetCode()
+          {
+               string[] scope = { "User.Read" };
+               string url = $"https://login.microsoftonline.com/{TenantID}/oauth2/v2.0/authorize?client_id={ClientID}&response_type=code&redirect_uri={RedirectUri}&response_mode=query&scope={scope}&state=12345";
+
+               return new RedirectResult(url);
+          }
 
           
      }

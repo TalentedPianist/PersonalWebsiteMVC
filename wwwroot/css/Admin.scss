@@ -53,86 +53,11 @@ form  {
 }
 
 
-#Photos {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-
-
-    section {
-        display: flex;
-        flex-direction: column;
-        flex: 1;
-        position: relative;
-
-        &:nth-of-type(1) {
-            ul {
-                display: flex;
-                flex-direction: row;
-                flex: 1;
-                gap: 1em;
-                list-style-type: none;
-                position: relative;
-            }
-        }
-
-        &:nth-of-type(2) {
-            display: grid;
-            grid-template-columns: repeat(4, 0.5fr);
-            position: relative;
-            width: 100%;
-            gap: 1em;
-
-            figure {
-                position: relative;
-                display: flex;
-                flex-direction: column;
-                flex: 1; 
-                gap: 1em;
-
-                 figcaption {
-                display: flex;
-                flex-direction: column;
-                flex: 1;
-                align-items: center;
-                gap: 1em;
-            }
-            }
-
-            div {
-                position: absolute;
-
-                display: flex;
-                background-color: rgba(0,0,0,0.6);
-                color: white !important;
-                z-index: 300000 !important;
-                flex-direction: column;
-                flex: 1;
-                align-items: center;
-                
-                cursor: default;
-            }
-
-            img {
-                position: relative;
-                cursor: initial;
-            }
-
-           
-
-            ul {
-                display: flex;
-                flex-direction: row;
-                flex: 1;
-                list-style-type: none;
-                justify-content: space-between;
-            
-            }
-        }
-    }
+#Photos { 
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1em;
 }
-
 
 
 .overlay {

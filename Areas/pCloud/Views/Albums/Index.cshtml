@@ -2,11 +2,14 @@
 @using System.Text.Json
 @using System.Text.Json.Serialization
 @using PersonalWebsiteMVC.Areas.pCloud.Models
+@using Microsoft.AspNetCore.Http
 @inject IHttpClientFactory _httpClientFactory
 
 <h1 class="bg bg-info p-1">Albums</h1>
 
 <a href="#" id="login">Login</a>
+
+
 
 <div id="Albums">
 </div>
@@ -16,4 +19,135 @@
 
 
 @section Scripts {
+     <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
+
+     <script>
+          var token = localStorage.getItem('pcloud_token');
+          var locationid = 2;
+          var client = pCloudSdk.createClient(token, 'oauth', locationid);
+
+          function children(metadata) {
+              return Promise.resolve(metadata.contents);
+          }
+
+          function files(metadata) {
+              return children(metadata).then(filter(f => !f.isfolder));
+          }
+
+          function withThumbs(metadata) {
+              return children(metadata).then(filter(f => f.thumb));
+          }
+
+          function filter(f) {
+              return (iterable) => {
+                  var ret = [];
+
+                  for (var n in iterable) {
+                      if (f(iterable[n])) {
+                          ret.push(iterable[n]);
+                      }
+
+                  }
+                  return ret;
+              }
+          }
+
+          function length(array) {
+              return Promise.resolve(array.length);
+          }
+
+          function map(f) {
+              return (array) => {
+                  return Promise.resolve(array.map(f));
+              }
+          }
+
+          function size(metadata) {
+              return metadata.size;
+          }
+
+          function name(metadata) {
+              return metadata.name;
+          }
+
+          function fileid(metadata) {
+              return metadata.fileid;
+          }
+
+          function sum(iterable) {
+              var ret = 0;
+              for (var n in iterable) {
+                  ret += iterable[n];
+
+                  console.log(iterable[n]);
+              }
+              return Promise.resolve(ret);
+          }
+
+          function folderSize(folderid) {
+              return client.listfolder(0).then(files).then(map(size)).then(sum);
+          }
+
+          function folderItems(folderid) {
+              return client.listfolder(0).then(children).then(map(name));
+          }
+
+           
+
+       
+
+          var url = new URL(window.location.href);
+           var name = url.searchParams.get('name');
+
+          if (url.searchParams.has('name')) {
+
+              var id = Number(url.searchParams.get('id'));
+              var strName = url.searchParams.get('name');
+
+              client.listfolder(id).then(a => {
+                  a.contents.forEach(values => {
+                      if (values.name.includes("JPEG")) {
+                          console.log(values);
+                            $("#Photos").append(`
+                               
+                                <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/${strName}/${values.name}">
+                                
+                            `);
+                      }
+                  });
+              });
+
+          } else {
+              var folderId = 19500076302;
+              client.listfolder(folderId).then(a => {
+                  a.contents.forEach(values => {
+                      $("#Albums").append(`
+                            <ul>
+                                <li><a href="?id=${values.folderid}&name=${values.name}">${values.name}</a></li>
+                            </ul>
+                      `);
+                  });
+              });
+          }
+     </script>
+
+     <script>
+          $("#login").on('click', function(e) {
+              e.preventDefault();
+              var REDIRECT_URI = 'http://localhost:5051/pCloud/';
+                var CLIENT_ID = 'GJR8uDME26u'
+                window.location.href = `https://my.pcloud.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token`;
+
+              const hash = window.location.hash;
+              const params = new URLSearchParams(hash.substring(1));
+              const token = params.get('access_token');
+
+              // Store access token in local store for future use
+              if (token) {
+                  localStorage.setItem('pcloud_token', token);
+              } else {
+                  console.error('No token found in redirect URL');
+              }
+          });
+     </script>
 }
