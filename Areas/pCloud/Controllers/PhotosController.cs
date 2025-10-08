@@ -21,13 +21,11 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                _http = http;
           }
 
-
-          public async Task<IActionResult> Index(string name)
+          [Route("/pCloud/Photos/{id}/{name}")]
+          public IActionResult Index(string id, string name)
           {
+               ViewBag.FolderId = id;
                ViewBag.Name = name;
-
-               await Task.CompletedTask;
-               
                return View();
           }
 

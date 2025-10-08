@@ -49,6 +49,13 @@ form input {
   grid-template-columns: repeat(4, 1fr);
   gap: 1em;
 }
+#Photos figcaption {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+  padding-top: 1em;
+}
 
 .overlay {
   background-color: rgba(0, 0, 0, 0.6);

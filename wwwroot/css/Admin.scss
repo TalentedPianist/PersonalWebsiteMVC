@@ -57,6 +57,14 @@ form  {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1em;
+
+    figcaption { 
+        display: flex; 
+        flex-direction: column;
+        gap: 1em;
+        align-items: center;
+        padding-top: 1em;
+    }
 }
 
 

@@ -11,25 +11,42 @@
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
 
-<h1 class="bg bg-info p-1">Photos</h1>
+<h1 class="bg bg-info p-1">Photos for @ViewBag.Name</h1>
 
 @TempData["Message"]
 
-@{
-     string token = _http.HttpContext!.Request.Cookies["AccessToken"]!;
-     string username = "douglas@douglasmcgregor.co.uk";
-     string password = "Inkyfrog1";
-     string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path=/My Pictures/{ViewBag.Name}";
+<ul>
+    <li><a href="#" id="selectAll">Select All</a></li>
+    <li><a href="#" id="addToDb">Add to Database</a></li>
+    <li><a href="#" id="delFromDb">Delete from Database</a></li>
+</ul>
 
-     var httpClient = _httpClientFactory.CreateClient();
-     HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
-     HttpResponseMessage response = await httpClient.SendAsync(request);
-     response.EnsureSuccessStatusCode();
-     var result = await response.Content.ReadAsStringAsync();
-     var apiResponse = JsonSerializer.Deserialize<ApiResponse>(result, new JsonSerializerOptions
-     {
-          PropertyNameCaseInsensitive = true
-     });
-     //var photos = apiResponse!.Metadata.Contents;
-     @result
+<div id="Photos">
+</div>
+
+@section Scripts {
+     <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
+
+     <script>
+          var token = localStorage.getItem('pcloud_token');
+           var locationid = 2;
+           var client = pCloudSdk.createClient(token, 'oauth', locationid);
+
+          client.listfolder(@ViewBag.FolderId).then(a => {
+                    a.contents.forEach(values => {
+                        if (values.name.includes("JPEG")) {
+                          
+                              $("#Photos").append(`
+                                    <figure>
+                                  <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}">
+                                        <figcaption>
+                                            ${values.name}
+                                            <input type="checkbox" value="${values.name}">
+                                        </figcaption>
+                                    </figure>
+                              `);
+                        }
+                    });
+                });
+     </script>
 }

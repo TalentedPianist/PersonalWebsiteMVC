@@ -11,14 +11,90 @@
 
 
 
-<div id="Albums">
+<div id="Gallery">
+     <ul>
+          <li><a href="#" id="selectAll">Select All</a></li>
+          <li><a href="#" id="addToDb">Add to Database</a></li>
+          <li><a href="#" id="delFromDb">Delete from Database</a></li>
+     </ul>
+     <section>
+     </section>
+     <section>
+     </section>
 </div>
 
-<div id="Photos">
-</div>
+
 
 
 @section Scripts {
+     <script>
+          let add = [];
+          let del = [];
+
+          // JS for selecting all checkboxes
+          $("#selectAll").on('click', function(e) {
+              $("#Gallery section:nth-of-type(1)").find("figure").find("figcaption").find("input[type='checkbox']").each(function(index, item) {
+                      $(item).prop('checked', true);
+              });
+
+                $('input:checkbox:checked').map(function() {
+                    // Check if album is in database before doing anything else
+                    let name = this.value;
+                    $.getJSON("/pCloud/Albums/CheckAlbumInDb", { name: name }, function(message) {
+                        if (message === true) { 
+                            // If album is in database, get ID using JSON
+                            $.ajax({ 
+                                method: "POST", 
+                                url: "/pCloud/Albums/GetID", 
+                                data: { name: name },
+                                async: false,
+                                cache: false,
+                                success: function(message) { 
+                                   
+                                    if (message) {
+                                         // Album is in database, add album to del array
+                                        del.push({ 'AlbumID': message });
+                                    } else { 
+                                        // Album is not in database, push to add array
+                                        add.push({ 'AlbumName': name });
+                                    }
+                                },
+                                error: function(error) { 
+                                    console.log(error); 
+                                }
+                                });
+                            
+                        } else { 
+                           
+                        }
+                    });
+                }).get();
+          });
+
+
+          $("#addToDb").on('click', function(e) {
+              e.preventDefault();
+
+
+                  $.ajax({
+                      url: "/pCloud/Albums/AddMultipleAlbumsToDb",
+                      method: "POST",
+                      contentType: "application/json",
+                      data: JSON.stringify(add),
+                      async: false,
+                      cache: false,
+                      success: function(message) {
+                          console.log(message);
+                      },
+                      error: function(error) {
+                          console.log(error);
+                      }
+                  });
+
+          });
+     </script>
+
+
      <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
 
      <script>
@@ -89,12 +165,12 @@
           }
 
           function folderItems(folderid) {
-              return client.listfolder(0).then(children).then(map(name));
+              return client.listfolder(0).then(children).then(map(@ViewBag.Name));
           }
 
-           
 
-       
+
+
 
           var url = new URL(window.location.href);
            var name = url.searchParams.get('name');
@@ -109,9 +185,9 @@
                       if (values.name.includes("JPEG")) {
                           console.log(values);
                             $("#Photos").append(`
-                               
-                                <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/${strName}/${values.name}">
-                                
+
+                                <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}">
+
                             `);
                       }
                   });
@@ -121,10 +197,20 @@
               var folderId = 19500076302;
               client.listfolder(folderId).then(a => {
                   a.contents.forEach(values => {
-                      $("#Albums").append(`
-                            <ul>
-                                <li><a href="?id=${values.folderid}&name=${values.name}">${values.name}</a></li>
-                            </ul>
+                      $("#Gallery section:nth-of-type(1)").append(`
+
+                            <figure>
+                                <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
+                        <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>
+                        <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z"
+                            fill="#ffca28"></path>
+                    </svg>
+                                <figcaption>
+                                    <a href="/pCloud/Photos/${values.folderid}/${values.name}">${values.name}</a>
+                                    <input type="checkbox" name="cbName" value="${values.name}">
+                                </figcaption>
+                            </figure>
+
                       `);
                   });
               });
