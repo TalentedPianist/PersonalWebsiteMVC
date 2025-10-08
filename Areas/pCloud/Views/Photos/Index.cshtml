@@ -16,9 +16,9 @@
 @TempData["Message"]
 
 <ul>
-    <li><a href="#" id="selectAll">Select All</a></li>
-    <li><a href="#" id="addToDb">Add to Database</a></li>
-    <li><a href="#" id="delFromDb">Delete from Database</a></li>
+     <li><a href="#" id="selectAll">Select All</a></li>
+     <li><a href="#" id="addToDb">Add to Database</a></li>
+     <li><a href="#" id="delFromDb">Delete from Database</a></li>
 </ul>
 
 <div id="Photos">
@@ -28,6 +28,44 @@
      <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
 
      <script>
+          let add = [];
+          let del = [];
+           // JS for selecting all checkboxes
+           $("#selectAll").on('click', function(e) {
+               e.preventDefault();
+
+               var cb = $("#Photos").find('figure').find('figcaption').find('input[type="checkbox"]');
+               $(cb).each(function(index, value) {
+                     $(this).prop('checked', true);
+
+                     add.push({ 'Name': value.value });
+               });
+           });
+
+           $("#addToDb").on('click', function(e) {
+               e.preventDefault();
+                    // Problem is somewhere here, don't need to touch the server side.  
+               $.ajax({ 
+                   method: "POST", 
+                   url: "/pCloud/Photos/AddMultipleToDb", 
+                   data: JSON.stringify(add),
+                   contentType: "application/json", 
+                   async: false, 
+                   cache: false,
+                   success: function(message) { 
+                       console.log(message);
+                   }, 
+                   error: function(error) { 
+                       console.log(error);
+                   }
+                });
+                   
+           });
+
+                   
+     </script>
+
+     <script>
           var token = localStorage.getItem('pcloud_token');
            var locationid = 2;
            var client = pCloudSdk.createClient(token, 'oauth', locationid);
@@ -35,7 +73,7 @@
           client.listfolder(@ViewBag.FolderId).then(a => {
                     a.contents.forEach(values => {
                         if (values.name.includes("JPEG")) {
-                          
+
                               $("#Photos").append(`
                                     <figure>
                                   <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}">
