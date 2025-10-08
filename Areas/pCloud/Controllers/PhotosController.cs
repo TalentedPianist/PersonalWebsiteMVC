@@ -45,13 +45,30 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
           [HttpPost]
-          [Route("/pCloud/photos/AddMultipleToDb")]
+          [Route("/pCloud/Photos/AddMultipleToDb")]
           public IActionResult AddMultipleToDb([FromBody]List<PersonalWebsiteMVC.Models.Photos> data)
           {
                _db.Photos.AddRange(data);
                _db.SaveChanges();
                
                return Ok(data);
+          }
+
+          [HttpPost]
+          [Route("/pCloud/Photos/RemoveMultipleFromDb")]
+          public IActionResult DelMultipleFromDb([FromBody]List<PersonalWebsiteMVC.Models.Photos> data)
+          {
+               _db.Photos.RemoveRange(data);
+               _db.SaveChanges();
+               return Ok(data);
+          }
+
+          [HttpPost]
+          [Route("/pCloud/Photos/GetID")]
+          public IActionResult GetID([FromForm(Name="name")]string name)
+          {
+               var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
+               return Ok(photo!.PhotoID);
           }
      }
 }
