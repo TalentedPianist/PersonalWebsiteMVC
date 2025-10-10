@@ -19,6 +19,7 @@ namespace PersonalWebsiteMVC.Data
         public DbSet<Guestbook> Guestbook { get; set; } = default!;
         public DbSet<Album> Albums { get; set; } = default!;
         public DbSet<Photos> Photos { get; set; } = default!;
+          public DbSet<Portfolio> Portfolio { get; set; } = default!;
     }
 
     
