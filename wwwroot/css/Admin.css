@@ -103,6 +103,13 @@ form input {
 #Gallery section:nth-of-type(1) figure svg {
   width: 100%;
 }
+#Gallery section:nth-of-type(1) figure figcaption {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+  margin-top: 1em;
+}
 #Gallery figcaption {
   text-align: center;
   display: flex;

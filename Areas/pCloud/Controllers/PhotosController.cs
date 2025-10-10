@@ -70,5 +70,27 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
                return Ok(photo!.PhotoID);
           }
+
+          [HttpPost]
+          [Route("/pCloud/Photos/Popup")]
+          public IActionResult Popup([FromForm(Name="url")]string image, [FromForm(Name="name")]string name, [FromForm(Name="albumName")]string albumName, [FromForm(Name="albumId")]string albumId)
+          {
+               ViewBag.Image = image;
+               ViewBag.Name = name;
+               ViewBag.AlbumName = albumName;
+               ViewBag.AlbumId = albumId;
+               return PartialView("~/Areas/pCloud/Views/Photos/Popup.cshtml");
+          }
+
+          [HttpPost]
+          [Route("/pCloud/Photos/MakeCoverPic")]
+          public IActionResult MakeCoverPic([FromForm(Name="CoverPic")] string CoverPic, [FromForm(Name="AlbumName")]string AlbumName)
+          {
+               var album = _db.Albums.Where(a => a.Name == AlbumName).FirstOrDefault();
+               album!.CoverPhoto = CoverPic;
+               _db.Albums.Update(album);
+               _db.SaveChanges();
+               return RedirectToAction("Index", new { area = "pCloud", controller = "Albums" });
+          }
      }
 }

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Areas.pCloud.Models;
+using PersonalWebsiteMVC.Data;
 using System.Text.Json;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers;
@@ -8,28 +9,35 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers;
 public class AlbumsController : Controller
 {
     private IHttpClientFactory _httpClientFactory { get; set; }
+     public ApplicationDbContext _db { get; set; }
 
-    public AlbumsController(IHttpClientFactory httpClientFactory)
+    public AlbumsController(IHttpClientFactory httpClientFactory, ApplicationDbContext db)
     {
         _httpClientFactory = httpClientFactory;
+          _db = db;
     }
 
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
-        string username = "douglas@douglasmcgregor.co.uk";
-        string password = "Inkyfrog1";
-        string albumsPath = "/My Pictures";
-        string url = $"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&path={albumsPath}";
-
-          // var httpClient = _httpClientFactory.CreateClient();
-          // HttpRequestMessage request = new(method: HttpMethod.Get, requestUri: url);
-          // HttpResponseMessage response = await httpClient.SendAsync(request);
-          // response.EnsureSuccessStatusCode();
-          // var result = await response.Content.ReadAsStringAsync();
-          // var model = System.Text.Json.JsonSerializer.Deserialize<List<FolderModel>>(result);
-          await Task.CompletedTask;
+        
         return View();
     }
 
+
+     [HttpGet]
+     [Route("/pCloud/Albums/GetCoverPic")]
+     public IActionResult GetCoverPic(string name)
+     {
+          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+          return Ok(album!.CoverPhoto);
+     }
+
+     [HttpGet]
+     [Route("/pCloud/Albums/GetID")]
+     public IActionResult GetID(string name)
+     {
+          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+          return Ok(album!.AlbumID);
+     }
 
 }

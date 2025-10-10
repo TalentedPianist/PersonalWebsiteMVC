@@ -13,6 +13,7 @@
 
 <div id="Gallery">
      <ul>
+          
           <li><a href="#" id="selectAll">Select All</a></li>
           <li><a href="#" id="addToDb">Add to Database</a></li>
           <li><a href="#" id="delFromDb">Delete from Database</a></li>
@@ -197,7 +198,10 @@
               var folderId = 19500076302;
               client.listfolder(folderId).then(a => {
                   a.contents.forEach(values => {
-                      $("#Gallery section:nth-of-type(1)").append(`
+                      
+                      $.get('/pCloud/Albums/GetCoverPic', { name: values.name }, function(data) {
+                          if (data === undefined) {
+                               $("#Gallery section:nth-of-type(1)").append(`
 
                             <figure>
                                 <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
@@ -205,6 +209,7 @@
                         <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z"
                             fill="#ffca28"></path>
                     </svg>
+
                                 <figcaption>
                                     <a href="/pCloud/Photos/${values.folderid}/${values.name}">${values.name}</a>
                                     <input type="checkbox" name="cbName" value="${values.name}">
@@ -212,6 +217,23 @@
                             </figure>
 
                       `);
+                          } else {
+                              $("#Gallery section:nth-of-type(1)").append(`
+                                    <figure>
+                                        <img src="${data}">
+                                        <figcaption>
+                                            <a href="/pCloud/Photos/${values.folderid}/${values.name}">${values.name}</a>
+                                            <input type="checkbox" name="cbName" value="${values.name}">
+                                        </figcaption>
+                                            
+                                    </figure>
+                                        
+                              `);
+                          }
+                      });
+                        
+
+                     
                   });
               });
           }

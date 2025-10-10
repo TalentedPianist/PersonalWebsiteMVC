@@ -16,6 +16,7 @@
 @TempData["Message"]
 
 <ul>
+     <li><a asp-action="Index" asp-controller="Albums" asp-area="pCloud">Back</a></li>
      <li><a href="#" id="selectAll">Select All</a></li>
      <li><a href="#" id="addToDb">Add to Database</a></li>
      <li><a href="#" id="delFromDb">Delete from Database</a></li>
@@ -24,8 +25,16 @@
 <div id="Photos">
 </div>
 
+<div id="targetElement">
+</div>
+
 @section Scripts {
      <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
+     <script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+     <script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
+
+
+
 
      <script>
           let add = [];
@@ -38,112 +47,152 @@
                $(cb).each(function(index, value) {
                      $(this).prop('checked', true);
                      let name = value.value;
-                     
+                    let figure = $(this).parent().parent();
+                    let figcaption = $(this).parent();
+                    let url = $(this).parent().parent().find('img').attr('src');
+                    let dateCreated = $(this).parent().parent().find('a').data('date');
+
+                  
+
                      $.getJSON('/pCloud/Photos/IsInDb', { name: value.value }, function(result) {
-                         if (result === true) { 
+                         if (result === true) {
                              // Get photo ID from database
-                             $.ajax({ 
-                                 method: "POST", 
-                                 url: "/pCloud/Photos/GetID", 
+                             $.ajax({
+                                 method: "POST",
+                                 url: "/pCloud/Photos/GetID",
                                  data: { name: name },
-                                 async: false, 
+                                 async: false,
                                  cache: false,
-                                 success: function(id) { 
+                                 success: function(id) {
                                      del.push({ 'PhotoID': id, 'Name': name });
-                                 }, 
-                                 error: function(error) { 
+                                 },
+                                 error: function(error) {
                                      console.log(error);
                                  }
                              });
                          } else {
-                             add.push({ 'Name': value.value });
+                                $.getJSON('/pCloud/Albums/GetID', { name: "@ViewBag.Name" }, function(id) { 
+                                    console.log(id);
+                             add.push({ 'AlbumID': id, 'Name': value.value, 'ImageUrl':  url, 'DateCreated': dateCreated });
+                                });
                          }
                      });
-                     
+
                });
            });
 
            $("#addToDb").on('click', function(e) {
                e.preventDefault();
-                   
-               $.ajax({ 
-                   method: "POST", 
-                   url: "/pCloud/Photos/AddMultipleToDb", 
+
+               $.ajax({
+                   method: "POST",
+                   url: "/pCloud/Photos/AddMultipleToDb",
                    data: JSON.stringify(add),
-                   contentType: "application/json", 
-                   async: false, 
+                   contentType: "application/json",
+                   async: false,
                    cache: false,
-                   success: function(message) { 
+                   success: function(message) {
                        console.log(message);
-                   }, 
-                   error: function(error) { 
+                   },
+                   error: function(error) {
                        console.log(error);
                    }
                 });
-                   
+
            });
 
 
-           $("#delFromDb").on('click', function(e) { 
+           $("#delFromDb").on('click', function(e) {
                e.preventDefault();
-      
 
-               $.ajax({ 
-                   method: "POST", 
+
+               $.ajax({
+                   method: "POST",
                    url: "/pCloud/Photos/RemoveMultipleFromDb",
                    data: JSON.stringify(del),
-                   headers: { 
+                   headers: {
                        "Content-type": "application/json",
                    },
                    contentType: "application/json",
                    async: false,
                    cache: false,
-                   success: function(message) { 
+                   success: function(message) {
                        console.log(message);
-                   }, 
-                   error: function(error) { 
+                   },
+                   error: function(error) {
                        console.log(error);
                    }
                });
            });
-                   
+
+
      </script>
 
-     
+
+
 
      <script>
           var token = localStorage.getItem('pcloud_token');
            var locationid = 2;
            var client = pCloudSdk.createClient(token, 'oauth', locationid);
 
+
+
+
+
           client.listfolder(@ViewBag.FolderId).then(a => {
                     a.contents.forEach(values => {
                         if (values.name.includes("JPEG")) {
+                          
+                            $("a.gallery").featherlightGallery({
+                            
+                                afterOpen: function(event) {
+                           
+                                    let content = this.$content[0];
+                                    let instance = this.$instance[0];
+                                    console.log(event);
+
+                                    $.ajax({ 
+                                        method: "POST", 
+                                        url: "/pCloud/Photos/Popup",
+                                        data: { url: event.target.currentSrc, name: event.currentTarget.dataset['name'], albumName: "@ViewBag.Name", albumId: "@ViewBag.FolderId" },
+                                        async: false, 
+                                        cache: false, 
+                                        success: function(message) { 
+                                            $(".featherlight-content").empty(); 
+                                            $(".featherlight-content").append(message);
+                                        }, 
+                                        error: function(error) { 
+                                            console.log(error);
+                                        }
+                                    });
+                                }
+                            });
+
+                       
 
                               $("#Photos").append(`
                                     <figure>
-                                  <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}">
+                                  <a href="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}" class="gallery" data-name="${values.name}" data-url="${event.target.currentSrc}" data-date="${values.created}"><img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}"></a>
                                         <figcaption>
-                                            <a href="#" id="photoPopup" class="gallery" data-name="${values.name}">${values.name}</a>
+                                           ${values.name}
                                             <input type="checkbox" value="${values.name}">
                                         </figcaption>
                                     </figure>
 
-                                    
+
                               `);
 
 
                         }
-                       $("#photoPopup").on('click', function(e) {
-                e.preventDefault();
-                console.log($(this).data('name'));
-            });
-                    });
-                     
+
+
 
                     });
-          
-           
-          
+          });
+
+
+
+
      </script>
 }
