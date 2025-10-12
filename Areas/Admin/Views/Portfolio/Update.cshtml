@@ -1,0 +1,39 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+@model Portfolio
+
+<h1 class="bg bg-info p-1">Update</h1>
+<a asp-action="Index" asp-controller="Portfolio" asp-area="Admin" class="btn btn-secondary">Back</a>
+
+@TempData["Message"]
+
+<form method="post" asp-action="UpdatePortfolio" asp-controller="Portfolio" asp-area="Admin">
+    <div asp-validation-summary="All"></div>
+    <div>
+        <label asp-for="PortfolioID">ID:</label>
+        <input asp-for="PortfolioID" class="form-control" disabled>
+    </div>
+    <div>
+        <label asp-for="Name">Name:</label>
+        <input asp-for="Name" class="form-control">
+    </div>
+    <div>
+        <label asp-for="Url">Url:</label>
+        <input asp-for="Url" class="form-control">
+    </div>
+    <div>
+        <label asp-for="ImageUrl">Image Url:</label>
+        <input asp-for="ImageUrl" class="form-control">
+    </div>
+    <div>
+        <label asp-for="Description">Description:</label>
+        <textarea id="ckeditor1" asp-for="Description" class="form-control"></textarea>
+    </div>
+  
+    <input asp-for="PortfolioID" type="hidden" value="@Model.PortfolioID" name="portfolioID">
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>
