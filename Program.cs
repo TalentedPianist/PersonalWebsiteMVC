@@ -305,7 +305,7 @@ try
     app.MapDefaultControllerRoute(); // Adding this line caused the links to render properly!! 
     app.UseDetection();
     app.UseRouting();
-
+     app.UseHttpsRedirection();
     app.UseStaticFiles();
 
     app.UseAuthentication();

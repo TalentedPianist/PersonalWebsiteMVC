@@ -14,5 +14,9 @@
   {
     "outputFile": "wwwroot/css/BlogV1.css",
     "inputFile": "wwwroot/css/BlogV1.scss"
+  },
+  {
+    "outputFile": "wwwroot/css/NewLayout.css",
+    "inputFile": "wwwroot/css/NewLayout.scss"
   }
 ]

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PersonalWebsiteMVC.Areas.pCloud.Models;
 using PersonalWebsiteMVC.Data;
@@ -8,6 +9,7 @@ using Wangkanai.Extensions;
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
     [Area("pCloud")]
+    [Authorize(Roles="Admin")]
     public class HomeController : Controller
     {
           public ApplicationDbContext _db { get; set; }

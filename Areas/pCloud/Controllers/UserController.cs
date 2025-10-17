@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
      [Area("pCloud")]
+     [Authorize(Roles="Admin")]
      public class UserController : Controller
      {
           private IHttpClientFactory _httpClientFactory { get; set; }

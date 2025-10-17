@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Areas.pCloud.Models;
 using PersonalWebsiteMVC.Data;
@@ -6,6 +7,7 @@ using System.Text.Json;
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers;
 
 [Area("pCloud")]
+[Authorize(Roles="Admin")]
 public class AlbumsController : Controller
 {
     private IHttpClientFactory _httpClientFactory { get; set; }

@@ -4,127 +4,130 @@
 
 
 @{
-    var data = new ImportMapDefinition(
-    new Dictionary<string, string>
-    {
+     var data = new ImportMapDefinition(
+     new Dictionary<string, string>
+     {
 { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
 { "ckeditor5/", "/lib/ckeditor5/" },
-    }, null, null);
+     }, null, null);
 }
 
 <!DOCTYPE html>
 <html>
 
 <head>
-    <base href="/">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, viewport-fit=cover">
-    <meta name="keywords" content="douglas, mcgregor, douglas mcgregor, dotnet 9, asp.net core, asp.net, html5, css, javascript, react, web, developer, web developer, graduate">
-    <meta name="description" content="Welcome to my personal website.  Here you will find blog posts on my journey through web development.  You will also find photo galleries of holiday snaps.">
-    <meta name="author" content="Douglas McGregor">
-    <meta name="robots" content="noindex,nofollow">
+     <base href="/">
+     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+     <meta name="viewport" content="width=device-width, viewport-fit=cover">
+     <meta name="keywords" content="douglas, mcgregor, douglas mcgregor, dotnet 9, asp.net core, asp.net, html5, css, javascript, react, web, developer, web developer, graduate">
+     <meta name="description" content="Welcome to my personal website.  Here you will find blog posts on my journey through web development.  You will also find photo galleries of holiday snaps.">
+     <meta name="author" content="Douglas McGregor">
+     <meta name="robots" content="noindex,nofollow">
      <meta property="og:title" content="Douglas McGregor">
      <meta property="og:url" content="http://www.douglasmcgregor.co.uk">
      <meta property="og:image" content="http://www.douglasmcgregor.co.uk/images/me.jpg">
      <meta property="og:description" content="Welcome to my personal website.  This is a blog about my journey in web developement along with photographs of holiday snaps and a personal touch.">
-    <link rel="canconial" href="http://www.douglasmcgregor.co.uk">
-    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
-    <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
-    <link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
-    <link rel="stylesheet" href="/css/simplePagination.css">
-    <link rel="stylesheet" href="/css/output.css">
-    <link rel="stylesheet" href="/css/BlogV1.css">
-    <title>@ViewBag.Title</title>
+     <link rel="canconial" href="http://www.douglasmcgregor.co.uk">
+     <link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
+     <link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
+     <link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
+     <link rel="stylesheet" href="/css/simplePagination.css">
+     <link rel="stylesheet" href="/css/output.css">
+     <link rel="stylesheet" href="/css/BlogV1.css">
+     <title>@ViewBag.Title</title>
 </head>
 
 <body>
-   <div class="w-[80%]">
-    <nav>
-        <ul>
-            <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
-            <li><a asp-action="About" asp-controller="Home">About</a></li>
-            <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
-            <li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
-            <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
-            <li><a asp-action="Guestbook" asp-controller="Home" asp-area="">Guestbook</a></li>
-        </ul>
-    </nav>
-    <header>
-
-    </header>
-        <main>
-  
-        @{
-            string url = _http.HttpContext!.Request.GetEncodedUrl();
-
-        }
-
-        @if (url.Contains("Photos"))
-        {
-            @RenderBody()
-        }
-        else
-        {
-            <div id="mainContent">
-               
-                    @RenderBody()
-                
-                <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
-         </div>
-        }
-
-        </main>
-    <footer>
-        Copyright &copy; douglasmcgregor.co.uk @DateTime.Now.ToString("yyyy")
-    </footer>
-    </div>
-    
-    <script src="/lib/jquery/jquery.min.js"></script>
+     <div id="Container">
+          <nav>
+               <ul>
+                    <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
+                    <li><a asp-action="About" asp-controller="Home">About</a></li>
+                    <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
+                    <li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
+                    <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
+                    <li><a asp-action="Guestbook" asp-controller="Home" asp-area="">Guestbook</a></li>
+               </ul>
+          </nav>
+          <header>
+          </header>
 
 
-    <script src="/lib/featherlight/featherlight.min.js"></script>
-    <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
-    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
-    <script src="/js/simplePagination.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
-    <script type="importmap" asp-importmap="@data"></script>
+          @{
+               string url = _http.HttpContext!.Request.GetEncodedUrl();
 
-    <script type="module">
-        import {
-            ClassicEditor,
-            Essentials,
-            Paragraph,
-            Bold,
-            Italic,
-            Font
-        } from 'ckeditor5';
+          }
 
-        window.ClassicEditor = ClassicEditor;
-        window.CKEditorEssentials = Essentials;
-        window.CKEditorParagraph = Paragraph;
-        window.CKEditorBold = Bold;
-        window.CKEditorItalic = Italic;
-        window.CKEditorFont = Font;
+          <main>
+          @if (url.Contains("Photos"))
+          {
+               @RenderBody()
+          }
+          else
+          {
 
-        if (document.querySelector('#ckeditor1')) {
-            ClassicEditor
-                .create(document.querySelector('#ckeditor1'), {
-                    licenseKey: 'GPL',
-                    plugins: [Essentials, Paragraph, Bold, Italic, Font],
-                    toolbar: []
-                })
-                .then(editor => {
-                    window.editor = editor;
+               <section>
+                    <article>
+                         @RenderBody()
+                    </article>
+                    <article>
 
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        }
-    </script>
-    <script src="/js/site.js" asp-append-version="true"></script>
-    @RenderSection("Scripts", false)
+                         <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
+                    </article>
+               </section>
+          }
+          </main>
+
+          <footer>
+               Copyright &copy; douglasmcgregor.co.uk @DateTime.Now.ToString("yyyy")
+          </footer>
+     </div>
+
+     <script src="/lib/jquery/jquery.min.js"></script>
+
+
+     <script src="/lib/featherlight/featherlight.min.js"></script>
+     <script src="/lib/featherlight/featherlight.gallery.min.js"></script>
+     <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
+     <script src="/js/simplePagination.js"></script>
+     <script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
+     <script type="importmap" asp-importmap="@data"></script>
+
+     <script type="module">
+          import {
+              ClassicEditor,
+              Essentials,
+              Paragraph,
+              Bold,
+              Italic,
+              Font
+          } from 'ckeditor5';
+
+          window.ClassicEditor = ClassicEditor;
+          window.CKEditorEssentials = Essentials;
+          window.CKEditorParagraph = Paragraph;
+          window.CKEditorBold = Bold;
+          window.CKEditorItalic = Italic;
+          window.CKEditorFont = Font;
+
+          if (document.querySelector('#ckeditor1')) {
+              ClassicEditor
+                  .create(document.querySelector('#ckeditor1'), {
+                      licenseKey: 'GPL',
+                      plugins: [Essentials, Paragraph, Bold, Italic, Font],
+                      toolbar: []
+                  })
+                  .then(editor => {
+                      window.editor = editor;
+
+                  })
+                  .catch(error => {
+                      console.error(error);
+                  });
+          }
+     </script>
+     <script src="/js/site.js" asp-append-version="true"></script>
+     @RenderSection("Scripts", false)
 
 </body>
 
