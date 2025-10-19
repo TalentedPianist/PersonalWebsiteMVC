@@ -825,7 +825,7 @@ header {
         h6 {
             z-index: 10000;
             color: white;
-            letter-spacing: 20 !important;
+           
         }
 
         h1 {
@@ -841,7 +841,7 @@ header {
 
 nav {
     ul {
-        background-color: #5E3E78;
+        background-color: indigo;
         display: flex;
         flex-direction: column;
         flex: 1;
@@ -903,7 +903,7 @@ main {
     @media only screen and (min-width: 768px) {
         padding-top: 0.5em;
         padding-bottom: 2em;
-        
+        padding-left: 1em;
 
         h1 {
             font-size: 38pt !important;
@@ -1047,7 +1047,7 @@ footer {
 
 
     img {
-        width: 60%;
+        width: 30%;
         border-radius: 50%;
         align-self: center;
     }
@@ -1057,34 +1057,22 @@ footer {
         text-decoration: revert !important;
     }
 
+   
+
     section {
         display: flex;
         flex-direction: column !important;
         flex: 0;
         padding-bottom: 1em;
         height: 100%;
-        
+        min-width: 100%;
 
         &:nth-of-type(1) {
             flex-direction: row !important;
             align-items: center;
             justify-content: center;
 
-            div {
-                display: flex;
-                flex-direction: column;
-                flex: 1;
-
-
-                &:first-child {
-                    gap: 2em !important;
-                    flex-direction: column;
-                }
-
-                &:last-child {
-                    gap: 2em !important;
-                    flex-direction: column;
-                }
+           
             }
 
            
@@ -1100,7 +1088,7 @@ footer {
             width: 100%;
         }
     }
-}
+
 
 #mainContent {
     display: flex;
