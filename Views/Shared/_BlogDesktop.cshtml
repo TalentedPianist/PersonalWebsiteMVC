@@ -1,7 +1,7 @@
 ﻿@using Microsoft.AspNetCore.Components
 @using Microsoft.AspNetCore.Http.Extensions
 @inject IHttpContextAccessor _http
-
+@inject Wangkanai.Detection.Services.IDetectionService DetectionService 
 
 @{
      var data = new ImportMapDefinition(
@@ -40,18 +40,19 @@
 
 <body>
      <div id="Container">
-          <nav>
-               <ul>
-                    <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
-                    <li><a asp-action="About" asp-controller="Home">About</a></li>
-                    <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
-                    <li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
-                    <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
-                    <li><a asp-action="Guestbook" asp-controller="Home" asp-area="">Guestbook</a></li>
-               </ul>
-          </nav>
-          <header>
-          </header>
+          
+		 <header>
+			 <nav>
+				 <ul>
+					 <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
+					 <li><a asp-action="About" asp-controller="Home">About</a></li>
+					 <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
+					 <li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
+					 <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
+					 <li><a asp-action="Guestbook" asp-controller="Home" asp-area="">Guestbook</a></li>
+				 </ul>
+			 </nav>
+		 </header>
 
 
           @{
@@ -69,6 +70,8 @@
 
                <section>
                     <article>
+
+
                          @RenderBody()
                     </article>
                     <article>

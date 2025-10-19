@@ -12,7 +12,7 @@ body {
 }
 @media only screen and (min-width: 768px) {
   body {
-    background-image: linear-gradient(to bottom, indigo, white);
+    background-image: linear-gradient(to bottom, #3F83BF, white);
     background-repeat: no-repeat;
     background-size: 100% 500px;
   }
@@ -225,8 +225,11 @@ section article:first-child {
   #Home {
     height: revert;
   }
+  #Home section {
+    background-color: revert !important;
+  }
 }
-@media only screen and (min-width: 768px) {
+@media only screen and (min-width: 1200px) {
   #Home {
     background-size: 100%;
     background-position: center;
@@ -701,7 +704,7 @@ header {
     position: relative;
     align-items: center;
     justify-content: center;
-    background-image: url("/images/bronte-falls.jpg");
+    background-image: url("/images/bamburgh-beach.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -727,11 +730,15 @@ header {
 }
 
 nav ul {
-  background-color: indigo;
+  background-color: rgba(0, 0, 0, 0.6);
   display: flex;
   flex-direction: column;
   flex: 1;
   list-style-type: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 @media only screen and (min-width: 768px) {
   nav ul {
@@ -743,13 +750,22 @@ nav ul {
     display: none;
   }
 }
+nav ul li {
+  padding: 0 !important;
+  margin: 0 !important;
+}
 nav a {
   color: white;
   text-decoration: none;
 }
-@media only screen and (min-width: 767px) {
+@media only screen and (min-width: 600px) {
   nav a {
-    font-size: xx-large !important;
+    font-size: large;
+  }
+}
+@media only screen and (min-width: 768px) {
+  nav a {
+    font-size: x-large !important;
   }
 }
 @media only screen and (min-width: 600px) {
@@ -757,8 +773,6 @@ nav a {
     display: flex;
     flex-direction: row;
     flex: 1;
-    padding-top: 1em;
-    padding-bottom: 1em;
     width: 100vw;
     justify-content: space-evenly;
   }
@@ -772,7 +786,7 @@ article {
 }
 
 main {
-  color: black;
+  color: black !important;
   display: flex;
   flex-direction: column;
   flex: 1;

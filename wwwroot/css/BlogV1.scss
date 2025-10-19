@@ -12,11 +12,10 @@ html {
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 
-    @media only screen and (min-width: 768px) { 
-        background-image: linear-gradient(to bottom, indigo, white);
-        background-repeat: no-repeat; 
+    @media only screen and (min-width: 768px) {
+        background-image: linear-gradient(to bottom, #3F83BF, white);
+        background-repeat: no-repeat;
         background-size: 100% 500px;
-        
     }
 }
 
@@ -268,9 +267,13 @@ section {
 
     @media only screen and (min-width: 600px) {
         height: revert;
+
+        section { 
+            background-color: revert !important;
+        }
     }
 
-    @media only screen and (min-width: 768px) {
+    @media only screen and (min-width: 1200px) {
         background-size: 100%;
         background-position: center;
         padding-left: 1em;
@@ -812,7 +815,7 @@ header {
         position: relative;
         align-items: center;
         justify-content: center;
-        background-image: url('/images/bronte-falls.jpg');
+        background-image: url('/images/bamburgh-beach.jpg');
         background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
@@ -841,11 +844,15 @@ header {
 
 nav {
     ul {
-        background-color: indigo;
+        background-color: rgba(0,0,0,0.6);
         display: flex;
         flex-direction: column;
         flex: 1;
         list-style-type: none;
+        position: absolute;
+        top: 0; 
+        left: 0; 
+        right: 0; 
 
         @media only screen and (min-width: 768px) {
             width: revert !important;
@@ -854,14 +861,23 @@ nav {
         @media only screen and (max-width: 600px) {
             display: none;
         }
+
+        li { 
+            padding: 0 !important;
+            margin: 0 !important;
+        }
     }
 
     a {
         color: white;
         text-decoration: none;
 
-        @media only screen and (min-width: 767px) {
-            font-size: xx-large !important;
+        @media only screen and (min-width: 600px) { 
+            font-size: large;
+        }
+
+        @media only screen and (min-width: 768px) {
+            font-size: x-large !important;
         }
     }
 
@@ -870,8 +886,7 @@ nav {
             display: flex;
             flex-direction: row;
             flex: 1;
-            padding-top: 1em;
-            padding-bottom: 1em;
+            
             width: 100vw;
             justify-content: space-evenly;
         }
@@ -891,7 +906,7 @@ article {
 }
 
 main {
-    color: black;
+    color: black !important;
     display: flex;
     flex-direction: column;
     flex: 1;
