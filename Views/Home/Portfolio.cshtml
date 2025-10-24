@@ -1,0 +1,47 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@using X.PagedList
+@using X.PagedList.Extensions
+@using X.Web.PagedList
+@model IPagedList<Portfolio>
+
+<h1>Portfolio</h1>
+
+@if (Model.Count() == 0)
+{
+	<p>No portfolio items have been found just now.  Please check back later.</p>
+}
+else
+{
+	
+
+	<div id="Portfolio">
+		<section>
+			<p>Welcome to my portfolio - a collection of projects I created during my degree.  Each project reflects a stage in my journey as a developer, exploring design, functionality and useability.</p>
+
+			<p>These projects showcase functionality built using React, PHP, HTML5, CSS3 and JavaScript.  Click on an image to view the project.</p>
+		</section>
+		<section>
+		@foreach (var item in Model)
+		{
+			<figure>
+				<img src="@item.ImageUrl">
+				<figcaption>@item.Name</figcaption>
+			</figure>
+		}
+		</section>
+	</div>
+
+	<p>Currently showing page @Model.PageNumber of @Model.PageCount portfolio items.</p>
+
+	@Html.PagedListPager((IPagedList)Model, page => Url.Action("Portfolio", new { pageNumber = page, area = "" }),
+			new PagedListRenderOptions
+			{
+				DisplayItemSliceAndTotal = false,
+				LiElementClasses = new string[] { "page-item" },
+				PageClasses = new String[] { "page-link" },
+			});
+}

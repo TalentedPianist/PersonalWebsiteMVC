@@ -39,17 +39,18 @@
 </head>
 
 <body>
-     <div id="Container">
+    
           
 		 <header>
 			 <nav>
 				 <ul>
 					 <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
-					 <li><a asp-action="About" asp-controller="Home">About</a></li>
+					 <li><a asp-action="About" asp-controller="Home" asp-area="">About</a></li>
 					 <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
 					 <li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
+                     <li><a asp-controller="Home" asp-action="Portfolio" asp-area="">Portfolio</a></li>
 					 <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
-					 <li><a asp-action="Guestbook" asp-controller="Home" asp-area="">Guestbook</a></li>
+					 
 				 </ul>
 			 </nav>
 		 </header>
@@ -65,27 +66,30 @@
           {
                @RenderBody()
           }
+          else if (url.Contains("Portfolio"))
+          {
+              @RenderBody()
+          }
           else
           {
 
                <section>
-                    <article>
-
+                   <article>
 
                          @RenderBody()
+                   </article>
+                   <article>
+                       <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml">
                     </article>
-                    <article>
+                </section>
 
-                         <partial name="~/Views/Shared/Sidebar/_Sidebar.cshtml" />
-                    </article>
-               </section>
           }
           </main>
 
           <footer>
                Copyright &copy; douglasmcgregor.co.uk @DateTime.Now.ToString("yyyy")
           </footer>
-     </div>
+     
 
      <script src="/lib/jquery/jquery.min.js"></script>
 

@@ -14,6 +14,7 @@ using DeviceDetectorNET.Cache;
 using Microsoft.AspNetCore.Http.Extensions;
 using Wangkanai.Detection.Services;
 using System.Text;
+using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Controllers
 {
@@ -79,6 +80,13 @@ namespace PersonalWebsiteMVC.Controllers
         {
             return View(_db.Posts);
         }
+
+          public IActionResult Portfolio([FromQuery(Name="pageNumber")]int? page)
+          {
+               var pageNumber = page ?? 1; 
+               var model = _db.Portfolio.ToPagedList(pageNumber, 10);
+               return View(model);
+          }
 
         public IActionResult Contact()
         {

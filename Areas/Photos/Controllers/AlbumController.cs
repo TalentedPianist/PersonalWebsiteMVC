@@ -26,7 +26,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             int id = Convert.ToInt32(_http.HttpContext!.Request.Query["id"]);
             PhotosViewModel model = new PhotosViewModel();
             var pageNumber = page ?? 1;
-            model.PagedPhotos = _db.Photos.Where(p => p.AlbumID == id).ToPagedList(pageNumber, 8);
+            model.PagedPhotos = _db.Photos.Where(p => p.AlbumID == id).ToPagedList(pageNumber, 12);
             model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
 
 

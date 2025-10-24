@@ -1,4 +1,4 @@
-/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
+﻿/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -694,4 +694,10 @@ footer {
 
 .visible {
   display: flex;
-}/*# sourceMappingURL=Blog.css.map */
+}
+
+#Portfolio {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+}

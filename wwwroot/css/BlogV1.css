@@ -10,13 +10,6 @@ html {
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
-@media only screen and (min-width: 768px) {
-  body {
-    background-image: linear-gradient(to bottom, #3F83BF, white);
-    background-repeat: no-repeat;
-    background-size: 100% 500px;
-  }
-}
 
 html,
 body {
@@ -36,6 +29,18 @@ h5,
 h6 {
   font-size: revert !important;
   font-weight: revert !important;
+}
+
+p {
+  color: #222;
+  font-size: 15pt;
+  line-height: 1.6;
+  letter-spacing: 1px;
+}
+@media only screen and (min-width: 1024px) {
+  p {
+    line-height: 2;
+  }
 }
 
 form {
@@ -138,8 +143,10 @@ section article {
   width: 50%;
 }
 section article:first-child {
-  margin-right: 10em;
   padding-left: 2em;
+}
+section article:first-child p {
+  padding-right: 2em;
 }
 @media only screen and (min-width: 768px) {
   section {
@@ -181,11 +188,11 @@ section article:first-child {
     align-items: flex-start;
     align-self: flex-start;
     text-align: left;
-    font-size: large;
     background-color: revert;
     background-image: none;
     width: revert;
     padding-left: 1em;
+    color: black;
   }
   #Home section {
     display: flex;
@@ -233,7 +240,6 @@ section article:first-child {
   #Home {
     background-size: 100%;
     background-position: center;
-    padding-left: 1em;
     color: black;
     gap: 1em;
   }
@@ -246,7 +252,6 @@ section article:first-child {
   #Home p {
     font-size: 16pt;
     line-height: 2;
-    padding-right: 10em;
   }
 }
 
@@ -600,7 +605,6 @@ section article:first-child {
   gap: 1em;
   align-items: center;
   position: relative;
-  width: 100%;
   margin-top: 1em;
   margin-bottom: 2em;
   margin-left: 1em;
@@ -611,6 +615,11 @@ section article:first-child {
 #Albums section:nth-of-type(2) figcaption a {
   text-decoration: revert !important;
   color: revert !important;
+}
+@media only screen and (max-width: 600px) {
+  #Albums section:nth-of-type(2) {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 #Albums section:nth-of-type(3) {
   display: flex;
@@ -636,6 +645,7 @@ section article:first-child {
   grid-template-columns: repeat(4, 1fr);
   gap: 2em;
   margin-top: 1em;
+  padding-right: 2em;
 }
 #Photos section:nth-of-type(2) {
   display: flex;
@@ -723,63 +733,39 @@ header {
     text-shadow: 1px 1px 2px black;
   }
 }
-@media only screen and (min-width: 767px) {
-  header {
-    font-size: 48pt !important;
-  }
-}
 
-nav ul {
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  list-style-type: none;
+nav {
   position: absolute;
   top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(6px);
+  color: #ffffff;
+  padding: 1rem 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
 }
-@media only screen and (min-width: 768px) {
-  nav ul {
-    width: revert !important;
-  }
-}
-@media only screen and (max-width: 600px) {
-  nav ul {
-    display: none;
-  }
-}
-nav ul li {
-  padding: 0 !important;
-  margin: 0 !important;
+nav ul {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  align-items: center;
+  justify-content: space-evenly;
 }
 nav a {
-  color: white;
+  color: #ffffff;
   text-decoration: none;
+  margin: 0 1.25rem;
+  font-size: 1.05rem;
+  font-weight: 500;
+  transition: color 0.3s ease;
+  letter-spacing: 3px;
 }
-@media only screen and (min-width: 600px) {
-  nav a {
-    font-size: large;
-  }
+nav a:hover {
+  color: #FAF7F0;
 }
-@media only screen and (min-width: 768px) {
-  nav a {
-    font-size: x-large !important;
-  }
-}
-@media only screen and (min-width: 600px) {
-  nav ul {
-    display: flex;
-    flex-direction: row;
-    flex: 1;
-    width: 100vw;
-    justify-content: space-evenly;
-  }
-  nav a {
-    font-size: large;
-  }
-}
+
 .top-row,
 article {
   padding-left: 0 !important;
@@ -791,7 +777,7 @@ main {
   flex-direction: column;
   flex: 1;
   height: 100%;
-  background-color: #ffa500;
+  background-color: #F4A261;
   clear: both !important;
 }
 @media only screen and (min-width: 768px) {
@@ -883,38 +869,37 @@ footer {
 }
 @media only screen and (min-width: 768px) {
   footer {
-    font-size: x-large;
-    background-color: lightgreen;
-    color: black;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    clear: both !important;
+    background-color: gold;
+    text-align: center;
+    font-size: large;
+    padding: 1.25rem 0;
+    color: #333;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
   }
 }
 
 .socialMedia {
   display: flex;
   flex-direction: row;
-  flex: 1;
-  width: 40%;
-  gap: 1.5em;
+  flex: 0;
+  margin-right: 0.5em;
+  align-items: flex-start;
+  width: 60%;
+  gap: 1em;
 }
 .socialMedia p {
   font-size: large;
 }
 .socialMedia svg {
   width: 100%;
-  align-self: flex-start;
-  display: flex;
 }
 .socialMedia a {
   display: inline-flex;
 }
-@media only screen and (min-width: 900px) {
-  .socialMedia {
-    width: 60%;
-    gap: 1em;
-  }
+.socialMedia a:hover svg {
+  transform: scale(1.05);
+  fill: #2A9D8F;
+  transition: all 0.2s ease;
 }
 
 #Sidebar {
@@ -924,7 +909,6 @@ footer {
   font-size: large;
   align-items: flex-start;
   justify-content: flex-start;
-  width: 50%;
 }
 #Sidebar img {
   width: 30%;
@@ -942,6 +926,11 @@ footer {
   padding-bottom: 1em;
   height: 100%;
   min-width: 100%;
+}
+@media only screen and (min-width: 600px) {
+  #Sidebar section {
+    gap: 1em;
+  }
 }
 #Sidebar section:nth-of-type(1) {
   flex-direction: row !important;
@@ -970,7 +959,7 @@ footer {
 }
 
 .featherlight {
-  z-index: revert !important;
+  background: rgba(0, 0, 0, 0.6) !important;
 }
 
 .featherlight-next {
@@ -984,6 +973,16 @@ footer {
 .featherlight-content {
   width: 50% !important;
   height: 100% !important;
+  background-color: #E9F0EE !important;
+  border-radius: 12px !important;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
+  padding: 1.5rem !important;
+  max-width: 800px !important;
+  margin: 2rem auto !important;
+  z-index: 50000 !important;
+}
+.featherlight-content .page-link {
+  z-index: -1 !important;
 }
 
 .featherlight-next,
@@ -1009,10 +1008,32 @@ footer {
   align-self: flex-start !important;
 }
 
-#Container {
+@media only screen and (min-width: 1200px) {
+  #Container {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    width: 80%;
+    margin: 0 auto;
+  }
+}
+
+#Portfolio section:nth-of-type(1) {
   display: flex;
   flex-direction: column;
-  flex: 0;
-  width: 80%;
-  margin: 0 auto;
+  flex: 1;
+}
+#Portfolio section:nth-of-type(1) p {
+  font-size: 1.125rem;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 2rem;
+  max-width: 750px;
+}
+#Portfolio section:nth-of-type(2) {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5em;
+  padding-right: 1em;
+  margin-bottom: 1em;
 }
