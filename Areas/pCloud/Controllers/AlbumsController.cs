@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Areas.pCloud.Models;
 using PersonalWebsiteMVC.Data;
+using PersonalWebsiteMVC.Models;
 using System.Text.Json;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers;
@@ -30,8 +31,15 @@ public class AlbumsController : Controller
      [Route("/pCloud/Albums/GetCoverPic")]
      public IActionResult GetCoverPic(string name)
      {
-          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-          return Ok(album!.CoverPhoto);
+          try
+          {
+               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+               return Ok(album!.CoverPhoto);
+          }
+          catch (NullReferenceException ex)
+          {
+               return NotFound(ex.Message);
+          }
      }
 
      [HttpGet]
@@ -40,6 +48,35 @@ public class AlbumsController : Controller
      {
           var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
           return Ok(album!.AlbumID);
+     }
+
+     [HttpGet]
+     [Route("/pCloud/Albums/CheckInDb")]
+     public IActionResult IsInDb(string name)
+     {
+          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault(); 
+          if (album is not null)
+               return Ok(true);
+          else
+               return Ok(false); 
+     }
+
+     [HttpPost]
+     [Route("/pCloud/Albums/AddMultipleAlbumsToDb")]
+     public IActionResult AddMultipleAlbumsToDb([FromBody]List<Album> data)
+     {
+          _db.Albums.AddRange(data);
+          _db.SaveChanges();
+          return Ok(data);
+     }
+
+     [HttpPost]
+     [Route("/pCloud/Albums/DelMultipleFromDb")]
+     public IActionResult DelMultipleFromDb([FromBody]List<Album> data)
+     {
+          _db.Albums.RemoveRange(data);
+          _db.SaveChanges();
+          return Ok(data);
      }
 
 }

@@ -12,93 +12,113 @@
 
 
 <div id="Gallery">
-     <ul>
-          
-          <li><a href="#" id="selectAll">Select All</a></li>
-          <li><a href="#" id="addToDb">Add to Database</a></li>
-          <li><a href="#" id="delFromDb">Delete from Database</a></li>
-     </ul>
-     <section>
-     </section>
-     <section>
-     </section>
+	<ul>
+
+		<li><a href="#" id="selectAll">Select All</a></li>
+		<li><a href="#" id="addToDb">Add to Database</a></li>
+		<li><a href="#" id="delFromDb">Delete from Database</a></li>
+	</ul>
+	<section>
+	</section>
+	<section>
+	</section>
 </div>
 
 
 
 
 @section Scripts {
-     <script>
-          let add = [];
-          let del = [];
+	<script>
+		let add = [];
+		let del = [];
 
-          // JS for selecting all checkboxes
-          $("#selectAll").on('click', function(e) {
-              $("#Gallery section:nth-of-type(1)").find("figure").find("figcaption").find("input[type='checkbox']").each(function(index, item) {
-                      $(item).prop('checked', true);
-              });
+		// JS for selecting all checkboxes
+		$("#selectAll").on('click', function (e) {
+			$("#Gallery section:nth-of-type(1)").find("figure").find("figcaption").find("input[type='checkbox']").each(function (index, item) {
+				$(item).prop('checked', true);
+			});
 
-                $('input:checkbox:checked').map(function() {
-                    // Check if album is in database before doing anything else
-                    let name = this.value;
-                    $.getJSON("/pCloud/Albums/CheckAlbumInDb", { name: name }, function(message) {
-                        if (message === true) { 
-                            // If album is in database, get ID using JSON
-                            $.ajax({ 
-                                method: "POST", 
-                                url: "/pCloud/Albums/GetID", 
-                                data: { name: name },
-                                async: false,
-                                cache: false,
-                                success: function(message) { 
-                                   
-                                    if (message) {
-                                         // Album is in database, add album to del array
-                                        del.push({ 'AlbumID': message });
-                                    } else { 
-                                        // Album is not in database, push to add array
-                                        add.push({ 'AlbumName': name });
-                                    }
-                                },
-                                error: function(error) { 
-                                    console.log(error); 
-                                }
-                                });
-                            
-                        } else { 
-                           
-                        }
-                    });
-                }).get();
-          });
+			$('input:checkbox:checked').map(function () {
+				// Check if album is in database before doing anything else
+				let name = this.value;
+                $.getJSON("/pCloud/Albums/CheckInDb", { name: name }, function (message) {
+                    console.log(message);
+					if (message === true) {
+						// If album is in database, get ID using JSON
+						$.ajax({
+							method: "POST",
+							url: "/pCloud/Albums/GetID",
+							data: { name: name },
+							async: false,
+							cache: false,
+							success: function (message) {
+                                console.log(message);
+								if (message) {
+									// Album is in database, add album to del array
+									del.push({ 'AlbumID': message });
+								} else {
+									// Album is not in database, push to add array
+									add.push({ 'Name': name });
+								}
+							},
+							error: function (error) {
+								console.log(error);
+							}
+						});
 
-
-          $("#addToDb").on('click', function(e) {
-              e.preventDefault();
+                    } else {
+                        add.push({'Name': name});
+                        
+					}
+				});
+			}).get();
+		});
 
 
-                  $.ajax({
-                      url: "/pCloud/Albums/AddMultipleAlbumsToDb",
-                      method: "POST",
-                      contentType: "application/json",
-                      data: JSON.stringify(add),
-                      async: false,
-                      cache: false,
-                      success: function(message) {
-                          console.log(message);
-                      },
-                      error: function(error) {
-                          console.log(error);
-                      }
-                  });
+		$("#addToDb").on('click', function (e) {
+			e.preventDefault();
+            //console.log(add);
 
-          });
-     </script>
+			$.ajax({
+				url: "/pCloud/Albums/AddMultipleAlbumsToDb",
+				method: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(add),
+				async: false,
+				cache: false,
+				success: function (message) {
+					console.log(message);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+
+        });
+
+        $("#delFromDb").on('click', function (e) {
+            $.ajax({
+                url: "/pCloud/Albums/DelMultipleFromDb",
+                method: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(del),
+                async: false,
+                cache: false,
+                success: function (message) {
+                    console.log(message);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+
+	</script>
 
 
-     <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
 
-     <script>
+	<script>
           var token = localStorage.getItem('pcloud_token');
           var locationid = 2;
           var client = pCloudSdk.createClient(token, 'oauth', locationid);
@@ -197,65 +217,50 @@
           } else {
               var folderId = 19500076302;
               client.listfolder(folderId).then(a => {
-                  a.contents.forEach(values => {
-                      
-                      $.get('/pCloud/Albums/GetCoverPic', { name: values.name }, function(data) {
-                          if (data === undefined) {
-                               $("#Gallery section:nth-of-type(1)").append(`
 
-                            <figure>
-                                <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
+                  a.contents.forEach(values => {
+                      //console.log(values);
+
+                      if ($.get('/pCloud/Albums/CheckInDb') === true) {
+                      } else {
+                          $("#Gallery section:nth-of-type(1)").append(`
+                                <figure>
+                                    <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
                         <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>
                         <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z"
                             fill="#ffca28"></path>
                     </svg>
 
-                                <figcaption>
-                                    <a href="/pCloud/Photos/${values.folderid}/${values.name}">${values.name}</a>
-                                    <input type="checkbox" name="cbName" value="${values.name}">
-                                </figcaption>
+                                    <figcaption>
+                                        <a href="/pCloud/Photos/${values.folderid}/${values.name}">${values.name}</a>
+                                        <input type="checkbox" name="cbName" value="${values.name}">
+                                    </figcaption>
                             </figure>
+                          `);
+                      }
 
-                      `);
-                          } else {
-                              $("#Gallery section:nth-of-type(1)").append(`
-                                    <figure>
-                                        <img src="${data}">
-                                        <figcaption>
-                                            <a href="/pCloud/Photos/${values.folderid}/${values.name}">${values.name}</a>
-                                            <input type="checkbox" name="cbName" value="${values.name}">
-                                        </figcaption>
-                                            
-                                    </figure>
-                                        
-                              `);
-                          }
-                      });
-                        
-
-                     
                   });
               });
           }
-     </script>
+	</script>
 
-     <script>
-          $("#login").on('click', function(e) {
-              e.preventDefault();
-              var REDIRECT_URI = 'http://localhost:5051/pCloud/';
-                var CLIENT_ID = 'GJR8uDME26u'
-                window.location.href = `https://my.pcloud.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token`;
+	<script>
+		$("#login").on('click', function (e) {
+			e.preventDefault();
+			var REDIRECT_URI = 'https://www.douglasmcgregor.co.uk/pcloud/';
+			var CLIENT_ID = 'GJR8uDME26u'
+			window.location.href = `https://my.pcloud.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token`;
 
-              const hash = window.location.hash;
-              const params = new URLSearchParams(hash.substring(1));
-              const token = params.get('access_token');
+			const hash = window.location.hash;
+			const params = new URLSearchParams(hash.substring(1));
+			const token = params.get('access_token');
 
-              // Store access token in local store for future use
-              if (token) {
-                  localStorage.setItem('pcloud_token', token);
-              } else {
-                  console.error('No token found in redirect URL');
-              }
-          });
-     </script>
+			// Store access token in local store for future use
+			if (token) {
+				localStorage.setItem('pcloud_token', token);
+			} else {
+				console.error('No token found in redirect URL');
+			}
+		});
+	</script>
 }
