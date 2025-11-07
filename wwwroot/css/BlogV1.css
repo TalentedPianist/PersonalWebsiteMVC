@@ -10,6 +10,13 @@ html {
 body {
   font-family: "Lucida Sans", "Lucida Sans Regular", "Lucida Grande", "Lucida Sans Unicode", Geneva, Verdana, sans-serif;
 }
+@media only screen and (min-width: 1200px) {
+  body {
+    background-image: linear-gradient(to bottom, yellow, white);
+    background-repeat: no-repeat;
+    background-size: 100% 500px;
+  }
+}
 
 html,
 body {
