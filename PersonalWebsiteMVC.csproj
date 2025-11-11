@@ -81,8 +81,6 @@
 	</ItemGroup>
 
 
-	<Target Name="Tailwind" BeforeTargets="Compile">
-		<Exec Command="npx tailwindcss -i ./wwwroot/css/input.css -o ./wwwroot/css/output.css --watch" />
-	</Target>
+
 
 </Project>
