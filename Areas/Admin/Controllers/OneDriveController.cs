@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Helpers;
 using Microsoft.Graph;
-using MyGraphSdk;
 using Microsoft.Kiota.Http.HttpClientLibrary;
 using System.Text;
 
