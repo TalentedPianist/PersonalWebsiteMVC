@@ -315,6 +315,7 @@ try
 
     app.MapGet("/hello", () => "Hello World");
      app.MapGet("/HelloWorld", () => "Hello World!");
+     app.MapGet("/boo", () => "Hi, I'm Casper!");
 
     app.MapGet("/Captcha", (string userResponse) =>
     {
