@@ -39,20 +39,20 @@
 </head>
 
 <body>
-    
+	<nav>
+		<ul>
+			<li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
+			<li><a asp-action="About" asp-controller="Home" asp-area="">About</a></li>
+			<li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
+			<li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
+			<li><a asp-controller="Home" asp-action="Portfolio" asp-area="">Portfolio</a></li>
+			<li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
+
+		</ul>
+	</nav>
           
 		 <header>
-			 <nav>
-				 <ul>
-					 <li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
-					 <li><a asp-action="About" asp-controller="Home" asp-area="">About</a></li>
-					 <li><a asp-action="Index" asp-controller="Home" asp-area="Blog">Blog</a></li>
-					 <li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
-                     <li><a asp-controller="Home" asp-action="Portfolio" asp-area="">Portfolio</a></li>
-					 <li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
-					 
-				 </ul>
-			 </nav>
+			 
 		 </header>
 
 
@@ -136,6 +136,8 @@
      </script>
      <script src="/js/site.js" asp-append-version="true"></script>
      @RenderSection("Scripts", false)
+
+  
 
 </body>
 

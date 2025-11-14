@@ -180,8 +180,22 @@ section {
 
             p {
                 padding-right: 2em;
+                
+
+                @media only screen and (min-width: 1200px) { 
+                    max-width: 1000px;  /* This is the solution to the long paragraph problem on large screens!!!  */
+                }
             }
         }
+
+        
+        @media only screen and (min-width: 1200px)  {
+            width: revert;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+        }
+
     }
 
 
@@ -257,6 +271,10 @@ section {
 
                 p {
                     font-size: x-large;
+
+                    @media only screen and (min-width: 1200px) { 
+                        padding-right: 50em;
+                    }
                 }
 
                 h1 {
@@ -288,8 +306,8 @@ section {
         background-position: center;
         color: black;
         gap: 1em;
-
-
+        flex: 0;
+        
         h1 {
             font-size: 38pt !important;
         }
@@ -700,16 +718,22 @@ section {
     section {
         &:nth-of-type(2) {
             display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1em;
+            grid-template-columns: repeat(4, 30em);
+            gap: 0;
             align-items: center;
             position: relative;
-            margin-top: 1em;
-            margin-bottom: 2em;
-            margin-left: 1em;
+
+            img { 
+                width: 80%;
+            }
+
+            svg { 
+                width: 80%;
+            }
 
             figcaption {
                 margin-top: 1em;
+
 
                 a {
                     text-decoration: revert !important;
@@ -827,10 +851,13 @@ header {
         position: relative;
         align-items: center;
         justify-content: center;
-        background-image: url('/images/bamburgh-beach.jpg');
-        background-position: center;
+        width: 100%;
+        background-image: url('/images/bronte-falls.jpg');
+        background-attachment: fixed; 
+        background-position: top;
         background-size: cover;
         background-repeat: no-repeat;
+        background-color: revert !important;
 
         h1,
         h2,
@@ -850,16 +877,7 @@ header {
 }
 
 nav {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0,0,0,0.3);
-    backdrop-filter: blur(6px);
-    color: #ffffff;
-    padding: 1rem 0;
-    z-index: 1000;
-    transition: background-color 0.3s ease;
+    position: relative;
 
     ul {
         display: flex;
@@ -867,6 +885,12 @@ nav {
         flex: 1;
         align-items: center;
         justify-content: space-evenly;
+        background-color: #323640;
+        
+        @media only screen and (min-width: 1200px) { 
+            padding-top: 2em;
+            padding-bottom: 2em;
+        }
     }
 
     a {
@@ -880,6 +904,10 @@ nav {
 
         &:hover {
             color: #FAF7F0;
+        }
+
+        @media only screen and (min-width: 1200px) { 
+            font-size: x-large;
         }
     }
 }
@@ -895,7 +923,7 @@ main {
     flex-direction: column;
     flex: 1;
     height: 100%;
-    background-color: #F4A261;
+    background-color: lightblue;
     clear: both !important;
 
 
@@ -922,6 +950,10 @@ main {
             article {
             }
         }
+    }
+
+    @media only screen and (min-width: 1200px) { 
+        align-items: center;
     }
 }
 
@@ -999,12 +1031,12 @@ footer {
     clear: both;
 
     @media only screen and (min-width: 768px) {
-       background-color: gold;
-       text-align: center;
-       font-size: large;
-       padding: 1.25rem 0;
-       color: #333;
-       border-top: 1px solid rgba(0,0,0,0.1);
+        background-color: #D9CBBA;
+        text-align: center;
+        font-size: large;
+        padding: 1.25rem 0;
+        color: #333;
+        border-top: 1px solid rgba(0,0,0,0.1);
     }
 }
 
@@ -1016,6 +1048,10 @@ footer {
     align-items: flex-start;
     width: 60%;
     gap: 1em;
+
+    @media only screen and (min-width: 1200px) { 
+        width: 30%;
+    }
 
     p {
         font-size: large;
@@ -1039,17 +1075,25 @@ footer {
 #Sidebar {
     display: flex;
     flex-direction: column;
-    flex: 0;
+    flex: 1;
     font-size: large;
     align-items: flex-start;
     justify-content: flex-start;
    
+    
+    @media only screen and (min-width: 1200px) { 
+        
+    }
 
 
     img {
         width: 30%;
         border-radius: 50%;
         align-self: center;
+
+        @media screen and (min-width: 1200px) { 
+            width: 20%;
+        }
     }
 
     a {
@@ -1066,6 +1110,11 @@ footer {
         padding-bottom: 1em;
         height: 100%;
         min-width: 100%;
+
+        @media only screen and (min-width: 1440px) { 
+            width: 50%;
+            flex-direction: row; 
+        }
 
         @media only screen and (min-width: 600px) {
             gap: 1em;
@@ -1156,6 +1205,8 @@ footer {
     a {
         align-self: flex-start !important;
     }
+
+    
 }
 
 #Container {
@@ -1189,7 +1240,7 @@ footer {
 
         &:nth-of-type(2) {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(3, 30em);
             gap: 5em;
             padding-right: 1em;
             margin-bottom: 1em;

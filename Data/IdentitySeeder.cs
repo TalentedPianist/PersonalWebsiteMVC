@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using PersonalWebsiteMVC.Models;
-using ServiceStack;
 
 namespace PersonalWebsiteMVC.Data
 {

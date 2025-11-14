@@ -155,6 +155,19 @@ section article:first-child {
 section article:first-child p {
   padding-right: 2em;
 }
+@media only screen and (min-width: 1200px) {
+  section article:first-child p {
+    max-width: 1000px; /* This is the solution to the long paragraph problem on large screens!!!  */
+  }
+}
+@media only screen and (min-width: 1200px) {
+  section article {
+    width: revert;
+    align-items: center;
+    align-content: center;
+    justify-content: center;
+  }
+}
 @media only screen and (min-width: 768px) {
   section {
     flex-direction: row;
@@ -223,6 +236,13 @@ section article:first-child p {
   #Home section:nth-of-type(1) p {
     font-size: x-large;
   }
+}
+@media only screen and (min-width: 600px) and (min-width: 1200px) {
+  #Home section:nth-of-type(1) p {
+    padding-right: 50em;
+  }
+}
+@media only screen and (min-width: 600px) {
   #Home section:nth-of-type(1) h1 {
     font-size: 42pt !important;
   }
@@ -249,6 +269,7 @@ section article:first-child p {
     background-position: center;
     color: black;
     gap: 1em;
+    flex: 0;
   }
   #Home h1 {
     font-size: 38pt !important;
@@ -608,13 +629,16 @@ section article:first-child p {
 }
 #Albums section:nth-of-type(2) {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1em;
+  grid-template-columns: repeat(4, 30em);
+  gap: 0;
   align-items: center;
   position: relative;
-  margin-top: 1em;
-  margin-bottom: 2em;
-  margin-left: 1em;
+}
+#Albums section:nth-of-type(2) img {
+  width: 80%;
+}
+#Albums section:nth-of-type(2) svg {
+  width: 80%;
 }
 #Albums section:nth-of-type(2) figcaption {
   margin-top: 1em;
@@ -721,10 +745,13 @@ header {
     position: relative;
     align-items: center;
     justify-content: center;
-    background-image: url("/images/bamburgh-beach.jpg");
-    background-position: center;
+    width: 100%;
+    background-image: url("/images/bronte-falls.jpg");
+    background-attachment: fixed;
+    background-position: top;
     background-size: cover;
     background-repeat: no-repeat;
+    background-color: revert !important;
   }
   header h1,
   header h2,
@@ -742,16 +769,7 @@ header {
 }
 
 nav {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(6px);
-  color: #ffffff;
-  padding: 1rem 0;
-  z-index: 1000;
-  transition: background-color 0.3s ease;
+  position: relative;
 }
 nav ul {
   display: flex;
@@ -759,6 +777,13 @@ nav ul {
   flex: 1;
   align-items: center;
   justify-content: space-evenly;
+  background-color: #323640;
+}
+@media only screen and (min-width: 1200px) {
+  nav ul {
+    padding-top: 2em;
+    padding-bottom: 2em;
+  }
 }
 nav a {
   color: #ffffff;
@@ -772,6 +797,11 @@ nav a {
 nav a:hover {
   color: #FAF7F0;
 }
+@media only screen and (min-width: 1200px) {
+  nav a {
+    font-size: x-large;
+  }
+}
 
 .top-row,
 article {
@@ -784,7 +814,7 @@ main {
   flex-direction: column;
   flex: 1;
   height: 100%;
-  background-color: #F4A261;
+  background-color: lightblue;
   clear: both !important;
 }
 @media only screen and (min-width: 768px) {
@@ -804,6 +834,11 @@ main {
     flex-direction: row;
     flex: 1;
     align-items: flex-start;
+  }
+}
+@media only screen and (min-width: 1200px) {
+  main {
+    align-items: center;
   }
 }
 
@@ -876,7 +911,7 @@ footer {
 }
 @media only screen and (min-width: 768px) {
   footer {
-    background-color: gold;
+    background-color: #D9CBBA;
     text-align: center;
     font-size: large;
     padding: 1.25rem 0;
@@ -893,6 +928,11 @@ footer {
   align-items: flex-start;
   width: 60%;
   gap: 1em;
+}
+@media only screen and (min-width: 1200px) {
+  .socialMedia {
+    width: 30%;
+  }
 }
 .socialMedia p {
   font-size: large;
@@ -912,7 +952,7 @@ footer {
 #Sidebar {
   display: flex;
   flex-direction: column;
-  flex: 0;
+  flex: 1;
   font-size: large;
   align-items: flex-start;
   justify-content: flex-start;
@@ -921,6 +961,11 @@ footer {
   width: 30%;
   border-radius: 50%;
   align-self: center;
+}
+@media screen and (min-width: 1200px) {
+  #Sidebar img {
+    width: 20%;
+  }
 }
 #Sidebar a {
   color: revert !important;
@@ -933,6 +978,12 @@ footer {
   padding-bottom: 1em;
   height: 100%;
   min-width: 100%;
+}
+@media only screen and (min-width: 1440px) {
+  #Sidebar section {
+    width: 50%;
+    flex-direction: row;
+  }
 }
 @media only screen and (min-width: 600px) {
   #Sidebar section {
@@ -1039,7 +1090,7 @@ footer {
 }
 #Portfolio section:nth-of-type(2) {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, 30em);
   gap: 5em;
   padding-right: 1em;
   margin-bottom: 1em;
