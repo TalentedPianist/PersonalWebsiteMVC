@@ -1,28 +1,21 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
-@using HtmlAgilityPack
-@using System.Text
+@using Elastic.Clients.Elasticsearch
+@using Elastic.Transport
+@using PersonalWebsiteMVC.Models
 @model SearchModel
 
-<h1 class="bg bg-info p-1">Create</h1>
-<a asp-action="Index" asp-controller="Search" asp-area="Admin" class="btn btn-secondary">Back</a>
+<h1 class="bg bg-info">Create</h1>
+<a asp-action="Index" asp-area="Admin" class="btn btn-secondary">Back</a>
 
-@TempData["Message"]
-
-
-
-
-
-<form method="post" asp-action="CreateIndex" asp-controller="Search" asp-area="Admin">
-    <div>
-        <label>URL:</label>
-        <input name="Url" asp-for="Url" class="form-control">
-    </div>
-    <button class="btn btn-primary" type="submit">Submit</button>
+<form method="post" asp-action="CreateIndex">
+	<div>
+		<label>Url:</label>
+		<input asp-for="Url" class="form-control">
+	</div>
+	<button type="submit" class="btn btn-primary">Create</button>
 </form>
-
 

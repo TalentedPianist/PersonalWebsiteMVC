@@ -1,23 +1,11 @@
-﻿using SolrNet.Attributes;
-
-namespace PersonalWebsiteMVC.Models
+﻿namespace PersonalWebsiteMVC.Models
 {
-    public class SearchModel
-    {
-          [SolrUniqueKey("id")]
-          
-        public string? Id { get; set; } 
-          [SolrField("Title")]
-        public string? Title { get; set; }
-          [SolrField("Excerpt")]
-        public string? Excerpt { get; set; }
-          [SolrField("Page")]
-        public string? Page { get; set; }
-          [SolrField("Url")]
-        public string? Url { get; set; }
-          [SolrField("Body")]
-        public string? Body { get; set; }
-          [SolrField("IndexDate")]
-        public DateTime? IndexDate { get; set; } 
-    }
+     public class SearchModel
+     {
+          public int Id { get; set; }
+          public string? Title { get; set; }
+          public string? Link { get; set; }
+          public string? Body { get; set; }
+
+     }
 }

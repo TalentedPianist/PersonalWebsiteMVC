@@ -1,58 +1,8 @@
 ﻿@*
-	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
-@using CommonServiceLocator
-@using Microsoft.AspNetCore.Http
-@using Elastic.Clients.Elasticsearch
-@using Elastic.Clients.Elasticsearch.QueryDsl
-@using HtmlAgilityPack
-@using System.Net
-@using System.Linq
-@using System.Text
-@using SolrNet
-@using SolrNet.Exceptions
-@inject IWebHostEnvironment _env
-@model IEnumerable<SearchModel>
-
-<h1 class="bg bg-info p-1">Search</h1>
-<p><a asp-action="Create" asp-controller="Search" asp-area="Admin">Create</a> new search document.</p>
 
 
-@TempData["Message"]
 
-<table>
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Body</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-          {
-               <tr>
-                   <td>@item.Id</td>
-                   <td>@item.Title</td>
-                   <td>@item.Body</td>
-                   <td><a asp-action="Update" asp-area="Admin" asp-controller="Search" asp-area="Admin" asp-route-id="@item.Id" class="btn btn-primary">Update</a></td>
-                   <td><a asp-action="Details" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id" class="btn btn-primary">Details</a></td>
-                   <td><a asp-action="Delete" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id" class="btn btn-danger">Delete</a></td>
-                </tr>
-          }
-     </tbody>
-</table>
-
-
-@section Scripts {
-    <script>
-        $("#indexLink").on('click', function(e) { 
-            e.preventDefault();
-            console.log("Link was clicked!");
-        });
-
-    </script>
-}

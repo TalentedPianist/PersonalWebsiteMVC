@@ -5,12 +5,13 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc;
 using PersonalWebsiteMVC.Models;
-using SolrNet;
-using SolrNet.Commands.Parameters;
-using SolrNet.Exceptions;
-using SolrNet.Impl;
 using System.Net;
 using System.Text;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
+
+// https://blexin.com/en/blog-en/how-to-integrate-elasticsearch-in-asp-net-core/
+// https://www.c-sharpcorner.com/article/how-to-integrate-elasticsearch-in-asp-net-core/
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
@@ -18,40 +19,28 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
      [Area("Admin")]
      public class SearchController : Controller
      {
-          private ISolrOperations<SearchModel> _solr;
+          public ElasticsearchClient _client { get; set; }
 
-          public SearchController(ISolrOperations<SearchModel> solr)
+          public SearchController(ElasticsearchClient client)
           {
-               _solr = solr;
+               _client = client;
           }
 
           public IActionResult Index()
           {
-
-               var q = _solr.Query(SolrQuery.All);
-               StringBuilder sb = new StringBuilder();
-             
-               return View(q);
-          }
-
-
-          public IActionResult Create()
-          {
                return View();
           }
 
-          [HttpPost]
-          public IActionResult CreateIndex([FromForm(Name="Url")]string Url, SearchModel model)
+          public IActionResult Create()
           {
-               string body = ParseBody(Url);
-               string title = ParseTitle(Url);
-               model.Body = body;
-               model.Title = title;
-               _solr.Add(model);
-               _solr.Commit();
 
-               TempData["Message"] = model.Url;
-               return View("~/Areas/Admin/Views/Search/Create.cshtml");
+               return View(_client.);
+          }
+
+          [HttpPost]
+          public IActionResult CreateIndex()
+          {
+               return View("Create");
           }
 
           private string ParseBody(string url)
@@ -76,67 +65,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return nodes.InnerText;
           }
 
-          
-          public IActionResult Delete(string id)
-          {
-               var result = _solr.Query(new SolrQueryByField("id", id));
-               SearchModel model = new SearchModel();
-               model.Id = result[0].Id;
-               model.Title = result[0].Title;
-               model.Url = result[0].Url;
-               model.Body = result[0].Body;
-               return View(model);
-          }
-
-          public IActionResult DeleteAll()
-          {
       
-               _solr.Delete(SolrQuery.All);
-               _solr.Commit();
-               return RedirectToAction("Index");
-          }
-
-          public IActionResult Details(string id)
-          {
-
-               var result = _solr.Query(new SolrQueryByField("id", id));
-               SearchModel model = new SearchModel();
-               model.Id = result[0].Id;
-               model.Title = result[0].Title;
-               model.Url = result[0].Url;
-               model.Body = result[0].Body;
-               return View(model);
-          }
-
-          public IActionResult Update(string id)
-          {
-               var result = _solr.Query(new SolrQueryByField("id", id));
-               SearchModel model = new SearchModel();
-               model.Id = result[0].Id;
-               model.Title = result[0].Title;
-               model.Url = result[0].Url;
-               model.Body = result[0].Body;
-               return View(model);
-          }
-
-          [HttpPost]
-          [Microsoft.AspNetCore.Mvc.Route("/Admin/Search/UpdateSolr")]
-          public IActionResult UpdateSolr(SearchModel model, string id)
-          {
-               _solr.Add(model);
-               _solr.Commit();
-               return RedirectToAction("Index");
-          }
-
-          [HttpPost]
-          [Microsoft.AspNetCore.Mvc.Route("/Admin/Search/DeleteSolr")]
-          public IActionResult DeleteSolr(SearchModel model, string id)
-          {
-               var result = _solr.Query(new SolrQueryByField("id", id));
-               _solr.Delete(result);
-               _solr.Commit();
-               return RedirectToAction("Index");
-          }
      }
 
 }

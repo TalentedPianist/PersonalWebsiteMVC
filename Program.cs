@@ -25,7 +25,9 @@ using SolrNet;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
-
+using Aspire.Elastic.Clients.Elasticsearch;
+using Elastic.Clients.Elasticsearch;
+using Elastic.Transport;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -215,9 +217,9 @@ try
 
     builder.Services.AddSwaggerGen();
 
-     builder.Services.AddSolrNet<SearchModel>($"http://localhost:8983/solr/SearchModel");
+     var settings = new ElasticsearchClientSettings(new Uri("http://localhost:9200")).Authentication(new BasicAuthentication("elastic", "Inkyfrog1"));
 
-
+     builder.AddElasticsearchClient("elasticsearch");
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")
