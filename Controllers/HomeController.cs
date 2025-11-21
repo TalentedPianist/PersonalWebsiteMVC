@@ -83,8 +83,8 @@ namespace PersonalWebsiteMVC.Controllers
 
           public IActionResult Portfolio([FromQuery(Name="pageNumber")]int? page)
           {
-               var pageNumber = page ?? 1; 
-               var model = _db.Portfolio.ToPagedList(pageNumber, 10);
+               var pageNumber = page ?? 1;
+               var model = _db.Portfolio.OrderByDescending(p => p.DateCreated).ToPagedList(pageNumber, 10);
                return View(model);
           }
 

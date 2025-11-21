@@ -1095,3 +1095,9 @@ footer {
   padding-right: 1em;
   margin-bottom: 1em;
 }
+@media only screen and (min-width: 768px) {
+  #Portfolio section:nth-of-type(2) {
+    grid-template-columns: repeat(3, 15em);
+    gap: 2em;
+  }
+}

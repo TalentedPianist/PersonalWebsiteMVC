@@ -28,8 +28,10 @@ else
 		@foreach (var item in Model)
 		{
 			<figure>
-				<img src="@item.ImageUrl">
-				<figcaption>@item.Name</figcaption>
+				<a href="@item.Url" target="_blank"><img src="@item.ImageUrl"></a>
+				<figcaption>
+				<a href="@item.Url" target="_blank">@item.Name</a>
+				</figcaption>
 			</figure>
 		}
 		</section>

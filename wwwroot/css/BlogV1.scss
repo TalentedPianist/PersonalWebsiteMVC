@@ -1244,6 +1244,12 @@ footer {
             gap: 5em;
             padding-right: 1em;
             margin-bottom: 1em;
+
+            @media only screen and (min-width: 768px) {
+                grid-template-columns: repeat(3, 15em);
+                gap: 2em;
+                
+            }
         }
     }
 }
