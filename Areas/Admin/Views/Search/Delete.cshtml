@@ -1,0 +1,16 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SearchModel
+
+<h1 class="bg bg-info">Delete</h1>
+<a asp-action="Index" asp-area="Admin" class="btn btn-secondary">Back</a>
+
+<p>Are you sure you want to delete @Model.Title from search?</p>
+
+<form method="post" asp-action="DeleteSearch">
+    <input type="hidden" name="SearchID" value="@Model.Id">
+    <button type="submit" class="btn btn-primary">Yes</button>
+</form>

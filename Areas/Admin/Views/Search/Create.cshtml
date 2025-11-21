@@ -11,10 +11,12 @@
 <h1 class="bg bg-info">Create</h1>
 <a asp-action="Index" asp-area="Admin" class="btn btn-secondary">Back</a>
 
-<form method="post" asp-action="CreateIndex">
+@TempData["Message"]
+
+<form method="post" asp-action="CreateDoc">
 	<div>
 		<label>Url:</label>
-		<input asp-for="Url" class="form-control">
+		<input asp-for="Link" class="form-control">
 	</div>
 	<button type="submit" class="btn btn-primary">Create</button>
 </form>

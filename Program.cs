@@ -217,9 +217,12 @@ try
 
     builder.Services.AddSwaggerGen();
 
-     var settings = new ElasticsearchClientSettings(new Uri("http://localhost:9200")).Authentication(new BasicAuthentication("elastic", "Inkyfrog1"));
+     builder.Services.AddSingleton<ElasticsearchClient>(sp =>
+     {
+          var settings = new ElasticsearchClientSettings(new Uri("http://localhost:9200")).Authentication(new BasicAuthentication("elastic", "Inkyfrog1")).DefaultIndex("Blog");
 
-     builder.AddElasticsearchClient("elasticsearch");
+          return new ElasticsearchClient(settings);
+     });
 
     var emailConfig = builder.Configuration
         .GetSection("MailSettings")

@@ -9,6 +9,11 @@ using System.Net;
 using System.Text;
 using Elastic.Clients.Elasticsearch;
 using Elastic.Transport;
+using Elastic.Clients.Elasticsearch.QueryDsl;
+using ServiceStack.Text;
+using SharpCompress;
+using NuGet.Protocol;
+using ServiceStack;
 
 // https://blexin.com/en/blog-en/how-to-integrate-elasticsearch-in-asp-net-core/
 // https://www.c-sharpcorner.com/article/how-to-integrate-elasticsearch-in-asp-net-core/
@@ -28,19 +33,64 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Index()
           {
-               return View();
+               var docs = _client.Search<SearchModel>(s => s
+                     .Query(s => s.MatchAll())).Documents.ToList();
+             
+               return View(docs);
+
           }
 
           public IActionResult Create()
           {
 
-               return View(_client.);
+               return View();
           }
 
           [HttpPost]
-          public IActionResult CreateIndex()
+          [Microsoft.AspNetCore.Mvc.Route("/Admin/Search/CreateIndex")]
+          public async Task<IActionResult> CreateIndex()
           {
-               return View("Create");
+               var result = await _client.Indices.CreateAsync("blog");
+               TempData["Message"] = result.DebugInformation;
+               return View("~/Areas/Admin/Views/Search/Index.cshtml");
+          }
+
+          [HttpPost]
+          public async Task<IActionResult> CreateDoc(SearchModel model)
+          {
+               Random rnd = new Random();
+               var doc = new SearchModel
+               {
+                    Id = rnd.Next(1, 100),
+                    Title = ParseTitle(model.Link!),
+                    Link = model.Link,
+                    Body = ParseBody(model.Link!)
+               };
+               var response = await _client.IndexAsync(doc, x => x.Index("blog"));
+
+
+               TempData["Message"] = response.DebugInformation;
+
+               return View("~/Areas/Admin/Views/Search/Create.cshtml");
+          }
+
+          public async Task<IActionResult> Delete(int id)
+          {
+               var response = await _client.GetAsync<SearchModel>(id, x => x.Index("blog"));
+               var model = new SearchModel
+               {
+                   Title = response.Source!.Title,
+                   Link = response.Source.Link,
+                   Body = response.Source.Body
+               };
+               return View(model);
+          }
+
+          [HttpPost]
+          public async Task<IActionResult> DeleteSearch([FromForm(Name="SearchID")]int Id)
+          {
+               var response = await _client.DeleteAsync("blog", Id);
+               return RedirectToAction("Index");
           }
 
           private string ParseBody(string url)
@@ -65,7 +115,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return nodes.InnerText;
           }
 
-      
+
      }
 
 }
