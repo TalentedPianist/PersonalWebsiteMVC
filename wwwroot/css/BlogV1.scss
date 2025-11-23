@@ -929,7 +929,6 @@ main {
 
     @media only screen and (min-width: 768px) {
         padding-top: 0.5em;
-        padding-bottom: 2em;
         padding-left: 1em;
 
         h1 {
@@ -944,7 +943,7 @@ main {
             display: flex;
             flex-direction: row;
             flex: 1;
-            align-items: flex-start;
+         
 
 
             article {
@@ -952,7 +951,7 @@ main {
         }
     }
 
-    @media only screen and (min-width: 1200px) { 
+    @media screen and (min-width: 1400px) { 
         align-items: center;
     }
 }
@@ -1221,6 +1220,9 @@ footer {
 
 
 #Portfolio {
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
 
     section {
         &:nth-of-type(1) {
@@ -1233,7 +1235,8 @@ footer {
                 color: #333;
                 line-height: 1.6;
                 margin-bottom: 2rem;
-                max-width: 750px;
+             
+                padding-right: 10em;
 
             }
         }
@@ -1246,10 +1249,17 @@ footer {
             margin-bottom: 1em;
 
             @media only screen and (min-width: 768px) {
-                grid-template-columns: repeat(3, 15em);
+                grid-template-columns: repeat(2, 30em);
                 gap: 2em;
+
+                figure { 
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1; 
+                }
                 
             }
+
         }
     }
 }
