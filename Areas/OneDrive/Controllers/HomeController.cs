@@ -2,6 +2,8 @@
 using Microsoft.Graph;
 using PersonalWebsiteMVC.Areas.OneDrive.Helpers;
 using Azure.Identity;
+using System.Text;
+using Microsoft.Graph.Models;
 
 
 namespace PersonalWebsiteMVC.Areas.OneDrive.Controllers
@@ -20,18 +22,9 @@ namespace PersonalWebsiteMVC.Areas.OneDrive.Controllers
 
           public async Task<IActionResult> Index()
           {
-               try
-               {
-                    var me = await _graphClient.Users["douglas@douglasmcgregor.co.uk"].GetAsync();
-                    TempData["Message"] = me!.GivenName;
-                    await Task.CompletedTask;
-                    return View();
-               }
-               catch (Microsoft.Graph.Models.ODataErrors.ODataError e)
-               {
-                    TempData["Message"] = e.Message;
-                    return View();
-               }
+               var item = await _graphClient.Users["douglas@douglasmcgregor.co.uk"].Drive.GetAsync();
+               TempData["Message"] = item!.Root;
+               return View();
           }
 
 
