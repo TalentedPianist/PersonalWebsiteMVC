@@ -33,9 +33,8 @@
                          <figure>
                               <img src="@album.CoverPhoto">
                               <figcaption>
-                                   <a asp-action="Index"
-                                      asp-controller="Album"
-                                      asp-route-name="@album.Name" asp-route-id="@album.AlbumID">@album.Name</a>
+                                   <a asp-controller="Album"
+                                      asp-route-Name="@album.Name" asp-route-id="@album.AlbumID" asp-action="Index">@album.Name</a >
                               </figcaption>
                          </figure>
                     }

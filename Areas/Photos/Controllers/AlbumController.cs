@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using SharpCompress;
+using System.Text;
 using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Photos.Controllers
@@ -20,18 +22,15 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         }
 
 
-        [Microsoft.AspNetCore.Mvc.Route("Photos/Album")]
-        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
+        [Microsoft.AspNetCore.Mvc.Route("Photos/{Name}")]
+        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page, string Name, [FromQuery(Name="id")]int id)
         {
-            int id = Convert.ToInt32(_http.HttpContext!.Request.Query["id"]);
+            
             PhotosViewModel model = new PhotosViewModel();
             var pageNumber = page ?? 1;
             model.PagedPhotos = _db.Photos.Where(p => p.AlbumID == id).ToPagedList(pageNumber, 12);
             model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
 
-
-            var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
-            ViewBag.AlbumName = album!.Name;
 
             return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }

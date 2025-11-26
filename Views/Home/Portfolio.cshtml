@@ -8,7 +8,7 @@
 @using X.Web.PagedList
 @model IPagedList<Portfolio>
 
-<h1>Portfolio</h1>
+
 
 @if (Model.Count() == 0)
 {
@@ -18,24 +18,25 @@ else
 {
 	
 
-	<div id="Portfolio">
-		<section>
-			<p>Welcome to my portfolio - a collection of projects I created during my degree.  Each project reflects a stage in my journey as a developer, exploring design, functionality and useability.</p>
+<div id="Portfolio">
+	<h1>Portfolio</h1>
+	<section>
+		<p>Welcome to my portfolio - a collection of projects I created during my degree.  Each project reflects a stage in my journey as a developer, exploring design, functionality and useability.</p>
 
-			<p>These projects showcase functionality built using React, PHP, HTML5, CSS3 and JavaScript.  Click on an image to view the project.</p>
-		</section>
-		<section>
+		<p>These projects showcase functionality built using React, PHP, HTML5, CSS3 and JavaScript.  Click on an image to view the project.</p>
+	</section>
+	<section>
 		@foreach (var item in Model)
 		{
 			<figure>
 				<a href="@item.Url" target="_blank"><img src="@item.ImageUrl"></a>
 				<figcaption>
-				<a href="@item.Url" target="_blank">@item.Name</a>
+					<a href="#targetElement" data-id="@item.PortfolioID" class="fl">@item.Name</a>
 				</figcaption>
 			</figure>
 		}
-		</section>
-	</div>
+	</section>
+</div>
 
 	<p>Currently showing page @Model.PageNumber of @Model.PageCount portfolio items.</p>
 
@@ -46,5 +47,23 @@ else
 				LiElementClasses = new string[] { "page-item" },
 				PageClasses = new String[] { "page-link" },
 			});
+
+	
+
+	<div id="targetElement" class="hidden">
+		Lightbox
+	</div>
+}
+
+@section Scripts {
+	<script>
+		$(".fl").featherlight({
+			afterOpen: function (e) {
+				let id = $(e.target).data('id');
+				console.log(id);
+			}
+		});
+	
+	</script>
 }
 

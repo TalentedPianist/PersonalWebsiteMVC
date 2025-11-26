@@ -23,7 +23,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                _httpClient = httpClient;
           }
 
-          [Route("Areas/Blog/Views/Index")]
+         
           [Route("Blog")]
           public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
           {
@@ -37,17 +37,11 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 
           }
 
-          [Route("Blog/SinglePost/{id}")]
-          public IActionResult SinglePost(int? id, [FromQuery(Name = "pageNumber")] int? page)
+          [Route("/Blog/{title}")]
+          public IActionResult Post(string title)
           {
-               BlogCommentViewModel model = new BlogCommentViewModel();
-               model.Post = _db.Posts.Where(p => p.PostID == id).FirstOrDefault();
-               var pageNumber = page ?? 1;
-               var strId = Convert.ToInt32(id);
-               model.PagedComments = (PagedList<Comments>?)_db.Comments.Where(c => c.PostID == strId).OrderByDescending(c => c.CommentDate).ToPagedList<Comments>(pageNumber, 1);
-               model.Comments = _db.Comments.Where(c => c.PostID == strId).OrderBy(c => c.CommentDate).ToList();
-
-               return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
+               var model = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
+               return View("~/Areas/Blog/Views/Shared/SinglePost", model);
           }
 
 

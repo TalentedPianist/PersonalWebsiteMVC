@@ -1,6 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Components
 @*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
@@ -9,207 +9,215 @@
 @TempData["Message"]
 
 @{
-    ViewData["Title"] = "Home Page";
-    var data = new ImportMapDefinition(
-    new Dictionary<string, string>
-    {
+	ViewData["Title"] = "Home Page";
+	var data = new ImportMapDefinition(
+	new Dictionary<string, string>
+	{
 { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
 { "ckeditor5/", "/lib/ckeditor5/" },
-    }, null, null);
+			}, null, null);
 }
 
 <div id="Photos">
 
-    <h1>@ViewBag.AlbumName</h1>
+	<h1>@ViewBag.AlbumName</h1>
 
 
-    <section>
+	<section>
+		@foreach (var photo in Model.PagedPhotos!)
+			{
+				@photo.Name
 
-        @foreach (var photo in Model.PagedPhotos!)
-        {
+				<figure>
+					<a class="gallery" href="@photo.ImageUrl" data-featherlight-gallery
+					   data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID">
+						<img src="@photo.ImageUrl" data-id="@photo.AlbumID" data-name="@photo.Name">
+					</a>
 
-            <figure>
-                <a class="gallery" href="@photo.ImageUrl" data-featherlight-gallery
-                    data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID"><img
-                        src="@photo.ImageUrl" data-id="@photo.AlbumID" data-name="@photo.Name"></a>
+					<figcaption>@photo.Name</figcaption>
 
-                <figcaption>@photo.Name</figcaption>
+				</figure>
 
-            </figure>
+			}
+		
 
-        }
+	</section>
+	<section>
+		<p>You are on page @Model.PagedPhotos!.PageNumber of @Model.PagedPhotos.PageCount.</p>
 
-    </section>
-    <section>
-        <p>You are on page @Model.PagedPhotos.PageNumber of @Model.PagedPhotos.PageCount.</p>
-
-        @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new { pageNumber =
-        page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),
-                new PagedListRenderOptions
-                {
-                    DisplayItemSliceAndTotal = false,
-                    LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new String[] { "page-link" },
-                    UlElementClasses = new[] { "pagination", "justify-content-center", "mt-3" },
-                })
-    </section>
+		@Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new
+		{
+			pageNumber =
+		page,
+			area = "Photos",
+			name = Context.Request.Query["name"],
+			id = Context.Request.Query["id"]
+		}),
+				new PagedListRenderOptions
+				{
+					DisplayItemSliceAndTotal = false,
+					LiElementClasses = new string[] { "page-item" },
+					PageClasses = new String[] { "page-link" },
+					UlElementClasses = new[] { "pagination", "justify-content-center", "mt-3" },
+				})
+	</section>
 </div>
 
 
 
 @section Scripts {
 
-    <script>
+	<script>
 
-        $('a.gallery').featherlightGallery({
-            galleryFadeIn: 100,
-            galleryFadeOut: 300,
-            beforeContent: function (e) {
-                let content = this.$content;
-                $(content).empty();
-            },
-            afterContent: function (e) {
+		$('a.gallery').featherlightGallery({
+			galleryFadeIn: 100,
+			galleryFadeOut: 300,
+			beforeContent: function (e) {
+				let content = this.$content;
+				$(content).empty();
+			},
+			afterContent: function (e) {
 
-                let target = this.$currentTarget[0];
-                let pName = $(target).data('name');
-                let albumId = $(target).data('album-id');
-         
-                let instance = this.$instance;
-                //$(this.$instance).find('.featherlight-content').html('Hello World!');
+				let target = this.$currentTarget[0];
+				let pName = $(target).data('name');
+				let albumId = $(target).data('album-id');
 
-                $.ajax({
-                    method: "POST",
-                    url: "/Album/GetPhoto",
-                    data: { name: pName, albumID: albumId, imgHref: target.href },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        //console.log(message);
-       
-                        $(instance).find('.featherlight-content').html(`
-            
-                                                        ${message}
-                                                    `);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
+				let instance = this.$instance;
+				//$(this.$instance).find('.featherlight-content').html('Hello World!');
 
-                let comments = instance.find('#Comments .comment');
-                let pager = instance.find('.pagination-container');
+				$.ajax({
+					method: "POST",
+					url: "/Album/GetPhoto",
+					data: { name: pName, albumID: albumId, imgHref: target.href },
+					async: false,
+					cache: false,
+					success: function (message) {
+						//console.log(message);
 
-                let numItems = comments.length;
-                let perPage = 4;
+						$(instance).find('.featherlight-content').html(`
 
-                comments.slice(perPage).hide();
+															${message}
+														`);
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				});
 
-                $(pager).pagination({
-                    items: numItems,
-                    itemsOnPage: perPage,
-                    onPageClick: function (pageNumber, e) {
-                        e.preventDefault();
-                        var showFrom = perPage * (pageNumber - 1);
-                        var showTo = showFrom + perPage;
-                        comments.hide().slice(showFrom, showTo).show();
-                    }
-                });
+				let comments = instance.find('#Comments .comment');
+				let pager = instance.find('.pagination-container');
 
-                let captcha = instance.find('#g-recaptcha');
+				let numItems = comments.length;
+				let perPage = 4;
 
-                if (captcha) {
-                    grecaptcha.render('g-recaptcha', {
-                        'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz'
-                    });
-                }
+				comments.slice(perPage).hide();
 
-                // Note that [0] needs to be added to the instance to return HTML and without [0] for jQuery function.
+				$(pager).pagination({
+					items: numItems,
+					itemsOnPage: perPage,
+					onPageClick: function (pageNumber, e) {
+						e.preventDefault();
+						var showFrom = perPage * (pageNumber - 1);
+						var showTo = showFrom + perPage;
+						comments.hide().slice(showFrom, showTo).show();
+					}
+				});
 
+				let captcha = instance.find('#g-recaptcha');
 
+				if (captcha) {
+					grecaptcha.render('g-recaptcha', {
+						'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz'
+					});
+				}
 
-                let ckElement = instance.find('#ckeditor1')[0];
-                ClassicEditor.create(ckElement, {
-                    licenseKey: 'GPL',
-                    plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
-                })
-                    .then(editor => {
-                        $("#commentForm").on('submit', function (e) {
-                            e.preventDefault();
-
-                            let name = instance.find('#name')[0]
-                            let email = instance.find('#email')[0];
-                            let website = instance.find('#website')[0];
-                            let message = editor.getData();
-                            let photoId = document.forms[0]['photoID'].value;
-                            let strCaptcha = document.forms[0]['g-recaptcha-response'].value;
-                            
-
-
-                            let errors = [];
-
-                            if (!name.validity.valid) {
-                                $(name).parent().find('.error').text('Please enter your name.');
-                                $(name).addClass('inputError');
-                                errors.push("Please enter your name.");
-                            } else {
-                                $(name).parent().find('.error').text('');
-                                $(name).removeClass('inputError');
-                            }
-
-                            if (!email.validity.valid) {
-                                $(email).parent().find('.error').text('Please enter your email address.');
-                                $(email).addClass('inputError');
-                                errors.push("Please enter your email address.");
-                            } else {
-                                $(email).parent().find('.error').text('');
-                                $(email).removeClass('inputError');
-                            }
-
-                            if (editor.getData() === '') {
-                                $(".ck").parent().find('.error').text('Please enter a message.');
-                                $(".ck").addClass('inputError');
-                                errors.push("Please enter a message.");
-                            } else {
-                                $(".ck").parent().find('.error').text('');
-                                $(".ck").removeClass('inputError');
-                            }
-
-                            if (errors.length === 0) {
-                                // No errors, add comment to database
-                                $.ajax({
-                                    method: "POST",
-                                    url: "/Photo/AddComment",
-                                    data: { name: name.value, email: email.value, website: website.value, message: editor.getData(), photoID: photoId, captchaResponse: strCaptcha },
-                                    async: false,
-                                    cache: false,
-                                    success: function (message) {
-                                        console.log(message);
-                                        $("#Comments").append(`
-                                            <hr>
-                                            <div class="flex flex-row flex-1">
-                                                <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
-                                                <p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM D')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
-                                            </div>
-                                            ${message.CommentContent}
-                                        `);
-                                    },
-                                    error: function (error) {
-                                        console.log(error);
-                                    }
-                                });
-                            } else {
-                            }
-                        });
-                    })
-                    .catch(error => {
-                        console.log(error);
-                    });
-            }
-        });
+				// Note that [0] needs to be added to the instance to return HTML and without [0] for jQuery function.
 
 
 
-    </script>
+				let ckElement = instance.find('#ckeditor1')[0];
+				ClassicEditor.create(ckElement, {
+					licenseKey: 'GPL',
+					plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
+				})
+					.then(editor => {
+						$("#commentForm").on('submit', function (e) {
+							e.preventDefault();
+
+							let name = instance.find('#name')[0]
+							let email = instance.find('#email')[0];
+							let website = instance.find('#website')[0];
+							let message = editor.getData();
+							let photoId = document.forms[0]['photoID'].value;
+							let strCaptcha = document.forms[0]['g-recaptcha-response'].value;
+
+
+
+							let errors = [];
+
+							if (!name.validity.valid) {
+								$(name).parent().find('.error').text('Please enter your name.');
+								$(name).addClass('inputError');
+								errors.push("Please enter your name.");
+							} else {
+								$(name).parent().find('.error').text('');
+								$(name).removeClass('inputError');
+							}
+
+							if (!email.validity.valid) {
+								$(email).parent().find('.error').text('Please enter your email address.');
+								$(email).addClass('inputError');
+								errors.push("Please enter your email address.");
+							} else {
+								$(email).parent().find('.error').text('');
+								$(email).removeClass('inputError');
+							}
+
+							if (editor.getData() === '') {
+								$(".ck").parent().find('.error').text('Please enter a message.');
+								$(".ck").addClass('inputError');
+								errors.push("Please enter a message.");
+							} else {
+								$(".ck").parent().find('.error').text('');
+								$(".ck").removeClass('inputError');
+							}
+
+							if (errors.length === 0) {
+								// No errors, add comment to database
+								$.ajax({
+									method: "POST",
+									url: "/Photo/AddComment",
+									data: { name: name.value, email: email.value, website: website.value, message: editor.getData(), photoID: photoId, captchaResponse: strCaptcha },
+									async: false,
+									cache: false,
+									success: function (message) {
+										console.log(message);
+										$("#Comments").append(`
+												<hr>
+												<div class="flex flex-row flex-1">
+													<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
+													<p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM D')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
+												</div>
+												${message.CommentContent}
+											`);
+									},
+									error: function (error) {
+										console.log(error);
+									}
+								});
+							} else {
+							}
+						});
+					})
+					.catch(error => {
+						console.log(error);
+					});
+			}
+		});
+
+
+
+	</script>
 
 
 }

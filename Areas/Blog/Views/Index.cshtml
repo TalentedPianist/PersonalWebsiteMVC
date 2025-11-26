@@ -47,7 +47,7 @@
                     @RemoveHTMLTags(result)
 
 
-                    <a asp-action="SinglePost" asp-area="Blog" asp-route-id="@post.PostID" class="btn btn-primary">Read More</a>
+                    <a asp-area="Blog" asp-action="Post" asp-route-title="@post.PostTitle" class="btn btn-primary">Read More</a>
 
                 }
                 </div>
