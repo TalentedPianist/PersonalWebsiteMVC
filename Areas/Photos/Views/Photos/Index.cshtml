@@ -12,16 +12,15 @@
     <h1>@ViewBag.AlbumName</h1>
 
     <section>
-        @if (Model.PagedPhotos is not null)
-        {
-            foreach (var item in Model.PagedPhotos)
+       
+            @foreach (var item in Model.PagedPhotos!)
             {
                 <figure>
                     <a class="gallery" href="@item.ImageUrl"><img src="@item.ImageUrl" alt="@item.Name"></a>
                     <figcaption>@item.Name</figcaption>
                 </figure>
             }
-        }
+        
     </section>
     
         @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Photos", new { pageNumber = page, area = "Photos", name = Context.Request.Query["name"], id = Context.Request.Query["id"] }),

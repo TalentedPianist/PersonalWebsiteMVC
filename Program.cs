@@ -91,17 +91,13 @@ try
 
      // Specifically for Microsoft Graph authentication
 
-     string[] initialScopes = builder.Configuration
-          .GetValue<string>("DownstreamApi:Scopes")?
-          .Split(' ', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
 
 
-     builder.Services
-          .AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-          .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAd"))
-          .EnableTokenAcquisitionToCallDownstreamApi(initialScopes)
-               .AddMicrosoftGraph(builder.Configuration.GetSection("DownstreamApi"))
-               .AddInMemoryTokenCaches();
+     builder.Services.AddAuthentication(options =>
+     {
+          options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+     })
+          .AddCookie();
 
 
 
@@ -244,16 +240,26 @@ try
 
      builder.Services.AddSingleton<GraphServiceClient>(sp =>
      {
-          var config = builder.Configuration.GetSection("Graph");
-          var tenantId = config["TenantId"];
-          var clientId = config["ClientId"];
-          var clientSecret = config["ClientSecret"];
+          var config = sp.GetRequiredService<IConfiguration>();
+          var tenantId = config["AzureAD:TenantId"];
+          var clientId = config["AzureAD:ClientId"];
+          var scopes = new[] { "User.Read", "Files.Read.All" };
 
-          var scopes = new[] { "https://graph.microsoft.com/.default" };
-          var credential = new ClientSecretCredential(tenantId, clientId, clientSecret);
+          var options = new DeviceCodeCredentialOptions
+          {
+               AuthorityHost = AzureAuthorityHosts.AzurePublicCloud,
+               ClientId = clientId, 
+               TenantId = tenantId,
+               DeviceCodeCallback = (code, cancellationToken) =>
+               {
+                    Console.WriteLine(code.Message);
+                    return Task.CompletedTask;
+               }
+          };
+
+          var credential = new DeviceCodeCredential(options);
           return new GraphServiceClient(credential, scopes);
      });
-
 
      var app = builder.Build();
 
@@ -281,24 +287,29 @@ try
 
 
      app.UseDetection();
+   
      app.UseHttpsRedirection();
      app.UseStaticFiles();
-     app.UseRouting();
-     app.UseSession();
     
+   
 
+     app.UseRouting();
      app.UseAuthentication();
      app.UseAuthorization();
+     app.UseSession();
      app.UseAntiforgery();
+
+     app.MapRazorPages();
 
      app.MapAreaControllerRoute(
          name: "Admin",
          areaName: "Admin",
          pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
-     app.MapControllerRoute(
-          name: "areas",
-          pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
+     
+     //app.MapControllerRoute(
+     //     name: "areas",
+     //     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
 
      app.MapControllerRoute(
           name: "blog-root",

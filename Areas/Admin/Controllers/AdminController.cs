@@ -27,7 +27,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
 
 		// GET: /<controller>/
-		[Route("Admin")]
+		[Route("/Admin")]
 		public IActionResult Index()
 		{
 			return View();
