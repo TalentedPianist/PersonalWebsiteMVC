@@ -30,8 +30,9 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             var pageNumber = page ?? 1;
             model.PagedPhotos = _db.Photos.Where(p => p.AlbumID == id).ToPagedList(pageNumber, 12);
             model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
-
-
+               model.SingleAlbum = _db.Albums.Where(p => p.AlbumID == id).FirstOrDefault();
+               ViewBag.AlbumName = model.SingleAlbum!.Name;
+          
             return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
         }
 

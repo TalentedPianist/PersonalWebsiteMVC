@@ -1,121 +1,122 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @inject IHttpContextAccessor _http
 @inject ApplicationDbContext _db
 @{
-    ViewData["id"] = Context.GetRouteValue("id");
+	ViewData["id"] = Context.GetRouteValue("id");
 }
 @model PersonalWebsiteMVC.Areas.Blog.Models.BlogCommentViewModel
 
 <div id="SinglePost">
 
-    @try
-    {
-        if (Model.Post is not null)
-        {
-            <h1>@Model.Post.PostTitle</h1>
-            @Html.Raw(Model.Post.PostContent)
-            <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
-        }
-        else
-        {
-            // You've just got to try things. This is how I got it working in the end.
-            var post = _db.Posts.Where(p => p.PostID == Convert.ToInt32(ViewData["id"])).FirstOrDefault();
+	@try
+	{
+		if (Model.Post is not null)
+		{
+			<h1>@Model.Post.PostTitle</h1>
+			@Html.Raw(Model.Post.PostContent)
+			<partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
+		}
+		else
+		{
+			// You've just got to try things. This is how I got it working in the end.
+			var post = _db.Posts.Where(p => p.PostID == Convert.ToInt32(ViewData["id"])).FirstOrDefault();
 
-            <h1>@post!.PostTitle</h1>
-            @Html.Raw(post.PostContent)
+			<div class="postContent">
+				<h1>@post!.PostTitle</h1>
+				@Html.Raw(post.PostContent)
+			</div>
 
-            @TempData["Message"]
 
-            <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
-        }
-    }
-    catch (NullReferenceException ex)
-    {
-        @ex.Message
-    }
+			<partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
+		}
+	}
+	catch (NullReferenceException ex)
+	{
+		@ex.Message
+	}
 
 </div>
 
 @section Scripts {
-    <script>
-        $("#commentForm").on('submit', function(e) { 
-            e.preventDefault();
+	<script>
+		$("#commentForm").on('submit', function (e) {
+			e.preventDefault();
 
-            var x = $("form").serializeArray();
-            $.each(x, function(i, field) { 
-                //console.log(field.name + ":" + field.value);
-            });
+			var x = $("form").serializeArray();
+			$.each(x, function (i, field) {
+				//console.log(field.name + ":" + field.value);
+			});
 
-            let name = document.querySelector("#name");
-            let email = document.querySelector("#email");
-            let website = document.querySelector("#website");
-            let captcha = document.forms[0]["g-recaptcha-response"];
-            let postID = document.querySelector("#postId");
+			let name = document.querySelector("#name");
+			let email = document.querySelector("#email");
+			let website = document.querySelector("#website");
+			let captcha = document.forms[0]["g-recaptcha-response"];
+			let postID = document.querySelector("#postId");
 
 
-            let oldSummary = document.getElementById("errorsSummary");
-            if (oldSummary)
-                oldSummary.remove();
+			let oldSummary = document.getElementById("errorsSummary");
+			if (oldSummary)
+				oldSummary.remove();
 
-            let errors = [];
-            if (!name.validity.valid) { 
-                $("#name").parent().find('.error').text('Please enter your name.');
-                $("#name").addClass('inputError');
-                errors.push("Please enter your name.");
-            } else { 
-                $("#name").parent().find('.error').text('');
-                $("#name").removeClass('inputError');
-            } 
+			let errors = [];
+			if (!name.validity.valid) {
+				$("#name").parent().find('.error').text('Please enter your name.');
+				$("#name").addClass('inputError');
+				errors.push("Please enter your name.");
+			} else {
+				$("#name").parent().find('.error').text('');
+				$("#name").removeClass('inputError');
+			}
 
-            if (!email.validity.valid) { 
-                $("#email").parent().find('.error').text('Please enter your email address.');
-                $("#email").addClass('inputError');
-                errors.push('Please enter your email address.');
-            } else { 
-                $("#email").parent().find('.error').text('');
-                $("#email").removeClass('inputError');
-            } 
+			if (!email.validity.valid) {
+				$("#email").parent().find('.error').text('Please enter your email address.');
+				$("#email").addClass('inputError');
+				errors.push('Please enter your email address.');
+			} else {
+				$("#email").parent().find('.error').text('');
+				$("#email").removeClass('inputError');
+			}
 
-            if (window.editor.getData() === '') { 
-                $(".ck").parent().find('.error').text('Please enter a message.');
-                $(".ck").addClass('inputError');
-                errors.push("Please enter a message.");
-            } else { 
-                $(".ck").parent().find('.error').text('');
-                $(".ck").removeClass('inputError');
-            } 
+			if (window.editor.getData() === '') {
+				$(".ck").parent().find('.error').text('Please enter a message.');
+				$(".ck").addClass('inputError');
+				errors.push("Please enter a message.");
+			} else {
+				$(".ck").parent().find('.error').text('');
+				$(".ck").removeClass('inputError');
+			}
 
-            if (errors.length === 0) { 
-                $.ajax({ 
-                    method: "POST", 
-                    url: "/Desktop/Blog/AddComment", 
-                    data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData(), captchaResponse: captcha.value, postID: postID.value },
-                    cache: false,
-                    async: false,
-                    success: function(message) {
-                        console.log(message); 
-                        if (message.error) { 
-                            $("form").before(`<hr><p>${message.error}</p>`);
-                        } else {
-                            $(".comment").before(`
-                                <hr>
-                                <div class="flex flex-row flex-1">
-                                    <img style="width: 100px" src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
-                                    <p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM d')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
-                                </div>
-                                ${message.CommentContent}
-                            `); 
-                        }
-                    },
-                    error: function(error) { 
-                        console.log(error);
-                    }
-                });
-            }
+			if (errors.length === 0) {
+				$.ajax({
+					method: "POST",
+					url: "/Desktop/Blog/AddComment",
+					data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData(), captchaResponse: captcha.value, postID: postID.value },
+					cache: false,
+					async: false,
+					success: function (message) {
+						console.log(message);
+						if (message.error) {
+							$("form").before(`<hr><p>${message.error}</p>`);
+						} else {
+							$(".comment").before(`
+									<hr>
+									<div class="flex flex-row flex-1">
+										<img style="width: 100px" src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
+										<p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM d')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
+									</div>
+									${message.CommentContent}
+								`);
+						}
+					},
+					error: function (error) {
+						console.log(error);
+					}
+				});
+			}
 
-        });
+		});
 
-    </script>
+	</script>
 }
