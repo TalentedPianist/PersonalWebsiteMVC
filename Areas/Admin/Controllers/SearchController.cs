@@ -40,6 +40,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           }
 
+
+
           public IActionResult Create()
           {
 
@@ -72,6 +74,38 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                TempData["Message"] = response.DebugInformation;
 
                return View("~/Areas/Admin/Views/Search/Create.cshtml");
+          }
+
+          [Microsoft.AspNetCore.Mvc.Route("/Admin/Search/Update/{id}")]
+          public async Task<IActionResult> Update(int id)
+          {
+               var response = await _client.GetAsync<SearchModel>(id, x => x.Index("blog"));
+
+               if (response.IsValidResponse)
+                    return View(response.Source);
+               else
+                    return View();
+          }
+
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/Admin/Search/UpdateSearch")]
+          public async Task<IActionResult> UpdateSearch([FromForm]SearchModel model)
+          {
+               var response = await _client.UpdateAsync<SearchModel, SearchModel>("blog", model.Id, u => u.Doc(model));
+               if (response.IsValidResponse)
+               {
+                    TempData["Message"] = "Update document succeeded.";
+               }
+               return View("~/Areas/Admin/Views/Search/Update.cshtml", model);
+          }
+
+          public async Task<IActionResult> Details(int id)
+          {
+               var response = await _client.GetAsync<SearchModel>(id, x => x.Index("blog"));
+               if (response.IsValidResponse)
+                    return View("~/Areas/Admin/Views/Search/Details.cshtml", response.Source);
+               else
+                    return View("~/Areas/Admin/Views/Search/Details.cshtml");
           }
 
           public async Task<IActionResult> Delete(int id)

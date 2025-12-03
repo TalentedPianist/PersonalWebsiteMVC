@@ -236,6 +236,7 @@ section {
         align-self: center;
         display: flex;
         margin: 0 auto;
+        z-index: -1;
     }
 
     h1 {
@@ -369,6 +370,7 @@ section {
         position: absolute;
         bottom: 0;
         margin-bottom: 0 !important;
+        z-index: -1; 
     }
 
     h1 {
@@ -1210,6 +1212,10 @@ footer {
     .page-link {
         z-index: -1 !important;
     }
+
+    #searchBox { 
+        height: revert !important; 
+    }
 }
 
 
@@ -1315,4 +1321,39 @@ footer {
             align-items: flex-start;
         }
     }
+}
+
+#searchIcon { 
+    color: lightgoldenrodyellow;
+    font-size: xx-large;
+}
+
+.searchBox { 
+    background-color: rgba(0,0,0,0.6);
+    padding: 2em;
+    position: absolute;
+    top: 0; 
+    right: 0;
+    display: flex; 
+    flex-direction: row; 
+    flex: 1; 
+    display: none;
+    text-align: center;
+
+    #searchIcon { 
+        font-size: revert !important;
+    }
+
+}
+
+.searchPopup { 
+    height: revert !important;
+    background-color: orange !important;
+    border-bottom: none !important;
+    box-shadow: revert !important;
+    vertical-align: top !important;
+    margin-top: 7em !important;
+    width: revert !important;
+    float: right !important;
+    
 }

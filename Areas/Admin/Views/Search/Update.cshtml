@@ -1,0 +1,28 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model SearchModel
+
+<h1 class="bg bg-info">Update</h1>
+<a asp-action="Index" asp-controller="Search" asp-area="Admin" class="btn btn-secondary">Back</a>
+
+@TempData["Message"]
+
+<form method="post" asp-action="UpdateSearch" asp-controller="Search">
+    <div>
+        <label asp-for="@Model.Title">Title:</label>
+        <input asp-for="@Model.Title" class="form-control">
+    </div>
+    <div>
+        <label asp-for="@Model.Link">Link:</label>
+        <input asp-for="@Model.Link" class="form-control">
+    </div>
+    <div>
+        <label asp-for="@Model.Body">Body:</label>
+        <textarea asp-for="@Model.Body" id="ckeditor1"></textarea>
+    </div>
+    <input type="hidden" asp-for="@Model.Id" value="@Model.Id">
+    <button type="submit" class="btn btn-primary">Update</button>
+</form>

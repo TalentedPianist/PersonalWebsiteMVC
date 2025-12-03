@@ -9,7 +9,7 @@
 	{
 { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
 { "ckeditor5/", "/lib/ckeditor5/" },
-			}, null, null);
+					}, null, null);
 }
 
 <!DOCTYPE html>
@@ -38,6 +38,7 @@
 	<link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
 	<link rel="stylesheet" href="/lib/ckeditor5/ckeditor5.css">
 	<link rel="stylesheet" href="/css/simplePagination.css">
+	<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
 	<link rel="stylesheet" href="/css/output.css">
 	<link rel="stylesheet" href="/css/BlogV1.css">
 	<title>@ViewBag.Title</title>
@@ -52,7 +53,7 @@
 			<li><a asp-controller="Home" asp-action="Index" asp-area="Photos">Photos</a></li>
 			<li><a asp-controller="Portfolio" asp-action="Index" asp-area="">Portfolio</a></li>
 			<li><a asp-action="Index" asp-controller="Contact" asp-area="">Contact</a></li>
-
+			<li><a href="#searchBox" id="searchLink"><i class="fa fa-search" id="searchIcon" title="Search the website"></i></a></li>
 		</ul>
 	</nav>
 
@@ -93,6 +94,11 @@
 	<footer>
 		Copyright &copy; douglasmcgregor.co.uk @DateTime.Now.ToString("yyyy")
 	</footer>
+
+	<div id="searchBox" class="hidden">
+		<input type="search" name="txtSearch">
+		<button type="submit">Search</button>
+	</div>
 
 
 	<script src="/lib/jquery/jquery.min.js"></script>
@@ -138,10 +144,11 @@
 				});
 		}
 	</script>
+	<script src="/lib/font-awesome/js/all.min.js"></script>
 	<script src="/js/site.js" asp-append-version="true"></script>
 	@RenderSection("Scripts", false)
 
-	
+
 </body>
 
 </html>

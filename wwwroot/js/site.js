@@ -32,10 +32,10 @@ $(function () {
         $(window).on('scroll', function () {
             if ($(window).scrollTop() >= 400) {
                 $('header').addClass('sticky');
-                $('header').prependTo('body');
+                //$('header').prependTo('body');
             } else {
                 $('header').removeClass('sticky');
-                $('header').prependTo('#Home');
+                //$('header').prependTo('#Home');
             }
         });
     }
@@ -277,5 +277,15 @@ const form = document.querySelector("form");
     });
 }
 
-var current = $.featherlight.current();
-console.log(current);
+// Specifically for search box stuff
+$("#searchLink").featherlight({
+    targetAttr: 'href',
+    beforeContent: function (e) {
+        let instance = this.$instance[0];
+        $(".featherlight-content").addClass("searchPopup");
+    },
+    afterContent: function (e) {
+        var input = $("#searchBox");
+   
+    }
+});
