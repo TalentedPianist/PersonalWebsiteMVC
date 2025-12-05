@@ -1195,3 +1195,7 @@ footer {
   width: revert !important;
   float: right !important;
 }
+
+.highlight {
+  background-color: yellow;
+}

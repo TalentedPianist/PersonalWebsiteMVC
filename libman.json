@@ -101,6 +101,10 @@
     {
       "library": "font-awesome@7.0.1",
       "destination": "wwwroot/lib/font-awesome/"
+    },
+    {
+      "library": "jqueryui@1.14.1",
+      "destination": "wwwroot/lib/jqueryui/"
     }
   ]
 }

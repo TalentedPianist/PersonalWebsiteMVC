@@ -283,9 +283,42 @@ $("#searchLink").featherlight({
     beforeContent: function (e) {
         let instance = this.$instance[0];
         $(".featherlight-content").addClass("searchPopup");
+        
     },
     afterContent: function (e) {
-        var input = $("#searchBox");
-   
+        let instance = this.$instance[0];
+        let search = instance.querySelector("#searchInput");
+        let results = instance.querySelector("#results");
+
+        search.addEventListener("keyup", delay(function (f) {
+            console.log(f.target.value);
+            // Use Ajax to send search term to server and process result
+            $.ajax({
+                method: "POST",
+                url: "/Search",
+                data: { Term: f.target.value },
+                dataType: 'text',
+                async: false,
+                cache: false,
+                success: function (message) {
+                    $(results).html(message);
+                },
+                error: function (error) {
+                    $(results).html(error);
+                }
+            });
+        }, 500));
     }
 });
+
+// Function to delay processing until the user stops typing
+function delay(callback, ms) {
+    var timer = 0;
+    return function () {
+        var context = this, args = arguments;
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+            callback.apply(context, args);
+        }, ms || 0);
+    };
+}

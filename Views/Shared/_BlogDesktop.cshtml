@@ -33,6 +33,7 @@
 	<meta property="og:image" content="http://www.douglasmcgregor.co.uk/images/me.jpg">
 	<meta property="og:description" content="Welcome to my personal website.  This is a blog about my journey in web developement along with photographs of holiday snaps and a personal touch.">
 	<link rel="canconial" href="http://www.douglasmcgregor.co.uk">
+	<link rel="stylesheet" href="/lib/jqueryui/themes/ui-lightness/jquery-ui.min.css">
 	<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
 	<link rel="stylesheet" href="/lib/featherlight/featherlight.min.css">
 	<link rel="stylesheet" href="/lib/featherlight/featherlight.gallery.min.css">
@@ -96,8 +97,10 @@
 	</footer>
 
 	<div id="searchBox" class="hidden">
-		<input type="search" name="txtSearch">
-		<button type="submit">Search</button>
+		<input type="search" name="txtSearch" id="searchInput">
+		<button type="submit" class="btn btn-primary">Search</button>
+
+		<div id="results"></div>
 	</div>
 
 
@@ -145,6 +148,7 @@
 		}
 	</script>
 	<script src="/lib/font-awesome/js/all.min.js"></script>
+	<script src="/lib/jqueryui/jquery-ui.min.js"></script>
 	<script src="/js/site.js" asp-append-version="true"></script>
 	@RenderSection("Scripts", false)
 
