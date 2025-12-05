@@ -40,8 +40,8 @@ namespace PersonalWebsiteMVC.Controllers
 
                     )
                     .Highlight(h => h
-                         .PreTags("<span class='highlight'>")
-                         .PostTags("</span>")
+                         .PreTags("<em>")
+                         .PostTags("</em>")
                          .Encoder(HighlighterEncoder.Html)
                          .Fields(new Dictionary<Field, HighlightField>
                          {
@@ -52,12 +52,9 @@ namespace PersonalWebsiteMVC.Controllers
                ));
 
                StringBuilder sb = new StringBuilder();
-               response.Hits.ForEach(h =>
-               {
-                    sb.Append(h.GetResponseStatus());
-               });
 
-               
+               var hits = response.Hits;
+               hits.ForEach(h => sb.Append(h.InnerHits));
 
                ViewBag.Result = sb.ToString();
 
