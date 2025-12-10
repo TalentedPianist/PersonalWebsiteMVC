@@ -17,10 +17,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
      [Area("Admin")]
      public class SearchController : Controller
      {
-          private readonly ISolrReadOnlyOperations<SearchModel> _solr;
+          private readonly ISolrOperations<SearchModel> _solr;
           private readonly ISolrCoreAdmin _solrCoreAdmin;
 
-          public SearchController(ISolrReadOnlyOperations<SearchModel> solr, ISolrCoreAdmin solrCoreAdmin)
+          public SearchController(ISolrOperations<SearchModel> solr, ISolrCoreAdmin solrCoreAdmin)
           {
                _solr = solr;
                _solrCoreAdmin = solrCoreAdmin;
@@ -28,19 +28,24 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Index()
           {
-               
-               try
-               {
-                    var model = _solr.Query(SolrQuery.All);
-                    return View(model);
-               }
-               catch (SolrConnectionException ex)
-               {
-                    TempData["Message"] = ex.Message;
-                    return View();
-               }
+               var model = _solr.Query(SolrQuery.All);
+               return View(model);
+
           }
 
+          public IActionResult Create()
+          {
+               return View();
+          }
+
+          [HttpPost]
+          [Route("/Admin/Search/CreateDoc")]
+          public IActionResult CreateDoc(SearchModel model)
+          {
+               _solr.Add(model);
+               _solr.Commit();
+               return View("~/Areas/Admin/Views/Search/Create.cshtml", model);
+          }
 
           private string ParseBody(string url)
           {
