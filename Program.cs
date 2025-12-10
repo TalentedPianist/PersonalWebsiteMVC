@@ -31,6 +31,7 @@ using Elastic.Transport;
 using PersonalWebsiteMVC.Areas.OneDrive.Helpers;
 using Microsoft.Graph;
 using Azure.Identity;
+using SolrNet.Impl;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -224,12 +225,7 @@ try
 
      builder.Services.AddSwaggerGen();
 
-     builder.Services.AddSingleton<ElasticsearchClient>(sp =>
-     {
-          var settings = new ElasticsearchClientSettings(new Uri("http://localhost:9200")).Authentication(new BasicAuthentication("elastic", "Inkyfrog1")).DefaultIndex("Blog");
-
-          return new ElasticsearchClient(settings);
-     });
+     
 
      builder.Services.AddSingleton<OneDriveAuthHelper>();
 
@@ -260,6 +256,11 @@ try
           var credential = new DeviceCodeCredential(options);
           return new GraphServiceClient(credential, scopes);
      });
+
+     builder.Services.AddSolrNet<SearchModel>("http://localhost:8983/solr/blog");
+     // https://devapo.io/blog/technology/leverage-the-power-of-indexing-with-apache-solr-and-net/
+     builder.Services.AddScoped<ISolrStatusResponseParser, SolrStatusResponseParser>();
+     builder.Services.AddScoped<ISolrCoreAdmin, SolrCoreAdmin>();
 
      var app = builder.Build();
 

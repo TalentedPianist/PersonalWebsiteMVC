@@ -10,38 +10,6 @@
 <h1 class="bg bg-info">Search</h1>
 <a asp-action="Create" asp-area="Admin" class="btn btn-secondary">Create</a>
 
+@TempData["Message"]
 
 
-@if (Model.Count == 0)
-{
-	<p>No search results have been found just now.</p>
-}
-else
-{
-	<table class="table">
-		<thead>
-			<tr>
-				<th>ID</th>
-				<th>Title</th>
-				<th>Link</th>
-				<th>Update</th>
-				<th>Details</th>
-				<th>Delete</th>
-			</tr>
-		</thead>
-		<tbody>
-
-			@foreach (SearchModel item in Model)
-			{
-				<tr>
-				<td>@item.Id</td>
-				<td>@item.Title</td>
-				<td>@item.Link</td>
-				<td><a asp-action="Update" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id" class="btn btn-link">Update</a></td>
-				<td><a asp-action="Details" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id" class="btn btn-link">Details</a></td>
-				<td><a asp-action="Delete" asp-area="Admin" asp-controller="Search" asp-route-id="@item.Id">Delete</a></td>
-				</tr>
-			}
-		</tbody>
-	</table>
-}

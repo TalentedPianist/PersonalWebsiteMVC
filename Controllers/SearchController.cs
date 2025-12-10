@@ -29,35 +29,43 @@ namespace PersonalWebsiteMVC.Controllers
 
                var response = await _client.SearchAsync<SearchModel>(s => s
                     .Indices("blog")
-                    .From(0)
-                    .Size(10)
                     .Query(q => q
                          .Term(t => t
                               .Field(x => x.Body)
                               .Value(Term)
-
+                              
                          )
 
                     )
-                    .Highlight(h => h
-                         .PreTags("<em>")
-                         .PostTags("</em>")
-                         .Encoder(HighlighterEncoder.Html)
-                         .Fields(new Dictionary<Field, HighlightField>
-                         {
-                              [new Field(nameof(SearchModel.Body))] = new HighlightField()
-                         }
-                    )
-
-               ));
+                   .Highlight(h =>
+                   {
+                        h.PreTags("<b>");
+                        h.PostTags("</b>");
+                        h.RequireFieldMatch(true);
+                        h.Fields(f =>
+                        {
+                            
+                        });
+                        h.FragmentSize(10);
+                   })
+                   
+               );
 
                StringBuilder sb = new StringBuilder();
 
-               var hits = response.Hits;
-               hits.ForEach(h => sb.Append(h.InnerHits));
-
+               foreach (var hit in response.Hits)
+               {
+                    if (hit.Highlight != null && hit.Highlight.TryGetValue("content", out var frags))
+                         {
+                         foreach (var frag in frags)
+                         {
+                              sb.Append(frag);
+                         }
+                    }
+               }
+               
+              
                ViewBag.Result = sb.ToString();
-
                return PartialView("~/Views/Home/SearchResults.cshtml");
 
           }
