@@ -2,8 +2,11 @@
 using HtmlAgilityPack;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using NuGet.Protocol;
 using PersonalWebsiteMVC.Models;
+using SharpCompress;
 using SolrNet;
+using SolrNet.Commands.Parameters;
 using SolrNet.Exceptions;
 using SolrNet.Impl;
 using System.Net;
@@ -28,9 +31,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Index()
           {
-               var model = _solr.Query(SolrQuery.All);
-               return View(model);
-
+               StringBuilder sb = new StringBuilder();
+               var q = _solr.Query(SolrQuery.All);
+               return View(q);
           }
 
           public IActionResult Create()
@@ -38,13 +41,49 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View();
           }
 
+          public IActionResult Update(string id)
+          {
+               var result = _solr.Query(SolrQuery.All,
+                    new QueryOptions
+                    {
+                         RequestHandler = new RequestHandlerParameters("/get"),
+                         ExtraParams = new Dictionary<string, string>
+                         {
+                              {"ids", id }
+                         }
+                    });
+               
+               return View(result.FirstOrDefault());
+          }
+
+          [HttpPost]
+
+          public IActionResult UpdateDoc(SearchModel model)
+          {
+               return View("Update");
+          }
+
           [HttpPost]
           [Route("/Admin/Search/CreateDoc")]
           public IActionResult CreateDoc(SearchModel model)
           {
-               _solr.Add(model);
+           
+                    model.Title = ParseTitle(model.Link!);
+                    model.Body = ParseBody(model.Link!);
+                    _solr.Add(model);
+                    _solr.Commit();
+               TempData["Message"] = model.Title;
+               
+               return View("Create");
+          }
+
+          [HttpPost]
+          [Route("/Admin/Search/DeleteAll")]
+          public IActionResult DeleteAllDocs()
+          {
+               _solr.Delete(SolrQuery.All);
                _solr.Commit();
-               return View("~/Areas/Admin/Views/Search/Create.cshtml", model);
+               return RedirectToAction("Index");
           }
 
           private string ParseBody(string url)
