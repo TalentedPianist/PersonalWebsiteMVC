@@ -60,7 +60,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult UpdateDoc(SearchModel model)
           {
-               return View("Update");
+               _solr.Add(model);
+               _solr.Commit();
+               return RedirectToAction("Index");
           }
 
           [HttpPost]
@@ -75,6 +77,36 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                TempData["Message"] = model.Title;
                
                return View("Create");
+          }
+
+          public IActionResult Details(string id)
+          {
+               var result = _solr.Query(SolrQuery.All,
+                    new QueryOptions
+                    {
+                         RequestHandler = new RequestHandlerParameters("/get"),
+                         ExtraParams = new Dictionary<string, string>
+                         {
+                              {"ids", id }
+                         }
+                    });
+               return View(result.FirstOrDefault());
+          }
+
+          public IActionResult Delete(string id)
+          {
+               var model = _solr.Query(SolrQuery.All,
+                    new QueryOptions
+                    {
+                         RequestHandler = new RequestHandlerParameters("/get"),
+                         ExtraParams = new Dictionary<string, string>
+                         {
+                              { "ids", id }
+                         }
+                    });
+               _solr.Delete(model);
+               _solr.Commit();
+               return RedirectToAction("Index");
           }
 
           [HttpPost]

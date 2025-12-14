@@ -3,6 +3,8 @@
 *@
 @{
 }
-@using PersonalWebsiteMVC.Models
+@model List<SearchModel>
 
-@Html.Raw(ViewBag.Result)
+@ViewBag.Result
+
+@Model.Count()
