@@ -6,6 +6,7 @@ using ServiceStack;
 using SharpCompress;
 using SolrNet;
 using SolrNet.Commands.Parameters;
+using SolrNet.Exceptions;
 using System.Text;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -31,14 +32,17 @@ namespace PersonalWebsiteMVC.Controllers
                StringBuilder sb = new StringBuilder();
 
                var options = new QueryOptions();
-               options.Rows = 1;
+               options.Rows = 25;
+               options.ExtraParams = new Dictionary<string, string>
+               {
+                    { "qf", $"{Term}" }
+               };
 
+               var model = _solr.Query(Term, options);
+               ViewBag.Result = Term;
 
-               var model = _solr.Query(new SolrQueryByField("body_str", Term), options);
-                    
-              
                return PartialView("~/Views/Home/SearchResults.cshtml", model);
-         
+
           }
      }
 }

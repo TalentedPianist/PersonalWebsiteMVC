@@ -52,7 +52,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                               {"ids", id }
                          }
                     });
-               
+
                return View(result.FirstOrDefault());
           }
 
@@ -69,13 +69,13 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           [Route("/Admin/Search/CreateDoc")]
           public IActionResult CreateDoc(SearchModel model)
           {
-           
-                    model.Title = ParseTitle(model.Link!);
-                    model.Body = ParseBody(model.Link!);
-                    _solr.Add(model);
-                    _solr.Commit();
-               TempData["Message"] = model.Title;
-               
+
+               model.Title = ParseTitle(model.Link);
+               model.Body = ParseBody(model.Link);
+               _solr.Add(model);
+               _solr.Commit();
+               TempData["Message"] = model.Body;
+
                return View("Create");
           }
 
