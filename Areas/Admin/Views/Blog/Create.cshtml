@@ -17,7 +17,7 @@
     <div class="form-group">
         <label asp-for="PostContent">Content:</label>
         <!-- Note: textarea needs the name attribute or else data posted will be null -->
-        <textarea asp-for="PostContent" id="ckeditor1" name="txtPost" class="form-control"></textarea>
+        <textarea asp-for="PostContent" id="ckeditor1" class="form-control border-black"></textarea>
     </div>
     <div class="form-group">
         <label asp-for="PostTitle">Title:</label>
@@ -28,8 +28,15 @@
         <input type="file" name="File1" class="form-control" id="image">
     </div>
     <div class="form-group">
+        <label asp-for="PostPublished">Published:</label>
+        <select asp-for="PostPublished" class="form-control border-black">
+            <option value="true">Yes</option>
+            <option value="false">No</option>
+        </select>
+    </div>
+    <div class="form-group">
         <label asp-for="CategoryID">Category:</label>
-        <select asp-for="CategoryID" class="form-control" id="category">
+        <select asp-for="CategoryID" class="form-control border-black" id="category">
             @foreach (var item in db.Categories)
             {
                 <option value="@item.CategoryID" />
@@ -38,9 +45,9 @@
         </select>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
-    <a href="#" id="draft">Save Draft</a>
-
 </form>
+
+<a href="#" id="draft">Save Draft</a>
 
 
 @section Scripts { 

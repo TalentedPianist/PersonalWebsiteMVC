@@ -32,7 +32,15 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           public IActionResult Index()
           {
                StringBuilder sb = new StringBuilder();
-               var q = _solr.Query(SolrQuery.All);
+               var options = new QueryOptions
+               {
+                    Rows = 10,
+                    Fields = new[] { "id", "title_s", "link_s", "body_s" },
+                    
+               };
+
+              
+               var q = _solr.Query(SolrQuery.All, options);
                return View(q);
           }
 

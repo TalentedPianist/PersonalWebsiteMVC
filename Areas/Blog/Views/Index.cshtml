@@ -1,8 +1,8 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-     Layout = "~/Views/Shared/_BlogDesktop.cshtml";
+	Layout = "~/Views/Shared/_BlogDesktop.cshtml";
 }
 
 @model BlogCommentViewModel
@@ -20,71 +20,77 @@
 <div id="Blog">
 
 
-    @if (_db.Posts.Count() == 0)
-    {
-        <p>No posts have been found just now. Please check back later.</p>
-    }
-    else
-    {
+	@if (_db.Posts.Count() == 0)
+	{
+		<h1>Blog</h1>
+		<p>No posts have been found just now. Please check back later.</p>
+	}
+	else
+	{
 
-            <h1>Blog</h1>
-
-
-            @try
-            {
-                <div class="Posts">
-                @foreach (Posts post in Model.PagedPosts!)
-                {
-                    var result = Truncate(post.PostContent!, 200);
+		<h1>Blog</h1>
 
 
-                    @if (post.FeaturedImage is not null)
-                    {
-                        <img src="/Uploads/@post.FeaturedImage">
-                    }
+		@try
+		{
+			<div class="Posts">
+				@foreach (Posts post in Model.PagedPosts!)
+				{
+					var result = Truncate(post.PostContent!, 200);
 
-                    <h2>@post.PostTitle</h2>
-                    @RemoveHTMLTags(result)
+					if (post.PostPublished == true)
+					{
+
+						if (post.FeaturedImage is not null)
+						{
+							<img src="/Uploads/@post.FeaturedImage">
+						}
+
+						<h2>@post.PostTitle</h2>
+						@RemoveHTMLTags(result)
 
 
-                    <a asp-area="Blog" asp-action="Post" asp-route-title="@post.PostTitle" class="btn btn-primary">Read More</a>
+						<a asp-area="Blog" asp-action="Post" asp-route-title="@post.PostTitle" class="btn btn-primary">Read More</a>
+					}
+				}
+			</div>
+		}
+		catch (NullReferenceException ex)
+		{
+			@ex.Message
+		}
 
-                }
-                </div>
-            }
-            catch (NullReferenceException ex)
-            {
-                @ex.Message
-            }
 
-       
-            <p>You are currently on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageSize.</p>
+		<p>You are currently on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageSize.</p>
 
-            @Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new { pageNumber = page,
-            area = "Blog" }),
-                new PagedListRenderOptions
-                {
-                    DisplayItemSliceAndTotal = false,
-                    LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new String[] { "page-link" },
-                    
-                })
-        
-           
-        }
+		@Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new
+		{
+			pageNumber = page,
+		area = "Blog"
+		}),
+			new PagedListRenderOptions
+			{
+				DisplayItemSliceAndTotal = false,
+				LiElementClasses = new string[] { "page-item" },
+				PageClasses = new String[] { "page-link" },
+
+			})
+
+
+	}
 </div>
 
 
 @functions {
 
 
-    public static string Truncate(string value, int maxChars)
-    {
-        return value.Length <= maxChars ? value : value.Substring(0, maxChars) + ".....";
-    }
+	public static string Truncate(string value, int maxChars)
+	{
+		return value.Length <= maxChars ? value : value.Substring(0, maxChars) + ".....";
+	}
 
-    public static string RemoveHTMLTags(string html)
-    {
-        return System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", string.Empty);
-    }
+	public static string RemoveHTMLTags(string html)
+	{
+		return System.Text.RegularExpressions.Regex.Replace(html, "<.*?>", string.Empty);
+	}
 }

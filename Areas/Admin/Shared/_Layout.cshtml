@@ -111,7 +111,11 @@
 			Paragraph,
 			Bold,
 			Italic,
-			Font
+			Font, 
+			Image, 
+			ImageInsert,
+			BlockQuote,
+			SourceEditing
 		} from 'ckeditor5';
 
 		window.ClassicEditor = ClassicEditor;
@@ -129,8 +133,8 @@
 			ClassicEditor
 				.create(document.querySelector('#ckeditor1'), {
 					licenseKey: 'GPL',
-					plugins: [Essentials, Paragraph, Bold, Italic, Font],
-					toolbar: ['bold', 'italic']
+					plugins: [Essentials, Paragraph, Bold, Italic, Font, Image, ImageInsert, SourceEditing, BlockQuote],
+					toolbar: ['bold', 'italic', 'insertImage', 'blockQuote', 'sourceEditing']
 				})
 				.then(editor => {
 

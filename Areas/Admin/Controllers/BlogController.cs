@@ -12,175 +12,177 @@ using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 {
-     [Authorize(Roles="Admin")]
-    [Area("Admin")]
-    public class BlogController : Controller
-    {
+     [Authorize(Roles = "Admin")]
+     [Area("Admin")]
+     public class BlogController : Controller
+     {
 
-        private readonly ApplicationDbContext _db = default!;
+          private readonly ApplicationDbContext _db = default!;
 
-        public BlogController(ApplicationDbContext db)
-        {
-            _db = db;
+          public BlogController(ApplicationDbContext db)
+          {
+               _db = db;
 
-        }
+          }
 
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Blog")]
-        public IActionResult Index([FromQuery(Name = "pageNumber")]int? page)
-        {
-            var posts = _db.Posts;
-            var pageNumber = page ?? 1;
-            var model = posts.ToPagedList(pageNumber, 5);
-            return View(model);
-        }
+          [Microsoft.AspNetCore.Mvc.Route("Admin/Blog")]
+          public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
+          {
+               var posts = _db.Posts;
+               var pageNumber = page ?? 1;
+               var model = posts.Where(p => p.PostPublished == true).ToPagedList(pageNumber, 5);
+               return View(model);
+          }
 
-        [Microsoft.AspNetCore.Mvc.Route("Admin/Blog/Create")]
-        [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
-        public IActionResult Create()
-        {
-            return View();
-        }
+          [Microsoft.AspNetCore.Mvc.Route("Admin/Blog/Create")]
+          [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
+          public IActionResult Create()
+          {
+               return View();
+          }
 
-       
 
-        [HttpPost]
-        [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
-        public async Task<IActionResult> SavePost(Posts model, [FromForm(Name="File1")]IFormFile file)
-        {
-            // This wasn't working because IFormFile was null.  Checking for null with a conditional fixed the problem.
-            if (file is not null)
-            {
-                var filePath = file.FileName;
 
-                if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
-                {
-                    ModelState.AddModelError("", "File already exists.");
-                }
-                else
-                {
-                    using (var stream = System.IO.File.Create("wwwroot/Uploads/" + filePath))
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
+          public async Task<IActionResult> SavePost(Posts model, [FromForm(Name = "File1")] IFormFile file)
+          {
+               // This wasn't working because IFormFile was null.  Checking for null with a conditional fixed the problem.
+               if (file is not null)
+               {
+                    var filePath = file.FileName;
+
+                    if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
                     {
-                        await file.CopyToAsync(stream);
+                         ModelState.AddModelError("", "File already exists.");
                     }
+                    else
+                    {
+                         using (var stream = System.IO.File.Create("wwwroot/Uploads/" + filePath))
+                         {
+                              await file.CopyToAsync(stream);
+                         }
 
+                         if (ModelState.IsValid)
+                         {
+                              var b = new Posts();
+                              b.PostContent = Request.Form["txtPost"];
+                              b.PostExcerpt = model.PostExcerpt;
+                              b.PostTitle = model.PostTitle;
+                              b.CategoryID = model.CategoryID;
+                              b.PostAuthor = model.PostAuthor;
+                              b.PostLocation = model.PostLocation;
+                              b.FeaturedImage = file.FileName;
+                              b.PostDate = DateTime.Now;
+                              b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
+                              b.PostActive = "No";
+                              _db.Posts.Add(b);
+                              _db.SaveChanges();
+                              return RedirectToAction("Index");
+                         }
+                    }
+               }
+               else
+               {
+                    ModelState.Clear(); // Clear the model state to avoid file field is required error
                     if (ModelState.IsValid)
                     {
-                        var b = new Posts();
-                        b.PostContent = Request.Form["txtPost"];
-                        b.PostExcerpt = model.PostExcerpt;
-                        b.PostTitle = model.PostTitle;
-                        b.CategoryID = model.CategoryID;
-                        b.PostAuthor = model.PostAuthor;
-                        b.PostLocation = model.PostLocation;
-                        b.FeaturedImage = file.FileName;
-                        b.PostDate = DateTime.Now;
-                        b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
-                        b.PostActive = "No";
-                        _db.Posts.Add(b);
-                        _db.SaveChanges();
-                        return RedirectToAction("Index");
+                         var b = new Posts();
+                         b.PostContent = model.PostContent;
+                         b.PostExcerpt = model.PostExcerpt;
+                         b.PostTitle = model.PostTitle;
+                         b.CategoryID = model.CategoryID;
+                         b.PostAuthor = model.PostAuthor;
+                         b.PostLocation = model.PostLocation;
+                         b.PostPublished = model.PostPublished;
+                         b.PostDate = DateTime.Now;
+                         b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
+                         b.PostActive = "No";
+                         _db.Posts.Add(b);
+                         _db.SaveChanges();
+                         return RedirectToAction("Index");
                     }
-                }
-            }
-            else
-            {
-                ModelState.Clear(); // Clear the model state to avoid file field is required error
-                if (ModelState.IsValid)
-                {
-                    var b = new Posts();
-                    b.PostContent = Request.Form["txtPost"];
+               }
+
+               return View("Create", model); // View only needs the file name to work without any other paths or extensions.
+          }
+
+
+          public IActionResult Update(int id)
+          {
+
+               return View(_db.Posts.Where(b => b.PostID == id).FirstOrDefault());
+          }
+
+          [HttpPost]
+          public async Task<IActionResult> Update(int id, Posts model, [FromForm(Name = "File1")] IFormFile file, [FromForm(Name = "txtPost")] string post)
+          {
+               if (file == null)
+               {
+                    TempData["Message"] = post;
+               }
+               else
+               {
+                    if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
+                    {
+                         ModelState.Clear(); // Reset model state because it is valid
+                    }
+                    else
+                    {
+                         using (var stream = System.IO.File.Create("wwwroot/Uploads/" + file.FileName))
+                         {
+                              await file.CopyToAsync(stream);
+                         }
+                         ModelState.Clear();
+                    }
+               }
+
+               if (ModelState.IsValid)
+               {
+                    var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault();
+                    b!.PostContent = post;
                     b.PostExcerpt = model.PostExcerpt;
                     b.PostTitle = model.PostTitle;
-                    b.CategoryID = model.CategoryID;
+                    b.FeaturedImage = file!.FileName;
                     b.PostAuthor = model.PostAuthor;
                     b.PostLocation = model.PostLocation;
-                    b.PostDate = DateTime.Now;
-                    b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
-                    b.PostActive = "No";
-                    _db.Posts.Add(b);
+                    b.CategoryID = model.CategoryID;
+                    _db.Update(b);
                     _db.SaveChanges();
+
                     return RedirectToAction("Index");
-                }
-            }
+               }
+               return View(model);
+          }
 
-            return View("Create", model); // View only needs the file name to work without any other paths or extensions.
-        }
+          public IActionResult Delete(int id)
+          {
+               var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault()!;
+               _db.Remove<Posts>(b);
+               _db.SaveChanges();
+               return RedirectToAction("Index");
+          }
 
+          public IActionResult Details(int id)
+          {
+               return View(_db.Posts.Where(b => b.PostID == id).FirstOrDefault());
+          }
 
-        public IActionResult Update(int id)
-        {
+          [HttpPost]
+          public IActionResult SaveDraft([FromBody] Posts model)
+          {
+               model.PostPublished = false;
+               _db.Posts.Add(model);
+               _db.SaveChanges();
+               return Ok(model);
+          }
 
-            return View(_db.Posts.Where(b => b.PostID == id).FirstOrDefault());
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Update(int id, Posts model, [FromForm(Name="File1")]IFormFile file, [FromForm(Name="txtPost")]string post)
-        {
-            if (file == null)
-            {
-                TempData["Message"] = post;
-            }
-            else
-            {
-                if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
-                {
-                    ModelState.Clear(); // Reset model state because it is valid
-                }
-                else
-                {
-                    using (var stream = System.IO.File.Create("wwwroot/Uploads/" + file.FileName))
-                    {
-                        await file.CopyToAsync(stream);
-                    }
-                    ModelState.Clear();
-                }
-            }
-
-            if (ModelState.IsValid)
-            {
-                var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault();
-                b!.PostContent = post;
-                b.PostExcerpt = model.PostExcerpt;
-                b.PostTitle = model.PostTitle;
-                b.FeaturedImage = file!.FileName;
-                b.PostAuthor = model.PostAuthor;
-                b.PostLocation = model.PostLocation;
-                b.CategoryID = model.CategoryID;
-                _db.Update(b);
-                _db.SaveChanges();
-
-                return RedirectToAction("Index");
-            }
-            return View(model);
-        }
-
-        public IActionResult Delete(int id)
-        {
-            var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault()!;
-            _db.Remove<Posts>(b);
-            _db.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
-        public IActionResult Details(int id)
-        {
-            return View(_db.Posts.Where(b => b.PostID == id).FirstOrDefault());
-        }
-
-        [HttpPost]
-        public IActionResult SaveDraft([FromBody]Posts model)
-        {
-            _db.Posts.Add(model);
-            _db.SaveChanges();
-            return Ok(model);
-        }
-
-        [HttpPost]
-        public IActionResult DeleteMultiple([FromBody]List<Posts> posts)
-        {
-            _db.Posts.RemoveRange(posts);
-            _db.SaveChanges();
-            return Ok();
-        }
-    }
+          [HttpPost]
+          public IActionResult DeleteMultiple([FromBody] List<Posts> posts)
+          {
+               _db.Posts.RemoveRange(posts);
+               _db.SaveChanges();
+               return Ok();
+          }
+     }
 }

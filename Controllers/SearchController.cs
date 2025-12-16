@@ -33,13 +33,13 @@ namespace PersonalWebsiteMVC.Controllers
 
                var options = new QueryOptions();
                options.Rows = 25;
-               options.ExtraParams = new Dictionary<string, string>
+               options.Highlight = new HighlightingParameters
                {
-                    { "qf", $"{Term}" }
+                    Fields = new[] { "body_s" },
                };
 
-               var model = _solr.Query(Term, options);
-               ViewBag.Result = Term;
+               var model = _solr.Query(new SolrQueryByField("body", Term), options);
+               
 
                return PartialView("~/Views/Home/SearchResults.cshtml", model);
 
