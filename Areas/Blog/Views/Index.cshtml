@@ -61,23 +61,25 @@
 		}
 
 
+
 		<p>You are currently on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageSize.</p>
 
 		@Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new
-		{
-			pageNumber = page,
-		area = "Blog"
-		}),
-			new PagedListRenderOptions
-			{
-				DisplayItemSliceAndTotal = false,
-				LiElementClasses = new string[] { "page-item" },
-				PageClasses = new String[] { "page-link" },
+{
+	pageNumber = page,
+	area = "Blog"
+}),
+						new PagedListRenderOptions
+						{
+							DisplayItemSliceAndTotal = false,
+							LiElementClasses = new string[] { "page-item" },
+							PageClasses = new String[] { "page-link" },
 
-			})
+						})
 
 
 	}
+
 </div>
 
 

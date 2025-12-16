@@ -729,9 +729,9 @@ header {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-image: url("/images/bronte-falls.jpg");
-    background-attachment: fixed;
-    background-position: top;
+    background-image: url("/images/bamburgh-coast.jpg");
+    background-attachment: local;
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     background-color: revert !important;
@@ -760,7 +760,7 @@ nav ul {
   flex: 1;
   align-items: center;
   justify-content: space-evenly;
-  background-color: #323640;
+  background-color: #152C40;
 }
 @media only screen and (min-width: 768px) {
   nav ul {
@@ -804,7 +804,7 @@ main {
   flex: 1;
   height: 100%;
   width: 100%;
-  background-color: lightblue;
+  background-color: #A2DCF2;
   clear: both !important;
 }
 @media only screen and (min-width: 768px) {

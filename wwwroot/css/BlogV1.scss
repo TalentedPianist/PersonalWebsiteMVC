@@ -845,9 +845,9 @@ header {
         align-items: center;
         justify-content: center;
         width: 100%;
-        background-image: url('/images/bronte-falls.jpg');
-        background-attachment: fixed;
-        background-position: top;
+        background-image: url('/images/bamburgh-coast.jpg');
+        background-attachment: local;
+        background-position: center;
         background-size: cover;
         background-repeat: no-repeat;
         background-color: revert !important;
@@ -878,9 +878,9 @@ nav {
         flex: 1;
         align-items: center;
         justify-content: space-evenly;
-        background-color: #323640;
+        background-color: #152C40;
 
-        @media only screen and (min-width: 768px) { 
+        @media only screen and (min-width: 768px) {
             padding-top: 1em;
             padding-bottom: 1em;
         }
@@ -922,10 +922,10 @@ main {
     flex: 1;
     height: 100%;
     width: 100%;
-    background-color: lightblue;
+    background-color: #A2DCF2;
     clear: both !important;
 
-    
+
 
 
     @media only screen and (min-width: 768px) {
@@ -939,23 +939,17 @@ main {
         h2 {
             font-size: 32pt !important;
         }
-
-        
-
     }
 
-  
+
     @media screen and (min-width: 1400px) {
         align-items: center;
-     
-       
     }
 
-    @media screen and (min-width: 1600px) { 
-       
+    @media screen and (min-width: 1600px) {
     }
 
-    @media screen and (min-width: 1800px) { 
+    @media screen and (min-width: 1800px) {
         padding-left: 40em;
         padding-right: 40em;
     }

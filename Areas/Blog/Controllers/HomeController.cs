@@ -30,7 +30,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 
                BlogCommentViewModel model = new BlogCommentViewModel();
                var pageNumber = page ?? 1;
-               model.PagedPosts = _db.Posts.ToPagedList(pageNumber, 3);
+               model.PagedPosts = _db.Posts.Where(p => p.PostPublished == true).ToPagedList(pageNumber, 3);
                model.AllPosts = _db.Posts.ToList();
                return View("~/Areas/Blog/Views/Index.cshtml", model);
 

@@ -30,7 +30,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           {
                var posts = _db.Posts;
                var pageNumber = page ?? 1;
-               var model = posts.Where(p => p.PostPublished == true).ToPagedList(pageNumber, 5);
+               var model = posts.ToPagedList(pageNumber, 5).Where(p => p.PostPublished == true);
                return View(model);
           }
 
