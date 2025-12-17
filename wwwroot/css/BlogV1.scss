@@ -183,7 +183,7 @@ section {
 
         &:first-child {
             padding-left: 2em;
-            padding-right: 1em;
+            padding-right: 2em;
             padding-bottom: 1em;
 
             p {
@@ -879,7 +879,7 @@ nav {
         align-items: center;
         justify-content: space-evenly;
 
-        background-color: #024873;
+        background-color: #356E9A;
         
         @media only screen and (min-width: 768px) {
             padding-top: 1em;
@@ -887,8 +887,8 @@ nav {
         }
 
         @media only screen and (min-width: 1200px) {
-            padding-top: 2em;
-            padding-bottom: 2em;
+            padding-top: 1em;
+            padding-bottom: 1em;
         }
     }
 
@@ -923,7 +923,7 @@ main {
     flex: 1;
     height: 100%;
     width: 100%;
-    background-color: #8DD5F2;
+    background-color: #D9BBA0;
     clear: both !important;
 
 
@@ -1030,12 +1030,12 @@ footer {
     clear: both;
 
     @media only screen and (min-width: 768px) {
-        background-color: #8697A6;
+        background-color: #8DD5F2;
         text-align: center;
         font-size: x-large;
         letter-spacing: 2px;
         padding: 1.25rem 0;
-        color: white;
+        color: black;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 }
