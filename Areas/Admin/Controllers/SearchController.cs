@@ -82,9 +82,9 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                model.Body = ParseBody(model.Link);
                _solr.Add(model);
                _solr.Commit();
-               TempData["Message"] = model.Body;
+             
 
-               return View("Create");
+               return RedirectToAction("Index");
           }
 
           public IActionResult Details(string id)

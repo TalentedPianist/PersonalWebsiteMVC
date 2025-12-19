@@ -17,10 +17,14 @@
 @inject IHostEnvironment _env
 
 
+@TempData["Message"]
+
 <div id="Blog">
 
 
-	@if (_db.Posts.Count() == 0)
+
+
+	@if (Model.PagedPosts!.Count() == 0)
 	{
 		<h1>Blog</h1>
 		<p>No posts have been found just now. Please check back later.</p>
@@ -61,7 +65,7 @@
 		}
 
 
-	
+	<div class="@ViewBag.Class">
 		<p>You are currently on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageSize.</p>
 
 		@Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new
@@ -69,16 +73,17 @@
 	pageNumber = page,
 	area = "Blog"
 }),
-						new PagedListRenderOptions
-						{
-							DisplayItemSliceAndTotal = false,
-							LiElementClasses = new string[] { "page-item" },
-							PageClasses = new String[] { "page-link" },
+								new PagedListRenderOptions
+								{
+									DisplayItemSliceAndTotal = false,
+									LiElementClasses = new string[] { "page-item" },
+									PageClasses = new String[] { "page-link" },
 
-						})
+								})
 
+	
+		</div>
 	}
-
 </div>
 
 

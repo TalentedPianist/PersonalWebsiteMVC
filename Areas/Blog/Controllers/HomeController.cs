@@ -7,6 +7,7 @@ using DeviceDetectorNET;
 using DeviceDetectorNET.Parser;
 using X.PagedList;
 using SharpCompress;
+using System.Text;
 
 namespace PersonalWebsiteMVC.Areas.Blog.Controllers
 {
@@ -33,10 +34,12 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                var pageNumber = page ?? 1;
                model.PagedPosts = _db.Posts.Where(p => p.PostPublished == true).ToPagedList(pageNumber, 3);
                model.AllPosts = _db.Posts.ToList();
-               model.PagedPosts.ForEach(p =>
+               StringBuilder sb = new StringBuilder();
+               if (model.PagedPosts.Count() == 0)
                {
-                    
-               });
+                    ViewBag.Class = "hidden";
+               }
+               
                return View("~/Areas/Blog/Views/Index.cshtml", model);
 
 

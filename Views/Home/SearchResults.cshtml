@@ -10,3 +10,8 @@
 @ViewBag.Result
 
 @Model.Count()
+
+@foreach (SearchModel item in Model)
+{
+    @item.Title
+}

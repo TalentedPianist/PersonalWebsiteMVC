@@ -46,6 +46,20 @@
             }
         </select>
     </div>
+    <div class="form-group">
+        
+        <label asp-for="PostPublished">Published:</label>
+        <select asp-for="PostPublished" class="form-control">
+            @if (Model.PostPublished == false)
+            {
+                <option value="true">Yes</option>
+            }
+            else
+            {
+                <option value="false">No</option>
+            }
+        </select>
+    </div>
   
     <button type="submit" class="btn btn-primary">Save</button>
 </form>

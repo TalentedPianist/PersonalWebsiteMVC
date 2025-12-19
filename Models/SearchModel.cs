@@ -6,11 +6,11 @@ namespace PersonalWebsiteMVC.Models
      {
           [SolrUniqueKey("id")]
           public string Id { get; set; } = default!;
-          [SolrField("title_s")]
+          [SolrField("title")]
           public string Title { get; set; } = default!;
-          [SolrField("link_s")]
+          [SolrField("link")]
           public string Link { get; set; } = default!;
-          [SolrField("body_s")]
+          [SolrField("body")]
           public string Body { get; set; } = default!;
 
      }
