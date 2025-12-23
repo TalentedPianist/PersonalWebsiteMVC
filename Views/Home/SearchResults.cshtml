@@ -1,5 +1,5 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
@@ -7,11 +7,18 @@
 
 @TempData["Message"]
 
-@ViewBag.Result
+<div class="searchResults">
+	<p>You searched for @ViewBag.Term and we found @Model.Count() results.</p>
+	<ul>
+		@foreach (SearchModel item in Model)
+		{
+			<li>
+				<b>@item.Title</b>
+				<p>@Html.Raw(item.Body)</p>
+				<a href="@item.Link">@item.Link</a>
+			</li>
+		}
+	</ul>
+</div>
 
-@Model.Count()
 
-@foreach (SearchModel item in Model)
-{
-    @item.Title
-}

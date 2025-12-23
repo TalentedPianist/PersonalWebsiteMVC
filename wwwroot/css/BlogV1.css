@@ -1174,4 +1174,21 @@ footer {
 
 .highlight {
   background-color: yellow;
+  padding: 5px 5px 5px 5px;
+}
+
+.searchResults ul {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+  list-style-type: disc;
+}
+.searchResults p {
+  font-size: revert;
+  line-height: revert;
+}
+.searchResults a {
+  text-decoration: revert;
+  color: revert;
 }

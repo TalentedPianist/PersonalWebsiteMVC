@@ -7,6 +7,7 @@ using SharpCompress;
 using SolrNet;
 using SolrNet.Commands.Parameters;
 using SolrNet.Exceptions;
+using System.Collections.Generic;
 using System.Text;
 
 namespace PersonalWebsiteMVC.Controllers
@@ -34,12 +35,32 @@ namespace PersonalWebsiteMVC.Controllers
                var options = new QueryOptions();
                options.Rows = 25;
                options.Fields = new[] { "id", "title", "link", "body" };
+               options.Highlight = new HighlightingParameters
+               {
+                    Fields = new[] { "body" },
+                    BeforeTerm = "<span class='highlight'>",
+                    AfterTerm = "</span>",
+                    Fragsize = 100,
+               };
+           
+               
 
-               var model = _solr.Query(new SolrQueryByField("body", Term));
+               var results = _solr.Query(new SolrQueryByField("body", Term), options);
+               List<SearchModel> model = new List<SearchModel>();
 
-               ViewBag.Result = Term;
-             
+               foreach (var result in results)
+               {
+                    var highlights = results.Highlights[result.Id];
+                    highlights.Values.ForEach(h =>
+                    {
+                         h.ForEach(p =>
+                         {
+                              model.Add(new SearchModel { Id = result.Id, Title = result.Title, Link = result.Link, Body = p });
+                         });
+                    });
+               }
 
+               ViewBag.Term = Term;
                return PartialView("~/Views/Home/SearchResults.cshtml", model);
 
           }

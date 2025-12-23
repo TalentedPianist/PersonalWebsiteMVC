@@ -115,7 +115,8 @@
 			Image, 
 			ImageInsert,
 			BlockQuote,
-			SourceEditing
+			SourceEditing,
+			CodeBlock
 		} from 'ckeditor5';
 
 		window.ClassicEditor = ClassicEditor;
@@ -124,7 +125,7 @@
 		window.Bold = Bold;
 		window.Italic = Italic;
 		window.Font = Font;
-
+		window.CodeBlock = CodeBlock;
 
 		window.editor = undefined;
 
@@ -133,8 +134,8 @@
 			ClassicEditor
 				.create(document.querySelector('#ckeditor1'), {
 					licenseKey: 'GPL',
-					plugins: [Essentials, Paragraph, Bold, Italic, Font, Image, ImageInsert, SourceEditing, BlockQuote],
-					toolbar: ['bold', 'italic', 'insertImage', 'blockQuote', 'sourceEditing']
+					plugins: [Essentials, Paragraph, Bold, Italic, Font, Image, ImageInsert, SourceEditing, BlockQuote, CodeBlock],
+					toolbar: ['bold', 'italic', 'insertImage', 'blockQuote', 'codeBlock', 'sourceEditing']
 				})
 				.then(editor => {
 
