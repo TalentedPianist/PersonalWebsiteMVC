@@ -18,11 +18,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
      {
 
           private readonly ApplicationDbContext _db = default!;
+          private IWebHostEnvironment _environment;
 
-          public BlogController(ApplicationDbContext db)
+          public BlogController(ApplicationDbContext db, IWebHostEnvironment environment)
           {
                _db = db;
-
+               _environment = environment;
           }
 
           [Microsoft.AspNetCore.Mvc.Route("Admin/Blog")]
@@ -41,70 +42,32 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View();
           }
 
-
-
+          // https://www.c-sharpcorner.com/article/complete-file-upload-and-download-in-asp-net-core-mvc/
           [HttpPost]
-          [Microsoft.AspNetCore.Mvc.Route("Blog/SavePost")]
-          public async Task<IActionResult> SavePost(Posts model, [FromForm(Name = "File1")] IFormFile file)
+          public async Task<IActionResult> CreatePost(Posts model)
           {
-               // This wasn't working because IFormFile was null.  Checking for null with a conditional fixed the problem.
-               if (file is not null)
+               if (model.FileUpload is not null)
                {
-                    var filePath = file.FileName;
-
-                    if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
+                    // Define the upload folder
+                    string uploadPath = System.IO.Path.Combine(_environment.WebRootPath, "Uploads");
+                    // Create the directory if it doesn't exist
+                    if (!System.IO.Directory.Exists(uploadPath))
                     {
-                         ModelState.AddModelError("", "File already exists.");
+                         System.IO.Directory.CreateDirectory(uploadPath);
                     }
-                    else
+                    // Generate the file path
+                    string filePath = System.IO.Path.Combine(uploadPath, model.FileUpload.FileName);
+                    // Save the file to the specified location
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                         using (var stream = System.IO.File.Create("wwwroot/Uploads/" + filePath))
-                         {
-                              await file.CopyToAsync(stream);
-                         }
-
-                         if (ModelState.IsValid)
-                         {
-                              var b = new Posts();
-                              b.PostContent = Request.Form["txtPost"];
-                              b.PostExcerpt = model.PostExcerpt;
-                              b.PostTitle = model.PostTitle;
-                              b.CategoryID = model.CategoryID;
-                              b.PostAuthor = model.PostAuthor;
-                              b.PostLocation = model.PostLocation;
-                              b.FeaturedImage = file.FileName;
-                              b.PostDate = DateTime.Now;
-                              b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
-                              b.PostActive = "No";
-                              _db.Posts.Add(b);
-                              _db.SaveChanges();
-                              return RedirectToAction("Index");
-                         }
+                         await model.FileUpload.CopyToAsync(stream);
                     }
+                    model.FeaturedImage = model.FileUpload.Name;
                }
-               else
-               {
-                    ModelState.Clear(); // Clear the model state to avoid file field is required error
-                    if (ModelState.IsValid)
-                    {
-                         var b = new Posts();
-                         b.PostContent = model.PostContent;
-                         b.PostExcerpt = model.PostExcerpt;
-                         b.PostTitle = model.PostTitle;
-                         b.CategoryID = model.CategoryID;
-                         b.PostAuthor = model.PostAuthor;
-                         b.PostLocation = model.PostLocation;
-                         b.PostPublished = model.PostPublished;
-                         b.PostDate = DateTime.Now;
-                         b.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
-                         b.PostActive = "No";
-                         _db.Posts.Add(b);
-                         _db.SaveChanges();
-                         return RedirectToAction("Index");
-                    }
-               }
-
-               return View("Create", model); // View only needs the file name to work without any other paths or extensions.
+               
+               _db.Posts.Add(model);
+               _db.SaveChanges();
+               return RedirectToAction("Index");
           }
 
 
@@ -115,44 +78,22 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public async Task<IActionResult> Update(int id, Posts model, [FromForm(Name = "File1")] IFormFile file, [FromForm(Name = "txtPost")] string post)
+          public async Task<IActionResult> UpdatePost(Posts model)
           {
-               if (file == null)
+               if (model.FileUpload is not null)
                {
-                    TempData["Message"] = post;
-               }
-               else
-               {
-                    if (System.IO.File.Exists("wwwroot/Uploads/" + file.FileName))
+                    string uploadPath = System.IO.Path.Combine(_environment.WebRootPath, "Uploads");
+                    string filePath = System.IO.Path.Combine(uploadPath, model.FileUpload.FileName);
+                    using (var stream = new FileStream(filePath, FileMode.Create))
                     {
-                         ModelState.Clear(); // Reset model state because it is valid
+                         await model.FileUpload.CopyToAsync(stream);
                     }
-                    else
-                    {
-                         using (var stream = System.IO.File.Create("wwwroot/Uploads/" + file.FileName))
-                         {
-                              await file.CopyToAsync(stream);
-                         }
-                         ModelState.Clear();
-                    }
+                    model.FeaturedImage = model.FileUpload.FileName;
                }
 
-               if (ModelState.IsValid)
-               {
-                    var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault();
-                    b!.PostContent = post;
-                    b.PostExcerpt = model.PostExcerpt;
-                    b.PostTitle = model.PostTitle;
-                    b.FeaturedImage = file!.FileName;
-                    b.PostAuthor = model.PostAuthor;
-                    b.PostLocation = model.PostLocation;
-                    b.CategoryID = model.CategoryID;
-                    _db.Update(b);
-                    _db.SaveChanges();
-
-                    return RedirectToAction("Index");
-               }
-               return View(model);
+               _db.Posts.Update(model);
+               _db.SaveChanges();
+               return View("Update", model);
           }
 
           public IActionResult Delete(int id)
@@ -171,7 +112,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           [HttpPost]
           public IActionResult SaveDraft([FromBody] Posts model)
           {
-               model.PostPublished = false;
+             
                _db.Posts.Add(model);
                _db.SaveChanges();
                return Ok(model);

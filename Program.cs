@@ -97,6 +97,7 @@ try
      builder.Services.AddAuthentication(options =>
      {
           options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+      
      })
           .AddCookie();
 
@@ -155,7 +156,12 @@ try
 
      });
 
-     builder.Services.AddSession();
+     builder.Services.AddSession(options =>
+     {
+          options.IdleTimeout = TimeSpan.FromHours(2);
+          options.Cookie.HttpOnly = true;
+          options.Cookie.IsEssential = true;
+     });
 
      builder.Services.Configure<MailSettings>(builder.Configuration.GetSection("MailSettings"));
 

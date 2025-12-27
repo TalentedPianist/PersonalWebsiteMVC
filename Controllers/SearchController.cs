@@ -40,7 +40,7 @@ namespace PersonalWebsiteMVC.Controllers
                     Fields = new[] { "body" },
                     BeforeTerm = "<span class='highlight'>",
                     AfterTerm = "</span>",
-                    Fragsize = 100,
+                    Fragsize = 50,
                };
            
                

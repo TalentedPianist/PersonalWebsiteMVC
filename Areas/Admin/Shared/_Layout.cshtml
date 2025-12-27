@@ -102,9 +102,9 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/lib/moment.js/moment.min.js"></script>
-	
 	<script type="importmap" asp-importmap="@data"></script>
 	<script type="module">
+
 		import {
 			ClassicEditor,
 			Essentials,
@@ -116,7 +116,9 @@
 			ImageInsert,
 			BlockQuote,
 			SourceEditing,
-			CodeBlock
+			CodeBlock,
+			MediaEmbed,
+		
 		} from 'ckeditor5';
 
 		window.ClassicEditor = ClassicEditor;
@@ -126,6 +128,7 @@
 		window.Italic = Italic;
 		window.Font = Font;
 		window.CodeBlock = CodeBlock;
+		window.MediaEmbed = MediaEmbed;
 
 		window.editor = undefined;
 
@@ -134,12 +137,13 @@
 			ClassicEditor
 				.create(document.querySelector('#ckeditor1'), {
 					licenseKey: 'GPL',
-					plugins: [Essentials, Paragraph, Bold, Italic, Font, Image, ImageInsert, SourceEditing, BlockQuote, CodeBlock],
-					toolbar: ['bold', 'italic', 'insertImage', 'blockQuote', 'codeBlock', 'sourceEditing']
+					plugins: [Essentials, Paragraph, Bold, Italic, Font, Image, ImageInsert, SourceEditing, BlockQuote, MediaEmbed, CodeBlock],
+					toolbar: ['bold', 'italic', 'insertImage', 'blockQuote', 'codeBlock', 'mediaEmbed', 'sourceEditing']
 				})
 				.then(editor => {
-
+					
 					window.editor = editor;
+
 				})
 				.catch(error => {
 					console.error(error);
