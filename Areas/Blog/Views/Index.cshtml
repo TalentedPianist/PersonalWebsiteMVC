@@ -42,8 +42,7 @@
 				{
 					var result = Truncate(post.PostContent!, 200);
 
-					if (post.PostPublished == true)
-					{
+					
 
 						if (post.FeaturedImage is not null)
 						{
@@ -55,7 +54,7 @@
 
 
 						<a asp-area="Blog" asp-action="Post" asp-route-title="@post.PostTitle" class="btn btn-primary">Read More</a>
-					}
+					
 				}
 			</div>
 		}

@@ -19,6 +19,23 @@ namespace PersonalWebsiteMVC.Data
         public DbSet<Album> Albums { get; set; } = default!;
         public DbSet<Photos> Photos { get; set; } = default!;
           public DbSet<Portfolio> Portfolio { get; set; } = default!;
+
+
+
+          protected override void OnModelCreating(ModelBuilder builder)
+          {
+               builder.Entity<Posts>()
+                    .Property(p => p.PostActive)
+                    .HasConversion<string>();
+
+               builder.Entity<Posts>()
+                    .Property(p => p.PostPublished)
+                    .HasConversion<string>();
+                    
+
+               base.OnModelCreating(builder);
+
+          }
     }
 
     

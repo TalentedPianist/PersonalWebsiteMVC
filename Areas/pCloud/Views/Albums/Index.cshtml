@@ -41,8 +41,8 @@
 			$('input:checkbox:checked').map(function () {
 				// Check if album is in database before doing anything else
 				let name = this.value;
-                $.getJSON("/pCloud/Albums/CheckInDb", { name: name }, function (message) {
-                    console.log(message);
+				$.getJSON("/pCloud/Albums/CheckInDb", { name: name }, function (message) {
+					console.log(message);
 					if (message === true) {
 						// If album is in database, get ID using JSON
 						$.ajax({
@@ -52,7 +52,7 @@
 							async: false,
 							cache: false,
 							success: function (message) {
-                                console.log(message);
+								console.log(message);
 								if (message) {
 									// Album is in database, add album to del array
 									del.push({ 'AlbumID': message });
@@ -66,9 +66,9 @@
 							}
 						});
 
-                    } else {
-                        add.push({'Name': name});
-                        
+					} else {
+						add.push({ 'Name': name });
+
 					}
 				});
 			}).get();
@@ -77,7 +77,7 @@
 
 		$("#addToDb").on('click', function (e) {
 			e.preventDefault();
-            //console.log(add);
+			//console.log(add);
 
 			$.ajax({
 				url: "/pCloud/Albums/AddMultipleAlbumsToDb",
@@ -94,32 +94,31 @@
 				}
 			});
 
-        });
+		});
 
-        $("#delFromDb").on('click', function (e) {
-            $.ajax({
-                url: "/pCloud/Albums/DelMultipleFromDb",
-                method: "POST",
-                contentType: "application/json",
-                data: JSON.stringify(del),
-                async: false,
-                cache: false,
-                success: function (message) {
-                    console.log(message);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
+		$("#delFromDb").on('click', function (e) {
+			$.ajax({
+				url: "/pCloud/Albums/DelMultipleFromDb",
+				method: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(del),
+				async: false,
+				cache: false,
+				success: function (message) {
+					console.log(message);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+		});
 
 	</script>
 
 
-	<script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
-
 	<script>
-          var token = localStorage.getItem('pcloud_token');
+		//var token = localStorage.getItem('pcloud_token');
+		var token = '655SZGJR8uDME26uZGGNx0kZaJogOMc5YgBGFWHzrTioPXMGPrr7'
           var locationid = 2;
           var client = pCloudSdk.createClient(token, 'oauth', locationid);
 
@@ -202,12 +201,13 @@
               var strName = url.searchParams.get('name');
 
               client.listfolder(id).then(a => {
-                  a.contents.forEach(values => {
+				  a.contents.forEach(values => {
+					  console.log(values);
                       if (values.name.includes("JPEG")) {
                           console.log(values);
                             $("#Photos").append(`
 
-                                <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}">
+                                <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/${strName}/${values.name}">
 
                             `);
                       }
@@ -217,9 +217,9 @@
           } else {
               var folderId = 19500076302;
               client.listfolder(folderId).then(a => {
-
+				  console.log(a);
                   a.contents.forEach(values => {
-                      //console.log(values);
+                      console.log(values);
 
                       if ($.get('/pCloud/Albums/CheckInDb') === true) {
                       } else {
@@ -232,7 +232,7 @@
                     </svg>
 
                                     <figcaption>
-                                        <a href="/pCloud/Photos/${values.folderid}/${values.name}">${values.name}</a>
+                                        <a href="/pCloud/Photos?id=${values.folderid}&name=${values.name}">${values.name}</a>
                                         <input type="checkbox" name="cbName" value="${values.name}">
                                     </figcaption>
                             </figure>
@@ -247,7 +247,7 @@
 	<script>
 		$("#login").on('click', function (e) {
 			e.preventDefault();
-			var REDIRECT_URI = 'https://www.douglasmcgregor.co.uk/pcloud/';
+			var REDIRECT_URI = 'http://localhost:5051/pCloud/';
 			var CLIENT_ID = 'GJR8uDME26u'
 			window.location.href = `https://my.pcloud.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token`;
 
@@ -263,4 +263,5 @@
 			}
 		});
 	</script>
+
 }

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PersonalWebsiteMVC.Data;
 
@@ -11,9 +12,11 @@ using PersonalWebsiteMVC.Data;
 namespace PersonalWebsiteMVC.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251227193142_PostsUpdate")]
+    partial class PostsUpdate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -446,9 +449,8 @@ namespace PersonalWebsiteMVC.Migrations
                     b.Property<string>("FeaturedImage")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostActive")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PostActive")
+                        .HasColumnType("int");
 
                     b.Property<string>("PostAuthor")
                         .HasColumnType("nvarchar(max)");
@@ -468,9 +470,8 @@ namespace PersonalWebsiteMVC.Migrations
                     b.Property<string>("PostLocation")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("PostPublished")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PostPublished")
+                        .HasColumnType("int");
 
                     b.Property<string>("PostTitle")
                         .HasColumnType("nvarchar(max)");

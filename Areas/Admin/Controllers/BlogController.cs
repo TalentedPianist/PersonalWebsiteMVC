@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Web;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using X.PagedList;
@@ -64,7 +65,10 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                     }
                     model.FeaturedImage = model.FileUpload.Name;
                }
-               
+
+               model.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
+               model.PostDate = DateTime.Now;
+               model.PostAuthor = HttpContext.User.Identity!.Name;
                _db.Posts.Add(model);
                _db.SaveChanges();
                return RedirectToAction("Index");
@@ -93,7 +97,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
                _db.Posts.Update(model);
                _db.SaveChanges();
-               return View("Update", model);
+               return RedirectToAction("Index");
           }
 
           public IActionResult Delete(int id)

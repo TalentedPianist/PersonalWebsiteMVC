@@ -102,6 +102,7 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
 	<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 	<script src="/lib/moment.js/moment.min.js"></script>
+	<script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
 	<script type="importmap" asp-importmap="@data"></script>
 	<script type="module">
 
@@ -111,14 +112,14 @@
 			Paragraph,
 			Bold,
 			Italic,
-			Font, 
-			Image, 
+			Font,
+			Image,
 			ImageInsert,
 			BlockQuote,
 			SourceEditing,
 			CodeBlock,
 			MediaEmbed,
-		
+
 		} from 'ckeditor5';
 
 		window.ClassicEditor = ClassicEditor;
@@ -141,7 +142,7 @@
 					toolbar: ['bold', 'italic', 'insertImage', 'blockQuote', 'codeBlock', 'mediaEmbed', 'sourceEditing']
 				})
 				.then(editor => {
-					
+
 					window.editor = editor;
 
 				})
@@ -150,7 +151,7 @@
 				});
 		}
 	</script>
-	
+
 	@RenderSection("Scripts", required: false)
 
 

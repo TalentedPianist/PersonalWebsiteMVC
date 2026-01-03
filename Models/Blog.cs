@@ -18,6 +18,18 @@ namespace PersonalWebsiteMVC.Models
 
      public class Posts
      {
+          public enum Active
+          {
+               Yes,
+               No
+          }
+
+          public enum Published
+          {
+               Yes,
+               No
+          }
+
           [Key]
           public int PostID { get; set; }
           public int? CategoryID { get; set; }
@@ -28,8 +40,8 @@ namespace PersonalWebsiteMVC.Models
           public string? PostAuthor { get; set; }
           public string? PostLocation { get; set; }
           public string? PostIP { get; set; }
-          public string? PostActive { get; set; }
-          public string? PostPublished { get; set; }
+          public Active PostActive { get; set; }
+          public Published PostPublished { get; set; }
           public DateTime? PostDate { get; set; }
           public int? CommentCount { get; set; }
           [NotMapped]

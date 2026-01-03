@@ -29,7 +29,7 @@
 </div>
 
 @section Scripts {
-     <script type="text/javascript" src="https://unpkg.com/pcloud-sdk-js@latest/dist/pcloudsdk.js"></script>
+
      <script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
      <script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
 
@@ -132,15 +132,16 @@
 
 
      <script>
-          var token = localStorage.getItem('pcloud_token');
-           var locationid = 2;
-           var client = pCloudSdk.createClient(token, 'oauth', locationid);
+         //var token = localStorage.getItem('pcloud_token');
+		 var token = '655SZGJR8uDME26uZ6DNx0kZzRwH8oDbT2YcGHvp3OurXukMeEM7';
+         console.log(token);
+     
+
+        
 
 
 
-
-
-          client.listfolder(@ViewBag.FolderId).then(a => {
+          @*client.listfolder(@ViewBag.FolderId).then(a => {
                     a.contents.forEach(values => {
                         if (values.name.includes("JPEG")) {
                           
@@ -173,7 +174,7 @@
 
                               $("#Photos").append(`
                                     <figure>
-                                  <a href="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}" class="gallery" data-name="${values.name}" data-url="${event.target.currentSrc}" data-date="${values.created}"><img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}"></a>
+                                  <a href="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}" class="gallery" data-name="${values.name}" data-url="${a.target.currentSrc}" data-date="${values.created}"><img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}"></a>
                                         <figcaption>
                                            ${values.name}
                                             <input type="checkbox" value="${values.name}">
@@ -189,7 +190,7 @@
 
 
                     });
-          });
+          });*@
 
 
 

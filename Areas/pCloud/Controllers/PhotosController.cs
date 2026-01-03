@@ -27,8 +27,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                _db = db; 
           }
 
-          [Route("/pCloud/Photos/{id}/{name}")]
-          public IActionResult Index(string id, string name)
+          [Route("/pCloud/Photos")]
+          public IActionResult Index([FromQuery(Name="id")] string id, [FromQuery(Name="name")]string name)
           {
                ViewBag.FolderId = id;
                ViewBag.Name = name;
