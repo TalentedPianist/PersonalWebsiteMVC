@@ -23,6 +23,7 @@
 </ul>
 
 <div id="Photos">
+    <input type="checkbox">
 </div>
 
 <div id="targetElement">
@@ -134,66 +135,49 @@
      <script>
          //var token = localStorage.getItem('pcloud_token');
 		 var token = '655SZGJR8uDME26uZ6DNx0kZzRwH8oDbT2YcGHvp3OurXukMeEM7';
-         console.log(token);
-     
-
+         console.log(token);     
+         let locationid = 2;
+         const client = pCloudSdk.createClient(token);
+         let id = undefined;
         
 
 
+         
 
-          @*client.listfolder(@ViewBag.FolderId).then(a => {
-                    a.contents.forEach(values => {
-                        if (values.name.includes("JPEG")) {
-                          
-                            $("a.gallery").featherlightGallery({
-                            
-                                afterOpen: function(event) {
-                           
-                                    let content = this.$content[0];
-                                    let instance = this.$instance[0];
-                                    console.log(event);
+         client.listfolder(@Context.Request.Query["id"]).then(a => {
+             a.contents.forEach(b => {
+                 if (b.name.includes("JPEG")) {
 
-                                    $.ajax({ 
-                                        method: "POST", 
-                                        url: "/pCloud/Photos/Popup",
-                                        data: { url: event.target.currentSrc, name: event.currentTarget.dataset['name'], albumName: "@ViewBag.Name", albumId: "@ViewBag.FolderId" },
-                                        async: false, 
-                                        cache: false, 
-                                        success: function(message) { 
-                                            $(".featherlight-content").empty(); 
-                                            $(".featherlight-content").append(message);
-                                        }, 
-                                        error: function(error) { 
-                                            console.log(error);
-                                        }
-                                    });
-                                }
-                            });
-
-                       
-
-                              $("#Photos").append(`
-                                    <figure>
-                                  <a href="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}" class="gallery" data-name="${values.name}" data-url="${a.target.currentSrc}" data-date="${values.created}"><img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/@ViewBag.Name/${values.name}"></a>
-                                        <figcaption>
-                                           ${values.name}
-                                            <input type="checkbox" value="${values.name}">
-                                        </figcaption>
-                                    </figure>
+                     client.getthumbs([b.fileid], thumb => {
 
 
-                              `);
+                         $("#Photos").append(`
+                        <figure>
+                            <img src="${thumb.url}">
+                            <figcaption>
+                                ${b.name}
+                                <input type="checkbox" value="${b.name}">
+                            </figcaption>
+                        </figure>
+                     `);
 
+                         document.querySelector("#Photos").querySelectorAll("figcaption").forEach(function (value) {
+                             let cb = value.querySelectorAll('input[type="checkbox"]');
+                             cb.forEach(c => {
+                                 // Add event listener to checkbox to make click functionality work.  
+                                 c.addEventListener('click', function (e) {
+                                     console.log(c.value);
+                                 });
+                             });
 
-                        }
+                         });
+                     }, 'auto', '120x120');
+                 }
+             });
+         });
 
-
-
-                    });
-          });*@
-
-
-
+         
+         
 
      </script>
 }
