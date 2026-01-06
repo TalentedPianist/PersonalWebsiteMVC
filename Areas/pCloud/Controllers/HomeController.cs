@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Json.More;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Areas.pCloud.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using RestSharp;
+using ServiceStack;
+using System.Text;
 using Wangkanai.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
@@ -21,69 +26,48 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                _db = db; 
           }
 
-          [Route("/pCloud/")]
-          public IActionResult Home()
+          public IActionResult Index()
           {
-               return View("~/Areas/pCloud/Views/Albums/Index.cshtml");
-          }
-
-          [HttpPost]
-          [Route("/pCloud/GetThumbs")]
-          public async Task<IActionResult> GetThumbs(int getauth, string username, string password)
-          {
-               var httpClient = _httpClientFactory.CreateClient();
-               var response = await httpClient.GetAsync($"https://eapi.pcloud.com?getauth={getauth}&username={username}&password={password}");
-               var content = await response.Content.ReadAsStringAsync();
-               return Ok(content);
-
-          }
-
-          [HttpPost]
-          [Route("/pCloud/Albums/AddMultipleToDb")]
-          public IActionResult AddMultipleAlbumsToDb([FromBody] List<Album> data)
-          {
-               _db.Albums.AddRange(data);
-               _db.SaveChanges();
-               return Ok(data);
-          }
-
-          [HttpGet]
-          [Route("/pCloud/Albums/CheckAlbumInDb")]
-          public bool CheckAlbumInDb(string name)
-          {
-               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-               if (album is not null)
-                    return true;
-               else
-                    return false;
-          }
-
-          [HttpGet]
-          [Route("/pCloud/Photos/CheckPhotoInDb")]
-          public bool CheckPicInDb(string name)
-          {
-               var pic = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
-               if (pic is not null)
-                    return true;
-               else
-                    return false;
+               var client = new RestClient("https://eapi.pcloud.com/listfolder");
+               client.AddDefaultHeader("Authorization", string.Format("Bearer {0}", GetAccessToken()));
+               var request = new RestRequest();
+               request.AddParameter("path", "/");
+               var response = client.Execute(request);
+               var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
+               StringBuilder sb = new StringBuilder();
+               List<Contents> model = result!.metadata!.Contents!;
+              
+               return View(model);
           }
 
 
           [HttpPost]
-          [Route("/pCloud/Albums/GetID")]
-          public IActionResult AlbumID(string name)
+          public IActionResult Auth()
           {
-               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-               return Ok(album!.AlbumID);
+               string clientId = "GJR8uDME26u";
+
+               string url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=http://localhost:5051/pCloud/";
+               return Redirect(url);
           }
 
-          [HttpGet]
-          [Route("pCloud/Photos/GetID")]
-          public IActionResult PhotoID(string name)
+          string GetAccessToken()
           {
-               var photo = _db.Photos.Where(a => a.Name == name).FirstOrDefault();
-               return Ok(photo!.PhotoID);
+               string clientId = "GJR8uDME26u";
+               string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
+               string url = "https://eapi.pcloud.com/oauth2_token";
+
+               var client = new RestClient(url);
+               var request = new RestRequest();
+               request.AddParameter("client_id", clientId);
+               request.AddParameter("client_secret", clientSecret);
+               request.AddParameter("code", HttpContext.Request.Query["code"]);
+               var response = client.Execute(request);
+               var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
+               return json!.access_token!;
           }
-    }
+
+         
+              
+
+     }
 }

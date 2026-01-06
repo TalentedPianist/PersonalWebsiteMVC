@@ -212,3 +212,11 @@ table {
 .ck-editor__editable_inline {
   min-height: 400px;
 }
+
+#PhotosNav ul {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+  list-style-type: none;
+  gap: 2em;
+}

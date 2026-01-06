@@ -68,6 +68,7 @@
 		<PackageReference Include="MudBlazor" Version="8.13.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
 		<PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
+		<PackageReference Include="RestSharp" Version="113.0.0" />
 		<PackageReference Include="Scalar.AspNetCore" Version="2.9.0" />
 		<PackageReference Include="Serilog.AspNetCore" Version="9.0.0" />
 		<PackageReference Include="ServiceStack.Extensions" Version="8.9.0" />

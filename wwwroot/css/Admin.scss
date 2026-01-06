@@ -7,46 +7,45 @@
 
 body {
     position: relative;
-  
 }
 
 img {
     width: 100%;
 }
 
-.navbar { 
+.navbar {
     background-color: darkslateblue !important;
 }
 
-.d-md-block { 
-     background-color: lightgreen !important;
-    
+.d-md-block {
+    background-color: lightgreen !important;
 
-     a { 
+
+    a {
         color: #2c3e50 !important;
         font-size: large !important;
-     }
+    }
 }
 
 
 
-main { 
+main {
     background-color: #fdfdfd !important;
     color: #2c3e50;
 }
- 
 
-form  {
-    display: flex; 
+
+form {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     gap: 1em;
 
-    button  {
+    button {
         align-self: flex-start;
     }
 
-    input { 
+    input {
         border: 1px solid black !important;
         padding: 10px 10px 10px 10px !important;
         margin-top: 1em;
@@ -54,13 +53,13 @@ form  {
 }
 
 
-#Photos { 
+#Photos {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 1em;
 
-    figcaption { 
-        display: flex; 
+    figcaption {
+        display: flex;
         flex-direction: column;
         gap: 1em;
         align-items: center;
@@ -122,10 +121,10 @@ form  {
                     width: 100%;
                 }
 
-                figcaption { 
-                    display: flex; 
+                figcaption {
+                    display: flex;
                     flex-direction: column;
-                    flex: 1; 
+                    flex: 1;
                     gap: 1em;
                     margin-top: 1em;
                 }
@@ -222,35 +221,44 @@ form  {
 
 .featherlight-content {
     header {
-        display: flex; 
+        display: flex;
         flex-direction: column;
         flex: 1;
         align-items: center;
-     
         gap: 2em;
 
         h1 {
             display: block !important;
         }
 
-        @media only screen and (min-width: 600px) { 
+        @media only screen and (min-width: 600px) {
             flex-direction: row;
         }
     }
 }
 
-.server-info { 
-    table { 
+.server-info {
+    table {
         table-layout: fixed;
         width: 100%;
     }
 }
 
-table { 
-    table-layout: fixed !important; 
+table {
+    table-layout: fixed !important;
     width: 100%;
 }
 
-.ck-editor__editable_inline { 
+.ck-editor__editable_inline {
     min-height: 400px;
+}
+
+#PhotosNav {
+    ul {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+        list-style-type: none;
+        gap: 2em;
+    }
 }

@@ -3,13 +3,18 @@
 @using System.Text.Json.Serialization
 @using PersonalWebsiteMVC.Areas.pCloud.Models
 @using Microsoft.AspNetCore.Http
+@using RestSharp
+@using Newtonsoft.Json
+@using PersonalWebsiteMVC.Models
 @inject IHttpClientFactory _httpClientFactory
 
 <h1 class="bg bg-info p-1">Albums</h1>
 
-<a href="#" id="login">Login</a>
+<form method="post" asp-action="Auth" asp-controller="Photos">
+	<button class="btn btn-link">Login to pCloud</button>
+</form>
 
-
+@GetAccessToken()
 
 <div id="Gallery">
 	<ul>
@@ -24,7 +29,23 @@
 	</section>
 </div>
 
+@functions {
+	string GetAccessToken()
+	{
+		string clientId = "GJR8uDME26u";
+		string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
+		string url = "https://eapi.pcloud.com/oauth2_token";
 
+		var client = new RestClient(url);
+		var request = new RestRequest();
+		request.AddParameter("client_id", clientId);
+		request.AddParameter("client_secret", clientSecret);
+		request.AddParameter("code", Context.Request.Query["code"]);
+		var response = client.Execute(request);
+		var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
+		return json!.access_token!;
+	}
+}
 
 
 @section Scripts {
@@ -116,152 +137,6 @@
 	</script>
 
 
-	<script>
-		//var token = localStorage.getItem('pcloud_token');
-		var token = '655SZGJR8uDME26uZGGNx0kZaJogOMc5YgBGFWHzrTioPXMGPrr7'
-          var locationid = 2;
-          var client = pCloudSdk.createClient(token, 'oauth', locationid);
-
-          function children(metadata) {
-              return Promise.resolve(metadata.contents);
-          }
-
-          function files(metadata) {
-              return children(metadata).then(filter(f => !f.isfolder));
-          }
-
-          function withThumbs(metadata) {
-              return children(metadata).then(filter(f => f.thumb));
-          }
-
-          function filter(f) {
-              return (iterable) => {
-                  var ret = [];
-
-                  for (var n in iterable) {
-                      if (f(iterable[n])) {
-                          ret.push(iterable[n]);
-                      }
-
-                  }
-                  return ret;
-              }
-          }
-
-          function length(array) {
-              return Promise.resolve(array.length);
-          }
-
-          function map(f) {
-              return (array) => {
-                  return Promise.resolve(array.map(f));
-              }
-          }
-
-          function size(metadata) {
-              return metadata.size;
-          }
-
-          function name(metadata) {
-              return metadata.name;
-          }
-
-          function fileid(metadata) {
-              return metadata.fileid;
-          }
-
-          function sum(iterable) {
-              var ret = 0;
-              for (var n in iterable) {
-                  ret += iterable[n];
-
-                  console.log(iterable[n]);
-              }
-              return Promise.resolve(ret);
-          }
-
-          function folderSize(folderid) {
-              return client.listfolder(0).then(files).then(map(size)).then(sum);
-          }
-
-          function folderItems(folderid) {
-              return client.listfolder(0).then(children).then(map(@ViewBag.Name));
-          }
-
-
-
-
-
-          var url = new URL(window.location.href);
-           var name = url.searchParams.get('name');
-
-          if (url.searchParams.has('name')) {
-
-              var id = Number(url.searchParams.get('id'));
-              var strName = url.searchParams.get('name');
-
-              client.listfolder(id).then(a => {
-				  a.contents.forEach(values => {
-					  console.log(values);
-                      if (values.name.includes("JPEG")) {
-                          console.log(values);
-                            $("#Photos").append(`
-
-                                <img src="https://filedn.eu/liszIfBDSLvHUF11ARlaYWB/Gallery/${strName}/${values.name}">
-
-                            `);
-                      }
-                  });
-              });
-
-          } else {
-              var folderId = 19500076302;
-              client.listfolder(folderId).then(a => {
-				  console.log(a);
-                  a.contents.forEach(values => {
-                      console.log(values);
-
-                      if ($.get('/pCloud/Albums/CheckInDb') === true) {
-                      } else {
-                          $("#Gallery section:nth-of-type(1)").append(`
-                                <figure>
-                                    <svg enable-background="new 4 8 40 32" xmlns="http://www.w3.org/2000/svg" viewBox="4 8 40 32">
-                        <path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000"></path>
-                        <path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z"
-                            fill="#ffca28"></path>
-                    </svg>
-
-                                    <figcaption>
-                                        <a href="/pCloud/Photos?id=${values.folderid}&name=${values.name}">${values.name}</a>
-                                        <input type="checkbox" name="cbName" value="${values.name}">
-                                    </figcaption>
-                            </figure>
-                          `);
-                      }
-
-                  });
-              });
-          }
-	</script>
-
-	<script>
-		$("#login").on('click', function (e) {
-			e.preventDefault();
-			var REDIRECT_URI = 'http://localhost:5051/pCloud/';
-			var CLIENT_ID = 'GJR8uDME26u'
-			window.location.href = `https://my.pcloud.com/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token`;
-
-			const hash = window.location.hash;
-			const params = new URLSearchParams(hash.substring(1));
-			const token = params.get('access_token');
-
-			// Store access token in local store for future use
-			if (token) {
-				localStorage.setItem('pcloud_token', token);
-			} else {
-				console.error('No token found in redirect URL');
-			}
-		});
-	</script>
+	
 
 }

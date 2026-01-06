@@ -1,5 +1,5 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
@@ -8,6 +8,7 @@
 @using System.Text.Json.Serialization
 @using PersonalWebsiteMVC.Areas.pCloud.Models
 @using Microsoft.AspNetCore.Http
+@using RestSharp
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
 
@@ -15,29 +16,98 @@
 
 @TempData["Message"]
 
+@GetAccessToken()
+
+<a class="btn btn-secondary" asp-action="Index" asp-controller="Albums" asp-area="pCloud">Back</a>
+
+
+<form method="post" asp-action="Auth">
+    <button class="btn btn-link">Login to pCloud</button>
+</form>
+
 <ul>
-     <li><a asp-action="Index" asp-controller="Albums" asp-area="pCloud">Back</a></li>
-     <li><a href="#" id="selectAll">Select All</a></li>
-     <li><a href="#" id="addToDb">Add to Database</a></li>
-     <li><a href="#" id="delFromDb">Delete from Database</a></li>
+
+    <li><a href="#" id="getUser">GetUser</a></li>
 </ul>
 
+<div id="PhotosNav">
+    
+	<ul>
+		<li><a href="#" id="selectAll">Select All</a></li>
+		<li><a href="#" id="addToDb">Add to Database</a></li>
+		<li><a href="#" id="delFromDb">Delete from Database</a></li>
+		<li><a href="#" id="delFromPCloud">Delete from PCloud</a></li>
+	</ul>
+</div>
+
 <div id="Photos">
-    <input type="checkbox">
+
 </div>
 
 <div id="targetElement">
 </div>
 
+@functions {
+    string GetAccessToken()
+    {
+        string clientId = "GJR8uDME26u";
+        string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
+        string url = "https://api.pcloud.com/oauth2_token";
+
+        var client = new RestClient(url);
+        var request = new RestRequest();
+        request.AddParameter("client_id", clientId);
+        request.AddParameter("client_secret", clientSecret);
+        request.AddParameter("code", Context.Request.Query["code"]);
+        var response = client.Execute(request);
+        return response.Content!.ToString();
+    }
+}
+
+
 @section Scripts {
 
-     <script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-     <script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <script>
+        $("#pCloudLogin").on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "/pCloud/Photos/Auth",
+                async: false,
+                cache: false,
+                success: function (message) {
+                    console.log(message);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $("#getUser").on('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "/pCloud/Photos/GetUser",
+                async: false,
+                cache: false,
+                success: function (message) {
+                    console.log(message);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
 
 
-
-
-     <script>
+	<script>
           let add = [];
           let del = [];
            // JS for selecting all checkboxes
@@ -53,7 +123,7 @@
                     let url = $(this).parent().parent().find('img').attr('src');
                     let dateCreated = $(this).parent().parent().find('a').data('date');
 
-                  
+
 
                      $.getJSON('/pCloud/Photos/IsInDb', { name: value.value }, function(result) {
                          if (result === true) {
@@ -72,7 +142,7 @@
                                  }
                              });
                          } else {
-                                $.getJSON('/pCloud/Albums/GetID', { name: "@ViewBag.Name" }, function(id) { 
+                                $.getJSON('/pCloud/Albums/GetID', { name: "@ViewBag.Name" }, function(id) {
                                     console.log(id);
                              add.push({ 'AlbumID': id, 'Name': value.value, 'ImageUrl':  url, 'DateCreated': dateCreated });
                                 });
@@ -127,31 +197,54 @@
            });
 
 
-     </script>
+	</script>
 
 
 
 
-     <script>
-         //var token = localStorage.getItem('pcloud_token');
-		 var token = '655SZGJR8uDME26uZ6DNx0kZzRwH8oDbT2YcGHvp3OurXukMeEM7';
-         console.log(token);     
-         let locationid = 2;
-         const client = pCloudSdk.createClient(token);
-         let id = undefined;
-        
+	<script>
+
+            //var token = localStorage.getItem('pcloud_token');
+            var token = '655SZGJR8uDME26uZ6DNx0kZzRwH8oDbT2YcGHvp3OurXukMeEM7';
+            console.log(token);
+            let locationid = 2;
+            const client = pCloudSdk.createClient(token);
+            let id = undefined;
+
+            let selectedCb = []; // Array to hold checkbox values
+
+            $("#delFromPCloud").on('click', function (e) {
+                e.preventDefault();
+                console.log(selectedCb);
+                $.ajax({
+                    method: "POST",
+                    url: "/pCloud/Photos/DeleteFromCloud",
+                    data: { 'names': selectedCb, 'token': token },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        console.log(message);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            });
+
+        // Here we attach one event listener to a parent element (#Photos).  Any checkbox inside it will trigger the handler.  
+        document.querySelector("#Photos").addEventListener('click', function (e) {
+            selectedCb.push(e.target.value);
+        });
+
+            client.listfolder(@Context.Request.Query["id"]).then(a => {
+
+                a.contents.forEach(b => {
+                    if (b.name.includes("JPEG")) {
+
+                        client.getthumbs([b.fileid], thumb => {
 
 
-         
-
-         client.listfolder(@Context.Request.Query["id"]).then(a => {
-             a.contents.forEach(b => {
-                 if (b.name.includes("JPEG")) {
-
-                     client.getthumbs([b.fileid], thumb => {
-
-
-                         $("#Photos").append(`
+                            $("#Photos").append(`
                         <figure>
                             <img src="${thumb.url}">
                             <figcaption>
@@ -160,24 +253,15 @@
                             </figcaption>
                         </figure>
                      `);
+                            
+                        }, 'auto', '120x120');
 
-                         document.querySelector("#Photos").querySelectorAll("figcaption").forEach(function (value) {
-                             let cb = value.querySelectorAll('input[type="checkbox"]');
-                             cb.forEach(c => {
-                                 // Add event listener to checkbox to make click functionality work.  
-                                 c.addEventListener('click', function (e) {
-                                     console.log(c.value);
-                                 });
-                             });
 
-                         });
-                     }, 'auto', '120x120');
-                 }
-             });
-         });
+                    }
+                });
+            });
 
-         
-         
+	</script>
 
-     </script>
+  
 }
