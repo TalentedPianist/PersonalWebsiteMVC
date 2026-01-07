@@ -40,12 +40,11 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
                var client = new RestClient("https://eapi.pcloud.com/listfolder");
                var request = new RestRequest();
-               request.AddParameter("path", "/");
+               request.AddParameter("folderid", "19500076302");
                request.AddParameter("getauth", "1");
                request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
                request.AddParameter("password", "Inkyfrog1");
                var response = client.Execute(request);
-               TempData["Message"] = response.Content;
                StringBuilder sb = new StringBuilder();
              
                try

@@ -23,7 +23,7 @@ public class pCloudMetadata
 
 public class ContentItem
 {
-     public int parentfolderid { get; set; }
+     public string parentfolderid { get; set; }
      public string id { get; set; }
      public string modified { get; set; }
      //public string path { get; set; }
