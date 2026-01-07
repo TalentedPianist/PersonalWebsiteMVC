@@ -240,28 +240,28 @@ try
          .Get<MailSettings>();
 
 
-     builder.Services.AddSingleton<GraphServiceClient>(sp =>
-     {
-          var config = sp.GetRequiredService<IConfiguration>();
-          var tenantId = config["AzureAD:TenantId"];
-          var clientId = config["AzureAD:ClientId"];
-          var scopes = new[] { "User.Read", "Files.Read.All" };
+     //builder.Services.AddSingleton<GraphServiceClient>(sp =>
+     //{
+     //     var config = sp.GetRequiredService<IConfiguration>();
+     //     var tenantId = config["AzureAD:TenantId"];
+     //     var clientId = config["AzureAD:ClientId"];
+     //     var scopes = new[] { "User.Read", "Files.Read.All" };
 
-          var options = new DeviceCodeCredentialOptions
-          {
-               AuthorityHost = AzureAuthorityHosts.AzurePublicCloud,
-               ClientId = clientId, 
-               TenantId = tenantId,
-               DeviceCodeCallback = (code, cancellationToken) =>
-               {
-                    Console.WriteLine(code.Message);
-                    return Task.CompletedTask;
-               }
-          };
+     //     var options = new DeviceCodeCredentialOptions
+     //     {
+     //          AuthorityHost = AzureAuthorityHosts.AzurePublicCloud,
+     //          ClientId = clientId, 
+     //          TenantId = tenantId,
+     //          DeviceCodeCallback = (code, cancellationToken) =>
+     //          {
+     //               Console.WriteLine(code.Message);
+     //               return Task.CompletedTask;
+     //          }
+     //     };
 
-          var credential = new DeviceCodeCredential(options);
-          return new GraphServiceClient(credential, scopes);
-     });
+     //     var credential = new DeviceCodeCredential(options);
+     //     return new GraphServiceClient(credential, scopes);
+     //});
 
      builder.Services.AddSolrNet<SearchModel>("http://localhost:8983/solr/blog");
      // https://devapo.io/blog/technology/leverage-the-power-of-indexing-with-apache-solr-and-net/

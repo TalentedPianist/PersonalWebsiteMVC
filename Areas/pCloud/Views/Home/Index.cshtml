@@ -6,20 +6,17 @@
 @using System.Net.Http.Headers
 @using Microsoft.AspNetCore.Http
 @using PersonalWebsiteMVC.Models
-@model List<Contents>
+@model List<ContentItem>
 
 <h1 class="bg bg-info p-1">pCloud</h1>
 
+@TempData["Message"]
 
 <form method="post" asp-action="Auth" asp-controller="Home" asp-area="pCloud">
 	<button class="btn btn-link">Login to pCloud</button>
 </form>
 
-@try
+@if (Model is not null)
 {
 @Model.Count()
-}
-catch (ArgumentNullException ex)
-{
-	@ex.Message
 }
