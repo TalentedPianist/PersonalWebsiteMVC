@@ -31,27 +31,21 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           public IActionResult Index([FromQuery(Name = "code")] string code)
           {
-               string AccessToken = "655SZGJR8uDME26uZdTpK0kZAEJfaNqdDmfMc5Aku6CMUuK1q7Ay";
-
-               string clientId = "GJR8uDME26u";
-
-               string url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=http://localhost:5051/pCloud/";
-               //TempData["Message"] = url;
-
                var client = new RestClient("https://eapi.pcloud.com/listfolder");
                var request = new RestRequest();
                request.AddParameter("folderid", "19500076302");
                request.AddParameter("getauth", "1");
                request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
                request.AddParameter("password", "Inkyfrog1");
+               request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                var response = client.Execute(request);
                StringBuilder sb = new StringBuilder();
-             
+               
                try
                {
                     var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-                    var folder = result!.metadata;
-                    List<ContentItem> items = result.metadata.contents;
+                    List<ContentItem> items = result!.metadata.contents;
+                    
                     return View(items);
                }
                catch (NullReferenceException)

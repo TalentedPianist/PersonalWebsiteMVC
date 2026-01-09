@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Authorization;
 using RestSharp;
 using ServiceStack;
 using Newtonsoft.Json;
+using X.PagedList.Extensions;
+using X.PagedList;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
@@ -30,20 +32,36 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/")]
-          public IActionResult Index([FromQuery(Name = "id")] string id)
+          public IActionResult Index([FromQuery(Name = "id")] string id, [FromQuery(Name="pageNumber")]int? page)
           {
                var client = new RestClient("https://eapi.pcloud.com/listfolder");
                var request = new RestRequest();
-               request.AddParameter("folderid", id);
+               //request.AddParameter("folderid", HttpContext.Request.Query["id"]);
+               request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                request.AddParameter("getauth", "1");
                request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
                request.AddParameter("password", "Inkyfrog1");
                var response = client.Execute(request);
                var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-               List<ContentItem> model = result!.metadata.contents;
+               StringBuilder sb = new StringBuilder();
+               var pageNumber = page ?? 1;
+
+               var model = result!.metadata.contents.ToPagedList(pageNumber, 20);
 
                return View(model);
 
           }
+
+          [HttpPost]
+          public IActionResult DeleteFromCloud(List<string> names)
+          {
+               return Ok(names);
+          }
+
+          public IActionResult GetPopup()
+          {
+               return Ok();
+          }
+          
      }
 }

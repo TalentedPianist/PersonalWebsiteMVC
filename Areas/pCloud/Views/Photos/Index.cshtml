@@ -9,10 +9,13 @@
 @using PersonalWebsiteMVC.Areas.pCloud.Models
 @using Microsoft.AspNetCore.Http
 @using RestSharp
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using System.Text
+@using X.PagedList
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
-
-@model List<ContentItem>
+@model PagedList<ContentItem>
 
 <h1 class="bg bg-info p-1">Photos for @Context.Request.Query["name"]</h1>
 
@@ -33,24 +36,56 @@
 	</ul>
 </div>
 
+
+
 <div id="Photos">
 	<section>
+
 		@if (Model is not null)
-        {
-            foreach (ContentItem item in Model)
-            {
-                if (item.name.Contains(".JPEG"))
-                {
-                    @item.name<br>
-                }
-            }
-        }
+		{
+			foreach (ContentItem item in Model)
+			{
+				if (item.name.Contains(".JPEG"))
+				{
+                    var thumb = GetThumbs(item.fileid.ToString()!, item.path, "120x120");
+					<figure>
+                        <img src="@thumb">
+                        <figcaption>
+                            <a class="fl" href="#Popup" data-image="@thumb" data-id="@item.id" data-fileid="@item.fileid" data-created="@item.created">@item.name</a>
+                            <input type="checkbox" name="delete" value="@item.name">
+                        </figcaption>
+                    </figure>
+				}
+			}
+		}
 	</section>
 </div>
 
-<div id="targetElement">
+<div id="Popup">
 </div>
 
+
+
+@functions {
+
+
+    string GetThumbs(string fileid, string path, string size)
+    {
+        var client = new RestClient("https://eapi.pcloud.com/getthumblink");
+        var request = new RestRequest();
+        request.AddParameter("getauth", "1");
+        request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+        request.AddParameter("password", "Inkyfrog1");
+        request.AddParameter("path", path);
+        request.AddParameter("size", size);
+        var response = client.Execute(request);
+        var result = JsonConvert.DeserializeObject(response.Content!);
+        StringBuilder sb = new StringBuilder();
+        JToken json = JToken.Parse(result!.ToString()!);
+        var url = "https://" + json["hosts"]![0] + json["path"];
+        return url;
+    }
+}
 
 
 
@@ -58,199 +93,44 @@
 
 	<script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
 	<script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
-
-	<script>
-		$("#pCloudLogin").on('click', function (e) {
-			e.preventDefault();
-			$.ajax({
-				method: "POST",
-				url: "/pCloud/Photos/Auth",
-				async: false,
-				cache: false,
-				success: function (message) {
-					console.log(message);
-				},
-				error: function (error) {
-					console.log(error);
-				}
-			});
-		});
-	</script>
-
-	<script>
-		$("#getUser").on('click', function (e) {
-			e.preventDefault();
-			$.ajax({
-				method: "POST",
-				url: "/pCloud/Photos/GetUser",
-				async: false,
-				cache: false,
-				success: function (message) {
-					console.log(message);
-				},
-				error: function (error) {
-					console.log(error);
-				}
-			});
-		});
-	</script>
-
-
-	<script>
-          let add = [];
-          let del = [];
-           // JS for selecting all checkboxes
-           $("#selectAll").on('click', function(e) {
-               e.preventDefault();
-
-               var cb = $("#Photos").find('figure').find('figcaption').find('input[type="checkbox"]');
-               $(cb).each(function(index, value) {
-                     $(this).prop('checked', true);
-                     let name = value.value;
-                    let figure = $(this).parent().parent();
-                    let figcaption = $(this).parent();
-                    let url = $(this).parent().parent().find('img').attr('src');
-                    let dateCreated = $(this).parent().parent().find('a').data('date');
-
-
-
-                     $.getJSON('/pCloud/Photos/IsInDb', { name: value.value }, function(result) {
-                         if (result === true) {
-                             // Get photo ID from database
-                             $.ajax({
-                                 method: "POST",
-                                 url: "/pCloud/Photos/GetID",
-                                 data: { name: name },
-                                 async: false,
-                                 cache: false,
-                                 success: function(id) {
-                                     del.push({ 'PhotoID': id, 'Name': name });
-                                 },
-                                 error: function(error) {
-                                     console.log(error);
-                                 }
-                             });
-                         } else {
-                                $.getJSON('/pCloud/Albums/GetID', { name: "@ViewBag.Name" }, function(id) {
-                                    console.log(id);
-                             add.push({ 'AlbumID': id, 'Name': value.value, 'ImageUrl':  url, 'DateCreated': dateCreated });
-                                });
-                         }
-                     });
-
-               });
-           });
-
-           $("#addToDb").on('click', function(e) {
-               e.preventDefault();
-
-               $.ajax({
-                   method: "POST",
-                   url: "/pCloud/Photos/AddMultipleToDb",
-                   data: JSON.stringify(add),
-                   contentType: "application/json",
-                   async: false,
-                   cache: false,
-                   success: function(message) {
-                       console.log(message);
-                   },
-                   error: function(error) {
-                       console.log(error);
-                   }
-                });
-
-           });
-
-
-           $("#delFromDb").on('click', function(e) {
-               e.preventDefault();
-
-
-               $.ajax({
-                   method: "POST",
-                   url: "/pCloud/Photos/RemoveMultipleFromDb",
-                   data: JSON.stringify(del),
-                   headers: {
-                       "Content-type": "application/json",
-                   },
-                   contentType: "application/json",
-                   async: false,
-                   cache: false,
-                   success: function(message) {
-                       console.log(message);
-                   },
-                   error: function(error) {
-                       console.log(error);
-                   }
-               });
-           });
-
-
-	</script>
-
-
-
-
-	<script>
-
-            //var token = localStorage.getItem('pcloud_token');
-            var token = '655SZGJR8uDME26uZ6DNx0kZzRwH8oDbT2YcGHvp3OurXukMeEM7';
-            console.log(token);
-            let locationid = 2;
-            const client = pCloudSdk.createClient(token);
-            let id = undefined;
-
-            let selectedCb = []; // Array to hold checkbox values
-
-            $("#delFromPCloud").on('click', function (e) {
-                e.preventDefault();
-                console.log(selectedCb);
-                $.ajax({
-                    method: "POST",
-                    url: "/pCloud/Photos/DeleteFromCloud",
-                    data: { 'names': selectedCb, 'token': token },
-                    async: false,
-                    cache: false,
-                    success: function (message) {
-                        console.log(message);
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-            });
-
-        // Here we attach one event listener to a parent element (#Photos).  Any checkbox inside it will trigger the handler.
-        document.querySelector("#Photos").addEventListener('click', function (e) {
-            selectedCb.push(e.target.value);
+    
+    <script>
+        let selected = [];
+        // The issue I was having is that checkboxes won't work without adding an event listener. 
+        let cb = $('input[type="checkbox"]');
+        $(cb).on('click', function (e) {
+            selected.push(e.target.value);
         });
-
-            client.listfolder(@Context.Request.Query["id"]).then(a => {
-
-                a.contents.forEach(b => {
-                    if (b.name.includes("JPEG")) {
-
-                        client.getthumbs([b.fileid], thumb => {
-
-
-                            $("#Photos").append(`
-                        <figure>
-                            <img src="${thumb.url}">
-                            <figcaption>
-                                ${b.name}
-                                <input type="checkbox" value="${b.name}">
-                            </figcaption>
-                        </figure>
-                     `);
-
-                        }, 'auto', '120x120');
+        $("#delFromPCloud").on('click', function (e) {
+            e.preventDefault();
+            console.log(selected);
+        });
+        
+    </script>
 
 
-                    }
-                });
-            });
+    <script>
+        // Script to load featherlight JS popup
+        $("a.fl").featherlight({
+            targetAttr: 'href',
+            afterContent: function () {
+                
+                let content = this.$content;
+                let target = this.$currentTarget[0];
+                let instance = this.$instance;
+                let data = $(target).data('content');
+                
+                
+                
+            }
+            
+        });
+    </script>
 
-	</script>
 
+
+
+
+	
 
 }

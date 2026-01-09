@@ -54,9 +54,15 @@ form {
 
 
 #Photos {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1em;
+    display: flex; 
+    flex-direction: column;
+    flex: 1; 
+
+    section { 
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 1em;
+    
 
     figcaption {
         display: flex;
@@ -64,6 +70,7 @@ form {
         gap: 1em;
         align-items: center;
         padding-top: 1em;
+    }
     }
 }
 

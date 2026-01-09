@@ -35,6 +35,7 @@ public class ContentItem
      public bool isfolder { get; set; }
      public string name { get; set; }
      public string icon { get; set; }
+     public string path { get; set; }
 
      // Optional fields (only appear on files)
      public string contenttype { get; set; }

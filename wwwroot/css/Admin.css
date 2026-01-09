@@ -45,11 +45,16 @@ form input {
 }
 
 #Photos {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+#Photos section {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1em;
 }
-#Photos figcaption {
+#Photos section figcaption {
   display: flex;
   flex-direction: column;
   gap: 1em;
