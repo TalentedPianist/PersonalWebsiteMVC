@@ -55,6 +55,27 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           }
 
+          public IActionResult Create(string id)
+          {
+               ViewBag.FolderID = id;
+               return View();
+          }
+
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Home/CreateFoldelr")]
+          public IActionResult CreateFolder(CreateFolderModel model, [FromForm(Name="folderid")]string folderid)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/createfolder");
+               var request = new RestRequest();
+               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+               request.AddParameter("password", "Inkyfrog1");
+               request.AddParameter("folderid", folderid);
+               request.AddParameter("name", model.Name);
+               var response = client.Execute(request);
+               TempData["Message"] = folderid;
+               return View("~/Areas/pCloud/Views/Home/Create.cshtml", model);
+          }
+
 
           [HttpPost]
           public IActionResult Auth()

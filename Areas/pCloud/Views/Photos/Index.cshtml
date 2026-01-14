@@ -15,7 +15,7 @@
 @using X.PagedList
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
-@model PagedList<ContentItem>
+@model List<ContentItem>
 
 <h1 class="bg bg-info p-1">Photos for @Context.Request.Query["name"]</h1>
 
@@ -33,6 +33,7 @@
 		<li><a href="#" id="addToDb">Add to Database</a></li>
 		<li><a href="#" id="delFromDb">Delete from Database</a></li>
 		<li><a href="#" id="delFromPCloud">Delete from PCloud</a></li>
+        <li><a asp-action="Upload" asp-controller="Photos" asp-route-folderid="@Context.Request.Query["id"]!" asp-area="pCloud">Upload Files</a></li>
 	</ul>
 </div>
 
@@ -51,8 +52,9 @@
 					<figure>
                         <img src="@thumb">
                         <figcaption>
-                            <a class="fl" href="#Popup" data-image="@thumb" data-id="@item.id" data-fileid="@item.fileid" data-created="@item.created">@item.name</a>
+                            <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb">@item.name</a>
                             <input type="checkbox" name="delete" value="@item.name">
+                            
                         </figcaption>
                     </figure>
 				}
@@ -118,10 +120,43 @@
                 let content = this.$content;
                 let target = this.$currentTarget[0];
                 let instance = this.$instance;
-                let data = $(target).data('content');
-                
-                
-                
+                let json = JSON.parse(target.dataset.item);
+                let image = target.dataset.image;
+
+                // Ajax script to get HTML with pCloud info and dynamically set it to the Popup.
+                $.ajax({
+                    method: "POST",
+                    url: "/pCloud/Photos/GetPopup",
+                    data: { 'item': json, 'thumb': image },
+                    async: false,
+                    cache: false,
+                    success: function (message) {  
+                        $(".featherlight-content").html(message);  // This popup is in the Featherlight instance so it makes sense to use .featherlight-content instead of #Popup.
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+
+                // Ajax script to delete the file from pCloud
+                $('#delFromCloud').on('click', function (e) {
+                    $.ajax({
+                        method: "POST",
+                        url: "/pCloud/Photos/DeleteFromCloud",
+                        data: { 'fileid': e.target.dataset.fileid },
+                        async: false,
+                        cache: false,
+                        success: function (message) {
+                            var result = JSON.parse(message);
+                            if (result.metadata.isdeleted === true) {
+                                window.location.reload();
+                            }
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
             }
             
         });

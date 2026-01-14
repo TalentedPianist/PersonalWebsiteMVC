@@ -132,9 +132,9 @@ try
      builder.Services.ConfigureApplicationCookie(options =>
      {
           // Cookie settings
-          //options.Cookie.Name = ".AspNetCore.Identity.Application";
+          options.Cookie.Name = ".AspNetCore.Identity.Application";
           options.Cookie.HttpOnly = true;
-          //options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+          options.ExpireTimeSpan = TimeSpan.FromHours(2);
 
 
           options.LoginPath = "/Identity/Account/Login";

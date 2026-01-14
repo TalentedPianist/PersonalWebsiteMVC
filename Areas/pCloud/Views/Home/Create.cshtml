@@ -1,0 +1,25 @@
+﻿@*
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model CreateFolderModel
+
+
+
+
+<h1 class="bg bg-info">Create</h1>
+<a class="btn btn-secondary" asp-action="Index" asp-controller="Home" asp-area="pCloud">Back</a>
+
+<div>
+@TempData["Message"]
+</div>
+
+<form method="post" asp-action="CreateFolder" asp-area="pCloud" asp-controller="Home">
+	<div class="form-group">
+		<label asp-for="Name">Name:</label>
+		<input asp-for="Name" class="form-control">
+	</div>
+	<input type="hidden" name="folderid" value="@Context.Request.Query["folderid"]">
+	<button type="submit" class="btn btn-primary">Create</button>
+</form>

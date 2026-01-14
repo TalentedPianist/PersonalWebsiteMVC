@@ -1,0 +1,17 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@model FileUploadModel
+
+<h1 class="bg bg-info p-1">Upload Files</h1>
+<a asp-action="Index" asp-controller="Photos" asp-route-id="@Context.Request.Query["folderid"]" asp-area="pCloud" class="btn btn-secondary">Back</a>
+
+@TempData["Message"]
+
+<form method="post" asp-action="UploadFiles" asp-area="pCloud" asp-controller="Photos" enctype="multipart/form-data">
+    <input type="file" class="form-control" name="file">
+    <input type="hidden" value="@Context.Request.Query["folderid"]" name="folderid">
+    <button type="submit" class="btn btn-primary">Upload</button>
+</form>

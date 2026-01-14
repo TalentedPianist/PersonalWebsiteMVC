@@ -3,15 +3,15 @@
 *@
 @{
 }
+@model ContentItem
 
-
-<h1>@ViewBag.Name</h1>
+<h1>@Model.name</h1>
 
 <img src="@ViewBag.Image">
 
-<form method="post" asp-action="MakeCoverPic" asp-area="pCloud" asp-controller="Photos">
-    <input type="hidden" name="CoverPic" value="@ViewBag.Image">
-    <input type="hidden" name="AlbumName" value="@ViewBag.AlbumName">
-    <p>Make cover photo?</p>
-    <button type="submit" class="btn btn-primary">Yes</button>
-</form>
+
+<ul>
+	<li><a asp-action="Update" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Update</a></li>
+	<li><a asp-action="Details" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Details</a></li>
+	<li><a asp-action="Delete" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Delete</a></li>
+</ul>
