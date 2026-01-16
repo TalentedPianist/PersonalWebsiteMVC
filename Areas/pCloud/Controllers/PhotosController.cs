@@ -94,16 +94,17 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("pCloud/Photos/UploadFiles")]
-          public async Task<IActionResult> UploadFile(IFormFile file, [FromForm(Name="folderid")]string folderid, [FromForm(Name="path")]string path)
+          public async Task<IActionResult> UploadFile(IFormFile file)
           {
-               
-
+               string accessToken = "655SZGJR8uDME26uZjggq0kZ4UCr9VvfyfjRgIM8CPVJEu3c3ajy";
+               long folderid = 21235871359;
                using var stream = file.OpenReadStream();
-               var client = new RestClient("https://eapi.pcloud.com");
+               var client = new RestClient($"https://eapi.pcloud.com?path=/Public Folder/Gallery/Scarborough");
                var request = new RestRequest("uploadfile", Method.Post);
-               request.AddHeader("Authorization", "Bearer 655SZGJR8uDME26uZjggq0kZ4UCr9VvfyfjRgIM8CPVJEu3c3ajy");
-               request.AddParameter("folderid", 21465566448);
-               //request.AddParameter("path", $"/Public Folder/Gallery/{path}");
+               request.AddHeader("Authorization", $"Bearer {accessToken}");
+               request.AddParameter("access_token", accessToken);
+               request.AddParameter("folderid", folderid);
+               //request.AddParameter("path", "/My Pictures");
                request.AddParameter("filename", file.FileName);
                request.AddFile("file", () => stream, file.FileName, file.ContentType);
                var response = await client.ExecuteAsync(request);
