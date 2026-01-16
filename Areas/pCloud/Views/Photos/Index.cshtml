@@ -23,7 +23,7 @@
 
 
 
-<a class="btn btn-secondary" asp-action="Index" asp-controller="Albums" asp-area="pCloud">Back</a>
+<a class="btn btn-secondary" asp-action="Index" asp-controller="Home" asp-area="pCloud">Back</a>
 
 
 <div id="PhotosNav">
@@ -33,9 +33,20 @@
 		<li><a href="#" id="addToDb">Add to Database</a></li>
 		<li><a href="#" id="delFromDb">Delete from Database</a></li>
 		<li><a href="#" id="delFromPCloud">Delete from PCloud</a></li>
-        <li><a asp-action="Upload" asp-controller="Photos" asp-route-folderid="@Context.Request.Query["id"]!" asp-area="pCloud">Upload Files</a></li>
+        <li>
+            <form method="post" asp-action="GetToken" asp-controller="Photos" asp-area="pCloud">
+                <button class="btn btn-link">Login</button>
+            </form>
+        </li>
 	</ul>
 </div>
+
+<form method="post" asp-action="UploadFiles" asp-area="pCloud" asp-controller="Photos" enctype="multipart/form-data">
+	<input type="file" class="form-control" name="file">
+	<input type="hidden" value="@Context.Request.Query["id"]" name="folderid">
+    <input type="hidden" value="@Context.Request.Query["name"]" name="path">
+	<button type="submit" class="btn btn-primary">Upload</button>
+</form>
 
 
 
@@ -46,9 +57,11 @@
 		{
 			foreach (ContentItem item in Model)
 			{
-				if (item.name.Contains(".JPEG"))
+                @item.folderid
+                
+				if (item.name!.Contains(".JPEG"))
 				{
-                    var thumb = GetThumbs(item.fileid.ToString()!, item.path, "120x120");
+                    var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "120x120");
 					<figure>
                         <img src="@thumb">
                         <figcaption>

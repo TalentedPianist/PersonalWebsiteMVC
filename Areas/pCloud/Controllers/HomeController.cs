@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using Newtonsoft.Json.Schema;
+using PersonalWebsiteMVC.Areas.pCloud.Helpers;
 using PersonalWebsiteMVC.Areas.pCloud.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
@@ -21,37 +22,40 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
      {
           public ApplicationDbContext _db { get; set; }
           public IHttpClientFactory _httpClientFactory { get; }
+          public IPCloudAuth _auth { get; set; }
 
-          public HomeController(IHttpClientFactory httpClientFactory, ApplicationDbContext db)
+          public HomeController(IHttpClientFactory httpClientFactory, ApplicationDbContext db, IPCloudAuth auth)
           {
                _httpClientFactory = httpClientFactory;
                _db = db;
+               _auth = auth;
           }
 
 
           public IActionResult Index([FromQuery(Name = "code")] string code)
           {
-               var client = new RestClient("https://eapi.pcloud.com/listfolder");
-               var request = new RestRequest();
-               request.AddParameter("folderid", "19500076302");
-               request.AddParameter("getauth", "1");
-               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-               request.AddParameter("password", "Inkyfrog1");
-               request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
-               var response = client.Execute(request);
-               StringBuilder sb = new StringBuilder();
-               
                try
                {
+                    var client = new RestClient("https://eapi.pcloud.com/listfolder");
+                    var request = new RestRequest();
+                    request.AddHeader("Authorization", "Bearer 655SZGJR8uDME26uZjggq0kZ4UCr9VvfyfjRgIM8CPVJEu3c3ajy");
+                    request.AddParameter("folderid", "19500076302");
+                    request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
+                    var response = client.Execute(request);
+                    StringBuilder sb = new StringBuilder();
+
+                    TempData["Message"] = response.Content;
                     var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-                    List<ContentItem> items = result!.metadata.contents;
-                    
+                    List<ContentItem> items = result!.metadata!.contents!;
                     return View(items);
                }
                catch (NullReferenceException)
                {
+                    return View();
                }
-               return View();
+                   
+              
+         
 
           }
 
@@ -65,50 +69,30 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Home/CreateFoldelr")]
           public IActionResult CreateFolder(CreateFolderModel model, [FromForm(Name="folderid")]string folderid)
           {
-               var client = new RestClient("https://eapi.pcloud.com/createfolder");
-               var request = new RestRequest();
-               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-               request.AddParameter("password", "Inkyfrog1");
-               request.AddParameter("folderid", folderid);
-               request.AddParameter("name", model.Name);
-               var response = client.Execute(request);
-               TempData["Message"] = folderid;
-               return View("~/Areas/pCloud/Views/Home/Create.cshtml", model);
+               try
+               {
+                    var client = new RestClient("https://eapi.pcloud.com/createfolder");
+                    var request = new RestRequest();
+                    request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+                    request.AddParameter("password", "Inkyfrog1");
+                    request.AddParameter("folderid", folderid);
+                    request.AddParameter("name", model.Name);
+                    var response = client.Execute(request);
+                    TempData["Message"] = folderid;
+               }
+               catch (NullReferenceException ex)
+               {
+               }
+               return View("~/Areas/pCloud/Views/Home/Create.cshtml");
           }
 
 
           [HttpPost]
-          public IActionResult Auth()
+          public Task GetAuth()
           {
-               string clientId = "GJR8uDME26u";
-
-               string url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=http://localhost:5051/pCloud/&state=12345&force_reapprove=true";
-               return Redirect(url);
+               _auth.Auth();
+               return Task.CompletedTask;
           }
-
-          string GetAccessToken()
-          {
-
-               string clientId = "GJR8uDME26u";
-               string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
-               string url = "https://eapi.pcloud.com/oauth2_token";
-
-               var client = new RestClient(url);
-               var request = new RestRequest();
-               request.AddParameter("client_id", clientId);
-               request.AddParameter("client_secret", clientSecret);
-               request.AddParameter("code", HttpContext.Request.Query["code"]);
-               request.AddParameter("access_token", "655SZGJR8uDME26uZdTpK0kZAEJfaNqdDmfMc5Aku6CMUuK1q7Ay");
-               
-               var response = client.Execute(request);
-               var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
-
-               return json!.access_token!;
-
-          }
-
-
-
 
      }
 }

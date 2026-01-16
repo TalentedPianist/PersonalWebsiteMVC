@@ -32,6 +32,7 @@ using PersonalWebsiteMVC.Areas.OneDrive.Helpers;
 using Microsoft.Graph;
 using Azure.Identity;
 using SolrNet.Impl;
+using PersonalWebsiteMVC.Areas.pCloud.Helpers;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -267,6 +268,8 @@ try
      // https://devapo.io/blog/technology/leverage-the-power-of-indexing-with-apache-solr-and-net/
      builder.Services.AddScoped<ISolrStatusResponseParser, SolrStatusResponseParser>();
      builder.Services.AddScoped<ISolrCoreAdmin, SolrCoreAdmin>();
+
+     builder.Services.AddScoped<IPCloudAuth, PCloudAuth>();
 
      var app = builder.Build();
 

@@ -6,6 +6,8 @@
 @using System.Net.Http.Headers
 @using Microsoft.AspNetCore.Http
 @using PersonalWebsiteMVC.Models
+
+@inject IPCloudAuth _auth
 @model List<ContentItem>
 
 <h1 class="bg bg-info p-1">pCloud</h1>
@@ -14,6 +16,11 @@
 
 @TempData["Message"]
 
+@_auth.GetAccessToken()
+
+<form method="post" asp-action="GetAuth" asp-controller="Home" asp-area="pCloud">
+	<button class="btn btn-link">Login</button>
+</form>
 
 
 <div id="Gallery">
@@ -25,9 +32,9 @@
 			<figure>
 				<svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
 				<figcaption>
-					<a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name">@item.name</a>
+					<a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name" asp-route-code="@Context.Request.Query["code"]">@item.name</a>
 					<input type="checkbox" value="@item.name">
-
+					@item.folderid
 				</figcaption>
 			</figure>
 		}

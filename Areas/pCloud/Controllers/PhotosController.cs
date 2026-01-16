@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using X.PagedList.Extensions;
 using X.PagedList;
 using Newtonsoft.Json.Linq;
+using PersonalWebsiteMVC.Areas.pCloud.Helpers;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
@@ -25,33 +26,43 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           public IHttpContextAccessor _http { get; set; }
           public ApplicationDbContext _db { get; set; }
           public IWebHostEnvironment _env { get; set; }
+          public IPCloudAuth _auth { get; set; }
 
-          public PhotosController(IHttpClientFactory httpClientFactory, IHttpContextAccessor http, ApplicationDbContext db, IWebHostEnvironment env)
+          public PhotosController(IHttpClientFactory httpClientFactory, IHttpContextAccessor http, ApplicationDbContext db, IWebHostEnvironment env, IPCloudAuth auth)
           {
                _httpClientFactory = httpClientFactory;
                _http = http;
                _db = db;
                _env = env;
+               _auth = auth;
           }
 
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/")]
           public IActionResult Index([FromQuery(Name = "id")] string id, [FromQuery(Name="pageNumber")]int? page)
           {
-               var client = new RestClient("https://eapi.pcloud.com/listfolder");
-               var request = new RestRequest();
-               //request.AddParameter("folderid", HttpContext.Request.Query["id"]);
-               request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
-               request.AddParameter("getauth", "1");
-               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-               request.AddParameter("password", "Inkyfrog1");
-               var response = client.Execute(request);
-               var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-               StringBuilder sb = new StringBuilder();
-               var pageNumber = page ?? 1;
+               try
+               {
+                    var client = new RestClient("https://eapi.pcloud.com/listfolder");
+                    var request = new RestRequest();
+                    //request.AddParameter("folderid", HttpContext.Request.Query["id"]);
+                    request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
+                    request.AddParameter("getauth", "1");
+                    request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+                    request.AddParameter("password", "Inkyfrog1");
+                    var response = client.Execute(request);
+                    var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
+                    StringBuilder sb = new StringBuilder();
+                    var pageNumber = page ?? 1;
 
-               var model = result!.metadata.contents;
+                    var model = result!.metadata!.contents;
 
-               return View(model);
+                    return View(model);
+               }
+               catch (NullReferenceException ex)
+               {
+                    TempData["Message"] = ex.Message;
+                    return View();
+               }
 
           }
 
@@ -83,26 +94,35 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("pCloud/Photos/UploadFiles")]
-          public async Task<IActionResult> UploadFile(IFormFile file, [FromForm(Name="folderid")]string folderid)
+          public async Task<IActionResult> UploadFile(IFormFile file, [FromForm(Name="folderid")]string folderid, [FromForm(Name="path")]string path)
           {
+               
 
-               string uploadPath = System.IO.Path.Combine(_env.WebRootPath, "Uploads");
-               string filePath = System.IO.Path.Combine(uploadPath, file.FileName);
-               using (var stream = new FileStream(filePath, FileMode.Create))
+               using var stream = file.OpenReadStream();
+               var client = new RestClient("https://eapi.pcloud.com");
+               var request = new RestRequest("uploadfile", Method.Post);
+               request.AddHeader("Authorization", "Bearer 655SZGJR8uDME26uZjggq0kZ4UCr9VvfyfjRgIM8CPVJEu3c3ajy");
+               request.AddParameter("folderid", 21465566448);
+               //request.AddParameter("path", $"/Public Folder/Gallery/{path}");
+               request.AddParameter("filename", file.FileName);
+               request.AddFile("file", () => stream, file.FileName, file.ContentType);
+               var response = await client.ExecuteAsync(request);
+               if (!response.IsSuccessful)
                {
-                    await file.CopyToAsync(stream);
-                    var client = new RestClient("https://eapi.pcloud.com/uploadfile");
-                    var request = new RestRequest();
-                    request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-                    request.AddParameter("password", "Inkyfrog1");
-                    request.AddParameter("folderid", folderid);
-                    request.AddParameter("filename", file.FileName);
-                    request.AddFile(file.FileName, filePath);
-                    var response = client.Execute(request);
-                    TempData["Message"] = response.Content;
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
                }
-                    return View("~/Areas/pCloud/Views/Photos/Upload.cshtml");
+               TempData["Message"] = response.Content;
+               return View("~/Areas/pCloud/Views/Photos/Index.cshtml");
           }
-          
+
+          [HttpPost]
+          public Task GetToken()
+          {
+               _auth.Auth();
+               return Task.CompletedTask;
+          }
      }
 }
