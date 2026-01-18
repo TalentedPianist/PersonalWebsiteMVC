@@ -34,11 +34,11 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           public IActionResult Index([FromQuery(Name = "code")] string code)
           {
-               try
-               {
+              
                     var client = new RestClient("https://eapi.pcloud.com/listfolder");
                     var request = new RestRequest();
-                    request.AddHeader("Authorization", "Bearer 655SZGJR8uDME26uZjggq0kZ4UCr9VvfyfjRgIM8CPVJEu3c3ajy");
+                    //request.AddHeader("Authorization", "Bearer  655SZGJR8uDME26uZEvMt0kZAbFQFztaJOLbY1UdbLWbT0mlhkXX");
+                    request.AddParameter("access_token", "655SZGJR8uDME26uZgrMt0kZJnk35TbFfO55n93KDuBQkjiGUGbk");
                     request.AddParameter("folderid", "19500076302");
                     request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                     var response = client.Execute(request);
@@ -48,11 +48,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
                     List<ContentItem> items = result!.metadata!.contents!;
                     return View(items);
-               }
-               catch (NullReferenceException)
-               {
-                    return View();
-               }
+               
                    
               
          
