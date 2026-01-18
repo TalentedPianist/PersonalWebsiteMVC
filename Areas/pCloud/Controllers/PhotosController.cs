@@ -38,8 +38,11 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/")]
-          public IActionResult Index([FromQuery(Name = "id")] string id, [FromQuery(Name="pageNumber")]int? page)
+          public async Task<IActionResult> Index([FromQuery(Name = "id")] string id, [FromQuery(Name="pageNumber")]int? page)
           {
+               string accessToken = "655SZGJR8uDME26uZjggq0kZ4UCr9VvfyfjRgIM8CPVJEu3c3ajy";
+            
+
                try
                {
                     var client = new RestClient("https://eapi.pcloud.com/listfolder");
@@ -64,6 +67,24 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     return View();
                }
 
+          }
+
+          public async Task<string> ListFolder(string token)
+          {
+               var client = new RestClient("https://eapi.pcloud.com");
+               var request = new RestRequest("listfolder");
+               request.AddHeader("Authorization", $"Bearer {token}");
+               request.AddParameter("path", "/");
+               var response = await client.ExecuteAsync(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               Console.WriteLine(response.Content!);
+               return response.Content!;
           }
 
           [HttpPost]
@@ -97,14 +118,20 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           public async Task<IActionResult> UploadFile(IFormFile file)
           {
                string accessToken = "655SZGJR8uDME26uZjggq0kZ4UCr9VvfyfjRgIM8CPVJEu3c3ajy";
-               long folderid = 21235871359;
+               var path = "/Public Folder/Gallery/Scarborough";
+               await UploadToPCloud(accessToken, "/", file);
+               return View("~/Areas/pCloud/Views/Photos/Index.cshtml");
+          }
+
+         
+
+          public async Task<JToken> UploadToPCloud(string token, string path, IFormFile file)
+          {
                using var stream = file.OpenReadStream();
-               var client = new RestClient($"https://eapi.pcloud.com?path=/Public Folder/Gallery/Scarborough");
+               var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("uploadfile", Method.Post);
-               request.AddHeader("Authorization", $"Bearer {accessToken}");
-               request.AddParameter("access_token", accessToken);
-               request.AddParameter("folderid", folderid);
-               //request.AddParameter("path", "/My Pictures");
+               request.AddHeader("Authorization", $"Bearer {token}");
+               request.AddParameter("path", "/Public Folder/Gallery/Scarborough");
                request.AddParameter("filename", file.FileName);
                request.AddFile("file", () => stream, file.FileName, file.ContentType);
                var response = await client.ExecuteAsync(request);
@@ -115,8 +142,73 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               TempData["Message"] = response.Content;
-               return View("~/Areas/pCloud/Views/Photos/Index.cshtml");
+               var json = JsonConvert.DeserializeObject(response.Content!);
+               JToken result = JToken.Parse(json!.ToString()!);
+               var metadata = result["metadata"]![0];
+             
+               await CopyToFolder(token, metadata!["path"]!.ToString(), metadata!["id"]!.ToString());
+               return metadata!;
+          }
+
+          public async Task<string> CopyToFolder(string token, string path, string fileid)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("copyfile");
+               request.AddHeader("Authorization", $"Bearer {token}");
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("path", path);
+               request.AddParameter("topath", "/Public Folder/Gallery/Scarborough/");
+               var response = await client.ExecuteAsync(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               await DeleteFileFromRoot(token, path);
+               return response.Content!;
+          }
+
+          public async Task<string> DeleteFileFromRoot(string token, string path)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("deletefile");
+               request.AddHeader("Authorization", $"Bearer {token}");
+               request.AddParameter("path", path);
+               var response = await client.ExecuteAsync(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               Console.WriteLine(response.Content);
+               return response.Content!;
+          }
+
+
+          public async Task<string> CreateUploadLink(string token, long folderid)
+          {
+               Console.WriteLine(token);
+               var client = new RestClient("https://eapi.pcloud.com/createuploadlink");
+               var request = new RestRequest();
+               //request.AddHeader("Authorization", $"Bearer {token}");
+               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+               request.AddParameter("password", "Inkyfrog1");
+               request.AddParameter("folderid", folderid);
+               var response = await client.ExecuteAsync(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               Console.WriteLine(response.Content);
+               //Console.WriteLine(token);
+               return response.Content!;
           }
 
           [HttpPost]

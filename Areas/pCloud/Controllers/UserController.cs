@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using RestSharp;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
@@ -16,19 +17,13 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           public async Task<IActionResult> Index()
           {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("userinfo");
+               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+               request.AddParameter("password", "Inkyfrog1");
 
-               var httpClient = _httpClientFactory.CreateClient();
-
-               // First we have to authenticate with pCloud.
-               string username = "douglas@douglasmcgregor.co.uk";
-               string password = "Inkyfrog1";
-
-               //string myPicturesId = "d12708566907";
-               string myPicturesPath = "/My Pictures";
-               string folderId = "12708566907";
-               var folders = await httpClient.GetStringAsync($"https://eapi.pcloud.com/listfolder?getauth=1&username={username}&password={password}&id={folderId}&path={myPicturesPath}");
-
-               TempData["Message"] = folders;
+               var response = await client.ExecuteAsync(request);
+               Console.WriteLine(response.Content);
                return View();
 
           }

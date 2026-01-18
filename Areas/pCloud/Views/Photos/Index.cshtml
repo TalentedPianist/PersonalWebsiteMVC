@@ -42,7 +42,7 @@
 </div>
 
 <form method="post" asp-action="UploadFiles" asp-area="pCloud" asp-controller="Photos" enctype="multipart/form-data">
-	<input type="file" class="form-control" name="file">
+	<input type="file" class="form-control" name="file" multiple>
 	<input type="hidden" value="@Context.Request.Query["id"]" name="folderid">
     <input type="hidden" value="@Context.Request.Query["name"]" name="path">
 	<button type="submit" class="btn btn-primary">Upload</button>
