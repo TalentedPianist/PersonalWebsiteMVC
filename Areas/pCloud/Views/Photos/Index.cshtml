@@ -59,14 +59,14 @@
 			{
                 @item.folderid
                 
-				if (item.name!.Contains(".JPEG"))
+				if (item.name!.Contains(".JPG"))
 				{
                     var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "120x120");
 					<figure>
                         <img src="@thumb">
                         <figcaption>
                             <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb">@item.name</a>
-                            <input type="checkbox" name="delete" value="@item.name">
+                            <input type="checkbox" name="delete" value="@item.fileid">
                             
                         </figcaption>
                     </figure>
@@ -118,7 +118,21 @@
         });
         $("#delFromPCloud").on('click', function (e) {
             e.preventDefault();
-            console.log(selected);
+            //console.log(selected);
+            $.ajax({
+                method: "post",
+                url: "/pCloud/Photos/DeleteMultiple",
+                data: { files: selected },
+                async: false,
+                cache: false,
+                success: function (message) {
+                    console.log(message);
+                    window.location.reload();
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         });
         
     </script>

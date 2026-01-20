@@ -37,8 +37,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
               
                     var client = new RestClient("https://eapi.pcloud.com/listfolder");
                     var request = new RestRequest();
-                    //request.AddHeader("Authorization", "Bearer  655SZGJR8uDME26uZEvMt0kZAbFQFztaJOLbY1UdbLWbT0mlhkXX");
-                    request.AddParameter("access_token", "655SZGJR8uDME26uZgrMt0kZJnk35TbFfO55n93KDuBQkjiGUGbk");
+                    
+                    request.AddParameter("access_token", "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X");
                     request.AddParameter("folderid", "19500076302");
                     request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                     var response = client.Execute(request);
