@@ -34,25 +34,20 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           public IActionResult Index([FromQuery(Name = "code")] string code)
           {
-              
-                    var client = new RestClient("https://eapi.pcloud.com/listfolder");
-                    var request = new RestRequest();
-                    
-                    request.AddParameter("access_token", "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X");
-                    request.AddParameter("folderid", "19500076302");
-                    request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
-                    var response = client.Execute(request);
-                    StringBuilder sb = new StringBuilder();
 
-                    TempData["Message"] = response.Content;
-                    var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-                    List<ContentItem> items = result!.metadata!.contents!;
-                    return View(items);
-               
-                   
-              
-         
+               var client = new RestClient("https://eapi.pcloud.com/listfolder");
+               var request = new RestRequest();
 
+               request.AddParameter("access_token", "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X");
+               request.AddParameter("folderid", "19500076302");
+               request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
+               var response = client.Execute(request);
+               StringBuilder sb = new StringBuilder();
+
+               //TempData["Message"] = response.Content;
+               var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
+               List<ContentItem> items = result!.metadata!.contents!;
+               return View(items);
           }
 
           public IActionResult Create(string id)
@@ -62,8 +57,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
           [HttpPost]
-          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Home/CreateFoldelr")]
-          public IActionResult CreateFolder(CreateFolderModel model, [FromForm(Name="folderid")]string folderid)
+          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Home/CreateFolder")]
+          public IActionResult CreateFolder(CreateFolderModel model, [FromForm(Name = "folderid")] string folderid)
           {
                try
                {

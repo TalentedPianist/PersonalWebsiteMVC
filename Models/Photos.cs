@@ -15,6 +15,8 @@ namespace PersonalWebsiteMVC.Models
         public string? Author { get; set; }
         public string? ImageUrl { get; set; }
         public DateTime? DateCreated { get; set; }
+
+
     }
 
 }

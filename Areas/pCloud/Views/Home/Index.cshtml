@@ -18,10 +18,17 @@
 
 @_auth.GetAccessToken()
 
+<!--
 <form method="post" asp-action="GetAuth" asp-controller="Home" asp-area="pCloud">
 	<button class="btn btn-link">Login</button>
 </form>
+-->
 
+<ul>
+	<li><a id="selectAll" href="#">Select All</a></li>
+	<li><a id="addToDb" href="#">Add To Database</a></li>
+	<li><a id="delFromDb" href="#">Delete From Database</a></li>
+</ul>
 
 <div id="Gallery">
 	@if (Model is not null)
@@ -33,7 +40,7 @@
 				<svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
 				<figcaption>
 					<a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name" asp-route-code="@Context.Request.Query["code"]">@item.name</a>
-					<input type="checkbox" value="@item.name">
+					<input type="checkbox" value="@item.name" data-date="@item.created">
 					@item.folderid
 				</figcaption>
 			</figure>
@@ -41,3 +48,91 @@
 		</section>
 	}
 </div>
+
+@section Scripts { 
+	<script>
+		// Script to select all checkboxes and add them to array to be processed.
+		let albums = []; // Array to hold all checked albums
+
+		document.getElementById("selectAll").addEventListener("click", function (e) {
+			e.preventDefault();
+			let cb = document.querySelector("#Gallery section").querySelectorAll('input[type="checkbox"]');
+			cb.forEach(function (item, index) {
+				item.checked = true; // Check all checkboxes
+			
+				albums.push({ Name: item.value, DateCreated: item.getAttribute('date') });
+				console.log(albums);
+			});
+		});
+
+		// Script to add value to array if checkboxes are individually checked
+		document.querySelector("#Gallery section").querySelectorAll('input[type="checkbox"]').forEach(function (item, index) {
+			item.addEventListener('click', function (e) {
+				let id = $.ajax({ // Check if album is in database using Ajax
+					method: "GET",
+					url: "/pCloud/Albums/GetID",
+					data: { name: item.value },
+					cache: false,
+					async: false,
+				}).responseText;
+				console.log(id);
+
+				if (id === 0) {
+					albums.push({ Name: item.value, DateCreated: item.dataset['date'] });
+				} else {
+					
+					albums.push({ AlbumID: id });
+				}
+			});
+		});
+
+		// Script to add selected albums to database using Ajax
+		$("#addToDb").on('click', function (e) {
+			e.preventDefault();
+			console.log(albums);
+
+			$.ajax({
+				method: "POST",
+				url: "/pCloud/Albums/AddMultipleAlbumsToDb",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				dataType: 'json',
+				data: JSON.stringify(albums),
+				async: false,
+				cache: false,
+				success: function (message) {
+					console.log(message);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+		});
+
+		// Script to delete selected items from database using Ajax
+		$("#delFromDb").on('click', function (e) {
+			e.preventDefault();
+
+			$.ajax({
+				method: "POST",
+				url: "/pCloud/Albums/DelMultipleFromDb",
+				headers: {
+					"Content-Type": "application/json"
+				},
+				dataType: 'json',
+				data: JSON.stringify(albums),
+				async: false,
+				cache: false,
+				success: function (message) {
+					window.location.reload();
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+		});
+		
+	</script>
+
+	}

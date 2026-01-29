@@ -14,6 +14,7 @@ using X.PagedList.Extensions;
 using X.PagedList;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Areas.pCloud.Helpers;
+using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
@@ -239,6 +240,47 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                _auth.Auth();
                return Task.CompletedTask;
+          }
+
+          [HttpGet]
+          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/GetID")]
+          public int GetID(string name)
+          {
+               try
+               {
+                    var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
+                    return photo!.PhotoID;
+               }
+               catch (NullReferenceException)
+               {
+                    // Photo is not in the database
+                    return 0;
+               }
+          }
+
+          [HttpGet]
+          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/GetAlbumID")]
+          public int GetAlbumID(string name)
+          {
+               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+               return album!.AlbumID;
+          }
+
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/AddToDb")]
+          public IActionResult AddToDb([FromBody]List<PersonalWebsiteMVC.Models.Photos> data)
+          {
+               _db.Photos.AddRange(data);
+               _db.SaveChanges();
+               return Ok(data);
+          }
+
+          [HttpPost]
+          public IActionResult DelFromDb([FromBody] List<PersonalWebsiteMVC.Models.Photos> data)
+          {
+               _db.Photos.RemoveRange(data);
+               _db.SaveChanges();
+               return Ok(data);
           }
      }
 }

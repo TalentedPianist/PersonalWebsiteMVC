@@ -13,8 +13,10 @@
 @using Newtonsoft.Json.Linq
 @using System.Text
 @using X.PagedList
+@using PersonalWebsiteMVC.Data
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
+@inject ApplicationDbContext _db
 @model List<ContentItem>
 
 <h1 class="bg bg-info p-1">Photos for @Context.Request.Query["name"]</h1>
@@ -66,7 +68,7 @@
                         <img src="@thumb">
                         <figcaption>
                             <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb">@item.name</a>
-                            <input type="checkbox" name="delete" value="@item.fileid">
+                            <input type="checkbox" name="delete" value="@item.fileid" data-date="@item.created" data-name="@item.name" data-image="@thumb">
                             
                         </figcaption>
                     </figure>
@@ -100,99 +102,129 @@
         var url = "https://" + json["hosts"]![0] + json["path"];
         return url;
     }
+
+   
 }
 
 
 
 @section Scripts {
 
-	<script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.min.js" type="text/javascript" charset="utf-8"></script>
-	<script src="//cdn.jsdelivr.net/npm/featherlight@1.7.14/release/featherlight.gallery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script>
+        // Script to enable featherlight popup for link in figcaption
+        $('a.fl').featherlight({
+            targetAttr: 'href',
+            afterContent: function (event) {
+                let instance = this.$instance;
+                let target = this.$currentTarget;
+
+                // Get photo model using Ajax
+                $.ajax({
+                    method: "POST",
+                    url: "/pCloud/Photos/GetPopup",
+                    data: { item: event.target.dataset['item'], thumb: event.target.dataset['image'] },
+                    async: false,
+                    cache: false,
+                    success: function (message) {
+                        $("#Popup").append(message);
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+        });
+    </script>
+    
     
     <script>
-        let selected = [];
-        // The issue I was having is that checkboxes won't work without adding an event listener. 
-        let cb = $('input[type="checkbox"]');
-        $(cb).on('click', function (e) {
-            selected.push(e.target.value);
-        });
-        $("#delFromPCloud").on('click', function (e) {
+        let photos = [];
+
+        document.querySelector("#selectAll").addEventListener("click", function (e) {
             e.preventDefault();
-            //console.log(selected);
+            let cb = document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]');
+            cb.forEach(function (item, index) {
+                item.checked = true;
+                
+            });
+        });
+
+        document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]').forEach(function (item, index) {
+            item.addEventListener('click', function (e) {
+            
+                // Check if photo is in database by making an Ajax call to the database with the photo name as filter
+                let strPhotoID = $.ajax({
+                    method: "GET",
+                    url: "/pCloud/Photos/GetID",
+                    data: { name: item.dataset['name'] },
+                    async: false,
+                    cache: false,
+                }).responseText;
+                
+
+              
+
+                if (strPhotoID == 0) { // If photo id returns 0, photo is not in the database
+                    let strAlbumID = $.ajax({
+                        method: "GET",
+                        url: "/pCloud/Photos/GetAlbumID",
+                        data: { name: '@Context.Request.Query["name"]' },
+                        async: false,
+                        cache: false,
+                    }).responseText;
+              
+                  
+                   // This should be improved by providing a user friendly message saying the album does not exist in the database.  
+                    photos.push({ Name: item.dataset['name'], AlbumID: strAlbumID, Author: '@Context.User.Identity!.Name', ImageUrl: item.dataset['image'], DateCreated: item.dataset['date'] });
+                } else {
+                    photos.push({ PhotoID: strPhotoID });
+                }
+                
+            });
+        });
+
+        document.querySelector("#addToDb").addEventListener('click', function (e) {
+            e.preventDefault();
+          
             $.ajax({
-                method: "post",
-                url: "/pCloud/Photos/DeleteMultiple",
-                data: { files: selected },
+                method: "POST",
+                url: "/pCloud/Photos/AddToDb",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                data: JSON.stringify(photos),
                 async: false,
                 cache: false,
                 success: function (message) {
                     console.log(message);
-                    window.location.reload();
                 },
                 error: function (error) {
                     console.log(error);
                 }
             });
         });
-        
-    </script>
 
+        document.querySelector("#delFromDb").addEventListener("click", function (e) {
+            e.preventDefault();
 
-    <script>
-        // Script to load featherlight JS popup
-        $("a.fl").featherlight({
-            targetAttr: 'href',
-            afterContent: function () {
-                
-                let content = this.$content;
-                let target = this.$currentTarget[0];
-                let instance = this.$instance;
-                let json = JSON.parse(target.dataset.item);
-                let image = target.dataset.image;
-
-                // Ajax script to get HTML with pCloud info and dynamically set it to the Popup.
-                $.ajax({
-                    method: "POST",
-                    url: "/pCloud/Photos/GetPopup",
-                    data: { 'item': json, 'thumb': image },
-                    async: false,
-                    cache: false,
-                    success: function (message) {  
-                        $(".featherlight-content").html(message);  // This popup is in the Featherlight instance so it makes sense to use .featherlight-content instead of #Popup.
-                    },
-                    error: function (error) {
-                        console.log(error);
-                    }
-                });
-
-                // Ajax script to delete the file from pCloud
-                $('#delFromCloud').on('click', function (e) {
-                    $.ajax({
-                        method: "POST",
-                        url: "/pCloud/Photos/DeleteFromCloud",
-                        data: { 'fileid': e.target.dataset.fileid },
-                        async: false,
-                        cache: false,
-                        success: function (message) {
-                            var result = JSON.parse(message);
-                            if (result.metadata.isdeleted === true) {
-                                window.location.reload();
-                            }
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                });
-            }
-            
+            $.ajax({
+                method: "POST",
+                url: "/pCloud/Photos/DelFromDb",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                data: JSON.stringify(photos),
+                async: false,
+                cache: false,
+                success: function (message) {
+                    console.log(message);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
         });
     </script>
-
-
-
-
-
 	
 
 }

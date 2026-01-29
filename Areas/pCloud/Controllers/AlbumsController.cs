@@ -46,8 +46,15 @@ public class AlbumsController : Controller
      [Route("/pCloud/Albums/GetID")]
      public IActionResult GetID(string name)
      {
-          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-          return Ok(album!.AlbumID);
+          try
+          {
+               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+               return Ok(album!.AlbumID);
+          }
+          catch (NullReferenceException ex)
+          {
+               return Ok(ex.Message);
+          }
      }
 
      [HttpGet]
@@ -74,9 +81,16 @@ public class AlbumsController : Controller
      [Route("/pCloud/Albums/DelMultipleFromDb")]
      public IActionResult DelMultipleFromDb([FromBody]List<Album> data)
      {
-          _db.Albums.RemoveRange(data);
-          _db.SaveChanges();
-          return Ok(data);
+          try
+          {
+               _db.Albums.RemoveRange(data);
+               _db.SaveChanges();
+               return Ok(data);
+          }
+          catch (InvalidOperationException ex)
+          {
+               return Ok(data);
+          }
      }
 
 }

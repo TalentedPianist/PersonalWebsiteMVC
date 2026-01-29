@@ -4,7 +4,7 @@ using System.Text.Json.Serialization;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Models
 {
-     public class PhotosModel
+     public class Photos
      {
           [JsonPropertyName("path")]
           public string Path { get; set; } = string.Empty;
