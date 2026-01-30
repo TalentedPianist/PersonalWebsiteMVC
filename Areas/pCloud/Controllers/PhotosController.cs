@@ -290,7 +290,24 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                return Ok(data);
           }
 
-         
-          
+
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/GetThumbs")]
+          public string GetThumbs(string fileid, string path, string size)
+          {
+               string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+               var client = new RestClient("https://eapi.pcloud.com/getthumblink");
+               var request = new RestRequest();
+               request.AddParameter("access_token", accessToken);
+               request.AddParameter("path", path);
+               request.AddParameter("size", size);
+               var response = client.Execute(request);
+               var result = JsonConvert.DeserializeObject(response.Content!);
+               StringBuilder sb = new StringBuilder();
+               JToken json = JToken.Parse(result!.ToString()!);
+               var url = "https://" + json["hosts"]![0] + json["path"];
+               return url;
+          }
+
      }
 }

@@ -13,11 +13,13 @@ public class AlbumsController : Controller
 {
     private IHttpClientFactory _httpClientFactory { get; set; }
      public ApplicationDbContext _db { get; set; }
+     public IHttpContextAccessor _http { get; set; } 
 
-    public AlbumsController(IHttpClientFactory httpClientFactory, ApplicationDbContext db)
+    public AlbumsController(IHttpClientFactory httpClientFactory, ApplicationDbContext db, IHttpContextAccessor http)
     {
         _httpClientFactory = httpClientFactory;
           _db = db;
+          _http = http;
     }
 
     public IActionResult Index()
@@ -101,6 +103,6 @@ public class AlbumsController : Controller
           album!.CoverPhoto = url;
           _db.Albums.Update(album);
           _db.SaveChanges();
-          return RedirectToAction("Index");
+          return RedirectToAction("Index", new { Area = "pCloud", Controller = "Albums" });
      }
 }

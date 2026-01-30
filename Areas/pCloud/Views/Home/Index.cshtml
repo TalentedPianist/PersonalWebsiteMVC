@@ -41,7 +41,7 @@
 				<figure>
 					@if (HasCoverPic(item.name!))
 					{
-						<img src="@GetCoverPic(item.name!)">
+						<img src="@GetThumb(item.name!)">
 					}
 					else
 					{
@@ -61,30 +61,20 @@
 	}
 </div>
 
+@functions  {
+	bool HasCoverPic(string name)
+	{
+		var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+		if (album!.CoverPhoto is not null)
+			return true;
+		else
+			return false;
+	}
 
-@functions {
-	string GetCoverPic(string name)
+	string GetThumb(string name)
 	{
 		var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
 		return album!.CoverPhoto!;
-
-	}
-
-
-	bool HasCoverPic(string name)
-	{
-		try
-		{
-			var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-			if (album!.CoverPhoto is not null)
-				return true;
-			else
-				return false;
-		}
-		catch (NullReferenceException)
-		{
-			return false;
-		}
 	}
 }
 
@@ -95,25 +85,7 @@
 		$(function () {
 			$("#Gallery section").find("figure").each((index, item) => {
 				let figcaption = $(item).find("figcaption");
-				$(figcaption).hide();
-				let image = $(item).find("img");
-				let svg = $(item).find("svg");
-				$(svg).on('mouseenter', function () {
-					$(figcaption).addClass('mouseEnter');
-					$(image).css("z-index", "-100000");
-					$(figcaption).show();
-					
-				});
-				$(svg).on('mouseleave', function () {
-					$(figcaption).hide();
-				});
-				$(image).on('mouseenter', function () {
-					$(figcaption).addClass('mouseEnter');
-					$(figcaption).show();
-				});
-				$(image).on('mouseleave', function () {
-					$(figcaption).hide();
-				});
+				
 			});
 		});
 	</script>

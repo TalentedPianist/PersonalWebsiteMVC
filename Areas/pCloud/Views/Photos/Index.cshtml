@@ -25,6 +25,7 @@
 
 
 
+
 <a class="btn btn-secondary" asp-action="Index" asp-controller="Home" asp-area="pCloud">Back</a>
 
 
@@ -67,7 +68,7 @@
 					<figure>
                         <img src="@thumb">
                         <figcaption>
-                            <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb">@item.name</a>
+                            <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
                             <input type="checkbox" name="delete" value="@item.fileid" data-date="@item.created" data-name="@item.name" data-image="@thumb">
                             
                         </figcaption>
@@ -88,11 +89,11 @@
 
     string GetThumbs(string fileid, string path, string size)
     {
+        string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+
         var client = new RestClient("https://eapi.pcloud.com/getthumblink");
         var request = new RestRequest();
-        request.AddParameter("getauth", "1");
-        request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-        request.AddParameter("password", "Inkyfrog1");
+        request.AddParameter("access_token", accessToken);
         request.AddParameter("path", path);
         request.AddParameter("size", size);
         var response = client.Execute(request);
@@ -103,7 +104,7 @@
         return url;
     }
 
-   
+
 }
 
 
@@ -128,7 +129,7 @@
                     cache: false,
                     success: function (message) {
                         $(".featherlight-content").html(message);
-                        
+                
                     },
                     error: function (error) {
                         console.log(error);
@@ -137,10 +138,24 @@
                 // The link was always returning null because I was trying to acccess it before the Ajax call and it wasn't initialized.
                 document.querySelector("#coverPic").addEventListener('click', function (e) {
                     e.preventDefault();
+                    let strFileID = event.target.dataset["fileid"];
+                    let strPath = event.target.dataset["path"];
+                    let strSize = "600x400";
+                    let strName = '@Context.Request.Query["name"]';
+
+                    let thumb = $.ajax({
+                        method: "POST",
+                        url: "/pCloud/Photos/GetThumbs",
+                        data: { fileid: strFileID, path: strPath, size: strSize },
+                        async: false,
+                        cache: false,
+                    }).responseText;
+                    
+
                     $.ajax({
                         method: "POST",
                         url: "/pCloud/Albums/MakeCoverPic",
-                        data: { name: '@Context.Request.Query["name"]', url: event.target.dataset['image'] },
+                        data: {name: strName, url: thumb },
                         async: false,
                         cache: false,
                         success: function (message) {

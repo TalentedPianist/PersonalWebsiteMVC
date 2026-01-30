@@ -114,10 +114,7 @@ form input {
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1em;
-  margin-top: 1em;
-  position: absolute;
-  top: 0;
+  position: relative;
 }
 #Gallery figcaption {
   text-align: center;
@@ -239,17 +236,4 @@ table {
   flex: 1;
   list-style-type: none;
   gap: 2em;
-}
-
-.mouseEnter {
-  background-color: rgba(0, 0, 0, 0.6);
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 100000000 !important;
-}
-.mouseEnter img {
-  z-index: -100;
 }
