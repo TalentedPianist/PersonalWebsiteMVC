@@ -106,6 +106,7 @@ form {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 1em;
+            position: relative;
 
             figure {
                 position: relative;
@@ -124,6 +125,7 @@ form {
 
                 img {
                     width: 100%;
+                    position: relative;
                 }
 
                 svg {
@@ -136,6 +138,8 @@ form {
                     flex: 1;
                     gap: 1em;
                     margin-top: 1em;
+                    position: absolute; 
+                    top: 0; 
                 }
             }
         }
@@ -281,5 +285,19 @@ table {
         flex: 1;
         list-style-type: none;
         gap: 2em;
+    }
+}
+
+.mouseEnter { 
+    background-color: rgba(0,0,0,0.6);
+    position: absolute; 
+    top: 0; 
+    left: 0;
+    right: 0; 
+    bottom: 0;
+    z-index: 100000000 !important;
+
+    img { 
+        z-index: -100;
     }
 }

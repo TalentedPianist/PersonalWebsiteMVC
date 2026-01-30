@@ -57,7 +57,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     StringBuilder sb = new StringBuilder();
                     var pageNumber = page ?? 1;
 
-                    var model = result!.metadata!.contents;
+                    var model = result!.metadata!.contents!.ToPagedList(pageNumber, 100);
 
                     return View(model);
                }
@@ -105,28 +105,35 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           public async Task<IActionResult> DeleteMultipleFromCloud(List<string> files)
           {
                string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
-               
-               files.ForEach(f =>
+               StringBuilder sb = new StringBuilder();
+               foreach (var fileid in files)
                {
-                    Console.WriteLine(f);
-                    var client = new RestClient("https://eapi.pcloud.com/");
+                    var client = new RestClient("https://eapi.pcloud.com");
                     var request = new RestRequest("deletefile");
-                    request.AddHeader("Authorization", $"Bearer {accessToken}");
-                    request.AddParameter("fileid", f);
-                    var response = client.Execute(request);
-                    Console.WriteLine(response.Content);
-               });
+                    request.AddParameter("access_token", accessToken);
+
+
+                    request.AddParameter("fileid", fileid);
+
+                    var response = await client.ExecuteAsync(request);
+                    sb.Append(response.Content);
+               }
+               TempData["Message"] = sb.ToString();
                return Ok(files);
+
           }
 
-          
+
 
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/GetPopup")]
-          public IActionResult GetPopup(ContentItem item, string thumb)
+          public IActionResult GetPopup(string item, string thumb)
           {
                ViewBag.Image = thumb;
-               return PartialView("~/Areas/pCloud/Views/Photos/Popup.cshtml", item);
+               JObject json = JObject.Parse(item);
+               var model = JsonConvert.DeserializeObject<ContentItem>(json.ToString());
+               return PartialView("~/Areas/pCloud/Views/Photos/Popup.cshtml", model);
+
           }
 
           public IActionResult Upload()
@@ -145,7 +152,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     files.ForEach(async file =>
                     {
                          await UploadToPCloud(accessToken, "/", "/Public Folder/Gallery/Scarborough", file);
-                        
+
                     });
 
                     return RedirectToAction("~/Areas/pCloud/Views/Photos/Index.cshtml");
@@ -230,7 +237,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.Content);
                }
                Console.WriteLine(response.Content);
-              
+
           }
 
 
@@ -268,7 +275,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/AddToDb")]
-          public IActionResult AddToDb([FromBody]List<PersonalWebsiteMVC.Models.Photos> data)
+          public IActionResult AddToDb([FromBody] List<PersonalWebsiteMVC.Models.Photos> data)
           {
                _db.Photos.AddRange(data);
                _db.SaveChanges();
@@ -282,5 +289,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                _db.SaveChanges();
                return Ok(data);
           }
+
+         
+          
      }
 }

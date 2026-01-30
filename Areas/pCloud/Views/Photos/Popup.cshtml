@@ -1,17 +1,28 @@
 ﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
 }
 @model ContentItem
 
-<h1>@Model.name</h1>
-
-<img src="@ViewBag.Image">
+@TempData["Message"]
 
 
-<ul>
-	<li><a asp-action="Update" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Update</a></li>
-	<li><a asp-action="Details" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Details</a></li>
-	<li><a asp-action="Delete" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Delete</a></li>
-</ul>
+@if (Model is not null)
+{
+	<h1>@Model.name</h1>
+
+	<a href="#" id="coverPic">Make Cover Photo</a>
+
+
+	<img src="@ViewBag.Image">
+
+
+	<ul>
+		<li><a asp-action="Update" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Update</a></li>
+		<li><a asp-action="Details" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Details</a></li>
+		<li><a asp-action="Delete" asp-controller="Photos" asp-area="pCloud" asp-route-id="@Model.fileid" class="btn btn-primary">Delete</a></li>
+	</ul>
+}
+
+

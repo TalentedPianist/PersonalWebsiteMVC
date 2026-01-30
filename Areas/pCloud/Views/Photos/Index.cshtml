@@ -17,7 +17,7 @@
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
 @inject ApplicationDbContext _db
-@model List<ContentItem>
+@model PagedList<ContentItem>
 
 <h1 class="bg bg-info p-1">Photos for @Context.Request.Query["name"]</h1>
 
@@ -61,9 +61,9 @@
 			{
                 @item.folderid
                 
-				if (item.name!.Contains(".JPG"))
+				if (item.name!.Contains(".JPG") || item.name.Contains(".JPEG"))
 				{
-                    var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "120x120");
+                    var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "600x400");
 					<figure>
                         <img src="@thumb">
                         <figcaption>
@@ -111,14 +111,15 @@
 @section Scripts {
 
 	<script>
+        
         // Script to enable featherlight popup for link in figcaption
         $('a.fl').featherlight({
             targetAttr: 'href',
             afterContent: function (event) {
-                let instance = this.$instance;
+                let instance = this.$instance[0];
                 let target = this.$currentTarget;
+                
 
-                // Get photo model using Ajax
                 $.ajax({
                     method: "POST",
                     url: "/pCloud/Photos/GetPopup",
@@ -126,31 +127,53 @@
                     async: false,
                     cache: false,
                     success: function (message) {
-                        $("#Popup").append(message);
+                        $(".featherlight-content").html(message);
+                        
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
-            }
+                // The link was always returning null because I was trying to acccess it before the Ajax call and it wasn't initialized.
+                document.querySelector("#coverPic").addEventListener('click', function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        method: "POST",
+                        url: "/pCloud/Albums/MakeCoverPic",
+                        data: { name: '@Context.Request.Query["name"]', url: event.target.dataset['image'] },
+                        async: false,
+                        cache: false,
+                        success: function (message) {
+                            console.log(message);
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            }                                          
         });
+
+		
     </script>
     
     
     <script>
         let photos = [];
-
+        let pCloudPhotos = [];
         document.querySelector("#selectAll").addEventListener("click", function (e) {
             e.preventDefault();
             let cb = document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]');
             cb.forEach(function (item, index) {
                 item.checked = true;
-                
+                pCloudPhotos.push(item.value);
             });
         });
 
         document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]').forEach(function (item, index) {
             item.addEventListener('click', function (e) {
+
+                pCloudPhotos.push(item.value);
             
                 // Check if photo is in database by making an Ajax call to the database with the photo name as filter
                 let strPhotoID = $.ajax({
@@ -214,6 +237,26 @@
                     "Content-Type": "application/json",
                 },
                 data: JSON.stringify(photos),
+                async: false,
+                cache: false,
+                success: function (message) {
+                    console.log(message);
+                },
+                error: function (error) {
+                    console.log(error);
+                }
+            });
+        });
+    </script>
+
+   
+    <script>
+        document.querySelector('#delFromPCloud').addEventListener('click', function (e) {
+            e.preventDefault();
+            $.ajax({
+                method: "POST",
+                url: "/pCloud/Photos/DeleteMultiple",
+                data: { files: pCloudPhotos },
                 async: false,
                 cache: false,
                 success: function (message) {

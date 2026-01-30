@@ -6,8 +6,9 @@
 @using System.Net.Http.Headers
 @using Microsoft.AspNetCore.Http
 @using PersonalWebsiteMVC.Models
-
+@using PersonalWebsiteMVC.Data
 @inject IPCloudAuth _auth
+@inject ApplicationDbContext _db
 @model List<ContentItem>
 
 <h1 class="bg bg-info p-1">pCloud</h1>
@@ -34,22 +35,89 @@
 	@if (Model is not null)
 	{
 		<section>
-		@foreach (ContentItem item in Model)
-		{
-			<figure>
-				<svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-				<figcaption>
-					<a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name" asp-route-code="@Context.Request.Query["code"]">@item.name</a>
-					<input type="checkbox" value="@item.name" data-date="@item.created">
-					@item.folderid
-				</figcaption>
-			</figure>
-		}
+			@foreach (ContentItem item in Model)
+			{
+
+				<figure>
+					@if (HasCoverPic(item.name!))
+					{
+						<img src="@GetCoverPic(item.name!)">
+					}
+					else
+					{
+						<svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+					}
+
+
+					<figcaption>
+						<a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name" asp-route-code="@Context.Request.Query["code"]">@item.name</a>
+						<input type="checkbox" value="@item.name" data-date="@item.created">
+						
+					</figcaption>
+				</figure>
+
+			}
 		</section>
 	}
 </div>
 
-@section Scripts { 
+
+@functions {
+	string GetCoverPic(string name)
+	{
+		var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+		return album!.CoverPhoto!;
+
+	}
+
+
+	bool HasCoverPic(string name)
+	{
+		try
+		{
+			var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+			if (album!.CoverPhoto is not null)
+				return true;
+			else
+				return false;
+		}
+		catch (NullReferenceException)
+		{
+			return false;
+		}
+	}
+}
+
+
+@section Scripts {
+	<script>
+		// Script to fade in figcaption on mouse over
+		$(function () {
+			$("#Gallery section").find("figure").each((index, item) => {
+				let figcaption = $(item).find("figcaption");
+				$(figcaption).hide();
+				let image = $(item).find("img");
+				let svg = $(item).find("svg");
+				$(svg).on('mouseenter', function () {
+					$(figcaption).addClass('mouseEnter');
+					$(image).css("z-index", "-100000");
+					$(figcaption).show();
+					
+				});
+				$(svg).on('mouseleave', function () {
+					$(figcaption).hide();
+				});
+				$(image).on('mouseenter', function () {
+					$(figcaption).addClass('mouseEnter');
+					$(figcaption).show();
+				});
+				$(image).on('mouseleave', function () {
+					$(figcaption).hide();
+				});
+			});
+		});
+	</script>
+
 	<script>
 		// Script to select all checkboxes and add them to array to be processed.
 		let albums = []; // Array to hold all checked albums
@@ -59,7 +127,7 @@
 			let cb = document.querySelector("#Gallery section").querySelectorAll('input[type="checkbox"]');
 			cb.forEach(function (item, index) {
 				item.checked = true; // Check all checkboxes
-			
+
 				albums.push({ Name: item.value, DateCreated: item.getAttribute('date') });
 				console.log(albums);
 			});
@@ -80,7 +148,7 @@
 				if (id === 0) {
 					albums.push({ Name: item.value, DateCreated: item.dataset['date'] });
 				} else {
-					
+
 					albums.push({ AlbumID: id });
 				}
 			});
@@ -132,7 +200,7 @@
 				}
 			});
 		});
-		
+
 	</script>
 
-	}
+}

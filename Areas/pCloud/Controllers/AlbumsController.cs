@@ -93,4 +93,14 @@ public class AlbumsController : Controller
           }
      }
 
+     [HttpPost]
+     [Route("/pCloud/Albums/MakeCoverPic")]
+     public IActionResult MakeCoverPic(string name, string url)
+     {
+          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+          album!.CoverPhoto = url;
+          _db.Albums.Update(album);
+          _db.SaveChanges();
+          return RedirectToAction("Index");
+     }
 }

@@ -87,6 +87,7 @@ form input {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 1em;
+  position: relative;
 }
 #Gallery section:nth-of-type(1) figure {
   position: relative;
@@ -104,6 +105,7 @@ form input {
 }
 #Gallery section:nth-of-type(1) figure img {
   width: 100%;
+  position: relative;
 }
 #Gallery section:nth-of-type(1) figure svg {
   width: 100%;
@@ -114,6 +116,8 @@ form input {
   flex: 1;
   gap: 1em;
   margin-top: 1em;
+  position: absolute;
+  top: 0;
 }
 #Gallery figcaption {
   text-align: center;
@@ -235,4 +239,17 @@ table {
   flex: 1;
   list-style-type: none;
   gap: 2em;
+}
+
+.mouseEnter {
+  background-color: rgba(0, 0, 0, 0.6);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100000000 !important;
+}
+.mouseEnter img {
+  z-index: -100;
 }

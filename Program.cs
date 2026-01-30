@@ -135,7 +135,7 @@ try
           // Cookie settings
           options.Cookie.Name = ".AspNetCore.Identity.Application";
           options.Cookie.HttpOnly = true;
-          options.ExpireTimeSpan = TimeSpan.FromHours(2);
+          options.ExpireTimeSpan = TimeSpan.FromDays(1);
 
 
           options.LoginPath = "/Identity/Account/Login";

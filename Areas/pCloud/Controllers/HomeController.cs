@@ -74,7 +74,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                catch (NullReferenceException ex)
                {
                }
-               return View("~/Areas/pCloud/Views/Home/Create.cshtml");
+               return RedirectToAction("Index", new { Area = "pCloud", Controller = "Home" });
           }
 
 
