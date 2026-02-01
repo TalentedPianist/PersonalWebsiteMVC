@@ -36,18 +36,18 @@
 		<li><a href="#" id="addToDb">Add to Database</a></li>
 		<li><a href="#" id="delFromDb">Delete from Database</a></li>
 		<li><a href="#" id="delFromPCloud">Delete from PCloud</a></li>
-        <li>
-            <form method="post" asp-action="GetToken" asp-controller="Photos" asp-area="pCloud">
-                <button class="btn btn-link">Login</button>
-            </form>
-        </li>
+		<li>
+			<form method="post" asp-action="GetToken" asp-controller="Photos" asp-area="pCloud">
+				<button class="btn btn-link">Login</button>
+			</form>
+		</li>
 	</ul>
 </div>
 
 <form method="post" asp-action="UploadFile" asp-area="pCloud" asp-controller="Photos" enctype="multipart/form-data">
 	<input type="file" class="form-control" name="files" multiple>
 	<input type="hidden" value="@Context.Request.Query["id"]" name="folderid">
-    <input type="hidden" value="@Context.Request.Query["name"]" name="path">
+	<input type="hidden" value="@Context.Request.Query["name"]" name="path">
 	<button type="submit" class="btn btn-primary">Upload</button>
 </form>
 
@@ -60,20 +60,20 @@
 		{
 			foreach (ContentItem item in Model)
 			{
-                @item.folderid
-                
+				@item.folderid
+
 				if (item.name!.Contains(".JPG") || item.name.Contains(".JPEG"))
 				{
-                    var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "600x400");
-                    
+					var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "600x400");
+
 					<figure>
-                        <img src="@thumb">
-                        <figcaption>
-                            <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
-                            <input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb">
-                            
-                        </figcaption>
-                    </figure>
+						<img src="@thumb">
+						<figcaption>
+							<a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
+							<input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb">
+
+						</figcaption>
+					</figure>
 				}
 			}
 		}
@@ -88,22 +88,22 @@
 @functions {
 
 
-    string GetThumbs(string fileid, string path, string size)
-    {
-        string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+	string GetThumbs(string fileid, string path, string size)
+	{
+		string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
 
-        var client = new RestClient("https://eapi.pcloud.com/getthumblink");
-        var request = new RestRequest();
-        request.AddParameter("access_token", accessToken);
-        request.AddParameter("path", path);
-        request.AddParameter("size", size);
-        var response = client.Execute(request);
-        var result = JsonConvert.DeserializeObject(response.Content!);
-        StringBuilder sb = new StringBuilder();
-        JToken json = JToken.Parse(result!.ToString()!);
-        var url = "https://" + json["hosts"]![0] + json["path"];
-        return url;
-    }
+		var client = new RestClient("https://eapi.pcloud.com/getthumblink");
+		var request = new RestRequest();
+		request.AddParameter("access_token", accessToken);
+		request.AddParameter("path", path);
+		request.AddParameter("size", size);
+		var response = client.Execute(request);
+		var result = JsonConvert.DeserializeObject(response.Content!);
+		StringBuilder sb = new StringBuilder();
+		JToken json = JToken.Parse(result!.ToString()!);
+		var url = "https://" + json["hosts"]![0] + json["path"];
+		return url;
+	}
 
 
 }
@@ -112,15 +112,16 @@
 
 @section Scripts {
 
+
 	<script>
-        
+
         // Script to enable featherlight popup for link in figcaption
         $('a.fl').featherlight({
             targetAttr: 'href',
             afterContent: function (event) {
                 let instance = this.$instance[0];
                 let target = this.$currentTarget;
-                
+
 
                 $.ajax({
                     method: "POST",
@@ -130,7 +131,7 @@
                     cache: false,
                     success: function (message) {
                         $(".featherlight-content").html(message);
-                
+
                     },
                     error: function (error) {
                         console.log(error);
@@ -151,7 +152,7 @@
                         async: false,
                         cache: false,
                     }).responseText;
-                    
+
 
                     $.ajax({
                         method: "POST",
@@ -167,14 +168,14 @@
                         }
                     });
                 });
-            }                                          
+            }
         });
 
-		
-    </script>
-    
-    
-    <script>
+
+	</script>
+
+
+	<script>
         let photos = [];
         let pCloudPhotos = [];
         document.querySelector("#selectAll").addEventListener("click", function (e) {
@@ -183,6 +184,38 @@
             cb.forEach(function (item, index) {
                 item.checked = true;
                 pCloudPhotos.push(item.value);
+
+                // Begin add to database for all checkboxes
+                 pCloudPhotos.push(item.value);
+
+ // Check if photo is in database by making an Ajax call to the database with the photo name as filter
+ let strPhotoID = $.ajax({
+     method: "GET",
+     url: "/pCloud/Photos/GetID",
+     data: { name: item.dataset['name'] },
+     async: false,
+     cache: false,
+ }).responseText;
+
+
+
+
+ if (strPhotoID == 0) { // If photo id returns 0, photo is not in the database
+     let strAlbumID = $.ajax({
+         method: "GET",
+         url: "/pCloud/Photos/GetAlbumID",
+         data: { name: '@Context.Request.Query["name"]' },
+         async: false,
+         cache: false,
+     }).responseText;
+
+
+    // This should be improved by providing a user friendly message saying the album does not exist in the database.
+     photos.push({ Name: item.dataset['name'], AlbumID: strAlbumID, Author: '@Context.User.Identity!.Name', ImageUrl: item.dataset['path'], DateCreated: item.dataset['date'] });
+ } else {
+     photos.push({ PhotoID: strPhotoID });
+ }
+                // End add to database for all checkboxes
             });
         });
 
@@ -190,7 +223,7 @@
             item.addEventListener('click', function (e) {
 
                 pCloudPhotos.push(item.value);
-            
+
                 // Check if photo is in database by making an Ajax call to the database with the photo name as filter
                 let strPhotoID = $.ajax({
                     method: "GET",
@@ -199,9 +232,9 @@
                     async: false,
                     cache: false,
                 }).responseText;
-                
 
-              
+
+
 
                 if (strPhotoID == 0) { // If photo id returns 0, photo is not in the database
                     let strAlbumID = $.ajax({
@@ -211,20 +244,20 @@
                         async: false,
                         cache: false,
                     }).responseText;
-              
-                  
-                   // This should be improved by providing a user friendly message saying the album does not exist in the database.  
+
+
+                   // This should be improved by providing a user friendly message saying the album does not exist in the database.
                     photos.push({ Name: item.dataset['name'], AlbumID: strAlbumID, Author: '@Context.User.Identity!.Name', ImageUrl: item.dataset['image'], DateCreated: item.dataset['date'] });
                 } else {
                     photos.push({ PhotoID: strPhotoID });
                 }
-                
+
             });
         });
 
         document.querySelector("#addToDb").addEventListener('click', function (e) {
             e.preventDefault();
-          
+
             $.ajax({
                 method: "POST",
                 url: "/pCloud/Photos/AddToDb",
@@ -263,27 +296,25 @@
                 }
             });
         });
-    </script>
+	</script>
 
-   
-    <script>
-        document.querySelector('#delFromPCloud').addEventListener('click', function (e) {
-            e.preventDefault();
-            $.ajax({
-                method: "POST",
-                url: "/pCloud/Photos/DeleteMultiple",
-                data: { files: pCloudPhotos },
-                async: false,
-                cache: false,
-                success: function (message) {
-                    console.log(message);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-    </script>
-	
 
+	<script>
+		document.querySelector('#delFromPCloud').addEventListener('click', function (e) {
+			e.preventDefault();
+			$.ajax({
+				method: "POST",
+				url: "/pCloud/Photos/DeleteMultiple",
+				data: { files: pCloudPhotos },
+				async: false,
+				cache: false,
+				success: function (message) {
+					console.log(message);
+				},
+				error: function (error) {
+					console.log(error);
+				}
+			});
+		});
+	</script>
 }

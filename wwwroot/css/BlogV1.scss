@@ -752,6 +752,12 @@ section {
                 text-decoration: revert !important;
             }
 
+            figure { 
+                display: flex; 
+                flex-direction: column;
+                flex: 1;
+            }
+
         }
     }
 }

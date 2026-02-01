@@ -649,6 +649,11 @@ section article:first-child {
   color: revert !important;
   text-decoration: revert !important;
 }
+#Albums section:nth-of-type(1) figure {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
 
 #Photos {
   display: flex;

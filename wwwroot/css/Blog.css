@@ -1,4 +1,4 @@
-/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
+﻿/* Note on VSCode the scss compiler only compiles to css instead of .min.css */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -609,11 +609,6 @@ footer {
   z-index: 50000 !important;
 }
 
-#Albums {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
 #Photos {
   display: flex;
   flex-direction: column;
@@ -642,4 +637,4 @@ footer {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
-}/*# sourceMappingURL=Blog.css.map */
+}

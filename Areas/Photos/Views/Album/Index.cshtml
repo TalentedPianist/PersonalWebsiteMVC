@@ -4,6 +4,10 @@
 *@
 @{
 }
+@using RestSharp
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@inject ApplicationDbContext _db
 @model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
 
 @TempData["Message"]
@@ -12,10 +16,10 @@
 	ViewData["Title"] = "Home Page";
 	var data = new ImportMapDefinition(
 	new Dictionary<string, string>
-	{
+		{
 { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
 { "ckeditor5/", "/lib/ckeditor5/" },
-			}, null, null);
+								}, null, null);
 }
 
 <div id="Photos">
@@ -25,43 +29,71 @@
 
 	<section>
 		@foreach (var photo in Model.PagedPhotos!)
-			{
-			
+				{
 
-				<figure>
-					<a class="gallery" href="@photo.ImageUrl" data-featherlight-gallery
-					   data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID">
-						<img src="@photo.ImageUrl" data-id="@photo.AlbumID" data-name="@photo.Name">
-					</a>
+					
 
-					<figcaption>@photo.Name</figcaption>
+			<figure>
+				<a class="gallery" href="@photo.ImageUrl" data-featherlight-gallery
+				   data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID">
+					<img src="@GetThumbs(photo.ImageUrl!, "600x400")" data-id="@photo.AlbumID" data-name="@photo.Name">
+				</a>
 
-				</figure>
+				<figcaption>@photo.Name</figcaption>
 
-			}
-		
+			</figure>
+
+		}
+
 
 	</section>
 	<section>
-		<p>You are on page @Model.PagedPhotos!.PageNumber of @Model.PagedPhotos.PageCount.</p>
-
-		@Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new
+		@if (Model.PagedPhotos is null)
 		{
-			pageNumber =
-		page,
-			area = "Photos",
-			name = Context.Request.Query["name"],
-			id = Context.Request.Query["id"]
-		}),
-				new PagedListRenderOptions
-				{
-					DisplayItemSliceAndTotal = false,
-					LiElementClasses = new string[] { "page-item" },
-					PageClasses = new String[] { "page-link" },
-					UlElementClasses = new[] { "pagination" },
-				})
+		}
+		else
+		{
+			<p>You are on page @Model.PagedPhotos!.PageNumber of @Model.PagedPhotos.PageCount.</p>
+
+			@Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new
+{
+	pageNumber =
+									page,
+	area = "Photos",
+	name = ViewBag.AlbumName,
+	id = Context.Request.Query["id"]
+}),
+											new PagedListRenderOptions
+											{
+												DisplayItemSliceAndTotal = false,
+												LiElementClasses = new string[] { "page-item" },
+												PageClasses = new String[] { "page-link" },
+												UlElementClasses = new[] { "pagination" },
+											})
+		}
 	</section>
 </div>
+
+
+@functions {
+	
+
+	string GetThumbs(string path, string size)
+	{
+		string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+		var client = new RestClient("https://eapi.pcloud.com");
+		var request = new RestRequest("getthumblink");
+		request.AddParameter("access_token", accessToken);
+		request.AddParameter("path", path);
+		request.AddParameter("size", size);
+		var response = client.Execute(request);
+		var result = JsonConvert.DeserializeObject(response.Content!);
+		JToken json = JToken.Parse(result!.ToString()!);
+		var url = "https://" + json["hosts"]![0] + json["path"];
+		return url;
+	}
+
+}
 
 
 
@@ -96,8 +128,8 @@
 
 						$(instance).find('.featherlight-content').html(`
 
-															${message}
-														`);
+																	${message}
+																`);
 					},
 					error: function (error) {
 						console.log(error);
@@ -193,13 +225,13 @@
 									success: function (message) {
 										console.log(message);
 										$("#Comments").append(`
-												<hr>
-												<div class="flex flex-row flex-1">
-													<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
-													<p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM D')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
-												</div>
-												${message.CommentContent}
-											`);
+														<hr>
+														<div class="flex flex-row flex-1">
+															<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
+															<p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM D')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
+														</div>
+														${message.CommentContent}
+													`);
 									},
 									error: function (error) {
 										console.log(error);
