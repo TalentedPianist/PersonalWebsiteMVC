@@ -29,6 +29,7 @@ public class AlbumsController : Controller
     }
 
 
+
      [HttpGet]
      [Route("/pCloud/Albums/GetCoverPic")]
      public IActionResult GetCoverPic(string name)
@@ -97,10 +98,10 @@ public class AlbumsController : Controller
 
      [HttpPost]
      [Route("/pCloud/Albums/MakeCoverPic")]
-     public IActionResult MakeCoverPic(string name, string url)
+     public IActionResult MakeCoverPic(string name, string path)
      {
           var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-          album!.CoverPhoto = url;
+          album!.CoverPhoto = path;
           _db.Albums.Update(album);
           _db.SaveChanges();
           return RedirectToAction("Index", new { Area = "pCloud", Controller = "Albums" });

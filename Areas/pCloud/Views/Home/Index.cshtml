@@ -7,6 +7,10 @@
 @using Microsoft.AspNetCore.Http
 @using PersonalWebsiteMVC.Models
 @using PersonalWebsiteMVC.Data
+@using RestSharp
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using System.Text
 @inject IPCloudAuth _auth
 @inject ApplicationDbContext _db
 @model List<ContentItem>
@@ -39,9 +43,18 @@
 			{
 
 				<figure>
-					@if (HasCoverPic(item.name!))
+					@if (CheckDb(item.name!))
 					{
-						<img src="@GetThumb(item.name!)">
+						var album = _db.Albums.Where(a => a.Name == item.name).FirstOrDefault();
+						if (album is not null)
+						{
+							if (album.CoverPhoto is not null)
+							{
+								var thumb = GetThumbs(album.CoverPhoto, "600x400");
+								<img src="@thumb">
+							}
+						}
+
 					}
 					else
 					{
@@ -62,19 +75,40 @@
 </div>
 
 @functions  {
-	bool HasCoverPic(string name)
+	string GetFileId(string name)
 	{
 		var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-		if (album!.CoverPhoto is not null)
-			return true;
+		return album!.CoverPhoto!;
+	}
+
+	bool CheckDb(string name)
+	{
+		var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+		if (album is not null)
+			if (album.CoverPhoto is not null)
+				return true;
+			else
+				return false;
 		else
 			return false;
 	}
 
-	string GetThumb(string name)
+
+	string GetThumbs(string path, string size)
 	{
-		var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-		return album!.CoverPhoto!;
+		string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+
+		var client = new RestClient("https://eapi.pcloud.com/getthumblink");
+		var request = new RestRequest();
+		request.AddParameter("access_token", accessToken);
+		request.AddParameter("path", path);
+		request.AddParameter("size", size);
+		var response = client.Execute(request);
+		var result = JsonConvert.DeserializeObject(response.Content!);
+		StringBuilder sb = new StringBuilder();
+		JToken json = JToken.Parse(result!.ToString()!);
+		var url = "https://" + json["hosts"]![0] + json["path"];
+		return url;
 	}
 }
 

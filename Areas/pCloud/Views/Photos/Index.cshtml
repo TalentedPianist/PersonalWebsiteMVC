@@ -65,11 +65,12 @@
 				if (item.name!.Contains(".JPG") || item.name.Contains(".JPEG"))
 				{
                     var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "600x400");
+                    
 					<figure>
                         <img src="@thumb">
                         <figcaption>
                             <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
-                            <input type="checkbox" name="delete" value="@item.fileid" data-date="@item.created" data-name="@item.name" data-image="@thumb">
+                            <input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb">
                             
                         </figcaption>
                     </figure>
@@ -155,7 +156,7 @@
                     $.ajax({
                         method: "POST",
                         url: "/pCloud/Albums/MakeCoverPic",
-                        data: {name: strName, url: thumb },
+                        data: {name: strName, path: strPath },
                         async: false,
                         cache: false,
                         success: function (message) {
