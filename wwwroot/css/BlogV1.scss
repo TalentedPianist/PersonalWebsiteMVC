@@ -852,9 +852,8 @@ header {
         align-items: center;
         justify-content: center;
         width: 100%;
-        background-image: url('/images/bamburgh-view.jpg');
-        background-attachment: local;
-        background-position: top;
+        background-image: url('/images/bronte-falls.jpg');
+        background-position: bottom;
         background-size: cover;
         background-repeat: no-repeat;
         background-color: revert !important;
@@ -885,9 +884,8 @@ nav {
         flex: 1;
         align-items: center;
         justify-content: space-evenly;
+        background-color: #D5D96C;
 
-        background-color: #356E9A;
-        
         @media only screen and (min-width: 768px) {
             padding-top: 1em;
             padding-bottom: 1em;
@@ -900,7 +898,7 @@ nav {
     }
 
     a {
-        color: white;
+        color: black;
         text-decoration: none;
         margin: 0 1.25rem;
         font-size: 1.05rem;
@@ -930,10 +928,9 @@ main {
     flex: 1;
     height: 100%;
     width: 100%;
-    background-color: lightgreen;
+    background-color: #A3C4D9;
     clear: both !important;
-
-
+    padding-bottom: 5em;
 
 
     @media only screen and (min-width: 768px) {
@@ -1037,12 +1034,12 @@ footer {
     clear: both;
 
     @media only screen and (min-width: 768px) {
-        background-color: #8DD5F2;
+        background-color: #384001;
+        color: white;
         text-align: center;
         font-size: x-large;
         letter-spacing: 2px;
         padding: 1.25rem 0;
-        color: black;
         border-top: 1px solid rgba(0, 0, 0, 0.1);
     }
 }

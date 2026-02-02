@@ -183,67 +183,10 @@
 							let photoId = document.forms[0]['photoID'].value;
 							let strCaptcha = document.forms[0]['g-recaptcha-response'].value;
 
-
-
-							let errors = [];
-
-							if (!name.validity.valid) {
-								$(name).parent().find('.error').text('Please enter your name.');
-								$(name).addClass('inputError');
-								errors.push("Please enter your name.");
-							} else {
-								$(name).parent().find('.error').text('');
-								$(name).removeClass('inputError');
-							}
-
-							if (!email.validity.valid) {
-								$(email).parent().find('.error').text('Please enter your email address.');
-								$(email).addClass('inputError');
-								errors.push("Please enter your email address.");
-							} else {
-								$(email).parent().find('.error').text('');
-								$(email).removeClass('inputError');
-							}
-
-							if (editor.getData() === '') {
-								$(".ck").parent().find('.error').text('Please enter a message.');
-								$(".ck").addClass('inputError');
-								errors.push("Please enter a message.");
-							} else {
-								$(".ck").parent().find('.error').text('');
-								$(".ck").removeClass('inputError');
-							}
-
-							if (errors.length === 0) {
-								// No errors, add comment to database
-								$.ajax({
-									method: "POST",
-									url: "/Photo/AddComment",
-									data: { name: name.value, email: email.value, website: website.value, message: editor.getData(), photoID: photoId, captchaResponse: strCaptcha },
-									async: false,
-									cache: false,
-									success: function (message) {
-										console.log(message);
-										$("#Comments").append(`
-														<hr>
-														<div class="flex flex-row flex-1">
-															<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109&d=mp">
-															<p>Posted by ${message.CommentAuthor} on ${dayjs(message.CommentDate).format('dddd MMMM D')} at ${dayjs(message.CommentDate).format('hh:ss A')}.</p>
-														</div>
-														${message.CommentContent}
-													`);
-									},
-									error: function (error) {
-										console.log(error);
-									}
-								});
-							} else {
-							}
 						});
-					})
-					.catch(error => {
-						console.log(error);
 					});
+			
+
 			}
 		});
 

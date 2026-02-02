@@ -47,6 +47,7 @@
 
 <body>
 
+
 	<nav>
 		<ul>
 			<li><a asp-action="Index" asp-controller="Home" asp-area="">Home</a></li>
@@ -70,6 +71,10 @@
 
 	<main>
 		@if (url.Contains("Photos"))
+		{
+			@RenderBody()
+		}
+		else if (url.Contains("Blog"))
 		{
 			@RenderBody()
 		}
