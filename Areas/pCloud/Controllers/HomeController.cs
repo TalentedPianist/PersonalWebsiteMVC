@@ -1,5 +1,4 @@
-﻿using Json.More;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -13,6 +12,7 @@ using ServiceStack;
 using SharpCompress;
 using System.Text;
 using Wangkanai.Extensions;
+using Microsoft.Extensions.Configuration;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
@@ -23,12 +23,16 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           public ApplicationDbContext _db { get; set; }
           public IHttpClientFactory _httpClientFactory { get; }
           public IPCloudAuth _auth { get; set; }
+          public IConfiguration _config { get; set; }
+          public IWebHostEnvironment _env { get; set; }
 
-          public HomeController(IHttpClientFactory httpClientFactory, ApplicationDbContext db, IPCloudAuth auth)
+          public HomeController(IHttpClientFactory httpClientFactory, ApplicationDbContext db, IPCloudAuth auth, IConfiguration config, IWebHostEnvironment env)
           {
                _httpClientFactory = httpClientFactory;
                _db = db;
                _auth = auth;
+               _config = config;
+               _env = env;
           }
 
 
@@ -38,7 +42,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                var client = new RestClient("https://eapi.pcloud.com/listfolder");
                var request = new RestRequest();
 
-               request.AddParameter("access_token", "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X");
+               request.AddParameter("access_token", _config["pCloud:Local:AccessToken"]);
                request.AddParameter("folderid", "19500076302");
                request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                var response = client.Execute(request);
@@ -60,20 +64,15 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Home/CreateFolder")]
           public IActionResult CreateFolder(CreateFolderModel model, [FromForm(Name = "folderid")] string folderid)
           {
-               try
-               {
+               
                     var client = new RestClient("https://eapi.pcloud.com/createfolder");
                     var request = new RestRequest();
-                    request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-                    request.AddParameter("password", "Inkyfrog1");
+                    request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
                     request.AddParameter("folderid", folderid);
                     request.AddParameter("name", model.Name);
                     var response = client.Execute(request);
                     TempData["Message"] = folderid;
-               }
-               catch (NullReferenceException ex)
-               {
-               }
+               
                return RedirectToAction("Index", new { Area = "pCloud", Controller = "Home" });
           }
 

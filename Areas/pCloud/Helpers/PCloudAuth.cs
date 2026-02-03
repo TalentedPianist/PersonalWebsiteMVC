@@ -13,16 +13,26 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
      public class PCloudAuth : IPCloudAuth
      {
           public IHttpContextAccessor _http { get; set; }
+          public IWebHostEnvironment _env { get; set; }
 
-          public PCloudAuth(IHttpContextAccessor http)
+          public PCloudAuth(IHttpContextAccessor http, IWebHostEnvironment env)
           {
                _http = http;
+               _env = env;
           }
 
           public void Auth()
           {
                string clientId = "GJR8uDME26u";
-               string url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=http://localhost:5051/pCloud/";
+               string url = string.Empty;
+               if (_env.IsProduction())
+               {
+                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=https://www.douglasmcgregor.co.uk/pCloud/";
+               }
+               else
+               {
+                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=http://localhost:5051/pCloud/";
+               }
                _http.HttpContext!.Response.Redirect(url);
           }
 

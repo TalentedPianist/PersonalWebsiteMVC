@@ -55,6 +55,7 @@
 			<PrivateAssets>all</PrivateAssets>
 			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
 		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.2" />
 		<PackageReference Include="Microsoft.Graph" Version="5.*" />
 		<PackageReference Include="Microsoft.Graph.Core" Version="3.2.5" />
 		<PackageReference Include="Microsoft.Identity.Client" Version="4.82.0-preview-1" />

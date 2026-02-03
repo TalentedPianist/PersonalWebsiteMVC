@@ -11,8 +11,12 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using System.Text
+@using System.Net.Http
+@using Microsoft.Extensions.Configuration
 @inject IPCloudAuth _auth
 @inject ApplicationDbContext _db
+@inject IConfiguration _config 
+@inject IWebHostEnvironment _env 
 @model List<ContentItem>
 
 <h1 class="bg bg-info p-1">pCloud</h1>
@@ -23,17 +27,20 @@
 
 @_auth.GetAccessToken()
 
-<!--
+
+
 <form method="post" asp-action="GetAuth" asp-controller="Home" asp-area="pCloud">
 	<button class="btn btn-link">Login</button>
 </form>
--->
+
 
 <ul>
 	<li><a id="selectAll" href="#">Select All</a></li>
 	<li><a id="addToDb" href="#">Add To Database</a></li>
 	<li><a id="delFromDb" href="#">Delete From Database</a></li>
 </ul>
+
+
 
 <div id="Gallery">
 	@if (Model is not null)
@@ -96,11 +103,10 @@
 
 	string GetThumbs(string path, string size)
 	{
-		string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
 
 		var client = new RestClient("https://eapi.pcloud.com/getthumblink");
 		var request = new RestRequest();
-		request.AddParameter("access_token", accessToken);
+		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
 		request.AddParameter("path", path);
 		request.AddParameter("size", size);
 		var response = client.Execute(request);

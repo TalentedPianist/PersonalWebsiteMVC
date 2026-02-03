@@ -14,12 +14,14 @@ public class AlbumsController : Controller
     private IHttpClientFactory _httpClientFactory { get; set; }
      public ApplicationDbContext _db { get; set; }
      public IHttpContextAccessor _http { get; set; } 
+     public IConfiguration _config { get; set; }
 
-    public AlbumsController(IHttpClientFactory httpClientFactory, ApplicationDbContext db, IHttpContextAccessor http)
+    public AlbumsController(IHttpClientFactory httpClientFactory, ApplicationDbContext db, IHttpContextAccessor http, IConfiguration config)
     {
         _httpClientFactory = httpClientFactory;
           _db = db;
           _http = http;
+          _config = config;
     }
 
     public IActionResult Index()

@@ -28,14 +28,17 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           public ApplicationDbContext _db { get; set; }
           public IWebHostEnvironment _env { get; set; }
           public IPCloudAuth _auth { get; set; }
+          public IConfiguration _config { get; set; }
 
-          public PhotosController(IHttpClientFactory httpClientFactory, IHttpContextAccessor http, ApplicationDbContext db, IWebHostEnvironment env, IPCloudAuth auth)
+
+          public PhotosController(IHttpClientFactory httpClientFactory, IHttpContextAccessor http, ApplicationDbContext db, IWebHostEnvironment env, IPCloudAuth auth, IConfiguration config)
           {
                _httpClientFactory = httpClientFactory;
                _http = http;
                _db = db;
                _env = env;
                _auth = auth;
+               _config = config;
           }
 
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/")]
@@ -48,8 +51,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                {
                     var client = new RestClient("https://eapi.pcloud.com/listfolder");
                     var request = new RestRequest();
-                    //request.AddParameter("folderid", HttpContext.Request.Query["id"]);
-                    request.AddParameter("access_token", accessToken);
+                    request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
                     request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                     request.AddHeader("Authorization", $"Bearer {accessToken}");
                     var response = client.Execute(request);
@@ -73,7 +75,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com");
                var request = new RestRequest("listfolder");
-               request.AddParameter("access_token", token);
+               request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
                request.AddParameter("path", "/");
                var response = await client.ExecuteAsync(request);
                if (!response.IsSuccessful)
@@ -93,8 +95,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com/deletefile");
                var request = new RestRequest();
-               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-               request.AddParameter("password", "Inkyfrog1");
+               request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
                request.AddParameter("fileid", fileid);
                var response = client.Execute(request);
                return Ok(response.Content);
@@ -104,13 +105,13 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/DeleteMultiple")]
           public async Task<IActionResult> DeleteMultipleFromCloud(List<string> files)
           {
-               string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+              
                StringBuilder sb = new StringBuilder();
                foreach (var fileid in files)
                {
                     var client = new RestClient("https://eapi.pcloud.com");
                     var request = new RestRequest("deletefile");
-                    request.AddParameter("access_token", accessToken);
+                    request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
 
 
                     request.AddParameter("fileid", fileid);
@@ -145,13 +146,13 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           [Microsoft.AspNetCore.Mvc.Route("pCloud/Photos/UploadFiles")]
           public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files)
           {
-               string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+               var accessToken = _config["PCloud:Local:AccessToken"];
                try
                {
 
                     files.ForEach(async file =>
                     {
-                         await UploadToPCloud(accessToken, "/", "/Public Folder/Gallery/Scarborough", file);
+                         await UploadToPCloud(accessToken!, "/", "/Public Folder/Gallery/Scarborough", file);
 
                     });
 
