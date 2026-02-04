@@ -191,7 +191,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                JToken result = JToken.Parse(json!.ToString()!);
                var metadata = result["metadata"]![0];
                Console.WriteLine(metadata!["path"]);
-               await CopyToFolder(token, metadata["path"]!.ToString(), "/Public Folder/Gallery/Scarborough/", metadata["fileid"]!.ToString());
+               await CopyToFolder(token, metadata["path"]!.ToString(), $"/Public Folder/Gallery/{topath}", metadata["fileid"]!.ToString());
                return metadata!;
           }
 

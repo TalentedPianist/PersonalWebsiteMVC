@@ -50,19 +50,18 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
 
         [HttpPost]
         [Route("/Album/GetPhoto")]
-        public IActionResult GetPhoto(string name, int albumID, string imgHref)
+        public IActionResult GetPhoto(string name, int albumID)
         {
             var photo = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
             var model = new PhotosViewModel();
             model.SinglePhoto = _db.Photos.Where(p => p.Name == name).FirstOrDefault();
             model.SingleAlbum = _db.Albums.Where(a => a.AlbumID == albumID).FirstOrDefault();
             model.Comments = new Comments();
-            model.AllComments = _db.Comments.
-                Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID)
-                .OrderByDescending(c => c.CommentDate)
-                .ToList();
 
-            ViewBag.ImgSrc = imgHref;
+               model.AllComments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID).ToList();
+
+               model.PagedComments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID).OrderByDescending(c => c.CommentDate).ToPagedList<Comments>(1, 3);
+
             return PartialView("~/Areas/Photos/Views/Album/Photo.cshtml", model);
 
         }

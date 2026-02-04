@@ -34,9 +34,9 @@
 					
 
 			<figure>
-				<a class="gallery" href="@photo.ImageUrl" data-featherlight-gallery
+				<a class="gallery" href="#Popup"
 				   data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID">
-					<img src="@GetThumbs(photo.ImageUrl!, "600x400")" data-id="@photo.AlbumID" data-name="@photo.Name">
+					<img src="@GetThumbs(photo.ImageUrl!, "600x400")" data-id="@photo.AlbumID" data-image="@GetThumbs(photo.ImageUrl!, "600x400")" data-name="@photo.Name">
 				</a>
 
 				<figcaption>@photo.Name</figcaption>
@@ -74,6 +74,10 @@
 	</section>
 </div>
 
+<div id="Popup">
+</div>
+
+
 
 @functions {
 	
@@ -104,92 +108,42 @@
 		$('a.gallery').featherlightGallery({
 			galleryFadeIn: 100,
 			galleryFadeOut: 300,
-			beforeContent: function (e) {
-				let content = this.$content;
-				$(content).empty();
+			previousIcon: '<<',
+			nextIcon: '>>',
+			afterOpen: function () {
+				
 			},
-			afterContent: function (e) {
+			afterContent: function () {
 
-				let target = this.$currentTarget[0];
-				let pName = $(target).data('name');
-				let albumId = $(target).data('album-id');
-
-				let instance = this.$instance;
-				//$(this.$instance).find('.featherlight-content').html('Hello World!');
+				let content = this.$content[0];
+				let instance = this.$instance[0];
+				let currentTarget = this.$currentTarget[0];
+				let name = currentTarget.dataset['name'];
+				let div = instance.querySelector('.featherlight-content');
+				div.classList.add('Photo');
 
 				$.ajax({
 					method: "POST",
 					url: "/Album/GetPhoto",
-					data: { name: pName, albumID: albumId, imgHref: target.href },
+					data: { name: name, albumID: '@Context.Request.Query["id"]' },
 					async: false,
 					cache: false,
 					success: function (message) {
-						//console.log(message);
 
-						$(instance).find('.featherlight-content').html(`
-
-																	${message}
-																`);
+						$(".featherlight-content").html(message);
 					},
 					error: function (error) {
 						console.log(error);
 					}
 				});
 
-				let comments = instance.find('#Comments .comment');
-				let pager = instance.find('.pagination-container');
-
-				let numItems = comments.length;
-				let perPage = 4;
-
-				comments.slice(perPage).hide();
-
-				$(pager).pagination({
-					items: numItems,
-					itemsOnPage: perPage,
-					onPageClick: function (pageNumber, e) {
-						e.preventDefault();
-						var showFrom = perPage * (pageNumber - 1);
-						var showTo = showFrom + perPage;
-						comments.hide().slice(showFrom, showTo).show();
-					}
-				});
-
-				let captcha = instance.find('#g-recaptcha');
-
-				if (captcha) {
-					grecaptcha.render('g-recaptcha', {
-						'site-key': '6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz'
-					});
-				}
-
-				// Note that [0] needs to be added to the instance to return HTML and without [0] for jQuery function.
-
-
-
-				let ckElement = instance.find('#ckeditor1')[0];
+				let ckElement = instance.querySelector('#ckeditor1');
 				ClassicEditor.create(ckElement, {
 					licenseKey: 'GPL',
-					plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
-				})
-					.then(editor => {
-						$("#commentForm").on('submit', function (e) {
-							e.preventDefault();
-
-							let name = instance.find('#name')[0]
-							let email = instance.find('#email')[0];
-							let website = instance.find('#website')[0];
-							let message = editor.getData();
-							let photoId = document.forms[0]['photoID'].value;
-							let strCaptcha = document.forms[0]['g-recaptcha-response'].value;
-
-						});
-					});
-			
-
+					plugins :[window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
+				});
 			}
 		});
-
 
 
 	</script>

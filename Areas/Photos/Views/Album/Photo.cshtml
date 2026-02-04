@@ -1,63 +1,86 @@
 @using PersonalWebsiteMVC.Areas.Photos.Models
+@using RestSharp
+@using Newtonsoft.Json
+@using Newtonsoft.Json.Linq
+@using Microsoft.Extensions.Configuration
+@using X.PagedList.Mvc 
+@inject IConfiguration _config 
 @model PhotosViewModel
 
-<h1>@Model.SinglePhoto!.Name</h1>
-<img src="@ViewBag.ImgSrc">
 
-<div id="Comments">
+<h1>@Model.SinglePhoto!.Name</h1>
+
+
+<img src="@GetThumbs(Model.SinglePhoto!.ImageUrl!)">
+
+
+<h3>Comments</h3>
+
 @if (Model.AllComments!.Count() == 0)
 {
-    <p>No comments have been found for this photo. Be the first to add a comment using the form below.</p>
-} else if (Model.AllComments!.Count() == 1)
-{
-    <p>1 comment has been found for this photo.</p>
-} else { 
-    <p>@Model.AllComments!.Count() comments have been found for this post.</p>
+    <p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
 }
 
+<div id="SinglePhoto">
 
+	<section>
+		@foreach (Comments comment in Model.PagedComments!)
+		{
+			<div>
+				<p>Posted by @comment.CommentAuthor on @comment.CommentDate</p>
+			</div>
+			@comment.CommentContent
+		}
 
-    @foreach (Comments comment in Model.AllComments!)
-    {
-        <div class="comment">
-        <div class="flex flex-row flex-1">
-            <img class="w-10" src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y
-    " />
-            <p>Posted by @comment.CommentAuthor on @comment.CommentDate.ToString("dddd mm yyyy") at @comment.CommentDate.ToString("HH:mm").</p>
-        </div>
-        @Html.Raw(comment.CommentContent)
-        </div>
-    }
-
-    <div class="pagination-container"></div>
-</div>
-
-<form method="post" id="commentForm" novalidate>
+        @if (Model.AllComments!.Count() == 0)
+        {
+        }
+        else
+        {
+		@Html.PagedListPager(Model.PagedComments, page => Url.Action("GetComments", new { page }))
+        }
+	</section>
+    <section>
+<form id="commentForm" method="post">
     <div>
         <label>Name:</label>
-
-        <input id="name" name="txtName" placeholder="John Doe" required>
-        <div class="error"></div>
-
+        <input asp-for="Comments.CommentAuthor" class="form-control" id="user" placeholder="John Smith....">
     </div>
     <div>
         <label>Email:</label>
-        <input id="email" name="txtEmail" placeholder="john@johndoe.com" required>
-        <span class="error"></span>
+        <input asp-for="Comments.CommentAuthorEmail" class="form-control" id="email" placeholder="john@johnsmith.com">
     </div>
     <div>
         <label>Website:</label>
-        <input id="website" name="txtWebsite" placeholder="https://www.johndoe.com">
+        <input asp-for="Comments.CommentAuthorUrl" class="form-control" id="website" placeholder="https://www.johnsmith.com">
     </div>
     <div>
         <label>Comment:</label>
-        <textarea name="txtComment" id="ckeditor1" placeholder="Beautiful photo...."></textarea>
-        <span class="error"></span>
+        <textarea id="ckeditor1" asp-for="Comments.CommentContent"></textarea>
     </div>
-    <div class="captcha">
-        <p>Please take a second to do the captcha and prove you're not a robot. This helps me fight spam. Thank you.</p>
-        <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
-    </div>
-    <input type="hidden" value="@Model.SinglePhoto.PhotoID" id="photoID">
     <button type="submit">Comment</button>
 </form>
+ </section>
+
+
+
+</div>
+
+
+
+
+@functions {
+    string GetThumbs(string path)
+    {
+        var client = new RestClient("https://eapi.pcloud.com");
+        var request = new RestRequest("getthumblink");
+        request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+        request.AddParameter("path", path);
+        request.AddParameter("size", "600x400");
+        var response = client.Execute(request);
+        var result = JsonConvert.DeserializeObject(response.Content!);
+        JToken json = JToken.Parse(result!.ToString()!);
+        var url = "https://" + json["hosts"]![0] + json["path"];
+        return url;
+    }
+}

@@ -105,6 +105,10 @@
     {
       "library": "jqueryui@1.14.1",
       "destination": "wwwroot/lib/jqueryui/"
+    },
+    {
+      "library": "material-ui@4.12.4",
+      "destination": "wwwroot/lib/material-ui/"
     }
   ]
 }

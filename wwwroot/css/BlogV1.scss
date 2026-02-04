@@ -1167,45 +1167,6 @@ footer {
 }
 
 
-.featherlight {
-    background: rgba(0, 0, 0, 0.6) !important;
-}
-
-.featherlight-next {
-    height: 60% !important;
-}
-
-.featherlight-previous {
-    height: 60% !important;
-}
-
-.featherlight-content {
-    width: 50% !important;
-    height: 100% !important;
-    background-color: #E9F0EE !important;
-    border-radius: 12px !important;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
-    padding: 1.5rem !important;
-    max-width: 800px !important;
-    margin: 2rem auto !important;
-    z-index: 50000 !important;
-
-    .page-link {
-        z-index: -1 !important;
-    }
-
-    #searchBox { 
-        height: revert !important; 
-    }
-}
-
-
-
-.featherlight-next,
-.featherlight-previous {
-    display: none;
-}
-
 .pagination-container {
     margin-top: 1em;
     margin-bottom: 1em;
@@ -1305,7 +1266,7 @@ footer {
 }
 
 #searchIcon { 
-    color: lightgoldenrodyellow;
+    color: darkgreen;
     font-size: xx-large;
 }
 
@@ -1327,16 +1288,8 @@ footer {
 
 }
 
-.searchPopup { 
-    height: revert !important;
-    background-color: orange !important;
-    border-bottom: none !important;
-    box-shadow: revert !important;
-    vertical-align: top !important;
-    margin-top: 7em !important;
-    width: revert !important;
-    float: right !important;
-    
+.searchPopup {
+    padding-bottom: 2em;
 }
 
 .highlight { 
@@ -1361,5 +1314,30 @@ footer {
     a { 
         text-decoration: revert;
         color: revert;
+    }
+}
+
+.featherlight-content {
+    
+}
+
+.Photo { 
+    background-color: yellow !important;
+}
+
+#commentForm { 
+   
+}
+
+#SinglePhoto { 
+   
+   
+
+    section { 
+        width: 50%; 
+    }
+
+    form { 
+        width: 100%;
     }
 }
