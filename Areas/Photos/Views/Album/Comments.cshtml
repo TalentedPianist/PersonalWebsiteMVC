@@ -1,5 +1,20 @@
-@model IEnumerable<Comments>
+@using PersonalWebsiteMVC.Areas.Photos.Models
+@model PhotosViewModel 
 
-@if (Model.Count() == 0) { 
-    <p>No comments have been found just now.  Be the first to share your thoughts on this photo using the form below.</p>
-}
+<div id="photoComments">
+	<section>
+	@if (Model.AllComments!.Count == 0)
+	{
+		<p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
+	}
+	</section>
+	<section>
+		<form id="photoCommentForm" method="post">
+			<div>
+				<label>Name:</label>
+				<input asp-for="Comments.CommentAuthor">
+			</div>
+		</form>
+	</section>
+
+</div>

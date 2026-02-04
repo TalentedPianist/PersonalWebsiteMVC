@@ -138,10 +138,12 @@
 				});
 
 				let ckElement = instance.querySelector('#ckeditor1');
-				ClassicEditor.create(ckElement, {
-					licenseKey: 'GPL',
-					plugins :[window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
-				});
+				if (ckElement) {
+					ClassicEditor.create(ckElement, {
+						licenseKey: 'GPL',
+						plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
+					});
+				}
 			}
 		});
 
