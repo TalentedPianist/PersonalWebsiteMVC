@@ -271,6 +271,8 @@ try
 
      builder.Services.AddScoped<IPCloudAuth, PCloudAuth>();
 
+     builder.Services.AddValidation(); 
+
      var app = builder.Build();
 
      // Code to seed data as seen in https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/movie-database-app/part-4?view=aspnetcore-9.0&pivots=vs#seed-the-database

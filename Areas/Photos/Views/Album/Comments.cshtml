@@ -1,20 +1,45 @@
 @using PersonalWebsiteMVC.Areas.Photos.Models
-@model PhotosViewModel 
+@model PhotosViewModel
 
 <div id="photoComments">
-	<section>
 	@if (Model.AllComments!.Count == 0)
 	{
 		<p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
 	}
-	</section>
-	<section>
-		<form id="photoCommentForm" method="post">
-			<div>
-				<label>Name:</label>
-				<input asp-for="Comments.CommentAuthor">
-			</div>
-		</form>
-	</section>
-
+	<div class="photosLayout">
+		<section>
+			@DateTime.Now
+		</section>
+		<section>
+			<form id="photoCommentForm" method="post">
+				<div>
+					<label>Name:</label>
+					<div class="flex flex-col flex-1">
+						<input placeholder="John Smith" data-val="true" data-val-required="The name field is required." id="name" name="name">
+						<span data-valmsg-for="name" data-valmsg-replace="true" class="text-danger"></span>
+					</div>
+				</div>
+				<div>
+					<label>Email:</label>
+					<div class="flex flex-col flex-1">
+						<input placeholder="john@johnsmith.com" data-val="true" data-val-required="The email field is required." id="email" name="email">
+						<span data-valmsg-for="email" data-valmsg-replace="true" class="text-danger"></span>
+					</div>
+				</div>
+				<div>
+					<label>Website:</label>
+					<input placeholder="https://www.johnsmith.com">
+				</div>
+				<div>
+					<label>Comment:</label>
+					<div class="flex flex-col flex-1">
+					<textarea id="comment" name="comment" class="ckeditor1" placeholder="What a great photo." data-val="true" data-val-required="The comment field is required."></textarea>
+					<span data-valmsg-for="comment" data-valmsg-replace="true" class="text-danger"></span>
+					</div>
+				</div>
+				
+				<button type="submit">Comment</button>
+			</form>
+		</section>
+	</div>
 </div>

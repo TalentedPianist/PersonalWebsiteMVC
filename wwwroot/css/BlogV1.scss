@@ -62,15 +62,21 @@ form {
         gap: 1em;
         margin-top: 1em;
         align-self: flex-start;
-       
+
 
         %placeholder {
             color: #d9d9d9 !important;
         }
 
-        .ck-editor__editable_inline {
-            min-height: 200px !important;
-            height: 200px;
+        //.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset, .ck.ck-reset_all {
+        //    width: 100px !important;
+        //    }
+            
+            
+
+
+        label {
+            font-size: large;
         }
     }
 
@@ -98,7 +104,7 @@ form {
     button {
         border: 1px solid black;
         padding: 10px 10px 10px 10px;
-        background-color: orange;
+        background-color: #D9C7B8;
         font-size: large;
 
         @media only screen and (min-width: 768px) {
@@ -176,7 +182,7 @@ figcaption {
 section {
     display: flex;
     flex-direction: column;
-    flex: 0;
+    flex: 1;
 
     article {
         width: 50%;
@@ -884,7 +890,7 @@ nav {
         flex: 1;
         align-items: center;
         justify-content: space-evenly;
-        background-color: #D5D96C;
+        background-color: #A69F7C;
 
         @media only screen and (min-width: 768px) {
             padding-top: 1em;
@@ -907,7 +913,7 @@ nav {
         letter-spacing: 3px;
 
         &:hover {
-            color: #FAF7F0;
+            color: brown;
         }
 
         @media only screen and (min-width: 1200px) {
@@ -1121,7 +1127,7 @@ footer {
     section {
         display: flex;
         flex-direction: column !important;
-        flex: 0;
+        flex: 1;
         padding-bottom: 1em;
         height: 100%;
         min-width: 100%;
@@ -1321,8 +1327,8 @@ footer {
     
 }
 
-.Photo { 
-    background-color: yellow !important;
+.Photo {
+    background-color: #D5D96C !important;
 }
 
 #commentForm { 
@@ -1330,14 +1336,40 @@ footer {
 }
 
 #SinglePhoto { 
+   display: flex; 
+   flex-direction: column;
+   flex: 1; 
+   width: 100%;
+   min-width: 100%;
    
+}
+
+#photoComments { 
+    display: flex; 
+    flex-direction: column; 
+    flex: 1; 
+    justify-content: space-evenly;
+    min-width: 100% !important;
+    width: 100% !important;
    
+
+    
+}
+
+.photosLayout { 
+    display: flex; 
+    flex-direction: row; 
+    flex: 1; 
+    width: 100%;
+
 
     section { 
-        width: 50%; 
-    }
-
-    form { 
-        width: 100%;
+        &:nth-of-type(2)  {
+            form { 
+                display: flex; 
+                flex-direction: column !important;
+                flex: 1; 
+            }
+        }
     }
 }

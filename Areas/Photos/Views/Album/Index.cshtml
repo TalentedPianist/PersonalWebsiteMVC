@@ -103,6 +103,7 @@
 
 @section Scripts {
 
+
 	<script>
 
 		$('a.gallery').featherlightGallery({
@@ -131,19 +132,36 @@
 					success: function (message) {
 
 						$(".featherlight-content").html(message);
+						
+
 					},
 					error: function (error) {
 						console.log(error);
 					}
 				});
 
-				let ckElement = instance.querySelector('#ckeditor1');
+				var form = $('.featherlight-content').find("form");
+
+				$.validator.unobtrusive.parse(form);
+
+				form.validate().settings.ignore = ":hidden:not(textarea)";
+
+				let ckElement = instance.querySelector('.ckeditor1');
 				if (ckElement) {
+				
 					ClassicEditor.create(ckElement, {
 						licenseKey: 'GPL',
 						plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
 					});
 				}
+
+				
+
+				$("#photoCommentForm").on('submit', function (e) {
+					e.preventDefault();
+
+					
+				});
 			}
 		});
 
