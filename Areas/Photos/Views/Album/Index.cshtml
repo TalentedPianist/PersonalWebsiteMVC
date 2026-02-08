@@ -19,7 +19,7 @@
 		{
 { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
 { "ckeditor5/", "/lib/ckeditor5/" },
-								}, null, null);
+										}, null, null);
 }
 
 <div id="Photos">
@@ -29,9 +29,9 @@
 
 	<section>
 		@foreach (var photo in Model.PagedPhotos!)
-				{
+		{
 
-					
+
 
 			<figure>
 				<a class="gallery" href="#Popup"
@@ -80,7 +80,7 @@
 
 
 @functions {
-	
+
 
 	string GetThumbs(string path, string size)
 	{
@@ -112,9 +112,10 @@
 			previousIcon: '<<',
 			nextIcon: '>>',
 			afterOpen: function () {
-				
+
 			},
 			afterContent: function () {
+				//window.stop();
 
 				let content = this.$content[0];
 				let instance = this.$instance[0];
@@ -132,7 +133,7 @@
 					success: function (message) {
 
 						$(".featherlight-content").html(message);
-						
+
 
 					},
 					error: function (error) {
@@ -146,21 +147,65 @@
 
 				form.validate().settings.ignore = ":hidden:not(textarea)";
 
+				let textarea = form.find('.ckeditor1')[0];
+
 				let ckElement = instance.querySelector('.ckeditor1');
+
+				let comment = undefined;
 				if (ckElement) {
-				
+
 					ClassicEditor.create(ckElement, {
 						licenseKey: 'GPL',
 						plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
-					});
+					})
+						.then(editor => {
+							textarea._ckeditor = editor;
+							editor.model.document.on('change:data', () => {
+								const $textarea = $(textarea);
+
+								// Push editor content back into textarea
+								$textarea.val(editor.getData());
+
+								// Re-validate this field
+								if (form.data('validator')) {
+									form.validate().element($textarea);
+									comment = editor.getData();
+								}
+							});
+						})
+						.catch(error => {
+							console.log(error);
+						});
 				}
 
-				
+
 
 				$("#photoCommentForm").on('submit', function (e) {
 					e.preventDefault();
+					console.log(e.target);
+					let name = $('#name').val();
+					let email = $('#email').val();
+					let website = $('#website').val();
+					let photoID = $("#photoID").val();
+					// Comment is declared earlier to support CKEditor
+					let formData = [];
+					formData.push({ PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment });
 
-					
+					$.ajax({
+						method: "POST",
+						url: "/Album/Comments/AddComment",
+						data: { PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment
+					},
+						async: false,
+						cache: false,
+						success: function (message) {
+							console.log(message);
+						},
+						error: function (error) {
+							console.log(error);
+						}
+					});
+
 				});
 			}
 		});

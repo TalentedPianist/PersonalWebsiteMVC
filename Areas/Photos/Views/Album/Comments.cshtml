@@ -8,7 +8,8 @@
 	}
 	<div class="photosLayout">
 		<section>
-			@DateTime.Now
+	
+			@Model.SinglePhoto!.PhotoID
 		</section>
 		<section>
 			<form id="photoCommentForm" method="post">
@@ -28,7 +29,7 @@
 				</div>
 				<div>
 					<label>Website:</label>
-					<input placeholder="https://www.johnsmith.com">
+					<input placeholder="https://www.johnsmith.com" id="website">
 				</div>
 				<div>
 					<label>Comment:</label>
@@ -37,7 +38,7 @@
 					<span data-valmsg-for="comment" data-valmsg-replace="true" class="text-danger"></span>
 					</div>
 				</div>
-				
+				<input type="hidden" name="photoID" value="@Model.SinglePhoto.PhotoID" id="photoID">
 				<button type="submit">Comment</button>
 			</form>
 		</section>
