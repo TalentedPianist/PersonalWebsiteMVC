@@ -109,6 +109,14 @@
     {
       "library": "material-ui@4.12.4",
       "destination": "wwwroot/lib/material-ui/"
+    },
+    {
+      "library": "paginationjs@2.6.0",
+      "destination": "wwwroot/lib/paginationjs/"
+    },
+    {
+      "library": "simplePagination.js@1.6",
+      "destination": "wwwroot/lib/simplePagination.js/"
     }
   ]
 }

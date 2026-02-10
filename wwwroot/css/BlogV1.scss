@@ -67,12 +67,11 @@ form {
         %placeholder {
             color: #d9d9d9 !important;
         }
-
         //.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset, .ck.ck-reset_all {
         //    width: 100px !important;
         //    }
-            
-            
+
+
 
 
         label {
@@ -118,8 +117,12 @@ form {
     div {
         display: flex;
         flex-direction: column;
-        flex: 1;
+        
 
+        &:not(:last-child) {
+            // Not selector prevents ckeditor from disappearing
+           flex: 0;
+        }
 
         .error {
             color: brown;
@@ -174,7 +177,7 @@ form {
     border: 3px solid red;
 }
 
-figcaption { 
+figcaption {
     margin-top: 1em;
 }
 
@@ -183,6 +186,10 @@ section {
     display: flex;
     flex-direction: column;
     flex: 1;
+
+    &:nth-of-type(2) {
+        align-items: flex-start;
+    }
 
     article {
         width: 50%;
@@ -193,29 +200,25 @@ section {
             padding-bottom: 1em;
 
             p {
-              
 
-                @media only screen and (min-width: 1200px) { 
-                    max-width: 1000px;  /* This is the solution to the long paragraph problem on large screens!!!  */
+
+                @media only screen and (min-width: 1200px) {
+                    max-width: 1000px; /* This is the solution to the long paragraph problem on large screens!!!  */
                 }
             }
         }
 
-       
 
-        @media only screen and (min-width: 1200px)  {
-            
+
+        @media only screen and (min-width: 1200px) {
             align-items: center;
             justify-content: center;
         }
-
     }
 
 
     @media only screen and (min-width: 768px) {
-        flex-direction: row;
-
-        
+        //flex-direction: row;
     }
 }
 
@@ -376,7 +379,7 @@ section {
         position: absolute;
         bottom: 0;
         margin-bottom: 0 !important;
-        z-index: -1; 
+        z-index: -1;
     }
 
     h1 {
@@ -496,7 +499,7 @@ section {
         @media only screen and (min-width: 600px) {
             background-color: revert;
             width: 100%;
-           
+
 
             p {
                 line-height: 2;
@@ -532,8 +535,6 @@ section {
                     background-color: lightyellow;
                 }
             }
-
-            
         }
     }
 
@@ -591,7 +592,7 @@ section {
     font-size: 16pt;
     background-color: #f2740f;
     line-height: 2;
-   
+
 
     button {
         align-self: flex-start;
@@ -605,8 +606,8 @@ section {
     @media only screen and (min-width: 600px) {
         background-color: revert;
 
-        p { 
-            width: 100%; 
+        p {
+            width: 100%;
         }
     }
 
@@ -620,13 +621,13 @@ section {
     }
 }
 
-.postContent { 
+.postContent {
     display: flex;
     flex-direction: column;
     flex: 1;
     width: 50%;
     min-width: 50%;
-    max-width: 50%; 
+    max-width: 50%;
 }
 
 
@@ -668,7 +669,8 @@ section {
                     margin-top: 1em;
                 }
 
-                &:last-child {}
+                &:last-child {
+                }
             }
         }
 
@@ -758,12 +760,11 @@ section {
                 text-decoration: revert !important;
             }
 
-            figure { 
-                display: flex; 
+            figure {
+                display: flex;
                 flex-direction: column;
                 flex: 1;
             }
-
         }
     }
 }
@@ -1059,7 +1060,7 @@ footer {
     width: 20%;
     gap: 1em;
 
-    @media only screen and (min-width: 768px) { 
+    @media only screen and (min-width: 768px) {
         width: 60%;
     }
 
@@ -1067,15 +1068,15 @@ footer {
         width: 60%;
     }
 
-    @media only screen and (min-width: 1400px) { 
+    @media only screen and (min-width: 1400px) {
         width: 30%;
     }
 
-    @media only screen and (min-width: 1600px) { 
-        width: 50%; 
+    @media only screen and (min-width: 1600px) {
+        width: 50%;
     }
 
-    @media only screen and (min-width: 1800px) { 
+    @media only screen and (min-width: 1800px) {
         width: 40%;
     }
 
@@ -1107,14 +1108,14 @@ footer {
     justify-content: flex-start;
 
 
-    @media only screen and (min-width: 1200px) {}
+    @media only screen and (min-width: 1200px) {
+    }
 
 
     img {
         border-radius: 50%;
         align-self: center;
         width: 30%;
-   
     }
 
     a {
@@ -1193,9 +1194,6 @@ footer {
     a {
         align-self: flex-start !important;
     }
-
-    
-
 }
 
 #Container {
@@ -1225,9 +1223,7 @@ footer {
                 color: #333;
                 line-height: 1.6;
                 margin-bottom: 2rem;
-
                 padding-right: 10em;
-
             }
         }
 
@@ -1247,7 +1243,6 @@ footer {
                     flex-direction: column;
                     flex: 1;
                 }
-
             }
 
             a {
@@ -1262,7 +1257,6 @@ footer {
             @media only screen and (min-width: 1600px) {
                 grid-template-columns: repeat(4, 25em);
             }
-
         }
 
         @media only screen and (min-width: 1400px) {
@@ -1271,41 +1265,40 @@ footer {
     }
 }
 
-#searchIcon { 
+#searchIcon {
     color: darkgreen;
     font-size: xx-large;
 }
 
-.searchBox { 
+.searchBox {
     background-color: rgba(0,0,0,0.6);
     padding: 2em;
     position: absolute;
-    top: 0; 
+    top: 0;
     right: 0;
-    display: flex; 
-    flex-direction: row; 
-    flex: 1; 
+    display: flex;
+    flex-direction: row;
+    flex: 1;
     display: none;
     text-align: center;
 
-    #searchIcon { 
+    #searchIcon {
         font-size: revert !important;
     }
-
 }
 
 .searchPopup {
     padding-bottom: 2em;
 }
 
-.highlight { 
+.highlight {
     background-color: yellow;
     padding: 5px 5px 5px 5px;
 }
 
-.searchResults { 
-    ul { 
-        display: flex; 
+.searchResults {
+    ul {
+        display: flex;
         flex-direction: column;
         flex: 1;
         gap: 1em;
@@ -1317,59 +1310,80 @@ footer {
         line-height: revert;
     }
 
-    a { 
+    a {
         text-decoration: revert;
         color: revert;
     }
 }
 
 .featherlight-content {
-    
 }
 
 .Photo {
     background-color: #D5D96C !important;
+    width: 100%;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
 }
 
-#commentForm { 
-   
+#commentForm {
 }
 
-#SinglePhoto { 
-   display: flex; 
-   flex-direction: column;
-   flex: 1; 
-   width: 100%;
-   min-width: 100%;
-   
+#SinglePhoto {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 1em;
+    width: 100%;
+    min-width: 100%;
 }
 
-#photoComments { 
-    display: flex; 
-    flex-direction: column; 
-    flex: 1; 
+#photoComments {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
     justify-content: space-evenly;
     min-width: 100% !important;
     width: 100% !important;
-   
-
-    
 }
 
-.photosLayout { 
-    display: flex; 
-    flex-direction: row; 
-    flex: 1; 
+.photosLayout {
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    gap: 1em;
     width: 100%;
 
 
-    section { 
-        &:nth-of-type(2)  {
-            form { 
-                display: flex; 
+    section {
+        &:nth-of-type(2) {
+            form {
+                display: flex;
                 flex-direction: column !important;
-                flex: 1; 
+                flex: 1;
+                align-self: flex-end; 
             }
+        }
+    }
+}
+
+.Comment {
+    display: flex;
+    flex-direction: column;
+    flex: 0;
+    gap: 1em;
+    border-bottom: 1px solid #000000;
+    padding-top: 1em;
+    padding-bottom: 1em;
+
+    div {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
+
+        img {
+            width: 15%;
+            margin-right: 2em;
         }
     }
 }

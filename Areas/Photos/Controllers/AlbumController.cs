@@ -67,42 +67,7 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         }
 
 
-        [Route("/Album/GetComments")]
-        [HttpPost]
-        public IActionResult GetComments(int id, int page = 1)
-        {
-            //int pageSize = 1;
-            var comments = _db.Comments
-                .Where(c => Convert.ToInt32(id) == Convert.ToInt32(c.PhotoID))
-                .OrderByDescending(c => c.CommentDate)
-                .ToList();
-
-            return PartialView("~/Areas/Photos/Views/Album/Comments.cshtml", comments);
-        }
-
-        [HttpPost]
-        [Route("/Photo/AddComment")]
-        public async Task<IActionResult> AddComment(string name, string email, string website, string message, string photoID, string captchaResponse)
-        {
-            if (await VerifyCaptcha(captchaResponse))
-            {
-                Comments comment = new Comments();
-                comment.CommentAuthor = name;
-                comment.CommentAuthorEmail = email;
-                comment.CommentAuthorUrl = website;
-                comment.CommentContent = message;
-                comment.CommentAuthorIP = _http.HttpContext!.Connection.RemoteIpAddress!.ToString();
-                comment.CommentDate = DateTime.Now;
-                comment.PhotoID = photoID;
-                _db.Comments.Add(comment);
-                _db.SaveChanges();
-                return Ok(comment);
-            }
-            else
-            {
-                return Json(new { error = "Please do the captcha to prove that you are human." });
-            }
-        }
+       
 
         public async Task<bool> VerifyCaptcha(string captchaResponse)
         {

@@ -46,5 +46,22 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
                _db.SaveChanges();
                return Ok(comment);
           }
+
+          [Route("/Album/GetComments")]
+          [HttpPost]
+          public IActionResult GetComments(int id, int page = 1)
+          {
+               //int pageSize = 1;
+               var comments = _db.Comments
+                   .Where(c => Convert.ToInt32(id) == Convert.ToInt32(c.PhotoID))
+                   //.OrderByDescending(c => c.CommentDate)
+                   .ToList();
+                                   
+
+
+               return PartialView("~/Areas/Photos/Views/Album/Comments.cshtml", comments);
+          }
+
+         
      }
 }

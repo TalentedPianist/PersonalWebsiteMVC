@@ -97,7 +97,9 @@ form button {
 form div {
   display: flex;
   flex-direction: column;
-  flex: 1;
+}
+form div:not(:last-child) {
+  flex: 0;
 }
 form div .error {
   color: brown;
@@ -148,6 +150,9 @@ section {
   flex-direction: column;
   flex: 1;
 }
+section:nth-of-type(2) {
+  align-items: flex-start;
+}
 section article {
   width: 50%;
 }
@@ -167,12 +172,6 @@ section article:first-child {
     justify-content: center;
   }
 }
-@media only screen and (min-width: 768px) {
-  section {
-    flex-direction: row;
-  }
-}
-
 #Home {
   display: flex;
   flex-direction: column;
@@ -1158,12 +1157,16 @@ footer {
 
 .Photo {
   background-color: #D5D96C !important;
+  width: 100%;
+  margin-left: 0 !important;
+  margin-right: 0 !important;
 }
 
 #SinglePhoto {
   display: flex;
   flex-direction: column;
   flex: 1;
+  gap: 1em;
   width: 100%;
   min-width: 100%;
 }
@@ -1181,10 +1184,31 @@ footer {
   display: flex;
   flex-direction: row;
   flex: 1;
+  gap: 1em;
   width: 100%;
 }
 .photosLayout section:nth-of-type(2) form {
   display: flex;
   flex-direction: column !important;
   flex: 1;
+  align-self: flex-end;
+}
+
+.Comment {
+  display: flex;
+  flex-direction: column;
+  flex: 0;
+  gap: 1em;
+  border-bottom: 1px solid #000000;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+.Comment div {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
+}
+.Comment div img {
+  width: 15%;
+  margin-right: 2em;
 }

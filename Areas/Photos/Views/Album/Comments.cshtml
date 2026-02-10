@@ -1,4 +1,5 @@
 @using PersonalWebsiteMVC.Areas.Photos.Models
+@using MvcPagedList.Core
 @model PhotosViewModel
 
 <div id="photoComments">
@@ -8,8 +9,24 @@
 	}
 	<div class="photosLayout">
 		<section>
-	
-			@Model.SinglePhoto!.PhotoID
+
+			@if (Model.AllComments is not null)
+			{
+				<div id="commentsList">
+				@foreach (Comments comment in Model.AllComments)
+				{
+					<div class="Comment">
+						<div>
+							<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=mp" />
+							<p>Comment posted by @comment.CommentAuthor</p>
+						</div>
+						@Html.Raw(comment.CommentContent)
+					</div>
+				}
+					<div id="commentsNav"></div>
+				</div>
+				
+			}
 		</section>
 		<section>
 			<form id="photoCommentForm" method="post">
@@ -34,8 +51,8 @@
 				<div>
 					<label>Comment:</label>
 					<div class="flex flex-col flex-1">
-					<textarea id="comment" name="comment" class="ckeditor1" placeholder="What a great photo." data-val="true" data-val-required="The comment field is required."></textarea>
-					<span data-valmsg-for="comment" data-valmsg-replace="true" class="text-danger"></span>
+						<textarea id="comment" name="comment" class="ckeditor1" placeholder="What a great photo." data-val="true" data-val-required="The comment field is required."></textarea>
+						<span data-valmsg-for="comment" data-valmsg-replace="true" class="text-danger"></span>
 					</div>
 				</div>
 				<input type="hidden" name="photoID" value="@Model.SinglePhoto.PhotoID" id="photoID">

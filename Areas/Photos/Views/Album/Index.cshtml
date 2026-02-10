@@ -111,11 +111,11 @@
 			galleryFadeOut: 300,
 			previousIcon: '<<',
 			nextIcon: '>>',
+			closeOnClick: false,
 			afterOpen: function () {
 
 			},
 			afterContent: function () {
-				//window.stop();
 
 				let content = this.$content[0];
 				let instance = this.$instance[0];
@@ -191,6 +191,7 @@
 					let formData = [];
 					formData.push({ PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment });
 
+					let result = new Map();
 					$.ajax({
 						method: "POST",
 						url: "/Album/Comments/AddComment",
@@ -199,7 +200,16 @@
 						async: false,
 						cache: false,
 						success: function (message) {
-							console.log(message);
+							let strHtml = `
+								<div>
+									<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=mp" />
+									Comment posted by ${message['CommentAuthor']} on ${message['CommentDate']}
+								</div>
+								${comment['CommentContent']}
+							`;
+							let commentList = $(instance).find('#commentsList').find('#Comment');
+							$(commentList).prepend(strHtml);
+							console.log(message['CommentContent']);
 						},
 						error: function (error) {
 							console.log(error);
@@ -207,7 +217,24 @@
 					});
 
 				});
-			}
+
+		
+				let commentsList = $(instance).find('#commentsList').find(".Comment");
+				var numPages = commentsList.length;
+				var perPage = 4;
+				commentsList.slice(perPage).hide();
+				$("#commentsNav").pagination({
+					items: numPages,
+					itemsOnPage: perPage,
+					cssStyle: "light-theme",
+					onPageClick: function (pageNum, e) {
+						e.preventDefault();
+						var start = perPage * (pageNum - 1);
+						var end = start + perPage;
+						commentsList.hide().slice(start, end).show();
+					}
+				});
+			} // End afterContent function
 		});
 
 
