@@ -7,6 +7,10 @@
 	{
 		<p>No comments have been found for this photo.  Be the first to add a comment using the form below.</p>
 	}
+	else
+	{
+		<p>@Model.AllComments!.Count comments have been found for this photo.  Share your thoughts using the form below.</p> 
+	}
 	<div class="photosLayout">
 		<section>
 
@@ -18,7 +22,7 @@
 					<div class="Comment">
 						<div>
 							<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=mp" />
-							<p>Comment posted by @comment.CommentAuthor</p>
+							<p>Comment posted by @comment.CommentAuthor on @DateTime.Now.ToString("dddd dd MMMM yyyy") at @DateTime.Now.ToString("HH:MM:ss")</p>
 						</div>
 						@Html.Raw(comment.CommentContent)
 					</div>

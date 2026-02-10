@@ -3,33 +3,36 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @using Microsoft.Extensions.Configuration
-@using X.PagedList.Mvc 
-@inject IConfiguration _config 
+@using X.PagedList.Mvc
+@inject IConfiguration _config
 @model PhotosViewModel
 
+<div id="photoContent">
+	<h1>@Model.SinglePhoto!.Name</h1>
 
-<h1>@Model.SinglePhoto!.Name</h1>
-
-
-<img src="@GetThumbs(Model.SinglePhoto!.ImageUrl!)">
-
+	<div class="photoWithArrows">
+		<a href="#" id="previousIcon">Previous</a>
+		<img src="@GetThumbs(Model.SinglePhoto!.ImageUrl!)">
+		<a href="#" id="nextIcon">Next</a>
+	</div>
+</div>
 
 <partial name="~/Areas/Photos/Views/Album/Comments.cshtml" model="Model" />
 
 
 
 @functions {
-    string GetThumbs(string path)
-    {
-        var client = new RestClient("https://eapi.pcloud.com");
-        var request = new RestRequest("getthumblink");
-        request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
-        request.AddParameter("path", path);
-        request.AddParameter("size", "600x400");
-        var response = client.Execute(request);
-        var result = JsonConvert.DeserializeObject(response.Content!);
-        JToken json = JToken.Parse(result!.ToString()!);
-        var url = "https://" + json["hosts"]![0] + json["path"];
-        return url;
-    }
+	string GetThumbs(string path)
+	{
+		var client = new RestClient("https://eapi.pcloud.com");
+		var request = new RestRequest("getthumblink");
+		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+		request.AddParameter("path", path);
+		request.AddParameter("size", "600x400");
+		var response = client.Execute(request);
+		var result = JsonConvert.DeserializeObject(response.Content!);
+		JToken json = JToken.Parse(result!.ToString()!);
+		var url = "https://" + json["hosts"]![0] + json["path"];
+		return url;
+	}
 }

@@ -116,14 +116,16 @@
 
 			},
 			afterContent: function () {
-
+			
 				let content = this.$content[0];
 				let instance = this.$instance[0];
 				let currentTarget = this.$currentTarget[0];
 				let name = currentTarget.dataset['name'];
 				let div = instance.querySelector('.featherlight-content');
 				div.classList.add('Photo');
-
+						
+				console.log(this);
+				
 				$.ajax({
 					method: "POST",
 					url: "/Album/GetPhoto",
@@ -133,7 +135,18 @@
 					success: function (message) {
 
 						$(".featherlight-content").html(message);
+						// Previous and next arrow functionality
+						let nextIcon = $('.featherlight-content').find('#nextIcon');
+						let prevIcon = $('.featherlight-content').find('#previousIcon');
 
+						$(nextIcon).on('click', function (e) {
+							e.preventDefault();
+							console.log(e.target);
+						});
+
+						$(prevIcon).on('click', function (e) {
+							e.preventDefault();
+						});
 
 					},
 					error: function (error) {
@@ -178,6 +191,7 @@
 						});
 				}
 
+				
 
 
 				$("#photoCommentForm").on('submit', function (e) {
@@ -191,7 +205,6 @@
 					let formData = [];
 					formData.push({ PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment });
 
-					let result = new Map();
 					$.ajax({
 						method: "POST",
 						url: "/Album/Comments/AddComment",
@@ -205,11 +218,11 @@
 									<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=mp" />
 									Comment posted by ${message['CommentAuthor']} on ${message['CommentDate']}
 								</div>
-								${comment['CommentContent']}
+								${message['CommentContent']}
 							`;
-							let commentList = $(instance).find('#commentsList').find('#Comment');
+							let commentList = $(instance).find('#commentsList').find('.Comment');
 							$(commentList).prepend(strHtml);
-							console.log(message['CommentContent']);
+							
 						},
 						error: function (error) {
 							console.log(error);
