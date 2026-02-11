@@ -107,10 +107,14 @@
 	<script>
 
 		$('a.gallery').featherlightGallery({
+			gallery: {
+				next: 'next >>',
+				previous: '<< previous'
+			},
 			galleryFadeIn: 100,
 			galleryFadeOut: 300,
-			previousIcon: '<<',
-			nextIcon: '>>',
+			previousIcon: 'Previous <<',
+			nextIcon: 'Next >>',
 			closeOnClick: false,
 			afterOpen: function () {
 
@@ -124,7 +128,6 @@
 				let div = instance.querySelector('.featherlight-content');
 				div.classList.add('Photo');
 						
-				console.log(this);
 				
 				$.ajax({
 					method: "POST",
@@ -136,18 +139,46 @@
 
 						$(".featherlight-content").html(message);
 						// Previous and next arrow functionality
-						let nextIcon = $('.featherlight-content').find('#nextIcon');
-						let prevIcon = $('.featherlight-content').find('#previousIcon');
+						let nextIcon = $('.featherlight-content').find('.featherlight-next');
+						let prevIcon = $('.featherlight-content').find('.featherlight-previous');
 
 						$(nextIcon).on('click', function (e) {
 							e.preventDefault();
-							console.log(e.target);
+							$('.featherlight').trigger('next');
 						});
 
 						$(prevIcon).on('click', function (e) {
 							e.preventDefault();
+							$('.featherlight').trigger('previous');
 						});
 
+						let close = $('.featherlight-content').find('#closeLightbox');
+						console.log(close);
+						$(close).on('click', function (e) {
+							e.preventDefault();
+							$.featherlight.current().close();
+						});
+
+						let photoComments = $('.featherlight-content').find('#photoComments');
+						$(photoComments).hide();
+
+						let viewComments = $('.featherlight-content').find('#viewComments');
+						let hideComments = $('.featherlight-content').find('#hideComments');
+						$(hideComments).hide();
+
+						$(viewComments).on('click', function (e) {
+							e.preventDefault();
+							$(photoComments).show();
+							$(viewComments).hide();
+							$(hideComments).show();
+						});
+
+						$(hideComments).on('click', function (e) {
+							e.preventDefault();
+							$(photoComments).hide();
+							$(hideComments).hide();
+							$(viewComments).show();
+						});
 					},
 					error: function (error) {
 						console.log(error);

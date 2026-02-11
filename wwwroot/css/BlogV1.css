@@ -1127,7 +1127,7 @@ footer {
   top: 0;
   right: 0;
   display: flex;
-  flex-direction: row;
+  flex-direction: row !important;
   flex: 1;
   display: none;
   text-align: center;
@@ -1138,6 +1138,21 @@ footer {
 
 .searchPopup {
   padding-bottom: 2em;
+  background-color: lightgreen !important;
+  position: absolute !important;
+  top: 0 !important;
+}
+.searchPopup .featherlight .featherlight-content {
+  position: absolute !important;
+  top: 0 !important;
+}
+.searchPopup .featherlight:last-of-type {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.searchPopup form {
+  display: flex;
+  flex-direction: row;
+  flex: 1;
 }
 
 .highlight {
@@ -1145,12 +1160,28 @@ footer {
   padding: 5px 5px 5px 5px;
 }
 
+.searchResults {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1em;
+  margin-left: 2em;
+  font-size: large;
+}
 .searchResults ul {
   display: flex;
   flex-direction: column;
   flex: 1;
   gap: 1em;
   list-style-type: disc;
+}
+.searchResults li {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 0.5em;
+  border-bottom: 1px solid #d9d9d9;
+  padding-bottom: 1em;
 }
 .searchResults p {
   font-size: revert;
@@ -1173,8 +1204,6 @@ footer {
   flex-direction: column;
   flex: 1;
   gap: 1em;
-  width: 100%;
-  min-width: 100%;
 }
 
 #photoComments {
@@ -1182,18 +1211,15 @@ footer {
   flex-direction: column;
   flex: 1;
   justify-content: space-evenly;
-  min-width: 100% !important;
-  width: 100% !important;
 }
 
-.photosLayout {
+.commentsLayout {
   display: flex;
-  flex-direction: row;
+  flex-direction: row !important;
   flex: 1;
   gap: 1em;
-  width: 100%;
 }
-.photosLayout section:nth-of-type(2) form {
+.commentsLayout section:nth-of-type(2) form {
   display: flex;
   flex-direction: column !important;
   flex: 1;
@@ -1224,10 +1250,11 @@ footer {
   flex-direction: column;
   flex: 1;
   justify-content: center;
-  align-items: center;
+  position: relative;
 }
 #photoContent img {
-  width: 80%;
+  width: 70%;
+  align-self: center;
 }
 
 .photoWithArrows {
@@ -1235,6 +1262,28 @@ footer {
   flex-direction: row;
   flex: 1;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-evenly;
   width: 100%;
+  position: relative;
+}
+.photoWithArrows .featherlight-next {
+  margin-left: 5em;
+}
+.photoWithArrows .featherlight-next:hover {
+  background-color: darkgreen;
+}
+.photoWithArrows .featherlight-previous, .photoWithArrows .featherlight-next {
+  display: block !important;
+}
+.photoWithArrows .featherlight-previous span, .photoWithArrows .featherlight-next span {
+  display: flex !important;
+}
+.photoWithArrows .featherlight-previous:hover, .photoWithArrows .featherlight-next:hover {
+  background: transparent !important;
+  color: darkgreen;
+}
+
+#viewComments, #hideComments {
+  text-decoration: revert !important;
+  color: revert !important;
 }

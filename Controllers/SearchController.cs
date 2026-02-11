@@ -64,5 +64,38 @@ namespace PersonalWebsiteMVC.Controllers
                return PartialView("~/Views/Home/SearchResults.cshtml", model);
 
           }
+
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/Search/SearchResults")]
+          public IActionResult SearchPage([FromForm(Name="txtSearch")]string term)
+          {
+               var options = new QueryOptions();
+               options.Rows = 25;
+               options.Fields = new[] { "id", "title", "link", "body" };
+               options.Highlight = new HighlightingParameters
+               {
+                    Fields = new[] { "body " },
+                    BeforeTerm = "<span class='highlight'>",
+                    AfterTerm = "</span>",
+                    Fragsize = 50,
+               };
+
+               var results = _solr.Query(new SolrQueryByField("body", term), options);
+               List<SearchModel> model = new List<SearchModel>();
+
+               foreach (var result in results)
+               {
+                    var highlights = results.Highlights[result.Id];
+                    highlights.Values.ForEach(h =>
+                    {
+                         h.ForEach(p =>
+                         {
+                              model.Add(new SearchModel { Id = result.Id, Title = result.Title, Link = result.Link, Body = p });
+                         });
+                    });
+               }
+               ViewBag.Term = term;
+               return View("~/Views/Home/SearchPage.cshtml", model);
+          }
      }
 }

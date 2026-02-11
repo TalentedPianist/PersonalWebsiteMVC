@@ -8,13 +8,24 @@
 @model PhotosViewModel
 
 <div id="photoContent">
+	<div class="flex flex-1 flex-row justify-between">
 	<h1>@Model.SinglePhoto!.Name</h1>
-
-	<div class="photoWithArrows">
-		<a href="#" id="previousIcon">Previous</a>
-		<img src="@GetThumbs(Model.SinglePhoto!.ImageUrl!)">
-		<a href="#" id="nextIcon">Next</a>
+		<a href="#" id="closeLightbox" title="Close photo"><i class="fa fa-window-close fa-3x" style="color: darkgreen;"></i></a>
 	</div>
+
+	
+	<div class="photoWithArrows">
+		<div class="featherlight-previous">
+			<span><<</span>
+		</div>
+		<img src="@GetThumbs(Model.SinglePhoto!.ImageUrl!)">
+		
+		<div class="featherlight-next" title="next">
+			<span>>></span>
+		</div>
+	</div>
+	<a href="#" id="viewComments">View Comments</a>
+	<a href="#" id="hideComments">Hide Comments</a>
 </div>
 
 <partial name="~/Areas/Photos/Views/Album/Comments.cshtml" model="Model" />

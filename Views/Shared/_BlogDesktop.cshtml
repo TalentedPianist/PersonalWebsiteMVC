@@ -106,9 +106,10 @@
 	</footer>
 
 	<div id="searchBox" class="hidden">
+		<form method="post" asp-controller="Search" asp-action="SearchResults" asp-area="">
 		<input type="search" name="txtSearch" id="searchInput">
 		<button type="submit" class="btn btn-primary">Search</button>
-
+		</form>
 		<div id="results"></div>
 	</div>
 

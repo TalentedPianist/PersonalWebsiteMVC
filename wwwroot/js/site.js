@@ -283,7 +283,8 @@ $("#searchLink").featherlight({
     beforeContent: function (e) {
         let instance = this.$instance[0];
         $(".featherlight-content").addClass("searchPopup");
-        
+        let searchPopup = $(".featherlight-content").find('.searchPopup');
+        $(searchPopup).css('display', 'flex');
     },
     afterContent: function (e) {
         let instance = this.$instance[0];
