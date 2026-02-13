@@ -8,111 +8,89 @@
 
 <div id="Contact">
 
-    
-            <h1>Contact</h1>
 
-            <p>It would be great to hear from you.  Please send me a message if you're interested in working together or just want to say hello.</p>
+     <h1>Contact</h1>
 
-            @TempData["Message"]
+     <p>It would be great to hear from you.  Please send me a message if you're interested in working together or just want to say hello.</p>
 
-            <form method="post" novalidate>
-                
-                <div>
-                    <label>Name:</label>
-                    <input id="name" name="txtName" placeholder="John Smith" required>
-                    <span class="error"></span>
-                </div>
-                <div>
-                    <label>Email:</label>
-                    <input id="email" name="txtEmail" placeholder="john@johnsmith.com" required>
-                    <span class="error"></span>
-                </div>
-                <div>
-                    <label>Website:</label>
-                    <input id="website" name="txtWebsite" placeholder="https://www.johnsmith.com">
-                    <span class="error"></span>
-                </div>
+     @TempData["Message"]
 
-                <div>
-                    <label>Message:</label>
+     <form method="post">
 
-                    <textarea id="ckeditor1" name="txtMessage" placeholder="What a great website..." required></textarea>
-                    <span class="error"></span>
-                </div>
+          <div>
+               <label>Name:</label>
+               <div class="flex flex-col flex-1">
+                    <input id="name" name="name" placeholder="John Smith" data-val-required="The name field is required." data-val="true">
+                    <span class="error" data-valmsg-for="name" data-valmsg-replace="true"></span>
+               </div>
+          </div>
+          <div>
+               <label>Email:</label>
+               <div class="flex flex-col flex-1">
+                    <input id="email" name="email" placeholder="john@johnsmith.com" data-val-required="The email field is required" data-val-email="The email field is not a valid email address." data-val="true">
+                    <span class="error" data-valmsg-for="email" data-valmsg-replace="true"></span>
+               </div>
+          </div>
+          <div>
+               <label>Website:</label>
+               <input id="website" name="website" placeholder="https://www.johnsmith.com">
+               <span class="error"></span>
+          </div>
 
-                <div>
-                    <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz" class="recaptcha">
-                    </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-      
+          <div>
+               <label>Message:</label>
+               <div class="flex flex-col flex-1">
+                    <textarea class="ckeditor1" name="message" placeholder="What a great website..." data-val="true" data-val-required="The message field is  required."></textarea>
+                    <span class="error" data-valmsg-for="message" data-valmsg-replace="true"></span>
+               </div>
+          </div>
+
+          <div>
+               <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz" class="recaptcha">
+               </div>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+     </form>
+
 </div>
 
-@section Scripts { 
-    <script>
-        $("form").on('submit', function(e) { 
-            e.preventDefault();
-            
-            let name = document.querySelector("#name");
-            let email = document.querySelector("#email");
-            let website = document.querySelector("#website");
-            let captcha = document.querySelector(".g-recaptcha-response");
+@section Scripts {
+     <script type="module">
+          let form = $('#Contact').find("form");
+          $.validator.unobtrusive.parse(form);
+          form.validate().settings.ignore = ":hidden:not(textarea)";
+          let textarea = form.find('.ckeditor1')[0];
 
-            let oldSummary = document.getElementById("errorsSummary");
-            if (oldSummary) { 
-                oldSummary.remove();
-            }
+          if (textarea)
+          {
+              ClassicEditor.create(textarea,  {
+                  licenseKey: 'GPL',
+                  plugins: [
+                      window.CKEditorEssentials,
+                      window.CKEditorParagraph,
+                      window.CKEditorBold,
+                      window.CKEditorItalic,
+                      window.CKEditorFont
+                  ]
+              })
+              .then(editor => {
+                  textarea._ckeditor = editor;
 
-            let errors = [];
+                  editor.model.document.on('change:data', () => {
+                      const $textarea = $(textarea);
 
-            if (!name.validity.valid) { 
-                $("#name").parent().find('.error').text('Please enter your name.');
-                $("#name").addClass('inputError');
-                errors.push("Please enter your name.");
-            } else { 
-                $("#name").parent().find('.error').text('');
-                $("#name").removeClass('inputError');
-            } 
+                      $textarea.val(editor.getData());
 
-            if (!email.validity.valid) { 
-                $("#email").parent().find('.error').text('Please enter your email address');
-                $("#email").addClass('inputError');
-                errors.push("Please enter your email address.");
-            } else { 
-                $("#email").parent().find('.error').text('');
-                $("#email").removeClass('inputError');
-            }
+                      if (form.data('validator')) {
+                          form.validate().element($textarea);
+                      }
+                  });
+              })
+              .catch(error =>  {
+                  console.error(error);
+              });
+          }
 
-            if (editor.getData() === '') { 
-                $(".ck").parent().find('.error').text('Please enter a message.');
-                $(".ck").addClass('inputError');
-                errors.push("Please enter a message.");
-            } else { 
-                $(".ck").parent().find('.error').text('');
-                $(".ck").removeClass('inputError');
-            }
 
-            if (errors.length === 0) { 
-                $.ajax({
-                    method: "POST", 
-                    url: "/Contact/SubmitForm", 
-                    data: { name: name.value, email: email.value, website: website.value, message: window.editor.getData(), captchaResponse: captcha.value },
-                    cache: false,
-                    async: false,
-                    success: function(message) { 
-                        if (message.error) { 
-                            $("form").before(`<p>${message.error}</p>`); 
-                        } else { 
-                            $("form").before().empty();
-                            $("form").before(`<p>Hi ${name.value}, thanks for your email.  A reply will be sent if necessary.</p>`);
-                        }
-                    }, 
-                    error: function(error) { 
-                        console.log(error);
-                    } 
-                });
-            }
-        });
-    </script>
+     </script>
 }

@@ -48,8 +48,9 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
           [Route("/Blog/{title}")]
           public IActionResult Post(string title)
           {
-               var model = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
-               return View("~/Areas/Blog/Views/Shared/SinglePost", model);
+               BlogCommentViewModel model = new BlogCommentViewModel();
+               model.Post = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
+               return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
           }
 
 

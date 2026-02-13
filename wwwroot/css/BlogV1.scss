@@ -67,11 +67,10 @@ form {
         %placeholder {
             color: #d9d9d9 !important;
         }
-        //.ck-reset_all :not(.ck-reset_all-excluded *), .ck.ck-reset, .ck.ck-reset_all {
-        //    width: 100px !important;
-        //    }
-
-
+        
+        .ck .ck-editor { 
+            width: 100% !important;
+        }
 
 
         label {
@@ -116,13 +115,10 @@ form {
 
     div {
         display: flex;
-        flex-direction: column;
-        
+        flex-direction: row;
+        flex: 1;
 
-        &:not(:last-child) {
-            // Not selector prevents ckeditor from disappearing
-           flex: 0;
-        }
+       
 
         .error {
             color: brown;

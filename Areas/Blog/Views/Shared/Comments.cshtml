@@ -10,77 +10,80 @@
 
 
 <div id="Comments">
-    <h2>Comments</h2>
+     <h2>Comments</h2>
 
 
 
 
-@if (Model.Comments.Count() == 0)
-{
-        <p>No comments have been found for this post. Be the first to add a comment using the form below.</p>
-}
-else
-{
+     @if (Model.Comments.Count() == 0)
+     {
+          <p>No comments have been found for this post. Be the first to add a comment using the form below.</p>
+     }
+     else
+     {
 
-    <div class="comment">
-    @foreach (Comments comment in Model.PagedComments!)
-    {
-            <div class="flex flex-row flex-1 align-top justify-start">
-                <img src="https://www.gravatar.com/avatar/?d=mp">
-                <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p>
-            </div>
-        @Html.Raw(comment.CommentContent)
-    }
-    </div>
+          <div class="comment">
+               @foreach (Comments comment in Model.PagedComments!)
+               {
+                    <div class="flex flex-row flex-1 align-top justify-start">
+                         <img src="https://www.gravatar.com/avatar/?d=mp">
+                         <p>Posted by @comment.CommentAuthor on @comment.CommentDate</p>
+                    </div>
+                    @Html.Raw(comment.CommentContent)
+               }
+     </div>
 
-    
-    <p>Currently showing page @Model.PagedComments.PageNumber of @Model.PagedComments.PageCount comments.</p>   
 
-                @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber
-                =
-                page, area = "Blog" }),
-                new PagedListRenderOptions
-                {
-                    DisplayItemSliceAndTotal = false,
-                    LiElementClasses = new string[] { "page-item" },
-                    PageClasses = new String[] { "page-link" }
-                })
+          <p>Currently showing page @Model.PagedComments.PageNumber of @Model.PagedComments.PageCount comments.</p>
 
-        }
-    
+          @Html.PagedListPager((IPagedList)Model.PagedComments!, page => Url.Action("Index", "Comments", new { pageNumber
+          =
+          page, area = "Blog" }),
+          new PagedListRenderOptions
+          {
+               DisplayItemSliceAndTotal = false,
+               LiElementClasses = new string[] { "page-item" },
+               PageClasses = new String[] { "page-link" }
+          })
+
+          }
+
 </div>
 
 <p>Share your thoughts on this post using the form below.</p>
 
 
-<form method="post" id="commentForm" novalidate>
-    <div asp-validation-summary="All" class="text-danger"></div>
-    <div>
-        <label>Name:</label>
-        <input id="name" name="txtName" placeholder="John Smith" required>
-        <span class="error"></span>
-    </div>
-    <div>
-        <label>Email:</label>
-        <input id="email" name="txtEmail" placeholder="john@johnsmith.com" required>
-        <span class="error"></span>
-    </div>
-    <div>
-        <label>Website:</label>
-        <input id="website" name="txtWebsite" placeholder="https://www.johnsmith.com">
-        <span class="error"></span>
-    </div>
-    <div>
-        <label>Comment:</label>
-        <textarea id="ckeditor1" name="txtMessage" placeholder="What a great post..."></textarea>
-        <span class="error"></span>
-    </div>
-    <input type="hidden" id="postId" value="@ViewData["id"]">
-    <div>
-        <p>Please take a second to do the captcha and prove that you are human. This helps me fight spam. Thank you.</p>
-        <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz"></div>
-    </div>
+<form method="post" id="blogCommentForm">
 
-    <button type="submit" class="btn btn-primary">Submit</button>
+     <div>
+          <label>Name:</label>
+          <div class="flex flex-col flex-1">
+               <input id="name" name="name" placeholder="John Smith" data-val-required="The name field is required." data-val="true">
+               <span class="error" data-valmsg-for="name" data-valmsg-replace="true"></span>
+          </div>
+     </div>
+     <div>
+          <label>Email:</label>
+          <div class="flex flex-col flex-1">
+               <input id="email" name="email" placeholder="john@johnsmith.com" data-val-email="The email field is not a valid email address" data-val-required="The email field is required" data-val="true">
+               <span class="error" data-valmsg-for="email" data-valmsg-replace="true"></span>
+          </div>
+     </div>
+     <div>
+          <label>Website:</label>
+          <input id="website" name="txtWebsite" placeholder="https://www.johnsmith.com">
+          <span class="error"></span>
+     </div>
+     <div>
+          <label>Comment:</label>
+          <div class="flex flex-col flex-1">
+               <textarea class="ckeditor1" name="comment" placeholder="What a great post..." data-val-required="The comment field is required" data-val="true"></textarea>
+               <span class="error" data-valmsg-for="comment" data-valmsg-replace="true"></span>
+          </div>
+     </div>
+     <input type="hidden" id="postId" value="@ViewData["id"]">
+
+
+     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 
