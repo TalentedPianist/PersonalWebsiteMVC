@@ -33,6 +33,7 @@ using Microsoft.Graph;
 using Azure.Identity;
 using SolrNet.Impl;
 using PersonalWebsiteMVC.Areas.pCloud.Helpers;
+using reCAPTCHA.AspNetCore;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -219,11 +220,7 @@ try
      // builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
      //     client.BaseAddress = new Uri("http://localhost:5051"));
 
-     builder.Services.AddGoogleCaptcha(configuration =>
-     {
-          configuration.V2SiteKey = "6LcR-VQrAAAAAFS2_Qz1L4NSod9AB4yVh2P0b47V";
-
-     });
+     
 
      builder.Services.AddBlazorBootstrap();
      builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
@@ -241,28 +238,6 @@ try
          .Get<MailSettings>();
 
 
-     //builder.Services.AddSingleton<GraphServiceClient>(sp =>
-     //{
-     //     var config = sp.GetRequiredService<IConfiguration>();
-     //     var tenantId = config["AzureAD:TenantId"];
-     //     var clientId = config["AzureAD:ClientId"];
-     //     var scopes = new[] { "User.Read", "Files.Read.All" };
-
-     //     var options = new DeviceCodeCredentialOptions
-     //     {
-     //          AuthorityHost = AzureAuthorityHosts.AzurePublicCloud,
-     //          ClientId = clientId, 
-     //          TenantId = tenantId,
-     //          DeviceCodeCallback = (code, cancellationToken) =>
-     //          {
-     //               Console.WriteLine(code.Message);
-     //               return Task.CompletedTask;
-     //          }
-     //     };
-
-     //     var credential = new DeviceCodeCredential(options);
-     //     return new GraphServiceClient(credential, scopes);
-     //});
 
      builder.Services.AddSolrNet<SearchModel>("http://localhost:8983/solr/blog");
      // https://devapo.io/blog/technology/leverage-the-power-of-indexing-with-apache-solr-and-net/
@@ -271,7 +246,16 @@ try
 
      builder.Services.AddScoped<IPCloudAuth, PCloudAuth>();
 
-     builder.Services.AddValidation(); 
+     builder.Services.AddValidation();
+
+     // https://github.com/TimothyMeadows/reCAPTCHA.AspNetCore
+     builder.Services.AddRecaptcha(builder.Configuration.GetSection("RecaptchaSettings"));
+     builder.Services.AddRecaptcha(options =>
+     {
+          options.SecretKey = "6Ld1l2osAAAAAK-VlYhJAohCH60eD_EqSGLsujP_";
+          options.SiteKey = "6Ld1l2osAAAAADZfO0bgWuTd8GUEpiwXBBUSIn1n";
+     });
+
 
      var app = builder.Build();
 
