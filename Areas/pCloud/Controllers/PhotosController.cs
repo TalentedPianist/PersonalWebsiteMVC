@@ -1,20 +1,21 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Net.Http.Headers;
-using System.Text.Json;
-using Microsoft.AspNetCore.Http;
-using PersonalWebsiteMVC.Areas.pCloud.Models;
-using System.Text;
-using SharpCompress;
-using PersonalWebsiteMVC.Data;
+﻿using Avalonia.Controls.Shapes;
 using Microsoft.AspNetCore.Authorization;
-using RestSharp;
-using ServiceStack;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
-using X.PagedList.Extensions;
-using X.PagedList;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Areas.pCloud.Helpers;
+using PersonalWebsiteMVC.Areas.pCloud.Models;
+using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using RestSharp;
+using ServiceStack;
+using SharpCompress;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.Json;
+using X.PagedList;
+using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
@@ -46,6 +47,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
 
+             
 
                try
                {
@@ -105,7 +107,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/DeleteMultiple")]
           public async Task<IActionResult> DeleteMultipleFromCloud(List<string> files)
           {
-              
+
                StringBuilder sb = new StringBuilder();
                foreach (var fileid in files)
                {
@@ -142,43 +144,57 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                return View();
           }
 
+          public async Task<string> FolderID(string name)
+          {
+               var client = new RestClient("https://eapi.pcloud.com");
+               var request = new RestRequest("listfolder");
+               request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+               request.AddParameter("folderid", "19500076302");
+               var response = await client.ExecuteAsync(request);
+               var json = JsonConvert.DeserializeObject(response.Content!);
+               JToken result = JToken.Parse(json!.ToString()!);
+               var metadata = result["metadata"];
+               return (string)metadata!["folderid"]!.ToString();
+          }
+
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("pCloud/Photos/UploadFiles")]
-          public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files)
+          public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files, [FromForm(Name = "path")] string path)
           {
+        
                var accessToken = _config["PCloud:Local:AccessToken"];
-               try
+     
+               foreach (IFormFile file in files)
                {
-
-                    files.ForEach(async file =>
-                    {
-                         await UploadToPCloud(accessToken!, "/", "/Public Folder/Gallery/Scarborough", file);
-
-                    });
-
-                    return RedirectToAction("~/Areas/pCloud/Views/Photos/Index.cshtml");
+                    await UploadToPCloud(accessToken!, path, file);
                }
-               catch (NullReferenceException ex)
-               {
-                    TempData["Message"] = ex.Message;
-                    return View("~/Areas/pCloud/Views/Photos/Index.cshtml");
-               }
+
+               //return RedirectToAction("~/Areas/pCloud/Views/Photos/Index.cshtml");
+               TempData["Message"] = path;
+               return View("~/Areas/pCloud/Views/Photos/Index.cshtml");
           }
 
 
 
-          public async Task<JToken> UploadToPCloud(string token, string frompath, string topath, IFormFile file)
+          public async Task UploadToPCloud(string token, string path, IFormFile file)
           {
                Console.WriteLine("Trying to upload to pCloud...");
-               Console.WriteLine(token);
+               Console.WriteLine(path);
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("uploadfile", Method.Post);
-               //request.AddParameter("access_token", token);
                request.AddHeader("Authorization", $"Bearer {token}");
-               request.AddParameter("path", topath);
+               var finalPath = $"/Public Folder/Gallery/{path}/";
+               var encodedPath = Uri.EscapeDataString(finalPath);
+               Console.WriteLine(encodedPath);
+               request.AddParameter("path", finalPath);
                request.AddParameter("filename", file.FileName);
-               request.AddFile("file", () => file.OpenReadStream(), file.FileName, file.ContentType);
-               var response = client.ExecuteAsync(request).Result;
+
+               using var ms = new MemoryStream();
+               await file.CopyToAsync(ms);
+               var fileBytes = ms.ToArray();
+               request.AddFile("file", fileBytes, file.FileName, file.ContentType);
+
+               var response = await client.ExecuteAsync(request);
                if (!response.IsSuccessful)
                {
                     Console.WriteLine(response.StatusCode);
@@ -186,30 +202,31 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-
+               Console.WriteLine(response.Content);
                var json = JsonConvert.DeserializeObject(response.Content!);
+               //Console.WriteLine(json);
                JToken result = JToken.Parse(json!.ToString()!);
                var metadata = result["metadata"]![0];
-               Console.WriteLine(metadata!["path"]);
-               await CopyToFolder(token, metadata["path"]!.ToString(), $"/Public Folder/Gallery/{topath}", metadata["fileid"]!.ToString());
-               return metadata!;
+               //Console.WriteLine(metadata!["path"]);
+               //await CopyToFolder(token, metadata!["path"]!.ToString(), path);
+               
           }
 
 
 
 
-          public async Task CopyToFolder(string token, string frompath, string topath, string fileid)
+          public async Task<Task> CopyToFolder(string token, string path, string topath)
           {
 
                Console.WriteLine("Trying to copy to folder...");
+               
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("copyfile");
                request.AddHeader("Authorization", $"Bearer {token}");
-               //request.AddParameter("access_token", token);
-               request.AddParameter("fileid", fileid);
-               request.AddParameter("path", frompath);
-               request.AddParameter("topath", topath);
-               var response = client.ExecuteAsync(request).Result;
+               request.AddParameter("path", path);
+               request.AddParameter("topath", $"/Public Folder/Gallery/{topath}/");
+               var response = await client.ExecuteAsync(request);
+               Console.WriteLine(response.Content);
                if (!response.IsSuccessful)
                {
                     Console.WriteLine(response.StatusCode);
@@ -217,14 +234,15 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               await DeleteFileFromRoot(token, frompath);
-
+               //await DeleteFileFromRoot(token, path);
+               return Task.CompletedTask;
 
           }
 
-          public async Task DeleteFileFromRoot(string token, string path)
+          public async Task<Task> DeleteFileFromRoot(string token, string path)
           {
                Console.WriteLine("Trying to delete file....");
+               Console.WriteLine(path);
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("deletefile");
                request.AddHeader("Authorization", $"Bearer {token}");
@@ -238,7 +256,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.Content);
                }
                Console.WriteLine(response.Content);
-
+               return Task.CompletedTask;
           }
 
 

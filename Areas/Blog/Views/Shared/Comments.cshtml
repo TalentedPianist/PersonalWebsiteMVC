@@ -4,10 +4,13 @@
 @{
 }
 @model BlogCommentViewModel
+@using Microsoft.Extensions.Options
 @using X.PagedList
 @using X.PagedList.Extensions
 @using X.Web.PagedList
-
+@using reCAPTCHA.AspNetCore
+@using reCAPTCHA.AspNetCore.Templates
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
 
 <div id="Comments">
      <h2>Comments</h2>
@@ -82,7 +85,7 @@
           </div>
      </div>
      <input type="hidden" id="postId" value="@ViewData["id"]">
-
+     @(Html.Recaptcha<RecaptchaV3HiddenInput>(RecaptchaSettings.Value))
 
      <button type="submit" class="btn btn-primary">Submit</button>
 </form>

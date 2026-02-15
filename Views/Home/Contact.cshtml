@@ -47,11 +47,6 @@
                     <span class="error" data-valmsg-for="message" data-valmsg-replace="true"></span>
                </div>
           </div>
-
-          <div>
-               <div id="g-recaptcha" data-sitekey="6LeCBlUrAAAAAGJFT1Rt-4hojR6NfEvqzsvZwnOz" class="recaptcha">
-               </div>
-          </div>
           @(Html.Recaptcha<RecaptchaV3HiddenInput>(RecaptchaSettings?.Value))
           <button type="submit" class="btn btn-primary">Submit</button>
      </form>

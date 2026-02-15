@@ -11,6 +11,7 @@ using System.Linq.Expressions;
 using System.Text;
 using ServiceStack;
 using Newtonsoft.Json;
+using reCAPTCHA.AspNetCore.Attributes;
 
 
 namespace PersonalWebsiteMVC.Controllers
@@ -38,32 +39,18 @@ namespace PersonalWebsiteMVC.Controllers
 
         [HttpPost]
         [Microsoft.AspNetCore.Mvc.Route("/Contact/SubmitForm")]
+        [ValidateRecaptcha(0.5)]
         public async Task<IActionResult> ContactForm(string name, string email, string website, string message, string captchaResponse)
         {
-            if (await VerifyCaptcha(captchaResponse))
+            if (ModelState.IsValid)
             {
                 await _EmailService.SendEmailAsync(email, "Contact Form", message);
                 return Ok();
             }
-            else
-            {
-                return Json(new { error = "You must do the captcha to prove that you are human." });
-            }
+               return View("~/Views/Home/Contact.cshtml");
         }
 
-        private async Task<bool> VerifyCaptcha(string captchaResponse)
-        {
-            var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}");
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
-                return captchaResult!.Success;
-            }
-            return false;
-        }
+        
 
     }
 }

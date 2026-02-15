@@ -1,6 +1,10 @@
+@using Microsoft.Extensions.Options
 @using PersonalWebsiteMVC.Areas.Photos.Models
 @using MvcPagedList.Core
+@using reCAPTCHA.AspNetCore
+@using reCAPTCHA.AspNetCore.Templates
 @model PhotosViewModel
+@inject IOptions<RecaptchaSettings> RecaptchaSettings
 
 <div id="photoComments">
 	@if (Model.AllComments!.Count == 0)
@@ -59,7 +63,8 @@
 						<span data-valmsg-for="comment" data-valmsg-replace="true" class="text-danger"></span>
 					</div>
 				</div>
-				<input type="hidden" name="photoID" value="@Model.SinglePhoto.PhotoID" id="photoID">
+				<input type="hidden" name="photoID" value="@Model.SinglePhoto!.PhotoID" id="photoID">
+				@(Html.Recaptcha<RecaptchaV3HiddenInput>(RecaptchaSettings.Value))
 				<button type="submit">Comment</button>
 			</form>
 		</section>
