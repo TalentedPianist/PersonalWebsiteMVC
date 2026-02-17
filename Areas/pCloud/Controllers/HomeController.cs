@@ -13,6 +13,7 @@ using SharpCompress;
 using System.Text;
 using Wangkanai.Extensions;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Hosting;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 {
@@ -36,28 +37,28 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
 
-          public IActionResult Index([FromQuery(Name = "code")] string code)
+          public IActionResult Index()
           {
-               try
-               {
-                    var client = new RestClient("https://eapi.pcloud.com/listfolder");
-                    var request = new RestRequest();
+               Console.WriteLine(_config["PCloud:Local:AccessToken"]);
+                    var client = new RestClient("https://eapi.pcloud.com/");
+                    var request = new RestRequest("listfolder");
 
                     request.AddParameter("access_token", _config["pCloud:Local:AccessToken"]);
+                    //request.AddParameter("folderid", "19500076302");
                     request.AddParameter("folderid", "19500076302");
-                    request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                     var response = client.Execute(request);
                     StringBuilder sb = new StringBuilder();
-
-                    //TempData["Message"] = response.Content;
-                    var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-                    List<ContentItem> items = result!.metadata!.contents!;
-                    return View(items);
-               }
-               catch (NullReferenceException ex)
+               if (!response.IsSuccessful)
                {
-                    return View();
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
                }
+               var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
+               List<ContentItem> model = result!.metadata!.contents!;
+               return View(model);
+            
           }
 
           public IActionResult Create(string id)

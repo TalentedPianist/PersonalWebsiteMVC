@@ -41,6 +41,6 @@ public class ContentItem
      public string? contenttype { get; set; }
      public string? hash { get; set; }
      public int? category { get; set; }
-     public long? fileid { get; set; }
+     public string? fileid { get; set; }
      public long? size { get; set; }
 }

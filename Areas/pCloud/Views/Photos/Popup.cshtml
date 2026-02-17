@@ -4,6 +4,7 @@
 @{
 }
 @model ContentItem
+@inject IConfiguration _config
 
 @TempData["Message"]
 
@@ -15,7 +16,7 @@
 	<a href="#" id="coverPic">Make Cover Photo</a>
 
 
-	<img src="@ViewBag.Image">
+	<img src='@GetThumbs(Model.fileid!, "600x400")'>
 
 
 	<ul>
@@ -26,3 +27,18 @@
 }
 
 
+@functions {
+    string GetThumbs(string fileid, string size)
+    {
+	    var client = new RestClient("https://eapi.pcloud.com/");
+	    var request = new RestRequest("getthumblink");
+	    request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+	    request.AddParameter("fileid", fileid);
+	    request.AddParameter("size", size);
+	    var response = client.Execute(request);
+	    var result = JsonConvert.DeserializeObject(response.Content!);
+	    JToken json = JToken.Parse(result!.ToString()!);
+	    var url = "https://" + json["hosts"]![0] + json["path"];
+	    return url;
+    }
+}

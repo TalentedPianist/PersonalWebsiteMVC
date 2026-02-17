@@ -49,7 +49,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
                request.AddParameter("code", _http.HttpContext.Request.Query["code"]);
                var response = client.Execute(request);
                var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
-               Console.WriteLine(response.Content);
+               //Console.WriteLine(response.Content);
                return json!.access_token!;
           }
      }

@@ -51,15 +51,8 @@ public class AlbumsController : Controller
      [Route("/pCloud/Albums/GetID")]
      public IActionResult GetID(string name)
      {
-          try
-          {
-               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-               return Ok(album!.AlbumID);
-          }
-          catch (NullReferenceException ex)
-          {
-               return Ok(ex.Message);
-          }
+          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+          return Ok(album!.AlbumID);
      }
 
      [HttpGet]
@@ -75,11 +68,11 @@ public class AlbumsController : Controller
 
      [HttpPost]
      [Route("/pCloud/Albums/AddMultipleAlbumsToDb")]
-     public IActionResult AddMultipleAlbumsToDb([FromBody]List<Album> data)
+     public IActionResult AddMultipleAlbumsToDb([FromBody]List<Album> album)
      {
-          _db.Albums.AddRange(data);
+          _db.Albums.AddRange(album);
           _db.SaveChanges();
-          return Ok(data);
+          return Ok(album);
      }
 
      [HttpPost]
@@ -92,20 +85,22 @@ public class AlbumsController : Controller
                _db.SaveChanges();
                return Ok(data);
           }
-          catch (InvalidOperationException ex)
+          catch (ArgumentNullException)
           {
-               return Ok(data);
+               TempData["Message"] = "Album is not in the database.";
+               return Ok("Album is not in the database.");
           }
      }
 
      [HttpPost]
      [Route("/pCloud/Albums/MakeCoverPic")]
-     public IActionResult MakeCoverPic(string name, string path)
+     public IActionResult MakeCoverPic(string name, string path, string fileid)
      {
           var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-          album!.CoverPhoto = path;
+          album!.CoverPhoto = fileid;
           _db.Albums.Update(album);
           _db.SaveChanges();
-          return RedirectToAction("Index", new { Area = "pCloud", Controller = "Albums" });
+          return Ok(album);
+         
      }
 }

@@ -43,33 +43,19 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/")]
-          public async Task<IActionResult> Index([FromQuery(Name = "id")] string id, [FromQuery(Name = "pageNumber")] int? page)
+          public async Task<IActionResult> Index([FromQuery(Name = "name")] string name, [FromQuery(Name = "pageNumber")] int? page)
           {
-               string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
 
-             
+               var client = new RestClient("https://eapi.pcloud.com/listfolder");
+               var request = new RestRequest();
+               request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+               request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
+               var response = client.Execute(request);
 
-               try
-               {
-                    var client = new RestClient("https://eapi.pcloud.com/listfolder");
-                    var request = new RestRequest();
-                    request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
-                    request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
-                    request.AddHeader("Authorization", $"Bearer {accessToken}");
-                    var response = client.Execute(request);
-                    var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-                    StringBuilder sb = new StringBuilder();
-                    var pageNumber = page ?? 1;
 
-                    var model = result!.metadata!.contents!.ToPagedList(pageNumber, 100);
-
-                    return View(model);
-               }
-               catch (NullReferenceException ex)
-               {
-                    TempData["Message"] = ex.Message;
-                    return View();
-               }
+               var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
+               List<ContentItem> items = result!.metadata!.contents!;
+               return View(items);
 
           }
 
@@ -87,7 +73,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               Console.WriteLine(response.Content!);
+               //Console.WriteLine(response.Content!);
                return response.Content!;
           }
 
@@ -109,19 +95,21 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
 
                StringBuilder sb = new StringBuilder();
-               foreach (var fileid in files)
+               foreach (var file in files)
                {
-                    var client = new RestClient("https://eapi.pcloud.com");
+                    Console.WriteLine(file);
+                    var client = new RestClient("https://eapi.pcloud.com/");
                     var request = new RestRequest("deletefile");
                     request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
 
 
-                    request.AddParameter("fileid", fileid);
+                    request.AddParameter("fileid", file);
 
                     var response = await client.ExecuteAsync(request);
                     sb.Append(response.Content);
+                    Console.WriteLine(response.Content);
                }
-               TempData["Message"] = sb.ToString();
+               //TempData["Message"] = sb.ToString();
                return Ok(files);
 
           }
@@ -132,6 +120,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/GetPopup")]
           public IActionResult GetPopup(string item, string thumb)
           {
+
                ViewBag.Image = thumb;
                JObject json = JObject.Parse(item);
                var model = JsonConvert.DeserializeObject<ContentItem>(json.ToString());
@@ -161,9 +150,9 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           [Microsoft.AspNetCore.Mvc.Route("pCloud/Photos/UploadFiles")]
           public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files, [FromForm(Name = "path")] string path)
           {
-        
+
                var accessToken = _config["PCloud:Local:AccessToken"];
-     
+
                foreach (IFormFile file in files)
                {
                     await UploadToPCloud(accessToken!, path, file);
@@ -209,7 +198,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                var metadata = result["metadata"]![0];
                //Console.WriteLine(metadata!["path"]);
                //await CopyToFolder(token, metadata!["path"]!.ToString(), path);
-               
+
           }
 
 
@@ -219,7 +208,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
 
                Console.WriteLine("Trying to copy to folder...");
-               
+
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("copyfile");
                request.AddHeader("Authorization", $"Bearer {token}");
@@ -298,35 +287,22 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                _db.Photos.AddRange(data);
                _db.SaveChanges();
+               TempData["Message"] = "Photos added to database.";
                return Ok(data);
           }
 
           [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/DelFromDb")]
           public IActionResult DelFromDb([FromBody] List<PersonalWebsiteMVC.Models.Photos> data)
           {
                _db.Photos.RemoveRange(data);
                _db.SaveChanges();
+               TempData["Message"] = "Photos deleted from database.";
                return Ok(data);
           }
 
 
-          [HttpPost]
-          [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/GetThumbs")]
-          public string GetThumbs(string fileid, string path, string size)
-          {
-               string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
-               var client = new RestClient("https://eapi.pcloud.com/getthumblink");
-               var request = new RestRequest();
-               request.AddParameter("access_token", accessToken);
-               request.AddParameter("path", path);
-               request.AddParameter("size", size);
-               var response = client.Execute(request);
-               var result = JsonConvert.DeserializeObject(response.Content!);
-               StringBuilder sb = new StringBuilder();
-               JToken json = JToken.Parse(result!.ToString()!);
-               var url = "https://" + json["hosts"]![0] + json["path"];
-               return url;
-          }
+        
 
      }
 }

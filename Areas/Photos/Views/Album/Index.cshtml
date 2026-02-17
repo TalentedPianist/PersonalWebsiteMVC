@@ -8,6 +8,7 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @inject ApplicationDbContext _db
+@inject IConfiguration _config
 @model PersonalWebsiteMVC.Areas.Photos.Models.PhotosViewModel
 
 @TempData["Message"]
@@ -84,10 +85,10 @@
 
 	string GetThumbs(string path, string size)
 	{
-		string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
+		
 		var client = new RestClient("https://eapi.pcloud.com");
 		var request = new RestRequest("getthumblink");
-		request.AddParameter("access_token", accessToken);
+		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
 		request.AddParameter("path", path);
 		request.AddParameter("size", size);
 		var response = client.Execute(request);

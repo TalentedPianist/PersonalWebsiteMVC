@@ -17,7 +17,8 @@
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
 @inject ApplicationDbContext _db
-@model PagedList<ContentItem>
+@inject IConfiguration _config
+@model List<ContentItem>
 
 <h1 class="bg bg-info p-1">Photos for @Context.Request.Query["name"]</h1>
 
@@ -56,27 +57,23 @@
 <div id="Photos">
 	<section>
 
-		@if (Model is not null)
-		{
-			foreach (ContentItem item in Model)
+			@foreach (ContentItem item in Model)
 			{
-				@item.folderid
+				if (item.name!.Contains("JPEG") || item.name.Contains("JPG")) { 
 
-				if (item.name!.Contains(".JPG") || item.name.Contains(".JPEG"))
-				{
-					var thumb = GetThumbs(item.fileid.ToString()!, item.path!, "600x400");
-
+				
+					var thumb = GetThumbs(item.path!, item.fileid!, "600x400");
 					<figure>
-						<img src="@thumb">
+						<a href="#Popup" class="fl" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb"><img src="@thumb" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-path="@item.path" data-fileid="@item.fileid"></a>
 						<figcaption>
 							<a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
-							<input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb">
+							<input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb" data-fileid="@item.fileid">
 
 						</figcaption>
 					</figure>
 				}
 			}
-		}
+		
 	</section>
 </div>
 
@@ -88,20 +85,19 @@
 @functions {
 
 
-	string GetThumbs(string fileid, string path, string size)
+	string GetThumbs(string path, string fileid, string size)
 	{
-		string accessToken = "655SZGJR8uDME26uZ9n760kZPllUcXeMnXXOpi7bGcN7ny92KC4X";
-
-		var client = new RestClient("https://eapi.pcloud.com/getthumblink");
-		var request = new RestRequest();
-		request.AddParameter("access_token", accessToken);
-		request.AddParameter("path", path);
+          
+		var client = new RestClient("https://eapi.pcloud.com");
+		var request = new RestRequest("getthumblink");
+		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+          request.AddParameter("path", path);
+		request.AddParameter("fileid", fileid);
 		request.AddParameter("size", size);
 		var response = client.Execute(request);
 		var result = JsonConvert.DeserializeObject(response.Content!);
-		StringBuilder sb = new StringBuilder();
 		JToken json = JToken.Parse(result!.ToString()!);
-		var url = "https://" + json["hosts"]![0] + json["path"];
+		var url = "https:" + json["hosts"]![0] + json["path"];
 		return url;
 	}
 
@@ -120,8 +116,7 @@
             targetAttr: 'href',
             afterContent: function (event) {
                 let instance = this.$instance[0];
-                let target = this.$currentTarget;
-
+                let target = this.$currentTarget[0];
 
                 $.ajax({
                     method: "POST",
@@ -131,33 +126,30 @@
                     cache: false,
                     success: function (message) {
                         $(".featherlight-content").html(message);
-
+                        //console.log(message);
                     },
                     error: function (error) {
                         console.log(error);
                     }
                 });
-                // The link was always returning null because I was trying to acccess it before the Ajax call and it wasn't initialized.
+                
+
+
+
                 document.querySelector("#coverPic").addEventListener('click', function (e) {
                     e.preventDefault();
+                    console.log(event);
                     let strFileID = event.target.dataset["fileid"];
                     let strPath = event.target.dataset["path"];
                     let strSize = "600x400";
                     let strName = '@Context.Request.Query["name"]';
 
-                    let thumb = $.ajax({
-                        method: "POST",
-                        url: "/pCloud/Photos/GetThumbs",
-                        data: { fileid: strFileID, path: strPath, size: strSize },
-                        async: false,
-                        cache: false,
-                    }).responseText;
-
+                    console.log(event.target);
 
                     $.ajax({
                         method: "POST",
                         url: "/pCloud/Albums/MakeCoverPic",
-                        data: {name: strName, path: strPath },
+                        data: {name: strName, path: '@Context.Request.Query["name"]', fileid: strFileID },
                         async: false,
                         cache: false,
                         success: function (message) {
@@ -222,7 +214,8 @@
         document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]').forEach(function (item, index) {
             item.addEventListener('click', function (e) {
 
-                pCloudPhotos.push(item.value);
+                pCloudPhotos.push(item.dataset['fileid']);
+                
 
                 // Check if photo is in database by making an Ajax call to the database with the photo name as filter
                 let strPhotoID = $.ajax({
@@ -309,7 +302,8 @@
 				async: false,
 				cache: false,
 				success: function (message) {
-					console.log(message);
+					//console.log(message);
+                         //window.location.reload();
 				},
 				error: function (error) {
 					console.log(error);
