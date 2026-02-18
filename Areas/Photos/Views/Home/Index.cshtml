@@ -7,71 +7,80 @@
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
 @inject ApplicationDbContext _db
-@inject IConfiguration _config 
+@inject IConfiguration _config
 @model PersonalWebsiteMVC.Areas.Photos.Models.AlbumsViewModel
 
 <div id="Albums">
 
-	<h1>Photos</h1>
+     <h1>Photos</h1>
 
-	@if (Model.PagedAlbums!.Count() == 0)
-	{
-		<p>No albums have been found just now.  Please check back later.</p>
-	}
-	else
-	{
-		<section>
+     @if (Model.PagedAlbums!.Count() == 0)
+     {
+          <p>No albums have been found just now.  Please check back later.</p>
+     }
+     else
+     {
+          <section>
 
+               @if (Model is not null)
+               {
+                    foreach (var album in Model.PagedAlbums!)
+                    {
+                         <figure>
 
-			@foreach (var album in Model.PagedAlbums!)
-			{
-				<figure>
-					@if (album.CoverPhoto is not null)
-					{
-						var thumb = GetThumbs(album.CoverPhoto, "600x400");
-						<img src="@thumb">
-					}
-					else
-					{
-					<svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@album.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-					}
-					<figcaption>
-						<a asp-controller="Album"
-						   asp-route-Name="@album.Name" asp-route-id="@album.AlbumID" asp-action="Index">@album.Name</a>
-					</figcaption>
-				</figure>
+                              @if (album.CoverPhoto is not null)
+                              {
+                                   var thumb = GetThumbs(album.CoverPhoto, "600x400");
+                                   <img src="@thumb">
+                              }
 
-			}
+                              else
+                              {
+                                   <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@album.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                              }
+                              <figcaption>
+                                   <a asp-controller="Album"
+                                      asp-route-Name="@album.Name" asp-route-id="@album.AlbumID" asp-action="Index">@album.Name</a>
+                              </figcaption>
+                         </figure>
 
-		</section>
-		<section>
-			<p>You are on page @Model.PagedAlbums!.PageNumber of @Model.PagedAlbums.PageCount.</p>
+                    }
+               }
+          </section>
+          <section>
+               <p>You are on page @Model!.PagedAlbums!.PageNumber of @Model.PagedAlbums.PageCount.</p>
 
-			@Html.PagedListPager((IPagedList)Model.PagedAlbums!, page => Url.Action("Index", "Home", new { pageNumber = page, area = "Photos" }),
-				new PagedListRenderOptions
-				{
-					DisplayItemSliceAndTotal = false,
-					LiElementClasses = new string[] { "page-item" },
-					PageClasses = new String[] { "page-link" }
-				})
-		</section>
-	}
+               @Html.PagedListPager((IPagedList)Model.PagedAlbums!, page => Url.Action("Index", "Home", new { pageNumber = page, area = "Photos" }),
+               new PagedListRenderOptions
+               {
+                    DisplayItemSliceAndTotal = false,
+                    LiElementClasses = new string[] { "page-item" },
+                    PageClasses = new String[] { "page-link" }
+               })
+     </section>
+          }
 
 </div>
 
 @functions {
-	string GetThumbs(string path, string size)
-	{
-
-		var client = new RestClient("https://eapi.pcloud.com/");
-		var request = new RestRequest("getthumblink");
-		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
-		request.AddParameter("path", path);
-		request.AddParameter("size", size);
-		var response = client.Execute(request);
-		var result = JsonConvert.DeserializeObject(response.Content!);
-		JToken json = JToken.Parse(result!.ToString()!);
-		var url = "https://" + json["hosts"]![0] + json["path"];
-		return url;
-	}
+     string GetThumbs(string fileid, string size)
+     {
+          try
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("getthumblink");
+               request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("size", size);
+               var response = client.Execute(request);
+               var result = JsonConvert.DeserializeObject(response.Content!);
+               JToken json = JToken.Parse(result!.ToString()!);
+               var url = "https://" + json["hosts"]![0] + json["path"];
+               return url;
+          }
+          catch (NullReferenceException)
+          {
+               return String.Empty;
+          }
+     }
 }

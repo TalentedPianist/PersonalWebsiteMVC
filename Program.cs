@@ -101,7 +101,10 @@ try
           options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
       
      })
-          .AddCookie();
+          .AddCookie(options =>
+          {
+               options.ExpireTimeSpan = TimeSpan.FromHours(1);
+          });
 
 
 
