@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Models;
 using RestSharp;
 
@@ -40,16 +41,26 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
           {
                string clientId = "GJR8uDME26u";
                string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
-               string url = "https://eapi.pcloud.com/oauth2_token";
+               string url = "https://eapi.pcloud.com/";
 
                var client = new RestClient(url);
-               var request = new RestRequest();
+               var request = new RestRequest("oauth2_token");
                request.AddParameter("client_id", clientId);
                request.AddParameter("client_secret", clientSecret);
                request.AddParameter("code", _http.HttpContext.Request.Query["code"]);
                var response = client.Execute(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               Console.WriteLine(response.Content);
                var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
-               //Console.WriteLine(response.Content);
+              
+                    _http.HttpContext.Session.SetString("PCloudToken", json!.access_token!);
+
                return json!.access_token!;
           }
      }

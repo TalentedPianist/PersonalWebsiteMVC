@@ -14,10 +14,12 @@
 @using System.Text
 @using X.PagedList
 @using PersonalWebsiteMVC.Data
+@using Microsoft.Extensions.Hosting
 @inject IHttpClientFactory _httpClientFactory
 @inject IHttpContextAccessor _http
 @inject ApplicationDbContext _db
 @inject IConfiguration _config
+@inject IWebHostEnvironment _env
 @model List<ContentItem>
 
 <h1 class="bg bg-info p-1">Photos for @Context.Request.Query["name"]</h1>
@@ -56,8 +58,8 @@
 
 <div id="Photos">
 	<section>
-
-			@foreach (ContentItem item in Model)
+            @if (Model is not null) { 
+			foreach (ContentItem item in Model)
 			{
 				if (item.name!.Contains("JPEG") || item.name.Contains("JPG")) { 
 
@@ -73,7 +75,7 @@
 					</figure>
 				}
 			}
-		
+		}
 	</section>
 </div>
 
@@ -89,8 +91,8 @@
 	{
           
 		var client = new RestClient("https://eapi.pcloud.com");
-		var request = new RestRequest("getthumblink");
-		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+		var request = new RestRequest("getthumblink"); 
+		request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);        
           request.AddParameter("path", path);
 		request.AddParameter("fileid", fileid);
 		request.AddParameter("size", size);

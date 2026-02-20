@@ -103,7 +103,7 @@ try
      })
           .AddCookie(options =>
           {
-               options.ExpireTimeSpan = TimeSpan.FromHours(1);
+               options.ExpireTimeSpan = TimeSpan.FromHours(5);
           });
 
 
@@ -259,7 +259,7 @@ try
           options.SiteKey = "6Ld1l2osAAAAADZfO0bgWuTd8GUEpiwXBBUSIn1n";
      });
 
-
+     
      var app = builder.Build();
 
      // Code to seed data as seen in https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/movie-database-app/part-4?view=aspnetcore-9.0&pivots=vs#seed-the-database

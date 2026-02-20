@@ -22,12 +22,8 @@
 <h1 class="bg bg-info p-1">pCloud</h1>
 <a class="btn btn-primary" asp-action="Create" asp-controller="Home" asp-area="pCloud" asp-route-folderid="19500076302">Create</a>
 
-
-
-
-@_auth.GetAccessToken()
 @TempData["Message"]
-
+@Context.Session.GetString("PCloudToken")
 
 <form method="post" asp-action="GetAuth" asp-controller="Home" asp-area="pCloud">
      <button class="btn btn-link">Login</button>
@@ -66,7 +62,7 @@
                          }
                          else
                          {
-                             
+
                               <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
 
                          }
@@ -91,18 +87,24 @@
 
      string GetThumbs(string path, string size)
      {
-
-          var client = new RestClient("https://eapi.pcloud.com/getthumblink");
-          var request = new RestRequest();
-          request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
-          request.AddParameter("path", path);
-          request.AddParameter("size", size);
-          var response = client.Execute(request);
-          var result = JsonConvert.DeserializeObject(response.Content!);
-          StringBuilder sb = new StringBuilder();
-          JToken json = JToken.Parse(result!.ToString()!);
-          var url = "https://" + json["hosts"]![0] + json["path"];
-          return url;
+          try
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("getthumblink");
+               request.AddParameter("access_token", Context.Session.GetString("PCloudToken"));
+               request.AddParameter("path", path);
+               request.AddParameter("size", size);
+               var response = client.Execute(request);
+               var result = JsonConvert.DeserializeObject(response.Content!);
+               StringBuilder sb = new StringBuilder();
+               JToken json = JToken.Parse(result!.ToString()!);
+               var url = "https://" + json["hosts"]![0] + json["path"];
+               return url;
+          }
+          catch (NullReferenceException)
+          {
+               return string.Empty;
+          }
      }
 }
 
@@ -134,17 +136,17 @@
                          data: { name: item.value },
                          cache: false,
                          async: false,
-                         success: function(message) { 
+                         success: function(message) {
                              console.log(message);
                          },
-                         error: function(error) { 
+                         error: function(error) {
                              console.log(error);
                          }
                     });
- 
+
 
                     if (id === 0) {
-                    
+
                          albums.push({ Name: item.value, DateCreated: item.dataset['date'] });
                     } else {
 
@@ -174,20 +176,20 @@
                          data: { name: item.value },
                          cache: false,
                          async: false,
-                         success: function(message) { 
-                              if (message === undefined) { 
+                         success: function(message) {
+                              if (message === undefined) {
                                    console.log('Album is not in database.');
                                    albums.push({ Name: item.value, DateCreated: e.target.dataset['date'] });
-                              } else { 
+                              } else {
                                    albums.push({ AlbumID: message });
                               }
                          },
-                         error: function(error) { 
+                         error: function(error) {
                               console.log(error);
                          }
                     });
-                        
-                   
+
+
                });
           });
 

@@ -740,7 +740,7 @@ header {
     align-items: center;
     justify-content: center;
     width: 100%;
-    background-image: url("/images/IMG_004442.jpg");
+    background-image: url("/images/IMG_004294.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -770,7 +770,7 @@ nav ul {
   flex: 1;
   align-items: center;
   justify-content: space-evenly;
-  background-color: #A69F7C;
+  background-color: #C9DFF2;
 }
 @media only screen and (min-width: 768px) {
   nav ul {
@@ -814,7 +814,7 @@ main {
   flex: 1;
   height: 100%;
   width: 100%;
-  background-color: #A3C4D9;
+  background-color: #F29F05;
   clear: both !important;
   padding-bottom: 5em;
 }
@@ -843,7 +843,7 @@ main {
 }
 
 .menuIcon {
-  color: yellow;
+  color: #F28705;
   width: 80px;
   height: 80px;
 }
@@ -911,8 +911,8 @@ footer {
 }
 @media only screen and (min-width: 768px) {
   footer {
-    background-color: #384001;
-    color: white;
+    background-color: #A2BF84;
+    color: black;
     text-align: center;
     font-size: x-large;
     letter-spacing: 2px;
@@ -960,6 +960,7 @@ footer {
 }
 .socialMedia svg {
   width: 100%;
+  fill: #730220;
 }
 .socialMedia a {
   display: inline-flex;
@@ -1117,7 +1118,7 @@ footer {
 }
 
 #searchIcon {
-  color: darkgreen;
+  color: #730220;
   font-size: xx-large;
 }
 
@@ -1132,9 +1133,6 @@ footer {
   flex: 1;
   display: none;
   text-align: center;
-}
-.searchBox #searchIcon {
-  font-size: revert !important;
 }
 
 .searchPopup {
