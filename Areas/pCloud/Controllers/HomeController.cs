@@ -42,8 +42,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                if (!string.IsNullOrEmpty(code))
                {
                     var token = _auth.GetAccessToken();
-                    HttpContext.Session.SetString("PCloudToken", token);
-                    ViewBag.AccessToken = token;
+                    Environment.SetEnvironmentVariable("PCloudToken", token);
+                    ViewBag.AccessToken = Environment.GetEnvironmentVariable("PCloudToken");
                     return RedirectToAction("Index", new { Area = "PCloud", Controller = "Home" });
                }
        
@@ -54,7 +54,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     var request = new RestRequest("listfolder");
 
 
-                    request.AddParameter("access_token", HttpContext.Request.Cookies["PCloudToken"]);
+                    request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
 
                     request.AddParameter("folderid", "19500076302");
                     var response = client.Execute(request);
@@ -95,7 +95,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                var client = new RestClient("https://eapi.pcloud.com/createfolder");
                var request = new RestRequest();
 
-               request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
+               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
 
                request.AddParameter("folderid", folderid);
                request.AddParameter("name", model.Name);

@@ -39,11 +39,6 @@
 		<li><a href="#" id="addToDb">Add to Database</a></li>
 		<li><a href="#" id="delFromDb">Delete from Database</a></li>
 		<li><a href="#" id="delFromPCloud">Delete from PCloud</a></li>
-		<li>
-			<form method="post" asp-action="GetToken" asp-controller="Photos" asp-area="pCloud">
-				<button class="btn btn-link">Login</button>
-			</form>
-		</li>
 	</ul>
 </div>
 
@@ -62,7 +57,7 @@
 			foreach (ContentItem item in Model)
 			{
 				
-
+                   if (item.name!.Contains(".JPEG") || item.name.Contains(".JPG")) { 
 				
 					var thumb = GetThumbs(item.path!, item.fileid!, "600x400");
 					<figure>
@@ -73,7 +68,7 @@
 
 						</figcaption>
 					</figure>
-				
+				}
 			}
 		}
 	</section>
@@ -82,7 +77,6 @@
 <div id="Popup">
 </div>
 
-@Context.Session.GetString("PCloudToken")
 
 @functions {
 
@@ -90,10 +84,10 @@
 	string GetThumbs(string path, string fileid, string size)
 	{
           
-		var client = new RestClient("https://eapi.pcloud.com");
+		var client = new RestClient("https://eapi.pcloud.com/");
 		var request = new RestRequest("getthumblink"); 
-		request.AddParameter("access_token", Context.Session.GetString("PCloudToken"));        
-          request.AddParameter("path", path);
+		request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));        
+          //request.AddParameter("path", path);
 		request.AddParameter("fileid", fileid);
 		request.AddParameter("size", size);
 		var response = client.Execute(request);

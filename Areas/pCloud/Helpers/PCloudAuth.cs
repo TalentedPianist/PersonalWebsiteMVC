@@ -26,15 +26,16 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
           {
                string clientId = "GJR8uDME26u";
                string url = string.Empty;
-               if (_env.IsProduction())
-               {
-                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=https://www.douglasmcgregor.co.uk/pCloud/";
-               }
-               else
-               {
-                    string responseUri = "http://localhost:5051/pCloud/";
-                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&force_reapprove=true&redirect_uri={responseUri}&state=12345&response_type=code";
-               }
+               //if (_env.IsProduction())
+               //{
+               //     url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=https://www.douglasmcgregor.co.uk/pCloud/";
+               //}
+               //else
+               //{
+               //     string responseUri = "http://localhost:5051/pCloud/";
+               //     url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&force_reapprove=true&redirect_uri={responseUri}&state=12345&response_type=code";
+               //}
+               url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=https://www.douglasmcgregor.co.uk/pCloud/";
                _http.HttpContext!.Response.Redirect(url);
           }
 
@@ -61,9 +62,6 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
                var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
                var token = json?.access_token == null ? "NULL" : json.access_token;
                //_http.HttpContext.Session.SetString("PCloudToken", token);
-               CookieOptions options = new CookieOptions();
-               _http.HttpContext.Response.Cookies.Append("PCloudToken", token);
-               _http.HttpContext.Response.Redirect("/pCloud/");
                return json!.access_token!;
           }
      }

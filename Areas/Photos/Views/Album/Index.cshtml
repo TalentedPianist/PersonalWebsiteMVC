@@ -86,9 +86,9 @@
 	string GetThumbs(string path, string size)
 	{
 		
-		var client = new RestClient("https://eapi.pcloud.com");
+		var client = new RestClient("https://eapi.pcloud.com/");
 		var request = new RestRequest("getthumblink");
-		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
+		request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
 		request.AddParameter("path", path);
 		request.AddParameter("size", size);
 		var response = client.Execute(request);

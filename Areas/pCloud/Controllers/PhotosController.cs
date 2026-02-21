@@ -51,7 +51,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     var client = new RestClient("https://eapi.pcloud.com/");
                     var request = new RestRequest("listfolder");
                     
-                         request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
+                         request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
                    
                     request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                     var response = client.Execute(request);
@@ -71,7 +71,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com");
                var request = new RestRequest("listfolder");
-               request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
+               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
                
                request.AddParameter("path", "/");
                var response = await client.ExecuteAsync(request);
@@ -92,7 +92,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com/deletefile");
                var request = new RestRequest();
-               request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
+               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
                request.AddParameter("fileid", fileid);
                var response = client.Execute(request);
                return Ok(response.Content);
@@ -110,7 +110,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     var client = new RestClient("https://eapi.pcloud.com/");
                     var request = new RestRequest("deletefile");
              
-                         request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
+                         request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
                     
                     request.AddParameter("fileid", file);
 
@@ -146,7 +146,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com");
                var request = new RestRequest("listfolder");
-                    request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
+                    request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
                
                request.AddParameter("folderid", "19500076302");
                var response = await client.ExecuteAsync(request);
@@ -166,7 +166,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                foreach (IFormFile file in files)
                {
                     
-                         await UploadToPCloud(HttpContext.Session.GetString("PCloudToken")!, path, file);
+                         await UploadToPCloud(Environment.GetEnvironmentVariable("PCloudToken")!, path, file);
                     
                }
 

@@ -87,14 +87,14 @@
 
 
 
-     string GetThumbs(string path, string size)
+     string GetThumbs(string fileid, string size)
      {
           try
           {
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("getthumblink");
-               request.AddParameter("access_token", Context.Session.GetString("PCloudToken"));
-               request.AddParameter("path", path);
+               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+               request.AddParameter("fileid", fileid);
                request.AddParameter("size", size);
                var response = client.Execute(request);
                var result = JsonConvert.DeserializeObject(response.Content!);
