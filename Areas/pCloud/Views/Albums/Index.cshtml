@@ -13,8 +13,7 @@
 <form method="post" asp-action="Auth" asp-controller="Photos">
 	<button class="btn btn-link">Login to pCloud</button>
 </form>
-
-@GetAccessToken()
+@Context.Session.GetString("PCloudToken")
 
 <div id="Gallery">
 	<ul>
@@ -29,23 +28,6 @@
 	</section>
 </div>
 
-@functions {
-	string GetAccessToken()
-	{
-		string clientId = "GJR8uDME26u";
-		string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
-		string url = "https://eapi.pcloud.com/oauth2_token";
-
-		var client = new RestClient(url);
-		var request = new RestRequest();
-		request.AddParameter("client_id", clientId);
-		request.AddParameter("client_secret", clientSecret);
-		request.AddParameter("code", Context.Request.Query["code"]);
-		var response = client.Execute(request);
-		var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
-		return json!.access_token!;
-	}
-}
 
 
 @section Scripts {

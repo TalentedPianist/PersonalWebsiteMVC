@@ -23,7 +23,7 @@
 <a class="btn btn-primary" asp-action="Create" asp-controller="Home" asp-area="pCloud" asp-route-folderid="19500076302">Create</a>
 
 @TempData["Message"]
-@Context.Session.GetString("PCloudToken")
+@Environment.GetEnvironmentVariable("PCloudToken")
 
 <form method="post" asp-action="GetAuth" asp-controller="Home" asp-area="pCloud">
      <button class="btn btn-link">Login</button>
@@ -37,6 +37,8 @@
 </ul>
 
 <p class="error"></p>
+
+@ViewBag.AccessToken
 
 <div id="Gallery">
      @if (Model is not null)

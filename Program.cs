@@ -286,8 +286,11 @@ try
 
 
      app.UseDetection();
-   
-     app.UseHttpsRedirection();
+
+     if (app.Environment.IsProduction())
+     {
+          app.UseHttpsRedirection();
+     }
      app.UseStaticFiles();
     
    

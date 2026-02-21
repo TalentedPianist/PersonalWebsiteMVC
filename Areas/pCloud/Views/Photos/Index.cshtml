@@ -61,7 +61,7 @@
             @if (Model is not null) { 
 			foreach (ContentItem item in Model)
 			{
-				if (item.name!.Contains("JPEG") || item.name.Contains("JPG")) { 
+				
 
 				
 					var thumb = GetThumbs(item.path!, item.fileid!, "600x400");
@@ -73,7 +73,7 @@
 
 						</figcaption>
 					</figure>
-				}
+				
 			}
 		}
 	</section>
@@ -82,7 +82,7 @@
 <div id="Popup">
 </div>
 
-
+@Context.Session.GetString("PCloudToken")
 
 @functions {
 
@@ -92,7 +92,7 @@
           
 		var client = new RestClient("https://eapi.pcloud.com");
 		var request = new RestRequest("getthumblink"); 
-		request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);        
+		request.AddParameter("access_token", Context.Session.GetString("PCloudToken"));        
           request.AddParameter("path", path);
 		request.AddParameter("fileid", fileid);
 		request.AddParameter("size", size);

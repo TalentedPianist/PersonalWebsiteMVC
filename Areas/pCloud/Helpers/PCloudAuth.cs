@@ -32,7 +32,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
                }
                else
                {
-                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=http://localhost:5051/pCloud/";
+                    string responseUri = "http://localhost:5051/pCloud/";
+                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&force_reapprove=true&redirect_uri={responseUri}&state=12345&response_type=code";
                }
                _http.HttpContext!.Response.Redirect(url);
           }
@@ -56,11 +57,13 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               Console.WriteLine(response.Content);
+               //Console.WriteLine(response.Content);
                var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
-              
-                    _http.HttpContext.Session.SetString("PCloudToken", json!.access_token!);
-
+               var token = json?.access_token == null ? "NULL" : json.access_token;
+               //_http.HttpContext.Session.SetString("PCloudToken", token);
+               CookieOptions options = new CookieOptions();
+               _http.HttpContext.Response.Cookies.Append("PCloudToken", token);
+               _http.HttpContext.Response.Redirect("/pCloud/");
                return json!.access_token!;
           }
      }

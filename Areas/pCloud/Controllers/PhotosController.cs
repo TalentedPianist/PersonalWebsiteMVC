@@ -42,8 +42,6 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                _config = config;
           }
 
-          // A note on pCloud access tokens.  They will only accept one IP address for authentication.  Ideally I would check if the app is in a development or production environment, however this causes the access token to expire because I am using two access tokens.  The solution therefore is to manually change the config to Remote before publishing.
-
 
           [Microsoft.AspNetCore.Mvc.Route("/pCloud/Photos/")]
           public async Task<IActionResult> Index([FromQuery(Name = "name")] string name, [FromQuery(Name = "pageNumber")] int? page)
@@ -53,7 +51,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     var client = new RestClient("https://eapi.pcloud.com/");
                     var request = new RestRequest("listfolder");
                     
-                         request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);
+                         request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
                    
                     request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
                     var response = client.Execute(request);
@@ -73,7 +71,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com");
                var request = new RestRequest("listfolder");
-                    request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);
+               request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
                
                request.AddParameter("path", "/");
                var response = await client.ExecuteAsync(request);
@@ -94,14 +92,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com/deletefile");
                var request = new RestRequest();
-               if (_env.IsDevelopment())
-               {
-                    request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
-               }
-               else
-               {
-                    request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);
-               }
+               request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
                request.AddParameter("fileid", fileid);
                var response = client.Execute(request);
                return Ok(response.Content);
@@ -119,7 +110,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     var client = new RestClient("https://eapi.pcloud.com/");
                     var request = new RestRequest("deletefile");
              
-                         request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);
+                         request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
                     
                     request.AddParameter("fileid", file);
 
@@ -155,7 +146,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com");
                var request = new RestRequest("listfolder");
-                    request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);
+                    request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
                
                request.AddParameter("folderid", "19500076302");
                var response = await client.ExecuteAsync(request);
@@ -175,7 +166,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                foreach (IFormFile file in files)
                {
                     
-                         await UploadToPCloud(_config["PCloud:Remote:AccessToken"]!, path, file);
+                         await UploadToPCloud(HttpContext.Session.GetString("PCloudToken")!, path, file);
                     
                }
 

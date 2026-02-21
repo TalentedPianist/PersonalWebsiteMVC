@@ -37,36 +37,45 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
 
-          public IActionResult Index()
+          public IActionResult Index([FromQuery(Name="code")]string code)
           {
-               
-                    TempData["Message"] = HttpContext.Session.GetString("PCloudToken");
-               
-               var client = new RestClient("https://eapi.pcloud.com/");
-               var request = new RestRequest("listfolder");
-
-       
-               request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
-
-               request.AddParameter("folderid", "19500076302");
-               var response = client.Execute(request);
-
-               if (!response.IsSuccessful)
+               if (!string.IsNullOrEmpty(code))
                {
-                    Console.WriteLine(response.StatusCode);
-                    Console.WriteLine(response.ErrorMessage);
-                    Console.WriteLine(response.ErrorException);
-                    Console.WriteLine(response.Content);
+                    var token = _auth.GetAccessToken();
+                    HttpContext.Session.SetString("PCloudToken", token);
+                    ViewBag.AccessToken = token;
+                    return RedirectToAction("Index", new { Area = "PCloud", Controller = "Home" });
                }
-               Console.WriteLine(response.Content);
+       
+
                try
                {
+                    var client = new RestClient("https://eapi.pcloud.com/");
+                    var request = new RestRequest("listfolder");
+
+
+                    request.AddParameter("access_token", HttpContext.Request.Cookies["PCloudToken"]);
+
+                    request.AddParameter("folderid", "19500076302");
+                    var response = client.Execute(request);
+
+                    if (!response.IsSuccessful)
+                    {
+                         Console.WriteLine(response.StatusCode);
+                         Console.WriteLine(response.ErrorMessage);
+                         Console.WriteLine(response.ErrorException);
+                         Console.WriteLine(response.Content);
+                    }
+                    Console.WriteLine(response.Content);
+
                     var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
                     List<ContentItem> model = result!.metadata!.contents!;
                     return View(model);
                }
                catch (NullReferenceException)
                {
+
+
                     return View();
                }
 
@@ -86,7 +95,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                var client = new RestClient("https://eapi.pcloud.com/createfolder");
                var request = new RestRequest();
 
-               request.AddParameter("access_token", _config["PCloud:Remote:AccessToken"]);
+               request.AddParameter("access_token", HttpContext.Session.GetString("PCloudToken"));
 
                request.AddParameter("folderid", folderid);
                request.AddParameter("name", model.Name);
