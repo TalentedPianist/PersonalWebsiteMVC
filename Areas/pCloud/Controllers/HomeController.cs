@@ -130,7 +130,6 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                request.AddParameter("type", "jpeg");
                request.AddParameter("skipauth", "1");
                var response = client.ExecuteAsync(request).Result;
-               Console.WriteLine(response.Content);
                return response.RawBytes!;
           }
 

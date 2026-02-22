@@ -53,9 +53,22 @@
                          if (album.CoverPhoto is not null)
                          {
 
-                              var thumb = Thumbnail(album.CoverPhoto!, "600x400");
-                         
-                              <img src="@Url.Action("GetThumb", "Home", new { fileid = album.CoverPhoto })">
+                              <figure>
+                                   <img src="@Url.Action("GetThumb", "Home", new { fileid = album.CoverPhoto })">
+                                   <figcaption>
+                                        <a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name">@item.name</a>
+                                   </figcaption>
+                              </figure>
+                         }
+                         else
+                         {
+                              <figure>
+                                   <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                                   <figcaption>
+                                        <a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name">@item.name</a>
+                                   </figcaption>
+                              </figure>
+
                          }
                     }
 
@@ -65,12 +78,12 @@
 </div>
 
 @functions {
-   
-     
+
+
 
      string Thumbnail(string fileid, string size)
      {
-         
+
           var client = new RestClient("https://eapi.pcloud.com/");
           var request = new RestRequest("getthumblink");
           request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
@@ -78,7 +91,7 @@
           request.AddParameter("size", size);
           request.AddParameter("skipauth", "1");
           var response = client.ExecuteAsync(request).Result;
-         dynamic json = JsonConvert.DeserializeObject(response.Content!)!;
+          dynamic json = JsonConvert.DeserializeObject(response.Content!)!;
           return "https://" + json.hosts[0] + json.path;
      }
 
