@@ -48,29 +48,27 @@
                {
 
                     var album = _db.Albums.Where(a => a.Name == item.name).FirstOrDefault();
-                    if (album is not null)
-                    {
-                         if (album.CoverPhoto is not null)
-                         {
 
+                    
                               <figure>
-                                   <img src="@Url.Action("GetThumb", "Home", new { fileid = album.CoverPhoto })">
+                                   <input type="checkbox" value="@item.name" data-date="@item.created">
+                                   @if (album is not null) { 
+                                       if (album.CoverPhoto is not null) { 
+                                   <img src="@Url.Action("GetThumb", "Home", new { fileid = album!.CoverPhoto })">
+                                       } else { 
+                                           <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                                       }
+                                   } else { 
+                                       <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
+                                   }
                                    <figcaption>
                                         <a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name">@item.name</a>
                                    </figcaption>
                               </figure>
-                         }
-                         else
-                         {
-                              <figure>
-                                   <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@item.name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
-                                   <figcaption>
-                                        <a asp-action="Index" asp-controller="Photos" asp-area="pCloud" asp-route-id="@item.folderid" asp-route-name="@item.name">@item.name</a>
-                                   </figcaption>
-                              </figure>
+                         
+                
 
-                         }
-                    }
+
 
                }
           </section>
@@ -155,18 +153,27 @@
                        async: false,
                        cache: false,
                    }).responseText;
-                   console.log(checkDb);
 
-                   console.log(e.target);
-                   console.log(item.value);
-                       $.ajax({ // Check if album is in database using Ajax
+
+
+                       let id = $.ajax({
+                           method: "GET",
+                           url: "/pCloud/Albums/GetID",
+                           data: { name: item.value },
+                           cache: false,
+                           async: false,
+                       }).responseText;
+                       //console.log(id);
+
+
+                       $.ajax({ //Check if album is in database using Ajax
                          method: "GET",
                          url: "/pCloud/Albums/GetID",
                          data: { name: item.value },
                          cache: false,
                          async: false,
                          success: function(message) {
-                              if (message === undefined) {
+                              if (message === 0) {
                                    console.log('Album is not in database.');
                                    albums.push({ Name: item.value, DateCreated: e.target.dataset['date'] });
                               } else {

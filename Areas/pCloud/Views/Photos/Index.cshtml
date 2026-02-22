@@ -52,8 +52,8 @@
 
 <div id="Photos">
      <section>
-          <environment include="Development">
-               @* @if (Model is not null)
+ 
+               @if (Model is not null)
                {
                     foreach (ContentItem item in Model)
                     {
@@ -63,7 +63,7 @@
 
                               var thumb = GetThumbs(item.fileid!, "600x400");
                               <figure>
-                                   <a href="#Popup" class="fl" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb"><img src="@thumb" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-path="@item.path" data-fileid="@item.fileid"></a>
+                                   <a href="#Popup" class="fl" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb"><img src="@Url.Action("GetThumb", "Photos", new { fileid = item.fileid })" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-path="@item.path" data-fileid="@item.fileid"></a>
                                    <figcaption>
                                         <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
                                         <input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb" data-fileid="@item.fileid">
@@ -72,21 +72,8 @@
                               </figure>
                          }
                     }
-               } *@
-          </environment>
-          <environment include="Production">
-               @if (Model is not null)
-               {
-                    foreach (ContentItem item in Model)
-                    {
-                         if (item.name!.Contains(".JPEG") || item.name.Contains(".JPG"))
-                         {
-                              var thumb = GetThumbs(item.fileid!, "600x400");
-                              
-                         }
-                    }
                }
-          </environment>
+    
      </section>
 </div>
 
@@ -95,17 +82,7 @@
 
 
 @functions {
-     string GetPubLink(string fileid, string size)
-     {
-          var client = new RestClient("https://eapi.pcloud.com/");
-          var request = new RestRequest("getthumb");
-          request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-          //request.AddParameter("path", path);
-          request.AddParameter("fileid", fileid);
-          request.AddParameter("size", size);
-          var response = client.Execute(request);
-          return response.Content!;
-     }
+    
 
      string GetThumbs(string fileid, string size)
      {

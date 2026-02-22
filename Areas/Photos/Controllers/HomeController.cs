@@ -2,6 +2,7 @@
 using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using RestSharp;
 using X.PagedList.Extensions;
 
 namespace PersonalWebsiteMVC.Areas.Photos.Controllers
@@ -25,6 +26,22 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             return View("~/Areas/Photos/Views/Home/Index.cshtml", model);
         }
 
-    
+          public IActionResult GetThumb(string fileid)
+          {
+               var bytes = GetPubLink(fileid, "600x400");
+               return File(bytes, "image/jpeg");
+          }
+
+          byte[] GetPubLink(string fileid, string size)
+          {
+               var client = new RestClient("https://eapi.pcloud.com");
+               var request = new RestRequest("getthumb", Method.Get);
+               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("size", size);
+               request.AddParameter("type", "jpeg");
+               var response = client.ExecuteAsync(request).Result;
+               return response.RawBytes!;
+          }
     }
 }

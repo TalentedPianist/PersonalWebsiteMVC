@@ -30,8 +30,8 @@
 
                               @if (album.CoverPhoto is not null)
                               {
-                                   var thumb = GetThumbs(album.CoverPhoto, "600x400");
-                                   <img src="@thumb">
+                                   
+                                   <img src="@Url.Action("GetThumb", new { fileid = album.CoverPhoto })">
                               }
 
                               else

@@ -66,7 +66,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                          Console.WriteLine(response.ErrorException);
                          Console.WriteLine(response.Content);
                     }
-                    Console.WriteLine(response.Content);
+                    //Console.WriteLine(response.Content);
 
                     var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
                     List<ContentItem> model = result!.metadata!.contents!;

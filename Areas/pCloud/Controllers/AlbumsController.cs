@@ -49,10 +49,17 @@ public class AlbumsController : Controller
 
      [HttpGet]
      [Route("/pCloud/Albums/GetID")]
-     public IActionResult GetID(string name)
+     public int GetID(string name)
      {
-          var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-          return Ok(album!.AlbumID);
+          try
+          {
+               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+               return album!.AlbumID;
+          }
+          catch (NullReferenceException)
+          {
+               return 0;
+          }
      }
 
      [HttpGet]
