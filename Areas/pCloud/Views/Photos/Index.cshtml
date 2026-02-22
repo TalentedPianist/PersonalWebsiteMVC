@@ -24,7 +24,6 @@
 
 <h1 class="bg bg-info p-1">Photos for @Context.Request.Query["name"]</h1>
 
-@TempData["Message"]
 
 
 
@@ -34,44 +33,61 @@
 
 <div id="PhotosNav">
 
-	<ul>
-		<li><a href="#" id="selectAll">Select All</a></li>
-		<li><a href="#" id="addToDb">Add to Database</a></li>
-		<li><a href="#" id="delFromDb">Delete from Database</a></li>
-		<li><a href="#" id="delFromPCloud">Delete from PCloud</a></li>
-	</ul>
+     <ul>
+          <li><a href="#" id="selectAll">Select All</a></li>
+          <li><a href="#" id="addToDb">Add to Database</a></li>
+          <li><a href="#" id="delFromDb">Delete from Database</a></li>
+          <li><a href="#" id="delFromPCloud">Delete from PCloud</a></li>
+     </ul>
 </div>
 
 <form method="post" asp-action="UploadFile" asp-area="pCloud" asp-controller="Photos" enctype="multipart/form-data">
-	<input type="file" class="form-control" name="files" multiple>
-	<input type="hidden" value="@Context.Request.Query["id"]" name="folderid">
-	<input type="hidden" value="@Context.Request.Query["name"]" name="path">
-	<button type="submit" class="btn btn-primary">Upload</button>
+     <input type="file" class="form-control" name="files" multiple>
+     <input type="hidden" value="@Context.Request.Query["id"]" name="folderid">
+     <input type="hidden" value="@Context.Request.Query["name"]" name="path">
+     <button type="submit" class="btn btn-primary">Upload</button>
 </form>
 
 
 
 <div id="Photos">
-	<section>
-            @if (Model is not null) { 
-			foreach (ContentItem item in Model)
-			{
-				
-                   if (item.name!.Contains(".JPEG") || item.name.Contains(".JPG")) { 
-				
-					var thumb = GetThumbs(item.path!, item.fileid!, "600x400");
-					<figure>
-						<a href="#Popup" class="fl" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb"><img src="@thumb" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-path="@item.path" data-fileid="@item.fileid"></a>
-						<figcaption>
-							<a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
-							<input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb" data-fileid="@item.fileid">
+     <section>
+          <environment include="Development">
+               @* @if (Model is not null)
+               {
+                    foreach (ContentItem item in Model)
+                    {
 
-						</figcaption>
-					</figure>
-				}
-			}
-		}
-	</section>
+                         if (item.name!.Contains(".JPEG") || item.name.Contains(".JPG"))
+                         {
+
+                              var thumb = GetThumbs(item.fileid!, "600x400");
+                              <figure>
+                                   <a href="#Popup" class="fl" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb"><img src="@thumb" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-path="@item.path" data-fileid="@item.fileid"></a>
+                                   <figcaption>
+                                        <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
+                                        <input type="checkbox" name="delete" value="@item.path" data-path="@item.path" data-date="@item.created" data-name="@item.name" data-image="@thumb" data-fileid="@item.fileid">
+
+                                   </figcaption>
+                              </figure>
+                         }
+                    }
+               } *@
+          </environment>
+          <environment include="Production">
+               @if (Model is not null)
+               {
+                    foreach (ContentItem item in Model)
+                    {
+                         if (item.name!.Contains(".JPEG") || item.name.Contains(".JPG"))
+                         {
+                              var thumb = GetThumbs(item.fileid!, "600x400");
+                              
+                         }
+                    }
+               }
+          </environment>
+     </section>
 </div>
 
 <div id="Popup">
@@ -79,232 +95,240 @@
 
 
 @functions {
-
-
-	string GetThumbs(string path, string fileid, string size)
-	{
-          
-		var client = new RestClient("https://eapi.pcloud.com/");
-		var request = new RestRequest("getthumblink"); 
-		request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));        
+     string GetPubLink(string fileid, string size)
+     {
+          var client = new RestClient("https://eapi.pcloud.com/");
+          var request = new RestRequest("getthumb");
+          request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
           //request.AddParameter("path", path);
-		request.AddParameter("fileid", fileid);
-		request.AddParameter("size", size);
-		var response = client.Execute(request);
-		var result = JsonConvert.DeserializeObject(response.Content!);
-		JToken json = JToken.Parse(result!.ToString()!);
-		var url = "https:" + json["hosts"]![0] + json["path"];
-		return url;
-	}
+          request.AddParameter("fileid", fileid);
+          request.AddParameter("size", size);
+          var response = client.Execute(request);
+          return response.Content!;
+     }
 
+     string GetThumbs(string fileid, string size)
+     {
+         
+          var client = new RestClient("https://eapi.pcloud.com/");
+          var request = new RestRequest("getthumblink");
+          request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+          //request.AddParameter("path", path);
+          request.AddParameter("fileid", fileid);
+          request.AddParameter("size", size);
+          var response = client.Execute(request);
+          var result = JsonConvert.DeserializeObject(response.Content!);
+          JToken json = JToken.Parse(result!.ToString()!);
+          var url = "https://" + json["hosts"]![0] + json["path"];
+          return url;
 
+     }
 }
-
 
 
 @section Scripts {
 
 
-	<script>
+     <script>
 
-        // Script to enable featherlight popup for link in figcaption
-        $('a.fl').featherlight({
-            targetAttr: 'href',
-            afterContent: function (event) {
-                let instance = this.$instance[0];
-                let target = this.$currentTarget[0];
+          // Script to enable featherlight popup for link in figcaption
+          $('a.fl').featherlight({
+              targetAttr: 'href',
+              afterContent: function (event) {
+                  let instance = this.$instance[0];
+                  let target = this.$currentTarget[0];
 
-                $.ajax({
+                  $.ajax({
+                      method: "POST",
+                      url: "/pCloud/Photos/GetPopup",
+                      data: { item: event.target.dataset['item'], thumb: event.target.dataset['image'] },
+                      async: false,
+                      cache: false,
+                      success: function (message) {
+                          $(".featherlight-content").html(message);
+                          //console.log(message);
+                      },
+                      error: function (error) {
+                          console.log(error);
+                      }
+                  });
+
+
+
+
+                  document.querySelector("#coverPic").addEventListener('click', function (e) {
+                      e.preventDefault();
+                      console.log(event);
+                      let strFileID = event.target.dataset["fileid"];
+                      let strPath = event.target.dataset["path"];
+                      let strSize = "600x400";
+                      let strName = '@Context.Request.Query["name"]';
+
+                      console.log(event.target);
+
+                      $.ajax({
+                          method: "POST",
+                          url: "/pCloud/Albums/MakeCoverPic",
+                          data: {name: strName, path: '@Context.Request.Query["name"]', fileid: strFileID },
+                          async: false,
+                          cache: false,
+                          success: function (message) {
+                              console.log(message);
+                          },
+                          error: function (error) {
+                              console.log(error);
+                          }
+                      });
+                  });
+              }
+          });
+
+
+     </script>
+
+
+     <script>
+                 let photos = [];
+                 let pCloudPhotos = [];
+                 document.querySelector("#selectAll").addEventListener("click", function (e) {
+                     e.preventDefault();
+                     let cb = document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]');
+                     cb.forEach(function (item, index) {
+                         item.checked = true;
+                         pCloudPhotos.push(item.value);
+
+                         // Begin add to database for all checkboxes
+                          pCloudPhotos.push(item.value);
+
+          // Check if photo is in database by making an Ajax call to the database with the photo name as filter
+          let strPhotoID = $.ajax({
+              method: "GET",
+              url: "/pCloud/Photos/GetID",
+              data: { name: item.dataset['name'] },
+              async: false,
+              cache: false,
+          }).responseText;
+
+
+
+
+          if (strPhotoID == 0) { // If photo id returns 0, photo is not in the database
+              let strAlbumID = $.ajax({
+                  method: "GET",
+                  url: "/pCloud/Photos/GetAlbumID",
+                  data: { name: '@Context.Request.Query["name"]' },
+                  async: false,
+                  cache: false,
+              }).responseText;
+
+
+             // This should be improved by providing a user friendly message saying the album does not exist in the database.
+              photos.push({ Name: item.dataset['name'], AlbumID: strAlbumID, Author: '@Context.User.Identity!.Name', ImageUrl: item.dataset['path'], DateCreated: item.dataset['date'] });
+          } else {
+              photos.push({ PhotoID: strPhotoID });
+          }
+                         // End add to database for all checkboxes
+                     });
+                 });
+
+                 document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]').forEach(function (item, index) {
+                     item.addEventListener('click', function (e) {
+
+                         pCloudPhotos.push(item.dataset['fileid']);
+
+
+                         // Check if photo is in database by making an Ajax call to the database with the photo name as filter
+                         let strPhotoID = $.ajax({
+                             method: "GET",
+                             url: "/pCloud/Photos/GetID",
+                             data: { name: item.dataset['name'] },
+                             async: false,
+                             cache: false,
+                         }).responseText;
+
+
+
+
+                         if (strPhotoID == 0) { // If photo id returns 0, photo is not in the database
+                             let strAlbumID = $.ajax({
+                                 method: "GET",
+                                 url: "/pCloud/Photos/GetAlbumID",
+                                 data: { name: '@Context.Request.Query["name"]' },
+                                 async: false,
+                                 cache: false,
+                             }).responseText;
+
+
+                            // This should be improved by providing a user friendly message saying the album does not exist in the database.
+                             photos.push({ Name: item.dataset['name'], AlbumID: strAlbumID, Author: '@Context.User.Identity!.Name', ImageUrl: item.dataset['image'], DateCreated: item.dataset['date'] });
+                         } else {
+                             photos.push({ PhotoID: strPhotoID });
+                         }
+
+                     });
+                 });
+
+                 document.querySelector("#addToDb").addEventListener('click', function (e) {
+                     e.preventDefault();
+
+                     $.ajax({
+                         method: "POST",
+                         url: "/pCloud/Photos/AddToDb",
+                         headers: {
+                             "Content-Type": "application/json",
+                         },
+                         data: JSON.stringify(photos),
+                         async: false,
+                         cache: false,
+                         success: function (message) {
+                             console.log(message);
+                         },
+                         error: function (error) {
+                             console.log(error);
+                         }
+                     });
+                 });
+
+                 document.querySelector("#delFromDb").addEventListener("click", function (e) {
+                     e.preventDefault();
+
+                     $.ajax({
+                         method: "POST",
+                         url: "/pCloud/Photos/DelFromDb",
+                         headers: {
+                             "Content-Type": "application/json",
+                         },
+                         data: JSON.stringify(photos),
+                         async: false,
+                         cache: false,
+                         success: function (message) {
+                             console.log(message);
+                         },
+                         error: function (error) {
+                             console.log(error);
+                         }
+                     });
+                 });
+     </script>
+
+
+     <script>
+          document.querySelector('#delFromPCloud').addEventListener('click', function (e) {
+               e.preventDefault();
+               $.ajax({
                     method: "POST",
-                    url: "/pCloud/Photos/GetPopup",
-                    data: { item: event.target.dataset['item'], thumb: event.target.dataset['image'] },
+                    url: "/pCloud/Photos/DeleteMultiple",
+                    data: { files: pCloudPhotos },
                     async: false,
                     cache: false,
                     success: function (message) {
-                        $(".featherlight-content").html(message);
-                        //console.log(message);
+                         //console.log(message);
+                         //window.location.reload();
                     },
                     error: function (error) {
-                        console.log(error);
+                         console.log(error);
                     }
-                });
-                
-
-
-
-                document.querySelector("#coverPic").addEventListener('click', function (e) {
-                    e.preventDefault();
-                    console.log(event);
-                    let strFileID = event.target.dataset["fileid"];
-                    let strPath = event.target.dataset["path"];
-                    let strSize = "600x400";
-                    let strName = '@Context.Request.Query["name"]';
-
-                    console.log(event.target);
-
-                    $.ajax({
-                        method: "POST",
-                        url: "/pCloud/Albums/MakeCoverPic",
-                        data: {name: strName, path: '@Context.Request.Query["name"]', fileid: strFileID },
-                        async: false,
-                        cache: false,
-                        success: function (message) {
-                            console.log(message);
-                        },
-                        error: function (error) {
-                            console.log(error);
-                        }
-                    });
-                });
-            }
-        });
-
-
-	</script>
-
-
-	<script>
-        let photos = [];
-        let pCloudPhotos = [];
-        document.querySelector("#selectAll").addEventListener("click", function (e) {
-            e.preventDefault();
-            let cb = document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]');
-            cb.forEach(function (item, index) {
-                item.checked = true;
-                pCloudPhotos.push(item.value);
-
-                // Begin add to database for all checkboxes
-                 pCloudPhotos.push(item.value);
-
- // Check if photo is in database by making an Ajax call to the database with the photo name as filter
- let strPhotoID = $.ajax({
-     method: "GET",
-     url: "/pCloud/Photos/GetID",
-     data: { name: item.dataset['name'] },
-     async: false,
-     cache: false,
- }).responseText;
-
-
-
-
- if (strPhotoID == 0) { // If photo id returns 0, photo is not in the database
-     let strAlbumID = $.ajax({
-         method: "GET",
-         url: "/pCloud/Photos/GetAlbumID",
-         data: { name: '@Context.Request.Query["name"]' },
-         async: false,
-         cache: false,
-     }).responseText;
-
-
-    // This should be improved by providing a user friendly message saying the album does not exist in the database.
-     photos.push({ Name: item.dataset['name'], AlbumID: strAlbumID, Author: '@Context.User.Identity!.Name', ImageUrl: item.dataset['path'], DateCreated: item.dataset['date'] });
- } else {
-     photos.push({ PhotoID: strPhotoID });
- }
-                // End add to database for all checkboxes
-            });
-        });
-
-        document.querySelector("#Photos section").querySelectorAll('input[type="checkbox"]').forEach(function (item, index) {
-            item.addEventListener('click', function (e) {
-
-                pCloudPhotos.push(item.dataset['fileid']);
-                
-
-                // Check if photo is in database by making an Ajax call to the database with the photo name as filter
-                let strPhotoID = $.ajax({
-                    method: "GET",
-                    url: "/pCloud/Photos/GetID",
-                    data: { name: item.dataset['name'] },
-                    async: false,
-                    cache: false,
-                }).responseText;
-
-
-
-
-                if (strPhotoID == 0) { // If photo id returns 0, photo is not in the database
-                    let strAlbumID = $.ajax({
-                        method: "GET",
-                        url: "/pCloud/Photos/GetAlbumID",
-                        data: { name: '@Context.Request.Query["name"]' },
-                        async: false,
-                        cache: false,
-                    }).responseText;
-
-
-                   // This should be improved by providing a user friendly message saying the album does not exist in the database.
-                    photos.push({ Name: item.dataset['name'], AlbumID: strAlbumID, Author: '@Context.User.Identity!.Name', ImageUrl: item.dataset['image'], DateCreated: item.dataset['date'] });
-                } else {
-                    photos.push({ PhotoID: strPhotoID });
-                }
-
-            });
-        });
-
-        document.querySelector("#addToDb").addEventListener('click', function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                method: "POST",
-                url: "/pCloud/Photos/AddToDb",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                data: JSON.stringify(photos),
-                async: false,
-                cache: false,
-                success: function (message) {
-                    console.log(message);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-
-        document.querySelector("#delFromDb").addEventListener("click", function (e) {
-            e.preventDefault();
-
-            $.ajax({
-                method: "POST",
-                url: "/pCloud/Photos/DelFromDb",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                data: JSON.stringify(photos),
-                async: false,
-                cache: false,
-                success: function (message) {
-                    console.log(message);
-                },
-                error: function (error) {
-                    console.log(error);
-                }
-            });
-        });
-	</script>
-
-
-	<script>
-		document.querySelector('#delFromPCloud').addEventListener('click', function (e) {
-			e.preventDefault();
-			$.ajax({
-				method: "POST",
-				url: "/pCloud/Photos/DeleteMultiple",
-				data: { files: pCloudPhotos },
-				async: false,
-				cache: false,
-				success: function (message) {
-					//console.log(message);
-                         //window.location.reload();
-				},
-				error: function (error) {
-					console.log(error);
-				}
-			});
-		});
-	</script>
+               });
+          });
+     </script>
 }

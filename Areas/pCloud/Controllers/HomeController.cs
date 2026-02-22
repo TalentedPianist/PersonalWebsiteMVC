@@ -44,7 +44,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     var token = _auth.GetAccessToken();
                     Environment.SetEnvironmentVariable("PCloudToken", token);
                     ViewBag.AccessToken = Environment.GetEnvironmentVariable("PCloudToken");
-                    return RedirectToAction("Index", new { Area = "PCloud", Controller = "Home" });
+                   return RedirectToAction("Index", new { Area = "PCloud", Controller = "Home" });
                }
        
 
@@ -111,6 +111,27 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                _auth.Auth();
                return Task.CompletedTask;
+          }
+
+          public IActionResult GetThumb(string fileid)
+          {
+               var bytes = GetPubLink(fileid, "600x400");
+               return File(bytes, "image/jpeg");
+          }
+
+          byte[] GetPubLink(string fileid, string size)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("getthumb", Method.Get);
+
+               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("size", size);
+               request.AddParameter("type", "jpeg");
+               request.AddParameter("skipauth", "1");
+               var response = client.ExecuteAsync(request).Result;
+               Console.WriteLine(response.Content);
+               return response.RawBytes!;
           }
 
      }

@@ -26,16 +26,17 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
           {
                string clientId = "GJR8uDME26u";
                string url = string.Empty;
-               //if (_env.IsProduction())
-               //{
-               //     url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=https://www.douglasmcgregor.co.uk/pCloud/";
-               //}
-               //else
-               //{
-               //     string responseUri = "http://localhost:5051/pCloud/";
-               //     url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&force_reapprove=true&redirect_uri={responseUri}&state=12345&response_type=code";
-               //}
-               url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri=https://www.douglasmcgregor.co.uk/pCloud/";
+               if (_env.IsProduction())
+               {
+                    var redirect = "https://www.douglasmcgregor.co.uk/pCloud/";
+                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&response_type=code&redirect_uri={redirect}&force_reapprove=true&state=12345";
+               }
+               else
+               {
+                    string responseUri = "http://localhost:5051/pCloud/";
+                    url = $"https://my.pcloud.com/oauth2/authorize?client_id={clientId}&force_reapprove=true&redirect_uri={responseUri}&state=12345&response_type=code";
+               }
+
                _http.HttpContext!.Response.Redirect(url);
           }
 
