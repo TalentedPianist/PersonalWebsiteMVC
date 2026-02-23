@@ -65,22 +65,19 @@
 @functions {
      string GetThumbs(string fileid, string size)
      {
-          try
-          {
+          
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("getthumblink");
-               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+               request.AddParameter("password", "Inkyfrog1");
                request.AddParameter("fileid", fileid);
                request.AddParameter("size", size);
                var response = client.Execute(request);
                var result = JsonConvert.DeserializeObject(response.Content!);
+               Console.WriteLine(response.Content);
                JToken json = JToken.Parse(result!.ToString()!);
                var url = "https://" + json["hosts"]![0] + json["path"];
                return url;
-          }
-          catch (NullReferenceException)
-          {
-               return String.Empty;
-          }
+         
      }
 }
