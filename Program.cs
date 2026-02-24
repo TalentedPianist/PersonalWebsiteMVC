@@ -259,6 +259,8 @@ try
           options.SiteKey = "6LcGnnUsAAAAAKS1RqaVpuDdYQQb7-pyvInVTjtP";
      });
 
+   
+
      
      var app = builder.Build();
 
@@ -292,9 +294,9 @@ try
           app.UseHttpsRedirection();
      }
      app.UseStaticFiles();
-    
-   
 
+
+     app.UseResponsive();
      app.UseRouting();
      app.UseAuthentication();
      app.UseAuthorization();
@@ -361,10 +363,12 @@ try
 
     app.MapOpenApi();
     app.MapScalarApiReference();
+   
 
     app.MapPostsEndpoints();
 
      app.UseDeveloperExceptionPage();
+
 
      using (var scope = app.Services.CreateScope())
      {

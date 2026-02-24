@@ -22,7 +22,7 @@
 		<PackageReference Include="BlazorPro.BlazorSize" Version="9.0.0" />
 		<PackageReference Include="BlazorStrap.V5" Version="5.2.105-RC-1" />
 		<PackageReference Include="CurrentDevice" Version="1.0.3" />
-		<PackageReference Include="DeviceDetector.NET" Version="6.4.7" />
+		<PackageReference Include="DeviceDetector.NET" Version="6.5.0" />
 		<PackageReference Include="Elastic.Clients.Elasticsearch" Version="9.3.0" />
 		<PackageReference Include="Flurl.Http" Version="4.0.2" />
 		<PackageReference Include="GoogleCaptchaComponent" Version="6.0.0" />
@@ -32,7 +32,7 @@
 		<PackageReference Include="jQuery.Validation" Version="1.21.0" />
 		<PackageReference Include="KITT.Web.ReCaptcha.Blazor" Version="1.0.3" />
 		<PackageReference Include="KITT.Web.ReCaptcha.Http" Version="1.0.1" />
-		<PackageReference Include="MailKit" Version="4.14.1" />
+		<PackageReference Include="MailKit" Version="4.15.0" />
 		<PackageReference Include="Majorsoft.Blazor.Components.Common.JsInterop" Version="1.5.0" />
 		<PackageReference Include="Majorsoft.Blazor.Components.Modal" Version="1.5.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="10.0.3" />
@@ -68,13 +68,13 @@
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="10.0.2" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.EntityFrameworkCore" Version="10.0.2" />
 		<PackageReference Include="Microsoft.Web.LibraryManager.Build" Version="3.0.71" />
-		<PackageReference Include="MudBlazor" Version="9.0.0-preview.2" />
+		<PackageReference Include="MudBlazor" Version="9.0.0" />
 		<PackageReference Include="MvcPagedList.Core" Version="3.2.0" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
 		<PackageReference Include="OdeToCode.UseNodeModules" Version="3.0.0" />
 		<PackageReference Include="reCAPTCHA.AspNetCore" Version="3.0.10" />
 		<PackageReference Include="RestSharp" Version="113.1.1-alpha.0.4" />
-		<PackageReference Include="Scalar.AspNetCore" Version="2.12.39" />
+		<PackageReference Include="Scalar.AspNetCore" Version="2.12.46" />
 		<PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
 		<PackageReference Include="ServiceStack.Extensions" Version="10.0.6" />
 		<PackageReference Include="Sitko.Blazor.CKEditor" Version="4.5.1" />
@@ -82,8 +82,9 @@
 		<PackageReference Include="SolrNet" Version="1.2.1" />
 		<PackageReference Include="SolrNet.Core" Version="1.2.1" />
 		<PackageReference Include="SolrNet.Microsoft.DependencyInjection" Version="1.2.1" />
-		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.2" />
+		<PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
 		<PackageReference Include="TinyMCE" Version="8.3.2" />
+		<PackageReference Include="Wangkanai.Detection" Version="8.20.0" />
 		<PackageReference Include="Wangkanai.Responsive" Version="7.14.0" />
 		<PackageReference Include="X.PagedList" Version="10.5.9" />
 		<PackageReference Include="X.PagedList.Mvc.Core" Version="10.5.9" />
