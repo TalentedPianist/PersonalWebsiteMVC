@@ -14,65 +14,67 @@
 @TempData["Message"]
 
 @{
-	ViewData["Title"] = "Home Page";
-	var data = new ImportMapDefinition(
-	new Dictionary<string, string>
-		{
+     ViewData["Title"] = "Home Page";
+     var data = new ImportMapDefinition(
+     new Dictionary<string, string>
+          {
 { "ckeditor5", "/lib/ckeditor5/ckeditor5.js" },
 { "ckeditor5/", "/lib/ckeditor5/" },
-										}, null, null);
+                                                  }, null, null);
 }
 
 <div id="Photos">
 
-	<h1>@ViewBag.AlbumName</h1>
+     <h1>@ViewBag.AlbumName</h1>
 
 
-	<section>
-		@foreach (var photo in Model.PagedPhotos!)
-		{
+     <section>
+          @if (Model is not null)
+          {
+               @foreach (var photo in Model.PagedPhotos!)
+               {
 
 
 
-			<figure>
-				<a class="gallery" href="#Popup"
-				   data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID">
-					<img src="@GetThumbs(photo.ImageUrl!, "600x400")" data-id="@photo.AlbumID" data-image="@GetThumbs(photo.ImageUrl!, "600x400")" data-name="@photo.Name">
-				</a>
+                    <figure>
+                         <a class="gallery" href="#Popup"
+                            data-name="@photo.Name" data-album-id="@photo.AlbumID" data-photo-id="@photo.PhotoID">
+                              <img src="@Url.Action("GetThumb", new { fileid = photo.ImageUrl })" data-id="@photo.AlbumID" data-image="@Url.Action("GetSingleThumb", new { fileid = photo.ImageUrl })" data-name="@photo.Name">
+                         </a>
 
-				<figcaption>@photo.Name</figcaption>
+                         <figcaption>
+                             @photo.Name 
+                          </figcaption>
 
-			</figure>
+                    </figure>
 
-		}
+               }
+          }
 
+     </section>
+     <section>
+          @if (Model is not null)
+          {
+               <p>You are on page @Model!.PagedPhotos!.PageNumber of @Model.PagedPhotos.PageCount.</p>
 
-	</section>
-	<section>
-		@if (Model.PagedPhotos is null)
-		{
-		}
-		else
-		{
-			<p>You are on page @Model.PagedPhotos!.PageNumber of @Model.PagedPhotos.PageCount.</p>
+               @Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new
+               {
+                    pageNumber =
+                    page,
+                    area = "Photos",
+                    name = ViewBag.AlbumName,
+                    id = ViewBag.AlbumID,
+                    }),
+                    new PagedListRenderOptions
+                    {
+                         DisplayItemSliceAndTotal = false,
+                         LiElementClasses = new string[] { "page-item" },
+                         PageClasses = new String[] { "page-link" },
+                         UlElementClasses = new[] { "pagination" },
+                    })
 
-			@Html.PagedListPager((IPagedList)Model.PagedPhotos!, page => Url.Action("Index", "Album", new
-{
-	pageNumber =
-									page,
-	area = "Photos",
-	name = ViewBag.AlbumName,
-	id = Context.Request.Query["id"]
-}),
-											new PagedListRenderOptions
-											{
-												DisplayItemSliceAndTotal = false,
-												LiElementClasses = new string[] { "page-item" },
-												PageClasses = new String[] { "page-link" },
-												UlElementClasses = new[] { "pagination" },
-											})
-		}
-	</section>
+                    }
+     </section>
 </div>
 
 <div id="Popup">
@@ -80,210 +82,191 @@
 
 
 
-@functions {
-
-
-	string GetThumbs(string path, string size)
-	{
-		
-		var client = new RestClient("https://eapi.pcloud.com/");
-		var request = new RestRequest("getthumblink");
-		request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-		request.AddParameter("path", path);
-		request.AddParameter("size", size);
-		var response = client.Execute(request);
-		var result = JsonConvert.DeserializeObject(response.Content!);
-		JToken json = JToken.Parse(result!.ToString()!);
-		var url = "https://" + json["hosts"]![0] + json["path"];
-		return url;
-	}
-
-}
 
 
 
 @section Scripts {
 
 
-	<script>
+     <script>
 
-		$('a.gallery').featherlightGallery({
-			gallery: {
-				next: 'next >>',
-				previous: '<< previous'
-			},
-			galleryFadeIn: 100,
-			galleryFadeOut: 300,
-			previousIcon: 'Previous <<',
-			nextIcon: 'Next >>',
-			closeOnClick: false,
-			afterOpen: function () {
+          $('a.gallery').featherlightGallery({
+               gallery: {
+                    next: 'next >>',
+                    previous: '<< previous'
+               },
+               galleryFadeIn: 100,
+               galleryFadeOut: 300,
+               previousIcon: 'Previous <<',
+               nextIcon: 'Next >>',
+               closeOnClick: false,
+               afterOpen: function () {
 
-			},
-			afterContent: function () {
-			
-				let content = this.$content[0];
-				let instance = this.$instance[0];
-				let currentTarget = this.$currentTarget[0];
-				let name = currentTarget.dataset['name'];
-				let div = instance.querySelector('.featherlight-content');
-				div.classList.add('Photo');
-						
-				
-				$.ajax({
-					method: "POST",
-					url: "/Album/GetPhoto",
-					data: { name: name, albumID: '@Context.Request.Query["id"]' },
-					async: false,
-					cache: false,
-					success: function (message) {
+               },
+               afterContent: function () {
 
-						$(".featherlight-content").html(message);
-						// Previous and next arrow functionality
-						let nextIcon = $('.featherlight-content').find('.featherlight-next');
-						let prevIcon = $('.featherlight-content').find('.featherlight-previous');
-
-						$(nextIcon).on('click', function (e) {
-							e.preventDefault();
-							$('.featherlight').trigger('next');
-						});
-
-						$(prevIcon).on('click', function (e) {
-							e.preventDefault();
-							$('.featherlight').trigger('previous');
-						});
-
-						let close = $('.featherlight-content').find('#closeLightbox');
-						console.log(close);
-						$(close).on('click', function (e) {
-							e.preventDefault();
-							$.featherlight.current().close();
-						});
-
-						let photoComments = $('.featherlight-content').find('#photoComments');
-						$(photoComments).hide();
-
-						let viewComments = $('.featherlight-content').find('#viewComments');
-						let hideComments = $('.featherlight-content').find('#hideComments');
-						$(hideComments).hide();
-
-						$(viewComments).on('click', function (e) {
-							e.preventDefault();
-							$(photoComments).show();
-							$(viewComments).hide();
-							$(hideComments).show();
-						});
-
-						$(hideComments).on('click', function (e) {
-							e.preventDefault();
-							$(photoComments).hide();
-							$(hideComments).hide();
-							$(viewComments).show();
-						});
-					},
-					error: function (error) {
-						console.log(error);
-					}
-				});
-
-				var form = $('.featherlight-content').find("form");
-
-				$.validator.unobtrusive.parse(form);
-
-				form.validate().settings.ignore = ":hidden:not(textarea)";
-
-				let textarea = form.find('.ckeditor1')[0];
-
-				let ckElement = instance.querySelector('.ckeditor1');
-
-				let comment = undefined;
-				if (ckElement) {
-
-					ClassicEditor.create(ckElement, {
-						licenseKey: 'GPL',
-						plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
-					})
-						.then(editor => {
-							textarea._ckeditor = editor;
-							editor.model.document.on('change:data', () => {
-								const $textarea = $(textarea);
-
-								// Push editor content back into textarea
-								$textarea.val(editor.getData());
-
-								// Re-validate this field
-								if (form.data('validator')) {
-									form.validate().element($textarea);
-									comment = editor.getData();
-								}
-							});
-						})
-						.catch(error => {
-							console.log(error);
-						});
-				}
-
-				
+                    let content = this.$content[0];
+                    let instance = this.$instance[0];
+                    let currentTarget = this.$currentTarget[0];
+                    let name = currentTarget.dataset['name'];
+                    let div = instance.querySelector('.featherlight-content');
+                    div.classList.add('Photo');
 
 
-				$("#photoCommentForm").on('submit', function (e) {
-					e.preventDefault();
-					console.log(e.target);
-					let name = $('#name').val();
-					let email = $('#email').val();
-					let website = $('#website').val();
-					let photoID = $("#photoID").val();
-					// Comment is declared earlier to support CKEditor
-					let formData = [];
-					formData.push({ PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment });
+                    $.ajax({
+                         method: "POST",
+                         url: "/Album/GetPhoto",
+                         data: { name: name, albumID: '@Context.Request.Query["id"]' },
+                         async: false,
+                         cache: false,
+                         success: function (message) {
 
-					$.ajax({
-						method: "POST",
-						url: "/Album/Comments/AddComment",
-						data: { PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment
-					},
-						async: false,
-						cache: false,
-						success: function (message) {
-							let strHtml = `
-								<div>
-									<img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=mp" />
-									Comment posted by ${message['CommentAuthor']} on ${message['CommentDate']}
-								</div>
-								${message['CommentContent']}
-							`;
-							let commentList = $(instance).find('#commentsList').find('.Comment');
-							$(commentList).prepend(strHtml);
-							
-						},
-						error: function (error) {
-							console.log(error);
-						}
-					});
+                              $(".featherlight-content").html(message);
+                              // Previous and next arrow functionality
+                              let nextIcon = $('.featherlight-content').find('.featherlight-next');
+                              let prevIcon = $('.featherlight-content').find('.featherlight-previous');
 
-				});
+                              $(nextIcon).on('click', function (e) {
+                                   e.preventDefault();
+                                   $('.featherlight').trigger('next');
+                              });
 
-		
-				let commentsList = $(instance).find('#commentsList').find(".Comment");
-				var numPages = commentsList.length;
-				var perPage = 4;
-				commentsList.slice(perPage).hide();
-				$("#commentsNav").pagination({
-					items: numPages,
-					itemsOnPage: perPage,
-					cssStyle: "light-theme",
-					onPageClick: function (pageNum, e) {
-						e.preventDefault();
-						var start = perPage * (pageNum - 1);
-						var end = start + perPage;
-						commentsList.hide().slice(start, end).show();
-					}
-				});
-			} // End afterContent function
-		});
+                              $(prevIcon).on('click', function (e) {
+                                   e.preventDefault();
+                                   $('.featherlight').trigger('previous');
+                              });
+
+                              let close = $('.featherlight-content').find('#closeLightbox');
+                              console.log(close);
+                              $(close).on('click', function (e) {
+                                   e.preventDefault();
+                                   $.featherlight.current().close();
+                              });
+
+                              let photoComments = $('.featherlight-content').find('#photoComments');
+                              $(photoComments).hide();
+
+                              let viewComments = $('.featherlight-content').find('#viewComments');
+                              let hideComments = $('.featherlight-content').find('#hideComments');
+                              $(hideComments).hide();
+
+                              $(viewComments).on('click', function (e) {
+                                   e.preventDefault();
+                                   $(photoComments).show();
+                                   $(viewComments).hide();
+                                   $(hideComments).show();
+                              });
+
+                              $(hideComments).on('click', function (e) {
+                                   e.preventDefault();
+                                   $(photoComments).hide();
+                                   $(hideComments).hide();
+                                   $(viewComments).show();
+                              });
+                         },
+                         error: function (error) {
+                              console.log(error);
+                         }
+                    });
+
+                    var form = $('.featherlight-content').find("form");
+
+                    $.validator.unobtrusive.parse(form);
+
+                    form.validate().settings.ignore = ":hidden:not(textarea)";
+
+                    let textarea = form.find('.ckeditor1')[0];
+
+                    let ckElement = instance.querySelector('.ckeditor1');
+
+                    let comment = undefined;
+                    if (ckElement) {
+
+                         ClassicEditor.create(ckElement, {
+                              licenseKey: 'GPL',
+                              plugins: [window.CKEditorEssentials, window.CKEditorParagraph, window.CKEditorBold, window.CKEditorItalic, window.CKEditorFont]
+                         })
+                              .then(editor => {
+                                   textarea._ckeditor = editor;
+                                   editor.model.document.on('change:data', () => {
+                                        const $textarea = $(textarea);
+
+                                        // Push editor content back into textarea
+                                        $textarea.val(editor.getData());
+
+                                        // Re-validate this field
+                                        if (form.data('validator')) {
+                                             form.validate().element($textarea);
+                                             comment = editor.getData();
+                                        }
+                                   });
+                              })
+                              .catch(error => {
+                                   console.log(error);
+                              });
+                    }
 
 
-	</script>
+
+
+                    $("#photoCommentForm").on('submit', function (e) {
+                         e.preventDefault();
+                         console.log(e.target);
+                         let name = $('#name').val();
+                         let email = $('#email').val();
+                         let website = $('#website').val();
+                         let photoID = $("#photoID").val();
+                         // Comment is declared earlier to support CKEditor
+                         let formData = [];
+                         formData.push({ PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment });
+
+                         $.ajax({
+                              method: "POST",
+                              url: "/Album/Comments/AddComment",
+                              data: { PhotoID: photoID, CommentAuthor: name, CommentAuthorEmail: email, CommentAuthorUrl: website, CommentContent: comment
+                         },
+                              async: false,
+                              cache: false,
+                              success: function (message) {
+                                   let strHtml = `
+                                        <div>
+                                             <img src="https://gravatar.com/avatar/27205e5c51cb03f862138b22bcb5dc20f94a342e744ff6df1b8dc8af3c865109?f=y&d=mp" />
+                                             Comment posted by ${message['CommentAuthor']} on ${message['CommentDate']}
+                                        </div>
+                                        ${message['CommentContent']}
+                                   `;
+                                   let commentList = $(instance).find('#commentsList').find('.Comment');
+                                   $(commentList).prepend(strHtml);
+
+                              },
+                              error: function (error) {
+                                   console.log(error);
+                              }
+                         });
+
+                    });
+
+
+                    let commentsList = $(instance).find('#commentsList').find(".Comment");
+                    var numPages = commentsList.length;
+                    var perPage = 4;
+                    commentsList.slice(perPage).hide();
+                    $("#commentsNav").pagination({
+                         items: numPages,
+                         itemsOnPage: perPage,
+                         cssStyle: "light-theme",
+                         onPageClick: function (pageNum, e) {
+                              e.preventDefault();
+                              var start = perPage * (pageNum - 1);
+                              var end = start + perPage;
+                              commentsList.hide().slice(start, end).show();
+                         }
+                    });
+               } // End afterContent function
+          });
+
+
+     </script>
 
 
 }

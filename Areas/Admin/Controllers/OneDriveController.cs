@@ -13,7 +13,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           
 
           [Route("/Admin/OneDrive")]
-          public IActionResult Index(Settings settings)
+          public IActionResult Index()
           {
 
             

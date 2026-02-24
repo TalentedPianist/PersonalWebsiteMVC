@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using PersonalWebsiteMVC.Areas.Photos.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using RestSharp;
 using SharpCompress;
 using System.Text;
 using X.PagedList.Extensions;
@@ -22,19 +23,29 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
         }
 
 
-        [Microsoft.AspNetCore.Mvc.Route("Photos/{Name}")]
-        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page, string Name, [FromQuery(Name="id")]int id)
+        [Route("Photos/{Name}/{id:int}")]
+        public IActionResult Index([FromQuery(Name = "pageNumber")] int? page, string Name, int id)
         {
-            
-            PhotosViewModel model = new PhotosViewModel();
-            var pageNumber = page ?? 1;
-            model.PagedPhotos = _db.Photos.Where(p => p.AlbumID == id).ToPagedList(pageNumber, 12);
-            model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
-               model.SingleAlbum = _db.Albums.Where(p => p.AlbumID == id).FirstOrDefault();
-               ViewBag.AlbumName = model.SingleAlbum!.Name;
-               
+               try
+               {
+                    PhotosViewModel model = new PhotosViewModel();
+                    var pageNumber = page ?? 1;
+                    model.PagedPhotos = _db.Photos.Where(p => p.AlbumID == id).ToPagedList(pageNumber, 12);
 
-            return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
+                    model.Photos = _db.Photos.Where(p => p.AlbumID == id).ToList();
+
+                    model.SingleAlbum = _db.Albums.Where(p => p.AlbumID == id).FirstOrDefault();
+                    ViewBag.AlbumName = model.SingleAlbum!.Name;
+                    ViewBag.AlbumID = id;
+
+                    return View("~/Areas/Photos/Views/Album/Index.cshtml", model);
+               }
+               catch (NullReferenceException)
+               {
+                    Console.WriteLine(id);
+                    return View("~/Areas/Photos/Views/Album/Index.cshtml");
+
+               }
         }
 
         [HttpPost]
@@ -61,27 +72,37 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
                model.AllComments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID).ToList();
 
                model.PagedComments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == model.SinglePhoto!.PhotoID).OrderByDescending(c => c.CommentDate).ToPagedList<Comments>(1, 3);
+               
 
             return PartialView("~/Areas/Photos/Views/Album/Photo.cshtml", model);
 
         }
 
+          [Route("/GetThumb/")]
+          public IActionResult GetThumb(string fileid)
+          {
+               var bytes = GetPubLink(fileid, "600x400");
+               return File(bytes, "image/jpeg");
+          }
 
-       
+          [Route("/GetSingleThumb/")]
+          public IActionResult GetSingleThumb(string fileid)
+          {
+               var bytes = GetPubLink(fileid, "600x400");
+               return File(bytes, "image/jpeg");
+          }
 
-        public async Task<bool> VerifyCaptcha(string captchaResponse)
-        {
-            var secretKey = "6LeCBlUrAAAAACVipFQ2hXQkaRn1i_pFJEZIegge";
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={captchaResponse}");
-            if (response.IsSuccessStatusCode)
-            {
-                var jsonResponse = await response.Content.ReadAsStringAsync();
-                var captchaResult = JsonConvert.DeserializeObject<CaptchaResponse>(jsonResponse);
-                return captchaResult!.Success;
-            }
-            return false;
-        }
-
+          byte[] GetPubLink(string fileid, string size)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("getthumb", Method.Get);
+               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+               request.AddParameter("password", "Inkyfrog1");
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("size", size);
+               var response = client.ExecuteAsync(request).Result;
+               Console.WriteLine(response.Content);
+               return response.RawBytes!;
+          }
     }
 }

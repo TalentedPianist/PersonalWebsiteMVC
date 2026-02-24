@@ -26,21 +26,32 @@ namespace PersonalWebsiteMVC.Areas.Photos.Controllers
             return View("~/Areas/Photos/Views/Home/Index.cshtml", model);
         }
 
+          [Route("/Home/GetThumb{fileid}")]
           public IActionResult GetThumb(string fileid)
           {
                var bytes = GetPubLink(fileid, "600x400");
-               return File(bytes, "image/jpeg");
+               return File(bytes, "image/jpg");
           }
 
           byte[] GetPubLink(string fileid, string size)
           {
-               var client = new RestClient("https://eapi.pcloud.com");
+               var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("getthumb", Method.Get);
-               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+               //request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+               request.AddParameter("password", "Inkyfrog1");
                request.AddParameter("fileid", fileid);
                request.AddParameter("size", size);
-               request.AddParameter("type", "jpeg");
+               //request.AddParameter("type", "jpeg");
                var response = client.ExecuteAsync(request).Result;
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+            
                return response.RawBytes!;
           }
     }

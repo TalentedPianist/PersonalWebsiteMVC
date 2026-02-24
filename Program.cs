@@ -256,7 +256,7 @@ try
      builder.Services.AddRecaptcha(options =>
      {
           options.SecretKey = "6Ld1l2osAAAAAK-VlYhJAohCH60eD_EqSGLsujP_";
-          options.SiteKey = "6Ld1l2osAAAAADZfO0bgWuTd8GUEpiwXBBUSIn1n";
+          options.SiteKey = "6LcGnnUsAAAAAKS1RqaVpuDdYQQb7-pyvInVTjtP";
      });
 
      

@@ -39,7 +39,7 @@
                                    <svg enable-background="new 4 8 40 32" viewBox="4 8 40 32" xmlns="http://www.w3.org/2000/svg" data-name="@album.Name"><path d="m40 12h-18l-4-4h-10c-2.2 0-4 1.8-4 4v8h40v-4c0-2.2-1.8-4-4-4z" fill="#ffa000" /><path d="m40 12h-32c-2.2 0-4 1.8-4 4v20c0 2.2 1.8 4 4 4h32c2.2 0 4-1.8 4-4v-20c0-2.2-1.8-4-4-4z" fill="#ffca28" /></svg>
                               }
                               <figcaption>
-                                   <a asp-controller="Album"
+                                   <a asp-controller="Album" asp-area="Photos"
                                       asp-route-Name="@album.Name" asp-route-id="@album.AlbumID" asp-action="Index">@album.Name</a>
                               </figcaption>
                          </figure>
@@ -63,21 +63,7 @@
 </div>
 
 @functions {
-     string GetThumbs(string fileid, string size)
-     {
-          
-               var client = new RestClient("https://eapi.pcloud.com/");
-               var request = new RestRequest("getthumblink");
-               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-               request.AddParameter("password", "Inkyfrog1");
-               request.AddParameter("fileid", fileid);
-               request.AddParameter("size", size);
-               var response = client.Execute(request);
-               var result = JsonConvert.DeserializeObject(response.Content!);
-               Console.WriteLine(response.Content);
-               JToken json = JToken.Parse(result!.ToString()!);
-               var url = "https://" + json["hosts"]![0] + json["path"];
-               return url;
+    
          
-     }
 }
+

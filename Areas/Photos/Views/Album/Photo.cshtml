@@ -18,7 +18,8 @@
 		<div class="featherlight-previous">
 			<span><<</span>
 		</div>
-		<img src="@GetThumbs(Model.SinglePhoto!.ImageUrl!)">
+	
+		<img src="@Url.Action("GetSingleThumb", new { fileid = Model.SinglePhoto.ImageUrl })">
 		
 		<div class="featherlight-next" title="next">
 			<span>>></span>
@@ -31,19 +32,3 @@
 <partial name="~/Areas/Photos/Views/Album/Comments.cshtml" model="Model" />
 
 
-
-@functions {
-	string GetThumbs(string path)
-	{
-		var client = new RestClient("https://eapi.pcloud.com");
-		var request = new RestRequest("getthumblink");
-		request.AddParameter("access_token", _config["PCloud:Local:AccessToken"]);
-		request.AddParameter("path", path);
-		request.AddParameter("size", "600x400");
-		var response = client.Execute(request);
-		var result = JsonConvert.DeserializeObject(response.Content!);
-		JToken json = JToken.Parse(result!.ToString()!);
-		var url = "https://" + json["hosts"]![0] + json["path"];
-		return url;
-	}
-}
