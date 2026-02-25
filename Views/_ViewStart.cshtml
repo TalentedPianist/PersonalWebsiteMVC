@@ -3,12 +3,7 @@
 
 @{
     var device = _detectionService.Device.Type;
-    if (device.ToString().Contains("Mobile"))
-    {
-        Layout = "~/Views/Shared/_BlogMobile.cshtml";
-    }
-    else
-    {
+    
         Layout = "~/Views/Shared/_BlogDesktop.cshtml";
-    }
+    
 }

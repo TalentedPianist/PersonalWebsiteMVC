@@ -259,7 +259,6 @@ try
           options.SiteKey = "6LcGnnUsAAAAAKS1RqaVpuDdYQQb7-pyvInVTjtP";
      });
 
-   
 
      
      var app = builder.Build();
@@ -363,7 +362,8 @@ try
 
     app.MapOpenApi();
     app.MapScalarApiReference();
-   
+
+    
 
     app.MapPostsEndpoints();
 
