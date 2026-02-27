@@ -80,6 +80,58 @@ $('#showLessBtn').on('click', function (e) {
 
 });
 
+// Opens Featherlight.js for mobile navigation
+$("#openMenu").featherlight({
+    targetAttr: 'href',
+    openSpeed: '300', 
+    closeSpeed: '300',
+    afterContent: function () {
+       
+        let instance = this.$instance[0];
+        let content = this.$content[0];
+        let home = $(content).find('#homeLink');
+        let about = $(content).find('#aboutLink');
+        let blog = $(content).find('#blogLink');
+        let portfolio = $(content).find('#portfolioLink');
+        let contact = $(content).find('#contactLink');
+
+        $(home).on('click', function (e) {
+            e.preventDefault();
+            setTimeout(function () {
+                window.location.href = '/Home';
+            }, 2000);
+        });
+
+        $(about).on('click', function (e) {
+            e.preventDefault();
+            setTimeout(function () {
+                window.location.href = '/About';
+            }, 2000);
+        });
+
+        $(blog).on('click', function (e) {
+            e.preventDefault();
+            setTimeout(function () {
+                window.location.href = '/Blog';
+            }, 2000);
+        });
+
+        $(portfolio).on('click', function (e) {
+            e.preventDefault();
+            setTimeout(function () {
+                window.location.href = '/Portfolio';
+            }, 2000);
+        });
+
+        $(contact).on('click', function (e) {
+            e.preventDefault();
+            setTimeout(function () {
+                window.location.href = '/Contact';
+            }, 2000);
+        });
+
+    }
+});
 
 
 // Specifically for search box stuff

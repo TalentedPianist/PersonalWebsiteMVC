@@ -64,7 +64,7 @@
 		}
 
 
-	<div class="@ViewBag.Class">
+	<div class="paginationHolder">
 		<p>You are currently on page @Model.PagedPosts!.PageNumber of @Model.PagedPosts.PageSize.</p>
 
 		@Html.PagedListPager((IPagedList)Model.PagedPosts!, page => Url.Action("Index", "Home", new

@@ -38,6 +38,7 @@ else
 	</section>
 </div>
 
+<div class="paginationHolder">
 	<p>Currently showing page @Model.PageNumber of @Model.PageCount portfolio items.</p>
 
 	@Html.PagedListPager((IPagedList)Model, page => Url.Action("Portfolio", new { pageNumber = page, area = "" }),
@@ -46,8 +47,8 @@ else
 				DisplayItemSliceAndTotal = false,
 				LiElementClasses = new string[] { "page-item" },
 				PageClasses = new String[] { "page-link" },
-			});
-
+			})
+    </div>
 	
 
 	<div id="targetElement" class="hidden">

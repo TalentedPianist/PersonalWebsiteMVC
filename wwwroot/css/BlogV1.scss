@@ -3,19 +3,25 @@
 @tailwind utilities;
 
 
+
+
 html {
     margin: 0 !important;
     padding: 0 !important;
     scroll-behavior: smooth;
+    width: 100% !important;
+    min-width: 100% !important;
 }
 
 body {
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    background-color: #F29F05;
+    position: relative;
 
     @media only screen and (min-width: 1200px) {
-        background-image: linear-gradient(to bottom, yellow, white);
-        background-repeat: no-repeat;
-        background-size: 100% 500px;
+    }
+
+    @media only screen and (min-width: 1600px) {
     }
 }
 
@@ -23,6 +29,7 @@ html,
 body {
     margin: 0;
     padding: 0;
+    width: 100% !important;
 }
 
 img {
@@ -57,112 +64,37 @@ form {
     flex-direction: column;
     flex: 1;
     gap: 2em;
+    align-self: flex-start;
 
-    @media only screen and (min-width: 768px) {
-        gap: 1em;
-        margin-top: 1em;
-        align-self: flex-start;
-
-
-        %placeholder {
-            color: #d9d9d9 !important;
-        }
-        
-        .ck .ck-editor { 
-            width: 100% !important;
-        }
-
-
-        label {
-            font-size: large;
-        }
+    @media only screen and (min-width: 1200px) {
+        width: 60%;
     }
 
-
-
-    input {
-        padding: 10px 10px 10px 10px;
-        border: 1px solid black;
-        align-items: center;
-
-        &::placeholder {
-            color: revert;
-            font-size: medium;
-        }
-
-        @media only screen and (min-width: 768px) {
-            padding: 5px 5px 5px 5px;
-        }
+    label {
+        display: none;
     }
-
-    textarea {
-        border: 1px solid black;
-    }
-
-    button {
-        border: 1px solid black;
-        padding: 10px 10px 10px 10px;
-        background-color: #D9C7B8;
-        font-size: large;
-
-        @media only screen and (min-width: 768px) {
-            align-self: flex-start;
-        }
-    }
-
-
-
 
     div {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         flex: 1;
+    }
 
-       
+    input {
+        border: 1px solid black;
+        padding: 5px 5px 5px 5px;
+    }
 
-        .error {
-            color: brown;
-            font-weight: bold;
-            clear: both;
-        }
+    ::placeholder {
+        color: grey !important;
+    }
 
-
-
-        @media only screen and (min-width: 768px) {
-            &:first-child {
-                flex-direction: row;
-            }
-
-            &:nth-of-type(2) {
-                display: flex;
-                flex-direction: row;
-            }
-
-            &:nth-of-type(3) {
-                display: flex;
-                flex-direction: row;
-            }
-
-            &:nth-of-type(4) {
-                flex-direction: row;
-            }
-
-            .ck {
-                flex-direction: column;
-                border: 1px solid black;
-            }
-
-
-            label {
-                width: 8em;
-            }
-
-            input {
-                width: 20em;
-            }
-        }
+    button {
+        align-self: flex-start;
     }
 }
+
+
 
 
 .ck-toolbar {
@@ -188,11 +120,11 @@ section {
     }
 
     article {
-        width: 50%;
+        //width: 100%;
 
         &:first-child {
             padding-left: 2em;
-            padding-right: 2em;
+            //padding-right: 2em;
             padding-bottom: 1em;
 
             p {
@@ -204,9 +136,13 @@ section {
             }
         }
 
+        @media only screen and (min-width: 768px) {
+            //width: 50%;
+        }
 
 
         @media only screen and (min-width: 1200px) {
+            width: 50%;
             align-items: center;
             justify-content: center;
         }
@@ -215,6 +151,7 @@ section {
 
     @media only screen and (min-width: 768px) {
         flex-direction: row;
+        gap: 2em;
     }
 }
 
@@ -224,16 +161,18 @@ section {
     display: flex;
     flex-direction: column;
     flex: 1;
-    align-items: center;
-    background-image: url('/images/mobile-home-background.svg');
-    background-repeat: no-repeat;
-    width: 100vw;
-    height: 100vh;
-    text-align: center;
-    position: relative;
-    background-color: #F29F05;
-    color: white;
+    height: 100%;
     gap: 2em;
+    //align-items: center;
+    //background-image: url('/images/mobile-home-background.svg');
+    //background-repeat: no-repeat;
+    //width: 100vw;
+    //height: 100vh;
+    //text-align: center;
+    //position: relative;
+    //background-color: #F29F05;
+    //color: white;
+    //gap: 2em;
 
     img {
         width: 50%;
@@ -261,7 +200,6 @@ section {
         background-color: revert;
         background-image: none;
         width: revert;
-        padding-left: 1em;
         color: black;
 
         section {
@@ -362,7 +300,6 @@ section {
         }
 
         @media only screen and (min-width: 768px) {
-            padding-left: 1em;
             padding-right: 1em;
         }
 
@@ -404,7 +341,6 @@ section {
 
     @media only screen and (min-width: 768px) {
         gap: 1em;
-        padding-left: 1em;
         min-height: revert;
     }
 
@@ -423,7 +359,6 @@ section {
 
 
     h1 {
-        padding-left: 16px;
         font-size: 42pt !important;
         margin: 0 !important;
 
@@ -438,7 +373,7 @@ section {
         position: absolute;
         display: flex;
         height: 500px;
-        background-color: #f2740f;
+        //background-color: #f2740f;
         content: "";
         width: 100vw;
         z-index: -1;
@@ -466,7 +401,7 @@ section {
         bottom: -1px;
         height: 100px;
         width: 100vw;
-        background-color: lightgreen;
+        //background-color: lightgreen;
         z-index: -1;
 
         @media only screen and (min-width: 600px) {
@@ -582,11 +517,9 @@ section {
     flex-direction: column;
     flex: 1;
     gap: 1em;
-    padding-left: 1em;
-    padding-right: 1em;
     padding-bottom: 2em;
     font-size: 16pt;
-    background-color: #f2740f;
+    //background-color: #f2740f;
     line-height: 2;
 
 
@@ -612,7 +545,7 @@ section {
         width: 100%;
 
         p {
-            padding-right: 1em;
+            //padding-right: 1em;
         }
     }
 }
@@ -741,6 +674,8 @@ section {
     flex: 1;
     height: 100%;
 
+
+
     section {
         display: flex;
         flex-direction: column;
@@ -846,20 +781,19 @@ section {
 header {
     position: relative;
     display: flex;
+    width: 100%;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
 
     @media only screen and (min-width: 600px) {
         display: flex;
         content: "";
-        height: 30vh;
         position: relative;
         align-items: center;
         justify-content: center;
         width: 100%;
-        background-image: url('/images/IMG_004294.jpg');
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        background-color: revert !important;
+
 
         h1,
         h2,
@@ -876,10 +810,29 @@ header {
             text-shadow: 1px 1px 2px black;
         }
     }
+
+    @media only screen and (min-width: 1200px) {
+        background-image: url('/images/IMG_004294.jpg');
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        background-color: revert !important;
+        height: 30vh;
+        background-size: 100%;
+
+        .mobileNavLink {
+            display: none;
+        }
+    }
 }
 
 nav {
     position: relative;
+    display: none;
+
+    @media only screen and (min-width: 1200px) {
+        display: flex;
+    }
 
     ul {
         display: flex;
@@ -895,6 +848,7 @@ nav {
         }
 
         @media only screen and (min-width: 1200px) {
+            display: flex;
             padding-top: 1em;
             padding-bottom: 1em;
         }
@@ -931,33 +885,29 @@ main {
     flex: 1;
     height: 100%;
     width: 100%;
-    background-color: #F29F05;
     clear: both !important;
-    padding-bottom: 5em;
-
+    //padding-bottom: 5em;
+    padding-left: 2em; // Only for mobile
+    padding-right: 2em; // Only for mobile
 
     @media only screen and (min-width: 768px) {
-        padding-top: 0.5em;
-        padding-left: 1em;
+    }
 
-        h1 {
-            font-size: 38pt !important;
-        }
-
-        h2 {
-            font-size: 32pt !important;
-        }
+    @media only screen and (min-width: 1200px) {
+        padding-left: 2em;
+        gap: 2em;
     }
 
 
     @media screen and (min-width: 1400px) {
-        align-items: center;
+        //align-items: center;
     }
 
     @media screen and (min-width: 1600px) {
+        // 1600px is the media query for my big screen.
+        margin: 0 auto;
+        width: 95%;
     }
-
-   
 }
 
 
@@ -965,9 +915,11 @@ main {
 
 
 .menuIcon {
-    color: #F28705;
-    width: 80px;
-    height: 80px;
+    color: yellow;
+    width: 60px;
+    height: 60px;
+    padding-top: 1em;
+    padding-bottom: 1em;
 }
 
 .mobileNav {
@@ -1002,6 +954,13 @@ main {
             text-decoration: none !important;
         }
     }
+
+
+
+    .featherlight {
+        top: 0 !important;
+        bottom: revert !important;
+    }
 }
 
 .sticky {
@@ -1025,23 +984,22 @@ main {
 }
 
 footer {
-    background-color: yellow;
-    color: black;
-    text-align: center;
-    padding-top: 1em;
-    padding-bottom: 1em;
-    font-size: x-large;
+    //background-color: yellow;
+    //color: black;
+    //text-align: center;
+    //padding-top: 1em;
+    //padding-bottom: 1em;
+    //font-size: x-large;
     clear: both;
-
-    @media only screen and (min-width: 768px) {
-        background-color: #A2BF84;
-        color: black;
-        text-align: center;
-        font-size: x-large;
-        letter-spacing: 2px;
-        padding: 1.25rem 0;
-        border-top: 1px solid rgba(0, 0, 0, 0.1);
-    }
+    width: 100% !important;
+    min-width: 100% !important;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    text-align: center;
+    font-size: large;
+    border-top: 1px solid yellow;
+    padding-top: 1em;
 }
 
 .socialMedia {
@@ -1094,15 +1052,16 @@ footer {
 }
 
 #Sidebar {
-    display: flex;
+    display: none;
     flex-direction: column;
     flex: 1;
     font-size: large;
     align-items: flex-start;
     justify-content: flex-start;
-
+    margin-top: 2em;
 
     @media only screen and (min-width: 1200px) {
+        display: flex;
     }
 
 
@@ -1168,10 +1127,14 @@ footer {
 }
 
 
+.paginationHolder {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    border-top: yellow;
+}
+
 .pagination-container {
-    margin-top: 1em;
-    margin-bottom: 1em;
-    padding-bottom: 1em;
 }
 
 
@@ -1205,37 +1168,37 @@ footer {
     display: flex;
     flex-direction: column;
     flex: 1;
+    width: 100%;
+    gap: 2em;
 
     section {
+        gap: 2em;
+
         &:nth-of-type(1) {
             display: flex;
             flex-direction: column;
             flex: 1;
-
-            p {
-                font-size: 1.125rem;
-                color: #333;
-                line-height: 1.6;
-                margin-bottom: 2rem;
-                padding-right: 10em;
-            }
         }
 
         &:nth-of-type(2) {
             display: grid;
-            grid-template-columns: repeat(3, 30em);
-            gap: 5em;
+            //grid-template-columns: repeat(3, 30em);
             padding-right: 1em;
             margin-bottom: 1em;
+            gap: 1em;
 
             @media only screen and (min-width: 768px) {
-                grid-template-columns: repeat(2, 30em);
+                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); // Using minmax allows the grid item to shrink properly.  Without it, Chrome defaults to min-content sizing behaviour.  
                 gap: 2em;
 
                 figure {
                     display: flex;
                     flex-direction: column;
                     flex: 1;
+                }
+
+                .paginationHolder {
+                    padding-left: 2em;
                 }
             }
 
@@ -1244,12 +1207,14 @@ footer {
                 text-decoration: revert;
             }
 
+
+
             @media only screen and (min-width: 1400px) {
-                grid-template-columns: repeat(3, 25em);
+                //grid-template-columns: repeat(3, 25em);
             }
 
             @media only screen and (min-width: 1600px) {
-                grid-template-columns: repeat(4, 25em);
+                grid-template-columns: repeat(2, 40em);
             }
         }
 
@@ -1280,24 +1245,24 @@ footer {
 .searchPopup {
     padding-bottom: 2em;
     background-color: lightgreen !important;
-    position: absolute !important; 
-    top: 0 !important; 
+    position: absolute !important;
+    top: 0 !important;
 
-    .featherlight { 
-        .featherlight-content { 
-        position: absolute !important; 
-        top: 0 !important; 
+    .featherlight {
+        .featherlight-content {
+            position: absolute !important;
+            top: 0 !important;
         }
 
-        &:last-of-type { 
+        &:last-of-type {
             background-color: rgba(0,0,0,.4);
         }
     }
 
-    form  {
-        display: flex; 
-        flex-direction: row; 
-        flex: 1; 
+    form {
+        display: flex;
+        flex-direction: row;
+        flex: 1;
     }
 }
 
@@ -1307,9 +1272,9 @@ footer {
 }
 
 .searchResults {
-    display: flex; 
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     gap: 1em;
     margin-left: 2em;
     font-size: large;
@@ -1322,10 +1287,10 @@ footer {
         list-style-type: disc;
     }
 
-    li { 
-        display: flex; 
+    li {
+        display: flex;
         flex-direction: column;
-        flex: 1; 
+        flex: 1;
         gap: 0.5em;
         border-bottom: 1px solid #d9d9d9;
         padding-bottom: 1em;
@@ -1356,7 +1321,6 @@ footer {
     flex-direction: column;
     flex: 1;
     gap: 1em;
-    
 }
 
 #photoComments {
@@ -1364,7 +1328,6 @@ footer {
     flex-direction: column;
     flex: 1;
     justify-content: space-evenly;
-    
 }
 
 .commentsLayout {
@@ -1372,7 +1335,7 @@ footer {
     flex-direction: row !important;
     flex: 1;
     gap: 1em;
-    
+
 
 
     section {
@@ -1381,7 +1344,6 @@ footer {
                 display: flex;
                 flex-direction: column !important;
                 flex: 1;
-            
             }
         }
     }
@@ -1409,17 +1371,16 @@ footer {
     }
 }
 
-#photoContent { 
-    display: flex; 
+#photoContent {
+    display: flex;
     flex-direction: column;
-    flex: 1; 
+    flex: 1;
     justify-content: center;
     position: relative;
 
-    img { 
+    img {
         width: 70%;
         align-self: center;
-  
     }
 }
 
@@ -1432,33 +1393,70 @@ footer {
     width: 100%;
     position: relative;
 
-    .featherlight-next { 
+    .featherlight-next {
         margin-left: 5em;
 
-        &:hover { 
+        &:hover {
             background-color: darkgreen;
         }
     }
 
     .featherlight-previous, .featherlight-next {
         display: block !important;
-        
-        span { 
+
+        span {
             display: flex !important;
-            
-           
         }
 
-        &:hover { 
+        &:hover {
             background: transparent !important;
             color: darkgreen;
         }
     }
 }
 
-#viewComments, #hideComments { 
-    
-        text-decoration: revert !important; 
-        color: revert !important;
-    
+#viewComments, #hideComments {
+    text-decoration: revert !important;
+    color: revert !important;
+}
+
+#mobileNavNew {
+    ul {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        gap: 2em;
+        justify-content: center;
+        align-items: center;
+    }
+
+    a {
+        color: white;
+        font-size: xx-large;
+    }
+}
+
+.featherlight {
+    .featherlight-content {
+        position: absolute !important;
+        top: 0 !important;
+        left: 0 !important;
+        background-color: revert !important;
+        width: 100% !important;
+        padding: 0 !important;
+    }
+
+    .featherlight-close-icon {
+        position: relative !important;
+        display: flex !important;
+        flex-direction: column !important;
+        flex: 1 !important;
+        align-self: center !important;
+        justify-self: center !important;
+        margin-top: 2em !important;
+        margin-bottom: 2em !important;
+        background: none !important;
+        color: white !important;
+        font-size: xx-large !important;
+    }
 }
