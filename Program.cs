@@ -34,6 +34,7 @@ using Azure.Identity;
 using SolrNet.Impl;
 using PersonalWebsiteMVC.Areas.pCloud.Helpers;
 using reCAPTCHA.AspNetCore;
+using Microsoft.OpenApi;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -230,7 +231,7 @@ try
 
      builder.Services.AddDetection();
 
-     builder.Services.AddSwaggerGen();
+     builder.Services.AddOpenApi();
 
      
 
@@ -355,14 +356,6 @@ try
         return tokens;
     });
 
-
-    // app.MapRazorComponents<App>()
-    //     .AddInteractiveServerRenderMode();
-    //app.MapFallbackToPage("/");
-
-    app.MapOpenApi();
-    app.MapScalarApiReference();
-
     
 
     app.MapPostsEndpoints();
@@ -383,6 +376,8 @@ try
 
      }
 
+     app.MapOpenApi();
+     app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Swagger"));
 
      app.Run();
 

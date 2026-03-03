@@ -57,6 +57,8 @@ form {
 @media only screen and (min-width: 1200px) {
   form {
     width: 60%;
+    gap: 1em;
+    align-self: revert;
   }
 }
 form label {
@@ -98,6 +100,9 @@ section {
 section:nth-of-type(2) {
   align-items: flex-start;
 }
+section article h1 {
+  margin-top: 0.5em;
+}
 section article:first-child {
   padding-left: 2em;
   padding-bottom: 1em;
@@ -107,7 +112,7 @@ section article:first-child {
     max-width: 1000px; /* This is the solution to the long paragraph problem on large screens!!!  */
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   section article {
     width: 50%;
     align-items: center;
@@ -116,8 +121,12 @@ section article:first-child {
 }
 @media only screen and (min-width: 768px) {
   section {
+    gap: 1em;
+  }
+}
+@media only screen and (min-width: 1100px) {
+  section {
     flex-direction: row;
-    gap: 2em;
   }
 }
 
@@ -152,46 +161,6 @@ section article:first-child {
     background-image: none;
     width: revert;
     color: black;
-  }
-  #Home section {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
-  #Home section p {
-    margin-bottom: 1em;
-    font-size: 15pt !important;
-  }
-  #Home section:nth-of-type(1) {
-    background-color: lightgoldenrodyellow;
-    width: 100%;
-    height: 100%;
-    flex-grow: 1;
-    flex: 0;
-    gap: 2em;
-    padding-top: 2em;
-    padding-bottom: 2em;
-  }
-  #Home section:nth-of-type(1) p {
-    font-size: x-large;
-  }
-}
-@media only screen and (min-width: 600px) and (min-width: 1200px) {
-  #Home section:nth-of-type(1) p {
-    padding-right: 50em;
-  }
-}
-@media only screen and (min-width: 600px) {
-  #Home section:nth-of-type(1) h1 {
-    font-size: 42pt !important;
-  }
-  #Home section:nth-of-type(2) {
-    background-color: lightgreen;
-    flex: 0;
-    width: 100%;
-    height: 100%;
-    padding-top: 2em;
-    padding-bottom: 2em;
   }
 }
 @media only screen and (min-width: 600px) {
@@ -228,33 +197,6 @@ section article:first-child {
   flex: 1;
   position: relative;
   min-height: 100vh;
-}
-#About section {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  gap: 2em;
-  background-color: #F29F05;
-  padding-top: 6em;
-}
-#About section img {
-  width: 50%;
-  border-radius: 50%;
-  align-self: center;
-}
-@media only screen and (min-width: 768px) {
-  #About section {
-    padding-right: 1em;
-  }
-}
-#About section p {
-  padding-left: 1em;
-}
-#About svg {
-  position: absolute;
-  bottom: 0;
-  margin-bottom: 0 !important;
-  z-index: -1;
 }
 #About h1 {
   font-size: 40pt !important;
@@ -680,7 +622,7 @@ header {
     text-shadow: 1px 1px 2px black;
   }
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 768px) {
   header {
     background-image: url("/images/IMG_004294.jpg");
     background-position: center;
@@ -699,7 +641,7 @@ nav {
   position: relative;
   display: none;
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 768px) {
   nav {
     display: flex;
   }
@@ -778,6 +720,11 @@ main {
   height: 60px;
   padding-top: 1em;
   padding-bottom: 1em;
+}
+@media only sreen and (min-width: 768px) {
+  .menuIcon {
+    display: none;
+  }
 }
 
 .mobileNav {
@@ -908,7 +855,7 @@ footer {
   justify-content: flex-start;
   margin-top: 2em;
 }
-@media only screen and (min-width: 1200px) {
+@media only screen and (min-width: 1100px) {
   #Sidebar {
     display: flex;
   }
@@ -930,9 +877,8 @@ footer {
   height: 100%;
   min-width: 100%;
 }
-@media only screen and (min-width: 1440px) {
+@media only screen and (min-width: 1100px) {
   #Sidebar section {
-    width: 50%;
     flex-direction: row;
   }
 }
