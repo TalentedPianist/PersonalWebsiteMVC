@@ -508,11 +508,12 @@ section article:first-child {
   display: flex;
   flex-direction: column;
   flex: 1;
+  margin-top: 1em;
 }
 #Albums section:nth-of-type(1) {
-  display: grid;
-  grid-template-columns: repeat(4, 20em);
-  grid-gap: 1em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 #Albums section:nth-of-type(1) a {
   color: revert !important;
@@ -522,6 +523,18 @@ section article:first-child {
   display: flex;
   flex-direction: column;
   flex: 1;
+}
+@media only screen and (min-width: 900px) {
+  #Albums section:nth-of-type(1) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (min-width: 1600px) {
+  #Albums section:nth-of-type(1) {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
 #Photos {
@@ -959,23 +972,19 @@ footer {
   flex: 1;
 }
 #Portfolio section:nth-of-type(2) {
-  display: grid;
-  padding-right: 1em;
-  margin-bottom: 1em;
-  gap: 1em;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 @media only screen and (min-width: 768px) {
-  #Portfolio section:nth-of-type(2) {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-    gap: 2em;
-  }
-  #Portfolio section:nth-of-type(2) figure {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-  }
   #Portfolio section:nth-of-type(2) .paginationHolder {
     padding-left: 2em;
+  }
+}
+@media only screen and (min-width: 1000px) {
+  #Portfolio section:nth-of-type(2) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 #Portfolio section:nth-of-type(2) a {

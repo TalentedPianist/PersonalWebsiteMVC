@@ -1,8 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using PersonalWebsiteMVC.Areas.pCloud.Models;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using RestSharp;
 using System.Text.Json;
 
 namespace PersonalWebsiteMVC.Areas.pCloud.Controllers;
@@ -26,8 +28,22 @@ public class AlbumsController : Controller
 
     public IActionResult Index()
     {
-        
-        return View();
+          TempData["Message"] = DateTime.Now;
+          var client = new RestClient("https://eapi.pcloud.com/");
+          var request = new RestRequest("listfolder");
+          request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+          request.AddParameter("folderid", HttpContext.Request.Query["id"]);
+          var response = client.Execute(request);
+          if (!response.IsSuccessful)
+          {
+               Console.WriteLine(response.StatusCode);
+               Console.WriteLine(response.ErrorMessage);
+               Console.WriteLine(response.ErrorException);
+               Console.WriteLine(response.Content);
+          }
+          var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
+          List<ContentItem> model = result!.metadata!.contents!;
+        return View(model);
     }
 
 
@@ -109,5 +125,22 @@ public class AlbumsController : Controller
           _db.SaveChanges();
           return Ok(album);
          
+     }
+
+     public IActionResult GetThumb(string fileid)
+     {
+          var bytes = GetPubLink(fileid, "600x400");
+          return File(bytes, "image/jpeg");
+     }
+
+     byte[] GetPubLink(string fileid, string size)
+     {
+          var client = new RestClient("https://eapi.pcloud.com/");
+          var request = new RestRequest("getthumb", Method.Get);
+          request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+          request.AddParameter("fileid", fileid);
+          request.AddParameter("size", size);
+          var response = client.ExecuteAsync(request).Result;
+          return response.RawBytes!;
      }
 }

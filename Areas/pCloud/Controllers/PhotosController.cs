@@ -50,19 +50,24 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                {
                     var client = new RestClient("https://eapi.pcloud.com/");
                     var request = new RestRequest("listfolder");
-                    
-                         request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-                   
-                    request.AddParameter("path", $"/Public Folder/Gallery/{HttpContext.Request.Query["name"]}");
-                    var response = client.Execute(request);
-
-             
+                    request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+                    request.AddParameter("folderid", HttpContext.Request.Query["id"]);
+                    var response = await client.ExecuteAsync(request);
+                    if (!response.IsSuccessful)
+                    {
+                         Console.WriteLine(response.StatusCode);
+                         Console.WriteLine(response.ErrorMessage);
+                         Console.WriteLine(response.ErrorException);
+                         Console.WriteLine(response.Content);
+                    }
+                    Console.WriteLine(response.Content);
                     var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-                    List<ContentItem> items = result!.metadata!.contents!;
-                    return View(items);
+                    List<ContentItem> model = result!.metadata!.contents!;
+                    return View(model);
                }
                catch (NullReferenceException)
                {
+                    TempData["Message"] = "User needs to login.";
                     return View();
                }
           }
@@ -72,7 +77,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                var client = new RestClient("https://eapi.pcloud.com");
                var request = new RestRequest("listfolder");
                request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-               
+
                request.AddParameter("path", "/");
                var response = await client.ExecuteAsync(request);
                if (!response.IsSuccessful)
@@ -109,9 +114,9 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(file);
                     var client = new RestClient("https://eapi.pcloud.com/");
                     var request = new RestRequest("deletefile");
-             
-                         request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-                    
+
+                    request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+
                     request.AddParameter("fileid", file);
 
                     var response = await client.ExecuteAsync(request);
@@ -146,8 +151,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                var client = new RestClient("https://eapi.pcloud.com");
                var request = new RestRequest("listfolder");
-                    request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-               
+               request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+
                request.AddParameter("folderid", "19500076302");
                var response = await client.ExecuteAsync(request);
                var json = JsonConvert.DeserializeObject(response.Content!);
@@ -158,21 +163,27 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("pCloud/Photos/UploadFiles")]
-          public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files, [FromForm(Name = "path")] string path)
+          public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files, [FromForm(Name="id")]string id, [FromForm(Name="name")]string name)
           {
 
-               var accessToken = _config["PCloud:Local:AccessToken"];
 
-               foreach (IFormFile file in files)
+               try
                {
-                    
-                         await UploadToPCloud(Environment.GetEnvironmentVariable("PCloudToken")!, path, file);
-                    
-               }
+                    foreach (IFormFile file in files)
+                    {
 
-               //return RedirectToAction("~/Areas/pCloud/Views/Photos/Index.cshtml");
-               TempData["Message"] = path;
-               return View("~/Areas/pCloud/Views/Photos/Index.cshtml");
+                         await UploadToPCloud(Environment.GetEnvironmentVariable("PCloudToken")!, name, file);
+
+                    }
+
+                    return RedirectToAction("Index", new RouteValueDictionary( new { contorller = "Photos", action = "Index", id = id, name = name }));
+               }
+               catch (NullReferenceException ex)
+               {
+                    TempData["Message"] = ex.Message;
+                    return View("~/Areas/pCloud/Views/Photos/Index.cshtml");
+               }
+               
           }
 
 
@@ -193,6 +204,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                using var ms = new MemoryStream();
                await file.CopyToAsync(ms);
                var fileBytes = ms.ToArray();
+               
                request.AddFile("file", fileBytes, file.FileName, file.ContentType);
 
                var response = await client.ExecuteAsync(request);
@@ -209,7 +221,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                JToken result = JToken.Parse(json!.ToString()!);
                var metadata = result["metadata"]![0];
                //Console.WriteLine(metadata!["path"]);
-               //await CopyToFolder(token, metadata!["path"]!.ToString(), path);
+               await CopyToFolder(token, metadata!["path"]!.ToString(), path);
 
           }
 
@@ -235,7 +247,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               //await DeleteFileFromRoot(token, path);
+               await DeleteFileFromRoot(token, path);
                return Task.CompletedTask;
 
           }

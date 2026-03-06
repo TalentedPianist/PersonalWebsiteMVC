@@ -35,6 +35,7 @@ using SolrNet.Impl;
 using PersonalWebsiteMVC.Areas.pCloud.Helpers;
 using reCAPTCHA.AspNetCore;
 using Microsoft.OpenApi;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -100,7 +101,7 @@ try
      builder.Services.AddAuthentication(options =>
      {
           options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-      
+
      })
           .AddCookie(options =>
           {
@@ -173,7 +174,7 @@ try
 
      builder.Services.AddCascadingAuthenticationState();
 
-     
+
      builder.Services.AddAuthorization(options =>
      {
           options.AddPolicy("Admin",
@@ -224,7 +225,7 @@ try
      // builder.Services.AddHttpClient<IReCaptchaFormClient, ReCaptchaFormHttpClient>(client =>
      //     client.BaseAddress = new Uri("http://localhost:5051"));
 
-     
+
 
      builder.Services.AddBlazorBootstrap();
      builder.Services.AddAntiforgery(options => options.HeaderName = "X-XSRF-TOKEN");
@@ -233,7 +234,7 @@ try
 
      builder.Services.AddOpenApi();
 
-     
+
 
      builder.Services.AddSingleton<OneDriveAuthHelper>();
 
@@ -260,8 +261,23 @@ try
           options.SiteKey = "6LcGnnUsAAAAAKS1RqaVpuDdYQQb7-pyvInVTjtP";
      });
 
+     builder.Services.AddCors(options =>
+     {
+          options.AddPolicy("ReactFrontend",
+               policy =>
+               {
+                    policy.WithOrigins("http://localhost:5173")
+                         .AllowAnyHeader()
+                    .AllowAnyMethod();
+               });
+     });
 
-     
+     builder.Services.Configure<KestrelServerLimits>(options =>
+     {
+          options.MaxRequestBodySize = 202428800;
+
+     });
+
      var app = builder.Build();
 
      // Code to seed data as seen in https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/movie-database-app/part-4?view=aspnetcore-9.0&pivots=vs#seed-the-database
@@ -298,6 +314,7 @@ try
 
      app.UseResponsive();
      app.UseRouting();
+     app.UseCors();
      app.UseAuthentication();
      app.UseAuthorization();
      app.UseSession();
@@ -310,7 +327,7 @@ try
          areaName: "Admin",
          pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
-     
+
      //app.MapControllerRoute(
      //     name: "areas",
      //     pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}");
@@ -323,17 +340,17 @@ try
      app.MapControllerRoute(
           name: "Post",
           pattern: "Title",
-          defaults: new { area = "Blog", action="Post" });
+          defaults: new { area = "Blog", action = "Post" });
 
      app.MapAreaControllerRoute(
           name: "OneDrive",
           areaName: "OneDrive",
           pattern: "OneDrive/{controller=Home}/{action=Index}/{id?}");
 
-    app.MapAreaControllerRoute(
-        name: "pCloud",
-        areaName: "pCloud",
-        pattern: "pCloud/{controller=Home}/{action=Index}/{id?}");
+     app.MapAreaControllerRoute(
+         name: "pCloud",
+         areaName: "pCloud",
+         pattern: "pCloud/{controller=Home}/{action=Index}/{id?}");
 
      app.MapControllerRoute(
           name: "default",
@@ -343,22 +360,22 @@ try
 
      app.MapGet("/Captcha", (string userResponse) =>
     {
-        return userResponse;
+         return userResponse;
 
     });
 
-    app.MapGet("antiforgery/token", (IAntiforgery forgeryService, HttpContext context) =>
-    {
-        var tokens = forgeryService.GetAndStoreTokens(context);
-        context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken!,
-            new CookieOptions { HttpOnly = false });
+     app.MapGet("antiforgery/token", (IAntiforgery forgeryService, HttpContext context) =>
+     {
+          var tokens = forgeryService.GetAndStoreTokens(context);
+          context.Response.Cookies.Append("XSRF-TOKEN", tokens.RequestToken!,
+             new CookieOptions { HttpOnly = false });
 
-        return tokens;
-    });
+          return tokens;
+     });
 
-    
 
-    app.MapPostsEndpoints();
+
+     app.MapPostsEndpoints();
 
      app.UseDeveloperExceptionPage();
 
@@ -381,14 +398,14 @@ try
 
      app.Run();
 
-        
+
 
 } // https://stackoverflow.com/questions/70247187/microsoft-extensions-hosting-hostfactoryresolverhostinglistenerstopthehostexce
 catch (Exception ex) when (ex is not HostAbortedException)
 {
-    Log.Fatal(ex, "server terminated unexpectedly");
+     Log.Fatal(ex, "server terminated unexpectedly");
 }
 finally
 {
-    Log.CloseAndFlush();
+     Log.CloseAndFlush();
 }

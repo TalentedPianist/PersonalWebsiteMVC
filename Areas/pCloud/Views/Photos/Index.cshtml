@@ -58,19 +58,17 @@
                     foreach (ContentItem item in Model)
                     {
 
-                         if (item.name!.Contains(".JPEG") || item.name.Contains(".JPG"))
-                         {
 
-                              var thumb = GetThumbs(item.fileid!, "600x400");
+                          
                               <figure>
-                                   <a href="#Popup" class="fl" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@thumb"><img src="@Url.Action("GetThumb", "Photos", new { fileid = item.fileid })" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-path="@item.path" data-fileid="@item.fileid"></a>
+                                   <a href="#Popup" class="fl" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-image="@Url.Action("GetThumb", "Photos", new { fileid = item.fileid })"><img src="@Url.Action("GetThumb", "Photos", new { fileid = item.fileid })" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-path="@item.path" data-fileid="@item.fileid"></a>
                                    <figcaption>
-                                        <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@thumb">@item.name</a>
-                                        <input type="checkbox" name="delete" value="@item.fileid" data-date="@item.created" data-name="@item.name" data-image="@thumb" data-fileid="@item.fileid">
+                                        <a class="fl" href="#Popup" data-item='@Html.Raw(System.Text.Json.JsonSerializer.Serialize(item))' data-fileid="@item.fileid" data-path="@item.path" data-name="@item.name" data-image="@Url.Action("GetThumb", "Photos", new { fileid = item.fileid })">@item.name</a>
+                                        <input type="checkbox" name="delete" value="@item.fileid" data-date="@item.created" data-name="@item.name" data-image="@Url.Action("GetThumb", "Photos", new { fileid = item.fileid })" data-fileid="@item.fileid">
 
                                    </figcaption>
                               </figure>
-                         }
+                         
                     }
                }
     
@@ -79,28 +77,6 @@
 
 <div id="Popup">
 </div>
-
-
-@functions {
-    
-
-     string GetThumbs(string fileid, string size)
-     {
-         
-          var client = new RestClient("https://eapi.pcloud.com/");
-          var request = new RestRequest("getthumblink");
-          request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-          //request.AddParameter("path", path);
-          request.AddParameter("fileid", fileid);
-          request.AddParameter("size", size);
-          var response = client.Execute(request);
-          var result = JsonConvert.DeserializeObject(response.Content!);
-          JToken json = JToken.Parse(result!.ToString()!);
-          var url = "https://" + json["hosts"]![0] + json["path"];
-          return url;
-
-     }
-}
 
 
 @section Scripts {

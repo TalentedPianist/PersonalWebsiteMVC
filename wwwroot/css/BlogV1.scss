@@ -630,11 +630,12 @@ section {
         display: flex;
         flex-direction: column;
         flex: 1;
+        margin-top: 1em;
 
         &:nth-of-type(1) {
-            display: grid;
-            grid-template-columns: repeat(4, 20em);
-            grid-gap: 1em;
+            display: flex; 
+            flex-direction: column;
+            flex: 1;
 
             a {
                 color: revert !important;
@@ -645,6 +646,16 @@ section {
                 display: flex;
                 flex-direction: column;
                 flex: 1;
+            }
+
+            @media only screen and (min-width: 900px) { 
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            @media only screen and (min-width: 1600px) { 
+                display: grid; 
+                grid-template-columns: repeat(3, 1fr);
             }
         }
     }
@@ -1138,25 +1149,28 @@ footer {
         }
 
         &:nth-of-type(2) {
-            display: grid;
+            //display: grid;
             //grid-template-columns: repeat(3, 30em);
-            padding-right: 1em;
-            margin-bottom: 1em;
-            gap: 1em;
+            //padding-right: 1em;
+            //margin-bottom: 1em;
+            //gap: 1em;
+            display: flex; 
+            flex-direction: column;
+            flex: 1; 
 
             @media only screen and (min-width: 768px) {
-                grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); // Using minmax allows the grid item to shrink properly.  Without it, Chrome defaults to min-content sizing behaviour.  
-                gap: 2em;
+               // grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); // Using minmax allows the grid item to shrink properly.  Without it, Chrome defaults to min-content sizing behaviour.  
+               
 
-                figure {
-                    display: flex;
-                    flex-direction: column;
-                    flex: 1;
-                }
 
                 .paginationHolder {
                     padding-left: 2em;
                 }
+            }
+
+            @media only screen and (min-width: 1000px) { 
+                display: grid; 
+                grid-template-columns: repeat(2, 1fr);
             }
 
             a {

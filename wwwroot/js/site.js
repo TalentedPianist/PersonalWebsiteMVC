@@ -31,7 +31,10 @@ $(function () {
     if (isMobile) {
         $(window).on('scroll', function () {
             if ($(window).scrollTop() >= 400) {
-                $('header').addClass('sticky');
+                if ($('#SinglePost')) {
+                } else {
+                    $('header').addClass('sticky');
+                }
                 //$('header').prependTo('body');
             } else {
                 $('header').removeClass('sticky');

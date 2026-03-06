@@ -7,6 +7,7 @@
 @using Newtonsoft.Json
 @using PersonalWebsiteMVC.Models
 @inject IHttpClientFactory _httpClientFactory
+@model List<ContentItem> 
 
 <h1 class="bg bg-info p-1">Albums</h1>
 
@@ -25,6 +26,15 @@
 	<section>
 	</section>
 	<section>
+		@foreach (ContentItem item in Model)
+		{
+			<figure>
+				<img src="@Url.Action("GetThumb", "Albums", new { fileid = item.fileid }))">
+				<figcaption>
+					@item.name
+				</figcaption>
+			 </figure>
+		}
 	</section>
 </div>
 
