@@ -278,6 +278,11 @@ try
 
      });
 
+     builder.WebHost.ConfigureKestrel(options =>
+     {
+          options.Limits.MaxRequestBodySize = long.MaxValue;
+     });
+
      var app = builder.Build();
 
      // Code to seed data as seen in https://learn.microsoft.com/en-us/aspnet/core/blazor/tutorials/movie-database-app/part-4?view=aspnetcore-9.0&pivots=vs#seed-the-database
