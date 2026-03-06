@@ -163,20 +163,21 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
           [HttpPost]
           [Microsoft.AspNetCore.Mvc.Route("pCloud/Photos/UploadFiles")]
-          public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files, [FromForm(Name = "folderid")] string folderid, [FromForm(Name = "name")] string name)
+          public async Task<IActionResult> UploadFile([FromForm(Name = "files")] List<IFormFile> files, [FromForm(Name = "id")] string folderid, [FromForm(Name = "name")] string foldername)
           {
-
+               Console.WriteLine($"Name {foldername}");
+               Console.WriteLine($"Folder id: {folderid}");
 
                try
                {
                     foreach (IFormFile file in files)
                     {
-                         Console.WriteLine(name);
-                         await UploadToPCloud(Environment.GetEnvironmentVariable("PCloudToken")!, string.Empty, $"/", $"/Public Folder/Gallery/{name}", file);
+                         
+                         await UploadToPCloud(Environment.GetEnvironmentVariable("PCloudToken")!, $"/Public Folder/Gallery/{foldername}/", file);
 
                     }
 
-                    return RedirectToAction("Index", new RouteValueDictionary(new { contorller = "Photos", action = "Index", id = HttpContext.Request.Query["id"], name = name }));
+                    return RedirectToAction("Index", new RouteValueDictionary(new {id = folderid, name = foldername }));
                }
                catch (NullReferenceException ex)
                {
@@ -188,19 +189,16 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
 
 
 
-          public async Task UploadToPCloud(string token, string name, string frompath, string topath, IFormFile file)
+          public async Task UploadToPCloud(string token, string topath, IFormFile file)
           {
-               Console.WriteLine("Trying to upload to pCloud...");
-               Console.WriteLine($"Name - {name}");
-               Console.WriteLine($"frompath - {frompath}");
-               Console.WriteLine($"topath - {topath}");
+               
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("uploadfile", Method.Post);
                request.AddHeader("Authorization", $"Bearer {token}");
                //var finalPath = $"/Public Folder/Gallery/{path}/";
                //var encodedPath = Uri.EscapeDataString(finalPath);
 
-               request.AddParameter("topath", $"/Public Folder/Gallery/{name}");
+               request.AddParameter("topath", topath);
                request.AddParameter("filename", file.FileName);
 
                using var ms = new MemoryStream();
@@ -217,21 +215,22 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               //Console.WriteLine(response.Content);
+               Console.WriteLine(response.Content);
                var json = JsonConvert.DeserializeObject(response.Content!);
                //Console.WriteLine(json);
                JToken result = JToken.Parse(json!.ToString()!);
                var metadata = result["metadata"]![0];
-             
-               Console.WriteLine(metadata!["fileid"]);
-               await Task.CompletedTask;
+               var fileid = metadata!["fileid"];
+               var path = metadata!["path"];
+               Console.WriteLine(path);
+               await CopyToFolder(token, path!.ToString(), topath);
 
           }
 
 
 
 
-          public async Task<Task> CopyToFolder(string token, string name, string path, string tofolderid, string fileid)
+          public async Task<Task> CopyToFolder(string token, string frompath, string topath)
           {
 
                Console.WriteLine("Trying to copy to folder...");
@@ -239,9 +238,8 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("copyfile");
                request.AddHeader("Authorization", $"Bearer {token}");
-               request.AddParameter("fileid", fileid);
-               request.AddParameter("topath", $"Public Folder/Gallery/{name}");
-
+               request.AddParameter("path", frompath);
+               request.AddParameter("topath", topath);
                var response = await client.ExecuteAsync(request);
                Console.WriteLine(response.Content);
                if (!response.IsSuccessful)
@@ -252,19 +250,19 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.Content);
                }
                Console.WriteLine(response.Content);
-               await DeleteFileFromRoot(token, path, fileid);
+               await DeleteFileFromRoot(token, frompath);
                return Task.CompletedTask;
 
           }
 
-          public async Task<Task> DeleteFileFromRoot(string token, string path, string fileid)
+          public async Task<Task> DeleteFileFromRoot(string token, string path)
           {
                Console.WriteLine("Trying to delete file....");
                Console.WriteLine(path);
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("deletefile");
                request.AddHeader("Authorization", $"Bearer {token}");
-               request.AddParameter("fileid", fileid);
+               request.AddParameter("path", path);
                var response = client.ExecuteAsync(request).Result;
                if (!response.IsSuccessful)
                {
@@ -273,7 +271,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               //Console.WriteLine(response.Content);
+               Console.WriteLine(response.Content);
                return Task.CompletedTask;
           }
 

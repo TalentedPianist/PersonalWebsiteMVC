@@ -15,11 +15,6 @@ public class ApiController : ControllerBase
         _db = db;
     }
 
-    [HttpGet]
-    [NonAction]
-    public IActionResult Get()
-    {
-        return Ok(DateTime.Now);
-    }
+
 
 }
