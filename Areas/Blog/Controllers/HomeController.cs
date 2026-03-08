@@ -50,6 +50,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
           {
                BlogCommentViewModel model = new BlogCommentViewModel();
                model.Post = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
+               ViewData["PostTitle"] = title;
                return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
           }
 

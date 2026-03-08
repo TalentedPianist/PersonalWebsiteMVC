@@ -4,9 +4,7 @@
 @using Microsoft.AspNetCore.Components
 @inject IHttpContextAccessor _http
 @inject ApplicationDbContext _db
-@{
-     ViewData["id"] = Context.GetRouteValue("id");
-}
+
 
 
 @model PersonalWebsiteMVC.Areas.Blog.Models.BlogCommentViewModel
@@ -22,11 +20,11 @@
      }
      else
      {
-          var post = _db.Posts.Where(p => p.PostID == Convert.ToInt32(ViewData["id"])).FirstOrDefault();
+          
 
           <div class="postContent">
-               <h1>@post!.PostTitle</h1>
-               @Html.Raw(post.PostContent)
+               <h1>@Model.Post!.PostTitle</h1>
+               @Html.Raw(Model.Post.PostContent)
           </div>
 
           <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
