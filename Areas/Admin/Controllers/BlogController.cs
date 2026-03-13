@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Web;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
@@ -116,11 +117,12 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           [HttpPost]
           public IActionResult SaveDraft([FromBody] Posts model)
           {
-             
+
                _db.Posts.Add(model);
                _db.SaveChanges();
                return Ok(model);
           }
+
 
           [HttpPost]
           public IActionResult DeleteMultiple([FromBody] List<Posts> posts)
@@ -128,6 +130,32 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                _db.Posts.RemoveRange(posts);
                _db.SaveChanges();
                return Ok();
+          }
+
+          [Microsoft.AspNetCore.Mvc.Route("/Blog/Autosave")]
+          [HttpPost]
+          public IActionResult Autosave([FromBody] Posts model, [FromForm(Name="postID")]int PostID)
+          {
+               if (PostID == 0)
+               {
+                    Posts post = new Posts();
+                    post.PostTitle = model.PostTitle;
+                    post.PostContent = model.PostContent;
+                    post.PostDate = DateTime.Now;
+                    post.PostAuthor = HttpContext.User.Identity!.Name;
+                    post.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
+                    //_db.Posts.Add(post);
+                    //_db.SaveChanges();
+                    return Ok(post.PostID);
+               }
+               else
+               {
+                    var post = _db.Posts.Where(p => p.PostID == model.PostID).FirstOrDefault();
+                    post!.PostContent = model.PostContent;
+                    _db.Posts.Update(post);
+                    _db.SaveChanges();
+                    return Ok(post);
+               }
           }
      }
 }
