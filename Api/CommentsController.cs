@@ -12,11 +12,11 @@ namespace PersonalWebsiteMVC.Api
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CommentsControler : ControllerBase
+    public class CommentsController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public CommentsControler(ApplicationDbContext context)
+        public CommentsController(ApplicationDbContext context)
         {
             _context = context;
         }
