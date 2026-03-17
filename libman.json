@@ -117,6 +117,11 @@
     {
       "library": "simplePagination.js@1.6",
       "destination": "wwwroot/lib/simplePagination.js/"
+    },
+    {
+      "provider": "unpkg",
+      "library": "@ckeditor/ckeditor5-emoji@47.6.1",
+      "destination": "wwwroot/lib/ckeditor/ckeditor5-emoji/"
     }
   ]
 }

@@ -11,26 +11,17 @@
 
 <div id="SinglePost">
 
-     @if (Model.Post is not null)
-     {
-          <h1>@Model.Post.PostTitle</h1>
-          @Html.Raw(Model.Post.PostContent)
-          <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" />
-
-     }
-     else
-     {
+ 
           
 
           <div class="postContent">
                <h1>@Model.Post!.PostTitle</h1>
                @Html.Raw(Model.Post.PostContent)
           </div>
-
-          <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
-     }
-
 </div>
+          <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
+     
+
 
 
 @section Scripts {

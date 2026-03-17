@@ -67,7 +67,7 @@ form {
     align-self: flex-start;
 
     @media only screen and (min-width: 1200px) {
-        width: 60%;
+        width: 70%;
         gap: 1em;
         align-self: revert;
     }
@@ -75,27 +75,25 @@ form {
     label {
         display: none;
 
-        @media only screen and (min-width: 1200px) { 
+        @media only screen and (min-width: 1200px) {
             //display: flex;
-           
         }
     }
 
-   
+
 
     div {
         display: flex;
         flex-direction: column;
         flex: 1;
 
-        @media only screen and (min-width: 1200px) { 
-            }
+        @media only screen and (min-width: 1200px) {
+        }
     }
 
     input {
         border: 1px solid black;
         padding: 5px 5px 5px 5px;
-       
     }
 
     ::placeholder {
@@ -135,7 +133,7 @@ section {
     article {
         //width: 100%;
 
-        h1 { 
+        h1 {
             margin-top: 0.5em;
         }
 
@@ -170,8 +168,8 @@ section {
         gap: 1em;
     }
 
-    @media only screen and (min-width: 1100px) { 
-        flex-direction: row; 
+    @media only screen and (min-width: 1100px) {
+        flex-direction: row;
     }
 }
 
@@ -221,7 +219,6 @@ section {
         background-image: none;
         width: revert;
         color: black;
-
     }
 
     @media only screen and (min-width: 600px) {
@@ -262,7 +259,7 @@ section {
     position: relative;
     min-height: 100vh;
 
-   
+
 
 
     h1 {
@@ -466,8 +463,7 @@ section {
     display: flex;
     flex-direction: column;
     flex: 1;
-    gap: 1em;
-    padding-bottom: 2em;
+    gap: 2em;
     font-size: 16pt;
     //background-color: #f2740f;
     line-height: 2;
@@ -504,9 +500,7 @@ section {
     display: flex;
     flex-direction: column;
     flex: 1;
-    width: 50%;
-    min-width: 50%;
-    max-width: 50%;
+    gap: 1em;
 }
 
 
@@ -515,12 +509,20 @@ section {
     flex-direction: column;
     flex: 1;
 
+    form { 
+        padding-top: 1em !important;
+    }
+
     @media only screen and (min-width: 768px) {
         gap: 1em;
-        margin-top: 2em;
         padding-top: 1em;
     }
 
+    p { 
+        margin-bottom: 1em;
+
+        
+    }
 
     img {
         display: block;
@@ -634,7 +636,7 @@ section {
         margin-top: 1em;
 
         &:nth-of-type(1) {
-            display: flex; 
+            display: flex;
             flex-direction: column;
             flex: 1;
             gap: 2em;
@@ -650,26 +652,24 @@ section {
                 flex: 1;
             }
 
-            img { 
+            img {
                 width: 90%;
             }
 
-            svg { 
+            svg {
                 width: 90%;
             }
 
-            @media only screen and (min-width: 900px) { 
-                display: flex; 
+            @media only screen and (min-width: 900px) {
+                display: flex;
                 flex-direction: column;
-                flex: 1; 
-
+                flex: 1;
             }
 
-            @media only screen and (min-width: 1100px) { 
-                display: grid; 
+            @media only screen and (min-width: 1100px) {
+                display: grid;
                 grid-template-columns: repeat(2, 1fr);
             }
-           
         }
     }
 }
@@ -785,7 +785,7 @@ header {
         }
     }
 
-    
+
 
     @media only screen and (min-width: 768px) {
         background-image: url('/images/IMG_004294.jpg');
@@ -867,7 +867,6 @@ main {
     padding-right: 2em; // Only for mobile
 
     @media only screen and (min-width: 768px) {
-       
     }
 
     @media only screen and (min-width: 1200px) {
@@ -898,7 +897,7 @@ main {
     padding-top: 1em;
     padding-bottom: 1em;
 
-    @media only sreen and (min-width: 768px) { 
+    @media only sreen and (min-width: 768px) {
         display: none;
     }
 }
@@ -1167,13 +1166,13 @@ footer {
             //padding-right: 1em;
             //margin-bottom: 1em;
             //gap: 1em;
-            display: flex; 
+            display: flex;
             flex-direction: column;
-            flex: 1; 
+            flex: 1;
 
             @media only screen and (min-width: 768px) {
-               // grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); // Using minmax allows the grid item to shrink properly.  Without it, Chrome defaults to min-content sizing behaviour.  
-               
+                // grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); // Using minmax allows the grid item to shrink properly.  Without it, Chrome defaults to min-content sizing behaviour.
+
 
 
                 .paginationHolder {
@@ -1181,8 +1180,8 @@ footer {
                 }
             }
 
-            @media only screen and (min-width: 1000px) { 
-                display: grid; 
+            @media only screen and (min-width: 1000px) {
+                display: grid;
                 grid-template-columns: repeat(2, 1fr);
             }
 

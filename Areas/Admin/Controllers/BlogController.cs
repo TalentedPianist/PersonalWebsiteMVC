@@ -115,16 +115,6 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           }
 
           [HttpPost]
-          public IActionResult SaveDraft([FromBody] Posts model)
-          {
-
-               _db.Posts.Add(model);
-               _db.SaveChanges();
-               return Ok(model);
-          }
-
-
-          [HttpPost]
           public IActionResult DeleteMultiple([FromBody] List<Posts> posts)
           {
                _db.Posts.RemoveRange(posts);
@@ -132,29 +122,39 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return Ok();
           }
 
-          [Microsoft.AspNetCore.Mvc.Route("/Blog/Autosave")]
+
           [HttpPost]
-          public IActionResult Autosave([FromBody] Posts model, [FromForm(Name="postID")]int PostID)
+          [Microsoft.AspNetCore.Mvc.Route("/Blog/SaveDraft")]
+          public IActionResult SaveDraft([FromBody] Posts model)
           {
-               if (PostID == 0)
-               {
-                    Posts post = new Posts();
-                    post.PostTitle = model.PostTitle;
-                    post.PostContent = model.PostContent;
-                    post.PostDate = DateTime.Now;
-                    post.PostAuthor = HttpContext.User.Identity!.Name;
-                    post.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
-                    //_db.Posts.Add(post);
-                    //_db.SaveChanges();
-                    return Ok(post.PostID);
-               }
-               else
+               Posts post = new Posts();
+               post.PostTitle = model.PostTitle;
+               post.PostContent = model.PostContent;
+               post.PostPublished = Posts.Published.No;
+               post.PostDate = DateTime.Now;
+               post.PostAuthor = HttpContext.User.Identity!.Name;
+               post.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
+               _db.Posts.Add(post);
+               _db.SaveChanges();
+               return Ok(post);
+          }
+
+          [HttpPost]
+          [Microsoft.AspNetCore.Mvc.Route("/Blog/UpdateDraft")]
+          public IActionResult UpdateDraft([FromBody] Posts model)
+          {
+               try
                {
                     var post = _db.Posts.Where(p => p.PostID == model.PostID).FirstOrDefault();
-                    post!.PostContent = model.PostContent;
+                    post!.PostTitle = model.PostTitle;
+                    post.PostContent = model.PostContent;
                     _db.Posts.Update(post);
                     _db.SaveChanges();
                     return Ok(post);
+               }
+               catch (NullReferenceException)
+               {
+                    return Ok("Post doesn't exist, please create post.");
                }
           }
      }

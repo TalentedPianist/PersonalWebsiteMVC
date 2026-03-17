@@ -40,17 +40,16 @@
 			<div class="Posts">
 				@foreach (Posts post in Model.PagedPosts!)
 				{
-					var result = Truncate(post.PostContent!, 200);
+					var result = Truncate(post.PostContent!, 300);
 
-					
-
+		
 						if (post.FeaturedImage is not null)
 						{
 							<img src="/Uploads/@post.FeaturedImage">
 						}
 
 						<h2>@post.PostTitle</h2>
-						@RemoveHTMLTags(result)
+						@RemoveHTMLTags(result.Replace("&nbsp;", string.Empty))
 
 
 						<a asp-area="Blog" asp-action="Post" asp-route-title="@post.PostTitle" class="btn btn-primary">Read More</a>

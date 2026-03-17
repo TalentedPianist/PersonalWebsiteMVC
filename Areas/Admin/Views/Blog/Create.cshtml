@@ -2,8 +2,8 @@
 @using PersonalWebsiteMVC.Data
 @inject ApplicationDbContext db
 @{
-    ViewData["Title"] = "Create";
-    Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
+     ViewData["Title"] = "Create";
+     Layout = "~/Areas/Admin/Shared/_Layout.cshtml";
 }
 
 <h1 class="bg-info text-white">Create</h1>
@@ -13,125 +13,115 @@
 @TempData["Message"]
 
 <form method="post" id="CreatePost" asp-action="CreatePost" asp-controller="Blog" asp-area="Admin" enctype="multipart/form-data" name="CreateForm">
-
-    <div class="form-group">
-        <label asp-for="PostContent">Content:</label>
-        <!-- Note: textarea needs the name attribute or else data posted will be null -->
-        <textarea asp-for="PostContent" id="ckeditor1" class="form-control border-black"></textarea>
-    </div>
-    <div class="form-group">
-        <label asp-for="PostTitle">Title:</label>
-        <input asp-for="PostTitle" class="form-control" id="title" />
-    </div>
-    <div class="form-group">
-        <label class="form-label col-sm-2">Featured Image:</label>
-        <input type="file" name="File1" class="form-control" id="image">
-    </div>
-    <div class="form-group">
-        <label asp-for="PostPublished">Published:</label>
-        <select asp-for="PostPublished" class="form-control border-black">
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-        </select>
-    </div>
-    <div class="form-group">
-        <label asp-for="CategoryID">Category:</label>
-        <select asp-for="CategoryID" class="form-control border-black" id="category">
-            @foreach (var item in db.Categories)
-            {
-                <option value="@item.CategoryID" />
-                @item.Category
-            }
-        </select>
-     
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-<a href="#" id="draft">Save Draft</a>
-
-
-@section Scripts { 
-    <script>
-        setInterval(() => { 
-           // Script to autosave blog post writing at set intervals
-        const title = document.querySelector("#title").value;
-        
-
-        $.ajax({ 
-            method: "POST", 
-            url: "/Blog/Autosave", 
-            data: JSON.stringify({ 
-                PostTitle: title, 
-                PostContent: editor.getData(),
-            }),
-            headers: { 
-                "Content-Type": "application/json",
-            },
-            async: false, 
-            cache: false,
-            success: function(message) { 
-                $('<input>').attr({
-                    type: 'hidden', 
-                    id: 'postID', 
-                    name: 'postID', 
-                    value: message 
-                }).appendTo(form);
-            },
-            error: function(error) { 
-                console.log(error);
-            }
-        });   
-         }, 10000);
-    </script>
-
-    <script>
-        $(function () {
-            function GetDateTime() {
-                var currentdate = new Date();
-                var datetime = currentdate.getDate() + "/"
-                    + (currentdate.getMonth() + 1) + "/"
-                    + currentdate.getFullYear() + " "
-                    + currentdate.getHours() + ":"
-                    + currentdate.getMinutes() + ":"
-                    + currentdate.getSeconds();
-                return datetime;
-            }
-
-
-            $("#draft").on('click', function (e) {
-                e.preventDefault();
-
-                var formData = {
-                    PostContent: $("#ckeditor1").val(),
-                    PostTitle: $("#title").val(),
-                    PostPublished: false,
-                    PostDate: GetDateTime(),
-                    CommentCount: 0,
-                };
-                console.log(formData);
-                $.ajax({
-                    method: "POST",
-                    url: "@Url.Action("SaveDraft", "Blog")",
-                    data: JSON.stringify(formData),
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    async: false,
-                    cache: false,
-                    processData: false,
-                    success: function (message) {
-                        console.log(message);
-                    },
-                    error: function (err) {
-                        console.log(err);
+     <input type="hidden" asp-for="PostID" id="hiddenID">
+          <div class="form-group">
+               <label asp-for="PostContent">Content:</label>
+               <!-- Note: textarea needs the name attribute or else data posted will be null -->
+               <textarea asp-for="PostContent" id="ckeditor1" class="form-control border-black"></textarea>
+          </div>
+          <div class="form-group">
+               <label asp-for="PostTitle">Title:</label>
+               <input asp-for="PostTitle" class="form-control" id="title" />
+          </div>
+          <div class="form-group">
+               <label class="form-label col-sm-2">Featured Image:</label>
+               <input type="file" name="File1" class="form-control" id="image">
+          </div>
+          <div class="form-group">
+               <label asp-for="PostPublished">Published:</label>
+               <select asp-for="PostPublished" class="form-control border-black">
+                    <option value="No">No</option>
+                    <option value="Yes">Yes</option>
+                    
+               </select>
+          </div>
+          <div class="form-group">
+               <label asp-for="CategoryID">Category:</label>
+               <select asp-for="CategoryID" class="form-control border-black" id="category">
+                    @foreach (var item in db.Categories)
+                    {
+                         <option value="@item.CategoryID" />
+                         @item.Category
                     }
+               </select>
+        
+          </div>
+       
+          <div class="flex flex-row flex-1 gap-5 w-full">
+               <button type="submit" class="btn btn-primary">Submit</button>
+               <a href="#" id="draft">Save Draft</a>
+          </div>
+     </form>
+
+
+
+     @section Scripts {
+          <script>
+               let postID = localStorage.getItem('currentPostID');
+               if (postID === undefined)
+               {
+                   // postID is not in local storage, do nothing.
+                   
+                         
+               }
+               else
+               {
+                   // Use jQuery to dynamically add the postID to the hidden field.
+                   $("#postID").attr('value', postID);
+                   // Use a timer to auto save the post reguarly now that it's been created.
+                   setInterval(function() {
+                       $.ajax({
+                           method: "POST",
+                           url: "/Blog/UpdateDraft",
+                           data: JSON.stringify({
+                               PostID: localStorage.getItem('currentPostID'),
+                               PostTitle: $("#title").val(),
+                               PostContent: editor.getData(),
+                                   
+                           }),
+                           headers: {
+                               "Content-Type": "application/json"
+                           },
+                           cache: false,
+                           success: function(message) {
+                               console.log(message);
+                           },
+                           error: function(error) {
+                               console.log(error);
+                           }
+                        });
+                   }, 10000);
+               }
+
+
+               $("#draft").on('click', function(e) {
+                   e.preventDefault();
+
+               $.ajax({
+                           type: "POST",
+                           url: "/Blog/SaveDraft",
+                           data: JSON.stringify({
+                               PostTitle: $("#title").val(),
+                               PostContent: editor.getData(),
+                                                               
+                           }),
+                           headers: { 
+                               "Content-Type": "application/json"
+                           },
+                           success: function(message) {
+                               console.log(message);
+                               localStorage.setItem('currentPostID', message.PostID);
+                           },
+                           error: function(error) {
+                               console.log(error);
+                           }
+                                
+                       });
                 });
+          </script>
+
              
-            });
-        });
-    </script>
-}
+     }
 
 
 

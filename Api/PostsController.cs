@@ -25,7 +25,7 @@ namespace PersonalWebsiteMVC.Api
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Posts>>> GetPosts()
         {
-            return await _context.Posts.ToListAsync();
+            return await _context.Posts.Where(p => p.PostPublished.ToString() == "Yes").ToListAsync();
         }
 
         // GET: api/Posts/5

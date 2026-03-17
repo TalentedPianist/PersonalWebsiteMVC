@@ -91,6 +91,10 @@
 		<PackageReference Include="X.Web.PagedList" Version="10.1.2" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="wwwroot\lib\ckeditor\" />
+	</ItemGroup>
+
 
 
 

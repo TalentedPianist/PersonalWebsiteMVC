@@ -97,6 +97,7 @@ try
      // Specifically for Microsoft Graph authentication
 
 
+     TimeSpan sessionTimeout = TimeSpan.FromHours(5);
 
      builder.Services.AddAuthentication(options =>
      {
@@ -106,6 +107,11 @@ try
           .AddCookie(options =>
           {
                options.ExpireTimeSpan = TimeSpan.FromHours(5);
+               options.Cookie.MaxAge = sessionTimeout;
+               options.Cookie.IsEssential = true;
+               options.Cookie.HttpOnly = true;
+               options.Cookie.SameSite = SameSiteMode.Strict;
+              
           });
 
 
@@ -283,6 +289,7 @@ try
           options.Limits.MaxRequestBodySize = long.MaxValue;
      });
 
+    
     
 
      var app = builder.Build();
