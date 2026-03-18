@@ -4,10 +4,11 @@
 @using Microsoft.AspNetCore.Components
 @inject IHttpContextAccessor _http
 @inject ApplicationDbContext _db
-
-
-
 @model PersonalWebsiteMVC.Areas.Blog.Models.BlogCommentViewModel
+@{
+    ViewData["Title"] = Model.Post!.PostTitle;
+}
+
 
 <div id="SinglePost">
 

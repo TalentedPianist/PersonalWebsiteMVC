@@ -2,8 +2,7 @@
 @*
 	For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
-@{
-}
+
 @using RestSharp
 @using Newtonsoft.Json
 @using Newtonsoft.Json.Linq
@@ -14,7 +13,7 @@
 @TempData["Message"]
 
 @{
-     ViewData["Title"] = "Home Page";
+     ViewData["Title"] = Model.SingleAlbum!.Name;
      var data = new ImportMapDefinition(
      new Dictionary<string, string>
           {
