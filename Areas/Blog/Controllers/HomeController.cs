@@ -25,7 +25,7 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                _httpClient = httpClient;
           }
 
-         
+
           [Route("Blog")]
           public IActionResult Index([FromQuery(Name = "pageNumber")] int? page)
           {
@@ -39,19 +39,23 @@ namespace PersonalWebsiteMVC.Areas.Blog.Controllers
                {
                     ViewBag.Class = "hidden";
                }
-               
+
                return View("~/Areas/Blog/Views/Index.cshtml", model);
 
 
           }
 
           [Route("/Blog/{title}")]
-          public IActionResult Post(string title)
+          public IActionResult Post([FromRoute(Name = "title")] string? title)
           {
+
+
                BlogCommentViewModel model = new BlogCommentViewModel();
-               model.Post = _db.Posts.Where(p => p.PostTitle == title).FirstOrDefault();
-               ViewData["PostTitle"] = title;
+
+               model.Post = _db.Posts.SingleOrDefault(p => p.PostTitle == title);
+               
                return View("~/Areas/Blog/Views/Shared/SinglePost.cshtml", model);
+
           }
 
 

@@ -6,22 +6,26 @@
 @inject ApplicationDbContext _db
 @model PersonalWebsiteMVC.Areas.Blog.Models.BlogCommentViewModel
 @{
-    ViewData["Title"] = Model.Post!.PostTitle;
+    if (Model.Post is not null) { 
+        ViewData["Title"] = Model.Post.PostTitle;
+        
+    }
 }
-
 
 <div id="SinglePost">
 
- 
-          
-
-          <div class="postContent">
+    
+   
+     <div class="postContent">
+          @if (Model.Post is not null)
+          {
                <h1>@Model.Post!.PostTitle</h1>
                @Html.Raw(Model.Post.PostContent)
-          </div>
+          }
+     </div>
 </div>
-          <partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
-     
+<partial name="~/Areas/Blog/Views/Shared/Comments.cshtml" view-data="ViewData" model="@Model" />
+   
 
 
 
@@ -34,29 +38,29 @@
 
           let textarea = form.find('.ckeditor1')[0];
           
-          ClassicEditor.create(textarea, { 
-              licenseKey: 'GPL',
-              plugins: [
-                  window.CKEditorEssentials, 
-                  window.CKEditorParagraph, 
-                  window.CKEditorBold,
-                  window.CKEditorItalic, 
-                  window.CKEditorFont
-              ]
+          ClassicEditor.create(textarea, {
+          licenseKey: 'GPL',
+          plugins: [
+          window.CKEditorEssentials,
+          window.CKEditorParagraph,
+          window.CKEditorBold,
+          window.CKEditorItalic,
+          window.CKEditorFont
+          ]
           })
-          .then(editor => { 
-              textarea._ckeditor = editor;
+          .then(editor => {
+          textarea._ckeditor = editor;
 
-              editor.model.document.on('change:data', () => { 
+          editor.model.document.on('change:data', () => {
 
-                  const $textarea = $(textarea);
+          const $textarea = $(textarea);
 
-                  $textarea.val(editor.getData());
+          $textarea.val(editor.getData());
 
-                  if (form.data('validator')) { 
-                      form.validate().element($textarea);
-                  }
-              });
+          if (form.data('validator')) {
+          form.validate().element($textarea);
+          }
+          });
           });
             
      </script>

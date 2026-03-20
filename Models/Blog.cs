@@ -46,6 +46,8 @@ namespace PersonalWebsiteMVC.Models
           public int? CommentCount { get; set; }
           [NotMapped]
           public IFormFile? FileUpload { get; set; }
+          public string? Keywords { get; set; }
+          public string? Description { get; set; }
      }
 
      public class Comments
