@@ -13,6 +13,6 @@ namespace PersonalWebsiteMVC.Models
           public DateTime DateCreated { get; set; }
           public string? IP { get; set; }
           public string? User { get; set; }
-
+          public string? Keywords { get; set; }
      }
 }

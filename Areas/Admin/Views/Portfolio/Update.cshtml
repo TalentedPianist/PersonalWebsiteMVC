@@ -33,7 +33,10 @@
         <label asp-for="Description">Description:</label>
         <textarea id="ckeditor1" asp-for="Description" class="form-control"></textarea>
     </div>
-  
+    <div>
+        <label asp-for="Keywords">Keywords:</label>
+        <input asp-for="Keywords" class="form-control">
+    </div>
     <input asp-for="PortfolioID" type="hidden" value="@Model.PortfolioID" name="portfolioID">
     <button type="submit" class="btn btn-primary">Update</button>
 </form>

@@ -11,5 +11,7 @@ namespace PersonalWebsiteMVC.Models
         public string? Location { get; set; } 
         public string? CoverPhoto { get; set; }
         public DateTime? DateCreated { get; set; }
+        public string? Keywords { get; set; }
+        public string? Portfolio { get; set; }
     }
 }

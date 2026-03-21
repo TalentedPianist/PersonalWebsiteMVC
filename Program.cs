@@ -45,6 +45,7 @@ try
 {
 
      var builder = WebApplication.CreateBuilder(args);
+     builder.Configuration.AddEnvironmentVariables();
 
      builder.Host.UseSerilog((context, loggerConfiguration) =>
      {
@@ -53,12 +54,16 @@ try
      });
 
      // Add services to the container.
-     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-     builder.Services.AddDbContext<ApplicationDbContext>(options =>
-         options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+     //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+     //builder.Services.AddDbContext<ApplicationDbContext>(options =>
+     // options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
+     var connectionString = builder.Configuration.GetConnectionString(Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection")!) ?? throw new InvalidOperationException("Connection string not found");
 
+          builder.Services.AddDbContext<ApplicationDbContext>(options =>
+               options.UseSqlServer(connectionString));
 
+     
      builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
      //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -391,18 +396,18 @@ try
      app.UseDeveloperExceptionPage();
 
 
-     using (var scope = app.Services.CreateScope())
-     {
-          var services = scope.ServiceProvider;
-          var dbContext = services.GetRequiredService<ApplicationDbContext>();
-          // Apply pending migrations
-          await dbContext.Database.MigrateAsync();
-          // Seed roles and admin user
-          await IdentitySeeder.SeedRolesAndAdminAsync(services);
+     //using (var scope = app.Services.CreateScope())
+     //{
+     //     var services = scope.ServiceProvider;
+     //     var dbContext = services.GetRequiredService<ApplicationDbContext>();
+     //     // Apply pending migrations
+     //     await dbContext.Database.MigrateAsync();
+     //     // Seed roles and admin user
+     //     await IdentitySeeder.SeedRolesAndAdminAsync(services);
 
 
 
-     }
+     //}
 
      app.MapOpenApi();
      app.UseSwaggerUI(options => options.SwaggerEndpoint("/openapi/v1.json", "Swagger"));
