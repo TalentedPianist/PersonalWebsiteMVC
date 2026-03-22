@@ -58,12 +58,21 @@ try
      //builder.Services.AddDbContext<ApplicationDbContext>(options =>
      // options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
-
+     if (builder.Environment.IsDevelopment())
+     {
           var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found");
 
           builder.Services.AddDbContext<ApplicationDbContext>(options =>
                options.UseSqlServer(connectionString));
-     
+     }
+
+     if (builder.Environment.IsProduction())
+     {
+          var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") ?? throw new InvalidOperationException("Connection string not found");
+
+          builder.Services.AddDbContext<ApplicationDbContext>(options =>
+               options.UseSqlServer(connectionString));
+     }
 
      
      builder.Services.AddDatabaseDeveloperPageExceptionFilter();
