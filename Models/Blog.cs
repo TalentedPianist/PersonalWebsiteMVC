@@ -31,7 +31,7 @@ namespace PersonalWebsiteMVC.Models
           }
 
           [Key]
-          public int PostID { get; set; }
+          public int id { get; set; } // id is more compatible with frontend frameworks
           public int? CategoryID { get; set; }
           public string? FeaturedImage { get; set; }
           public string? PostContent { get; set; }

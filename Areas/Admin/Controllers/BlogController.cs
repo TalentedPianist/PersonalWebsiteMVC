@@ -79,7 +79,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           public IActionResult Update(int id)
           {
 
-               return View(_db.Posts.Where(b => b.PostID == id).FirstOrDefault());
+               return View(_db.Posts.Where(b => b.id == id).FirstOrDefault());
           }
 
           [HttpPost]
@@ -103,7 +103,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Delete(int id)
           {
-               var b = _db.Posts.Where(b => b.PostID == id).FirstOrDefault()!;
+               var b = _db.Posts.Where(b => b.id == id).FirstOrDefault()!;
                _db.Remove<Posts>(b);
                _db.SaveChanges();
                return RedirectToAction("Index");
@@ -111,7 +111,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
 
           public IActionResult Details(int id)
           {
-               return View(_db.Posts.Where(b => b.PostID == id).FirstOrDefault());
+               return View(_db.Posts.Where(b => b.id == id).FirstOrDefault());
           }
 
           [HttpPost]
@@ -145,7 +145,7 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
           {
                try
                {
-                    var post = _db.Posts.Where(p => p.PostID == model.PostID).FirstOrDefault();
+                    var post = _db.Posts.Where(p => p.id == model.id).FirstOrDefault();
                     post!.PostTitle = model.PostTitle;
                     post.PostContent = model.PostContent;
                     _db.Posts.Update(post);

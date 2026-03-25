@@ -443,11 +443,11 @@ namespace PersonalWebsiteMVC.Migrations
 
             modelBuilder.Entity("PersonalWebsiteMVC.Models.Posts", b =>
                 {
-                    b.Property<int>("PostID")
+                    b.Property<int>("id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PostID"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"));
 
                     b.Property<int?>("CategoryID")
                         .HasColumnType("int");
@@ -493,7 +493,7 @@ namespace PersonalWebsiteMVC.Migrations
                     b.Property<string>("PostTitle")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("PostID");
+                    b.HasKey("id");
 
                     b.ToTable("Posts");
                 });

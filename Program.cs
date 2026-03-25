@@ -36,6 +36,8 @@ using PersonalWebsiteMVC.Areas.pCloud.Helpers;
 using reCAPTCHA.AspNetCore;
 using Microsoft.OpenApi;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -127,9 +129,29 @@ try
                options.Cookie.IsEssential = true;
                options.Cookie.HttpOnly = true;
                options.Cookie.SameSite = SameSiteMode.Strict;
-              
-          });
 
+          })
+          .AddJwtBearer(options =>
+          {
+               var secret = builder.Configuration["JwtConfig:Secret"];
+               var issuer = builder.Configuration["JwtConfig:ValidIssuer"];
+               var audience = builder.Configuration["JwtConfig:ValidAudiences"];
+               if (secret is null || issuer is null || audience is null)
+               {
+                    throw new ApplicationException("Jwt is not set in the configuration");
+               }
+               options.SaveToken = true;
+               options.RequireHttpsMetadata = false;
+               options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
+               {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidAudience = audience, 
+                    ValidIssuer = issuer,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
+               };
+
+          });
 
 
      builder.Services.Configure<IdentityOptions>(options =>
@@ -226,7 +248,8 @@ try
              {
                   policy.AllowAnyOrigin()
                  .AllowAnyHeader()
-                 .AllowAnyMethod();
+                 .AllowAnyMethod()
+                 .WithExposedHeaders("Content-Range");
              });
      });
 
@@ -305,7 +328,8 @@ try
           options.Limits.MaxRequestBodySize = long.MaxValue;
      });
 
-    
+     //builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+
     
 
      var app = builder.Build();
@@ -405,6 +429,8 @@ try
 
 
      app.UseDeveloperExceptionPage();
+
+     app.MapGroup("/identity").MapIdentityApi<ApplicationUser>();
 
 
      //using (var scope = app.Services.CreateScope())

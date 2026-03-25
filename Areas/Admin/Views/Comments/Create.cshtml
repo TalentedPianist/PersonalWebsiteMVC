@@ -19,7 +19,7 @@
           <select asp-for="PostID" class="form-control" id="post">
                @foreach (var item in db.Posts)
                {
-                    <option value="@item.PostID">@item.PostTitle</option>
+                    <option value="@item.id">@item.PostTitle</option>
                }
           </select>
      </div>

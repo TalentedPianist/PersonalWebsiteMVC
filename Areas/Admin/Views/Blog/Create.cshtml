@@ -13,7 +13,7 @@
 @TempData["Message"]
 
 <form method="post" id="CreatePost" asp-action="CreatePost" asp-controller="Blog" asp-area="Admin" enctype="multipart/form-data" name="CreateForm">
-     <input type="hidden" asp-for="PostID" id="hiddenID">
+     <input type="hidden" asp-for="id" id="hiddenID">
           <div class="form-group">
                <label asp-for="PostContent">Content:</label>
                <!-- Note: textarea needs the name attribute or else data posted will be null -->

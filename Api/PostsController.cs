@@ -25,7 +25,13 @@ namespace PersonalWebsiteMVC.Api
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Posts>>> GetPosts()
         {
-            return await _context.Posts.Where(p => p.PostPublished.ToString() == "Yes").ToListAsync();
+               
+            var model = await _context.Posts.Where(p => p.PostPublished.ToString() == "Yes").ToListAsync();
+               var total = model.Count().ToString();
+
+     
+               Response.Headers.Append("Content-Range", total);
+               return model;
         }
 
         // GET: api/Posts/5
@@ -47,7 +53,7 @@ namespace PersonalWebsiteMVC.Api
         [HttpPut("{id}")]
         public async Task<IActionResult> PutPosts(int id, Posts posts)
         {
-            if (id != posts.PostID)
+            if (id != posts.id)
             {
                 return BadRequest();
             }
@@ -81,7 +87,7 @@ namespace PersonalWebsiteMVC.Api
             _context.Posts.Add(posts);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetPosts", new { id = posts.PostID }, posts);
+            return CreatedAtAction("GetPosts", new { id = posts.id }, posts);
         }
 
         // DELETE: api/Posts/5
@@ -102,7 +108,7 @@ namespace PersonalWebsiteMVC.Api
 
         private bool PostsExists(int id)
         {
-            return _context.Posts.Any(e => e.PostID == id);
+            return _context.Posts.Any(e => e.id == id);
         }
     }
 }
