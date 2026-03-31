@@ -60,23 +60,16 @@ try
      //builder.Services.AddDbContext<ApplicationDbContext>(options =>
      // options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
 
-     if (builder.Environment.IsDevelopment())
-     {
-          var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string not found");
 
-          builder.Services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(connectionString));
-     }
+     var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"] ?? throw new InvalidOperationException("Connection string not found");
 
-     if (builder.Environment.IsProduction())
-     {
-          var connectionString = Environment.GetEnvironmentVariable("ConnectionStrings__DefaultConnection") ?? throw new InvalidOperationException("Connection string not found");
+     builder.Services.AddDbContext<ApplicationDbContext>(options =>
+          options.UseSqlServer(connectionString));
 
-          builder.Services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(connectionString));
-     }
+     var test = builder.Configuration["ConnectionStrings:DefaultConnection"];
+     Console.WriteLine($"CONN: {test}");
 
-     
+
      builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
      //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -146,7 +139,7 @@ try
                {
                     ValidateIssuer = true,
                     ValidateAudience = true,
-                    ValidAudience = audience, 
+                    ValidAudience = audience,
                     ValidIssuer = issuer,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
                };
@@ -330,7 +323,7 @@ try
 
      //builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
 
-    
+
 
      var app = builder.Build();
 
