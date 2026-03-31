@@ -985,6 +985,10 @@ footer {
     gap: 1em;
     width: 60%;
 
+    @media only screen and (min-width: 1900px) { 
+        width: 30%;
+    }
+
 
     p {
         font-size: large;
@@ -1025,6 +1029,10 @@ footer {
         border-radius: 50%;
         align-self: center;
         width: 30%;
+
+        @media only screen and (min-width: 1900px) { 
+            width: 20%;
+        }
     }
 
     a {

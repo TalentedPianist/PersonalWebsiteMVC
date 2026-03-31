@@ -835,6 +835,11 @@ footer {
   gap: 1em;
   width: 60%;
 }
+@media only screen and (min-width: 1900px) {
+  .socialMedia {
+    width: 30%;
+  }
+}
 .socialMedia p {
   font-size: large;
 }
@@ -869,6 +874,11 @@ footer {
   border-radius: 50%;
   align-self: center;
   width: 30%;
+}
+@media only screen and (min-width: 1900px) {
+  #Sidebar img {
+    width: 20%;
+  }
 }
 #Sidebar a {
   color: revert !important;
