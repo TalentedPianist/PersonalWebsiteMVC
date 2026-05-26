@@ -82,7 +82,8 @@ namespace PersonalWebsiteMVC.Areas.Admin.Controllers
                return View(_db.Posts.Where(b => b.id == id).FirstOrDefault());
           }
 
-          [HttpPost]
+          [HttpPut]
+          [Microsoft.AspNetCore.Mvc.Route("/api/posts/{id}")]
           public async Task<IActionResult> UpdatePost(Posts model)
           {
                if (model.FileUpload is not null)

@@ -50,7 +50,7 @@ namespace PersonalWebsiteMVC.Api
 
         // PUT: api/Posts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
+        [HttpPut("api/Posts/{id}")]
         public async Task<IActionResult> PutPosts(int id, Posts posts)
         {
             if (id != posts.id)

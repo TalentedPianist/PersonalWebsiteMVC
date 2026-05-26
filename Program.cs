@@ -233,19 +233,6 @@ try
 
      builder.Services.AddResponsive();
 
-
-     builder.Services.AddCors(options =>
-     {
-          options.AddDefaultPolicy(
-             policy =>
-             {
-                  policy.AllowAnyOrigin()
-                 .AllowAnyHeader()
-                 .AllowAnyMethod()
-                 .WithExposedHeaders("Content-Range");
-             });
-     });
-
      builder.Services.AddHttpClient();
 
      builder.Services.AddEndpointsApiExplorer();
@@ -301,11 +288,12 @@ try
 
      builder.Services.AddCors(options =>
      {
-          options.AddPolicy("ReactFrontend",
+          options.AddPolicy("default",
                policy =>
                {
-                    policy.WithOrigins("http://localhost:5173")
+                    policy.WithOrigins("http://localhost:5173", "https://localhost:5173")
                          .AllowAnyHeader()
+                         .WithExposedHeaders("Content-Range")
                     .AllowAnyMethod();
                });
      });
@@ -361,7 +349,7 @@ try
 
      app.UseResponsive();
      app.UseRouting();
-     app.UseCors();
+     app.UseCors("default");
      app.UseAuthentication();
      app.UseAuthorization();
      app.UseSession();
