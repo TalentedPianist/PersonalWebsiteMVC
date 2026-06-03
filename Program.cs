@@ -38,6 +38,7 @@ using Microsoft.OpenApi;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -74,10 +75,14 @@ try
 
      //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
      //.AddEntityFrameworkStores<ApplicationDbContext>();
-     builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
-         .AddEntityFrameworkStores<ApplicationDbContext>()
-         .AddDefaultTokenProviders()
-         .AddDefaultUI();
+     //builder.Services.AddIdentity<ApplicationUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = false)
+     //    .AddEntityFrameworkStores<ApplicationDbContext>()
+     //    .AddDefaultTokenProviders()
+     //    .AddDefaultUI();
+
+     builder.Services.AddIdentityCore<ApplicationUser>()
+          .AddEntityFrameworkStores<ApplicationDbContext>()
+          .AddDefaultTokenProviders();
 
      builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider().AddRazorRuntimeCompilation();
      builder.Services.AddRazorPages().AddNewtonsoftJson();
@@ -112,40 +117,34 @@ try
 
      builder.Services.AddAuthentication(options =>
      {
-          options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+          options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+          options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 
-     })
-          .AddCookie(options =>
+     }).AddJwtBearer(options =>
+     {
+          var secret = builder.Configuration["JwtConfig:Secret"];
+          var issuer = builder.Configuration["JwtConfig:ValidIssuer"];
+          var audience = builder.Configuration["JwtConfig:ValidAudiences"];
+          if (secret is null || issuer is null || audience is null)
           {
-               options.ExpireTimeSpan = TimeSpan.FromHours(5);
-               options.Cookie.MaxAge = sessionTimeout;
-               options.Cookie.IsEssential = true;
-               options.Cookie.HttpOnly = true;
-               options.Cookie.SameSite = SameSiteMode.Strict;
-
-          })
-          .AddJwtBearer(options =>
+               throw new ApplicationException("Jwt isd not set in the configuration");
+          }
+          options.SaveToken = true;
+          options.RequireHttpsMetadata = false;
+          options.TokenValidationParameters = new TokenValidationParameters()
           {
-               var secret = builder.Configuration["JwtConfig:Secret"];
-               var issuer = builder.Configuration["JwtConfig:ValidIssuer"];
-               var audience = builder.Configuration["JwtConfig:ValidAudiences"];
-               if (secret is null || issuer is null || audience is null)
-               {
-                    throw new ApplicationException("Jwt is not set in the configuration");
-               }
-               options.SaveToken = true;
-               options.RequireHttpsMetadata = false;
-               options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters()
-               {
-                    ValidateIssuer = true,
-                    ValidateAudience = true,
-                    ValidAudience = audience,
-                    ValidIssuer = issuer,
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
-               };
-
-          });
-
+               ValidateIssuer = true,
+               ValidateAudience = true,
+               ValidAudience = audience,
+               ValidIssuer = issuer,
+               IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret))
+          };
+          //options.TokenValidationParameters = new TokenValidationParameters()
+          //{
+          //     ClockSkew = new System.TimeSpan(0, 0, 30)
+          //};
+     });
 
      builder.Services.Configure<IdentityOptions>(options =>
      {
@@ -411,7 +410,7 @@ try
 
      app.UseDeveloperExceptionPage();
 
-     app.MapGroup("/identity").MapIdentityApi<ApplicationUser>();
+     //app.MapGroup("/identity").MapIdentityApi<ApplicationUser>();
 
 
      //using (var scope = app.Services.CreateScope())
