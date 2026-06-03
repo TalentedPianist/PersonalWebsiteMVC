@@ -81,6 +81,7 @@ try
      //    .AddDefaultUI();
 
      builder.Services.AddIdentityCore<ApplicationUser>()
+          .AddRoles<IdentityRole>()
           .AddEntityFrameworkStores<ApplicationDbContext>()
           .AddDefaultTokenProviders();
 

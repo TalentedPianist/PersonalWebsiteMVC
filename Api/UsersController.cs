@@ -182,6 +182,46 @@ namespace PersonalWebsiteMVC.Api
                     return BadRequest(ModelState);
               
           }
-          
-    }
+
+          public async Task<IActionResult> Register([FromBody] User model)
+          {
+               // Check if the model is valid
+               if (ModelState.IsValid)
+               {
+                    var existedUser = await _userManager.FindByEmailAsync(model.Email);
+                    if (existedUser != null)
+                    {
+                         ModelState.AddModelError("", "Email address already taken");
+                         return BadRequest(ModelState);
+                    }
+                    // Create a new user object
+                    var user = new ApplicationUser()
+                    {
+                         FirstName = model.FirstName,
+                         LastName = model.LastName,
+                         Email = model.Email,
+                         UserName = model.UserName,
+                         SecurityStamp = Guid.NewGuid().ToString()
+                    };
+                    // Try to save the user
+                    var result = await _userManager.CreateAsync(user, model.Password);
+                    // If the user is successfully created, return OK
+                    if (result.Succeeded)
+                    {
+                         var token = GenerateToken(model.Email);
+                         return Ok(new { token });
+                    }
+                    // If there are any errors, add them to the ModelState object and return the error to the client
+                    foreach (var error in result.Errors)
+                    {
+                         ModelState.AddModelError("", error.Description);
+                    }
+                    
+               }
+               // If we get this far something failed, redisplay form
+               return BadRequest(ModelState);
+
+          }
+
+     }
 }
