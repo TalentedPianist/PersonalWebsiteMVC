@@ -17,13 +17,13 @@ namespace PersonalWebsiteMVC.Api
                roleManager = roleMgr;
           }
 
-          [HttpGet("/roles")]
+          [HttpGet]
           public IActionResult ListRoles()
           {
                return Ok(roleManager.Roles);
           }
 
-          [HttpPost("/roles/Create")]
+          [HttpPost]
           [IgnoreAntiforgeryToken]
           public async Task<IActionResult> CreateRole([Required][FromForm(Name="name")] string name)
           {
@@ -42,14 +42,14 @@ namespace PersonalWebsiteMVC.Api
 
           }
 
-          [HttpGet("/roles/role/{id}")]
+          [HttpGet("{id}")]
           public async Task<IActionResult> GetRole(string id)
           {
                return Ok(await roleManager.FindByIdAsync(id));
           }
 
 
-          [HttpPut("/roles/update/{id}")]
+          [HttpPut("{id}")]
           public async Task<IActionResult> UpdateRole(string id, [FromForm(Name="name")]string name)
           {
                if (string.IsNullOrWhiteSpace(name))
@@ -67,6 +67,19 @@ namespace PersonalWebsiteMVC.Api
                     }
                     return NotFound(new { Message = "There was a problem" });
                }
+          }
+
+          [HttpDelete("{id}")]
+          public async Task<IActionResult> DeleteRole(string id)
+          {
+              
+                var role = await roleManager.FindByIdAsync(id);
+               if (role is not null)
+               {
+                    await roleManager.DeleteAsync(role);
+                    return Ok($"Role {role.Name} successfully deleted");
+               }
+               return Ok();
           }
 
      }

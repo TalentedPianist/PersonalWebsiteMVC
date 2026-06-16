@@ -159,7 +159,7 @@ namespace PersonalWebsiteMVC.Api
 
           }
 
-          [HttpPost("/identity/login")]
+          [HttpPost("/api/identity/login")]
           public async Task<IActionResult> Login([FromBody]Login model)
           {
                // Get the secret in the configuration
@@ -173,6 +173,7 @@ namespace PersonalWebsiteMVC.Api
                               if (await _userManager.CheckPasswordAsync(user, model.Password))
                               {
                                    var token = GenerateToken(model.Email);
+                              
                                    return Ok(new { token });
                               }
 
@@ -183,6 +184,7 @@ namespace PersonalWebsiteMVC.Api
               
           }
 
+          [HttpPost("/api/identity/register")]
           public async Task<IActionResult> Register([FromBody] User model)
           {
                // Check if the model is valid
