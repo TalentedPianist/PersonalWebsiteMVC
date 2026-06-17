@@ -174,7 +174,7 @@ namespace PersonalWebsiteMVC.Api
                               {
                                    var token = GenerateToken(model.Email);
                               
-                                   return Ok(new { token });
+                                   return Ok(new { token, user.Id, user.FirstName, user.Email });
                               }
 
                          }

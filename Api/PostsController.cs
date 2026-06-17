@@ -82,8 +82,10 @@ namespace PersonalWebsiteMVC.Api
         // POST: api/Posts
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Posts>> PostPosts(Posts posts)
+        public async Task<ActionResult<Posts>> PostPosts([FromBody]Posts posts)
         {
+               posts.PostDate = DateTime.Now;
+               posts.PostIP = HttpContext.Connection.RemoteIpAddress!.ToString();
             _context.Posts.Add(posts);
             await _context.SaveChangesAsync();
 
@@ -110,5 +112,13 @@ namespace PersonalWebsiteMVC.Api
         {
             return _context.Posts.Any(e => e.id == id);
         }
+
+          [HttpPost("/Posts")]
+          public IActionResult CreatePost([FromBody]Posts model)
+          {
+               _context.Posts.Add(model);
+               //_context.SaveChanges();
+               return Ok(model);
+          }
     }
 }
