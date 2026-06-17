@@ -113,12 +113,6 @@ namespace PersonalWebsiteMVC.Api
             return _context.Posts.Any(e => e.id == id);
         }
 
-          [HttpPost("/Posts")]
-          public IActionResult CreatePost([FromBody]Posts model)
-          {
-               _context.Posts.Add(model);
-               //_context.SaveChanges();
-               return Ok(model);
-          }
+       
     }
 }
