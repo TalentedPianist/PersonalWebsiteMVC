@@ -51,32 +51,11 @@ namespace PersonalWebsiteMVC.Api
         // PUT: api/Posts/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("api/Posts/{id}")]
-        public async Task<IActionResult> PutPosts(int id, Posts posts)
+        public async Task<IActionResult> PutPosts(int id, [FromBody]Posts posts)
         {
-            if (id != posts.id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(posts).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!PostsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+               _context.Posts.Update(posts);
+               await _context.SaveChangesAsync();
+               return Ok(posts);
         }
 
         // POST: api/Posts
