@@ -39,6 +39,7 @@ using Microsoft.AspNetCore.Server.Kestrel.Core;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 
 Log.Logger = new LoggerConfiguration()
     .WriteTo.Console()
@@ -68,7 +69,6 @@ try
           options.UseSqlServer(connectionString));
 
      var test = builder.Configuration["ConnectionStrings:DefaultConnection"];
-     Console.WriteLine($"CONN: {test}");
 
 
      builder.Services.AddDatabaseDeveloperPageExceptionFilter();
@@ -274,9 +274,9 @@ try
      builder.Services.AddScoped<ISolrStatusResponseParser, SolrStatusResponseParser>();
      builder.Services.AddScoped<ISolrCoreAdmin, SolrCoreAdmin>();
 
-     builder.Services.AddScoped<IPCloudAuth, PCloudAuth>();
+     //builder.Services.AddScoped<IPCloudAuth, PCloudAuth>();
 
-     builder.Services.AddValidation();
+     //builder.Services.AddValidation();
 
      // https://github.com/TimothyMeadows/reCAPTCHA.AspNetCore
      builder.Services.AddRecaptcha(builder.Configuration.GetSection("RecaptchaSettings"));
@@ -310,6 +310,11 @@ try
      });
 
      //builder.Services.AddIdentityApiEndpoints<ApplicationUser>().AddEntityFrameworkStores<ApplicationDbContext>();
+
+     builder.Services.Configure<ApiBehaviorOptions>(options =>
+     {
+          //options.SuppressModelStateInvalidFilter = true;
+     });
 
 
 
@@ -357,10 +362,10 @@ try
 
      app.MapRazorPages();
 
-     app.MapAreaControllerRoute(
-         name: "Admin",
-         areaName: "Admin",
-         pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
+     //app.MapAreaControllerRoute(
+     //    name: "Admin",
+     //    areaName: "Admin",
+     //    pattern: "Admin/{controller=Home}/{action=Index}/{id?}");
 
 
      //app.MapControllerRoute(
@@ -382,10 +387,10 @@ try
           areaName: "OneDrive",
           pattern: "OneDrive/{controller=Home}/{action=Index}/{id?}");
 
-     app.MapAreaControllerRoute(
-         name: "pCloud",
-         areaName: "pCloud",
-         pattern: "pCloud/{controller=Home}/{action=Index}/{id?}");
+     //app.MapAreaControllerRoute(
+     //    name: "pCloud",
+     //    areaName: "pCloud",
+     //    pattern: "pCloud/{controller=Home}/{action=Index}/{id?}");
 
      app.MapControllerRoute(
           name: "default",

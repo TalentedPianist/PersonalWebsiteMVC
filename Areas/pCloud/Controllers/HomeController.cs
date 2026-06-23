@@ -41,43 +41,45 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           {
                if (!string.IsNullOrEmpty(code))
                {
-                    var token = _auth.GetAccessToken();
-                    Environment.SetEnvironmentVariable("PCloudToken", token);
+                    //var token = _auth.GetAccessToken();
+                    //Environment.SetEnvironmentVariable("PCloudToken", token);
                     ViewBag.AccessToken = Environment.GetEnvironmentVariable("PCloudToken");
                    return RedirectToAction("Index", new { Area = "PCloud", Controller = "Home" });
                }
-       
-
-               try
-               {
-                    var client = new RestClient("https://eapi.pcloud.com/");
-                    var request = new RestRequest("listfolder");
 
 
-                    request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-
-                    request.AddParameter("folderid", "19500076302");
-                    var response = client.Execute(request);
-
-                    if (!response.IsSuccessful)
-                    {
-                         Console.WriteLine(response.StatusCode);
-                         Console.WriteLine(response.ErrorMessage);
-                         Console.WriteLine(response.ErrorException);
-                         Console.WriteLine(response.Content);
-                    }
-                    //Console.WriteLine(response.Content);
-
-                    var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-                    List<ContentItem> model = result!.metadata!.contents!;
-                    return View(model);
-               }
-               catch (NullReferenceException)
-               {
+               //try
+               //{
+               //     var client = new RestClient("https://eapi.pcloud.com/");
+               //     var request = new RestRequest("listfolder");
 
 
-                    return View();
-               }
+               //     request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+
+               //     request.AddParameter("folderid", "19500076302");
+               //     var response = client.Execute(request);
+
+               //     if (!response.IsSuccessful)
+               //     {
+               //          Console.WriteLine(response.StatusCode);
+               //          Console.WriteLine(response.ErrorMessage);
+               //          Console.WriteLine(response.ErrorException);
+               //          Console.WriteLine(response.Content);
+               //     }
+               //     //Console.WriteLine(response.Content);
+
+               //     var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
+               //     List<ContentItem> model = result!.metadata!.contents!;
+               //     return View(model);
+               //}
+               //catch (NullReferenceException)
+               //{
+
+
+               //     return View();
+               //}
+
+               return View();
 
           }
 
@@ -106,12 +108,12 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Controllers
           }
 
 
-          [HttpPost]
-          public Task GetAuth()
-          {
-               _auth.Auth();
-               return Task.CompletedTask;
-          }
+          //[HttpPost]
+          //public Task GetAuth()
+          //{
+          //     _auth.Auth();
+          //     return Task.CompletedTask;
+          //}
 
           public IActionResult GetThumb(string fileid)
           {

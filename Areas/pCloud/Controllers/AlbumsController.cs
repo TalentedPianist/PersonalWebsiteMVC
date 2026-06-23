@@ -28,22 +28,23 @@ public class AlbumsController : Controller
 
     public IActionResult Index()
     {
-          TempData["Message"] = DateTime.Now;
-          var client = new RestClient("https://eapi.pcloud.com/");
-          var request = new RestRequest("listfolder");
-          request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
-          request.AddParameter("folderid", HttpContext.Request.Query["id"]);
-          var response = client.Execute(request);
-          if (!response.IsSuccessful)
-          {
-               Console.WriteLine(response.StatusCode);
-               Console.WriteLine(response.ErrorMessage);
-               Console.WriteLine(response.ErrorException);
-               Console.WriteLine(response.Content);
-          }
-          var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
-          List<ContentItem> model = result!.metadata!.contents!;
-        return View(model);
+          //  TempData["Message"] = DateTime.Now;
+          //  var client = new RestClient("https://eapi.pcloud.com/");
+          //  var request = new RestRequest("listfolder");
+          //  request.AddParameter("access_token", Environment.GetEnvironmentVariable("PCloudToken"));
+          //  request.AddParameter("folderid", HttpContext.Request.Query["id"]);
+          //  var response = client.Execute(request);
+          //  if (!response.IsSuccessful)
+          //  {
+          //       Console.WriteLine(response.StatusCode);
+          //       Console.WriteLine(response.ErrorMessage);
+          //       Console.WriteLine(response.ErrorException);
+          //       Console.WriteLine(response.Content);
+          //  }
+          //  var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Contentq!);
+          //  List<ContentItem> model = result!.metadata!.contents!;
+          //return View(model);
+          return View();
     }
 
 

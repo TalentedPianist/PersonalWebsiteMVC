@@ -8,7 +8,7 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
      public interface IPCloudAuth
      {
           void Auth();
-          string GetAccessToken();
+          //string GetAccessToken();
      }
 
      public class PCloudAuth : IPCloudAuth
@@ -40,30 +40,32 @@ namespace PersonalWebsiteMVC.Areas.pCloud.Helpers
                _http.HttpContext!.Response.Redirect(url);
           }
 
-          public string GetAccessToken()
-          {
-               string clientId = "GJR8uDME26u";
-               string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
-               string url = "https://eapi.pcloud.com/";
 
-               var client = new RestClient(url);
-               var request = new RestRequest("oauth2_token");
-               request.AddParameter("client_id", clientId);
-               request.AddParameter("client_secret", clientSecret);
-               request.AddParameter("code", _http.HttpContext.Request.Query["code"]);
-               var response = client.Execute(request);
-               if (!response.IsSuccessful)
-               {
-                    Console.WriteLine(response.StatusCode);
-                    Console.WriteLine(response.ErrorMessage);
-                    Console.WriteLine(response.ErrorException);
-                    Console.WriteLine(response.Content);
-               }
-               //Console.WriteLine(response.Content);
-               var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
-               var token = json?.access_token == null ? "NULL" : json.access_token;
-               //_http.HttpContext.Session.SetString("PCloudToken", token);
-               return json!.access_token!;
-          }
+
+          //public string GetAccessToken()
+          //{
+          //     string clientId = "GJR8uDME26u";
+          //     string clientSecret = "U83OQca6ABpaiDtaBsStUbgKRiAk";
+          //     string url = "https://eapi.pcloud.com/";
+
+          //     var client = new RestClient(url);
+          //     var request = new RestRequest("oauth2_token");
+          //     request.AddParameter("client_id", clientId);
+          //     request.AddParameter("client_secret", clientSecret);
+          //     request.AddParameter("code", _http.HttpContext.Request.Query["code"]);
+          //     var response = client.Execute(request);
+          //     if (!response.IsSuccessful)
+          //     {
+          //          Console.WriteLine(response.StatusCode);
+          //          Console.WriteLine(response.ErrorMessage);
+          //          Console.WriteLine(response.ErrorException);
+          //          Console.WriteLine(response.Content);
+          //     }
+          //     //Console.WriteLine(response.Content);
+          //     var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
+          //     var token = json?.access_token == null ? "NULL" : json.access_token;
+          //     //_http.HttpContext.Session.SetString("PCloudToken", token);
+          //     return json!.access_token!;
+          //}
      }
 }
