@@ -13,10 +13,12 @@ namespace PersonalWebsiteMVC.Api
      {
 
           public ApplicationDbContext _db { get; set; }
+          public IHttpContextAccessor _http { get; set; }
 
-          public PCloudAuthentication(ApplicationDbContext db)
+          public PCloudAuthentication(ApplicationDbContext db, IHttpContextAccessor http)
           {
                _db = db;
+               _http = http;
           }
 
          
@@ -40,11 +42,27 @@ namespace PersonalWebsiteMVC.Api
                }
                var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
                var token = json?.access_token == null ? "NULL" : json.access_token;
-              
                return Ok(token);
           }
 
-          
+          [HttpPost("/api/StoreToken")]
+          public IActionResult StoreToken([FromQuery(Name="token")]string? token)
+          {
+               Environment.SetEnvironmentVariable("pCloudToken", token);
+               foreach (var d in Environment.GetEnvironmentVariables())
+               {
+                    Console.WriteLine(d);
+               }
+               return Ok(token);
+          }
+
+          [HttpGet("/api/pCloudToken")]
+          public IActionResult GetPCloudToken()
+          {
+               var token = Environment.GetEnvironmentVariable("pCloudToken");
+               Console.WriteLine(token);
+               return Ok(token);
+          }
 
         
           [HttpGet("/api/pCloud/ListFolder")]
