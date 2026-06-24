@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using RestSharp;
 
@@ -10,16 +11,24 @@ namespace PersonalWebsiteMVC.Api
      [ApiController]
      public class PCloudAuthentication : ControllerBase
      {
+
+          public ApplicationDbContext _db { get; set; }
+
+          public PCloudAuthentication(ApplicationDbContext db)
+          {
+               _db = db;
+          }
+
          
           // Correct useage of parameters - string? clientId - bypasses validation errors
           [HttpPost("/api/GetToken")]
-          public IActionResult GetToken([FromQuery(Name="client_id")]string? clientId, [FromQuery(Name="client_secret")]string clientSecret, [FromQuery(Name="code")]string code)
+          public IActionResult GetToken([FromQuery(Name="client_id")]string? clientId, [FromQuery(Name="secret")]string? clientSecret, [FromQuery(Name="code")]string? code)
           {
                var url = "https://eapi.pcloud.com/";
                var client = new RestClient(url);
                var request = new RestRequest("oauth2_token");
-               request.AddParameter("client_id", clientId);
-               request.AddParameter("client_secret", clientSecret);
+               request.AddParameter("client_id", "GJR8uDME26u");
+               request.AddParameter("client_secret", "U83OQca6ABpaiDtaBsStUbgKRiAk");
                request.AddParameter("code", code);
                var response = client.Execute(request);
                if (!response.IsSuccessful)
@@ -31,16 +40,13 @@ namespace PersonalWebsiteMVC.Api
                }
                var json = JsonConvert.DeserializeObject<pCloudToken>(response.Content!);
                var token = json?.access_token == null ? "NULL" : json.access_token;
-               //Environment.SetEnvironmentVariable("PCloudToken", json!.access_token);
+              
                return Ok(token);
           }
 
-          [HttpGet("/pCloud/GetAccessToken")]
-          public IActionResult GetAccessToken()
-          {
-               return Ok(Environment.GetEnvironmentVariable("PCloudToken"));
-          }
+          
 
+        
           [HttpGet("/api/pCloud/ListFolder")]
           public IActionResult ListFolder([FromQuery(Name = "access_token")] string token, [FromQuery(Name = "folderid")] string folderid)
           {
@@ -58,6 +64,19 @@ namespace PersonalWebsiteMVC.Api
                }
                var result = JsonConvert.DeserializeObject<PCloudResponse>(response.Content!);
                return Ok(response);
+          }
+
+          [HttpGet("/api/pCloud/ListAlbum")]
+          public IActionResult ListAlbum([FromQuery(Name="token")]string token, [FromQuery(Name="id")]string id)
+          {
+               var client = new RestClient("https://eapi.pcloud.com");
+               var request = new RestRequest("listfolder");
+               request.AddParameter("folderid", id);
+               request.AddParameter("code", token);
+               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
+               request.AddParameter("password", "Inkyfrog1");
+               var result = client.Execute(request);
+               return Ok(result);
           }
      }
 }

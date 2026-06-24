@@ -19,7 +19,7 @@ namespace PersonalWebsiteMVC.Data
         public DbSet<Album> Albums { get; set; } = default!;
         public DbSet<Photos> Photos { get; set; } = default!;
           public DbSet<Portfolio> Portfolio { get; set; } = default!;
-
+          public DbSet<PCloudAccessToken> PCloudToken { get; set; } = default!; 
 
 
           protected override void OnModelCreating(ModelBuilder builder)
