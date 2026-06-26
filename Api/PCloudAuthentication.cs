@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using RestSharp;
@@ -45,25 +46,7 @@ namespace PersonalWebsiteMVC.Api
                return Ok(token);
           }
 
-          [HttpPost("/api/StoreToken")]
-          public IActionResult StoreToken([FromQuery(Name="token")]string? token)
-          {
-               Environment.SetEnvironmentVariable("pCloudToken", token);
-               foreach (var d in Environment.GetEnvironmentVariables())
-               {
-                    Console.WriteLine(d);
-               }
-               return Ok(token);
-          }
-
-          [HttpGet("/api/pCloudToken")]
-          public IActionResult GetPCloudToken()
-          {
-               var token = Environment.GetEnvironmentVariable("pCloudToken");
-               Console.WriteLine(token);
-               return Ok(token);
-          }
-
+          
         
           [HttpGet("/api/pCloud/ListFolder")]
           public IActionResult ListFolder([FromQuery(Name = "access_token")] string token, [FromQuery(Name = "folderid")] string folderid)
@@ -85,17 +68,65 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/pCloud/ListAlbum")]
-          public IActionResult ListAlbum([FromQuery(Name="token")]string token, [FromQuery(Name="id")]string id)
+          public IActionResult ListAlbum([FromQuery(Name="token")]string? token, [FromQuery(Name="id")]string? id)
           {
-               var client = new RestClient("https://eapi.pcloud.com");
+               var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("listfolder");
                request.AddParameter("folderid", id);
-               request.AddParameter("code", token);
-               request.AddParameter("username", "douglas@douglasmcgregor.co.uk");
-               request.AddParameter("password", "Inkyfrog1");
-               var result = client.Execute(request);
-               return Ok(result);
+               request.AddParameter("access_token", token);
+               var response = client.Execute(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               return Ok(response.Content);
           }
+
+          [HttpGet("/api/pCloud/GetThumbLink")]
+          public IActionResult GetThumbLink(string? fileid, string? size, string? token)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("getthumblink");
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("size", "50x50");
+               request.AddParameter("access_token", token);
+               var response = client.Execute(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               var json = JObject.Parse(response.Content!);
+               var result = json["hosts"]!;
+               return Ok(response.Content);
+          }
+
+
+          [HttpPost("/api/pCloud/GetThumb")]
+          public IActionResult GetThumb([FromQuery(Name="fileid")]string? fileid, [FromQuery(Name="token")]string? token)
+          {
+               var bytes = GetPubLink(fileid!, "600x400", token!);
+               return Ok(fileid);
+          }
+
+          byte[] GetPubLink(string? fileid, string? size, string? token)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("getthumblink", Method.Get);
+               request.AddParameter("access_token", token);
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("size", size);
+               request.AddParameter("type", "jpeg");
+               var response = client.ExecuteAsync(request).Result;
+               return response.RawBytes!;
+          }
+
+
      }
 }
 
