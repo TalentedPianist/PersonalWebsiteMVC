@@ -5,6 +5,8 @@ using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 using RestSharp;
+using Microsoft.EntityFrameworkCore;
+using SharpCompress;
 
 namespace PersonalWebsiteMVC.Api
 {
@@ -86,12 +88,13 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/pCloud/GetThumbLink")]
-          public IActionResult GetThumbLink(string? fileid, string? size, string? token)
+          public IActionResult GetThumbLink([FromQuery(Name="fileid")]string[]? fileid, string? size, string? token)
           {
+
                var client = new RestClient("https://eapi.pcloud.com/");
-               var request = new RestRequest("getthumblink");
-               request.AddParameter("fileid", fileid);
-               request.AddParameter("size", "50x50");
+               var request = new RestRequest("getthumbslinks");
+               request.AddParameter("fileids", fileid[0]);
+               request.AddParameter("size", "150x130");
                request.AddParameter("access_token", token);
                var response = client.Execute(request);
                if (!response.IsSuccessful)
@@ -101,29 +104,28 @@ namespace PersonalWebsiteMVC.Api
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               var json = JObject.Parse(response.Content!);
-               var result = json["hosts"]!;
-               return Ok(response.Content);
+         
+               return Ok(JsonConvert.DeserializeObject(response.Content!));
           }
 
-
-          [HttpPost("/api/pCloud/GetThumb")]
-          public IActionResult GetThumb([FromQuery(Name="fileid")]string? fileid, [FromQuery(Name="token")]string? token)
-          {
-               var bytes = GetPubLink(fileid!, "600x400", token!);
-               return Ok(fileid);
-          }
-
-          byte[] GetPubLink(string? fileid, string? size, string? token)
+          [HttpGet("/api/pCloud/GetStat")]
+          public IActionResult GetPicStats([FromQuery(Name="fileid")]string fileid, [FromQuery(Name="token")]string token)
           {
                var client = new RestClient("https://eapi.pcloud.com/");
-               var request = new RestRequest("getthumblink", Method.Get);
-               request.AddParameter("access_token", token);
+               var request = new RestRequest("stat");
                request.AddParameter("fileid", fileid);
-               request.AddParameter("size", size);
-               request.AddParameter("type", "jpeg");
-               var response = client.ExecuteAsync(request).Result;
-               return response.RawBytes!;
+               request.AddParameter("access_token", token);
+               var response = client.Execute(request);
+               if (!response.IsSuccessful)
+               {
+                    Console.WriteLine(response.StatusCode);
+                    Console.WriteLine(response.ErrorMessage);
+                    Console.WriteLine(response.ErrorException);
+                    Console.WriteLine(response.Content);
+               }
+               Console.WriteLine(response.Content);
+               return Ok(response.Content);
+
           }
 
 
