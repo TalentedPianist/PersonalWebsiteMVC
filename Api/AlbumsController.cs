@@ -19,17 +19,22 @@ namespace PersonalWebsiteMVC.Api
           public IHttpContextAccessor _http { get; set; }
           public ApplicationDbContext _db { get; set; }
           public IWebHostEnvironment _env { get; set; }
-          public IPCloudAuth _auth { get; set; }
           public IConfiguration _config { get; set; }
 
-          public AlbumsController(IHttpClientFactory httpClientFactory, IHttpContextAccessor http, ApplicationDbContext db, IWebHostEnvironment env, IPCloudAuth auth, IConfiguration config)
+          public AlbumsController(IHttpClientFactory httpClientFactory, IHttpContextAccessor http, ApplicationDbContext db, IWebHostEnvironment env, IConfiguration config)
           {
                _httpClientFactory = httpClientFactory;
                _http = http;
                _db = db;
                _env = env;
-               _auth = auth;
                _config = config;
+          }
+
+
+          [HttpGet("/api/albums/GetAlbum")]
+          public IActionResult GetAlbums()
+          {
+               return Ok(_db.Albums);
           }
 
           

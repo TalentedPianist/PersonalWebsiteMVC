@@ -123,7 +123,7 @@ namespace PersonalWebsiteMVC.Api
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               Console.WriteLine(response.Content);
+            
                return Ok(response.Content);
 
           }
