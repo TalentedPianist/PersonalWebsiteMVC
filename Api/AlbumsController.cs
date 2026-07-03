@@ -37,6 +37,19 @@ namespace PersonalWebsiteMVC.Api
                return Ok(_db.Albums);
           }
 
+          [HttpGet("/api/albums/Album/{id}")]
+          public IActionResult Update(int id)
+          {
+               var album = _db.Albums.Where(a => a.AlbumID == id).FirstOrDefault();
+               return Ok(album);
+          }
+
+
+          [HttpPost("/api/albums/UpdateAlbum")]
+          public IActionResult UpdateAlbum(Album model)
+          {
+               return Ok(model);
+          }
           
     }
 }
