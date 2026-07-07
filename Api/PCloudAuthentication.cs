@@ -88,9 +88,9 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/pCloud/GetThumbLink")]
-          public IActionResult GetThumbLink([FromQuery(Name="fileid")]string[]? fileid, string? size, string? token)
+          public IActionResult GetThumbLink([FromQuery(Name="fileids")]string[]? fileid, string? size, string? token)
           {
-
+             
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("getthumbslinks");
                request.AddParameter("fileids", fileid[0]);
@@ -104,7 +104,7 @@ namespace PersonalWebsiteMVC.Api
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-         
+
                return Ok(JsonConvert.DeserializeObject(response.Content!));
           }
 
@@ -128,6 +128,43 @@ namespace PersonalWebsiteMVC.Api
 
           }
 
+
+          [HttpPut("/api/pCloud/AddAlbumID")]
+          public IActionResult AddAlbumID([FromQuery(Name="name")]string? name, [FromQuery(Name="id")]string? id)
+          {
+               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+               album!.PCloudFolderID = id;
+               _db.Albums.Update(album);
+               _db.SaveChanges();
+               return Ok(album);
+
+          }
+
+          [HttpGet("/api/pCloud/GetAlbumID")]
+          public IActionResult GetAlbumID(string? name)
+          {
+               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+               if (album is not null)
+               {
+                    if (album.PCloudFolderID is not null)
+                    {
+                         return Ok(album.PCloudFolderID);
+                    }
+               }
+               return NotFound();
+          }
+
+          [HttpGet("/api/pCloud/PhotoPicker")]
+          public IActionResult PhotoPicker(string token, string id)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("listfolder");
+               request.AddParameter("access_token", token);
+               request.AddParameter("folderid", id);
+               var response = client.Execute(request);
+               return Ok(response.Content);
+               
+          }
 
      }
 }
