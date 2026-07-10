@@ -53,6 +53,13 @@ namespace PersonalWebsiteMVC.Api
                _db.SaveChanges();
                return Ok(model);
           }
+
+          [HttpGet("/api/albums/GetID")]
+          public IActionResult GetID(string name)
+          {
+               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+               return Ok(album!.AlbumID);
+          }
           
     }
 }

@@ -42,9 +42,11 @@ namespace PersonalWebsiteMVC.Api
                return Ok(HttpContext.Connection.RemoteIpAddress!.ToString());
           }
 
-          private bool PhotosExists(int id)
+          [HttpGet("/api/Photos/PhotoExists")]
+          public IActionResult PhotoExists(string photoName, int albumID)
           {
-               return _context.Photos.Any(e => e.PhotoID == id);
+               var photo = _context.Photos.Where(p => p.Name == photoName).Any();
+               return Ok(photo);
           }
      }
 }
