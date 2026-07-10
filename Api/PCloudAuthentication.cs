@@ -7,6 +7,7 @@ using PersonalWebsiteMVC.Models;
 using RestSharp;
 using Microsoft.EntityFrameworkCore;
 using SharpCompress;
+using System.Text;
 
 namespace PersonalWebsiteMVC.Api
 {
@@ -87,13 +88,14 @@ namespace PersonalWebsiteMVC.Api
                return Ok(response.Content);
           }
 
-          [HttpGet("/api/pCloud/GetThumbLink")]
-          public IActionResult GetThumbLink([FromQuery(Name="fileids")]string[]? fileid, string? size, string? token)
+          
+          [HttpPost("/api/pCloud/GetThumbLink")]
+          public IActionResult GetThumbLink(string? fileid, string? size, [FromQuery(Name="token")]string? token)
           {
-             
+
                var client = new RestClient("https://eapi.pcloud.com/");
-               var request = new RestRequest("getthumbslinks");
-               request.AddParameter("fileids", fileid[0]);
+               var request = new RestRequest("getthumblink");
+               request.AddParameter("fileid", fileid);
                request.AddParameter("size", "150x130");
                request.AddParameter("access_token", token);
                var response = client.Execute(request);
@@ -105,7 +107,7 @@ namespace PersonalWebsiteMVC.Api
                     Console.WriteLine(response.Content);
                }
 
-               return Ok(JsonConvert.DeserializeObject(response.Content!));
+               return Ok(response.Content);
           }
 
           [HttpGet("/api/pCloud/GetStat")]

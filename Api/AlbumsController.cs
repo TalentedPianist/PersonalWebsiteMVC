@@ -45,12 +45,12 @@ namespace PersonalWebsiteMVC.Api
           }
 
 
-          [HttpPut("/api/albums/UpdateAlbum")]
-          public IActionResult UpdateAlbum(Album model)
+          [HttpPut("/api/albums/UpdateAlbum/{id}")]
+          public IActionResult UpdateAlbum([FromBody]Album model)
           {
-               //var album = _db.Albums.Where(a => a.AlbumID == model.AlbumID).FirstOrDefault();
-               //_db.Albums.Update(album!);
-               
+               var album = _db.Albums.Where(a => a.AlbumID == model.AlbumID).FirstOrDefault();
+               _db.Albums.Update(album!);
+               _db.SaveChanges();
                return Ok(model);
           }
           
