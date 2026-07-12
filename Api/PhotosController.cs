@@ -45,7 +45,7 @@ namespace PersonalWebsiteMVC.Api
           [HttpGet("/api/Photos/PhotoExists")]
           public IActionResult PhotoExists(string photoName, int albumID)
           {
-               var photo = _context.Photos.Where(p => p.Name == photoName).Any();
+               var photo = _context.Photos.Where(p => p.Name == photoName && p.AlbumID == albumID).Any();
                return Ok(photo);
           }
      }

@@ -60,6 +60,12 @@ namespace PersonalWebsiteMVC.Api
                var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
                return Ok(album!.AlbumID);
           }
+
+          [HttpGet("/api/albums/PhotoExists")]
+          public IActionResult PhotoExists(string name, int albumId)
+          {
+               return Ok(albumId);
+          }
           
     }
 }
