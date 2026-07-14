@@ -54,7 +54,7 @@ namespace PersonalWebsiteMVC.Api
           public IActionResult DeleteMultipePhotosFromDb(Photos[]? model)
           {
               
-                    _context.Photos.RemoveRange(model);
+                    _context.Photos.RemoveRange(model!);
                     _context.SaveChanges();
                
                return Ok(model);

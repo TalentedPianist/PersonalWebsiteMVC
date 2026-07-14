@@ -85,7 +85,7 @@ namespace PersonalWebsiteMVC.Api
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-               Console.WriteLine(token);
+           
                return Ok(response.Content);
           }
 
