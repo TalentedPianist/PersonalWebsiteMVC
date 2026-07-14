@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using SharpCompress;
 
 namespace PersonalWebsiteMVC.Api
 {
@@ -42,11 +43,36 @@ namespace PersonalWebsiteMVC.Api
                return Ok(HttpContext.Connection.RemoteIpAddress!.ToString());
           }
 
-          [HttpGet("/api/Photos/PhotoExists")]
-          public IActionResult PhotoExists(string photoName, int albumID)
+          [HttpGet("/api/Photos/CheckExists")]
+          public IActionResult MultiplePhotoExists(string? name, int? albumID)
           {
-               var photo = _context.Photos.Where(p => p.Name == photoName && p.AlbumID == albumID).Any();
+               var photo = _context.Photos.Where(p => p.Name == name).Any();
                return Ok(photo);
+          }
+
+          [HttpPost("/api/Photos/DeleteMultiple")]
+          public IActionResult DeleteMultipePhotosFromDb(Photos[]? model)
+          {
+              
+                    _context.Photos.RemoveRange(model);
+                    _context.SaveChanges();
+               
+               return Ok(model);
+          }
+
+          [HttpPost("/api/Photos/AddMultiple")]
+          public IActionResult AddMultiplePhotosToDb(Photos[]? model)
+          {
+               _context.Photos.AddRange(model!);
+               _context.SaveChanges();
+               return Ok(model);
+          }
+
+          [HttpGet("/api/Photos/GetID")]
+          public IActionResult GetPhotoID([FromQuery(Name="name")]string name)
+          {
+               var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
+               return Ok(photo!.PhotoID);
           }
      }
 }

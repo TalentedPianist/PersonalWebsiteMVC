@@ -85,11 +85,12 @@ namespace PersonalWebsiteMVC.Api
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
+               Console.WriteLine(token);
                return Ok(response.Content);
           }
 
           
-          [HttpPost("/api/pCloud/GetThumbLink")]
+          [HttpGet("/api/pCloud/GetThumbLink")]
           public IActionResult GetThumbLink(string? fileid, string? size, [FromQuery(Name="token")]string? token)
           {
 
@@ -106,7 +107,7 @@ namespace PersonalWebsiteMVC.Api
                     Console.WriteLine(response.ErrorException);
                     Console.WriteLine(response.Content);
                }
-
+              
                return Ok(response.Content);
           }
 
