@@ -169,6 +169,24 @@ namespace PersonalWebsiteMVC.Api
                
           }
 
+
+          [HttpPost("/api/pCloud/CreateAlbum")]
+          public IActionResult CreateAlbum(string? token, string? name)
+          {
+               var client = new RestClient("https://eapi.pcloud.com/");
+               var request = new RestRequest("createfolderifnotexists");
+               request.AddParameter("folderid", "19500076302");
+               request.AddParameter("name", name);
+               request.AddParameter("access_token", token);
+               var response = client.Execute(request);
+               return Ok(response.Content);
+          }
+
+          [HttpPost("/api/pCloud/UploadFiles")]
+          public IActionResult UploadFiles([FromForm(Name="photos")]IFormFile[] files, [FromQuery(Name="token")]string? token)
+          {
+               return Ok(files);
+          }
      }
 }
 

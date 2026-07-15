@@ -43,14 +43,21 @@ namespace PersonalWebsiteMVC.Api
                return Ok(HttpContext.Connection.RemoteIpAddress!.ToString());
           }
 
-          [HttpPost("/api/Photos/CheckExists")]
+          [HttpGet("/api/Photos/CheckExists")]
           public IActionResult MultiplePhotoExists(string? name, int? albumID)
           {
                var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
-               return Ok(photo);
+               if (photo is not null)
+               {
+                    return Ok(photo);
+               }
+               else
+               {
+                    return Ok(false);
+               }
           }
 
-          [HttpPost("/api/Photos/DeleteMultiple")]
+          [HttpGet("/api/Photos/DeleteMultiple")]
           public IActionResult DeleteMultipePhotosFromDb(Photos[]? model)
           {
               
@@ -87,6 +94,15 @@ namespace PersonalWebsiteMVC.Api
           public IActionResult GetOnePic(string? name)
           {
                return Ok(name);
+          }
+
+          [HttpPost("/api/photos/DelSinglePhoto")]
+          public IActionResult DelSinglePhoto(Photos model)
+          {
+               var photo = _context.Photos.Where(p => p.PhotoID == model.PhotoID).FirstOrDefault();
+               _context.Photos.Remove(photo!);
+               _context.SaveChanges();
+               return Ok("Photo successfully deleted.");
           }
      }
 }
