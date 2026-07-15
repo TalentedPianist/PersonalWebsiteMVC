@@ -43,10 +43,10 @@ namespace PersonalWebsiteMVC.Api
                return Ok(HttpContext.Connection.RemoteIpAddress!.ToString());
           }
 
-          [HttpGet("/api/Photos/CheckExists")]
+          [HttpPost("/api/Photos/CheckExists")]
           public IActionResult MultiplePhotoExists(string? name, int? albumID)
           {
-               var photo = _context.Photos.Where(p => p.Name == name).Any();
+               var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
                return Ok(photo);
           }
 
@@ -73,6 +73,20 @@ namespace PersonalWebsiteMVC.Api
           {
                var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
                return Ok(photo!.PhotoID);
+          }
+
+          [HttpPost("/api/photos/AddSinglePhoto")]
+          public IActionResult AddSinglePhoto(Photos model)
+          {
+               _context.Photos.Add(model);
+               _context.SaveChanges();
+               return Ok(model);
+          }
+
+          [HttpGet("/api/photos/GetOnePic")]
+          public IActionResult GetOnePic(string? name)
+          {
+               return Ok(name);
           }
      }
 }

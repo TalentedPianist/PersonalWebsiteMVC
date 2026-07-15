@@ -55,17 +55,26 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/albums/GetID")]
-          public IActionResult GetID(string name)
+          public IActionResult GetID(string? name)
           {
-               var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-               return Ok(album!.AlbumID);
+               try
+               {
+                    var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
+                    return Ok(album!.AlbumID);
+               }
+               catch (NullReferenceException)
+               {
+                    return Ok(name);
+               }
           }
 
           [HttpGet("/api/albums/PhotoExists")]
           public IActionResult PhotoExists(string name, int albumId)
           {
+
                return Ok(albumId);
           }
+
           
     }
 }
