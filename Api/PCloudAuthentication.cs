@@ -19,6 +19,7 @@ namespace PersonalWebsiteMVC.Api
           public ApplicationDbContext _db { get; set; }
           public IHttpContextAccessor _http { get; set; }
           public string Message { get; set; } = string.Empty;
+          public List<string> FileID { get; set; } = new List<string>();
 
           public PCloudAuthentication(ApplicationDbContext db, IHttpContextAccessor http)
           {
@@ -145,7 +146,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/pCloud/GetAlbumID")]
-          public IActionResult GetAlbumID([FromQuery(Name="name")]string? name)
+          public IActionResult GetAlbumID([FromQuery(Name = "name")] string? name)
           {
                var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
                if (album is not null)
@@ -159,7 +160,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/pCloud/PhotoPicker")]
-          public IActionResult PhotoPicker(string token, string id)
+          public IActionResult PhotoPicker(string? token, string? id)
           {
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("listfolder");
@@ -167,6 +168,7 @@ namespace PersonalWebsiteMVC.Api
                request.AddParameter("folderid", id);
                var response = client.Execute(request);
                return Ok(response.Content);
+
 
           }
 
@@ -184,19 +186,23 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/pCloud/UploadFiles")]
-          public async Task<IActionResult> UploadFiles([FromForm(Name = "photos")] IFormFile[] files, [FromQuery(Name = "token")] string? token, [FromQuery(Name = "folderid")] string? folderid, [FromQuery(Name = "foldername")] string foldername)
+          public async Task<IActionResult> UploadFiles([FromForm(Name = "photos")] IFormFile[]? files, [FromQuery(Name = "token")] string? token, [FromQuery(Name = "folderid")] string? folderid, [FromQuery(Name = "foldername")] string? foldername, [FromQuery(Name = "rootFolder")] string? rootFolder)
           {
+               var result = string.Empty;
                StringBuilder sb = new StringBuilder();
-               foreach (IFormFile file in files)
+               foreach (IFormFile file in files!)
                {
-                    await UploadToPCloud(folderid!, token!, file, foldername);
+                    result = await UploadToPCloud(folderid, token, file, foldername, rootFolder);
+                    FileID.Add(result);
                }
 
-               return Ok();
+               return Ok(FileID);
+
           }
 
-          public async Task UploadToPCloud(string? folderid, string? token, IFormFile? file, string foldername)
+          public async Task<string> UploadToPCloud(string? folderid, string? token, IFormFile? file, string? foldername, string? rootFolder)
           {
+
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("uploadfile", Method.Post);
                request.AddHeader("Authorization", $"Bearer {token}");
@@ -215,10 +221,21 @@ namespace PersonalWebsiteMVC.Api
                var metadata = result["metadata"]![0];
                var fileid = metadata!["fileid"];
                var path = metadata!["path"];
-               var toPath = $"/Public Folder/Gallery/{foldername}/";
-               Console.WriteLine(toPath);
-               await CopyToFolder(token!.ToString(), path!.ToString(), fileid!.ToString(), folderid!.ToString(), toPath);
-               await Task.CompletedTask;
+               var toPath = string.Empty;
+
+               if (foldername == "Portfolio")
+               {
+                    toPath = $"/Public Folder/Portfolio/";
+               }
+               else
+               {
+                    toPath = $"/Public Folder/Gallery/{foldername}/";
+               }
+               // Folder id is possibly null
+               await CopyToFolder(token!, path!.ToString(), fileid!.ToString(), folderid!, toPath);
+               return fileid!.ToString();
+
+
           }
 
           public async Task<Task> CopyToFolder(string token, string frompath, string fileid, string tofolderid, string topath)
@@ -250,7 +267,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/pCloud/DelPicsFromPCloud")]
-          public async Task<IActionResult> DeleteFromPCloud(DelPhotosModel[]? model, [FromQuery(Name="token")]string? token)
+          public async Task<IActionResult> DeleteFromPCloud(DelPhotosModel[]? model, [FromQuery(Name = "token")] string? token)
           {
                StringBuilder sb = new StringBuilder();
                foreach (var item in model!)
@@ -261,7 +278,7 @@ namespace PersonalWebsiteMVC.Api
                {
                     return Ok(Message);
                }
-               return Ok(); 
+               return Ok();
           }
 
           public async Task<string> DeleteFromPCloud(string fileid, string token, string path)
@@ -277,7 +294,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/pCloud/RenameFolder")]
-          public async Task<IActionResult> RenameFolder(string? folderid, string? token, [FromQuery(Name="name")]string? name)
+          public async Task<IActionResult> RenameFolder(string? folderid, string? token, [FromQuery(Name = "name")] string? name)
           {
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("renamefolder");
@@ -289,7 +306,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/pCloud/DeleteFolder")]
-          public async Task<IActionResult> DeleteFolder([FromQuery(Name="folderid")]string? folderid, [FromQuery(Name="token")]string? token)
+          public async Task<IActionResult> DeleteFolder([FromQuery(Name = "folderid")] string? folderid, [FromQuery(Name = "token")] string? token)
           {
                var client = new RestClient("https://eapi.pcloud.com/");
                var request = new RestRequest("deletefolder");

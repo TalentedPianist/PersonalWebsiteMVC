@@ -46,12 +46,16 @@ namespace PersonalWebsiteMVC.Api
 
 
           [HttpPut("/api/albums/UpdateAlbum/{id}")]
-          public IActionResult UpdateAlbum([FromBody]Album model)
+          public IActionResult UpdateAlbum(Album model)
           {
-               var album = _db.Albums.Where(a => a.AlbumID == model.AlbumID).FirstOrDefault();
-               _db.Albums.Update(album!);
-               _db.SaveChanges();
-               return Ok(model);
+               // .AsNoTracking() prevents entity type instance errors
+               var album = _db.Albums.Where(a => a.AlbumID == model.AlbumID).AsNoTracking().FirstOrDefault();
+               if (album is not null)
+               {
+                    _db.Albums.Update(model);
+                    _db.SaveChanges();
+               }
+               return Ok(album);
           }
 
           [HttpGet("/api/albums/GetID")]
