@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
+using PersonalWebsiteMVC.Models;
+
 
 namespace PersonalWebsiteMVC.Api
 {
@@ -11,10 +13,13 @@ namespace PersonalWebsiteMVC.Api
      public class RolesController : ControllerBase
      {
           private RoleManager<IdentityRole> roleManager;
+          private UserManager<ApplicationUser> userManager;
+          private List<string> Errors = new List<string>();
 
-          public RolesController(RoleManager<IdentityRole> roleMgr)
+          public RolesController(RoleManager<IdentityRole> roleMgr, UserManager<ApplicationUser> usrMgr)
           {
                roleManager = roleMgr;
+               userManager = usrMgr;
           }
 
           [HttpGet]
@@ -42,31 +47,80 @@ namespace PersonalWebsiteMVC.Api
 
           }
 
-          [HttpGet("{id}")]
+          [HttpGet("/api/Role/Update/{id}")]
           public async Task<IActionResult> GetRole(string id)
           {
-               return Ok(await roleManager.FindByIdAsync(id));
+               var role = await roleManager.FindByIdAsync(id);
+               List<ApplicationUser> members = new List<ApplicationUser>();
+               List<ApplicationUser> nonMembers = new List<ApplicationUser>();
+               foreach (ApplicationUser user in userManager.Users)
+               {
+                    var list = await userManager.IsInRoleAsync(user, role!.Name!) ? members : nonMembers;
+                    list.Add(user);
+               }
+               return Ok(new RoleEdit
+               {
+                    Role = role!, 
+                    Members = members, 
+                    NonMembers = nonMembers
+               });
           }
 
 
-          [HttpPut("{id}")]
-          public async Task<IActionResult> UpdateRole(string id, [FromForm(Name="name")]string name)
+          [HttpPut("/api/Roles/Update/{id}")]
+          public async Task<IActionResult> UpdateRole([FromForm(Name="addIds")]string[]? addIds, [FromForm(Name="delIds")]string[]? delIds, [FromForm(Name="roleName")]string? RoleName)
           {
-               if (string.IsNullOrWhiteSpace(name))
+               IdentityResult result;
+               if (addIds is not null)
                {
-                    return Problem("Please provide the role name.");
-               }
-               else
-               {
-                    var role = await roleManager.FindByIdAsync(id);
-                    if (role is not null)
+                    foreach (string userId in addIds)
                     {
-                         role.Name = name;
-                         await roleManager.UpdateAsync(role);
-                         return Ok($"Role {name} updated successfully");
+                         var user = await userManager.FindByIdAsync(userId);
+                         if (user != null)
+                         {
+
+                              result = await userManager.AddToRoleAsync(user, RoleName!);
+                              if (result.Succeeded)
+                              {
+                                   return Ok(result);
+                              }
+                              else
+                              {
+                                   foreach (IdentityError error in result.Errors)
+                                   {
+                                        Errors.Add(error.Description);
+                                   }
+                                   return Ok(Errors);
+                              }
+
+                         }
                     }
-                    return NotFound(new { Message = "There was a problem" });
                }
+
+               if (delIds is not null)
+               {
+                    foreach (string userId in delIds)
+                    {
+                         var user = await userManager.FindByIdAsync(userId);
+                         if (user != null)
+                         {
+                              result = await userManager.RemoveFromRoleAsync(user, RoleName!);
+                              if (result.Succeeded)
+                              {
+                                   return Ok(result);
+                              }
+                              else
+                              {
+                                   foreach (IdentityError error in result.Errors)
+                                   {
+                                        Errors.Add(error.Description);
+                                   }
+                                   return Ok(Errors);
+                              }
+                         }
+                    }
+               }
+               return Ok(delIds);
           }
 
           [HttpDelete("{id}")]
@@ -80,6 +134,24 @@ namespace PersonalWebsiteMVC.Api
                     return Ok($"Role {role.Name} successfully deleted");
                }
                return Ok();
+          }
+
+          [HttpGet("/api/RoleUsers")]
+          public async Task<IActionResult> RoleUsers([FromQuery(Name="roleID")]string? roleID)
+          {
+               List<string> names = new List<string>();
+               var role = await roleManager.FindByIdAsync(roleID!);
+               if (role != null)
+               {
+                    foreach (var user in userManager.Users)
+                    {
+                         if (user != null && await userManager.IsInRoleAsync(user, role.Name!))
+                              names.Add(user.UserName!);
+
+                    }
+               }
+               Console.WriteLine(names);
+               return Ok(names.Count == 0 ? "No Users" : string.Join(", ", names));
           }
 
      }

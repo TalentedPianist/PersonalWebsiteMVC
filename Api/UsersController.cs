@@ -12,122 +12,98 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using ServiceStack;
 
 namespace PersonalWebsiteMVC.Api
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class UsersController : ControllerBase
-    {
-        private readonly ApplicationDbContext _context;
+     [Microsoft.AspNetCore.Mvc.Route("api/[controller]")]
+     [ApiController]
+     public class UsersController : ControllerBase
+     {
+          private readonly ApplicationDbContext _context;
           private UserManager<ApplicationUser> _userManager;
           private IConfiguration _configuration;
+          public List<string> Errors = new List<string>();
+          public IPasswordHasher<ApplicationUser> passwordHasher; 
 
-        public UsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration)
-        {
-            _context = context;
+          public UsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration, IPasswordHasher<ApplicationUser> passwordHash)
+          {
+               _context = context;
                _userManager = userManager;
                _configuration = configuration;
-        }
+               passwordHasher = passwordHash;
+          }
 
-        // GET: api/Users
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetUsers()
-        {
-            return await _context.Users.ToListAsync();
-        }
+          // GET: api/Users
+          [HttpGet]
+          public async Task<ActionResult<IEnumerable<ApplicationUser>>> GetUsers()
+          {
+               return await _context.Users.ToListAsync();
+          }
 
-        // GET: api/Users/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ApplicationUser>> GetUser(string id)
-        {
-            var applicationUser = await _context.Users.FindAsync(id);
+          [HttpPost("/api/Users/Create")]
+          public async Task<IActionResult> Create(User? user)
+          {
+               var userExists = _userManager.Users.Where(u => u.Email == user!.Email).Any();
+               if (userExists)
+               {
+                    return Ok("User already exists in database.");
+               }
+               else
+               {
+                    ApplicationUser? appUser = new ApplicationUser
+                    {
+                         FirstName = user!.FirstName,
+                         LastName = user.LastName,
+                         Email = user.Email,
+                         UserName = user.UserName,
+                    };
 
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
+                    IdentityResult result = await _userManager.CreateAsync(appUser, user.Password!);
 
-            return applicationUser;
-        }
+                    if (result.Succeeded)
+                         return Ok(appUser);
+                    else
+                    {
+                         foreach (IdentityError error in result.Errors)
+                         {
+                              ModelState.AddModelError("", error.Description);
+                              Errors.Add(error.Description);
 
-        // PUT: api/Users/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser(string id, ApplicationUser applicationUser)
-        {
-            if (id != applicationUser.Id)
-            {
-                return BadRequest();
-            }
+                         }
+                         return Ok(Errors);
+                    }
+               }
+          }
 
-            _context.Entry(applicationUser).State = EntityState.Modified;
+          [HttpGet("/api/User/{id}")]
+          public IActionResult GetUser(string id)
+          {
+               var user = _userManager.Users.Where(u => u.Id == id).FirstOrDefault();
+               return Ok(user);
+          }
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+          [HttpPut("/api/User/Update/{id}")]
+          public async Task<IActionResult> UpdateUser([FromQuery(Name="firstname")] string? firstname, [FromQuery(Name="lastname")] string? lastname, [FromQuery(Name="email")]string? email, [FromQuery(Name="password")]string? password, string? id)
+          {
 
-            return NoContent();
-        }
+               ApplicationUser user = _userManager.Users.Where(u => u.Id == id).FirstOrDefault()!;
+               user.FirstName = firstname;
+               user.LastName = lastname;
+               user.Email = email;
+               user.PasswordHash = passwordHasher.HashPassword(user, password!);
+               IdentityResult result = await _userManager.UpdateAsync(user);
+               return Ok(result);
+          }
 
-        // POST: api/Users
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-     
-        public async Task<ActionResult<ApplicationUser>> PostApplicationUser(ApplicationUser applicationUser)
-        {
-            _context.Users.Add(applicationUser);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (UserExists(applicationUser.Id))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+          [HttpDelete("/api/User/Delete/{id}")]
+          public async Task<IActionResult> DeleteUser([FromQuery(Name="id")]string id)
+          {
+               var user = _userManager.Users.Where(u => u.Id == id).FirstOrDefault();
+               await _userManager.DeleteAsync(user!);
+               return Ok("User successfully deleted");
+          }
 
-            return CreatedAtAction("GetUser", new { id = applicationUser.Id }, applicationUser);
-        }
-
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser(string id)
-        {
-            var applicationUser = await _context.Users.FindAsync(id);
-            if (applicationUser == null)
-            {
-                return NotFound();
-            }
-
-            _context.Users.Remove(applicationUser);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool UserExists(string id)
-        {
-            return _context.Users.Any(e => e.Id == id);
-        }
 
           private string? GenerateToken(string email)
           {
@@ -160,28 +136,28 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/identity/login")]
-          public async Task<IActionResult> Login([FromBody]Login model)
+          public async Task<IActionResult> Login([FromBody] Login model)
           {
                // Get the secret in the configuration
-               
-                    // Check if the model is valid
-                    if (ModelState.IsValid)
-                    {
-                         var user = await _userManager.FindByEmailAsync(model.Email);
-                         if (user != null)
-                         {
-                              if (await _userManager.CheckPasswordAsync(user, model.Password))
-                              {
-                                   var token = GenerateToken(model.Email);
-                              
-                                   return Ok(new { token, user.Id, user.FirstName, user.Email });
-                              }
 
+               // Check if the model is valid
+               if (ModelState.IsValid)
+               {
+                    var user = await _userManager.FindByEmailAsync(model.Email);
+                    if (user != null)
+                    {
+                         if (await _userManager.CheckPasswordAsync(user, model.Password))
+                         {
+                              var token = GenerateToken(model.Email);
+
+                              return Ok(new { token, user.Id, user.FirstName, user.Email });
                          }
-                         ModelState.AddModelError("", "Invalid email or password");
+
                     }
-                    return BadRequest(ModelState);
-              
+                    ModelState.AddModelError("", "Invalid email or password");
+               }
+               return BadRequest(ModelState);
+
           }
 
           [HttpPost("/api/identity/register")]
@@ -218,7 +194,7 @@ namespace PersonalWebsiteMVC.Api
                     {
                          ModelState.AddModelError("", error.Description);
                     }
-                    
+
                }
                // If we get this far something failed, redisplay form
                return BadRequest(ModelState);
