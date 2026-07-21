@@ -70,6 +70,7 @@ namespace PersonalWebsiteMVC.Api
           [HttpPut("/api/Roles/Update/{id}")]
           public async Task<IActionResult> UpdateRole([FromForm(Name="addIds")]string[]? addIds, [FromForm(Name="delIds")]string[]? delIds, [FromForm(Name="roleName")]string? RoleName)
           {
+               
                IdentityResult result;
                if (addIds is not null)
                {
@@ -82,7 +83,7 @@ namespace PersonalWebsiteMVC.Api
                               result = await userManager.AddToRoleAsync(user, RoleName!);
                               if (result.Succeeded)
                               {
-                                   return Ok(result);
+                                   Console.WriteLine(result);
                               }
                               else
                               {
@@ -107,7 +108,7 @@ namespace PersonalWebsiteMVC.Api
                               result = await userManager.RemoveFromRoleAsync(user, RoleName!);
                               if (result.Succeeded)
                               {
-                                   return Ok(result);
+                                   Console.WriteLine(result);
                               }
                               else
                               {
@@ -115,12 +116,13 @@ namespace PersonalWebsiteMVC.Api
                                    {
                                         Errors.Add(error.Description);
                                    }
-                                   return Ok(Errors);
+                                 
                               }
                          }
                     }
                }
-               return Ok(delIds);
+               return Ok();
+               
           }
 
           [HttpDelete("{id}")]
@@ -152,6 +154,13 @@ namespace PersonalWebsiteMVC.Api
                }
                Console.WriteLine(names);
                return Ok(names.Count == 0 ? "No Users" : string.Join(", ", names));
+          }
+
+          [HttpGet("/api/Roles/View/{id}")]
+          public IActionResult ViewRole(string id)
+          {
+               var role = roleManager.Roles.Where(r => r.Id == id).FirstOrDefault();
+               return Ok(role);
           }
 
      }

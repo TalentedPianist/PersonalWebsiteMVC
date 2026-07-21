@@ -80,10 +80,9 @@ try
      //    .AddDefaultTokenProviders()
      //    .AddDefaultUI();
 
-     builder.Services.AddIdentityCore<ApplicationUser>()
-          .AddRoles<IdentityRole>()
-          .AddEntityFrameworkStores<ApplicationDbContext>()
-          .AddDefaultTokenProviders();
+     builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
+           .AddEntityFrameworkStores<ApplicationDbContext>()
+           .AddDefaultTokenProviders();
 
      builder.Services.AddControllersWithViews().AddNewtonsoftJson().AddSessionStateTempDataProvider().AddRazorRuntimeCompilation();
      builder.Services.AddRazorPages().AddNewtonsoftJson();

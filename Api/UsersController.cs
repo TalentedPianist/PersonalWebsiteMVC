@@ -22,16 +22,20 @@ namespace PersonalWebsiteMVC.Api
      {
           private readonly ApplicationDbContext _context;
           private UserManager<ApplicationUser> _userManager;
+          public RoleManager<IdentityRole> _roleManager;
           private IConfiguration _configuration;
           public List<string> Errors = new List<string>();
-          public IPasswordHasher<ApplicationUser> passwordHasher; 
+          public IPasswordHasher<ApplicationUser> passwordHasher;
+          private SignInManager<ApplicationUser> _signInManager; 
+          
 
-          public UsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration, IPasswordHasher<ApplicationUser> passwordHash)
+          public UsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration, IPasswordHasher<ApplicationUser> passwordHash, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
           {
                _context = context;
                _userManager = userManager;
                _configuration = configuration;
                passwordHasher = passwordHash;
+               _signInManager = signInManager; 
           }
 
           // GET: api/Users
@@ -116,6 +120,9 @@ namespace PersonalWebsiteMVC.Api
                }
                var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
                var tokenHandler = new JwtSecurityTokenHandler();
+
+               
+
                var tokenDescriptor = new SecurityTokenDescriptor
                {
                     Subject = new ClaimsIdentity(new[]
@@ -136,28 +143,22 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/identity/login")]
-          public async Task<IActionResult> Login([FromBody] Login model)
+          public async Task<IActionResult> Login([FromForm(Name="email")]string email, [FromForm(Name="password")]string password)
           {
-               // Get the secret in the configuration
-
-               // Check if the model is valid
-               if (ModelState.IsValid)
+               var user = await _userManager.FindByEmailAsync(email);
+               if (user != null)
                {
-                    var user = await _userManager.FindByEmailAsync(model.Email);
-                    if (user != null)
+                    if (await _userManager.CheckPasswordAsync(user, password))
                     {
-                         if (await _userManager.CheckPasswordAsync(user, model.Password))
-                         {
-                              var token = GenerateToken(model.Email);
-
-                              return Ok(new { token, user.Id, user.FirstName, user.Email });
-                         }
-
+                         var token = GenerateToken(email);
+                         var userId = user.Id;
+                         var roles = await _userManager.GetRolesAsync(user);
+                         var email = user.Email;
+                         var firstName = user.FirstName;
+                         return Ok(new { token, userId, firstName, email, roles });
                     }
-                    ModelState.AddModelError("", "Invalid email or password");
                }
-               return BadRequest(ModelState);
-
+               return Ok();
           }
 
           [HttpPost("/api/identity/register")]
@@ -166,7 +167,7 @@ namespace PersonalWebsiteMVC.Api
                // Check if the model is valid
                if (ModelState.IsValid)
                {
-                    var existedUser = await _userManager.FindByEmailAsync(model.Email);
+                    var existedUser = await _userManager.FindByEmailAsync(model.Email!);
                     if (existedUser != null)
                     {
                          ModelState.AddModelError("", "Email address already taken");
@@ -182,11 +183,11 @@ namespace PersonalWebsiteMVC.Api
                          SecurityStamp = Guid.NewGuid().ToString()
                     };
                     // Try to save the user
-                    var result = await _userManager.CreateAsync(user, model.Password);
+                    var result = await _userManager.CreateAsync(user, model.Password!);
                     // If the user is successfully created, return OK
                     if (result.Succeeded)
                     {
-                         var token = GenerateToken(model.Email);
+                         var token = GenerateToken(model.Email!);
                          return Ok(new { token });
                     }
                     // If there are any errors, add them to the ModelState object and return the error to the client
