@@ -153,9 +153,9 @@ namespace PersonalWebsiteMVC.Api
                          var token = GenerateToken(email);
                          var userId = user.Id;
                          var roles = await _userManager.GetRolesAsync(user);
-                         var email = user.Email;
+                         var strEmail = user.Email;
                          var firstName = user.FirstName;
-                         return Ok(new { token, userId, firstName, email, roles });
+                         return Ok(new { token, userId, firstName, strEmail, roles });
                     }
                }
                return Ok();
