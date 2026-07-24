@@ -57,20 +57,16 @@ try
           loggerConfiguration.ReadFrom.Configuration(context.Configuration);
      });
 
-     // Add services to the container.
-     //var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
-     //builder.Services.AddDbContext<ApplicationDbContext>(options =>
-     // options.UseSqlServer(builder.Configuration["ConnectionStrings:DefaultConnection"]));
+     
 
-
-     var connectionString = builder.Configuration["ConnectionStrings:DefaultConnection"] ?? throw new InvalidOperationException("Connection string not found");
-
+     //Add services to the container.
+     var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
      builder.Services.AddDbContext<ApplicationDbContext>(options =>
-          options.UseSqlServer(connectionString));
-
-     var test = builder.Configuration["ConnectionStrings:DefaultConnection"];
+      options.UseSqlServer(connectionString));
 
 
+     //Console.WriteLine(connectionString);
+     
      builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 
      //builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)

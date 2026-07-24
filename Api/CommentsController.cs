@@ -1,108 +1,58 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
 
 namespace PersonalWebsiteMVC.Api
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CommentsController : ControllerBase
-    {
-        private readonly ApplicationDbContext _context;
+     [Route("api/[controller]")]
+     [ApiController]
+     public class CommentsController : ControllerBase
+     {
+          public ApplicationDbContext _db { get; set; }
 
-        public CommentsController(ApplicationDbContext context)
-        {
-            _context = context;
-        }
+          public CommentsController(ApplicationDbContext db)
+          {
+               _db = db;
+          }
 
-        // GET: api/CommentsControler
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Comments>>> GetComments(int postID)
-        {
-               return await _context.Comments.Where(p => p.PostID == postID).ToListAsync();
-        }
 
-        // GET: api/CommentsControler/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Comments>> GetComment(int id)
-        {
-            var comments = await _context.Comments.FindAsync(id);
+          [HttpGet("/api/Comments")]
+          public IActionResult GetComments()
+          {
+               return Ok(_db.Comments);
+          }
 
-            if (comments == null)
-            {
-                return NotFound();
-            }
+          [Route("/api/Comment/Create")]
+          public IActionResult CreatePost(Comments? model)
+          {
+               _db.Comments.Add(model!);
+               _db.SaveChanges();
+               return Ok(model);
+          }
 
-            return comments;
-        }
+          [HttpGet("/api/Comment/{id}")]
+          public IActionResult GetComment(int id)
+          {
+               var comment = _db.Comments.Where(c => c.CommentID == id).FirstOrDefault();
+               return Ok(comment);
+          }
 
-        // PUT: api/CommentsControler/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutComments(int id, Comments comments)
-        {
-            if (id != comments.CommentID)
-            {
-                return BadRequest();
-            }
+          [HttpPut("/api/Comment/Update/")]
+          public IActionResult UpdateComment(Comments model)
+          {
+               _db.Comments.Update(model);
+               _db.SaveChanges();
+               return Ok(model);
+          }
 
-            _context.Entry(comments).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!CommentsExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
-        }
-
-        // POST: api/CommentsControler
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Comments>> PostComments(Comments comments)
-        {
-            _context.Comments.Add(comments);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetComments", new { id = comments.CommentID }, comments);
-        }
-
-        // DELETE: api/CommentsControler/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComments(int id)
-        {
-            var comments = await _context.Comments.FindAsync(id);
-            if (comments == null)
-            {
-                return NotFound();
-            }
-
-            _context.Comments.Remove(comments);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
-        }
-
-        private bool CommentsExists(int id)
-        {
-            return _context.Comments.Any(e => e.CommentID == id);
-        }
-    }
+          [HttpDelete("/api/Comment/{id}")]
+          public IActionResult DeleteComment(int id)
+          {
+               var comment = _db.Comments.Where(c => c.CommentID == id).FirstOrDefault();
+               _db.Comments.Remove(comment!);
+               _db.SaveChanges();
+               return Ok(id);
+          }
+     }
 }
