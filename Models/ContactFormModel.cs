@@ -8,15 +8,13 @@ namespace PersonalWebsiteMVC.Models
 {
    public class ContactFormModel
    {
-      [Display(Name = "Name:")]
+      
+      public string? Name { get; set; } 
       [Required]
-      public string Name { get; set; } = default!;
-      [Display(Name = "Email:")]
-      [Required]
-      public string Email { get; set; } = default!;
-      public string Website { get; set; } = default!;
-      [Display(Name = "Message:")]
-      [Required]
-      public string Message { get; set; } = default!;
+      [EmailAddress(ErrorMessage="Email address is invalid.")]
+      public string? Email { get; set; } 
+      public string? Website { get; set; } 
+      
+      public string? Message { get; set; } 
    }
 }

@@ -54,5 +54,12 @@ namespace PersonalWebsiteMVC.Api
                _db.SaveChanges();
                return Ok(id);
           }
+
+          [HttpGet("/api/Comments/GetComments")]
+          public IActionResult BlogComments(int PostID)
+          {
+               var comments = _db.Comments.Where(c => c.PostID == PostID);
+               return Ok(comments);
+          }
      }
 }

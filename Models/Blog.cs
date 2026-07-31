@@ -62,6 +62,7 @@ namespace PersonalWebsiteMVC.Models
           public string? CommentAuthor { get; set; }
           [Display(Name = "Email")]
           [Required]
+          [EmailAddress(ErrorMessage="Email address is invalid.")]
           public string? CommentAuthorEmail { get; set; }
           [Display(Name = "Website")]
           public string? CommentAuthorUrl { get; set; }
