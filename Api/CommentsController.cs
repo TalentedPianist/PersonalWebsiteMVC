@@ -58,7 +58,7 @@ namespace PersonalWebsiteMVC.Api
           [HttpGet("/api/Comments/GetComments")]
           public IActionResult BlogComments(int PostID)
           {
-               var comments = _db.Comments.Where(c => c.PostID == PostID);
+               var comments = _db.Comments.Where(c => c.PostID == PostID).OrderByDescending(c => c.CommentDate);
                return Ok(comments);
           }
      }
