@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -26,8 +27,8 @@ namespace PersonalWebsiteMVC.Api
           private IConfiguration _configuration;
           public List<string> Errors = new List<string>();
           public IPasswordHasher<ApplicationUser> passwordHasher;
-          private SignInManager<ApplicationUser> _signInManager; 
-          
+          private SignInManager<ApplicationUser> _signInManager;
+
 
           public UsersController(ApplicationDbContext context, UserManager<ApplicationUser> userManager, IConfiguration configuration, IPasswordHasher<ApplicationUser> passwordHash, RoleManager<IdentityRole> roleManager, SignInManager<ApplicationUser> signInManager)
           {
@@ -35,7 +36,7 @@ namespace PersonalWebsiteMVC.Api
                _userManager = userManager;
                _configuration = configuration;
                passwordHasher = passwordHash;
-               _signInManager = signInManager; 
+               _signInManager = signInManager;
           }
 
           // GET: api/Users
@@ -88,7 +89,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPut("/api/User/Update/{id}")]
-          public async Task<IActionResult> UpdateUser([FromQuery(Name="firstname")] string? firstname, [FromQuery(Name="lastname")] string? lastname, [FromQuery(Name="email")]string? email, [FromQuery(Name="password")]string? password, string? id)
+          public async Task<IActionResult> UpdateUser([FromQuery(Name = "firstname")] string? firstname, [FromQuery(Name = "lastname")] string? lastname, [FromQuery(Name = "email")] string? email, [FromQuery(Name = "password")] string? password, string? id)
           {
 
                ApplicationUser user = _userManager.Users.Where(u => u.Id == id).FirstOrDefault()!;
@@ -101,7 +102,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpDelete("/api/User/Delete/{id}")]
-          public async Task<IActionResult> DeleteUser([FromQuery(Name="id")]string id)
+          public async Task<IActionResult> DeleteUser([FromQuery(Name = "id")] string id)
           {
                var user = _userManager.Users.Where(u => u.Id == id).FirstOrDefault();
                await _userManager.DeleteAsync(user!);
@@ -109,7 +110,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
 
-          private string? GenerateToken(string email)
+          private async Task<string?> GenerateToken(string email, ApplicationUser user)
           {
                var secret = _configuration["JwtConfig:Secret"];
                var issuer = _configuration["JwtConfig:ValidIssuer"];
@@ -121,14 +122,16 @@ namespace PersonalWebsiteMVC.Api
                var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
                var tokenHandler = new JwtSecurityTokenHandler();
 
-               
+               var userRoles = await _userManager.GetRolesAsync(user);
+               var claims = new List<Claim>
+               {
+                    new(ClaimTypes.Name, email)
+               };
+
 
                var tokenDescriptor = new SecurityTokenDescriptor
                {
-                    Subject = new ClaimsIdentity(new[]
-                    {
-                         new Claim(ClaimTypes.Email, email)
-                    }),
+                    Subject = new ClaimsIdentity(claims), 
                     Expires = DateTime.UtcNow.AddDays(1),
                     Issuer = issuer,
                     Audience = audience,
@@ -136,70 +139,77 @@ namespace PersonalWebsiteMVC.Api
                };
                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                var token = tokenHandler.WriteToken(securityToken);
-
+               Console.WriteLine(token);
                return token;
 
 
           }
 
+
+
+
           [HttpPost("/api/identity/login")]
-          public async Task<IActionResult> Login([FromForm(Name="email")]string email, [FromForm(Name="password")]string password)
+          public async Task<IActionResult> Login([FromForm] Login model)
           {
-               var user = await _userManager.FindByEmailAsync(email);
-               if (user != null)
+
+
+               if (ModelState.IsValid)
                {
-                    if (await _userManager.CheckPasswordAsync(user, password))
+                    var appUser = await _userManager.FindByEmailAsync(model.Email);
+                    if (appUser != null)
                     {
-                         var token = GenerateToken(email);
-                         var userId = user.Id;
-                         var roles = await _userManager.GetRolesAsync(user);
-                         var strEmail = user.Email;
-                         var firstName = user.FirstName;
-                         return Ok(new { token, userId, firstName, strEmail, roles });
+                         await _signInManager.SignOutAsync();
+                         Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(appUser, model.Password, false, false);
+                         if (result.Succeeded)
+                         {
+                              return Ok();
+                         }
+
                     }
+
                }
-               return Ok();
+               return BadRequest();
           }
 
           [HttpPost("/api/identity/register")]
-          public async Task<IActionResult> Register([FromBody] User model)
+          public async Task<IActionResult> Register(User model)
           {
-               // Check if the model is valid
+               
+
                if (ModelState.IsValid)
                {
-                    var existedUser = await _userManager.FindByEmailAsync(model.Email!);
-                    if (existedUser != null)
+                    ApplicationUser user = new ApplicationUser
                     {
-                         ModelState.AddModelError("", "Email address already taken");
-                         return BadRequest(ModelState);
-                    }
-                    // Create a new user object
-                    var user = new ApplicationUser()
-                    {
-                         FirstName = model.FirstName,
-                         LastName = model.LastName,
-                         Email = model.Email,
                          UserName = model.UserName,
-                         SecurityStamp = Guid.NewGuid().ToString()
+                         Email = model.Email,
+                         FirstName = model.FirstName,
+                         LastName = model.Password,
                     };
-                    // Try to save the user
-                    var result = await _userManager.CreateAsync(user, model.Password!);
-                    // If the user is successfully created, return OK
+
+                    IdentityResult result = await _userManager.CreateAsync(user, model.Password!);
                     if (result.Succeeded)
                     {
-                         var token = GenerateToken(model.Email!);
-                         return Ok(new { token });
+                         var role = await _userManager.AddToRoleAsync(user, "Member");
+                         if (role.Succeeded)
+                         {
+                              // Successfully added the user to the member role, do other stuff here
+
+                              var token = GenerateToken(model.Email!, user);
+                              return Ok(new { token });
+                         }
+
                     }
-                    // If there are any errors, add them to the ModelState object and return the error to the client
-                    foreach (var error in result.Errors)
+                    else
                     {
-                         ModelState.AddModelError("", error.Description);
+                         foreach (var error in result.Errors)
+                         {
+                              ModelState.AddModelError("", error.Description);
+                              Errors.Add(error.Description);
+                         }
                     }
-
+                    
                }
-               // If we get this far something failed, redisplay form
                return BadRequest(ModelState);
-
           }
 
      }

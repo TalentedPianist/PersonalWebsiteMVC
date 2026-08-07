@@ -65,7 +65,7 @@ try
       options.UseSqlServer(connectionString));
 
 
-     //Console.WriteLine(connectionString);
+     Console.WriteLine(connectionString);
      
      builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 

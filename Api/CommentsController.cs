@@ -26,16 +26,17 @@ namespace PersonalWebsiteMVC.Api
           [Route("/api/Comment/Create")]
           public IActionResult CreatePost(Comments? model)
           {
+               model!.CommentDate = DateTime.Now;
                _db.Comments.Add(model!);
                _db.SaveChanges();
                return Ok(model);
           }
 
-          [HttpGet("/api/Comment/{id}")]
+          [HttpPost("/api/PostComments/{id}")]
           public IActionResult GetComment(int id)
           {
-               var comment = _db.Comments.Where(c => c.CommentID == id).FirstOrDefault();
-               return Ok(comment);
+               var comments = _db.Comments.Where(c => c.PostID == id);
+               return Ok(comments);
           }
 
           [HttpPut("/api/Comment/Update/")]

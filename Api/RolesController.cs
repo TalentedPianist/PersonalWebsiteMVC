@@ -30,7 +30,7 @@ namespace PersonalWebsiteMVC.Api
 
           [HttpPost]
           [IgnoreAntiforgeryToken]
-          public async Task<IActionResult> CreateRole([Required][FromForm(Name="name")] string name)
+          public async Task<IActionResult> CreateRole(string name)
           {
                StringBuilder sb = new StringBuilder();
                if (ModelState.IsValid)
