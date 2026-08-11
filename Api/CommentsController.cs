@@ -39,7 +39,11 @@ namespace PersonalWebsiteMVC.Api
                var comments = _db.Comments.AsQueryable().AsNoTracking();
                var count = await comments.CountAsync();
                var items = await comments.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-               var result = new PaginatedList<Comments> (items, count, pageIndex, pageSize);
+               
+               var route = HttpContext.Request.Path.Value;
+               route = route!.Replace("/api/", "");
+               var result = new PaginatedList<Comments> (items, count, pageIndex, pageSize, route!);
+               
                return Ok(result);
           }
 
