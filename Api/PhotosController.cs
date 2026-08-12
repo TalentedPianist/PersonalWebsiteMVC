@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
+using RestSharp;
 using SharpCompress;
 
 namespace PersonalWebsiteMVC.Api
@@ -78,8 +79,15 @@ namespace PersonalWebsiteMVC.Api
           [HttpGet("/api/Photos/GetID")]
           public IActionResult GetPhotoID([FromQuery(Name="name")]string name)
           {
-               var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
-               return Ok(photo!.PhotoID);
+               try
+               {
+                    var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
+                    return Ok(photo!.PhotoID);
+               }
+               catch (NullReferenceException)
+               {
+                    return Ok();
+               }
           }
 
           [HttpPost("/api/photos/AddSinglePhoto")]
@@ -103,6 +111,35 @@ namespace PersonalWebsiteMVC.Api
                _context.Photos.Remove(photo!);
                _context.SaveChanges();
                return Ok("Photo successfully deleted.");
+          }
+
+          [HttpGet("/api/photos/GetThumb")]
+          public IActionResult GetThumb(string fileid, string token, string size)
+          {
+               var client = new RestClient("https://eapi.pcloud.com");
+               var request = new RestRequest("/getthumblink");
+               request.AddParameter("fileid", fileid);
+               request.AddParameter("size", size);
+               request.AddParameter("access_token", token);
+               var result = client.Execute(request);
+               return Ok(result.Content);
+          }
+
+          [HttpPut("/api/photos/MakeCoverPhoto")]
+          public IActionResult MakeCoverPhoto(string? url, string? name)
+          {
+               try
+               {
+                    var album = _context.Albums.Where(a => a.Name == name).FirstOrDefault();
+                    album!.CoverPhoto = url;
+                    _context.Albums.Update(album);
+                    _context.SaveChanges();
+                    return Ok(album);
+               }
+               catch (NullReferenceException)
+               {
+                    return Ok();
+               }
           }
      }
 }

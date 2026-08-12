@@ -23,15 +23,16 @@ namespace PersonalWebsiteMVC.Api
 
         // GET: api/Posts
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Posts>>> GetPosts()
+        public async Task<ActionResult<PaginatedList<Posts>>> GetPosts(int pageIndex = 1, int pageSize = 1)
         {
-               
-            var model = await _context.Posts.Where(p => p.PostPublished.ToString() == "Yes").ToListAsync();
-               var total = model.Count().ToString();
-
-     
-               Response.Headers.Append("Content-Range", total);
-               return model;
+               var posts = _context.Posts.AsQueryable().AsNoTracking();
+               var count = await posts.CountAsync();
+               var items = await posts.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+               var route = HttpContext.Request.Path.Value;
+               route = route!.Replace("/api/", "");
+               var result = new PaginatedList<Posts>(items, count, pageIndex, pageSize, route);
+               return Ok(result);
+            
         }
 
         // GET: api/Posts/5

@@ -32,8 +32,11 @@ namespace PersonalWebsiteMVC.Api
 
 
           [HttpGet("/api/albums/GetAlbum")]
-          public IActionResult GetAlbums()
+          public async Task<ActionResult<PaginatedList<Album>>> GetAlbums(int pageIndex = 1, int pageSize = 10)
           {
+               var albums = _db.Albums.AsQueryable().AsNoTracking();
+               var count = await albums.CountAsync();
+               var items = await albums.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
                return Ok(_db.Albums);
           }
 
@@ -72,6 +75,13 @@ namespace PersonalWebsiteMVC.Api
                }
           }
 
+          [HttpGet("/api/albums/AlbumExists")]
+          public IActionResult AlbumExists(string? name)
+          {
+               var album = _db.Albums.Where(a => a.Name == name).Any();
+               return Ok(album);
+          }
+          
           [HttpGet("/api/albums/PhotoExists")]
           public IActionResult PhotoExists(string name, int albumId)
           {
@@ -79,6 +89,21 @@ namespace PersonalWebsiteMVC.Api
                return Ok(albumId);
           }
 
-          
+          [HttpPost("/api/albums/Create")]
+          public IActionResult CreateAlbum(Album model)
+          {
+               _db.Albums.Add(model);
+               _db.SaveChanges();
+               return Ok(model);
+          }
+
+          [HttpDelete("/api/albums/Delete")]
+          public IActionResult DeleteAlbum(string pCloudID)
+          {
+               var album = _db.Albums.Where(a => a.PCloudFolderID == pCloudID).FirstOrDefault();
+               _db.Albums.Remove(album!);
+               _db.SaveChanges();
+               return Ok(pCloudID);
+          }
     }
 }
