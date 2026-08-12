@@ -114,24 +114,31 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/photos/GetThumb")]
-          public IActionResult GetThumb(string fileid, string token, string size)
+          public IActionResult GetThumb(string? fileid, string? token, string? size)
           {
-               var client = new RestClient("https://eapi.pcloud.com");
-               var request = new RestRequest("/getthumblink");
-               request.AddParameter("fileid", fileid);
-               request.AddParameter("size", size);
-               request.AddParameter("access_token", token);
-               var result = client.Execute(request);
-               return Ok(result.Content);
+               try
+               {
+                    var client = new RestClient("https://eapi.pcloud.com");
+                    var request = new RestRequest("/getthumblink");
+                    request.AddParameter("fileid", fileid);
+                    request.AddParameter("size", size);
+                    request.AddParameter("access_token", token);
+                    var result = client.Execute(request);
+                    return Ok(result.Content);
+               }
+               catch (ArgumentNullException)
+               {
+                    return Ok();
+               }
           }
 
           [HttpPut("/api/photos/MakeCoverPhoto")]
-          public IActionResult MakeCoverPhoto(string? url, string? name)
+          public IActionResult MakeCoverPhoto(string? fileid, string? name)
           {
                try
                {
                     var album = _context.Albums.Where(a => a.Name == name).FirstOrDefault();
-                    album!.CoverPhoto = url;
+                    album!.CoverPhoto = fileid;
                     _context.Albums.Update(album);
                     _context.SaveChanges();
                     return Ok(album);
