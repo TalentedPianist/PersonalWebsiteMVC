@@ -62,17 +62,12 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/albums/GetID")]
-          public IActionResult GetID(string? name)
+          public IActionResult GetID([FromQuery(Name="name")]string? name)
           {
-               try
-               {
+              
                     var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-                    return Ok(album!.AlbumID);
-               }
-               catch (NullReferenceException)
-               {
-                    return Ok(name);
-               }
+                    return Ok(album);
+               
           }
 
           [HttpGet("/api/albums/AlbumExists")]
@@ -82,12 +77,7 @@ namespace PersonalWebsiteMVC.Api
                return Ok(album);
           }
           
-          [HttpGet("/api/albums/PhotoExists")]
-          public IActionResult PhotoExists(string name, int albumId)
-          {
-
-               return Ok(albumId);
-          }
+          
 
           [HttpPost("/api/albums/Create")]
           public IActionResult CreateAlbum(Album model)

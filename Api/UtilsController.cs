@@ -18,5 +18,12 @@ namespace PersonalWebsiteMVC.Api
                var response = await client.ExecuteAsync(request);
                return Ok(response.Content);
           }
+
+          [HttpGet("/utils/IP")]
+          public IActionResult GetIPAddress()
+          {
+               
+               return Ok(HttpContext.Connection.RemoteIpAddress);
+          }
      }
 }

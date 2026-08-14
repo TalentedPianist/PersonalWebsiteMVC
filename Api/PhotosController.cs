@@ -47,7 +47,7 @@ namespace PersonalWebsiteMVC.Api
           [HttpGet("/api/Photos/CheckExists")]
           public IActionResult MultiplePhotoExists(string? name, int? albumID)
           {
-               var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
+               var photo = _context.Photos.Where(p => p.Name == name && p.AlbumID == albumID).FirstOrDefault();
                if (photo is not null)
                {
                     return Ok(photo);
@@ -58,13 +58,9 @@ namespace PersonalWebsiteMVC.Api
                }
           }
 
-          [HttpGet("/api/Photos/DeleteMultiple")]
+          [HttpDelete("/api/Photos/DeleteMultiple")]
           public IActionResult DeleteMultipePhotosFromDb(Photos[]? model)
           {
-              
-                    _context.Photos.RemoveRange(model!);
-                    _context.SaveChanges();
-               
                return Ok(model);
           }
 
@@ -114,7 +110,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/photos/GetThumb")]
-          public IActionResult GetThumb(string? fileid, string? token, string? size)
+          public IActionResult GetThumb([FromQuery(Name="fileid")]string? fileid, string? token, string? size)
           {
                try
                {
@@ -147,6 +143,20 @@ namespace PersonalWebsiteMVC.Api
                {
                     return Ok();
                }
+          }
+
+          [HttpGet("/api/photos/GetAlbum")]
+          public IActionResult GetAlbum(int id, string name)
+          {
+               var photos = _context.Photos.Where(p => p.AlbumID == id && p.Name == name).FirstOrDefault();
+               return Ok(photos);
+          }
+
+          [HttpGet("/api/photos/PhotoExists")]
+          public IActionResult PhotoExists(string? name, int? albumId)
+          {
+               var photo = _context.Photos.Where(p => p.Name == name && p.AlbumID == albumId).Any();
+               return Ok(photo);
           }
      }
 }
