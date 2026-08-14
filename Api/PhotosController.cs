@@ -59,8 +59,9 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpDelete("/api/Photos/DeleteMultiple")]
-          public IActionResult DeleteMultipePhotosFromDb(Photos[]? model)
+          public IActionResult DeleteMultipePhotosFromDb([FromBody]Photos[] model)
           {
+               
                return Ok(model);
           }
 
