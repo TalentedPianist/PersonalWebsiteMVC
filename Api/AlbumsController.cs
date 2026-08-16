@@ -66,7 +66,7 @@ namespace PersonalWebsiteMVC.Api
           {
               
                     var album = _db.Albums.Where(a => a.Name == name).FirstOrDefault();
-                    return Ok(album);
+                    return Ok(album!.AlbumID);
                
           }
 

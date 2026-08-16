@@ -28,63 +28,63 @@ namespace PersonalWebsiteMVC.Api
           [HttpGet]
           public async Task<ActionResult<IEnumerable<Photos>>> GetPhotos()
           {
-               return await _context.Photos.ToListAsync();
+               return await _context.Photos.AsNoTracking().ToListAsync();
           }
 
           [HttpPost("/api/Photos/AddPhoto")]
-          public async Task<ActionResult> AddPhoto(List<Photos>? model, [FromQuery(Name="AlbumName")]string? AlbumName)
+          public async Task<ActionResult> AddPhoto(List<Photos>? model, [FromQuery(Name = "AlbumName")] string? AlbumName)
           {
                var album = _context.Albums.Any(a => a.Name == AlbumName);
                return Ok(album);
           }
 
-          [HttpGet("/api/GetIP")]
-          public IActionResult GetIP()
-          {
-               return Ok(HttpContext.Connection.RemoteIpAddress!.ToString());
-          }
+
 
           [HttpGet("/api/Photos/CheckExists")]
           public IActionResult MultiplePhotoExists(string? name, int? albumID)
           {
-               var photo = _context.Photos.Where(p => p.Name == name && p.AlbumID == albumID).FirstOrDefault();
-               if (photo is not null)
-               {
-                    return Ok(photo);
-               }
-               else
-               {
-                    return Ok(false);
-               }
+               var photo = _context.Photos.Where(p => p.Name == name && p.AlbumID == albumID).Any();
+               return Ok(photo);
           }
 
           [HttpDelete("/api/Photos/DeleteMultiple")]
-          public IActionResult DeleteMultipePhotosFromDb([FromBody]Photos[] model)
+          public IActionResult DeleteMultipePhotosFromDb([FromBody] Photos[] model)
           {
-               
-               return Ok(model);
-          }
-
-          [HttpPost("/api/Photos/AddMultiple")]
-          public IActionResult AddMultiplePhotosToDb(Photos[]? model)
-          {
-               _context.Photos.AddRange(model!);
+               _context.Photos.AsNoTracking();
+               _context.RemoveRange(model);
                _context.SaveChanges();
                return Ok(model);
           }
 
-          [HttpGet("/api/Photos/GetID")]
-          public IActionResult GetPhotoID([FromQuery(Name="name")]string name)
+          [HttpPost("/api/Photos/AddMultiple")]
+          public IActionResult AddMultiplePhotosToDb([FromBody] Photos[] model)
           {
                try
                {
-                    var photo = _context.Photos.Where(p => p.Name == name).FirstOrDefault();
+                    _context.Photos.AddRange(model!);
+                    _context.SaveChanges();
+                    return Ok(model);
+               }
+               catch (InvalidOperationException ex)
+               {
+                    return Ok(ex.Message);
+               }
+          }
+
+          [HttpGet("/api/Photos/GetID")]
+          public IActionResult GetPhotoID([FromQuery(Name = "name")] string name)
+          {
+               
+               var photo = _context.Photos.Where(p => p.Name == name).AsNoTracking().FirstOrDefault();
+               if (photo is not null)
+               {
                     return Ok(photo!.PhotoID);
                }
-               catch (NullReferenceException)
+               else
                {
-                    return Ok();
+                    return NotFound();
                }
+
           }
 
           [HttpPost("/api/photos/AddSinglePhoto")]
@@ -111,7 +111,7 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/photos/GetThumb")]
-          public IActionResult GetThumb([FromQuery(Name="fileid")]string? fileid, string? token, string? size)
+          public IActionResult GetThumb([FromQuery(Name = "fileid")] string? fileid, string? token, string? size)
           {
                try
                {
@@ -149,15 +149,10 @@ namespace PersonalWebsiteMVC.Api
           [HttpGet("/api/photos/GetAlbum")]
           public IActionResult GetAlbum(int id, string name)
           {
-               var photos = _context.Photos.Where(p => p.AlbumID == id && p.Name == name).FirstOrDefault();
+               var photos = _context.Photos.Where(p => p.AlbumID == id && p.Name == name).AsNoTracking().FirstOrDefault();
                return Ok(photos);
           }
 
-          [HttpGet("/api/photos/PhotoExists")]
-          public IActionResult PhotoExists(string? name, int? albumId)
-          {
-               var photo = _context.Photos.Where(p => p.Name == name && p.AlbumID == albumId).Any();
-               return Ok(photo);
-          }
+       
      }
 }
