@@ -146,13 +146,14 @@ namespace PersonalWebsiteMVC.Api
                }
           }
 
+
           [HttpGet("/api/photos/GetAlbum")]
-          public async Task<ActionResult<PaginatedList<Photos>>> GetAlbum(int id, int pageIndex = 1, int pageSize = 10)
+          public async Task<ActionResult<PaginatedList<Photos>>> GetAlbum(int id, int pageIndex = 1, int pageSize = 12)
           {
                var photos = _context.Photos.Where(p => p.AlbumID == id).AsQueryable().AsNoTracking();
                var count = await photos.CountAsync();
                var items = await photos.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-               var route = HttpContext.Request.Path.Value;
+               var route = $"{HttpContext.Request.Path.Value}";
                route = route!.Replace("/api/", "");
                var result = new PaginatedList<Photos>(items, count, pageIndex, pageSize, route);
                return Ok(result);
