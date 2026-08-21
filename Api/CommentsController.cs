@@ -24,13 +24,22 @@ namespace PersonalWebsiteMVC.Api
                return Ok(_db.Comments);
           }
 
-          [Route("/api/Comment/Create")]
+          [HttpPost("/api/Comment/Create")]
           public IActionResult CreatePost(Comments? model)
           {
-               model!.CommentDate = DateTime.Now;
-               _db.Comments.Add(model!);
-               _db.SaveChanges();
-               return Ok(model);
+               if (ModelState.IsValid)
+               {
+                    model!.CommentDate = DateTime.Now;
+                    model.CommentAuthorIP = HttpContext.Connection.RemoteIpAddress!.ToString();
+                    _db.Comments.Add(model!);
+                    _db.SaveChanges();
+                    return Ok(model);
+               }
+               else
+               {
+                    return Ok();
+               }
+
           }
 
           [HttpGet("/api/PostComments/{id}")]
@@ -39,11 +48,11 @@ namespace PersonalWebsiteMVC.Api
                var comments = _db.Comments.AsQueryable().AsNoTracking();
                var count = await comments.CountAsync();
                var items = await comments.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
-               
+
                var route = HttpContext.Request.Path.Value;
                route = route!.Replace("/api/", "");
-               var result = new PaginatedList<Comments> (items, count, pageIndex, pageSize, route!);
-               
+               var result = new PaginatedList<Comments>(items, count, pageIndex, pageSize, route!);
+
                return Ok(result);
           }
 
@@ -65,9 +74,20 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/Comments/GetComments")]
-          public IActionResult BlogComments(int PostID)
+          public IActionResult BlogComments(int? PostID, int? PhotoID)
           {
+
                var comments = _db.Comments.Where(c => c.PostID == PostID).OrderByDescending(c => c.CommentDate);
+               return Ok(comments);
+
+          }
+
+          [HttpGet("/api/Comments/PhotoComments")]
+          public async Task<ActionResult<PaginatedList<Comments>>> PhotoComments(int PhotoID)
+          {
+               var id = Convert.ToInt32(PhotoID);
+               
+               var comments = _db.Comments.Where(c => c.PhotoID!.Equals(PhotoID));
                return Ok(comments);
           }
      }

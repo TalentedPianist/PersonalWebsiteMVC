@@ -57,19 +57,16 @@ namespace PersonalWebsiteMVC.Models
           public int? PostID { get; set; }
 
           public string? PhotoID { get; set; }
-          [Display(Name = "Name")]
-          [Required]
+          [Required(ErrorMessage="You must enter your name.")] 
           public string? CommentAuthor { get; set; }
-          [Display(Name = "Email")]
-          [Required]
+          [Required(ErrorMessage="You must enter your email address.")]
           [EmailAddress(ErrorMessage="Email address is invalid.")]
           public string? CommentAuthorEmail { get; set; }
           [Display(Name = "Website")]
           public string? CommentAuthorUrl { get; set; }
           public string? CommentAuthorIP { get; set; }
           public DateTime CommentDate { get; set; }
-          [Display(Name = "Comment")]
-          [Required]
+          [Required(ErrorMessage="You must enter a comment.")]
           public string? CommentContent { get; set; }
           public string? CommentType { get; set; }
 
