@@ -31,8 +31,8 @@ namespace PersonalWebsiteMVC.Api
                {
                     model!.CommentDate = DateTime.Now;
                     model.CommentAuthorIP = HttpContext.Connection.RemoteIpAddress!.ToString();
-                    _db.Comments.Add(model!);
-                    _db.SaveChanges();
+                    //_db.Comments.Add(model!);
+                    //_db.SaveChanges();
                     return Ok(model);
                }
                else
@@ -83,12 +83,16 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpGet("/api/Comments/PhotoComments")]
-          public async Task<ActionResult<PaginatedList<Comments>>> PhotoComments(int PhotoID)
+          public async Task<ActionResult<PaginatedList<Comments>>> PhotoComments(int PhotoID, int pageIndex = 1, int pageSize = 1)
           {
                var id = Convert.ToInt32(PhotoID);
-               
-               var comments = _db.Comments.Where(c => c.PhotoID!.Equals(PhotoID));
-               return Ok(comments);
+               var comments = _db.Comments.Where(c => Convert.ToInt32(c.PhotoID) == id).AsQueryable().AsNoTracking();
+               var count = await comments.CountAsync();
+               var items = await comments.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
+               var route = HttpContext.Request.Path.Value;
+               route = route!.Replace("/api/", "");
+               var result = new PaginatedList<Comments>(items, count, pageIndex, pageSize, route);
+               return Ok(result);
           }
      }
 }
