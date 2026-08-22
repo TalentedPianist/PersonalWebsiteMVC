@@ -25,14 +25,14 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/Comment/Create")]
-          public IActionResult CreatePost(Comments? model)
+          public IActionResult CreateComment(Comments? model)
           {
                if (ModelState.IsValid)
                {
                     model!.CommentDate = DateTime.Now;
                     model.CommentAuthorIP = HttpContext.Connection.RemoteIpAddress!.ToString();
-                    //_db.Comments.Add(model!);
-                    //_db.SaveChanges();
+                    _db.Comments.Add(model!);
+                    _db.SaveChanges();
                     return Ok(model);
                }
                else
@@ -45,7 +45,7 @@ namespace PersonalWebsiteMVC.Api
           [HttpGet("/api/PostComments/{id}")]
           public async Task<ActionResult<PaginatedList<Comments>>> GetComment(int id, int pageIndex = 1, int pageSize = 1)
           {
-               var comments = _db.Comments.AsQueryable().AsNoTracking();
+               var comments = _db.Comments.Where(c => c.PostID == id).AsQueryable().AsNoTracking();
                var count = await comments.CountAsync();
                var items = await comments.Skip((pageIndex - 1) * pageSize).Take(pageSize).ToListAsync();
 
