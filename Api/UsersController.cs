@@ -13,7 +13,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using PersonalWebsiteMVC.Data;
 using PersonalWebsiteMVC.Models;
-using ServiceStack;
 
 namespace PersonalWebsiteMVC.Api
 {
@@ -23,7 +22,7 @@ namespace PersonalWebsiteMVC.Api
      {
           private readonly ApplicationDbContext _context;
           private UserManager<ApplicationUser> _userManager;
-          public RoleManager<IdentityRole> _roleManager;
+          private RoleManager<IdentityRole> _roleManager;
           private IConfiguration _configuration;
           public List<string> Errors = new List<string>();
           public IPasswordHasher<ApplicationUser> passwordHasher;
@@ -34,6 +33,7 @@ namespace PersonalWebsiteMVC.Api
           {
                _context = context;
                _userManager = userManager;
+               _roleManager = roleManager;
                _configuration = configuration;
                passwordHasher = passwordHash;
                _signInManager = signInManager;
@@ -105,6 +105,7 @@ namespace PersonalWebsiteMVC.Api
           public async Task<IActionResult> DeleteUser([FromQuery(Name = "id")] string id)
           {
                var user = _userManager.Users.Where(u => u.Id == id).FirstOrDefault();
+               var role = await _userManager.RemoveFromRoleAsync(user!, "Member");
                await _userManager.DeleteAsync(user!);
                return Ok("User successfully deleted");
           }
@@ -122,7 +123,7 @@ namespace PersonalWebsiteMVC.Api
                var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secret));
                var tokenHandler = new JwtSecurityTokenHandler();
 
-               var userRoles = await _userManager.GetRolesAsync(user);
+               //var userRoles = await _userManager.GetRolesAsync(user);
                var claims = new List<Claim>
                {
                     new(ClaimTypes.Name, email)
@@ -131,7 +132,7 @@ namespace PersonalWebsiteMVC.Api
 
                var tokenDescriptor = new SecurityTokenDescriptor
                {
-                    Subject = new ClaimsIdentity(claims), 
+                    Subject = new ClaimsIdentity(claims),
                     Expires = DateTime.UtcNow.AddDays(1),
                     Issuer = issuer,
                     Audience = audience,
@@ -139,7 +140,7 @@ namespace PersonalWebsiteMVC.Api
                };
                var securityToken = tokenHandler.CreateToken(tokenDescriptor);
                var token = tokenHandler.WriteToken(securityToken);
-               Console.WriteLine(token);
+               await Task.CompletedTask;
                return token;
 
 
@@ -149,7 +150,7 @@ namespace PersonalWebsiteMVC.Api
 
 
           [HttpPost("/api/identity/login")]
-          public async Task<IActionResult> Login([FromForm] Login model)
+          public async Task<IActionResult> Login(Login model)
           {
 
 
@@ -162,19 +163,29 @@ namespace PersonalWebsiteMVC.Api
                          Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(appUser, model.Password, false, false);
                          if (result.Succeeded)
                          {
-                              return Ok();
+                              var Id = appUser.Id;
+                              var FirstName = appUser.FirstName;
+                              var Email = appUser.Email;
+                              var member = await _userManager.IsInRoleAsync(appUser, "Member");
+                              var roles = member ? "Member" : null;
+                              var token = await GenerateToken(appUser.Email!, appUser);
+                              return Ok(new { Id, FirstName, Email, roles, token });
+                         }
+                         else
+                         {
+                              ModelState.AddModelError("", "Invalid email or password");
                          }
 
                     }
 
                }
-               return BadRequest();
+               return BadRequest(ModelState);
           }
 
           [HttpPost("/api/identity/register")]
           public async Task<IActionResult> Register(User model)
           {
-               
+
 
                if (ModelState.IsValid)
                {
@@ -183,21 +194,29 @@ namespace PersonalWebsiteMVC.Api
                          UserName = model.UserName,
                          Email = model.Email,
                          FirstName = model.FirstName,
-                         LastName = model.Password,
+                         LastName = model.LastName,
                     };
 
                     IdentityResult result = await _userManager.CreateAsync(user, model.Password!);
+                    var addToRole = await _userManager.AddToRoleAsync(user, "Member");
+                    
+
                     if (result.Succeeded)
                     {
-                         var role = await _userManager.AddToRoleAsync(user, "Member");
-                         if (role.Succeeded)
+                         if (addToRole.Succeeded)
                          {
                               // Successfully added the user to the member role, do other stuff here
 
                               var token = GenerateToken(model.Email!, user);
-                              return Ok(new { token });
-                         }
+                              var firstName = user.FirstName;
+                              var email = user.Email;
 
+                              var member = await _userManager.IsInRoleAsync(user, "Member");
+                              var role = member ? "Member" : null;
+
+                              return Ok(new { token, firstName, email, role });
+
+                         }
                     }
                     else
                     {
@@ -207,9 +226,20 @@ namespace PersonalWebsiteMVC.Api
                               Errors.Add(error.Description);
                          }
                     }
-                    
+
                }
                return BadRequest(ModelState);
+          }
+
+          public async Task<string> GetRole(ApplicationUser user)
+          {
+               var role = await _userManager.IsInRoleAsync(user, "Member");
+               return "Member";
+          }
+
+          public async Task AddUserToRole(ApplicationUser user)
+          {
+               await _userManager.AddToRoleAsync(user, "Member");
           }
 
      }

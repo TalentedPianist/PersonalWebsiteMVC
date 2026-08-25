@@ -17,20 +17,15 @@ namespace PersonalWebsiteMVC.Api
           }
 
           [HttpPost("/api/Contact")]
-          public async Task<IActionResult> SendEmail(ContactFormModel model)
+          public async Task<IActionResult> SendEmail(Contact model)
           {
-               try
+
+               if (ModelState.IsValid)
                {
-                    if (ModelState.IsValid)
-                    {
-                         await _EmailService.SendEmailAsync("douglas@douglasmcgregor.co.uk", "Contact Form Enquiry", model.Message!);
-                    }
-                    return Ok(model);
+                    await _EmailService.SendEmailAsync("douglas@douglasmcgregor.co.uk", "Contact Form Enquiry", model.Message!);
                }
-               catch (ArgumentNullException ex)
-               {
-                    return Ok();
-               }
+               return Ok(model);
+
           }
      }
 }

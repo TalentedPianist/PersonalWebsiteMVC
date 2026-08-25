@@ -8,6 +8,7 @@ namespace PersonalWebsiteMVC.Models
           public string? FirstName { get; set; } = default!;
           public string? LastName { get; set; } = default!;
           [Required]
+          [EmailAddress(ErrorMessage="Please enter a valid email address.")]
           public string? Email { get; set; } = default!;
           [Required]
           public string? UserName { get; set; } = default!;

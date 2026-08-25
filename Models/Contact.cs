@@ -7,6 +7,7 @@ namespace PersonalWebsiteMVC.Models
        [Required]
         public string? Name { get; set; }
         [Required]
+        [EmailAddress(ErrorMessage="Please enter a valid email address")]
         public string? Email { get; set; } 
 
         public string? Website { get; set; } 
