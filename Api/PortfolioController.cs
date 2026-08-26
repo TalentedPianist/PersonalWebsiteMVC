@@ -104,5 +104,11 @@ namespace PersonalWebsiteMVC.Api
         {
             return _context.Portfolio.Any(e => e.PortfolioID == id);
         }
+
+          [HttpPost("/api/Portfolio/Create")]
+          public async Task<IActionResult> Create(Portfolio model)
+          {
+               return Ok(model);
+          }
     }
 }
