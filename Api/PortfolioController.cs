@@ -108,6 +108,8 @@ namespace PersonalWebsiteMVC.Api
           [HttpPost("/api/Portfolio/Create")]
           public async Task<IActionResult> Create(Portfolio model)
           {
+               _context.Portfolio.Add(model);
+               _context.SaveChanges();
                return Ok(model);
           }
     }
